@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import { CabeceraPantalla } from './diseno/CabeceraPantalla'
 import { Estructura } from './diseno/Estructura'
 import { Cargando } from './diseno/Estados'
+import { LimiteError } from './diseno/LimiteError'
 
 // El Observatorio arrastra MapLibre (~1 MB): se carga solo al entrar en la ruta.
 const Galeria = lazy(() => import('./diseno/Galeria').then((m) => ({ default: m.Galeria })))
@@ -19,17 +20,21 @@ export default function App() {
         <Route
           path="observatorio"
           element={
-            <Suspense fallback={<Cargando texto="Cargando…" />}>
-              <Observatorio />
-            </Suspense>
+            <LimiteError>
+              <Suspense fallback={<Cargando texto="Cargando…" />}>
+                <Observatorio />
+              </Suspense>
+            </LimiteError>
           }
         />
         <Route
           path="_sistema"
           element={
-            <Suspense fallback={<Cargando texto="Cargando…" />}>
-              <Galeria />
-            </Suspense>
+            <LimiteError>
+              <Suspense fallback={<Cargando texto="Cargando…" />}>
+                <Galeria />
+              </Suspense>
+            </LimiteError>
           }
         />
         <Route path="*" element={<CabeceraPantalla titulo="Página no encontrada" hallazgo="Esta dirección no existe en la app." />} />

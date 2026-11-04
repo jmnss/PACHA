@@ -16,6 +16,21 @@ export function vecinas(ts: number[], ms: number): { anterior: number | null; si
   return { anterior, siguiente }
 }
 
+/** Índice de la pasada anterior o igual al instante (la que el reloj llama «anterior»); la primera si el instante precede a todas. */
+export function indiceAnterior(ts: number[], ms: number): number {
+  let mejor = -1
+  for (let i = 0; i < ts.length; i++) if (ts[i] <= ms && (mejor < 0 || ts[i] > ts[mejor])) mejor = i
+  if (mejor >= 0) return mejor
+  let primera = 0
+  for (let i = 1; i < ts.length; i++) if (ts[i] < ts[primera]) primera = i
+  return primera
+}
+
+/** Índices (antes, después) distintos y ordenados; con valores inválidos, primera y última pasada. */
+export function parejaValida(a: number, d: number, n: number): [number, number] {
+  return a >= 0 && d >= 0 && a < d ? [a, d] : [0, Math.max(0, n - 1)]
+}
+
 const esLluviosa = (t: string) => t.toLowerCase().startsWith('lluv')
 
 /** Temporada («Lluviosa», «Seca») del mes de un instante, según la climatología del contexto. */

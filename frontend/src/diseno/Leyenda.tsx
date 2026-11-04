@@ -29,7 +29,7 @@ export function Leyenda({ paleta, vmin, vmax, unidad, leyenda, variable, extremo
     const items = leyenda ?? []
     const colores = coloresDeCategorias(variable ?? '', items.length)
     return (
-      <div className="leyenda" role="group" aria-label={`Leyenda, ${unidad}`}>
+      <div className="leyenda" role="group" aria-label={unidad ? `Leyenda, ${unidad}` : 'Leyenda'}>
         <ul className="leyenda__categorias">
           {items.map(([etiqueta], i) => {
             const color = colores[i]
@@ -42,7 +42,7 @@ export function Leyenda({ paleta, vmin, vmax, unidad, leyenda, variable, extremo
             )
           })}
         </ul>
-        <div className="leyenda__unidad">{unidad}</div>
+        {unidad && <div className="leyenda__unidad">{unidad}</div>}
       </div>
     )
   }

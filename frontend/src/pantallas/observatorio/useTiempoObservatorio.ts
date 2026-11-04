@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { indiceAnterior } from './derivados'
 import { useInstante } from '../../tiempo/useInstante'
 import { usePlayback } from '../../tiempo/usePlayback'
 import { VELOCIDADES, type Velocidad } from '../../tiempo/ControlesReproductor'
@@ -17,6 +18,9 @@ export function useTiempoObservatorio(instantes: string[], tUrl: string, guardar
   const [velocidad, setVelocidad] = useState<Velocidad>('normal')
   const inst = useInstante(instantes)
   const { irAIndice, irAInstante } = inst
+  const ts = useMemo(() => instantes.map((x) => Date.parse(x)), [instantes])
+  /** Pasada que muestran el mapa y el KPI: la anterior o igual al instante, como el reloj. */
+  const pasadaActiva = indiceAnterior(ts, inst.ms)
   const pb = usePlayback({ total: instantes.length, intervaloMs: VELOCIDADES[velocidad].ms, onIndice: irAIndice })
   const { ir: irPb, pausa, play, reproduciendo } = pb
   const guardar = useRef(guardarT)
@@ -46,7 +50,7 @@ export function useTiempoObservatorio(instantes: string[], tUrl: string, guardar
   }, [pausa, pasoMin, irAIndice, irAInstante, inst.indice, inst.ms])
 
   return {
-    ...inst, reproduciendo, play, pausa, pasoMin, setPasoMin, velocidad, setVelocidad,
+    ...inst, pasadaActiva, reproduciendo, play, pausa, pasoMin, setPasoMin, velocidad, setVelocidad,
     desdeCinta, inicio, final, atras: () => mover(-1), adelante: () => mover(1),
   }
 }

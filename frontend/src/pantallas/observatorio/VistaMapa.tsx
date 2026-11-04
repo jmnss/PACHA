@@ -3,11 +3,12 @@ import { useMemo, useRef, useState } from 'react'
 import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
 import { useCapa, useSimular, type CapaDto, type Contexto, type Escenario, type ResultadoCambio } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
-import { Cargando, ErrorBloque } from '../../diseno/Estados'
+import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
 import { Leyenda } from '../../diseno/Leyenda'
 import { Pestanas } from '../../diseno/Pestanas'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tarjeta } from '../../diseno/Tarjeta'
+import { formatearFecha } from '../../tiempo/fechas'
 import { dentroDeEcuador } from '../../mapa/dentroDeEcuador'
 import { CapaLienzo } from '../../mapa/CapaLienzo'
 import { MapaBase } from '../../mapa/MapaBase'
@@ -16,6 +17,7 @@ import { estiloDeCapa, temporadasLluviosas } from './derivados'
 import type { TiempoObservatorio } from './useTiempoObservatorio'
 
 export type ModoCapa = 'modelo' | 'cambio'
+export const SIN_PAREJA = 'Elige dos pasadas distintas para ver el cambio.'
 export const AVISO_FUERA = 'Ese punto está fuera de Ecuador. Elige un punto dentro del país.'
 
 const MODOS = [
@@ -57,7 +59,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
   const [aviso, setAviso] = useState<string | null>(null)
   const simular = useSimular()
 
-  const pasada = esc.adquisiciones[tiempo.indice]
+  const pasada = esc.adquisiciones[tiempo.pasadaActiva]
   const variable = esc.variables[0]
   const modelo = useCapa(esc.id, modo === 'modelo' && pasada ? { adquisicion: pasada.id, variable, polarizacion } : undefined)
   const consulta = modo === 'modelo' ? modelo : resultado
@@ -83,13 +85,19 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
     simular.mutate({ escenario_id: base, parametros: { lat, lon } }, { onSuccess: (nuevo) => onEscenarioNuevo(nuevo.id) })
   }
 
-  const ordinal = tiempo.indice
-  const motivoAntes = ordinal >= esc.adquisiciones.length - 1 || esc.adquisiciones[ordinal].id >= despuesId
-    ? 'La pasada «antes» debe ser anterior a la pasada «después».' : undefined
-  const motivoDespues = ordinal <= 0 || esc.adquisiciones[ordinal].id <= antesId
-    ? 'La pasada «después» debe ser posterior a la pasada «antes».' : undefined
+  // Se compara por posición en la lista de pasadas, no por el texto de los ids.
+  const ids = esc.adquisiciones.map((a) => a.id)
+  const [iAntes, iDespues] = [ids.indexOf(antesId), ids.indexOf(despuesId)]
+  const ordinal = tiempo.pasadaActiva
+  const motivoAntes = ordinal >= iDespues ? 'La pasada «antes» debe ser anterior a la pasada «después».' : undefined
+  const motivoDespues = ordinal <= iAntes ? 'La pasada «después» debe ser posterior a la pasada «antes».' : undefined
 
-  const cargando = consulta.isPending || (consulta.isFetching && !capa)
+  // Sin pareja válida la consulta no se lanza (idle): se explica en vez de quedarse cargando.
+  const sinPareja = modo === 'cambio' && resultado.fetchStatus === 'idle' && !resultado.data
+  const cargando = !sinPareja && (consulta.isPending || (consulta.isFetching && !capa))
+  const rotulo = modo === 'modelo'
+    ? (pasada ? `Pasada · ${formatearFecha(pasada.instante) ?? '—'}` : null)
+    : `Cambio · antes ${formatearFecha(esc.adquisiciones[iAntes]?.instante) ?? '—'}, después ${formatearFecha(esc.adquisiciones[iDespues]?.instante) ?? '—'}`
 
   return (
     <>
@@ -107,6 +115,9 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
             )}
           </MapaBase>
           {cargando && <div className="vista-mapa__estado"><Cargando texto="Calculando la capa…" filas={2} /></div>}
+          {sinPareja && (
+            <div className="vista-mapa__estado"><Vacio titulo="Sin cambio que mostrar" texto={SIN_PAREJA} /></div>
+          )}
           {consulta.isError && !capa && (
             <div className="vista-mapa__estado">
               <ErrorBloque mensaje={mensaje(consulta.error)} ultimoDato={hora(consulta.dataUpdatedAt)} onReintentar={() => void consulta.refetch()} />
@@ -120,8 +131,9 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
             <ErrorBloque mensaje={mensaje(simular.error)} onReintentar={() => simular.reset()} />
           </div>
         )}
+        {capa && rotulo && <p className="vista-mapa__capa num">{rotulo}</p>}
         {capa && estilo && (
-          <Leyenda paleta={capa.paleta} vmin={capa.rejilla.vmin} vmax={capa.rejilla.vmax} unidad={capa.unidad || 'categorías'}
+          <Leyenda paleta={capa.paleta} vmin={capa.rejilla.vmin} vmax={capa.rejilla.vmax} unidad={capa.unidad}
             leyenda={capa.leyenda} variable={capa.variable} extremos={extremosDe(capa)} />
         )}
         <p className="vista-mapa__ayuda">

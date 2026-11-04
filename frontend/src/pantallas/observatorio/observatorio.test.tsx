@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import Observatorio from './Observatorio'
-import { hallazgo, temporadasLluviosas, vecinas } from './derivados'
+import { hallazgo, indiceAnterior, parejaValida, temporadasLluviosas, vecinas } from './derivados'
 
 // MapLibre no corre en jsdom: el mapa falso ofrece dos «clics» y deja pasar a sus hijos.
 vi.mock('../../mapa/MapaBase', () => ({
@@ -16,6 +16,7 @@ vi.mock('../../mapa/MapaBase', () => ({
     <div data-testid="mapa-falso">
       <button onClick={() => onClic?.(-1.0, -80.0)}>Clic dentro de Ecuador</button>
       <button onClick={() => onFueraDeEcuador?.(-12.05, -77.04)}>Clic fuera de Ecuador</button>
+      <button onClick={() => onClic?.(-12.05, -77.04)}>Clic en el Pacífico por onClic</button>
       {children}
     </div>
   ),
@@ -73,6 +74,8 @@ function simularFetch() {
     if (url === '/api/escenarios') return json([BASE])
     if (url === '/api/tipos') return json([{ id: 'humedales', nombre: 'Pérdida de humedales' }, { id: 'incendios', nombre: 'Incendios forestales' }])
     if (url === '/api/escenarios/ec_x') return json(BASE)
+    if (url === '/api/escenarios/ec_uno') return json({ ...BASE, id: 'ec_uno', nombre: 'Escena de una pasada', adquisiciones: BASE.adquisiciones.slice(0, 1) })
+    if (url.startsWith('/api/escenarios/ec_x~caducado')) return json({ mensaje: 'El escenario no existe.' }, 404)
     if (url === '/api/escenarios/ec_x~abc123') return json(DERIVADO)
     if (url.startsWith('/api/escenarios/ec_x/capa')) return json(capa({ variable: 'sigma0', paleta: 'gris', unidad: 'dB', leyenda: null, adquisicion_id: '2026-04-12' }))
     if (url.endsWith('/cambio')) return json(CAMBIO)
@@ -81,6 +84,7 @@ function simularFetch() {
     return json({ mensaje: 'no previsto' }, 404)
   }))
 }
+const cambios = () => llamadas.filter((l) => l.url.endsWith('/cambio'))
 const posts = () => llamadas.filter((l) => l.metodo === 'POST' && l.url === '/api/simulacion/escenario')
 
 function Ubicacion() {
@@ -180,11 +184,102 @@ describe('Observatorio · mapa y tiempo', () => {
   })
 })
 
+describe('Observatorio · casos límite', () => {
+  it('con una sola pasada no hay petición de cambio: muestra el motivo y no queda cargando', async () => {
+    montar('/observatorio?escenario=ec_uno')
+    expect(await screen.findAllByText('Elige dos pasadas distintas para ver el cambio.')).not.toHaveLength(0)
+    expect(screen.queryByText(/Calculando/)).not.toBeInTheDocument()
+    expect(cambios()).toHaveLength(0)
+  })
+
+  it.each([
+    ['antes igual a después', 'antes=2026-05-06&despues=2026-05-06'],
+    ['antes posterior a después', 'antes=2026-05-18&despues=2026-04-12'],
+    ['pasadas que no existen', 'antes=nada&despues=tampoco'],
+  ])('normaliza la pareja (%s) a los valores por defecto', async (_n, q) => {
+    montar(`/observatorio?escenario=ec_x&${q}`)
+    await listo()
+    expect(cambios()).toHaveLength(1)
+    expect(cambios()[0].cuerpo).toMatchObject({ antes: '2026-04-12', despues: '2026-05-18' })
+  })
+
+  it('un escenario caducado (404) ofrece volver al escenario base y deja los selectores', async () => {
+    montar('/observatorio?escenario=ec_x~caducado')
+    expect(await screen.findByRole('alert')).toHaveTextContent('El escenario no existe.')
+    expect(screen.getByRole('button', { name: 'Reintentar' })).toBeInTheDocument()
+    expect(screen.getByLabelText('Escenario')).toBeInTheDocument()
+    expect(screen.getByLabelText('Tipo de cambio')).toBeInTheDocument()
+    fireEvent.click(await screen.findByRole('button', { name: 'Volver a Humedal de prueba' }))
+    await listo()
+    expect(screen.getByTestId('ubicacion').textContent).toContain('escenario=ec_x')
+  })
+
+  it('el mapa y el reloj hablan de la misma pasada: la anterior o igual al instante', async () => {
+    montar('/observatorio?escenario=ec_x&t=2026-04-30T00:00:00.000Z')
+    await listo()
+    const reloj = screen.getByTestId('reloj')
+    await waitFor(() => expect(reloj).toHaveTextContent('Pasada anterior · 24 abr 2026'))
+    expect(reloj).toHaveTextContent('Siguiente · 6 may 2026')
+    const kpi = screen.getByText('Pasada activa').closest('div') as HTMLElement
+    expect(kpi).toHaveTextContent('24 abr 2026')
+    fireEvent.click(screen.getByRole('tab', { name: 'Modelo en el tiempo' }))
+    await waitFor(() => expect(llamadas.some((l) => l.url.includes('/capa?adquisicion=2026-04-24&'))).toBe(true))
+    expect(await screen.findByText('Pasada · 24 abr 2026')).toBeInTheDocument()
+  })
+
+  it('el motivo de un botón desactivado es texto visible y lo describe', async () => {
+    montar()
+    await listo()
+    const boton = screen.getByRole('button', { name: 'Fijar como «después»' })
+    expect(boton).toBeDisabled()
+    const motivo = screen.getByText('La pasada «después» debe ser posterior a la pasada «antes».')
+    expect(boton.getAttribute('aria-describedby')).toBe(motivo.id)
+  })
+
+  it('la leyenda categórica no inventa una unidad', async () => {
+    montar()
+    await listo()
+    expect(screen.queryByText('categorías')).not.toBeInTheDocument()
+  })
+
+  it('desde un escenario derivado el clic envía el id base', async () => {
+    montar('/observatorio?escenario=ec_x~abc123')
+    await listo()
+    fireEvent.click(screen.getByText('Clic dentro de Ecuador'))
+    await waitFor(() => expect(posts()).toHaveLength(1))
+    expect(posts()[0].cuerpo).toMatchObject({ escenario_id: 'ec_x' })
+  })
+
+  it('un clic fuera de Ecuador que llega por onClic también se rechaza sin llamar a la API', async () => {
+    montar()
+    await listo()
+    const antes = llamadas.length
+    fireEvent.click(screen.getByText('Clic en el Pacífico por onClic'))
+    expect(screen.getByRole('alert')).toHaveTextContent('fuera de Ecuador')
+    expect(llamadas.length).toBe(antes)
+  })
+
+  it('la humedad del suelo se rotula como estimada', async () => {
+    montar()
+    expect(await screen.findByText(/Humedad del suelo estimada/)).toBeInTheDocument()
+  })
+})
+
 describe('derivados', () => {
   it('vecinas: anterior es la última pasada que no supera el instante', () => {
     expect(vecinas([10, 20, 30], 20)).toEqual({ anterior: 20, siguiente: 30 })
     expect(vecinas([10, 20, 30], 25)).toEqual({ anterior: 20, siguiente: 30 })
     expect(vecinas([10, 20, 30], 30)).toEqual({ anterior: 30, siguiente: null })
+  })
+  it('parejaValida y indiceAnterior', () => {
+    expect(parejaValida(1, 3, 4)).toEqual([1, 3])
+    expect(parejaValida(2, 2, 4)).toEqual([0, 3])
+    expect(parejaValida(3, 1, 4)).toEqual([0, 3])
+    expect(parejaValida(-1, 2, 4)).toEqual([0, 3])
+    expect(parejaValida(0, 0, 1)).toEqual([0, 0])
+    expect(indiceAnterior([10, 20, 30], 25)).toBe(1)
+    expect(indiceAnterior([10, 20, 30], 20)).toBe(1)
+    expect(indiceAnterior([10, 20, 30], 5)).toBe(0)
   })
   it('temporadasLluviosas une meses consecutivos', () => {
     const f = temporadasLluviosas(CONTEXTO as never, Date.UTC(2026, 0, 10), Date.UTC(2026, 7, 1))

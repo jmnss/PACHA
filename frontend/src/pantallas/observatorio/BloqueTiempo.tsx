@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import type { Contexto, Escenario } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
 import { CintaPasadas, type Temporada } from '../../tiempo/CintaPasadas'
@@ -22,6 +23,7 @@ interface Props {
 
 /** Reloj, cinta de pasadas y controles de tiempo: la misma cinta bajo todas las vistas del Observatorio. */
 export function BloqueTiempo({ pasadas, tiempo, contexto, temporadas, alInteractuar, onFijarAntes, onFijarDespues, motivoAntes, motivoDespues }: Props) {
+  const idMotivos = useId()
   const ts = pasadas.map((p) => Date.parse(p.instante))
   const { anterior, siguiente } = vecinas(ts, tiempo.ms)
   const temporada = temporadaDelMes(contexto, tiempo.ms)
@@ -52,8 +54,14 @@ export function BloqueTiempo({ pasadas, tiempo, contexto, temporadas, alInteract
       />
       {(onFijarAntes || onFijarDespues) && (
         <div className="bloque-tiempo__fijar">
-          <Boton variante="secundario" onClick={onFijarAntes} disabled={!!motivoAntes} title={motivoAntes}>Fijar como «antes»</Boton>
-          <Boton variante="secundario" onClick={onFijarDespues} disabled={!!motivoDespues} title={motivoDespues}>Fijar como «después»</Boton>
+          <Boton variante="secundario" onClick={onFijarAntes} disabled={!!motivoAntes} aria-describedby={motivoAntes ? `${idMotivos}-antes` : undefined}>Fijar como «antes»</Boton>
+          <Boton variante="secundario" onClick={onFijarDespues} disabled={!!motivoDespues} aria-describedby={motivoDespues ? `${idMotivos}-despues` : undefined}>Fijar como «después»</Boton>
+        </div>
+      )}
+      {(motivoAntes || motivoDespues) && (
+        <div className="bloque-tiempo__motivos">
+          {motivoAntes && <p id={`${idMotivos}-antes`}>{motivoAntes}</p>}
+          {motivoDespues && <p id={`${idMotivos}-despues`}>{motivoDespues}</p>}
         </div>
       )}
     </div>

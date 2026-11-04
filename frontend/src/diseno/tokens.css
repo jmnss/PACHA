@@ -103,6 +103,9 @@ body {
   --offset-subrayado: 3px;
   --w-flotante: 420px;     /* panel flotante de la banda */
   --w-termino: 320px;      /* panel de un término */
+  --w-selector-min: 200px; /* selectores de la cabecera del Observatorio */
+  --h-mapa: clamp(320px, 56vh, 560px);        /* alto mínimo del mapa del Observatorio */
+  --h-mapa-movil: clamp(280px, 46vh, 400px);
   --w-kpi-min: 160px;      /* ancho mínimo de una cifra de la franja */
   --w-icono-min: 120px;    /* celda de la galería de iconos */
   --z-flotante: 20;

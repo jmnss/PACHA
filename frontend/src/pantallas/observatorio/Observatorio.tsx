@@ -1,12 +1,14 @@
 import { useMemo } from 'react'
 import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
-import { useCambio, useContexto, useEscenario, useEscenarios, useTipos, type Escenario } from '../../api/consultas'
+import { useCambio, useContexto, useEscenario, useEscenarios, useTipos, type Escenario, type TipoCambio } from '../../api/consultas'
+import { Boton } from '../../diseno/Boton'
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
 import { Pestanas } from '../../diseno/Pestanas'
 import { Selector } from '../../diseno/Selector'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
-import { hallazgo } from './derivados'
+import { hallazgo, parejaValida } from './derivados'
+import { SIN_PAREJA } from './VistaMapa'
 import { PanelContexto } from './PanelContexto'
 import { PanelMetricas } from './PanelMetricas'
 import { useTiempoObservatorio } from './useTiempoObservatorio'
@@ -33,8 +35,11 @@ const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', 
 
 /** Ruta /observatorio: mapa y tiempo (esta tarea); «Antes y después» y «Serie» llegan en las tareas 4.2 y 4.3. */
 export default function Observatorio() {
-  const [url] = useEstadoUrl(ESQUEMA)
+  const [url, cambiar] = useEstadoUrl(ESQUEMA)
   const escenario = useEscenario(url.escenario)
+  const escenarios = useEscenarios()
+  const tipos = useTipos()
+  const irA = (id: string) => cambiar({ escenario: id, antes: '', despues: '', t: '' })
 
   if (escenario.isPending) {
     return (
@@ -45,19 +50,64 @@ export default function Observatorio() {
     )
   }
   if (escenario.isError) {
+    const e = escenario.error
+    const catalogo = escenarios.data ?? []
+    // Un escenario derivado caducado (id con «~») vuelve a su base; si no existe, al primero del catálogo.
+    const base = url.escenario.split('~')[0]
+    const destino = catalogo.find((x) => x.id === base && x.id !== url.escenario) ?? catalogo[0]
+    const noExiste = e instanceof ErrorApi && e.estado === 404
     return (
       <>
-        <CabeceraPantalla titulo="Observatorio" hallazgo={PREGUNTA} />
-        <ErrorBloque
-          mensaje={escenario.error instanceof ErrorApi ? escenario.error.mensaje : MENSAJE_RED}
-          ultimoDato={hora(escenario.dataUpdatedAt)}
-          onReintentar={() => void escenario.refetch()}
+        <CabeceraPantalla
+          titulo="Observatorio"
+          hallazgo={PREGUNTA}
+          acciones={
+            <Selectores
+              tipos={tipos.data} lista={catalogo} escenarioId={url.escenario} tipoId=""
+              onEscenario={irA} onTipo={(t) => { const d = catalogo.find((x) => x.tipo_cambio === t); if (d) irA(d.id) }}
+            />
+          }
         />
+        <div className="observatorio__salida">
+          <ErrorBloque
+            mensaje={e instanceof ErrorApi ? e.mensaje : MENSAJE_RED}
+            ultimoDato={hora(escenario.dataUpdatedAt)}
+            onReintentar={() => void escenario.refetch()}
+          />
+          {noExiste && destino && <Boton variante="secundario" onClick={() => irA(destino.id)}>Volver a {destino.nombre}</Boton>}
+        </div>
       </>
     )
   }
   // `key`: al cambiar de escenario se reinicia el tiempo (instante, reproductor).
   return <ObservatorioCargado key={escenario.data.id} esc={escenario.data} />
+}
+
+interface PropsSelectores {
+  tipos: TipoCambio[] | undefined
+  lista: Escenario[]
+  escenarioId: string
+  tipoId: string
+  /** Escenario actual si no está en el catálogo (derivado de un clic). */
+  actual?: Escenario
+  onEscenario: (id: string) => void
+  onTipo: (tipo: string) => void
+}
+
+/** Tipo de cambio y escenario: siguen visibles aunque el escenario no cargue. */
+function Selectores({ tipos, lista, escenarioId, tipoId, actual, onEscenario, onTipo }: PropsSelectores) {
+  const opciones = lista.map((e) => ({ valor: e.id, texto: e.nombre }))
+  if (!lista.some((e) => e.id === escenarioId)) {
+    opciones.push({ valor: escenarioId, texto: actual?.nombre ?? 'Escenario no disponible' })
+  }
+  const opcionesTipo = (tipos ?? []).map((t) => ({ valor: t.id, texto: t.nombre }))
+  if (!opcionesTipo.some((o) => o.valor === tipoId)) opcionesTipo.unshift({ valor: tipoId, texto: tipoId || 'Elige un tipo' })
+  return (
+    <div className="observatorio__selectores">
+      <Selector etiqueta="Tipo de cambio" value={tipoId} onChange={(e) => onTipo(e.target.value)} opciones={opcionesTipo} />
+      <Selector etiqueta="Escenario" value={escenarioId} onChange={(e) => onEscenario(e.target.value)} opciones={opciones} />
+    </div>
+  )
 }
 
 function ObservatorioCargado({ esc }: { esc: Escenario }) {
@@ -67,8 +117,10 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
 
   const pasadas = esc.adquisiciones
   const ids = pasadas.map((p) => p.id)
-  const antesId = ids.includes(url.antes) ? url.antes : ids[0]
-  const despuesId = ids.includes(url.despues) ? url.despues : ids[ids.length - 1]
+  // La pareja se normaliza por posición: distintas y en orden; si no, primera y última pasada.
+  const [iAntes, iDespues] = parejaValida(ids.indexOf(url.antes), ids.indexOf(url.despues), ids.length)
+  const antesId = ids[iAntes]
+  const despuesId = ids[iDespues]
   const polarizacion = esc.polarizaciones.includes('HH') ? 'HH' : esc.polarizaciones[0]
 
   const peticion = useMemo(
@@ -85,23 +137,16 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
 
   const iso = (id: string) => pasadas.find((p) => p.id === id)?.instante ?? ''
   const frase = hallazgo(resultado.data, iso(antesId), iso(despuesId))
-  const texto = frase ?? (resultado.isError ? 'No se pudo calcular el cambio entre las dos pasadas elegidas.' : resultado.isPending ? 'Calculando el cambio entre las dos pasadas…' : PREGUNTA)
+  const texto = frase ?? (!peticion ? SIN_PAREJA : resultado.isError ? 'No se pudo calcular el cambio entre las dos pasadas elegidas.' : resultado.isPending ? 'Calculando el cambio entre las dos pasadas…' : PREGUNTA)
 
   const lista = escenarios.data ?? []
-  const opcionesEscenario = lista.some((e) => e.id === esc.id) ? lista : [...lista, esc]
   const irA = (id: string) => cambiar({ escenario: id, antes: '', despues: '', t: '' })
   const alTipo = (tipo: string) => {
     const destino = lista.find((e) => e.tipo_cambio === tipo)
     if (destino) irA(destino.id)
   }
-
   const selectores = (
-    <div className="observatorio__selectores">
-      <Selector etiqueta="Tipo de cambio" value={esc.tipo_cambio} onChange={(e) => alTipo(e.target.value)}
-        opciones={(tipos.data ?? [{ id: esc.tipo_cambio, nombre: esc.tipo_cambio }]).map((t) => ({ valor: t.id, texto: t.nombre }))} />
-      <Selector etiqueta="Escenario" value={esc.id} onChange={(e) => irA(e.target.value)}
-        opciones={opcionesEscenario.map((e) => ({ valor: e.id, texto: e.nombre }))} />
-    </div>
+    <Selectores tipos={tipos.data} lista={lista} escenarioId={esc.id} tipoId={esc.tipo_cambio} actual={esc} onEscenario={irA} onTipo={alTipo} />
   )
 
   return (
@@ -125,7 +170,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
           )}
         </div>
         <aside className="observatorio__lado" aria-label="Métricas y contexto">
-          <PanelMetricas esc={esc} resultado={resultado} indice={tiempo.indice} antesId={antesId} despuesId={despuesId} />
+          <PanelMetricas esc={esc} resultado={resultado} indice={tiempo.pasadaActiva} antesId={antesId} despuesId={despuesId} />
           <PanelContexto consulta={contexto} ms={tiempo.ms} />
         </aside>
       </div>

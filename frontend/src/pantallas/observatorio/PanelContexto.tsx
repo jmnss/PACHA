@@ -39,13 +39,13 @@ export function PanelContexto({ consulta, ms }: Props) {
     ['Temporada en la pasada activa', `${temporada}${c.temporada.nombre_local ? ` · ${c.temporada.nombre_local}` : ''}`],
     ['Estación astronómica hoy', c.estacion_astronomica.estacion],
     ['Próximo hito', `${c.estacion_astronomica.proximo_hito}, ${formatearFecha(c.estacion_astronomica.fecha_proximo_hito) ?? ''}`],
-    ['Humedad del suelo hoy', `${formatoNumero(c.humedad_suelo * 100, 1)} %`],
+    ['Humedad del suelo estimada hoy', `${formatoNumero(c.humedad_suelo * 100, 1)} %`],
   ]
   return (
     <Tarjeta titulo={titulo}>
       <p className="panel-contexto__nota">
         Clima real de <Termino nombre="NASA POWER" explicacion="Servicio de la NASA con clima estimado a partir de satélites y modelos. Sirve para saber en qué temporada está un lugar; no son observaciones del radar NISAR." />,
-        {' '}no de NISAR.
+        {' '}no de NISAR. La humedad del suelo es una estimación por balance hídrico sobre la climatología, no una medición.
       </p>
       <dl className="lista-datos">
         {filas.map(([k, v]) => (
