@@ -40,3 +40,10 @@ def test_lat_lon_fuera_de_rango_422(cliente_demo):
     assert cliente_demo.get("/api/contexto", params={"lat": 95, "lon": 0}).status_code == 422
     assert cliente_demo.get("/api/contexto", params={"lat": 0, "lon": 200}).status_code == 422
     assert cliente_demo.get("/api/contexto", params={"lon": 0}).status_code == 422
+
+
+def test_sello_del_contexto_lleva_fecha_fija_de_preparacion(cliente_demo):
+    a = cliente_demo.get("/api/contexto", params={"lat": -0.70, "lon": -80.20}).json()["origen"]
+    b = cliente_demo.get("/api/contexto", params={"lat": -0.70, "lon": -80.20}).json()["origen"]
+    assert a["fecha_generacion"] == b["fecha_generacion"]
+    assert a["fecha_generacion"].startswith("2026-11-01")

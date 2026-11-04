@@ -2,7 +2,7 @@
 
 English: [README.md](README.md)
 
-> **AVISO: DATOS DE DEMOSTRACIÓN.** Todo lo que muestra esta app es **sintético**, producido por un generador reproducible (`scripts/generar_datos_demo.py`, semilla fija). **Nada es una observación real de NISAR.** La app muestra siempre una banda naranja «DATOS DE DEMOSTRACIÓN» y cada capa y exportación lleva su origen. El proveedor de datos reales (`NISAR_PROVEEDOR=real`) es un **esqueleto** que falla con un mensaje claro hasta que estén los recursos oficiales del challenge. Los detalles técnicos de NISAR (productos, bandas, fechas) están *pendientes de confirmar con la documentación oficial*.
+> **AVISO: DATOS DE DEMOSTRACIÓN.** Todo lo que muestra esta app es **sintético**, producido por un generador reproducible (`scripts/generar_datos_demo.py`, semilla fija). **Nada es una observación real de NISAR.** La app muestra siempre una banda naranja «DATOS DE DEMOSTRACIÓN» y cada capa y exportación lleva su origen. El proveedor de datos reales (`NISAR_PROVEEDOR=real`) es un **esqueleto** que falla con un mensaje claro hasta que estén los recursos oficiales del challenge. Los detalles técnicos de NISAR (productos, bandas, fechas) están *pendientes de confirmar con la documentación oficial*. La única excepción es el contexto climático (climatología de NASA POWER): es dato real complementario, no es de NISAR ni viene del radar; todo lo demás es sintético.
 
 ## Qué es
 

@@ -10,11 +10,14 @@ from modelo import estaciones
 router = APIRouter()
 
 FUENTE = "NASA POWER (climatología 2001–2025) y geoBoundaries"
-NOTAS = "Contexto climático real complementario; no es una observación de NISAR."
+NOTAS = ("Contexto climático real complementario; no es una observación de NISAR. "
+         "La fecha es la de preparación de la tabla climática local, no la de la consulta.")
+# Fecha fija de preparación de data/clima_ecuador_power.csv (no cambia con cada petición).
+FECHA_PREPARACION = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 
 def _origen() -> Origen:
-    return Origen(tipo="real", fuente=FUENTE, fecha_generacion=datetime.now(timezone.utc), notas=NOTAS)
+    return Origen(tipo="real", fuente=FUENTE, fecha_generacion=FECHA_PREPARACION, notas=NOTAS)
 
 
 @router.get("/contexto", response_model=ContextoDto | None)

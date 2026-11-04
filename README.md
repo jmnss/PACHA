@@ -2,7 +2,7 @@
 
 Español: [README.es.md](README.es.md)
 
-> **WARNING: DEMONSTRATION DATA.** Everything this app shows is **synthetic**, produced by a reproducible generator (`scripts/generar_datos_demo.py`, fixed seed). **Nothing is a real NISAR observation.** The app always shows an orange "DATOS DE DEMOSTRACIÓN" band, and every layer and export carries its origin. The real data provider (`NISAR_PROVEEDOR=real`) is a **skeleton** that fails with a clear message until the official challenge resources are available. NISAR technical details (products, bands, dates) are *pending confirmation against the official documentation*.
+> **WARNING: DEMONSTRATION DATA.** Everything this app shows is **synthetic**, produced by a reproducible generator (`scripts/generar_datos_demo.py`, fixed seed). **Nothing is a real NISAR observation.** The app always shows an orange "DATOS DE DEMOSTRACIÓN" band, and every layer and export carries its origin. The real data provider (`NISAR_PROVEEDOR=real`) is a **skeleton** that fails with a clear message until the official challenge resources are available. NISAR technical details (products, bands, dates) are *pending confirmation against the official documentation*. The one exception is the climate context (NASA POWER climatology), which is real but complementary data: it is not NISAR and does not come from the radar; everything else is synthetic.
 
 ## What it is
 
