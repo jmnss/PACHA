@@ -2,23 +2,27 @@
 import json
 import threading
 from collections import OrderedDict
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 from fastapi import APIRouter, Depends, Request
-from pydantic import AwareDatetime, BaseModel, StrictInt, model_validator
+from pydantic import (AwareDatetime, BaseModel, StrictBool, StrictFloat, StrictInt, StrictStr,
+                      model_validator)
 
 from api.deps import obtener
 from api.rutas.capas import _dto
 from api.schemas import CapaDto
 from datos.contrato import Escenario, ProveedorDatos
+from datos.geografia import MENSAJE_FUERA_DE_ECUADOR, en_ecuador
+from datos.proveedores.demo import MAX_FOTOGRAMAS
 
 router = APIRouter()
 
-MAX_FOTOGRAMAS = 120
 MAX_CACHE = 12
-# Ecuador continental y Galápagos (WGS84): oeste, sur, este, norte.
-_ECUADOR = (-92.2, -5.1, -75.1, 1.8)
+MAX_PARAMETROS = 32
+MAX_TEXTO = 40
+ANIO_MIN, ANIO_MAX = 1900, 2100
+Valor = StrictBool | StrictInt | StrictFloat | StrictStr
 
 
 class CacheLRU:
@@ -46,16 +50,26 @@ class CacheLRU:
 
 class PeticionEscenario(BaseModel):
     escenario_id: str
-    parametros: dict[str, float] = {}
+    parametros: dict[str, Valor] = {}
 
     @model_validator(mode="after")
-    def _en_ecuador(self) -> "PeticionEscenario":
+    def _acotar(self) -> "PeticionEscenario":
+        if len(self.escenario_id) > MAX_TEXTO:
+            raise ValueError(f"El identificador del escenario admite como máximo {MAX_TEXTO} caracteres.")
+        if len(self.parametros) > MAX_PARAMETROS:
+            raise ValueError(f"Se admiten como máximo {MAX_PARAMETROS} parámetros por petición.")
+        for k, v in self.parametros.items():
+            if len(k) > MAX_TEXTO or (isinstance(v, str) and len(v) > MAX_TEXTO):
+                raise ValueError(f"Los nombres y los valores de texto de los parámetros admiten como "
+                                 f"máximo {MAX_TEXTO} caracteres.")
         lat, lon = self.parametros.get("lat"), self.parametros.get("lon")
-        if lat is not None and lon is not None:
-            oeste, sur, este, norte = _ECUADOR
-            if not (sur <= lat <= norte and oeste <= lon <= este):
-                raise ValueError("El punto elegido queda fuera de Ecuador: elige una latitud y una "
-                                 "longitud dentro del país.")
+        if (lat is None) != (lon is None):
+            raise ValueError("Para colocar un punto en el mapa hacen falta lat y lon.")
+        if lat is not None:
+            if (isinstance(lat, (bool, str)) or isinstance(lon, (bool, str))):
+                raise ValueError("lat y lon deben ser números.")
+            if not en_ecuador(lat, lon):
+                raise ValueError(MENSAJE_FUERA_DE_ECUADOR)
         return self
 
 
@@ -66,6 +80,9 @@ class PeticionFotogramas(PeticionEscenario):
 
     @model_validator(mode="after")
     def _intervalo(self) -> "PeticionFotogramas":
+        for t in (self.inicio, self.fin):
+            if not ANIO_MIN <= t.year <= ANIO_MAX:
+                raise ValueError(f"Las fechas deben estar entre los años {ANIO_MIN} y {ANIO_MAX}.")
         if self.paso_min < 1:
             raise ValueError("El paso debe ser un número entero de minutos mayor o igual que 1.")
         if self.fin <= self.inicio:
@@ -74,8 +91,12 @@ class PeticionFotogramas(PeticionEscenario):
 
 
 def _canonica(cuerpo: BaseModel) -> str:
-    return json.dumps(cuerpo.model_dump(mode="json"), sort_keys=True, separators=(",", ":"),
-                      ensure_ascii=False)
+    """JSON canónico: claves ordenadas e instantes normalizados a UTC."""
+    datos = cuerpo.model_dump()
+    for k in ("inicio", "fin"):
+        if k in datos:
+            datos[k] = datos[k].astimezone(timezone.utc).isoformat()
+    return json.dumps(datos, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
 
 def _cache(request: Request) -> CacheLRU:
@@ -90,14 +111,9 @@ def _numero(inicio: datetime, fin: datetime, paso_min: int) -> int:
 
 
 @router.post("/simulacion/escenario", response_model=Escenario)
-def simular(cuerpo: PeticionEscenario, request: Request,
-            prov: ProveedorDatos = Depends(obtener)) -> Escenario:
-    cache, clave = _cache(request), "escenario:" + _canonica(cuerpo)
-    hit = cache.obtener(clave)
-    if hit is None:
-        hit = prov.simular(cuerpo.escenario_id, dict(cuerpo.parametros))
-        cache.guardar(clave, hit)
-    return hit
+def simular(cuerpo: PeticionEscenario, prov: ProveedorDatos = Depends(obtener)) -> Escenario:
+    # Sin caché: cada llamada refresca el registro de ids derivados del proveedor.
+    return prov.simular(cuerpo.escenario_id, dict(cuerpo.parametros))
 
 
 @router.post("/simulacion/fotogramas", response_model=list[CapaDto])
@@ -107,11 +123,14 @@ def fotogramas(cuerpo: PeticionFotogramas, request: Request,
     if n > MAX_FOTOGRAMAS:
         raise ValueError(f"Pide como máximo {MAX_FOTOGRAMAS} fotogramas por vez; esta petición "
                          f"pedía {n}. Amplía el paso o acorta el intervalo.")
-    cache, clave = _cache(request), "fotogramas:" + _canonica(cuerpo)
+    cache, clave = _cache(request), _canonica(cuerpo)
     hit = cache.obtener(clave)
     if hit is None:
-        capas = prov.fotogramas(cuerpo.escenario_id, dict(cuerpo.parametros), cuerpo.inicio,
-                                cuerpo.fin, cuerpo.paso_min)
+        try:
+            capas = prov.fotogramas(cuerpo.escenario_id, dict(cuerpo.parametros), cuerpo.inicio,
+                                    cuerpo.fin, cuerpo.paso_min)
+        except OverflowError:
+            raise ValueError("Las fechas quedan fuera del rango admitido.") from None
         hit = [_dto(c) for c in capas]
         cache.guardar(clave, hit)
     return hit

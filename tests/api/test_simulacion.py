@@ -1,3 +1,4 @@
+import gzip
 import time
 
 from fastapi.testclient import TestClient
@@ -87,4 +88,47 @@ def test_lote_de_120_tamano_y_tiempo(cliente_demo):
     r = cliente_demo.post("/api/simulacion/fotogramas",
                           json=_foto(fin="2026-03-01T01:59:00Z", paso_min=1))
     assert r.status_code == 200 and len(r.json()) == 120
-    print(f"120 fotogramas: {time.perf_counter() - t:.1f} s, {len(r.content)} bytes sin comprimir, {len(__import__("gzip").compress(r.content))} con gzip")
+    seg, comprimido = time.perf_counter() - t, len(gzip.compress(r.content))
+    print(f"120 fotogramas: {seg:.1f} s, {len(r.content)} bytes sin comprimir, {comprimido} con gzip")
+    assert seg < 5 and comprimido < 500_000
+
+
+def _capa_ok(c, sim_id):
+    esc = c.get(f"/api/escenarios/{sim_id}").json()
+    r = c.get(f"/api/escenarios/{sim_id}/capa",
+              params={"adquisicion": esc["adquisiciones"][0]["id"], "variable": esc["variables"][0],
+                      "polarizacion": (esc["polarizaciones"] or [None])[0]} )
+    return r.status_code
+
+
+def test_escenario_repetido_sigue_consultable_tras_muchas_simulaciones(cliente_demo):
+    cuerpo = {"escenario_id": ESC, "parametros": {"radio_km": 2.0}}
+    a = cliente_demo.post("/api/simulacion/escenario", json=cuerpo).json()
+    for i in range(40):
+        cliente_demo.post("/api/simulacion/escenario",
+                          json={"escenario_id": ESC, "parametros": {"radio_km": 0.5 + 0.1 * i}})
+        b = cliente_demo.post("/api/simulacion/escenario", json=cuerpo).json()
+        assert b["id"] == a["id"]
+    assert _capa_ok(cliente_demo, b["id"]) == 200
+
+
+def test_fecha_extrema_422(cliente_demo):
+    r = cliente_demo.post("/api/simulacion/fotogramas",
+                          json=_foto(inicio="0001-01-01T00:00:00Z", fin="0001-01-01T01:00:00Z"))
+    assert r.status_code == 422 and "1900" in r.json()["mensaje"]
+    r = cliente_demo.post("/api/simulacion/fotogramas",
+                          json=_foto(inicio="2026-03-01T00:00:00", fin=FIN))
+    assert r.status_code == 422 and "zona horaria" in r.json()["mensaje"]
+    assert cliente_demo.post("/api/simulacion/fotogramas", json=_foto(fin=INI)).status_code == 422
+
+
+def test_peticion_acotada_422(cliente_demo):
+    def pedir(par):
+        return cliente_demo.post("/api/simulacion/escenario", json={"escenario_id": ESC, "parametros": par})
+    assert pedir({f"p{i}": 1 for i in range(33)}).status_code == 422
+    assert pedir({"x" * 41: 1}).status_code == 422
+    assert pedir({"orbita": "x" * 41}).status_code == 422
+    assert pedir({"radio_km": True}).status_code == 422
+    assert pedir({"radio_km": [1]}).status_code == 422
+    r = pedir({"lat": -2.0})
+    assert r.status_code == 422 and "lat y lon" in r.json()["mensaje"]

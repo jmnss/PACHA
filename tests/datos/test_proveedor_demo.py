@@ -357,3 +357,11 @@ def test_concurrencia_sin_excepciones_ni_perdida_de_topes():
     assert len(p._cache) <= MAX_CACHE and len(p._simulados) <= MAX_CACHE and len(p._analisis_cache) <= MAX_CACHE
     # el mismo id siempre da la misma escena
     assert p.simular("ec_pedernales", {"deslizamiento_m": 0.5}).id == ids[0]
+
+
+def test_simular_fuera_de_ecuador_valueerror():
+    import pytest
+    from datos.geografia import en_ecuador
+    assert en_ecuador(-2.0, -79.9) and not en_ecuador(50.0, 0.0)
+    with pytest.raises(ValueError, match="fuera de Ecuador"):
+        ProveedorDemostracion().simular("ec_la_segua", {"lat": 50.0, "lon": 0.0})

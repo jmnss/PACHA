@@ -22,10 +22,11 @@ from datos.contrato import (
     PALETAS, Adquisicion, CampoVectorial, CapaRaster, Capacidades, Control, Escenario, Opcion, TipoCambio, Medicion, Metrica, Origen,
     ResultadoCambio, SerieTemporal, TablaResultado,
 )
+from datos.geografia import MENSAJE_FUERA_DE_ECUADOR, en_ecuador
 from datos.generador import ESCENARIOS_DEMO, PARAMETROS_DEMO, generar_escena, origen_demo
 from modelo import estaciones, nisar
 
-MAX_FOTOGRAMAS = 500
+MAX_FOTOGRAMAS = 120
 MAX_CACHE = 32  # escenas, escenarios simulados registrados y análisis en memoria
 ORBITAS = ("Ascendente", "Descendente")
 # Parámetros de la simulación que no son controles físicos del tipo de cambio.
@@ -228,6 +229,8 @@ def _validar(tipo: str, parametros: dict | None) -> dict:
         lat, lon = _numero(parametros["lat"], "lat"), _numero(parametros["lon"], "lon")
         if not (-90 <= lat <= 90 and -180 <= lon <= 180):
             raise ValueError("lat debe estar entre -90 y 90, y lon entre -180 y 180.")
+        if not en_ecuador(lat, lon):
+            raise ValueError(MENSAJE_FUERA_DE_ECUADOR)
         punto = (lat, lon)
     ajustes: dict = {}
     mostrados: dict = {}
@@ -511,7 +514,10 @@ class ProveedorDemostracion:
                 raise ValueError(f"{nombre} debe llevar zona horaria.")
         if isinstance(paso_min, bool) or not isinstance(paso_min, int) or paso_min <= 0:
             raise ValueError("El paso debe ser un número entero de minutos mayor que 0.")
-        ini, fi = inicio.astimezone(timezone.utc), fin.astimezone(timezone.utc)
+        try:
+            ini, fi = inicio.astimezone(timezone.utc), fin.astimezone(timezone.utc)
+        except OverflowError:
+            raise ValueError("Las fechas quedan fuera del rango admitido.") from None
         if fi < ini:
             raise ValueError("El fin debe ser igual o posterior al inicio.")
         n = int((fi - ini).total_seconds() // (paso_min * 60)) + 1
@@ -520,7 +526,10 @@ class ProveedorDemostracion:
         escena, esc = self._contexto(escenario_id, parametros)
         paneles = []
         for k in range(n):
-            t = ini + pd.Timedelta(minutes=paso_min * k)
+            try:
+                t = ini + pd.Timedelta(minutes=paso_min * k)
+            except (OverflowError, pd.errors.OutOfBoundsDatetime):
+                raise ValueError("Las fechas quedan fuera del rango admitido.") from None
             panel, _ = nisar.estado_modelo(escena, t.replace(tzinfo=None))
             paneles.append((t, panel))
         vmin = min(float(p.vmin) for _, p in paneles)

@@ -52,6 +52,8 @@ def _mensaje_validacion(e: dict) -> str:
     tipo = e["type"]
     if tipo == "missing":
         return f"Falta el campo {campo}."
+    if tipo == "timezone_aware":
+        return "Indica la fecha con zona horaria, por ejemplo 2026-05-01T00:00:00Z."
     if tipo == "value_error":
         return str(e["msg"]).removeprefix("Value error, ")
     return f"El valor de {campo} no es válido." if campo else "El valor no es válido."
