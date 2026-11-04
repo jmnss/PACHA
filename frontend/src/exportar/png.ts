@@ -1,39 +1,71 @@
-import type { Origen } from '../diseno/origen'
+import { esReal, type Origen } from '../diseno/origen'
 import { COLORES_EXPORTACION } from '../mapa/colores'
 
+/** Alto de una línea de texto de la franja (--fs-12) y relleno vertical total: una línea → 24 px,
+ * dos líneas → 36 px (alto = 12·n + 12). La franja se AÑADE bajo la imagen. */
+export const ALTO_LINEA = 12
 export const ALTO_FRANJA = 24
+const MARGEN = 8
 const TEXTO_DEMO = 'DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR'
+const FUENTE_RESPALDO = "'Public Sans', system-ui, sans-serif"
 
-/** Qué se dibuja en la franja: texto y colores. Función pura. Sintético → siempre la advertencia;
- * real → la fuente. */
-export function pixelesFranja(ancho: number, origen: Origen) {
+export type Medir = (texto: string) => number
+
+/** Parte el texto por palabras en las líneas necesarias para que quepa en `ancho` (sin aplastarlo). */
+export function partirTexto(texto: string, ancho: number, medir: Medir): string[] {
+  const lineas: string[] = []
+  let actual = ''
+  for (const palabra of texto.split(' ')) {
+    const prueba = actual ? `${actual} ${palabra}` : palabra
+    if (actual && medir(prueba) > ancho) {
+      lineas.push(actual)
+      actual = palabra
+    } else {
+      actual = prueba
+    }
+  }
+  lineas.push(actual)
+  return lineas
+}
+
+/** Qué se dibuja en la franja: líneas de texto, alto y colores (de --demo-bg, --demo-ink y --font-sans).
+ * Fail-safe: solo `tipo === 'real'` exacto lleva la fuente en lugar de la advertencia. Función pura
+ * salvo por la lectura de variables CSS. */
+export function pixelesFranja(ancho: number, origen: Origen | null | undefined, medir: Medir = (t) => t.length * 7) {
   const css = typeof document !== 'undefined' ? getComputedStyle(document.documentElement) : null
-  const color = (v: string, respaldo: string) => css?.getPropertyValue(v).trim() || respaldo
+  const leer = (v: string, respaldo: string) => css?.getPropertyValue(v).trim() || respaldo
+  const texto = esReal(origen) ? String(origen?.fuente || 'desconocida') : TEXTO_DEMO
+  const lineas = partirTexto(texto, Math.max(0, ancho - 2 * MARGEN), medir)
   return {
     ancho,
-    alto: ALTO_FRANJA,
-    fondo: color('--demo-bg', COLORES_EXPORTACION.demoBg),
-    tinta: color('--demo-ink', COLORES_EXPORTACION.demoInk),
-    texto: origen.tipo === 'sintetico' ? TEXTO_DEMO : origen.fuente,
+    alto: ALTO_LINEA * lineas.length + ALTO_LINEA,
+    fondo: leer('--demo-bg', COLORES_EXPORTACION.demoBg),
+    tinta: leer('--demo-ink', COLORES_EXPORTACION.demoInk),
+    fuente: `600 ${ALTO_LINEA}px ${leer('--font-sans', FUENTE_RESPALDO)}`,
+    lineas,
   }
 }
 
-/** Copia el lienzo y le añade bajo la imagen una franja de 24 px con el origen (el resultado mide
- * alto + 24). No hay parámetro para omitirla. */
-export function aPng(lienzo: HTMLCanvasElement, origen: Origen): Promise<Blob> {
+/** Copia el lienzo y le añade bajo la imagen una franja con el origen: 24 px si el texto cabe en una
+ * línea, 36 px si hace falta partirlo en dos (el resultado mide alto + franja). No hay parámetro para
+ * omitirla. */
+export function aPng(lienzo: HTMLCanvasElement, origen: Origen | null | undefined): Promise<Blob> {
   const salida = document.createElement('canvas')
-  salida.width = lienzo.width
-  salida.height = lienzo.height + ALTO_FRANJA
   const ctx = salida.getContext('2d')
   if (!ctx) return Promise.reject(new Error('No se pudo crear el lienzo de exportación.'))
-  const f = pixelesFranja(lienzo.width, origen)
+  // La fuente debe estar puesta antes de medir.
+  const base = pixelesFranja(lienzo.width, origen)
+  ctx.font = base.fuente
+  const f = pixelesFranja(lienzo.width, origen, (t) => ctx.measureText(t).width)
+  salida.width = lienzo.width
+  salida.height = lienzo.height + f.alto
   ctx.drawImage(lienzo, 0, 0)
   ctx.fillStyle = f.fondo
   ctx.fillRect(0, lienzo.height, f.ancho, f.alto)
   ctx.fillStyle = f.tinta
-  ctx.font = '600 12px "Public Sans", sans-serif'
+  ctx.font = f.fuente
   ctx.textBaseline = 'middle'
-  ctx.fillText(f.texto, 8, lienzo.height + f.alto / 2, Math.max(0, f.ancho - 16))
+  f.lineas.forEach((l, i) => ctx.fillText(l, MARGEN, lienzo.height + ALTO_LINEA + i * ALTO_LINEA))
   return new Promise((ok, mal) =>
     salida.toBlob((b) => (b ? ok(b) : mal(new Error('No se pudo generar el PNG.'))), 'image/png'),
   )

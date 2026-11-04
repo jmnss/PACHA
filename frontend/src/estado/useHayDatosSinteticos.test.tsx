@@ -34,6 +34,22 @@ describe('useHayDatosSinteticos', () => {
     expect(result.current).toBe(false)
   })
 
+  it.each(['synthetic', 'Sintetico', '', 'desconocido'])('un origen de tipo «%s» cuenta como sintético', async (tipo) => {
+    const { result, cliente } = montar(salud(false))
+    await waitFor(() => expect(result.current).toBe(false))
+    act(() => cliente.setQueryData(['capa', 'a'], { origen: origen(tipo) }))
+    expect(result.current).toBe(true)
+  })
+
+  it('un origen null o sin tipo cuenta como sintético', async () => {
+    const { result, cliente } = montar(salud(false))
+    await waitFor(() => expect(result.current).toBe(false))
+    act(() => cliente.setQueryData(['capa', 'a'], { origen: null }))
+    expect(result.current).toBe(true)
+    act(() => cliente.setQueryData(['capa', 'a'], { origen: {} }))
+    expect(result.current).toBe(true)
+  })
+
   it('true si salud dice hay_sinteticos', async () => {
     const { result } = montar(salud(true))
     await new Promise((r) => setTimeout(r, 20))

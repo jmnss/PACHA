@@ -3,15 +3,13 @@ import { useCallback, useSyncExternalStore } from 'react'
 import type { Salud } from '../api/consultas'
 import { useSalud } from '../api/consultas'
 
-/** ¿Algún valor (a poca profundidad) lleva `origen.tipo === 'sintetico'`? */
+/** ¿Algún valor (a poca profundidad) lleva un `origen` cuyo tipo no es exactamente 'real'? */
 export function contieneSintetico(valor: unknown, profundidad = 4): boolean {
   if (!valor || typeof valor !== 'object' || profundidad < 0) return false
   if (Array.isArray(valor)) return valor.some((v) => contieneSintetico(v, profundidad - 1))
   const o = valor as Record<string, unknown>
-  const origen = o.origen
-  if (origen && typeof origen === 'object' && (origen as { tipo?: unknown }).tipo === 'sintetico') {
-    return true
-  }
+  // Fail-safe: un `origen` presente que no sea exactamente `tipo: 'real'` cuenta como sintético.
+  if ('origen' in o && (o.origen as { tipo?: unknown } | null)?.tipo !== 'real') return true
   return Object.values(o).some((v) => contieneSintetico(v, profundidad - 1))
 }
 

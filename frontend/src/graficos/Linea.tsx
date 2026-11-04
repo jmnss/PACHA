@@ -1,6 +1,6 @@
 import { SelloOrigen } from '../diseno/SelloOrigen'
 import type { Origen } from '../diseno/origen'
-import { textoSello } from '../diseno/origen'
+import { esReal, textoSello } from '../diseno/origen'
 import { colocarEtiquetas, escalaRedonda } from './escala'
 import { esVerdad, fechaEje, parseInstante, rotulo } from './fechas'
 import { formatoNumero } from './formato'
@@ -31,7 +31,7 @@ const DIA = 86_400_000
 /** Gráfico de líneas rectas de 2 px (docs/diseno.md §8). Siempre lleva el sello de origen. */
 export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 }: Props) {
   const { ref, ancho } = useAncho()
-  const sint = origen.tipo === 'sintetico'
+  const sint = !esReal(origen)
   const datos = series.map((s, i) => ({
     ...s,
     verdad: esVerdad(s.nombre, sint),
