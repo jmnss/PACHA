@@ -19,3 +19,7 @@ export const COLORES_MAPA = {
   marcador: '#e5b93c',
   marcadorBorde: '#000000',
 } as const
+
+/** Respaldo de la franja de origen de las exportaciones PNG si no se pueden leer las variables CSS
+ * (--demo-bg, --demo-ink de diseno/tokens.css). Mismos valores que los tokens. */
+export const COLORES_EXPORTACION = { demoBg: '#2a1c14', demoInk: '#f0a868' } as const

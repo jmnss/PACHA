@@ -1,3 +1,4 @@
+import { aCsv, descargarCsv, type Celda } from '../exportar/csv'
 import { useMemo, useState } from 'react'
 import { formatearFecha } from '../tiempo/fechas'
 import { useCambio, useEscenarios, type Escenario, type ResultadoCambio } from '../api/consultas'
@@ -22,7 +23,7 @@ import { SelloOrigen } from './SelloOrigen'
 import { Tabla, type ColumnaTabla } from './Tabla'
 import { Tarjeta } from './Tarjeta'
 import { Termino } from './Termino'
-import { fechaCorta, textoSello } from './origen'
+import { fechaCorta } from './origen'
 import { CintaPasadas, type Temporada } from '../tiempo/CintaPasadas'
 import { ControlesReproductor, VELOCIDADES, type Velocidad } from '../tiempo/ControlesReproductor'
 import { indiceMasCercano, useInstante } from '../tiempo/useInstante'
@@ -35,20 +36,10 @@ const PESTANAS = [
 ]
 
 /** CSV de los escenarios con las líneas `# origen` y la advertencia (docs/diseno.md §8). */
-function descargarCsv(filas: Record<string, unknown>[], esc: Escenario | undefined) {
+function exportarCsv(filas: Record<string, unknown>[], esc: Escenario | undefined) {
   if (!esc) return
-  const lineas = [
-    `# origen: ${textoSello(esc.origen)}`,
-    '# DATOS DE DEMOSTRACIÓN: no son observaciones reales de NISAR',
-    'nombre,tipo_cambio,region,resolucion_m,pasadas',
-    ...filas.map((f) => [f.nombre, f.tipo_cambio, f.region, f.resolucion_m, f.pasadas].map((v) => `"${String(v)}"`).join(',')),
-  ]
-  const url = URL.createObjectURL(new Blob([lineas.join('\n')], { type: 'text/csv;charset=utf-8' }))
-  const a = document.createElement('a')
-  a.href = url
-  a.download = 'escenarios-demostracion.csv'
-  a.click()
-  URL.revokeObjectURL(url)
+  const columnas = ['nombre', 'tipo_cambio', 'region', 'resolucion_m', 'pasadas']
+  descargarCsv('escenarios-demostracion.csv', aCsv(filas as Record<string, Celda>[], columnas, esc.origen))
 }
 
 /** Tarjeta de la cinta de pasadas: el play recorre las pasadas; ±paso mueve el instante en minutos. */
@@ -201,7 +192,7 @@ export function Galeria() {
         titulo="Sistema de diseño"
         hallazgo={`En este escenario de demostración, «${esc?.nombre}» tiene ${adq?.length} pasadas de ${esc?.resolucion_m}\u00a0m de píxel.`}
         acciones={
-          <Boton variante="primario" icono={<IconoDescargar />} onClick={() => descargarCsv(filasEsc, esc)}>
+          <Boton variante="primario" icono={<IconoDescargar />} onClick={() => exportarCsv(filasEsc, esc)}>
             Descargar CSV
           </Boton>
         }
