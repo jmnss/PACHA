@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from 'react'
 import type { ReactNode } from 'react'
 import type { Rejilla } from '../api/rejilla'
 import { Leyenda } from '../diseno/Leyenda'
@@ -148,7 +148,7 @@ export function Comparador({
         <p className="comparador__aviso" role="alert">{par.error}</p>
       ) : (
         <div className="comparador__escenario" ref={escenario}
-          style={{ aspectRatio: `${antes.columnas} / ${antes.filas}` }}>
+          style={{ aspectRatio: `${antes.columnas} / ${antes.filas}`, '--razon': antes.columnas / antes.filas } as CSSProperties}>
           <canvas ref={lienzoAntes} className="comparador__lienzo" role="img" aria-label={etiquetaAntes} />
           <canvas ref={lienzoDespues} className="comparador__lienzo comparador__lienzo--despues" role="img" aria-label={etiquetaDespues}
             style={{ clipPath: `inset(0 0 0 ${pos}%)` }} />

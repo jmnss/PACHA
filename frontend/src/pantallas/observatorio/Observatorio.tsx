@@ -8,6 +8,9 @@ import { Pestanas } from '../../diseno/Pestanas'
 import { Selector } from '../../diseno/Selector'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
 import { hallazgo, parejaValida } from './derivados'
+import { leerCuadrante, leerPunto, textoCuadrante, textoPunto } from './medicion'
+import { Mediciones } from './Mediciones'
+import { NotasResultado, VistaAntesDespues } from './VistaAntesDespues'
 import { SIN_PAREJA } from './VistaMapa'
 import { PanelContexto } from './PanelContexto'
 import { PanelMetricas } from './PanelMetricas'
@@ -21,6 +24,9 @@ const ESQUEMA = {
   antes: { tipo: 'string', porDefecto: '' },
   despues: { tipo: 'string', porDefecto: '' },
   t: { tipo: 'string', porDefecto: '' },
+  pol: { tipo: 'string', porDefecto: '' },
+  p: { tipo: 'string', porDefecto: '' },
+  c: { tipo: 'string', porDefecto: '' },
   vista: { tipo: 'enum', valores: ['mapa', 'comparar', 'serie'], porDefecto: 'mapa' },
 } as const satisfies Esquema
 
@@ -39,7 +45,7 @@ export default function Observatorio() {
   const escenario = useEscenario(url.escenario)
   const escenarios = useEscenarios()
   const tipos = useTipos()
-  const irA = (id: string) => cambiar({ escenario: id, antes: '', despues: '', t: '' })
+  const irA = (id: string) => cambiar({ escenario: id, antes: '', despues: '', t: '', pol: '', p: '', c: '' })
 
   if (escenario.isPending) {
     return (
@@ -121,7 +127,9 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
   const [iAntes, iDespues] = parejaValida(ids.indexOf(url.antes), ids.indexOf(url.despues), ids.length)
   const antesId = ids[iAntes]
   const despuesId = ids[iDespues]
-  const polarizacion = esc.polarizaciones.includes('HH') ? 'HH' : esc.polarizaciones[0]
+  const polarizacion = esc.polarizaciones.includes(url.pol) ? url.pol : esc.polarizaciones.includes('HH') ? 'HH' : esc.polarizaciones[0]
+  const punto = leerPunto(url.p)
+  const cuadrante = leerCuadrante(url.c)
 
   const peticion = useMemo(
     () => (antesId && despuesId && antesId !== despuesId ? { antes: antesId, despues: despuesId, ...(polarizacion ? { polarizacion } : {}) } : undefined),
@@ -140,7 +148,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
   const texto = frase ?? (!peticion ? SIN_PAREJA : resultado.isError ? 'No se pudo calcular el cambio entre las dos pasadas elegidas.' : resultado.isPending ? 'Calculando el cambio entre las dos pasadas…' : PREGUNTA)
 
   const lista = escenarios.data ?? []
-  const irA = (id: string) => cambiar({ escenario: id, antes: '', despues: '', t: '' })
+  const irA = (id: string) => cambiar({ escenario: id, antes: '', despues: '', t: '', pol: '', p: '', c: '' })
   const alTipo = (tipo: string) => {
     const destino = lista.find((e) => e.tipo_cambio === tipo)
     if (destino) irA(destino.id)
@@ -162,16 +170,29 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
               onFijar={(cual, id) => cambiar({ [cual === 'antes' ? 'antes' : 'despues']: id })}
               onEscenarioNuevo={irA}
             />
-          ) : (
-            <Vacio
-              titulo={url.vista === 'comparar' ? 'Antes y después' : 'Serie'}
-              texto="Esta vista todavía no está disponible. Mientras tanto, usa la vista Mapa."
+          ) : url.vista === 'comparar' ? (
+            <VistaAntesDespues
+              esc={esc} resultado={resultado} antesId={antesId} despuesId={despuesId} polarizacion={polarizacion}
+              punto={punto} cuadrante={cuadrante}
+              onPunto={(q) => cambiar({ p: textoPunto(q), c: '' })}
+              onCuadrante={(q) => cambiar({ c: textoCuadrante(q), p: '' })}
+              onPareja={(antes, despues) => cambiar({ antes, despues })}
+              onPolarizacion={(pol) => cambiar({ pol })}
             />
+          ) : (
+            <Vacio titulo="Serie" texto="Esta vista todavía no está disponible. Mientras tanto, usa la vista Mapa." />
           )}
         </div>
         <aside className="observatorio__lado" aria-label="Métricas y contexto">
+          {url.vista === 'comparar' && peticion && (
+            <Mediciones
+              esc={esc} antesId={antesId} despuesId={despuesId} bbox={resultado.data?.antes.rejilla.bbox ?? esc.bbox}
+              punto={punto} cuadrante={cuadrante} onBorrar={() => cambiar({ p: '', c: '' })}
+            />
+          )}
           <PanelMetricas esc={esc} resultado={resultado} indice={tiempo.pasadaActiva} antesId={antesId} despuesId={despuesId} />
-          <PanelContexto consulta={contexto} ms={tiempo.ms} />
+          {url.vista === 'comparar' && <NotasResultado resultado={resultado} />}
+          {url.vista !== 'comparar' && <PanelContexto consulta={contexto} ms={tiempo.ms} />}
         </aside>
       </div>
     </>

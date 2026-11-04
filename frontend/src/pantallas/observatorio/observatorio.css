@@ -48,3 +48,26 @@
 .bloque-tiempo__motivos { margin: 0; display: flex; flex-direction: column; gap: var(--space-1); color: var(--secondary); font-size: var(--fs-12); line-height: var(--lh-16); }
 .vista-mapa__capa { margin: 0; color: var(--secondary); font-size: var(--fs-12); line-height: var(--lh-16); }
 .observatorio__salida { display: flex; flex-direction: column; gap: var(--space-3); align-items: flex-start; }
+
+/* Antes y después, mediciones y campo de flujo */
+.vista-comparar .tarjeta__cuerpo { display: flex; flex-direction: column; gap: var(--space-4); }
+.vista-comparar__selectores { display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--w-fecha-min), 1fr)); gap: var(--space-4); align-items: end; }
+.vista-comparar .pestanas { border-bottom: 1px solid var(--rule); overflow-x: auto; }
+.vista-comparar__error { margin: 0; color: var(--warning); font-size: var(--fs-13); }
+.vista-comparar__notas { margin: 0; padding-left: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); color: var(--secondary); font-size: var(--fs-13); line-height: var(--lh-20); }
+.medicion__coordenadas { margin: 0; font-size: var(--fs-14); }
+.medicion__etiqueta { display: block; color: var(--muted); font-size: var(--fs-12); }
+.medicion__nota { margin: 0; color: var(--muted); font-size: var(--fs-12); line-height: var(--lh-16); }
+.medicion__acciones { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.campo-flujo { display: flex; flex-direction: column; gap: var(--space-3); }
+.campo-flujo__lienzo { width: 100%; height: auto; display: block; background: var(--raised); border-radius: var(--radius-card); }
+.campo-flujo__flecha line { stroke: var(--accent); stroke-linecap: butt; }
+.campo-flujo__flecha polygon { fill: var(--accent); }
+.campo-flujo__ref { display: flex; align-items: center; gap: var(--space-3); }
+.campo-flujo__ref svg { height: var(--space-5); flex: none; }
+.campo-flujo__valor { color: var(--secondary); font-size: var(--fs-13); }
+.campo-flujo__nota { margin: 0; color: var(--muted); font-size: var(--fs-12); line-height: var(--lh-16); }
+/* La imagen no pasa de --h-comparador de alto (una escena cuadrada no ocupa más que la columna lateral); el resto de la tarjeta la acompaña. */
+.observatorio__principal > .vista-comparar { flex: 1; }
+.vista-comparar .comparador__escenario { width: min(100%, calc(var(--h-comparador) * var(--razon, 1))); margin-inline: auto; }
+@media (max-width: 699px) { .vista-comparar .comparador__escenario { width: 100%; } }
