@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { Boton } from '../diseno/Boton'
 import { Selector } from '../diseno/Selector'
 import { IconoAdelante, IconoAtras, IconoEvento, IconoFinal, IconoInicio, IconoPausa, IconoPlay } from '../diseno/iconos'
@@ -38,8 +39,9 @@ interface Props {
 /** Inicio, −paso, play/pausa, +paso, final, ir al evento, paso y velocidad. */
 export function ControlesReproductor(p: Props) {
   const off = p.deshabilitado !== undefined
+  const idMotivo = useId()
   return (
-    <div className="reproductor" role="group" aria-label="Controles de tiempo">
+    <div className="reproductor" role="group" aria-label="Controles de tiempo" aria-describedby={off ? idMotivo : undefined}>
       <div className="reproductor__botones">
         <Boton variante="terciario" aria-label="Ir al inicio" title="Ir al inicio" icono={<IconoInicio />} onClick={p.onInicio} disabled={off} />
         <Boton variante="terciario" aria-label="Retroceder un paso" title="Retroceder un paso" icono={<IconoAtras />} onClick={p.onAtras} disabled={off} />
@@ -59,7 +61,7 @@ export function ControlesReproductor(p: Props) {
           onChange={(e) => p.onVelocidad(e.target.value as Velocidad)}
           opciones={(Object.keys(VELOCIDADES) as Velocidad[]).map((k) => ({ valor: k, texto: VELOCIDADES[k].texto }))} />
       </div>
-      {off && <p className="reproductor__motivo" role="status">{p.deshabilitado}</p>}
+      {off && <p id={idMotivo} className="reproductor__motivo" role="status">{p.deshabilitado}</p>}
     </div>
   )
 }

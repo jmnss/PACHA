@@ -61,11 +61,16 @@ export function CintaPasadas({ adquisiciones, evento, instante, temporadas = [],
     emitir(t0 + Math.min(1, Math.max(0, (clientX - r.left) / r.width)) * span)
   }
   const alPulsar = (e: PointerEvent) => {
+    if (e.button !== 0) return
     arrastrando.current = true
     try { e.currentTarget.setPointerCapture?.(e.pointerId) } catch { /* sin captura */ }
     desdeX(e.clientX)
   }
-  const alMover = (e: PointerEvent) => { if (arrastrando.current) desdeX(e.clientX) }
+  const alMover = (e: PointerEvent) => {
+    if (!arrastrando.current) return
+    if (e.buttons === 0) { arrastrando.current = false; return }
+    desdeX(e.clientX)
+  }
   const alSoltar = () => { arrastrando.current = false }
 
   const irAPasada = (i: number) => {

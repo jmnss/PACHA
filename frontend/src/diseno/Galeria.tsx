@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useCambio, useEscenarios, type Escenario } from '../api/consultas'
 import { Barras } from '../graficos/Barras'
 import { Linea } from '../graficos/Linea'
@@ -23,6 +23,7 @@ import { Termino } from './Termino'
 import { fechaCorta, textoSello } from './origen'
 import { CintaPasadas, type Temporada } from '../tiempo/CintaPasadas'
 import { ControlesReproductor, VELOCIDADES, type Velocidad } from '../tiempo/ControlesReproductor'
+import { indiceMasCercano, useInstante } from '../tiempo/useInstante'
 import { usePlayback } from '../tiempo/usePlayback'
 
 const PESTANAS = [
@@ -53,30 +54,35 @@ function TarjetaCinta({ esc }: { esc: Escenario }) {
   const adq = esc.adquisiciones
   const [velocidad, setVelocidad] = useState<Velocidad>('normal')
   const [pasoMin, setPasoMin] = useState(17280)
-  const [instante, setInstante] = useState(adq[0]?.instante ?? '')
-  const pb = usePlayback({ total: adq.length, intervaloMs: VELOCIDADES[velocidad].ms })
-  const t0 = Date.parse(adq[0]?.instante ?? '')
-  const t1 = Date.parse(adq[adq.length - 1]?.instante ?? '')
+  const instantes = useMemo(() => adq.map((a) => a.instante), [adq])
+  const inst = useInstante(instantes)
+  const pb = usePlayback({ total: adq.length, intervaloMs: VELOCIDADES[velocidad].ms, onIndice: inst.irAIndice })
+  if (adq.length === 0) return null
+  const t0 = Date.parse(adq[0].instante)
+  const t1 = Date.parse(adq[adq.length - 1].instante)
   // Ejemplo ilustrativo: evento a media serie y una temporada lluviosa en el primer tercio.
-  const evento = adq[Math.floor(adq.length / 2)]?.instante
+  const iEvento = Math.floor(adq.length / 2)
   const temporadas: Temporada[] = adq.length > 1
     ? [{ inicio: adq[0].instante, fin: new Date(t0 + (t1 - t0) / 3).toISOString(), tipo: 'lluviosa' }]
     : []
-  const mover = (min: number) => setInstante(new Date(Math.min(t1, Math.max(t0, Date.parse(instante) + min * 60000))).toISOString())
-  const alIndice = (i: number) => { pb.ir(i); setInstante(adq[i].instante) }
-  useEffect(() => { if (adq[pb.indice]) setInstante(adq[pb.indice].instante) }, [pb.indice]) // eslint-disable-line react-hooks/exhaustive-deps
-  if (adq.length === 0) return null
+  const aIndice = (i: number) => { pb.pausa(); pb.ir(i); inst.irAIndice(i) }
+  const mover = (min: number) => {
+    pb.pausa()
+    const nuevo = Math.min(t1, Math.max(t0, inst.ms + min * 60000))
+    inst.irAInstante(nuevo)
+    pb.ir(indiceMasCercano(instantes.map((s) => Date.parse(s)), nuevo))
+  }
   return (
     <Tarjeta titulo="Cinta de pasadas y reproductor" pie={<SelloOrigen origen={esc.origen} />}>
       <div className="galeria-cinta">
-        <CintaPasadas adquisiciones={adq} evento={evento} instante={instante} temporadas={temporadas}
-          onCambio={(t, i) => { pb.pausa(); pb.ir(i); setInstante(t) }} />
+        <CintaPasadas adquisiciones={adq} evento={adq[iEvento].instante} instante={inst.instante} temporadas={temporadas}
+          onCambio={(t, i) => { pb.pausa(); pb.ir(i); inst.irAInstante(t) }} />
         <ControlesReproductor
           pasoMin={pasoMin} onPaso={setPasoMin} velocidad={velocidad} onVelocidad={setVelocidad}
           reproduciendo={pb.reproduciendo} onPlay={pb.play} onPausa={pb.pausa}
-          onInicio={() => alIndice(0)} onFinal={() => alIndice(adq.length - 1)}
+          onInicio={() => aIndice(0)} onFinal={() => aIndice(adq.length - 1)}
           onAtras={() => mover(-pasoMin)} onAdelante={() => mover(pasoMin)}
-          onEvento={() => alIndice(Math.floor(adq.length / 2))} />
+          onEvento={() => aIndice(iEvento)} />
       </div>
     </Tarjeta>
   )
