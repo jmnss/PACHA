@@ -39,12 +39,20 @@ else
   curl -sf "$BASE/api/salud" >/dev/null || { echo "El servidor no respondió en 60 s." >&2; exit 1; }
 fi
 
+echo "== Guard: colores solo en tokens.css y rampas.ts =="
+if grep -rnE '#[0-9a-fA-F]{3,8}\b|\brgba?\(' frontend/src --include='*.css' --include='*.ts' --include='*.tsx' \
+    | grep -vE 'frontend/src/diseno/(tokens\.css|rampas\.ts|tokens\.test\.ts)|frontend/src/api/tipos\.ts|\.test\.tsx?:'; then
+  echo "RESULT: hay colores fuera de tokens.css/rampas.ts (arriba)." >&2; exit 1
+fi
+
 echo "== Lint (--app frontend/src) =="
 node "$SKILL/lint.mjs" --app frontend/src
 LINT=$?
 
 echo "== Inspección a 1440, 768 y 390 px: $BASE$RUTA =="
-# palette-terracotta: --demo-ink (#f0a868) lo fija docs/diseno.md §4 para la banda de demostración.
+# palette-terracotta: --demo-ink (#f0a868) lo fija docs/diseno.md §4 para la banda de demostración, y el
+# inspector lo confunde con un acento terracota. Como el permiso vale para toda la pantalla, el guard de
+# arriba (grep) garantiza que ningún color suelto se cuele: los hex solo viven en tokens.css y rampas.ts.
 node "$SKILL/inspect.mjs" "$BASE$RUTA" --app --widths 1440,768,390 --allow palette-terracotta --out "$SALIDA"
 INSP=$?
 

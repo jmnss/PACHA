@@ -14,12 +14,30 @@ import { SelloOrigen } from './SelloOrigen'
 import { Tabla, type ColumnaTabla } from './Tabla'
 import { Tarjeta } from './Tarjeta'
 import { Termino } from './Termino'
+import { fechaCorta, textoSello } from './origen'
 
 const PESTANAS = [
   { id: 'mapa', etiqueta: 'Mapa' },
   { id: 'antes', etiqueta: 'Antes/después' },
   { id: 'serie', etiqueta: 'Serie' },
 ]
+
+/** CSV de los escenarios con las líneas `# origen` y la advertencia (docs/diseno.md §8). */
+function descargarCsv(filas: Record<string, unknown>[], esc: Escenario | undefined) {
+  if (!esc) return
+  const lineas = [
+    `# origen: ${textoSello(esc.origen)}`,
+    '# DATOS DE DEMOSTRACIÓN: no son observaciones reales de NISAR',
+    'nombre,tipo_cambio,region,resolucion_m,pasadas',
+    ...filas.map((f) => [f.nombre, f.tipo_cambio, f.region, f.resolucion_m, f.pasadas].map((v) => `"${String(v)}"`).join(',')),
+  ]
+  const url = URL.createObjectURL(new Blob([lineas.join('\n')], { type: 'text/csv;charset=utf-8' }))
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'escenarios-demostracion.csv'
+  a.click()
+  URL.revokeObjectURL(url)
+}
 
 /** Galería de todos los componentes con datos reales de la API (/_sistema). */
 export function Galeria() {
@@ -31,6 +49,7 @@ export function Galeria() {
   const [nombre, setNombre] = useState('')
 
   const lista = escenarios.data ?? []
+  const vacio = escenarios.isSuccess && lista.length === 0
   const esc: Escenario | undefined = lista.find((e) => e.id === id) ?? lista[0]
   const adq = esc?.adquisiciones
   const peticion = adq && adq.length > 1 ? { antes: adq[0].id, despues: adq[adq.length - 1].id } : undefined
@@ -49,6 +68,15 @@ export function Galeria() {
       <>
         <CabeceraPantalla titulo="Sistema de diseño" />
         <ErrorBloque mensaje="No se pudieron cargar los escenarios." onReintentar={() => void escenarios.refetch()} />
+      </>
+    )
+  }
+
+  if (vacio) {
+    return (
+      <>
+        <CabeceraPantalla titulo="Sistema de diseño" />
+        <Vacio titulo="Sin escenarios" texto="La API no devolvió ningún escenario para mostrar en la galería." />
       </>
     )
   }
@@ -82,9 +110,13 @@ export function Galeria() {
     <>
       <CabeceraPantalla
         titulo="Sistema de diseño"
-        hallazgo={`En este escenario de demostración, «${esc?.nombre}» tiene ${adq?.length} pasadas de ${esc?.resolucion_m} m de píxel.`}
-        acciones={<Boton variante="primario" icono={<IconoDescargar />}>Descargar CSV</Boton>}
-        frescura={esc ? `Generado ${esc.origen.fecha_generacion.slice(0, 10)}` : undefined}
+        hallazgo={`En este escenario de demostración, «${esc?.nombre}» tiene ${adq?.length} pasadas de ${esc?.resolucion_m}\u00a0m de píxel.`}
+        acciones={
+          <Boton variante="primario" icono={<IconoDescargar />} onClick={() => descargarCsv(filasEsc, esc)}>
+            Descargar CSV
+          </Boton>
+        }
+        frescura={esc ? `Generado ${fechaCorta(esc.origen.fecha_generacion)}` : undefined}
       />
 
       {cambio.data ? (
@@ -126,11 +158,11 @@ export function Galeria() {
           <div className="galeria-pila">
             <Pestanas etiqueta="Vistas del observatorio" pestanas={PESTANAS} activa={pestana} onCambiar={setPestana} />
             <div className="galeria-fila">
-              <Boton variante="primario">Primario</Boton>
               <Boton variante="secundario">Secundario</Boton>
               <Boton variante="terciario">Terciario</Boton>
               <Boton variante="secundario" disabled>Desactivado</Boton>
             </div>
+            <p className="galeria-texto">El botón primario de la pantalla es el de la cabecera: solo hay uno.</p>
             <p className="galeria-texto">
               El radar mide la retrodispersión, llamada{' '}
               <Termino nombre="σ⁰" explicacion="Cuánta señal vuelve al satélite desde cada punto del suelo. El agua lisa devuelve poca; las copas de los árboles, mucha." />

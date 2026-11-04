@@ -1,6 +1,6 @@
 {
  "url": "http://localhost:8000/_sistema",
- "at": "2026-11-04T08:11:13.212Z",
+ "at": "2026-11-04T08:17:22.216Z",
  "allow": [
   "palette-terracotta"
  ],
@@ -12,7 +12,7 @@
    "screens": 2,
    "filled": [
     0.59,
-    0.67
+    0.65
    ],
    "motion": {
     "elements": 0,
@@ -28,9 +28,9 @@
      "h": 900
     },
     "page": {
-     "height": 1756,
+     "height": 1776,
      "screens": 2,
-     "words": 368,
+     "words": 381,
      "img": 0,
      "video": 0,
      "canvas": 0,
@@ -125,7 +125,7 @@
      "microLabelShare": 0,
      "microSamples": [],
      "upperShare": 0.03,
-     "centerShare": 0.06,
+     "centerShare": 0.05,
      "smallText": 12
     },
     "eyebrows": [],
@@ -152,15 +152,15 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.46
-      },
-      {
-       "color": "#ffffff",
-       "share": 0.26
+       "share": 0.45
       },
       {
        "color": "#b4b4b8",
-       "share": 0.24
+       "share": 0.26
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.25
       },
       {
        "color": "#f0a868",
@@ -183,7 +183,7 @@
      "lowContrast": []
     },
     "buttons": {
-     "count": 8,
+     "count": 7,
      "inHero": 1,
      "radius": "pill",
      "height": 34,
@@ -239,7 +239,7 @@
      "w": 1440,
      "h": 900
     },
-    "pageH": 1756,
+    "pageH": 1776,
     "margins": {
      "left": 103,
      "right": 53
@@ -272,8 +272,8 @@
       "sel": "div.galeria-rejilla",
       "tag": "div",
       "top": 761,
-      "height": 837,
-      "words": 178,
+      "height": 857,
+      "words": 191,
       "media": 0,
       "middle": 66,
       "heading": {
@@ -445,9 +445,9 @@
      "h": 1024
     },
     "page": {
-     "height": 2767,
+     "height": 2787,
      "screens": 2.7,
-     "words": 368,
+     "words": 381,
      "img": 0,
      "video": 0,
      "canvas": 0,
@@ -585,7 +585,7 @@
      "microLabelShare": 0,
      "microSamples": [],
      "upperShare": 0.03,
-     "centerShare": 0.06,
+     "centerShare": 0.05,
      "smallText": 12
     },
     "eyebrows": [
@@ -623,15 +623,15 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.46
-      },
-      {
-       "color": "#ffffff",
-       "share": 0.26
+       "share": 0.45
       },
       {
        "color": "#b4b4b8",
-       "share": 0.24
+       "share": 0.26
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.25
       },
       {
        "color": "#f0a868",
@@ -654,7 +654,7 @@
      "lowContrast": []
     },
     "buttons": {
-     "count": 8,
+     "count": 7,
      "inHero": 1,
      "radius": "pill",
      "height": 34,
@@ -717,7 +717,7 @@
      "w": 768,
      "h": 1024
     },
-    "pageH": 2767,
+    "pageH": 2787,
     "margins": {
      "left": 82,
      "right": 53
@@ -796,8 +796,8 @@
       "sel": "div.galeria-col",
       "tag": "div",
       "top": 859,
-      "height": 837,
-      "words": 97,
+      "height": 857,
+      "words": 110,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -818,7 +818,7 @@
      {
       "sel": "div.galeria-col",
       "tag": "div",
-      "top": 1720,
+      "top": 1740,
       "height": 817,
       "words": 81,
       "media": 0,
@@ -841,7 +841,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 2561,
+      "top": 2581,
       "height": 174,
       "words": 12,
       "media": 0,
@@ -991,7 +991,7 @@
     0.73,
     0.53,
     0.93,
-    0.93,
+    0.87,
     0.87
    ],
    "motion": {
@@ -1008,9 +1008,9 @@
      "h": 844
     },
     "page": {
-     "height": 3522,
+     "height": 3570,
      "screens": 4.2,
-     "words": 368,
+     "words": 381,
      "img": 0,
      "video": 0,
      "canvas": 0,
@@ -1150,7 +1150,7 @@
      "microLabelShare": 0,
      "microSamples": [],
      "upperShare": 0.03,
-     "centerShare": 0.06,
+     "centerShare": 0.05,
      "smallText": 12
     },
     "eyebrows": [],
@@ -1177,15 +1177,15 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.45
-      },
-      {
-       "color": "#ffffff",
-       "share": 0.27
+       "share": 0.44
       },
       {
        "color": "#b4b4b8",
-       "share": 0.24
+       "share": 0.27
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.26
       },
       {
        "color": "#f0a868",
@@ -1208,7 +1208,7 @@
      "lowContrast": []
     },
     "buttons": {
-     "count": 8,
+     "count": 7,
      "inHero": 1,
      "radius": "pill",
      "height": 44,
@@ -1264,7 +1264,7 @@
      "w": 390,
      "h": 844
     },
-    "pageH": 3522,
+    "pageH": 3570,
     "margins": {
      "left": 16,
      "right": 37
@@ -1343,8 +1343,8 @@
       "sel": "div.galeria-col",
       "tag": "div",
       "top": 1268,
-      "height": 965,
-      "words": 78,
+      "height": 1013,
+      "words": 91,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -1365,7 +1365,7 @@
      {
       "sel": "div.galeria-col",
       "tag": "div",
-      "top": 2257,
+      "top": 2305,
       "height": 931,
       "words": 81,
       "media": 0,
@@ -1388,7 +1388,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 3204,
+      "top": 3252,
       "height": 246,
       "words": 12,
       "media": 0,
@@ -1433,14 +1433,14 @@
     "edges": [
      {
       "x": 37,
-      "n": 6
+      "n": 7
      },
      {
       "x": 16,
       "n": 2
      }
     ],
-    "leftBlocks": 8,
+    "leftBlocks": 9,
     "bodySize": 12,
     "stage": false,
     "explains": false,
@@ -1524,7 +1524,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.34,
+     "under13": 0.33,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [

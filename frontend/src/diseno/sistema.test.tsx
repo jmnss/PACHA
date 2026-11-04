@@ -49,6 +49,27 @@ describe('BandaDemostracion', () => {
     expect(within(panel).getByText(/datos\/generador\.py v1/)).toBeInTheDocument()
   })
 
+  it('Escape cierra el panel y devuelve el foco al botón; el foco entra al abrir', async () => {
+    simularApi(true)
+    envolver(<BandaDemostracion />)
+    const boton = await screen.findByRole('button', { name: 'Qué significa' })
+    fireEvent.click(boton)
+    const panel = await screen.findByRole('dialog')
+    expect(panel).toHaveFocus()
+    fireEvent.keyDown(panel, { key: 'Escape' })
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(boton).toHaveFocus()
+  })
+
+  it('un clic fuera cierra el panel', async () => {
+    simularApi(true)
+    envolver(<BandaDemostracion />)
+    fireEvent.click(await screen.findByRole('button', { name: 'Qué significa' }))
+    await screen.findByRole('dialog')
+    fireEvent.mouseDown(document.body)
+    expect(screen.queryByRole('dialog')).toBeNull()
+  })
+
   it('no aparece si todo es real', async () => {
     simularApi(false)
     const { container } = envolver(<BandaDemostracion />)
@@ -78,6 +99,7 @@ describe('Pestanas', () => {
     expect(marcadas).toHaveLength(1)
     expect(marcadas[0]).toHaveTextContent('B')
     expect(document.querySelectorAll('.pestanas__pestana--activa')).toHaveLength(1)
+    expect(document.querySelectorAll('.pestanas__linea')).toHaveLength(1)
   })
   it('las flechas cambian de pestaña', () => {
     const cambiar = vi.fn()

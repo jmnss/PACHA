@@ -30,8 +30,16 @@ export function Estructura() {
           {DESTINOS.map(({ ruta, etiqueta, etiquetaCorta, Icono, fin }) => (
             <li key={ruta}>
               <NavLink to={ruta} end={fin} className="riel__destino" aria-label={etiqueta} title={etiqueta}>
-                <Icono />
-                <span className="riel__etiqueta">{etiquetaCorta}</span>
+                {({ isActive }) => (
+                  <>
+                    <Icono />
+                    <span className="riel__etiqueta">
+                      {etiquetaCorta}
+                      {isActive && <span className="riel__linea riel__linea--etiqueta" aria-hidden="true" />}
+                    </span>
+                    {isActive && <span className="riel__linea riel__linea--riel" aria-hidden="true" />}
+                  </>
+                )}
               </NavLink>
             </li>
           ))}

@@ -45,7 +45,10 @@ export function Pestanas({ pestanas, activa, onCambiar, etiqueta }: Props) {
             onClick={() => onCambiar(p.id)}
             onKeyDown={(e) => alTeclear(e, i)}
           >
-            <span className="pestanas__etiqueta">{p.etiqueta}</span>
+            <span className="pestanas__etiqueta">
+              {p.etiqueta}
+              {esActiva && <span className="pestanas__linea" aria-hidden="true" />}
+            </span>
           </button>
         )
       })}

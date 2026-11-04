@@ -53,6 +53,10 @@
   /* solo lo que flota */
   --shadow-float: 0 12px 28px rgba(0, 0, 0, 0.2);
 
+  /* escala tipográfica (docs/diseno.md §5): tamaños y interlineados */
+  --fs-12: 12px; --fs-13: 13px; --fs-14: 14px; --fs-16: 16px; --fs-20: 20px; --fs-22: 22px; --fs-26: 26px;
+  --lh-16: 16px; --lh-20: 20px; --lh-24: 24px; --lh-28: 28px; --lh-32: 32px;
+
   /* tipografía (docs/diseno.md §5) */
   --font-sans: 'Public Sans', system-ui, sans-serif;
   --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
@@ -92,6 +96,12 @@ body {
   --size-thumb: 14px;      /* tirador del deslizador */
   --w-switch: 28px;  --h-switch: 16px;
   --size-thumb-switch: 10px;
+  --size-2: 2px;           /* pista del deslizador, desfases finos */
+  --offset-subrayado: 3px;
+  --w-flotante: 420px;     /* panel flotante de la banda */
+  --w-termino: 320px;      /* panel de un término */
+  --w-kpi-min: 160px;      /* ancho mínimo de una cifra de la franja */
+  --w-icono-min: 120px;    /* celda de la galería de iconos */
   --z-flotante: 20;
   --z-banda: 30;
 }
