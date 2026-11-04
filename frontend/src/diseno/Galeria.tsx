@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useCambio, useEscenarios, type Escenario } from '../api/consultas'
+import { Barras } from '../graficos/Barras'
+import { Linea } from '../graficos/Linea'
 import { Boton } from './Boton'
 import { Campo } from './Campo'
 import { CabeceraPantalla } from './CabeceraPantalla'
@@ -107,6 +109,11 @@ export function Galeria() {
     Object.fromEntries((tablaCambio?.columnas ?? []).map((c, i) => [c, f[i]])),
   )
 
+  const serieCambio = cambio.data?.series[0]
+  const porSerie = new Map<string, [string, number][]>()
+  for (const [t, v, nombre] of serieCambio?.puntos ?? []) porSerie.set(nombre, [...(porSerie.get(nombre) ?? []), [t, v]])
+  const barras = [...porSerie.entries()].map(([etiqueta, p]) => ({ etiqueta, valor: p[p.length - 1][1] }))
+
   return (
     <>
       <CabeceraPantalla
@@ -147,6 +154,23 @@ export function Galeria() {
             leyenda={[['Nueva inundación', ''], ['Pérdida de inundación', ''], ['Inundación persistente', '']]} />
         </div>
       </Tarjeta>
+      {serieCambio && (
+        <Tarjeta titulo={serieCambio.titulo}>
+          <Linea
+            titulo={serieCambio.titulo}
+            unidad={serieCambio.unidad}
+            origen={serieCambio.origen}
+            series={[...porSerie.entries()].map(([nombre, puntos]) => ({ nombre, puntos }))}
+            marcas={adq && adq.length > 1 ? [{ instante: adq[adq.length - 1].id, etiqueta: 'después', tipo: 'despues' }, { instante: adq[0].id, etiqueta: 'antes', tipo: 'antes' }] : []}
+          />
+          <Barras
+            titulo={`Último valor de ${serieCambio.titulo}`}
+            unidad={serieCambio.unidad}
+            origen={serieCambio.origen}
+            datos={barras}
+          />
+        </Tarjeta>
+      )}
       {tablaCambio && (
         <Tarjeta titulo={tablaCambio.titulo} pie={<SelloOrigen origen={tablaCambio.origen} />}>
           <Tabla titulo={tablaCambio.titulo} columnas={columnasCambio} filas={filasCambio} />

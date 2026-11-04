@@ -3,10 +3,13 @@ import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 // Ningún valor suelto en componentes.css: todo sale de tokens.css (docs/diseno.md §6).
-const css = readFileSync(resolve(__dirname, 'componentes.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '')
+const css = ['componentes.css', '../graficos/graficos.css']
+  .map((f) => readFileSync(resolve(__dirname, f), 'utf8'))
+  .join('\n')
+  .replace(/\/\*[\s\S]*?\*\//g, '')
 const lineas = css.split('\n')
 
-describe('componentes.css sin valores sueltos', () => {
+describe('componentes.css y graficos.css sin valores sueltos', () => {
   it('no contiene colores hex, rgb() ni rgba()', () => {
     expect(css).not.toMatch(/#[0-9a-fA-F]{3,8}\b/)
     expect(css).not.toMatch(/\brgba?\(/)

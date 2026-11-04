@@ -26,6 +26,8 @@
   --chart-1: #e5b93c;    /* serie principal: lo detectado, hoy, el periodo actual */
   --chart-2: #f2f2f3;    /* referencia: la verdad sintética del modelo (punteada) */
   --chart-3: #8a8c92;    /* comparación o lo posterior al cursor */
+  --chart-linea: 2px;    /* grosor de las líneas de datos */
+  --chart-punto: 5px;    /* punto de la cabecera de leyenda */
 
   /* origen de los datos (banda y sellos de demostración) */
   --demo-bg:  #2a1c14;

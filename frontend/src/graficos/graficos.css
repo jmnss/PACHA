@@ -1,0 +1,21 @@
+/* Gráficos (docs/diseno.md §8). Solo tokens. */
+.grafico { margin: 0; display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.grafico__cabecera { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+.grafico__unidad { font-size: var(--fs-12); line-height: var(--lh-16); color: var(--muted); }
+.grafico__leyenda { display: flex; gap: var(--space-4); flex-wrap: wrap; list-style: none; margin: 0; padding: 0; font-size: var(--fs-12); line-height: var(--lh-16); color: var(--secondary); }
+.grafico__leyenda li { display: inline-flex; align-items: center; gap: var(--space-2); }
+.grafico__punto { width: var(--chart-punto); height: var(--chart-punto); border-radius: 50%; display: inline-block; }
+.grafico__lienzo { width: 100%; min-width: 0; }
+.grafico__svg { display: block; max-width: 100%; overflow: visible; }
+.grafico__rejilla { stroke: var(--grid); stroke-width: 1px; }
+.grafico__cero { stroke: var(--chart-3); stroke-width: 1px; }
+.grafico__eje { fill: var(--muted); font-size: var(--fs-12); font-variant-numeric: tabular-nums; }
+.grafico__eje--valor { fill: var(--secondary); }
+.grafico__vacio { fill: var(--muted); font-size: var(--fs-12); }
+.grafico__linea { stroke-width: var(--chart-linea); stroke-linejoin: miter; stroke-linecap: butt; }
+.grafico__barra { fill: var(--chart-1); }
+.grafico__marca line { stroke-width: 1px; stroke: var(--muted); }
+.grafico__marca text { font-size: var(--fs-12); fill: var(--muted); }
+.grafico__marca--evento line { stroke: var(--text); }
+.grafico__marca--evento text { fill: var(--text); }
+.grafico__pie { margin: 0; }

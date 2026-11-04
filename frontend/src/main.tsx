@@ -8,6 +8,7 @@ import '@fontsource/public-sans/600.css'
 import '@fontsource/public-sans/700.css'
 import './diseno/tokens.css'
 import './diseno/componentes.css'
+import './graficos/graficos.css'
 import App from './App.tsx'
 import { crearQueryClient } from './api/consultas'
 
