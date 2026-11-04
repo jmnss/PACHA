@@ -57,7 +57,7 @@
 
   /* escala tipográfica (docs/diseno.md §5): tamaños y interlineados */
   --fs-12: 12px; --fs-13: 13px; --fs-14: 14px; --fs-16: 16px; --fs-20: 20px; --fs-22: 22px; --fs-26: 26px;
-  --lh-16: 16px; --lh-20: 20px; --lh-24: 24px; --lh-28: 28px; --lh-32: 32px;
+  --lh-16: 16px; --lh-20: 20px; --lh-24: 24px; --lh-26: 26px; --lh-28: 28px; --lh-32: 32px;
 
   /* tipografía (docs/diseno.md §5) */
   --font-sans: 'Public Sans', system-ui, sans-serif;

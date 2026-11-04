@@ -7,6 +7,7 @@ import { LimiteError } from './diseno/LimiteError'
 
 // El Observatorio arrastra MapLibre (~1 MB): se carga solo al entrar en la ruta.
 const Galeria = lazy(() => import('./diseno/Galeria').then((m) => ({ default: m.Galeria })))
+const Historias = lazy(() => import('./pantallas/historias/Historias'))
 const Observatorio = lazy(() => import('./pantallas/observatorio/Observatorio'))
 
 export default function App() {
@@ -15,7 +16,13 @@ export default function App() {
       <Route element={<Estructura />}>
         <Route
           index
-          element={<CabeceraPantalla titulo="Historias" hallazgo="Qué ve el radar cuando el agua sube o el bosque arde, y por qué." />}
+          element={
+            <LimiteError>
+              <Suspense fallback={<Cargando texto="Cargando…" />}>
+                <Historias />
+              </Suspense>
+            </LimiteError>
+          }
         />
         <Route
           path="observatorio"

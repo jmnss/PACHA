@@ -1,0 +1,34 @@
+/* Historias: pantalla de lectura (docs/diseno.md §5). Solo tokens. */
+.historias__indice { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: var(--gap); }
+.historias__enlace {
+  display: flex; flex-direction: column; gap: var(--space-1); padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border); color: var(--secondary); text-decoration: none; max-width: var(--w-lectura);
+}
+.historias__enlace:hover { color: var(--text); }
+.historias__enlace:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+.historias__enlace--activa { border-bottom-color: var(--accent); color: var(--text); }
+.historias__enlace-titulo { font-size: var(--fs-16); line-height: var(--lh-24); font-weight: 600; color: var(--text); }
+.historias__enlace-resumen { font-size: var(--fs-13); line-height: var(--lh-20); }
+
+.historia { display: flex; flex-direction: column; gap: var(--space-7); }
+/* Escritorio: lectura (partes 1 y 2) a la izquierda y el comparador a la derecha, a la vista desde el primer pantallazo.
+   Columnas: 68ch + hueco de 48 px + resto del lienzo; la fila de abajo reparte hipótesis y aplicaciones en las mismas columnas. */
+@media (min-width: 1100px) {
+  .historia { display: grid; grid-template-columns: minmax(0, var(--w-lectura)) minmax(0, 1fr); column-gap: var(--space-7); row-gap: var(--space-7); align-items: start; }
+}
+.historia__titulo { margin: 0; font-size: var(--fs-26); line-height: var(--lh-32); font-weight: 600; grid-column: 1 / -1; }
+.historia__lectura { display: flex; flex-direction: column; gap: var(--space-7); min-width: 0; }
+.historia__parte { display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
+.historia__encabezado { margin: 0; font-size: var(--fs-20); line-height: var(--lh-28); font-weight: 600; }
+.historia__parrafo { margin: 0; max-width: var(--w-lectura); font-size: var(--fs-16); line-height: var(--lh-26); color: var(--text); }
+.historia__parte--ancha .historia__texto > .historia__parrafo { max-width: none; }
+.historia__texto { display: flex; flex-direction: column; gap: var(--space-4); }
+.historia__hallazgo { margin: 0; max-width: var(--w-lectura); font-size: var(--fs-16); line-height: var(--lh-26); color: var(--secondary); }
+.historia__nota { margin: 0; color: var(--muted); font-size: var(--fs-12); line-height: var(--lh-16); max-width: var(--w-lectura); }
+.historia__comparador .tarjeta__cuerpo { display: flex; flex-direction: column; gap: var(--space-4); }
+.historia__comparador .pestanas { border-bottom: 1px solid var(--rule); overflow-x: auto; }
+.historia__comparador .comparador__escenario { width: min(100%, calc(var(--h-comparador) * var(--razon, 1))); margin-inline: auto; }
+@media (max-width: 699px) { .historia__comparador .comparador__escenario { width: 100%; } }
+.historia__notas { max-width: var(--w-lectura); }
+.historia .boton { text-decoration: none; display: inline-flex; align-items: center; }
+.historias__creditos { color: var(--muted); font-size: var(--fs-12); line-height: var(--lh-16); max-width: var(--w-lectura); }
