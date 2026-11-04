@@ -10,7 +10,9 @@ from datetime import datetime
 from typing import Literal, Protocol, runtime_checkable
 
 import numpy as np
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+import math
+
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, model_validator
 
 BBox = tuple[float, float, float, float]  # (oeste, sur, este, norte) en WGS84
 Paleta = Literal["gris", "secuencial", "divergente", "ciclico", "categorias"]
@@ -44,13 +46,13 @@ class Origen(BaseModel):
     generador: str | None = None
     version: str | None = None
     semilla: int | None = None
-    fecha_generacion: datetime
+    fecha_generacion: AwareDatetime  # con zona horaria; naive se rechaza
     notas: str | None = None
 
 
 class Adquisicion(BaseModel):
     id: str
-    instante: datetime  # UTC
+    instante: AwareDatetime  # con zona horaria (UTC)
     direccion_orbital: str | None = None
     polarizaciones: list[str]
 
@@ -89,7 +91,7 @@ class CapaRaster:
     variable: str
     polarizacion: str | None
     unidad: str
-    paleta: str
+    paleta: Paleta
     vmin: float
     vmax: float
     leyenda: list[tuple[str, str]] | None
@@ -103,9 +105,13 @@ class CapaRaster:
             raise ValueError(f"CapaRaster.datos debe ser 2D, recibió {arr.ndim}D")
         if arr.size == 0:
             raise ValueError("CapaRaster.datos no puede estar vacío")
-        object.__setattr__(self, "datos", arr.astype(np.float32, copy=False))
+        copia = np.array(arr, dtype=np.float32, copy=True)
+        copia.setflags(write=False)
+        object.__setattr__(self, "datos", copia)
         if self.paleta not in PALETAS:
             raise ValueError(f"paleta inválida: {self.paleta!r}; válidas: {PALETAS}")
+        if not (math.isfinite(self.vmin) and math.isfinite(self.vmax)):
+            raise ValueError(f"vmin ({self.vmin}) y vmax ({self.vmax}) deben ser finitos")
         if not self.vmin <= self.vmax:
             raise ValueError(f"vmin ({self.vmin}) no puede superar vmax ({self.vmax})")
         validar_bbox(self.bbox)
@@ -147,13 +153,19 @@ class Medicion(BaseModel):
     cuadrante: tuple[int, int, int, int] | None = None
     punto: tuple[int, int] | None = None
     metricas: list[Metrica]
-    tabla: list[dict[str, str | float]]
+    tabla: list[dict[str, str | float | None]]
     origen: Origen
 
     @model_validator(mode="after")
     def _uno_solo(self) -> "Medicion":
         if (self.cuadrante is None) == (self.punto is None):
             raise ValueError("Medicion exige exactamente uno de `cuadrante` o `punto`")
+        if self.cuadrante is not None:
+            f0, f1, c0, c1 = self.cuadrante
+            if not (0 <= f0 < f1 and 0 <= c0 < c1):
+                raise ValueError(f"cuadrante inválido {self.cuadrante}: se exige 0<=fila0<fila1 y 0<=col0<col1")
+        if self.punto is not None and min(self.punto) < 0:
+            raise ValueError(f"punto inválido {self.punto}: fila y columna deben ser >= 0")
         return self
 
 

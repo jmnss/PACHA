@@ -10,15 +10,15 @@ son UTC. Las rejillas son 2D `float32`, con `NaN` = sin dato (la API las cuantiz
 
 | Modelo | Qué es |
 |---|---|
-| `Origen` | De dónde sale el dato. `tipo` es `"sintetico"` o `"real"`; `fuente`, `producto`, `generador`, `version`, `semilla`, `fecha_generacion`, `notas`. `tipo="sintetico"` obliga a mostrar la banda «DATOS DE DEMOSTRACIÓN». |
-| `Adquisicion` | Una pasada: `id`, `instante` (UTC), `direccion_orbital` (opcional), `polarizaciones`. |
+| `Origen` | De dónde sale el dato. `tipo` es `"sintetico"` o `"real"`; `fuente`, `producto`, `generador`, `version`, `semilla`, `fecha_generacion` (con zona horaria obligatoria), `notas`. `tipo="sintetico"` obliga a mostrar la banda «DATOS DE DEMOSTRACIÓN». |
+| `Adquisicion` | Una pasada: `id`, `instante` (UTC, con zona horaria obligatoria), `direccion_orbital` (opcional), `polarizaciones`. |
 | `Capacidades` | `simulacion`, `modelo_continuo`, `verdad_terreno` (booleanos; el proveedor real los tendrá en `false`). |
 | `Escenario` | Un caso de estudio: `id`, `nombre`, `tipo_cambio`, `historia` (`inundacion`, `incendio` o nulo), `region`, `bbox`, `resolucion_m` (metros por píxel, > 0), `polarizaciones`, `variables`, `adquisiciones` (al menos una), `capacidades`, `origen`. |
-| `CapaRaster` | Rejilla 2D con `variable`, `polarizacion`, `unidad`, `paleta` (`gris`, `secuencial`, `divergente`, `ciclico`, `categorias`), `vmin`/`vmax`, `leyenda` (pares código-etiqueta, color), `datos`, `bbox`, `origen`. Inmutable; valida 2D, paleta, `vmin <= vmax` y `bbox`. |
+| `CapaRaster` | Rejilla 2D con `variable`, `polarizacion`, `unidad`, `paleta` (`gris`, `secuencial`, `divergente`, `ciclico`, `categorias`), `vmin`/`vmax`, `leyenda` (lista de pares `(etiqueta, color)`; el código de categoría es la posición + 1), `datos` (solo lectura, copia propia), `bbox`, `origen`. Inmutable; valida 2D, paleta, `vmin <= vmax` finitos y `bbox`. |
 | `SerieTemporal` | `titulo`, `unidad`, `puntos` = lista de `(instante, valor, serie)`, `origen`. |
 | `Metrica` | `etiqueta`, `valor` (texto ya formateado), `unidad`, `ayuda` (explicación en español llano). |
-| `ResultadoCambio` | `antes`, `despues`, `cambio`, `clasificacion` (opcional), `metricas`, `series`, `notas`, `origen`. |
-| `Medicion` | Medición sobre `cuadrante` (fila0, fila1, col0, col1, en píxeles) **o** `punto` (fila, columna); exactamente uno. `metricas` y `tabla` (filas `{columna: texto o número}`), `origen`. |
+| `ResultadoCambio` | Es un dataclass inmutable, no pydantic, porque contiene `CapaRaster` (que lleva `np.ndarray`). `antes`, `despues`, `cambio`, `clasificacion` (opcional), `metricas`, `series`, `notas`, `origen`. |
+| `Medicion` | Medición sobre `cuadrante` (fila0, fila1, col0, col1, en píxeles) **o** `punto` (fila, columna); exactamente uno. `metricas` y `tabla` (filas `{columna: texto, número o nulo}`; el nulo es una celda sin valor, p. ej. «% del cuadrante»), `origen`. |
 | `ProveedorDatos` | Protocolo: `nombre`, `escenarios`, `escenario`, `capa`, `cambio`, `medir`. Opcional si `capacidades.simulacion`: `simular`, `fotogramas`. |
 
 Excepciones: `DatosRealesNoDisponibles` (el proveedor real aún no está integrado) y

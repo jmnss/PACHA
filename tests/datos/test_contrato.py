@@ -1,4 +1,5 @@
 """Pruebas del contrato de datos genérico (datos/contrato.py)."""
+from dataclasses import FrozenInstanceError
 from datetime import datetime, timezone
 
 import numpy as np
@@ -54,7 +55,7 @@ def test_capa_rechaza_datos_no_2d():
 def test_capa_normaliza_a_float32_y_es_inmutable():
     c = capa(np.ones((2, 2), dtype=np.float64))
     assert c.datos.dtype == np.float32
-    with pytest.raises(Exception):
+    with pytest.raises(FrozenInstanceError):
         c.vmin = 1.0  # type: ignore[misc]
 
 
@@ -98,3 +99,47 @@ def test_excepciones_y_protocolo():
     assert issubclass(DatosRealesNoDisponibles, RuntimeError)
     assert issubclass(CapacidadNoDisponible, RuntimeError)
     assert hasattr(ProveedorDatos, "escenarios") and hasattr(ProveedorDatos, "medir")
+
+
+def test_tabla_acepta_celdas_none():
+    med = Medicion(cuadrante=(0, 1, 0, 1), metricas=[],
+                   tabla=[{"Categoría": "x", "% del cuadrante": None, "km²": 1.5}], origen=origen())
+    assert med.tabla[0]["% del cuadrante"] is None
+
+
+def test_fechas_naive_se_rechazan_y_aware_serializa_con_zona():
+    with pytest.raises(ValidationError, match="zona|timezone|aware"):
+        Origen(tipo="real", fuente="x", fecha_generacion=datetime(2026, 1, 1))
+    with pytest.raises(ValidationError):
+        Adquisicion(id="a", instante=datetime(2026, 1, 1), polarizaciones=[])
+    j = Adquisicion(id="a", instante=AHORA, polarizaciones=[]).model_dump_json()
+    assert "Z" in j or "+00:00" in j
+
+
+def test_vmin_vmax_deben_ser_finitos():
+    for vmin, vmax in [(float("nan"), 1.0), (0.0, float("inf")), (float("-inf"), 0.0)]:
+        with pytest.raises(ValueError):
+            CapaRaster("e", None, "v", None, "", "gris", vmin, vmax, None,
+                       np.zeros((2, 2), dtype=np.float32), BBOX, origen())
+
+
+def test_datos_son_solo_lectura_y_copia():
+    fuente = np.ones((2, 2), dtype=np.float32)
+    c = capa(fuente)
+    assert not c.datos.flags.writeable
+    with pytest.raises(ValueError):
+        c.datos[0, 0] = 5.0
+    fuente[0, 0] = 9.0  # mutar el original no afecta a la capa
+    assert c.datos[0, 0] == 1.0
+
+
+@pytest.mark.parametrize("cuad", [(-1, 2, 0, 2), (2, 2, 0, 2), (3, 2, 0, 2), (0, 2, 2, 2), (0, 2, -1, 1)])
+def test_cuadrante_invalido(cuad):
+    with pytest.raises(ValidationError):
+        Medicion(cuadrante=cuad, metricas=[], tabla=[], origen=origen())
+
+
+def test_punto_negativo_invalido():
+    with pytest.raises(ValidationError):
+        Medicion(punto=(-1, 0), metricas=[], tabla=[], origen=origen())
+    assert Medicion(punto=(0, 0), metricas=[], tabla=[], origen=origen()).punto == (0, 0)
