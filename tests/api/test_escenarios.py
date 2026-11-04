@@ -1,20 +1,3 @@
-import pytest
-from fastapi.testclient import TestClient
-
-from api.app import create_app
-from tests.datos.proveedor_ficticio import ProveedorFicticio
-
-
-@pytest.fixture
-def cliente_ficticio():
-    with TestClient(create_app(ProveedorFicticio())) as c:
-        yield c
-
-
-@pytest.fixture(params=["demo", "ficticio"])
-def cliente(request, cliente_demo, cliente_ficticio):
-    return cliente_demo if request.param == "demo" else cliente_ficticio
-
 
 def test_lista_escenarios_con_origen(cliente):
     r = cliente.get("/api/escenarios")
