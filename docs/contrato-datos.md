@@ -6,6 +6,14 @@ Vive en `datos/contrato.py`. Es lo que la interfaz necesita, venga de donde veng
 Convenciones: `bbox = (oeste, sur, este, norte)` en WGS84, con oeste < este y sur < norte. Los instantes
 son UTC. Las rejillas son 2D `float32`, con `NaN` = sin dato (la API las cuantiza a uint8 para viajar).
 
+## Convenciones de las rejillas y la banda de demostración
+
+- **Orientación:** la fila 0 de toda rejilla es el norte (la imagen se lee de arriba abajo, de norte a sur).
+- **Capas categóricas:** viajan con códigos enteros directos: el valor `k` corresponde a `leyenda[k-1]` y `0`
+  significa «sin dato». Las capas continuas se cuantizan a uint8 entre `vmin` y `vmax`.
+- **Banda de demostración:** `/api/salud.hay_sinteticos` gobierna la banda «DATOS DE DEMOSTRACIÓN»; es `true`
+  si algún `origen.tipo` es `"sintetico"`, y la banda no se puede cerrar.
+
 ## Modelos
 
 | Modelo | Qué es |

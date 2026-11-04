@@ -1,4 +1,5 @@
 """`python servidor.py`: API y frontend compilado (`frontend/dist`) en http://127.0.0.1:8000."""
+import os
 from pathlib import Path
 
 import uvicorn
@@ -7,7 +8,8 @@ from fastapi.responses import FileResponse
 
 from api.app import create_app
 
-DIST = Path(__file__).parent / "frontend" / "dist"
+# NISAR_DIST permite servir otra carpeta compilada (p. ej. la de scripts/revision_visual.sh).
+DIST = Path(os.environ.get("NISAR_DIST") or Path(__file__).parent / "frontend" / "dist")
 
 
 def crear_servidor(dist: Path = DIST):

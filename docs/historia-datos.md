@@ -7,9 +7,9 @@ Las cifras se leen en pantalla (las calcula la app); no las memorices ni las inv
 
 ## Antes de empezar (preparación)
 
-1. `python servidor.py` y abrir `http://localhost:8000/` (o la versión de desarrollo).
+1. `cd frontend && npm run build && cd .. && python servidor.py` y abrir `http://localhost:8000/` (o la versión de desarrollo).
 2. Comprobar que la banda naranja «DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR» está arriba.
-3. Tener a mano el Observatorio (`/observatorio`) por si preguntan por una medición.
+3. Tener a mano el Observatorio (`/observatorio`) por si preguntan por una medición o por los otros tipos de cambio.
 
 ## Minuto 0:00 a 0:30 · Qué es y qué NO es
 
@@ -55,6 +55,14 @@ Las cifras se leen en pantalla (las calcula la app); no las memorices ni las inv
   nubes o humo. Para sacar conclusiones haría falta: series largas del mismo lugar, saber qué polarizaciones hay en
   cada pasada, y validación en campo. Qué cobertura habrá sobre Ecuador está pendiente de confirmar.
 - Frase final: «Hoy es una demostración honesta. Con datos reales cambiará la fuente y hará falta calibrar y validar antes de sacar conclusiones; la forma de leerlo, en cambio, se mantiene.»
+
+## Extra (si sobra tiempo): el Observatorio
+
+Ruta `/observatorio`. Mismo escenario, tres vistas: **Mapa** (capas sobre el mapa; la base de OpenFreeMap es
+opcional), **Antes y después** (comparador deslizante) y **Serie** (serie temporal del escenario). Un panel de
+**simulación** permite cambiar parámetros (semilla, miradas/ENL, dirección de la órbita, variación estacional y los
+controles propios de cada tipo de cambio) y ver otra escena sintética; con la misma semilla se repite la misma escena.
+Los seis tipos de cambio del challenge están en el selector. Sigue siendo demostración: la banda no se cierra.
 
 ## Cómo cambiaría con datos reales
 

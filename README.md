@@ -1,88 +1,58 @@
-# NISAR · Rastreador de cambios en la superficie de Ecuador
+# NISAR · Ecuador
 
-Aplicación Streamlit que simula y analiza observaciones del radar NISAR (banda L, NASA–ISRO) en
-Ecuador: humedales, incendios, terremotos, glaciares, agricultura y subsidencia. El modelo conoce la
-región natural, la estación astronómica y la temporada climática (lluviosa / seca) de cada lugar y
-fecha a partir de la climatología NASA POWER 2001–2025. Interfaz con estética cyberpunk.
+Español: [README.es.md](README.es.md)
 
-Incluye el **🌋 Modo Dios**: un simulador interactivo, a modo de juego, en el que el usuario desata
-incendios, tormentas, desbordes, marejadas, terremotos (con tsunamis y deslizamientos en cascada) y
-erupciones sobre el relieve real de Ecuador (DEM SRTM). La propagación y los efectos se calculan con
-modelos publicados y la app muestra lo que vería NISAR en su siguiente pasada (ver más abajo).
+> **WARNING: DEMONSTRATION DATA.** Everything this app shows is **synthetic**, produced by a reproducible generator (`scripts/generar_datos_demo.py`, fixed seed). **Nothing is a real NISAR observation.** The app always shows an orange "DATOS DE DEMOSTRACIÓN" band, and every layer and export carries its origin. The real data provider (`NISAR_PROVEEDOR=real`) is a **skeleton** that fails with a clear message until the official challenge resources are available. NISAR technical details (products, bands, dates) are *pending confirmation against the official documentation*.
 
-## Ejecutar
+## What it is
 
-```powershell
-python app.py
+An open web app that shows how the NISAR radar (NASA-ISRO) can "see" **floods and wetlands** (main story, lowland coast of Ecuador) and **wildfires** (second story, Andes), plus an observatory for the six change types named by the challenge. It was built for the NASA Space Apps Challenge **"Dancing with the SARs"**, whose goal (our own summary, not the official text) is an easy-to-use interactive app that turns radar observations into readable information about surface change. See [docs/challenge.md](docs/challenge.md).
+
+- **Stories** (`/`): a guided read of each case, with a before/after slider, polarizations, a pass timeline and illustrative hypotheses.
+- **Observatory** (`/observatorio`): Map, Before/after and Time series views, measurements, and a simulation panel.
+
+## Install and run
+
+Requires Python 3.13 and Node 22. In this repo, `source scripts/entorno.sh` sets up Node 22 (nvm), `CHROME_PATH` and the provider.
+
+```bash
+python -m pip install -r requirements.txt -r requirements-api.txt
+python scripts/generar_datos_demo.py     # optional: the app does not need it
+cd frontend && npm install && npm run build && cd ..
+python servidor.py                        # API + frontend at http://localhost:8000
 ```
 
-Abre http://localhost:8501 (si el puerto está ocupado, la app usa el siguiente libre y lo indica en la
-terminal). Dependencias: `python -m pip install -r requirements.txt`.
+Check it: `curl http://localhost:8000/api/salud` returns `"hay_sinteticos":true`.
 
-## Estructura
+**Development:** run `python servidor.py` and, in another terminal, `cd frontend && npm run dev` (http://localhost:5173).
 
-```
-app.py                         Punto de entrada: interfaz Streamlit (comentada línea a línea)
-requirements.txt               Dependencias de Python
-.streamlit/config.toml         Servidor y tema cyberpunk (colores y fuentes)
+**Data provider:** `NISAR_PROVEEDOR=demo|real` (default `demo`). `real` is a skeleton.
 
-modelo/                        Núcleo científico
-  nisar.py                     Geometría NISAR, modelos físicos, simulación, detección, HDF5 y catálogo ASF
-  estaciones.py                Región natural, estación astronómica, temporada y balance hídrico
-  clima.py                     Partición espacial reproducible (+ 5 pruebas unitarias)
-  desastres.py                 Modo Dios: mundo (DEM, cobertura, población), desastres, efectos y vista NISAR (+ 8 pruebas)
+## Tests
 
-interfaz/                      Piezas de la interfaz
-  tema.py                      Paleta neón validada, rampas de color, CSS y estilo de gráficos
-  particion_vista.py           Pestaña «Validación»
-  modo_dios.py                 Pestaña «Modo Dios» (fragmento: sus clics no recargan el resto de la app)
-  componentes/selector_imagen/ Componente HTML para elegir punto y cuadrante sobre las imágenes
-  componentes/mundo_dios/      Tablero del juego: clic para desatar, animación en el navegador
-
-data/                          Datos de entrada
-  nisar_sample.csv             Catálogo de lugares
-  clima_ecuador_power.csv      Climatología mensual NASA POWER (malla MERRA-2)
-  ecuador_provincias.geojson   24 provincias con su región natural (geoBoundaries, CC0)
-  nisar/                       (opcional) productos HDF5 reales descargados de ASF
-  terreno/                     Caché de teselas del DEM (se crea sola; puede borrarse)
-
-resultados/particion_espacial/ Artefactos de la partición (CSV, YAML, JSON y huella SHA-256)
-
-scripts/
-  preparar_datos_ecuador.py    Descarga y prepara los datos de Ecuador
-
-docs/                          Informes técnicos (LaTeX + PDF, estilo cyberpunk)
-  modelo_nisar_ecuador.tex/.pdf        Modelo físico-matemático, señal SAR y temporadas
-  teoria_particion_espacial.tex/.pdf   Teoría de la partición espacial
-  estilo_cyberpunk.sty                 Maqueta común (opción «impresion» para fondo blanco)
-  generar_datos_latex.py               Calcula las tablas y figuras de los informes
-  datos_generados.tex                  Salida del script anterior (no editar a mano)
-
-archivo/                       Restos de herramientas anteriores (no ejecutar; ver archivo/LEEME.md)
+```bash
+python -m pytest tests -q                       # data and API
+python -m unittest modelo.clima modelo.desastres # scientific core
+cd frontend && npm test && npm run lint         # vitest and eslint
+cd frontend && npx playwright test              # end to end (needs CHROME_PATH and a built frontend)
 ```
 
-## Tareas habituales (desde la raíz del proyecto)
+## Architecture
 
-| Tarea | Orden |
-|---|---|
-| Regenerar los datos de Ecuador | `python scripts/preparar_datos_ecuador.py` |
-| Regenerar la partición espacial | `python -m modelo.clima` |
-| Pruebas de la partición | `python -m unittest modelo.clima` |
-| Pruebas del Modo Dios (sin red) | `python -m unittest modelo.desastres` |
-| Regenerar tablas y figuras de los informes | `python docs/generar_datos_latex.py` |
-| Compilar un informe | `cd docs` y luego `pdflatex <nombre>.tex` dos veces |
+- `datos/`: data contract (`contrato.py`) and providers: `demo` (synthetic) and `real` (skeleton). Contract: [docs/contrato-datos.md](docs/contrato-datos.md).
+- `api/`: stateless FastAPI; it only talks to the contract in `datos/` (except `/api/contexto`, which uses supplementary data from `modelo/estaciones.py`).
+- `frontend/`: React 18 + Vite + TypeScript; state lives in the URL and the browser, no accounts.
+- `modelo/`: physics and the synthetic generator.
+- Docs: [challenge](docs/challenge.md), [design](docs/diseno.md), [talk script](docs/historia-datos.md).
 
-## Modo Dios: modelos usados
+## Legacy Streamlit app
 
-| Desastre | Modelo de propagación / área | Efectos |
-|---|---|---|
-| 🔥 Incendio | Autómata celular de Alexandridis et al. (2008), humedad de Rothermel (1972) | Área, biomasa y CO₂, personas a evacuar |
-| ⛈️ Tormenta | SCS-CN (TR-55) + aguas someras inerciales (Bates et al., 2010) + SHALSTAB | Jonkman et al. (2008), daño JRC Sudamérica (Huizinga et al., 2017) |
-| 🌊 Desborde / marejada | Hidrograma triangular o nivel del mar + Bates et al. (2010) | Jonkman et al. (2008), JRC |
-| 🌍 Terremoto | Wells y Coppersmith (1994), Okada (1985), Allen et al. (2012), Worden et al. (2012) | PAGER (Jaiswal y Wald, 2010); tsunami y deslizamientos en cascada |
-| 🌋 Erupción | LAHARZ (Iverson et al., 1998), cono de energía (Malin y Sheridan, 1982), Mastin et al. (2009), advección–difusión de ceniza | Población expuesta, techos colapsados (Spence et al., 2005) |
+The original app still works and is not modified: `python app.py` (http://localhost:8501). Its README is in [docs/README-streamlit.md](docs/README-streamlit.md).
 
-El relieve son teselas Terrarium (SRTM) de AWS Open Data; la población urbana es aproximada (orden de
-magnitud del censo INEC 2022) y la rural, sintética. Los supuestos propios del juego (escala temporal del
-fuego, velocidades de lahares, letalidad volcánica) se declaran en las notas de cada evento. Es una
-herramienta educativa, no un mapa oficial de riesgo.
+## Submission requirements
+
+Official submission requirements: pending confirmation.
+
+## License and credits
+
+MIT ([LICENSE](LICENSE)); provisional, pending confirmation by the team. Data sources, fonts and references: [CREDITOS.md](CREDITOS.md).

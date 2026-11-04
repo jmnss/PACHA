@@ -24,13 +24,14 @@ trap apagar EXIT
 
 echo "== Compilando el frontend =="
 # VITE_MAPA_REMOTO=0: el mapa no pide nada a OpenFreeMap en la revisión (solo capas locales).
-(cd frontend && VITE_MAPA_REMOTO=0 npm run build) || { echo "RESULT: la compilación falló." >&2; exit 1; }
+# Compila a frontend/dist-revision (no toca frontend/dist, que es la compilación normal) y el servidor la usa vía NISAR_DIST.
+(cd frontend && VITE_MAPA_REMOTO=0 npm run build -- --outDir dist-revision --emptyOutDir) || { echo "RESULT: la compilación falló." >&2; exit 1; }
 
 if curl -sf "$BASE/api/salud" >/dev/null; then
-  echo "== Servidor ya en marcha; se reutiliza (no se apagará) =="
+  echo "== Servidor ya en marcha; se reutiliza (no se apagará; sirve SU carpeta compilada, no dist-revision) =="
 else
   echo "== Levantando python servidor.py =="
-  python servidor.py >/tmp/revision_visual_servidor.log 2>&1 &
+  NISAR_DIST="$RAIZ/frontend/dist-revision" python servidor.py >/tmp/revision_visual_servidor.log 2>&1 &
   PID=$!
   for _ in $(seq 1 60); do
     curl -sf "$BASE/api/salud" >/dev/null && break
