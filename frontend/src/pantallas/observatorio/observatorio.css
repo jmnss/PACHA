@@ -71,3 +71,5 @@
 .vista-comparar .comparador__escenario { width: min(100%, calc(var(--h-comparador) * var(--razon, 1))); margin-inline: auto; }
 @media (max-width: 699px) { .vista-comparar .comparador__escenario { width: 100%; } }
 .medicion__nota a { color: var(--text); text-decoration: underline; }
+.serie { display: flex; flex-direction: column; gap: var(--space-4); }
+.serie__nota { margin: 0; font-size: var(--fs-12); color: var(--muted); }

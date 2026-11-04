@@ -3,7 +3,7 @@ import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
 import { useCambio, useContexto, useEscenario, useEscenarios, useTipos, type Escenario, type TipoCambio } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
-import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
+import { Cargando, ErrorBloque } from '../../diseno/Estados'
 import { Pestanas } from '../../diseno/Pestanas'
 import { Selector } from '../../diseno/Selector'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
@@ -14,6 +14,7 @@ import { NotasResultado, VistaAntesDespues } from './VistaAntesDespues'
 import { SIN_PAREJA } from './VistaMapa'
 import { PanelContexto } from './PanelContexto'
 import { PanelMetricas } from './PanelMetricas'
+import { VistaSerie } from './VistaSerie'
 import { useTiempoObservatorio } from './useTiempoObservatorio'
 import { VistaMapa } from './VistaMapa'
 import './observatorio.css'
@@ -39,7 +40,7 @@ const VISTAS = [
 const PREGUNTA = 'Qué cambió aquí entre dos pasadas y cuánto.'
 const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }) : undefined)
 
-/** Ruta /observatorio: mapa y tiempo (esta tarea); «Antes y después» y «Serie» llegan en las tareas 4.2 y 4.3. */
+/** Ruta /observatorio: mapa y tiempo (esta tarea); «Antes y después» y «Serie» son las otras dos vistas. */
 export default function Observatorio() {
   const [url, cambiar] = useEstadoUrl(ESQUEMA)
   const escenario = useEscenario(url.escenario)
@@ -180,7 +181,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
               onPolarizacion={(pol) => cambiar({ pol })}
             />
           ) : (
-            <Vacio titulo="Serie" texto="Esta vista todavía no está disponible. Mientras tanto, usa la vista Mapa." />
+            <VistaSerie esc={esc} resultado={resultado} antesId={antesId} despuesId={despuesId} />
           )}
         </div>
         <aside className="observatorio__lado" aria-label="Métricas y contexto">
