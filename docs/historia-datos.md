@@ -54,7 +54,7 @@ Las cifras se leen en pantalla (las calcula la app); no las memorices ni las inv
 - Decir: con datos reales de NISAR esto podría servir para cartografiar inundaciones y áreas quemadas aunque haya
   nubes o humo. Para sacar conclusiones haría falta: series largas del mismo lugar, saber qué polarizaciones hay en
   cada pasada, y validación en campo. Qué cobertura habrá sobre Ecuador está pendiente de confirmar.
-- Frase final: «Hoy es una demostración honesta; mañana, con datos reales, cambia la fuente, no la forma de leerlo.»
+- Frase final: «Hoy es una demostración honesta. Con datos reales cambiará la fuente y hará falta calibrar y validar antes de sacar conclusiones; la forma de leerlo, en cambio, se mantiene.»
 
 ## Cómo cambiaría con datos reales
 
@@ -64,11 +64,14 @@ Las cifras se leen en pantalla (las calcula la app); no las memorices ni las inv
 | Sello de origen | «Sintético · generador… · semilla…» | Fuente y producto oficiales, con su cita |
 | Hallazgo | «En este escenario de demostración, …» | Redacción de hecho, con fechas de las pasadas |
 | Hipótesis | Ejemplos ilustrativos | Hipótesis a contrastar con campo y otras fuentes |
-| Pareja antes/después | Primera y última pasada del escenario | Las fechas que existan y elija quien analiza |
+| Pareja antes/después | La pareja de pasadas que más cambia en la serie del escenario (ver abajo) | Las fechas que existan y elija quien analiza |
 
 ## Si preguntan
 
 - «¿Es real?» No: sintético, generado con un script reproducible con semilla fija.
 - «¿Qué satélite, qué banda, qué fecha?» No lo afirmamos: pendiente de confirmar con la documentación oficial.
-- «¿Por qué esa pareja de fechas?» La API no recomienda un intervalo; la historia usa la primera y la última pasada
-  del escenario para mostrar todo el ciclo, y el Observatorio permite elegir otras.
+- «¿Por qué esa pareja de fechas?» La API no recomienda un intervalo; la historia pide primero el cambio entre la
+  primera y la última pasada y, con su serie, elige la pareja ordenada con mayor diferencia absoluta (si no hay
+  criterio fiable, deja primera y última). Con la inundación suele ser el pico de la crecida frente a la pasada más
+  seca; con el incendio, antes del fuego frente a la primera pasada posterior. El cursor de la cinta mueve «después»
+  y el Observatorio permite elegir otras.

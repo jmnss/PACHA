@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen, waitFor, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { HISTORIAS } from './contenido'
@@ -19,22 +19,30 @@ const escenario = (id: string, historia: string | null) => ({
 const ESCENARIOS = [escenario('ec_otro', null), escenario('ec_agua', 'inundacion'), escenario('ec_fuego', 'incendio')]
 const capa = (pol: string) => ({ escenario_id: 'x', adquisicion_id: null, instante: null, polarizacion: pol, origen, rejilla, variable: 'sigma0', paleta: 'gris', unidad: 'dB', leyenda: null })
 let llamadas: { url: string; cuerpo: any }[] // eslint-disable-line @typescript-eslint/no-explicit-any
+/** Si se asigna, las respuestas de /cambio con esa fecha «después» esperan a que se llame a `liberar`. */
+let retener: string | null
+let liberar: (() => void) | null
 const json = (x: unknown, status = 200) => Promise.resolve(new Response(JSON.stringify(x), { status }))
 
 beforeEach(() => {
   llamadas = []
+  retener = null
+  liberar = null
   vi.stubGlobal('fetch', vi.fn((url: string, init?: RequestInit) => {
     llamadas.push({ url, cuerpo: init?.body ? JSON.parse(String(init.body)) : undefined })
     if (url === '/api/salud') return json({ estado: 'ok', hay_sinteticos: true, origen_tipo: 'sintetico', proveedor: 'demo', version: '1' })
     if (url === '/api/escenarios') return json(ESCENARIOS)
     if (url.startsWith('/api/contexto')) return json(null)
     if (url.endsWith('/cambio')) {
-      const pol = JSON.parse(String(init?.body)).polarizacion
-      return json({
+      const cuerpo = JSON.parse(String(init?.body))
+      const pol = cuerpo.polarizacion
+      const respuesta = {
         antes: capa(pol), despues: capa(pol), cambio: capa(pol), capas_extra: [], clasificacion: null, tablas: [], vectores: null, origen,
         notas: ['Nota del modelo de demostración.'], metricas: [],
-        series: [{ titulo: 'Superficie inundada', unidad: 'km²', puntos: [[fechas[0], 20, 'Detectada'], [fechas[3], 5, 'Detectada']] }],
-      })
+        series: [{ titulo: 'Superficie inundada', unidad: 'km²', puntos: fechas.map((f, i) => [f, [20, 28, 10, 5][i], 'Detectada']) }],
+      }
+      if (retener && cuerpo.despues === retener) return new Promise<Response>((ok) => { liberar = () => ok(new Response(JSON.stringify(respuesta))) })
+      return json(respuesta)
     }
     return json({ mensaje: 'no previsto' }, 404)
   }))
@@ -48,6 +56,7 @@ function montar(ruta = '/') {
   )
 }
 
+const ultimo = <T,>(a: T[]): T => a[a.length - 1]
 const aTexto = (p: Parrafo) => p.map((s) => (typeof s === 'string' ? s : s.termino)).join('')
 const SEGMENTOS_TEXTO = (h: (typeof HISTORIAS)[number]) => [
   ...h.queCambia.parrafos, ...h.queVeElRadar.parrafos, ...h.comparador.introduccion, h.comparador.porQue, h.comparador.otra,
@@ -106,8 +115,8 @@ describe('Historias · pantalla', () => {
     montar()
     const fig = await screen.findByRole('figure')
     expect(fig.querySelector('figcaption')?.textContent).toBe('σ⁰ HH, dB')
-    const cambio = llamadas.find((l) => l.url === '/api/escenarios/ec_agua/cambio')!
-    expect(cambio.cuerpo).toEqual({ antes: fechas[0], despues: fechas[3], polarizacion: 'HH' })
+    const cambio = ultimo(llamadas.filter((l) => l.url === '/api/escenarios/ec_agua/cambio'))
+    expect(cambio.cuerpo).toEqual({ antes: fechas[1], despues: fechas[3], polarizacion: 'HH' })
     expect(await screen.findByText(/^En este escenario de demostración, superficie inundada baja de/)).toBeInTheDocument()
     expect(screen.getByText('Nota del modelo de demostración.')).toBeInTheDocument()
   })
@@ -129,8 +138,51 @@ describe('Historias · pantalla', () => {
     const q = new URLSearchParams(href.split('?')[1])
     expect(href.startsWith('/observatorio?')).toBe(true)
     expect(q.get('escenario')).toBe('ec_agua')
-    expect(q.get('antes')).toBe(fechas[0])
+    expect(q.get('antes')).toBe(fechas[1])
     expect(q.get('despues')).toBe(fechas[3])
+    expect(q.get('pol')).toBe('HH')
+    expect(q.get('vista')).toBe('comparar')
+  })
+
+  it('elige la pareja de mayor cambio de la serie y la primera consulta es primera/última pasada', async () => {
+    montar()
+    await screen.findByRole('figure')
+    const cuerpos = llamadas.filter((l) => l.url === '/api/escenarios/ec_agua/cambio').map((l) => l.cuerpo)
+    expect(cuerpos[0]).toEqual({ antes: fechas[0], despues: fechas[3], polarizacion: 'HH' })
+    expect(ultimo(cuerpos)).toEqual({ antes: fechas[1], despues: fechas[3], polarizacion: 'HH' })
+  })
+
+  it('al mover la cinta cambia «después», «antes» no se mueve y el comparador sigue montado con su divisor', async () => {
+    montar()
+    const fig = await screen.findByRole('figure')
+    const divisor = within(fig).getByRole('slider', { name: 'Divisor entre antes y después' })
+    fireEvent.keyDown(divisor, { key: 'ArrowRight', shiftKey: true })
+    const posicion = divisor.getAttribute('aria-valuenow')
+    expect(posicion).not.toBe('50')
+    retener = fechas[2]
+    fireEvent.keyDown(screen.getByRole('slider', { name: 'Instante de la cinta de pasadas' }), { key: 'ArrowLeft' })
+    expect(await screen.findByText('Actualizando…')).toBeInTheDocument()
+    expect(screen.getByRole('figure')).toBe(fig)
+    expect(within(fig).getByRole('slider', { name: 'Divisor entre antes y después' }).getAttribute('aria-valuenow')).toBe(posicion)
+    const ultima = ultimo(llamadas.filter((l) => l.url.endsWith('/cambio')))
+    expect(ultima.cuerpo).toEqual({ antes: fechas[1], despues: fechas[2], polarizacion: 'HH' })
+    await act(async () => { liberar!() })
+    await waitFor(() => expect(screen.queryByText('Actualizando…')).not.toBeInTheDocument())
+    expect(screen.getByRole('figure')).toBe(fig)
+    expect(within(fig).getByRole('slider', { name: 'Divisor entre antes y después' }).getAttribute('aria-valuenow')).toBe(posicion)
+  })
+
+  it('al cambiar de polarización el comparador no se desmonta', async () => {
+    montar()
+    const fig = await screen.findByRole('figure')
+    retener = fechas[3]
+    // La consulta HH ya está en caché; la HV tarda.
+    screen.getByRole('tab', { name: 'HV' }).click()
+    expect(await screen.findByText('Actualizando…')).toBeInTheDocument()
+    expect(screen.getByRole('figure')).toBe(fig)
+    await act(async () => { liberar!() })
+    await waitFor(() => expect(screen.getByRole('figure').querySelector('figcaption')?.textContent).toBe('σ⁰ HV, dB'))
+    expect(screen.getByRole('figure')).toBe(fig)
   })
 
   it('la primera vez cada término se explica y las siguientes ya no son botones', async () => {

@@ -16,15 +16,15 @@ export const inundacion: ContenidoHistoria = {
   queVeElRadar: {
     titulo: 'Qué ve el radar y por qué',
     parrafos: [
-      ['Un ', t('radar'), ' es un sensor activo: emite su propia señal y mide lo que vuelve. Por eso funciona de día y de noche, y la señal atraviesa las nubes. Lo que mide en cada punto se llama ', t('sigma0'), ' y se expresa en ', t('dB'), '.'],
+      ['NISAR es una misión de satélite de ', t('radar'), ' de la NASA y la agencia espacial india (ISRO); sus detalles técnicos están pendientes de confirmar con la documentación oficial. Un radar de este tipo es un sensor activo: emite su propia señal y mide lo que vuelve. Por eso funciona de día y de noche, y la señal atraviesa las nubes. Lo que mide en cada punto se llama ', t('sigma0'), ' y se expresa en ', t('dB'), '.'],
       ['Lo que vuelve depende de dos cosas del terreno: su ', t('rugosidad'), ' y su ', t('dielectrica'), '. El agua abierta y en calma es muy lisa: actúa como un espejo y manda la señal lejos del satélite, así que se ve oscura en la imagen.'],
-      ['Bajo árboles o cultivos altos inundados pasa lo contrario. La señal rebota en el agua, después en un tronco y vuelve hacia el satélite (un doble rebote), y la zona se ve más brillante que antes. Una onda de ', t('bandaL'), ' atraviesa parte de las copas, por lo que puede registrar ese rebote. Qué bandas y qué polarizaciones tendrán los productos de NISAR está pendiente de confirmar con la documentación oficial.'],
+      ['Bajo árboles o cultivos altos inundados pasa lo contrario. La señal rebota en el agua, después en un tronco (o en el tallo de un cultivo alto) y vuelve hacia el satélite (un doble rebote), y la zona se ve más brillante que antes. Una onda de ', t('bandaL'), ' atraviesa parte de las copas, por lo que puede registrar ese rebote. Además, el radar emite y recibe la onda con una orientación determinada, la ', t('polarizacion'), ', y cada combinación responde distinto al agua y a las plantas. Qué bandas y qué polarizaciones tendrán los productos de NISAR está pendiente de confirmar con la documentación oficial.'],
     ],
   },
   comparador: {
     titulo: 'Antes y después, en el comparador',
     introduccion: [
-      ['Desliza el divisor para pasar de la primera a la última pasada del escenario. Las zonas que se oscurecen o se aclaran son las que cambiaron. Para medir un punto o un cuadrante, abre el mismo escenario en el Observatorio.'],
+      ['Desliza el divisor para pasar de la pasada «antes» a la pasada «después» del escenario. Las zonas que se oscurecen o se aclaran son las que cambiaron. Para medir un punto o un cuadrante, abre el mismo escenario en el Observatorio.'],
     ],
     polarizacion: 'HH',
     porQue: ['La ', t('polarizacion'), ' ', t('HH'), ' es la que mejor resalta el agua: el agua abierta aparece oscura por la reflexión de espejo, y la vegetación inundada aparece brillante por el doble rebote.'],

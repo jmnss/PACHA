@@ -12,10 +12,13 @@ import { CintaPasadas } from '../../tiempo/CintaPasadas'
 import { formatearFecha } from '../../tiempo/fechas'
 import { estiloDeCapa, hallazgo, temporadasLluviosas } from '../observatorio/derivados'
 import { TERMINOS, type ContenidoHistoria, type Parrafo } from './contenido/tipos'
+import { parejaDeMayorCambio } from './pareja'
 
 interface Props {
   contenido: ContenidoHistoria
   esc: Escenario
+  /** Índice de historias: va en la columna de lectura, para que el comparador suba en escritorio. */
+  indice?: ReactNode
 }
 
 const fecha = (iso: string | undefined) => formatearFecha(iso) ?? '—'
@@ -23,31 +26,45 @@ const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', 
 
 /**
  * Plantilla de una historia: cinco partes fijas, cada una con encabezado de 20 px.
- * Pareja de pasadas por defecto (decisión documentada): la primera y la última del escenario,
- * porque la API no ofrece un intervalo recomendado y así el comparador abarca todo el ciclo.
+ *
+ * Pareja de pasadas por defecto: la API no recomienda un intervalo. Se pide primero el cambio entre la primera y
+ * la última pasada y, con su serie, `parejaDeMayorCambio` elige la pareja que más cambia (ver pareja.ts). Si no
+ * hay criterio fiable se queda primera/última. La cinta mueve «después»; «antes» queda fija.
  */
-export function Historia({ contenido: c, esc }: Props) {
+export function Historia({ contenido: c, esc, indice }: Props) {
   const pasadas = esc.adquisiciones
-  const [iDespues, setIDespues] = useState(Math.max(0, pasadas.length - 1))
+  const ultima = pasadas.length - 1
   const recomendada = esc.polarizaciones.includes(c.comparador.polarizacion) ? c.comparador.polarizacion : esc.polarizaciones[0]
   const [pol, setPol] = useState<string | undefined>(recomendada)
+  const [despuesElegido, setDespuesElegido] = useState<number | null>(null)
 
-  const antes = pasadas[0]
+  // Descubrimiento de la pareja: primera y última pasada, con la polarización recomendada.
+  const descubrimiento = useCambio(
+    esc.id,
+    useMemo(() => (ultima > 0 ? { antes: pasadas[0].id, despues: pasadas[ultima].id, ...(recomendada ? { polarizacion: recomendada } : {}) } : undefined), [pasadas, ultima, recomendada]),
+  )
+  const pareja = useMemo<[number, number] | null>(() => {
+    if (ultima < 1 || descubrimiento.isPending) return null
+    return parejaDeMayorCambio(descubrimiento.data?.series[0]?.puntos, pasadas) ?? [0, ultima]
+  }, [descubrimiento.isPending, descubrimiento.data, pasadas, ultima])
+
+  const iAntes = pareja ? pareja[0] : 0
+  const iDespues = pareja ? Math.max(iAntes + 1, despuesElegido ?? pareja[1]) : 0
+  const antes = pasadas[iAntes]
   const despues = pasadas[iDespues]
   const peticion = useMemo(
-    () => (antes && despues && antes.id !== despues.id ? { antes: antes.id, despues: despues.id, ...(pol ? { polarizacion: pol } : {}) } : undefined),
-    [antes, despues, pol],
+    () => (pareja && antes && despues ? { antes: antes.id, despues: despues.id, ...(pol ? { polarizacion: pol } : {}) } : undefined),
+    [pareja, antes, despues, pol],
   )
-  const resultado = useCambio(esc.id, peticion)
+  // `conservar`: al mover la cinta o cambiar de polarización se sigue viendo la imagen anterior hasta que llegue la nueva.
+  const resultado = useCambio(esc.id, peticion, true)
   const lat = (esc.bbox[1] + esc.bbox[3]) / 2
   const lon = (esc.bbox[0] + esc.bbox[2]) / 2
   const contexto = useContexto(lat, lon)
-  const ts = pasadas.map((p) => Date.parse(p.instante))
-  const temporadas = useMemo(
-    () => (ts.length ? temporadasLluviosas(contexto.data, Math.min(...ts), Math.max(...ts)) : []),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [contexto.data, pasadas],
-  )
+  const temporadas = useMemo(() => {
+    const ts = pasadas.map((p) => Date.parse(p.instante))
+    return ts.length ? temporadasLluviosas(contexto.data, Math.min(...ts), Math.max(...ts)) : []
+  }, [contexto.data, pasadas])
 
   // Un término se explica solo la primera vez que aparece en la historia.
   const vistos = new Set<string>()
@@ -63,7 +80,9 @@ export function Historia({ contenido: c, esc }: Props) {
 
   const r = resultado.data
   const frase = hallazgo(r, antes?.instante ?? '', despues?.instante ?? '')
-  const polarizaciones = ['HH', 'HV'].filter((x) => esc.polarizaciones.includes(x)).map((x) => ({ id: x, etiqueta: x === c.comparador.polarizacion ? `${x} · recomendada` : x }))
+  const polarizaciones = ['HH', 'HV']
+    .filter((x) => esc.polarizaciones.includes(x))
+    .map((x) => ({ id: x, etiqueta: x === c.comparador.polarizacion ? `${x} · recomendada` : x }))
 
   const enlace = `/observatorio?${new URLSearchParams({
     escenario: esc.id,
@@ -82,15 +101,18 @@ export function Historia({ contenido: c, esc }: Props) {
   const p4 = parrafos(c.hipotesis.parrafos)
   const p5 = parrafos(c.aplicaciones.parrafos)
 
-  let cuerpo: ReactNode = null
-  if (!peticion) {
+  let cuerpo: ReactNode
+  if (ultima < 1) {
     cuerpo = <p className="historia__nota">Este escenario no tiene dos pasadas distintas para comparar.</p>
-  } else if (resultado.isPending) {
-    cuerpo = <Cargando texto="Calculando el cambio entre la primera y la última pasada…" filas={5} />
+  } else if (!peticion || (resultado.isPending && !r)) {
+    cuerpo = <Cargando texto="Calculando el cambio entre las dos pasadas…" filas={5} />
   } else if (resultado.isError && !r) {
     cuerpo = (
-      <ErrorBloque mensaje={resultado.error instanceof ErrorApi ? resultado.error.mensaje : MENSAJE_RED}
-        ultimoDato={hora(resultado.dataUpdatedAt)} onReintentar={() => void resultado.refetch()} />
+      <ErrorBloque
+        mensaje={resultado.error instanceof ErrorApi ? resultado.error.mensaje : MENSAJE_RED}
+        ultimoDato={hora(resultado.dataUpdatedAt)}
+        onReintentar={() => void resultado.refetch()}
+      />
     )
   } else if (r) {
     const estilo = estiloDeCapa(r.antes)
@@ -106,43 +128,49 @@ export function Historia({ contenido: c, esc }: Props) {
 
   return (
     <article className="historia" aria-labelledby="historia-titulo">
-      <h2 id="historia-titulo" className="historia__titulo">{c.titulo}</h2>
-
-      <div className="historia__lectura">
-      <section className="historia__parte" aria-labelledby="h-1">
-        <h3 id="h-1" className="historia__encabezado">{c.queCambia.titulo}</h3>
-        {p1}
-      </section>
-
-      <section className="historia__parte" aria-labelledby="h-2">
-        <h3 id="h-2" className="historia__encabezado">{c.queVeElRadar.titulo}</h3>
-        {p2}
-      </section>
+      <div className="historia__cabecera">
+        {indice}
+        <h2 id="historia-titulo" className="historia__titulo">{c.titulo}</h2>
       </div>
 
-      <section className="historia__parte historia__parte--ancha" aria-labelledby="h-3">
+      <div className="historia__lectura">
+        <section className="historia__parte" aria-labelledby="h-1">
+          <h3 id="h-1" className="historia__encabezado">{c.queCambia.titulo}</h3>
+          {p1}
+        </section>
+        <section className="historia__parte" aria-labelledby="h-2">
+          <h3 id="h-2" className="historia__encabezado">{c.queVeElRadar.titulo}</h3>
+          {p2}
+        </section>
+      </div>
+
+      <section className="historia__parte historia__parte--comparador" aria-labelledby="h-3">
         <h3 id="h-3" className="historia__encabezado">{c.comparador.titulo}</h3>
-        <div className="historia__texto">
-          {p3a}
-          {p3b}
-          {p3c}
-        </div>
-        {frase && <p className="historia__hallazgo">{frase}</p>}
         <Tarjeta className="historia__comparador">
-          {polarizaciones.length > 1 && <Pestanas etiqueta="Polarización" pestanas={polarizaciones} activa={pol ?? ''} onCambiar={setPol} />}
+          <div className="historia__pestanas">
+            {polarizaciones.length > 1 && <Pestanas etiqueta="Polarización" pestanas={polarizaciones} activa={pol ?? ''} onCambiar={setPol} />}
+            {/* Siempre ocupa su sitio: «Actualizando…» no cambia la altura del bloque. */}
+            <p className="historia__estado" role="status">{resultado.isPlaceholderData ? 'Actualizando…' : ''}</p>
+          </div>
           {cuerpo}
-          {pasadas.length > 1 && (
+          {ultima > 0 && (
             <>
               <CintaPasadas
                 adquisiciones={pasadas} instante={despues?.instante ?? ''} temporadas={temporadas}
-                onCambio={(_, i) => setIDespues(Math.max(1, i))}
+                onCambio={(_, i) => setDespuesElegido(Math.max(iAntes + 1, i))}
               />
               <p className="historia__nota">
-                Cada muesca es una pasada del satélite sobre este lugar. Mueve el cursor para elegir la pasada «después»; «antes» es siempre la primera.
+                Una muesca por pasada del satélite. Mueve el cursor para elegir «después»; «antes» queda fija.
               </p>
             </>
           )}
         </Tarjeta>
+        <div className="historia__texto">
+          {p3a}
+          {frase && <p className="historia__hallazgo">{frase}</p>}
+          {p3b}
+          {p3c}
+        </div>
         {r && r.notas.length > 0 && (
           <div className="historia__notas">
             <NotasModelo notas={r.notas} />
@@ -153,12 +181,12 @@ export function Historia({ contenido: c, esc }: Props) {
         </div>
       </section>
 
-      <section className="historia__parte" aria-labelledby="h-4">
+      <section className="historia__parte historia__parte--4" aria-labelledby="h-4">
         <h3 id="h-4" className="historia__encabezado">{c.hipotesis.titulo}</h3>
         {p4}
       </section>
 
-      <section className="historia__parte" aria-labelledby="h-5">
+      <section className="historia__parte historia__parte--5" aria-labelledby="h-5">
         <h3 id="h-5" className="historia__encabezado">{c.aplicaciones.titulo}</h3>
         {p5}
       </section>

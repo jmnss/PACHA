@@ -1,6 +1,6 @@
 {
  "url": "http://localhost:8000/",
- "at": "2026-11-04T11:41:38.572Z",
+ "at": "2026-11-04T11:51:19.634Z",
  "allow": [
   "palette-terracotta"
  ],
@@ -11,9 +11,9 @@
    "load": "load",
    "screens": 3,
    "filled": [
-    0.57,
-    0.56,
-    0.42
+    0.68,
+    0.46,
+    0.32
    ],
    "motion": {
     "elements": 0,
@@ -29,9 +29,9 @@
      "h": 900
     },
     "page": {
-     "height": 2304,
+     "height": 2368,
      "screens": 2.6,
-     "words": 877,
+     "words": 934,
      "img": 0,
      "video": 0,
      "canvas": 2,
@@ -112,7 +112,7 @@
       "tracking": 0,
       "contrast": 5.3
      },
-     "measureChars": 68,
+     "measureChars": 59,
      "max": {
       "size": 26,
       "vw": 1.8,
@@ -143,7 +143,7 @@
      "sectionBgs": [
       {
        "color": "#131217",
-       "top": 653,
+       "top": 220,
        "hsl": {
         "h": 252,
         "s": 0.12,
@@ -154,11 +154,11 @@
      "textColors": [
       {
        "color": "#ffffff",
-       "share": 0.75
+       "share": 0.78
       },
       {
        "color": "#8a8c92",
-       "share": 0.13
+       "share": 0.11
       },
       {
        "color": "#b4b4b8",
@@ -207,9 +207,9 @@
      "hairlineSamples": [
       "nav.riel 50px",
       "div.banda-demo__fila 1390px",
-      "a.historias__enlace.historias__enlace--activa 541px",
-      "a.historias__enlace 541px",
-      "div.pestanas 695px"
+      "a.historias__enlace.historias__enlace--activa 470px",
+      "a.historias__enlace 470px",
+      "div.historia__pestanas 766px"
      ],
      "outlinedBoxes": 1,
      "dashed": 0,
@@ -222,7 +222,16 @@
      "textShadow": 0,
      "cardRows": []
     },
-    "heroMedia": [],
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.08
+     },
+     {
+      "type": "canvas",
+      "ratio": 0.08
+     }
+    ],
     "nav": {
      "links": 2,
      "fixed": true,
@@ -239,10 +248,10 @@
      "w": 1440,
      "h": 900
     },
-    "pageH": 2304,
+    "pageH": 2368,
     "margins": {
      "left": 82,
-     "right": 48
+     "right": 53
     },
     "sections": [],
     "gaps": [],
@@ -258,28 +267,24 @@
     "edges": [
      {
       "x": 82,
-      "n": 15
+      "n": 19
      },
      {
-      "x": 671,
-      "n": 7
-     },
-     {
-      "x": 767,
-      "n": 1
+      "x": 600,
+      "n": 5
      }
     ],
-    "leftBlocks": 23,
+    "leftBlocks": 24,
     "bodySize": 16,
     "stage": false,
     "explains": true,
     "slivers": [],
-    "voidShare": 0.04,
+    "voidShare": 0.1,
     "voidBox": {
-     "x": 540,
-     "y": 240,
-     "w": 900,
-     "h": 60
+     "x": 1200,
+     "y": 120,
+     "w": 240,
+     "h": 540
     }
    },
    "app": {
@@ -351,7 +356,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.13,
+     "under13": 0.11,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -378,10 +383,10 @@
    "load": "load",
    "screens": 4,
    "filled": [
-    0.64,
-    0.64,
-    0.65,
-    0.6
+    0.6,
+    0.72,
+    0.48,
+    0.61
    ],
    "motion": {
     "elements": 0,
@@ -397,9 +402,9 @@
      "h": 1024
     },
     "page": {
-     "height": 3373,
-     "screens": 3.3,
-     "words": 877,
+     "height": 3715,
+     "screens": 3.6,
+     "words": 934,
      "img": 0,
      "video": 0,
      "canvas": 2,
@@ -460,7 +465,7 @@
       "mono": false,
       "align": "left",
       "position": "left",
-      "widthRatio": 0.62,
+      "widthRatio": 0.61,
       "top": 68,
       "tag": "h1",
       "kind": "heading"
@@ -482,7 +487,7 @@
       "align": "left",
       "position": "center",
       "widthRatio": 0.85,
-      "top": 362,
+      "top": 354,
       "tag": "h2",
       "kind": "heading"
      }
@@ -523,7 +528,7 @@
       "tracking": 0,
       "contrast": 5.3
      },
-     "measureChars": 82,
+     "measureChars": 59,
      "max": {
       "size": 26,
       "vw": 3.4,
@@ -554,31 +559,22 @@
      "sectionBgs": [
       {
        "color": "#131217",
-       "top": 1484,
+       "top": 1490,
        "hsl": {
         "h": 252,
         "s": 0.12,
         "l": 0.08
-       }
-      },
-      {
-       "color": "#212023",
-       "top": 1590,
-       "hsl": {
-        "h": 260,
-        "s": 0.04,
-        "l": 0.13
        }
       }
      ],
      "textColors": [
       {
        "color": "#ffffff",
-       "share": 0.75
+       "share": 0.78
       },
       {
        "color": "#8a8c92",
-       "share": 0.13
+       "share": 0.11
       },
       {
        "color": "#b4b4b8",
@@ -627,9 +623,9 @@
      "hairlineSamples": [
       "nav.riel 50px",
       "div.banda-demo__fila 718px",
-      "a.historias__enlace.historias__enlace--activa 541px",
-      "a.historias__enlace 541px",
-      "div.pestanas 612px"
+      "a.historias__enlace.historias__enlace--activa 470px",
+      "a.historias__enlace 470px",
+      "div.historia__pestanas 612px"
      ],
      "outlinedBoxes": 1,
      "dashed": 0,
@@ -659,25 +655,29 @@
      "w": 768,
      "h": 1024
     },
-    "pageH": 3373,
+    "pageH": 3715,
     "margins": {
      "left": 82,
-     "right": 32
+     "right": 53
     },
     "sections": [
      {
-      "sel": "nav.historias__indice",
-      "tag": "nav",
-      "top": 152,
-      "height": 186,
-      "words": 62,
+      "sel": "div.historia__cabecera",
+      "tag": "div",
+      "top": 176,
+      "height": 210,
+      "words": 70,
       "media": 0,
       "middle": 0,
-      "heading": null,
+      "heading": {
+       "text": "Cuando el agua sube en la Costa baja",
+       "size": 26,
+       "tag": "h2"
+      },
       "left": 82,
-      "right": 147,
+      "right": 224,
       "textLeft": 82,
-      "textRight": 147,
+      "textRight": 224,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -687,9 +687,9 @@
      {
       "sel": "div.historia__lectura",
       "tag": "div",
-      "top": 442,
-      "height": 652,
-      "words": 250,
+      "top": 434,
+      "height": 964,
+      "words": 312,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -698,21 +698,21 @@
        "tag": "h3"
       },
       "left": 82,
-      "right": 32,
+      "right": 217,
       "textLeft": 82,
-      "textRight": 32,
+      "textRight": 217,
       "fullBleed": false,
       "footer": false,
       "hero": true,
-      "continues": true,
+      "continues": false,
       "pinned": false
      },
      {
-      "sel": "section.historia__parte.historia__parte--ancha",
+      "sel": "section.historia__parte.historia__parte--comparador",
       "tag": "section",
-      "top": 1142,
-      "height": 1469,
-      "words": 253,
+      "top": 1446,
+      "height": 1299,
+      "words": 245,
       "media": 2,
       "middle": 0,
       "heading": {
@@ -721,20 +721,20 @@
        "tag": "h3"
       },
       "left": 82,
-      "right": 35,
+      "right": 53,
       "textLeft": 82,
-      "textRight": 35,
+      "textRight": 53,
       "fullBleed": false,
       "footer": false,
       "hero": false,
-      "continues": true,
+      "continues": false,
       "pinned": false
      },
      {
-      "sel": "section.historia__parte",
+      "sel": "section.historia__parte.historia__parte--4",
       "tag": "section",
-      "top": 2659,
-      "height": 310,
+      "top": 2793,
+      "height": 414,
       "words": 127,
       "media": 0,
       "middle": 0,
@@ -744,20 +744,20 @@
        "tag": "h3"
       },
       "left": 82,
-      "right": 40,
+      "right": 217,
       "textLeft": 82,
-      "textRight": 40,
+      "textRight": 217,
       "fullBleed": false,
       "footer": false,
       "hero": false,
-      "continues": true,
+      "continues": false,
       "pinned": false
      },
      {
-      "sel": "section.historia__parte",
+      "sel": "section.historia__parte.historia__parte--5",
       "tag": "section",
-      "top": 3017,
-      "height": 268,
+      "top": 3255,
+      "height": 372,
       "words": 117,
       "media": 0,
       "middle": 0,
@@ -767,13 +767,13 @@
        "tag": "h3"
       },
       "left": 82,
-      "right": 40,
+      "right": 218,
       "textLeft": 82,
-      "textRight": 40,
+      "textRight": 218,
       "fullBleed": false,
       "footer": true,
       "hero": false,
-      "continues": true,
+      "continues": false,
       "pinned": false
      }
     ],
@@ -790,10 +790,10 @@
     "edges": [
      {
       "x": 82,
-      "n": 23
+      "n": 24
      }
     ],
-    "leftBlocks": 23,
+    "leftBlocks": 24,
     "bodySize": 16,
     "stage": false,
     "explains": true,
@@ -870,7 +870,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.13,
+     "under13": 0.11,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -887,7 +887,7 @@
      "size": 26,
      "top": 68
     },
-    "colourShare": 0.002
+    "colourShare": 0.004
    },
    "consoleErrors": []
   },
@@ -895,12 +895,13 @@
    "width": 390,
    "height": 844,
    "load": "load",
-   "screens": 5,
+   "screens": 6,
    "filled": [
-    0.52,
-    0.75,
-    0.8,
-    0.75,
+    0.67,
+    0.76,
+    0.93,
+    0.57,
+    0.76,
     0.8
    ],
    "motion": {
@@ -917,9 +918,9 @@
      "h": 844
     },
     "page": {
-     "height": 4155,
-     "screens": 4.9,
-     "words": 877,
+     "height": 4350,
+     "screens": 5.2,
+     "words": 934,
      "img": 0,
      "video": 0,
      "canvas": 2,
@@ -1002,7 +1003,7 @@
       "align": "left",
       "position": "center",
       "widthRatio": 0.92,
-      "top": 386,
+      "top": 362,
       "tag": "h2",
       "kind": "heading"
      }
@@ -1075,7 +1076,7 @@
      "sectionBgs": [
       {
        "color": "#131217",
-       "top": 2008,
+       "top": 1764,
        "hsl": {
         "h": 252,
         "s": 0.12,
@@ -1084,7 +1085,7 @@
       },
       {
        "color": "#212023",
-       "top": 2122,
+       "top": 1879,
        "hsl": {
         "h": 260,
         "s": 0.04,
@@ -1095,11 +1096,11 @@
      "textColors": [
       {
        "color": "#ffffff",
-       "share": 0.75
+       "share": 0.78
       },
       {
        "color": "#8a8c92",
-       "share": 0.13
+       "share": 0.11
       },
       {
        "color": "#b4b4b8",
@@ -1150,7 +1151,7 @@
       "div.banda-demo__fila 390px",
       "a.historias__enlace.historias__enlace--activa 358px",
       "a.historias__enlace 358px",
-      "div.pestanas 316px"
+      "div.historia__pestanas 316px"
      ],
      "outlinedBoxes": 1,
      "dashed": 0,
@@ -1180,21 +1181,25 @@
      "w": 390,
      "h": 844
     },
-    "pageH": 4155,
+    "pageH": 4350,
     "margins": {
      "left": 16,
-     "right": 16
+     "right": 17
     },
     "sections": [
      {
-      "sel": "nav.historias__indice",
-      "tag": "nav",
+      "sel": "div.historia__cabecera",
+      "tag": "div",
       "top": 144,
-      "height": 226,
-      "words": 62,
+      "height": 282,
+      "words": 70,
       "media": 0,
       "middle": 0,
-      "heading": null,
+      "heading": {
+       "text": "Cuando el agua sube en la Costa baja",
+       "size": 26,
+       "tag": "h2"
+      },
       "left": 16,
       "right": 21,
       "textLeft": 16,
@@ -1208,9 +1213,9 @@
      {
       "sel": "div.historia__lectura",
       "tag": "div",
-      "top": 498,
-      "height": 990,
-      "words": 250,
+      "top": 474,
+      "height": 1198,
+      "words": 312,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -1225,34 +1230,15 @@
       "fullBleed": false,
       "footer": false,
       "hero": false,
-      "continues": true,
-      "pinned": false
-     },
-     {
-      "sel": "div.historia__texto",
-      "tag": "div",
-      "top": 1580,
-      "height": 318,
-      "words": 88,
-      "media": 0,
-      "middle": 0,
-      "heading": null,
-      "left": 16,
-      "right": 22,
-      "textLeft": 16,
-      "textRight": 22,
-      "fullBleed": false,
-      "footer": false,
-      "hero": false,
-      "continues": true,
+      "continues": false,
       "pinned": false
      },
      {
       "sel": "section.tarjeta.historia__comparador",
       "tag": "section",
-      "top": 2008,
-      "height": 701,
-      "words": 71,
+      "top": 1764,
+      "height": 686,
+      "words": 63,
       "media": 2,
       "middle": 0,
       "heading": null,
@@ -1267,9 +1253,28 @@
       "pinned": false
      },
      {
+      "sel": "div.historia__texto",
+      "tag": "div",
+      "top": 2466,
+      "height": 438,
+      "words": 106,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 16,
+      "right": 20,
+      "textLeft": 16,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
       "sel": "div.historia__notas",
       "tag": "div",
-      "top": 2725,
+      "top": 2920,
       "height": 160,
       "words": 66,
       "media": 0,
@@ -1286,9 +1291,9 @@
       "pinned": false
      },
      {
-      "sel": "section.historia__parte",
+      "sel": "section.historia__parte.historia__parte--4",
       "tag": "section",
-      "top": 2993,
+      "top": 3188,
       "height": 518,
       "words": 127,
       "media": 0,
@@ -1305,13 +1310,13 @@
       "fullBleed": false,
       "footer": false,
       "hero": false,
-      "continues": true,
+      "continues": false,
       "pinned": false
      },
      {
-      "sel": "section.historia__parte",
+      "sel": "section.historia__parte.historia__parte--5",
       "tag": "section",
-      "top": 3559,
+      "top": 3754,
       "height": 476,
       "words": 117,
       "media": 0,
@@ -1328,7 +1333,7 @@
       "fullBleed": false,
       "footer": true,
       "hero": false,
-      "continues": true,
+      "continues": false,
       "pinned": false
      }
     ],
@@ -1345,10 +1350,10 @@
     "edges": [
      {
       "x": 16,
-      "n": 23
+      "n": 24
      }
     ],
-    "leftBlocks": 23,
+    "leftBlocks": 24,
     "bodySize": 16,
     "stage": false,
     "explains": true,
@@ -1425,7 +1430,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.14,
+     "under13": 0.13,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [

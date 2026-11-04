@@ -16,15 +16,15 @@ export const incendio: ContenidoHistoria = {
   queVeElRadar: {
     titulo: 'Qué ve el radar y por qué',
     parrafos: [
-      ['Un ', t('radar'), ' es un sensor activo: emite su propia señal y mide lo que vuelve. Por eso funciona de día y de noche, y la señal atraviesa el humo y las nubes. Lo que mide en cada punto se llama ', t('sigma0'), ' y se expresa en ', t('dB'), '.'],
-      ['Lo que vuelve depende de la ', t('rugosidad'), ' y de la ', t('dielectrica'), ' del terreno. Un bosque es un conjunto de ramas y troncos que esparcen la señal en todas direcciones; mientras más madera y más follaje, más señal vuelve.'],
-      ['Una onda de ', t('bandaL'), ' es larga y atraviesa las hojas para llegar a las ramas y los troncos. Cuando el fuego los consume, esa dispersión desaparece y la señal baja. Qué bandas y qué polarizaciones tendrán los productos de NISAR está pendiente de confirmar con la documentación oficial.'],
+      ['NISAR es una misión de satélite de ', t('radar'), ' de la NASA y la agencia espacial india (ISRO); sus detalles técnicos están pendientes de confirmar con la documentación oficial. Un radar de este tipo es un sensor activo: emite su propia señal y mide lo que vuelve. Por eso funciona de día y de noche, y la señal atraviesa el humo y las nubes. Lo que mide en cada punto se llama ', t('sigma0'), ' y se expresa en ', t('dB'), '.'],
+      ['Lo que vuelve depende de la ', t('rugosidad'), ' y de la ', t('dielectrica'), ' del terreno. Un bosque es un conjunto de ramas y troncos que esparcen la señal en todas direcciones; mientras más madera y más follaje, más señal vuelve, aunque solo hasta cierto punto: con mucha biomasa la señal se satura y deja de crecer.'],
+      ['Una onda de ', t('bandaL'), ' es larga y atraviesa las hojas para llegar a las ramas y los troncos. Cuando el fuego los consume, esa dispersión desaparece y la señal baja. Además, el radar emite y recibe la onda con una orientación determinada, la ', t('polarizacion'), ', y cada combinación responde distinto a las ramas, al suelo y a la humedad. Qué bandas y qué polarizaciones tendrán los productos de NISAR está pendiente de confirmar con la documentación oficial.'],
     ],
   },
   comparador: {
     titulo: 'Antes y después, en el comparador',
     introduccion: [
-      ['Desliza el divisor para pasar de la primera a la última pasada del escenario. La zona que se oscurece es la que perdió estructura. Para medir un punto o un cuadrante, abre el mismo escenario en el Observatorio.'],
+      ['Desliza el divisor para pasar de la pasada «antes» a la pasada «después» del escenario. La zona que se oscurece es la que perdió estructura. Para medir un punto o un cuadrante, abre el mismo escenario en el Observatorio.'],
     ],
     polarizacion: 'HV',
     porQue: ['La ', t('polarizacion'), ' ', t('HV'), ' es la que mejor resalta el bosque quemado: responde a la dispersión de las ramas y los troncos, y cae cuando esa estructura se consume.'],

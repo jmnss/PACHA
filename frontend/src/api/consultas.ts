@@ -1,4 +1,4 @@
-import { QueryClient, useMutation, useQuery } from '@tanstack/react-query'
+import { keepPreviousData, QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { ErrorApi, llamar } from './cliente'
 import type { components } from './tipos'
 
@@ -71,8 +71,10 @@ export const useCapa = (id: string | undefined, p: ParamsCapa | undefined) =>
   })
 
 /** Query (no mutación): el resultado se cachea por petición y así cuenta para la banda de demostración. */
-export const useCambio = (id: string | undefined, p: PeticionCambio | undefined) =>
+export const useCambio = (id: string | undefined, p: PeticionCambio | undefined, conservar = false) =>
   useQuery({
+    // `conservar`: mientras llega la petición nueva se sigue mostrando el resultado anterior (sin desmontar nada).
+    placeholderData: conservar ? keepPreviousData : undefined,
     queryKey: ['cambio', id, p],
     queryFn: () => llamar<ResultadoCambio>(`/api/escenarios/${e(id!)}/cambio`, p),
     enabled: !!id && !!p,
