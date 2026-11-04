@@ -106,8 +106,11 @@ body {
   --w-selector-min: 200px; /* selectores de la cabecera del Observatorio */
   --h-comparador: clamp(380px, 68vh, 660px); /* alto máximo de la imagen del comparador */
   --w-fecha-min: 140px;    /* selectores de fecha y polarización de «Antes y después» */
-  --h-mapa: clamp(320px, 56vh, 560px);        /* alto mínimo del mapa del Observatorio */
-  --h-mapa-movil: clamp(280px, 46vh, 400px);
+  --h-mapa: clamp(440px, calc(100vh - 240px), 780px); /* mapa inmersivo del Observatorio: el alto de la ventana menos cabecera y barra */
+  --h-mapa-max: 820px;
+  --h-mapa-movil: clamp(360px, 62vh, 540px);
+  --w-controles-mapa: 240px; /* placa flotante: mapa base y opacidad */
+  --w-leyenda-mapa: 280px;
   --w-kpi-min: 160px;      /* ancho mínimo de una cifra de la franja */
   --w-icono-min: 120px;    /* celda de la galería de iconos */
   --scrim: rgba(0, 0, 0, 0.6); /* fondo tras una hoja modal */

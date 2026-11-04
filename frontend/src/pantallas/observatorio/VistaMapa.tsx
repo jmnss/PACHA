@@ -11,6 +11,8 @@ import { Tarjeta } from '../../diseno/Tarjeta'
 import { formatearFecha } from '../../tiempo/fechas'
 import { dentroDeEcuador } from '../../mapa/dentroDeEcuador'
 import { CapaLienzo } from '../../mapa/CapaLienzo'
+import { ControlesMapa } from '../../mapa/ControlesMapa'
+import { MAPA_BASE_INICIAL, mapaRemotoActivo, type MapaBaseId } from '../../mapa/estilo'
 import { MapaBase } from '../../mapa/MapaBase'
 import type { Valores } from './parametros'
 import { BloqueTiempo } from './BloqueTiempo'
@@ -51,6 +53,18 @@ function useUltimo<T>(valor: T | undefined): T | undefined {
   return ref.current
 }
 
+const CLAVE_BASE = 'nisar.mapaBase'
+const BASES_VALIDAS: readonly string[] = ['oscuro', 'satelite', 'relieve']
+function baseGuardada(): MapaBaseId {
+  try {
+    const v = localStorage.getItem(CLAVE_BASE)
+    if (v && BASES_VALIDAS.includes(v)) return v as MapaBaseId
+  } catch { /* sin almacenamiento: se usa el mapa base por defecto */ }
+  return MAPA_BASE_INICIAL
+}
+/** En móvil la leyenda empieza plegada para no tapar el mapa. */
+const esMovil = () => typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 699px)').matches
+
 const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }) : undefined)
 const mensaje = (e: unknown) => (e instanceof ErrorApi ? e.mensaje : MENSAJE_RED)
 
@@ -64,6 +78,14 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
   const [pais, setPais] = useState(false)
   const [aviso, setAviso] = useState<string | null>(null)
   const simular = useSimular()
+  const [base, setBase] = useState<MapaBaseId>(baseGuardada)
+  const [opacidad, setOpacidad] = useState(0.85)
+  const [leyendaAbierta, setLeyendaAbierta] = useState(() => !esMovil())
+  const [conBases] = useState(mapaRemotoActivo)
+  const elegirBase = (id: MapaBaseId) => {
+    setBase(id)
+    try { localStorage.setItem(CLAVE_BASE, id) } catch { /* solo una comodidad */ }
+  }
 
   const pasada = esc.adquisiciones[tiempo.pasadaActiva]
   const variable = esc.variables[0]
@@ -119,11 +141,28 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
           </div>
         </div>
         <div className="vista-mapa__mapa">
-          <MapaBase bbox={pais ? undefined : esc.bbox} onClic={alClic} onFueraDeEcuador={alClic} marcadores={marcadores}>
+          <MapaBase base={base} bbox={pais ? undefined : esc.bbox} onClic={alClic} onFueraDeEcuador={alClic} marcadores={marcadores}>
             {capa && estilo && (
-              <CapaLienzo rejilla={capa.rejilla} bbox={capa.rejilla.bbox} rampa={estilo.rampa} categorias={estilo.categorias} />
+              <CapaLienzo rejilla={capa.rejilla} bbox={capa.rejilla.bbox} rampa={estilo.rampa} categorias={estilo.categorias} opacidad={opacidad} />
             )}
           </MapaBase>
+          <div className="vista-mapa__flota">
+            <div className="vista-mapa__arriba">
+              {capa && rotulo ? <p className="vista-mapa__capa num">{rotulo}</p> : <span />}
+              <ControlesMapa base={base} onBase={elegirBase} opacidad={opacidad} onOpacidad={setOpacidad} conBases={conBases} />
+            </div>
+            {capa && estilo && (
+              <div className="vista-mapa__leyenda">
+                <button type="button" className="vista-mapa__plegar" aria-expanded={leyendaAbierta} onClick={() => setLeyendaAbierta((a) => !a)}>
+                  {leyendaAbierta ? 'Ocultar leyenda' : 'Mostrar leyenda'}
+                </button>
+                {leyendaAbierta && (
+                  <Leyenda paleta={capa.paleta} vmin={capa.rejilla.vmin} vmax={capa.rejilla.vmax} unidad={capa.unidad}
+                    leyenda={capa.leyenda} variable={capa.variable} extremos={extremosDe(capa)} />
+                )}
+              </div>
+            )}
+          </div>
           {cargando && <div className="vista-mapa__estado"><Cargando texto="Calculando la capa…" filas={2} /></div>}
           {sinPareja && (
             <div className="vista-mapa__estado"><Vacio titulo="Sin cambio que mostrar" texto={SIN_PAREJA} /></div>
@@ -140,11 +179,6 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
           <div className="vista-mapa__aviso">
             <ErrorBloque mensaje={mensaje(simular.error)} onReintentar={() => simular.reset()} />
           </div>
-        )}
-        {capa && rotulo && <p className="vista-mapa__capa num">{rotulo}</p>}
-        {capa && estilo && (
-          <Leyenda paleta={capa.paleta} vmin={capa.rejilla.vmin} vmax={capa.rejilla.vmax} unidad={capa.unidad}
-            leyenda={capa.leyenda} variable={capa.variable} extremos={extremosDe(capa)} />
         )}
         <p className="vista-mapa__ayuda">
           {pais ? 'Pulsa un punto dentro de Ecuador para simular una escena allí.' : 'Pulsa el mapa para simular una escena en ese punto, o abre todo Ecuador para elegir otro lugar.'}

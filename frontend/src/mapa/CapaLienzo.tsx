@@ -1,8 +1,9 @@
-import { useContext, useEffect, useId } from 'react'
+import { useContext, useEffect, useId, useRef } from 'react'
 import type { ImageSource } from 'maplibre-gl'
 import type { Rejilla } from '../api/rejilla'
 import type { ColorCategoria, NombreRampa } from '../diseno/rampas'
 import { ContextoMapa } from './contexto'
+import { ANCLA_DATOS_LOCAL, ANCLA_DATOS_REMOTA } from './estilo'
 import { esquinas, pixelesDeRejilla } from './lienzo'
 
 type Props = {
@@ -10,11 +11,15 @@ type Props = {
   bbox: readonly [number, number, number, number]
   rampa: NombreRampa
   categorias?: readonly ColorCategoria[]
+  /** 0–1: deja ver el terreno bajo la capa. */
+  opacidad?: number
 }
 
 /** Pinta una Rejilla de la API en un lienzo y la coloca sobre el mapa (sin suavizado: se ve el píxel). */
-export function CapaLienzo({ rejilla, bbox, rampa, categorias }: Props) {
+export function CapaLienzo({ rejilla, bbox, rampa, categorias, opacidad = 1 }: Props) {
   const mapa = useContext(ContextoMapa)
+  const opacidadRef = useRef(opacidad)
+  opacidadRef.current = opacidad
   const id = `lienzo-${useId().replace(/:/g, '')}`
 
   useEffect(() => {
@@ -35,9 +40,16 @@ export function CapaLienzo({ rejilla, bbox, rampa, categorias }: Props) {
     if (fuente) fuente.updateImage({ url, coordinates })
     else {
       mapa.addSource(id, { type: 'image', url, coordinates })
-      mapa.addLayer({ id, type: 'raster', source: id, paint: { 'raster-resampling': 'nearest', 'raster-fade-duration': 0 } }, 'exterior')
+      // Orden: base → datos → etiquetas. Sin mapa base remoto, los datos van bajo la máscara de fuera de Ecuador.
+      const antes = mapa.getLayer(ANCLA_DATOS_REMOTA) ? ANCLA_DATOS_REMOTA : ANCLA_DATOS_LOCAL
+      mapa.addLayer({ id, type: 'raster', source: id,
+        paint: { 'raster-resampling': 'nearest', 'raster-fade-duration': 0, 'raster-opacity': opacidadRef.current } }, antes)
     }
   }, [mapa, id, rejilla, bbox, rampa, categorias])
+
+  useEffect(() => {
+    if (mapa?.getLayer(id)) mapa.setPaintProperty(id, 'raster-opacity', opacidad)
+  }, [mapa, id, opacidad])
 
   useEffect(() => () => {
     if (mapa && mapa.getStyle()) {

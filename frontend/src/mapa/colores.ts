@@ -12,9 +12,9 @@ export const COLORES_MAPA = {
   /** Opacidades (0–1), no colores. */
   opacidadFrontera: 0.6,
   opacidadExterior: 0.8,
-  /** Calles y agua de OpenFreeMap: tenues, solo contexto. */
-  calles: '#3a3a3e',
-  aguaRemota: '#101014',
+  /** Límites de provincias sobre los mapas base remotos (tenues, con opacidadLimites). */
+  limites: '#ffffff',
+  opacidadLimites: 0.3,
   /** Marcador de punto elegido. */
   marcador: '#e5b93c',
   marcadorBorde: '#000000',
