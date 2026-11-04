@@ -1,6 +1,6 @@
 # INFORME — Migración a React
 
-Estado: **Fase 1 revisada (análisis, diseño, plan y revisión crítica). Fase 2 sin empezar.**
+Estado: **Fase 2 en curso: bloques 0, 1 y 2 completos (pytest 164 + 2 omitidas por diseño, unittest 13 OK).**
 Última actualización: 2026-11-04
 
 Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea.
@@ -9,7 +9,43 @@ Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar ca
 
 | Tarea | Commit | Verificación |
 |---|---|---|
-| — | — | — |
+| chore: entorno reproducible y dependencias de la API | `fb1abf1` | pruebas del bloque en verde |
+| test: caracterización del núcleo científico | `35256c7` | pruebas del bloque en verde |
+| fix: textos honestos en el núcleo y licencia MIT provisional | `5dc9540` | pruebas del bloque en verde |
+| chore: dejar de versionar __pycache__ | `6d3f97f` | pruebas del bloque en verde |
+| feat(datos): contrato de datos genérico | `dc49606` | pruebas del bloque en verde |
+| feat(datos): generador sintético reproducible | `5b90655` | pruebas del bloque en verde |
+| feat(datos): proveedor de demostración | `d11a611` | pruebas del bloque en verde |
+| feat(datos): esqueleto del proveedor real y selección | `66eb201` | pruebas del bloque en verde |
+| test(datos): conformidad del contrato con dos proveedores | `ee10ae5` | pruebas del bloque en verde |
+| test(datos): fortalece la suite de conformidad (origen, medir, rutas deterministas) | `16bf072` | pruebas del bloque en verde |
+| feat(api): esqueleto y arranque único | `ea07e6d` | pruebas del bloque en verde |
+| feat(api): rejillas cuantizadas y reducidas | `2effd83` | pruebas del bloque en verde |
+| feat(api): tipos y escenarios | `9fa768d` | pruebas del bloque en verde |
+| feat(api): capas, cambio y medición | `b6f6d01` | pruebas del bloque en verde |
+| feat(api): simulación y fotogramas | `ca5247e` | pruebas del bloque en verde |
+| feat(api): contexto climático | `90788d6` | pruebas del bloque en verde |
+| feat(api): contrato OpenAPI | `d8efd3f` | pruebas del bloque en verde |
+
+## Decisiones tomadas sin supervisión
+
+- `__pycache__` dejó de versionarse (`git rm --cached`) para tener árbol limpio.
+- No se tocó `fecha_evento` de `ec_pedernales` en `data/nisar_sample.csv` (2026-04-16 coincide con el aniversario de un sismo real); **pendiente del equipo** decidir si se cambia.
+- El contrato de datos creció de forma aditiva: `ResultadoCambio.tablas/vectores/capas_extra`, `CapaRaster.instante`, `Control/TipoCambio` (necesarios para campo de flujo, tabla por parcela y controles de simulación).
+- La API no importa `modelo/` salvo `/api/contexto`; los tipos y controles llegan por `ProveedorDatos.tipos()`.
+- `/api/salud` devuelve `hay_sinteticos`; **la banda de demostración del frontend debe usar ese campo**, no `origen_tipo`.
+- La validación «dentro de Ecuador» de la simulación es una caja aproximada en `datos/geografia.py`.
+- `/api/simulacion/escenario` no se cachea en la API; `/fotogramas` sí (12 entradas).
+- Las fechas del contexto climático: `fecha_generacion` es la hora de la petición, no la fecha del dato.
+
+## Riesgos para la integración con datos reales
+
+- `/cambio` puede ser pesado con rejillas reales (hasta 6 capas por respuesta): pedir capas extra a demanda.
+- `/medicion` recalcula el cambio solo para conocer la malla: añadir caché.
+
+## Pendientes menores diferidos (de las revisiones)
+
+Ver `.superpowers/sdd/plan-migracion/progress.md` (no versionado): validar `max_lado`/`vmin` NaN en `api/encoding.py`; ids únicos de adquisición en `Escenario`; escena cacheada mutable.
 
 ## Pendientes
 
