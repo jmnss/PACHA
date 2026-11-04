@@ -69,28 +69,31 @@ def _sitio_catalogo(sitio_id: str) -> dict:
 
 
 def _generar_sin_cache(sitio_id: str, parametros: dict | None = None,
-                       sitio: dict | None = None) -> nisar.Escena:
+                       sitio: dict | None = None, ajustes: dict | None = None) -> nisar.Escena:
     p = _parametros(parametros)
     s = dict(sitio) if sitio is not None else _sitio_catalogo(sitio_id)
     s.setdefault("id", sitio_id)
     return nisar.simular(s, semilla=p["semilla"], looks=p["looks"], orbita=p["orbita"],
-                         estacional=p["estacional"])
+                         ajustes=ajustes or None, estacional=p["estacional"])
 
 
 @lru_cache(maxsize=32)
 def _generar_cacheada(clave: str) -> nisar.Escena:
     d = json.loads(clave)
-    return _generar_sin_cache(d["sitio_id"], d["parametros"], d["sitio"])
+    return _generar_sin_cache(d["sitio_id"], d["parametros"], d["sitio"], d["ajustes"])
 
 
 def generar_escena(sitio_id: str, parametros: dict | None = None,
-                   sitio: dict | None = None) -> nisar.Escena:
-    """Escena sintética en memoria. La clave de caché es canónica (parámetros completos + sitio).
+                   sitio: dict | None = None, ajustes: dict | None = None) -> nisar.Escena:
+    """Escena sintética en memoria. La clave de caché es canónica (parámetros completos + sitio + ajustes).
+
+    `ajustes`: parámetros físicos del modelo en unidades del modelo (como `nisar.simular`).
 
     La escena devuelta se comparte entre llamadas iguales: no se debe modificar.
     """
     clave = json.dumps(
-        {"sitio_id": sitio_id, "parametros": _parametros(parametros), "sitio": sitio},
+        {"sitio_id": sitio_id, "parametros": _parametros(parametros), "sitio": sitio,
+         "ajustes": dict(ajustes) if ajustes else None},
         sort_keys=True, default=str,
     )
     return _generar_cacheada(clave)
