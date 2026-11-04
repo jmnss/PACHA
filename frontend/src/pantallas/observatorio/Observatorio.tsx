@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
-import { useCambio, useContexto, useEscenario, useEscenarios, useTipos, type Escenario, type TipoCambio } from '../../api/consultas'
+import { useCambio, useContexto, useEscenario, useEscenarios, useSimular, useTipos, type Escenario, type TipoCambio } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { Cargando, ErrorBloque } from '../../diseno/Estados'
@@ -10,7 +11,7 @@ import { Pestanas } from '../../diseno/Pestanas'
 import { Selector } from '../../diseno/Selector'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
 import { useMovil } from '../../estado/useMovil'
-import { codificar, type Control, type Valores } from './parametros'
+import { codificar, decodificar, type Control, type Valores } from './parametros'
 import { PanelSimulacion } from './PanelSimulacion'
 import { useSimulacion } from './useSimulacion'
 import { hallazgo, parejaValida } from './derivados'
@@ -55,7 +56,33 @@ export default function Observatorio() {
   const tipos = useTipos()
   const irA = (id: string) => cambiar({ escenario: id, antes: '', despues: '', t: '', pol: '', p: '', c: '', par: '' })
 
-  if (escenario.isPending) {
+  // Un enlace a un escenario simulado caducado (404, id con «~») con `par=`: se vuelve a simular la base
+  // con los parámetros del enlace y se reemplaza la URL. Un solo intento, así que no hay bucle.
+  const cliente = useQueryClient()
+  const resimular = useSimular()
+  const intentado = useRef(false)
+  const caducado = escenario.isError && escenario.error instanceof ErrorApi && escenario.error.estado === 404
+  const listaBase = escenarios.data
+  useEffect(() => {
+    if (!caducado || intentado.current || !url.escenario.includes('~') || !url.par) return
+    if (!listaBase || tipos.isPending) return
+    const baseId = url.escenario.split('~')[0]
+    const baseEsc = listaBase.find((x) => x.id === baseId)
+    if (!baseEsc) return
+    const controles = tipos.data?.find((t) => t.id === baseEsc.tipo_cambio)?.controles ?? []
+    const valores = decodificar(url.par, controles)
+    if (!Object.keys(valores).length) return
+    intentado.current = true
+    resimular.mutate({ escenario_id: baseId, parametros: valores }, {
+      onSuccess: (nuevo) => {
+        cliente.setQueryData(['escenario', nuevo.id], nuevo)
+        cambiar({ escenario: nuevo.id, par: codificar(valores) }, { reemplazar: true })
+      },
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [caducado, url.escenario, url.par, listaBase, tipos.isPending, tipos.data])
+
+  if (escenario.isPending || resimular.isPending) {
     return (
       <>
         <CabeceraPantalla titulo="Observatorio" hallazgo={PREGUNTA} />

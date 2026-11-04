@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import Observatorio from './Observatorio'
+import { codificar } from './parametros'
 import { hallazgo, indiceAnterior, parejaValida, temporadasLluviosas, vecinas } from './derivados'
 
 // MapLibre no corre en jsdom: el mapa falso ofrece dos «clics» y deja pasar a sus hijos.
@@ -212,6 +213,30 @@ describe('Observatorio · casos límite', () => {
     fireEvent.click(await screen.findByRole('button', { name: 'Volver a Humedal de prueba' }))
     await listo()
     expect(screen.getByTestId('ubicacion').textContent).toContain('escenario=ec_x')
+  })
+
+  it('un enlace simulado caducado con par= vuelve a simular la base una sola vez y reemplaza la URL', async () => {
+    montar(`/observatorio?escenario=ec_x~caducado&par=${codificar({ lat: -1, lon: -80 })}`)
+    await waitFor(() => expect(posts()).toHaveLength(1))
+    expect(posts()[0].cuerpo).toEqual({ escenario_id: 'ec_x', parametros: { lat: -1, lon: -80 } })
+    await waitFor(() => expect(screen.getByTestId('ubicacion').textContent).toContain('escenario=ec_x%7Eabc123'))
+    await listo()
+    expect(posts()).toHaveLength(1)
+  })
+
+  it('si la nueva simulación falla no reintenta y mantiene «Volver a…»', async () => {
+    const previo = vi.mocked(fetch).getMockImplementation()!
+    vi.stubGlobal('fetch', vi.fn((url: string, init?: RequestInit) => {
+      if (url === '/api/simulacion/escenario') {
+        llamadas.push({ url, metodo: 'POST', cuerpo: undefined })
+        return json({ mensaje: 'falló' }, 500)
+      }
+      return previo(url, init)
+    }))
+    montar(`/observatorio?escenario=ec_x~caducado&par=${codificar({ lat: -1, lon: -80 })}`)
+    expect(await screen.findByRole('button', { name: 'Volver a Humedal de prueba' })).toBeInTheDocument()
+    expect(posts()).toHaveLength(1)
+    expect(screen.getByRole('alert')).toHaveTextContent('El escenario no existe.')
   })
 
   it('el mapa y el reloj hablan de la misma pasada: la anterior o igual al instante', async () => {
