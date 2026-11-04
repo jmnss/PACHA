@@ -8,7 +8,10 @@ import { pintarPar } from './pintar'
 beforeAll(() => {
   class PE extends MouseEvent {
     pointerId: number
-    constructor(tipo: string, init: PointerEventInit = {}) { super(tipo, init); this.pointerId = init.pointerId ?? 1 }
+    isPrimary: boolean
+    constructor(tipo: string, init: PointerEventInit = {}) {
+      super(tipo, init); this.pointerId = init.pointerId ?? 1; this.isPrimary = init.isPrimary ?? true
+    }
   }
   vi.stubGlobal('PointerEvent', PE)
 })
@@ -20,16 +23,16 @@ function rejilla(codigos: number[], vmin = -30, vmax = 0, lado = 2): Rejilla {
 }
 const A = rejilla([1, 64, 128, 255])
 
-function montar(extra: Record<string, unknown> = {}) {
+function montar(extra: Record<string, unknown> = {}, izq = 0, arriba = 0) {
   const props = {
     antes: A, despues: A, rampa: 'gris' as const, etiquetaAntes: 'Antes · 12 abr 2026', etiquetaDespues: 'Después · 26 nov 2026',
-    titulo: 'σ⁰ HH, dB', origen, unidad: 'dB', ...extra,
+    titulo: 'HH, dB', origen, unidad: 'dB', ...extra,
   }
   const r = render(<Comparador {...props} />)
   const esc = r.container.querySelector('.comparador__escenario') as HTMLElement | null
   if (!esc) return { ...r, esc, gesto: null as never, divisor: null as never }
-  // Escenario de 200 × 100 px en el origen.
-  esc.getBoundingClientRect = () => ({ left: 0, top: 0, width: 200, height: 100, right: 200, bottom: 100, x: 0, y: 0, toJSON() {} })
+  // Escenario de 200 × 100 px, con su esquina en (izq, arriba).
+  esc.getBoundingClientRect = () => ({ left: izq, top: arriba, width: 200, height: 100, right: izq + 200, bottom: arriba + 100, x: izq, y: arriba, toJSON() {} })
   return { ...r, esc, gesto: screen.getByTestId('comparador-gesto'), divisor: screen.getByRole('slider') }
 }
 
@@ -37,7 +40,7 @@ describe('Comparador', () => {
   it('el divisor empieza al 50 %', () => {
     const { divisor } = montar()
     expect(divisor).toHaveAttribute('aria-valuenow', '50')
-    expect(screen.getByText('σ⁰ HH, dB')).toBeInTheDocument()
+    expect(screen.getByText('HH, dB')).toBeInTheDocument()
     expect(screen.getByText('Antes · 12 abr 2026')).toBeInTheDocument()
   })
 
@@ -99,6 +102,57 @@ describe('Comparador', () => {
     fireEvent.pointerUp(gesto, { clientX: 101, clientY: 50 })
     expect(onPunto).toHaveBeenCalledTimes(1)
     expect(onCuadrante).not.toHaveBeenCalled()
+  })
+
+  it('las coordenadas son relativas a la imagen aunque esté desplazada en la página', () => {
+    const onPunto = vi.fn(), onCuadrante = vi.fn()
+    const { gesto, divisor } = montar({ onPunto, onCuadrante }, 300, 80)
+    fireEvent.pointerDown(gesto, { clientX: 350, clientY: 105 })
+    fireEvent.pointerUp(gesto, { clientX: 350, clientY: 105 })
+    expect(onPunto).toHaveBeenCalledWith([0.25, 0.25])
+    fireEvent.pointerDown(gesto, { clientX: 340, clientY: 100 })
+    fireEvent.pointerMove(gesto, { clientX: 400, clientY: 140 })
+    fireEvent.pointerUp(gesto, { clientX: 400, clientY: 140 })
+    expect(onCuadrante).toHaveBeenCalledWith([0.2, 0.2, 0.5, 0.6])
+    fireEvent.pointerDown(divisor, { clientX: 400, clientY: 100 })
+    expect(divisor).toHaveAttribute('aria-valuenow', '50')
+    fireEvent.pointerMove(divisor, { clientX: 450, clientY: 100 })
+    expect(divisor).toHaveAttribute('aria-valuenow', '75')
+  })
+
+  it('ignora el botón secundario y los punteros no primarios', () => {
+    const onPunto = vi.fn()
+    const { gesto } = montar({ onPunto })
+    fireEvent.pointerDown(gesto, { clientX: 50, clientY: 25, button: 2 })
+    fireEvent.pointerUp(gesto, { clientX: 50, clientY: 25, button: 2 })
+    fireEvent.pointerDown(gesto, { clientX: 50, clientY: 25, isPrimary: false })
+    fireEvent.pointerUp(gesto, { clientX: 50, clientY: 25, isPrimary: false })
+    expect(onPunto).not.toHaveBeenCalled()
+  })
+
+  it('siempre muestra la leyenda y el sello de origen, también con aviso o error', () => {
+    const { unmount } = montar()
+    expect(screen.getByRole('group', { name: /Leyenda/ })).toBeInTheDocument()
+    expect(screen.getByText(/^Sintético/)).toBeInTheDocument()
+    unmount()
+    montar({ despues: rejilla([1, 2, 3, 4], -20, 0) }) // rangos distintos: aviso
+    expect(screen.getByText(/rangos distintos/)).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: /Leyenda/ })).toBeInTheDocument()
+    expect(screen.getByText(/^Sintético/)).toBeInTheDocument()
+  })
+
+  it('con extensiones distintas (error) sigue mostrando leyenda y sello', () => {
+    montar({ despues: rejilla([1, 2, 3, 4, 5, 6, 7, 8, 9], -30, 0, 3) })
+    expect(screen.getByRole('alert')).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: /Leyenda/ })).toBeInTheDocument()
+    expect(screen.getByText(/^Sintético/)).toBeInTheDocument()
+  })
+
+  it('si el origen de «después» difiere, se ven los dos sellos', () => {
+    const otro = { ...(origen as object), fuente: 'otra fuente' } as never
+    montar({ origenDespues: otro })
+    expect(screen.getAllByText(/^Sintético/)).toHaveLength(2)
+    expect(screen.getByText(/otra fuente/)).toBeInTheDocument()
   })
 
   it('marca el punto y el cuadrante recibidos', () => {

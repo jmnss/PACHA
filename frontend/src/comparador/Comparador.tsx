@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
+import type { ReactNode } from 'react'
 import type { Rejilla } from '../api/rejilla'
 import { Leyenda } from '../diseno/Leyenda'
 import { SelloOrigen } from '../diseno/SelloOrigen'
-import type { Origen } from '../diseno/origen'
+import { textoSello, type Origen } from '../diseno/origen'
 import type { ColorCategoria, NombreRampa, PaletaContrato } from '../diseno/rampas'
 import { normalizar, ordenarCuadrante, pintarPar, UMBRAL_ARRASTRE } from './pintar'
 
@@ -16,7 +17,7 @@ interface Props {
   etiquetaAntes: string
   etiquetaDespues: string
   /** Variable y polarización activa, p. ej. «σ⁰ HH, dB». */
-  titulo?: string
+  titulo?: ReactNode
   /** Colores de las categorías; si se da, la capa es categórica (códigos directos). */
   categorias?: readonly ColorCategoria[]
   onPunto?: (p: Punto) => void
@@ -25,6 +26,8 @@ interface Props {
   punto?: Punto | null
   cuadrante?: Cuadrante | null
   origen: Origen
+  /** Origen de la imagen «después» si difiere del de «antes»; entonces se muestran ambos sellos. */
+  origenDespues?: Origen
   unidad?: string
   /** Nombre de la variable de la capa (elige la rampa y las categorías de la leyenda). */
   variable?: string
@@ -53,7 +56,7 @@ function capturar(el: Element, id: number) {
 /** Dos imágenes de la misma extensión con un divisor deslizante; clic = punto, arrastre = cuadrante. */
 export function Comparador({
   antes, despues, rampa, etiquetaAntes, etiquetaDespues, titulo, categorias, onPunto, onCuadrante,
-  punto, cuadrante, origen, unidad = 'valor', variable, leyenda,
+  punto, cuadrante, origen, origenDespues, unidad = 'valor', variable, leyenda,
 }: Props) {
   const [pos, setPos] = useState(50)
   const escenario = useRef<HTMLDivElement>(null)
@@ -106,6 +109,7 @@ export function Comparador({
 
   // ---- gesto sobre la imagen: punto o cuadrante ----
   const alBajarImagen = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0 || !e.isPrimary) return
     const p = normalizar(e.clientX, e.clientY, rect())
     gesto.current = { inicio: p, actual: p, arrastre: false }
     capturar(e.currentTarget, e.pointerId)
@@ -170,6 +174,9 @@ export function Comparador({
       <Leyenda paleta={paletaDeRampa(rampa, !!categorias)} vmin={vmin} vmax={vmax} unidad={unidad}
         variable={variable ?? VARIABLE_DE_RAMPA[rampa]} leyenda={leyenda} />
       <SelloOrigen origen={origen} />
+      {origenDespues && textoSello(origenDespues) !== textoSello(origen) && (
+        <SelloOrigen origen={origenDespues} />
+      )}
     </figure>
   )
 }

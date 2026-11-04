@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { formatearFecha } from '../tiempo/fechas'
 import { useCambio, useEscenarios, type Escenario, type ResultadoCambio } from '../api/consultas'
 import { Barras } from '../graficos/Barras'
 import { Linea } from '../graficos/Linea'
@@ -96,19 +97,28 @@ function TarjetaComparador({ esc, cambio }: { esc: Escenario; cambio: ResultadoC
   const a = cambio.antes
   const d = cambio.despues
   const rampa = rampaDePaleta(a.paleta, a.variable) ?? 'gris'
-  const cat = a.paleta === 'categorias' ? coloresDeCategorias(a.variable, a.leyenda?.length ?? 0) : undefined
+  const cat = useMemo(
+    () => (a.paleta === 'categorias' ? coloresDeCategorias(a.variable, a.leyenda?.length ?? 0) : undefined),
+    [a.paleta, a.variable, a.leyenda],
+  )
   const pol = a.polarizacion ? ` ${a.polarizacion}` : ''
-  const fecha = (s: string | null) => (s ? s.slice(0, 10) : '')
+  // La fecha sale del instante de la Adquisición del escenario; sin fecha válida, solo «Antes»/«Después».
+  const etiqueta = (lado: string, id: string | null) => {
+    const f = formatearFecha(esc.adquisiciones.find((x) => x.id === id)?.instante)
+    return f ? `${lado} · ${f}` : lado
+  }
   return (
     <Tarjeta titulo="Comparador antes/después">
       <Comparador
         antes={a.rejilla} despues={d.rejilla} rampa={rampa} categorias={cat} variable={a.variable} leyenda={a.leyenda}
-        unidad={a.unidad} titulo={`${a.unidad === 'dB' ? 'σ⁰' : a.variable.replace(/_/g, ' ')}${pol}, ${a.unidad}`}
-        etiquetaAntes={`Antes · ${fecha(a.instante ?? a.adquisicion_id)}`} etiquetaDespues={`Después · ${fecha(d.instante ?? d.adquisicion_id)}`}
+        unidad={a.unidad} titulo={<>{a.unidad === 'dB'
+          ? <Termino nombre="σ⁰" explicacion="Cuánta señal vuelve al satélite desde cada punto del suelo. El agua lisa devuelve poca; las copas de los árboles, mucha." />
+          : a.variable.replace(/_/g, ' ')}{pol}, {a.unidad}</>}
+        etiquetaAntes={etiqueta('Antes', a.adquisicion_id)} etiquetaDespues={etiqueta('Después', d.adquisicion_id)}
         punto={punto} cuadrante={cuadrante}
         onPunto={(p) => { setPunto(p); setCuadrante(null) }}
         onCuadrante={(c) => { setCuadrante(c); setPunto(null) }}
-        origen={a.origen ?? esc.origen} />
+        origen={a.origen} origenDespues={d.origen} />
     </Tarjeta>
   )
 }
