@@ -1,6 +1,6 @@
 # INFORME — Migración a React
 
-Estado: **Fase 2 en curso: bloques 0, 1 y 2 completos (pytest 164 + 2 omitidas por diseño, unittest 13 OK).**
+Estado: **Fase 2 INTERRUMPIDA por límite de uso. Completos: bloques 0, 1, 2 y tareas 3.1–3.7 (3.8 implementada, sin revisar). Faltan 3.9, 3.10, bloque 4 (pantallas) y bloque 5 (cierre).** La app todavía no tiene pantallas Historias ni Observatorio; solo existe la galería `/_sistema`.
 Última actualización: 2026-11-04
 
 Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea.
@@ -47,7 +47,15 @@ Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar ca
 
 Ver `.superpowers/sdd/plan-migracion/progress.md` (no versionado): validar `max_lado`/`vmin` NaN en `api/encoding.py`; ids únicos de adquisición en `Escenario`; escena cacheada mutable.
 
-## Pendientes
+## Pendientes por la interrupción (retomar aquí)
+
+1. Revisar la Tarea 3.8 (commit `7c32dc2`, pruebas verdes pero sin revisor).
+2. Tareas 3.9 (comparador), 3.10 (exportaciones con origen), punto de control 3.
+3. Bloque 4: 4.1–4.5 (Observatorio y Historias). Bloque 5: 5.1–5.3 (e2e, README bilingüe, informe).
+4. Diferidos de las revisiones: `React.lazy` del mapa (bundle 1,17 MB); documentar en `docs/contrato-datos.md` que la fila 0 de la rejilla es el norte; `revision_visual.sh` deja `dist` compilado con `VITE_MAPA_REMOTO=0` (usar otro `outDir`); el decodificador API→lienzo debe usar `colorear` con categorías (código k → color k−1) y aún no hay prueba de integración; pruebas débiles de honestidad en `useHayDatosSinteticos`.
+5. El plan original (`docs/plan-migracion.md`) sigue siendo la guía; el ledger de ejecución (`.superpowers/sdd/plan-migracion/progress.md`) no está versionado.
+
+## Pendientes (plan completo)
 
 Primera noche, en orden (`docs/plan-migracion.md`): 0.1–0.3, 1.1–1.5, 2.1–2.7, 3.1–3.10, 4.1–4.5,
 5.1–5.3. Noche 2: N2.1–N2.6. Con datos reales: sección «Integración de datos reales».
