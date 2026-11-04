@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import type { Origen } from '../diseno/origen'
-import { aCsv } from './csv'
+import { aCsv, celdaCsv } from './csv'
 import { aPng, pixelesFranja } from './png'
 
 const sint = { tipo: 'sintetico', fuente: 'Generador de demostración', generador: 'nisar-demo', version: '1', semilla: 7, fecha_generacion: '2026-11-05T10:00:00Z' } as unknown as Origen
@@ -31,6 +31,14 @@ describe('aCsv', () => {
     const t = aCsv([{ a: 'di "hola", ok', b: 'x\ny', c: null, d: 1.5 }], ['a', 'b', 'c', 'd'], real)
     expect(t).toContain('"di ""hola"", ok","x\ny",,1.5')
   })
+  it('neutraliza también espacios iniciales antes de = + - @ y tab/CR iniciales', () => {
+    expect(celdaCsv(' =1+1')).toBe("' =1+1")
+    expect(celdaCsv('  @cmd')).toBe("'  @cmd")
+    expect(celdaCsv('\tx')).toBe("'\tx")
+    expect(celdaCsv('\rx')).toBe('"\'\rx"')
+    expect(celdaCsv(' hola')).toBe(' hola')
+  })
+
   it('previene inyección de fórmulas en texto, no en números', () => {
     const t = aCsv([{ a: '=1+1', b: '@x', c: '-5', d: -5, e: '+cmd' }], ['a', 'b', 'c', 'd', 'e'], real)
     expect(t).toContain("'=1+1,'@x,'-5,-5,'+cmd")

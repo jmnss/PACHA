@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { MutationObserver, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
@@ -51,9 +51,35 @@ describe('useHayDatosSinteticos', () => {
   })
 
   it('true si salud dice hay_sinteticos', async () => {
-    const { result } = montar(salud(true))
-    await new Promise((r) => setTimeout(r, 20))
+    const { result, cliente } = montar(salud(true))
+    await waitFor(() => expect(cliente.getQueryState(['salud'])?.status).toBe('success'))
     expect(result.current).toBe(true)
+  })
+
+  it('false con hay_sinteticos=false y la caché sin datos de origen', async () => {
+    const { result, cliente } = montar(salud(false))
+    await waitFor(() => expect(cliente.getQueryState(['salud'])?.status).toBe('success'))
+    expect(cliente.getQueryCache().getAll().filter((q) => q.queryKey[0] !== 'salud')).toHaveLength(0)
+    expect(result.current).toBe(false)
+  })
+
+  it('una simulación (mutación) sintética en caché activa la banda', async () => {
+    const { result, cliente } = montar(salud(false))
+    await waitFor(() => expect(result.current).toBe(false))
+    await act(async () => {
+      await new MutationObserver(cliente, { mutationFn: async () => ({ origen: origen('sintetico') }) }).mutate()
+    })
+    await waitFor(() => expect(result.current).toBe(true))
+  })
+
+  it('una simulación real en caché no la activa', async () => {
+    const { result, cliente } = montar(salud(false))
+    await waitFor(() => expect(result.current).toBe(false))
+    await act(async () => {
+      await new MutationObserver(cliente, { mutationFn: async () => ({ origen: origen('real') }) }).mutate()
+    })
+    expect(cliente.getMutationCache().getAll()).toHaveLength(1)
+    expect(result.current).toBe(false)
   })
 
   it('true si salud falla', async () => {
@@ -64,7 +90,7 @@ describe('useHayDatosSinteticos', () => {
         <QueryClientProvider client={cliente}>{children}</QueryClientProvider>
       ),
     })
-    await new Promise((r) => setTimeout(r, 20))
+    await waitFor(() => expect(cliente.getQueryState(['salud'])?.status).toBe('error'))
     expect(result.current).toBe(true)
   })
 })

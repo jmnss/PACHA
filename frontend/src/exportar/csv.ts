@@ -27,14 +27,14 @@ function limpia(t: unknown): string {
 }
 
 /** Escapa una celda: null/undefined → vacío; números con punto decimal; texto que empieza por = + - @
- * (o tabulador/CR) se prefija con comilla simple contra inyección de fórmulas; comillas, comas y saltos
+ * (con o sin espacios delante) o por tabulador/CR se prefija con comilla simple contra inyección de fórmulas; comillas, comas y saltos
  * de línea se entrecomillan. */
 export function celdaCsv(v: Celda): string {
   if (v === null || v === undefined) return ''
   if (typeof v === 'number') return Number.isFinite(v) ? String(v) : ''
   if (typeof v === 'boolean') return v ? 'true' : 'false'
   let t = String(v)
-  if (/^[=+\-@\t\r]/.test(t)) t = `'${t}`
+  if (/^[ ]*[=+\-@]|^[\t\r]/.test(t)) t = `'${t}`
   return /[",\r\n]/.test(t) ? `"${t.replace(/"/g, '""')}"` : t
 }
 
