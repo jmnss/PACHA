@@ -43,7 +43,9 @@ def test_antes_igual_despues_422(cliente):
         assert r.status_code == 422 and "Elige dos fechas distintas" in r.json()["mensaje"]
 
 
-def test_antes_posterior_a_despues_422_con_mensaje(cliente):
+def test_antes_posterior_a_despues_422_con_mensaje(cliente_demo):
+    # Solo el demo valida el orden: el proveedor ficticio de pruebas no lo exige.
+    cliente = cliente_demo
     esc, a, d = _par(cliente)
     for ruta, extra in (("cambio", {}), ("medicion", {"punto": [0.5, 0.5]})):
         r = cliente.post(f"/api/escenarios/{esc['id']}/{ruta}", json={"antes": d, "despues": a, **extra})
