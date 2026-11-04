@@ -16,25 +16,34 @@ export const RAMPAS: Record<NombreRampa, string[]> = {
   ceniza: ['#2a2a2c', '#6e6e73', '#cfcfd2'],
 }
 
-/** Categorías con su muestra exacta (§4). Sin cambio y sin dato: transparente (código 0). */
-export const CATEGORIAS = {
-  aguaAbierta: { etiqueta: 'Agua abierta', color: '#4f8fc4' },
-  vegetacionInundada: { etiqueta: 'Vegetación inundada', color: '#5fc39c' },
-  quemado: { etiqueta: 'Quemado', color: '#e0773a' },
-  aumento: { etiqueta: 'Aumento > 3 dB', color: '#4f8fc4' },
-  disminucion: { etiqueta: 'Disminución > 3 dB', color: '#e0773a' },
-  deslizamiento: { etiqueta: 'Deslizamiento', color: '#e5566f' },
-} as const
+/** Color de una categoría: hex de §4, o `null` = transparente (p. ej. «Sin cambio»). */
+export type ColorCategoria = string | null
 
 /**
- * Conjuntos de categorías que coexisten en una misma capa. Agua abierta y «aumento > 3 dB» comparten
- * color por diseño (§4) porque nunca se mezclan; por eso la distinguibilidad se exige por conjunto.
+ * Colores por VARIABLE categórica (código k de la rejilla ↔ posición k-1 de la leyenda; 0 = sin dato,
+ * siempre transparente). Solo hex de §4. Los colores heredados que trae la leyenda del contrato se
+ * ignoran. Agua abierta y «aumento > 3 dB» comparten tono (#4f8fc4) y quemado y «disminución > 3 dB»
+ * comparten #e0773a porque nunca coexisten en una capa; la distinguibilidad se exige por variable.
  */
-export const CONJUNTOS_CATEGORIAS: Record<string, (keyof typeof CATEGORIAS)[]> = {
-  inundacion: ['aguaAbierta', 'vegetacionInundada'],
-  cambioDb: ['aumento', 'disminucion'],
-  incendio: ['quemado'],
-  ladera: ['deslizamiento'],
+export const COLORES_CATEGORIA: Record<string, ColorCategoria[]> = {
+  // Nueva inundación, Pérdida de inundación, Inundación persistente
+  cambio_de_inundacion: ['#4f8fc4', '#e0773a', '#5fc39c'],
+  // Severidad moderada, Severidad alta (más oscuro = más severo, como la rampa `fuego`)
+  area_quemada_detectada: ['#efa04a', '#9a3412'],
+  // Sin cambio (transparente), Crecimiento del cultivo, Cosecha / labranza, Inundación (trasplante de arroz)
+  cambio_por_parcela: [null, '#5fc39c', '#e0773a', '#4f8fc4'],
+  // Hielo nuevo (avance), Hielo perdido (retroceso del frente)
+  cambio_del_frente: ['#4f8fc4', '#e0773a'],
+}
+
+/** Lista fija de §4 para una variable categórica desconocida: por posición, nunca una casilla vacía. */
+export const COLORES_RESPALDO: string[] = ['#4f8fc4', '#e0773a', '#5fc39c', '#9a3412', '#8fc0e6', '#efa04a']
+
+/** Colores de las `n` categorías de `variable`; si no se conoce, la lista de respaldo (cíclica). */
+export function coloresDeCategorias(variable: string, n: number): ColorCategoria[] {
+  const conocidos = COLORES_CATEGORIA[variable]
+  if (conocidos && conocidos.length >= n) return conocidos.slice(0, n)
+  return Array.from({ length: n }, (_, i) => COLORES_RESPALDO[i % COLORES_RESPALDO.length])
 }
 
 /** Paleta del contrato (`datos/contrato.py`) más la rampa por defecto de cada una. */
@@ -61,17 +70,6 @@ export function rampaDePaleta(paleta: PaletaContrato, variable = ''): NombreRamp
       if (v.includes('ceniza')) return 'ceniza'
       return 'agua'
   }
-}
-
-/**
- * Color de una categoría de la leyenda del contrato. Se busca por etiqueta (sin tildes ni mayúsculas;
- * por prefijo, para tolerar «Agua abierta (m)» u otros sufijos). Si no coincide, se devuelve `undefined`
- * y quien llama decide (la leyenda usa el código de rejilla k = posición + 1).
- */
-export function colorDeCategoria(etiqueta: string): string | undefined {
-  const limpia = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim()
-  const e = limpia(etiqueta)
-  return Object.values(CATEGORIAS).find((c) => e.startsWith(limpia(c.etiqueta).split(' >')[0]))?.color
 }
 
 export type Rgb = [number, number, number]
@@ -113,18 +111,18 @@ function nuevoImageData(ancho: number, alto: number, datos: Uint8ClampedArray): 
 
 /**
  * Colorea una rejilla uint8: 0 → transparente (alfa 0); 1..255 → interpolación lineal por paradas de la
- * rampa. Con `categorias` (colores hex), el código k (1-based) toma `categorias[k-1]`; un código fuera
- * de rango queda transparente. `ancho` por defecto: raíz de la longitud (rejilla cuadrada).
+ * rampa. Con `categorias` (colores hex o null), el código k (1-based) toma `categorias[k-1]`; null o un
+ * código fuera de rango queda transparente. `ancho` por defecto: raíz de la longitud (rejilla cuadrada).
  */
 export function colorear(
   rejilla: Uint8Array,
   rampa: NombreRampa,
-  categorias?: readonly string[],
+  categorias?: readonly ColorCategoria[],
   ancho = Math.round(Math.sqrt(rejilla.length)),
 ): ImageData {
   const px = new Uint8ClampedArray(rejilla.length * 4)
   if (categorias) {
-    const tabla = categorias.map(hexARgb)
+    const tabla = categorias.map((c) => (c ? hexARgb(c) : null))
     for (let i = 0; i < rejilla.length; i++) {
       const c = tabla[rejilla[i] - 1]
       if (rejilla[i] > 0 && c) px.set([c[0], c[1], c[2], 255], i * 4)

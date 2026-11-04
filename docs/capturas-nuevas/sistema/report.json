@@ -1,6 +1,6 @@
 {
  "url": "http://localhost:8000/_sistema",
- "at": "2026-11-04T08:21:53.472Z",
+ "at": "2026-11-04T08:29:02.356Z",
  "allow": [
   "palette-terracotta"
  ],
@@ -31,7 +31,7 @@
     "page": {
      "height": 2139,
      "screens": 2.4,
-     "words": 421,
+     "words": 428,
      "img": 0,
      "video": 0,
      "canvas": 0,
@@ -125,9 +125,9 @@
      "microLabels": 0,
      "microLabelShare": 0,
      "microSamples": [],
-     "upperShare": 0.03,
+     "upperShare": 0.02,
      "centerShare": 0.05,
-     "smallText": 15
+     "smallText": 16
     },
     "eyebrows": [],
     "numbered": [],
@@ -161,7 +161,7 @@
       },
       {
        "color": "#ffffff",
-       "share": 0.24
+       "share": 0.23
       },
       {
        "color": "#f0a868",
@@ -274,7 +274,7 @@
       "tag": "section",
       "top": 761,
       "height": 339,
-      "words": 36,
+      "words": 43,
       "media": 0,
       "middle": 285,
       "heading": {
@@ -425,7 +425,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.35,
+     "under13": 0.36,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -472,7 +472,7 @@
     "page": {
      "height": 3150,
      "screens": 3.1,
-     "words": 421,
+     "words": 428,
      "img": 0,
      "video": 0,
      "canvas": 0,
@@ -609,9 +609,9 @@
      "microLabels": 0,
      "microLabelShare": 0,
      "microSamples": [],
-     "upperShare": 0.03,
+     "upperShare": 0.02,
      "centerShare": 0.05,
-     "smallText": 15
+     "smallText": 16
     },
     "eyebrows": [
      {
@@ -656,7 +656,7 @@
       },
       {
        "color": "#ffffff",
-       "share": 0.24
+       "share": 0.23
       },
       {
        "color": "#f0a868",
@@ -822,7 +822,7 @@
       "tag": "section",
       "top": 859,
       "height": 339,
-      "words": 36,
+      "words": 43,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -1010,7 +1010,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.35,
+     "under13": 0.36,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -1038,8 +1038,8 @@
    "filled": [
     0.73,
     0.72,
-    0.63,
-    0.81,
+    0.68,
+    0.93,
     0.87
    ],
    "motion": {
@@ -1056,9 +1056,9 @@
      "h": 844
     },
     "page": {
-     "height": 3941,
+     "height": 3965,
      "screens": 4.7,
-     "words": 421,
+     "words": 428,
      "img": 0,
      "video": 0,
      "canvas": 0,
@@ -1199,7 +1199,7 @@
      "microSamples": [],
      "upperShare": 0.03,
      "centerShare": 0.05,
-     "smallText": 15
+     "smallText": 16
     },
     "eyebrows": [],
     "numbered": [],
@@ -1312,7 +1312,7 @@
      "w": 390,
      "h": 844
     },
-    "pageH": 3941,
+    "pageH": 3965,
     "margins": {
      "left": 16,
      "right": 37
@@ -1391,8 +1391,8 @@
       "sel": "section.tarjeta",
       "tag": "section",
       "top": 1268,
-      "height": 355,
-      "words": 36,
+      "height": 379,
+      "words": 43,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -1413,7 +1413,7 @@
      {
       "sel": "div.galeria-col",
       "tag": "div",
-      "top": 1639,
+      "top": 1663,
       "height": 1013,
       "words": 91,
       "media": 0,
@@ -1436,7 +1436,7 @@
      {
       "sel": "div.galeria-col",
       "tag": "div",
-      "top": 2676,
+      "top": 2700,
       "height": 931,
       "words": 81,
       "media": 0,
@@ -1459,7 +1459,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 3623,
+      "top": 3647,
       "height": 246,
       "words": 12,
       "media": 0,
@@ -1595,7 +1595,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.38,
+     "under13": 0.39,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [

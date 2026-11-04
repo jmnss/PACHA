@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { CATEGORIAS, CONJUNTOS_CATEGORIAS, RAMPAS, colorear, hexARgb, lutDeRampa, rampaDePaleta, type NombreRampa } from './rampas'
+import combinaciones from './combinaciones-demo.json'
+import { COLORES_CATEGORIA, COLORES_RESPALDO, RAMPAS, colorear, coloresDeCategorias, hexARgb, lutDeRampa, rampaDePaleta, type NombreRampa } from './rampas'
 
 type V3 = [number, number, number]
 const lineal = (c: number) => { const x = c / 255; return x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4 }
@@ -73,17 +74,44 @@ describe('rampas de color (docs/diseno.md §4)', () => {
     expect(RAMPAS.ciclico[0]).toBe(RAMPAS.ciclico[RAMPAS.ciclico.length - 1])
   })
 
+  const CONJUNTOS: Record<string, (string | null)[]> = {
+    ...COLORES_CATEGORIA,
+    respaldo_4: COLORES_RESPALDO.slice(0, 4),
+  }
   it.each([['deuteranopía', DEUTAN], ['protanopía', PROTAN]] as const)(
-    'categorías que coexisten son distinguibles con %s (ΔE2000 ≥ 15)', (_n, m) => {
-      for (const [conjunto, claves] of Object.entries(CONJUNTOS_CATEGORIAS)) {
-        for (let i = 0; i < claves.length; i++) {
-          for (let j = i + 1; j < claves.length; j++) {
-            const d = de2000(lab(simular(CATEGORIAS[claves[i]].color, m)), lab(simular(CATEGORIAS[claves[j]].color, m)))
-            expect(d, `${conjunto}: ${claves[i]} vs ${claves[j]}`).toBeGreaterThanOrEqual(15)
+    'categorías reales y de respaldo son distinguibles con %s (ΔE2000 ≥ 15 por pares)', (_n, m) => {
+      for (const [nombre, colores] of Object.entries(CONJUNTOS)) {
+        const opacos = colores.filter((c): c is string => c !== null)
+        for (let i = 0; i < opacos.length; i++) {
+          for (let j = i + 1; j < opacos.length; j++) {
+            const d = de2000(lab(simular(opacos[i], m)), lab(simular(opacos[j], m)))
+            expect(d, `${nombre}: ${opacos[i]} vs ${opacos[j]}`).toBeGreaterThanOrEqual(15)
           }
         }
       }
     })
+
+  it('todas las combinaciones que emite el proveedor demo tienen color (o transparencia explícita)', () => {
+    expect(combinaciones.length).toBeGreaterThan(10)
+    for (const c of combinaciones) {
+      if (c.paleta === 'categorias') {
+        expect(c.leyenda, c.variable).toBeTruthy()
+        const colores = coloresDeCategorias(c.variable, c.leyenda!.length)
+        expect(colores).toHaveLength(c.leyenda!.length)
+        // Variable emitida y conocida: sin recurrir al respaldo.
+        expect(COLORES_CATEGORIA[c.variable], `falta COLORES_CATEGORIA[${c.variable}]`).toBeDefined()
+        colores.forEach((col) => { if (col !== null) expect(col).toMatch(/^#[0-9a-f]{6}$/) })
+      } else {
+        expect(rampaDePaleta(c.paleta as never, c.variable), `${c.variable}/${c.paleta}`).not.toBeNull()
+      }
+    }
+  })
+
+  it('variable categórica desconocida: tonos de respaldo por posición, ninguno vacío', () => {
+    const col = coloresDeCategorias('variable_nueva', 7)
+    expect(col.every((c) => typeof c === 'string')).toBe(true)
+    expect(col[0]).toBe(COLORES_RESPALDO[0])
+  })
 
   it('el 0 es transparente y 1..255 son opacos con los extremos de la rampa', () => {
     const img = colorear(new Uint8Array([0, 1, 255, 128]), 'agua', undefined, 2)
@@ -100,6 +128,12 @@ describe('rampas de color (docs/diseno.md §4)', () => {
     expect([...img.data.slice(4, 8)]).toEqual([0x4f, 0x8f, 0xc4, 255])
     expect([...img.data.slice(8, 12)]).toEqual([0x5f, 0xc3, 0x9c, 255])
     expect(img.data[15]).toBe(0) // código sin categoría
+  })
+
+  it('categoría null (p. ej. «Sin cambio») es transparente', () => {
+    const img = colorear(new Uint8Array([1, 2]), 'agua', [null, '#5fc39c'], 2)
+    expect(img.data[3]).toBe(0)
+    expect(img.data[7]).toBe(255)
   })
 
   it('rampaDePaleta: secuencial es agua salvo que la variable indique otra', () => {

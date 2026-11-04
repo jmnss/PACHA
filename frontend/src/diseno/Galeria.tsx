@@ -143,8 +143,8 @@ export function Galeria() {
         <div className="galeria__leyendas">
           <Leyenda paleta="gris" vmin={-30} vmax={0} unidad="dB" />
           <Leyenda paleta="divergente" vmin={-6} vmax={6} unidad="dB" />
-          <Leyenda paleta="categorias" vmin={0} vmax={0} unidad="categoría"
-            leyenda={[['Agua abierta', ''], ['Vegetación inundada', '']]} />
+          <Leyenda paleta="categorias" vmin={0} vmax={2} unidad="categoría" variable="cambio_de_inundacion"
+            leyenda={[['Nueva inundación', ''], ['Pérdida de inundación', ''], ['Inundación persistente', '']]} />
         </div>
       </Tarjeta>
       {tablaCambio && (

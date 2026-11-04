@@ -141,6 +141,7 @@ espejo de agua baja de 26,8 a 5,5 km² entre la primera y la última pasada». N
 
   Categorías: agua abierta `#4f8fc4`, vegetación inundada `#5fc39c`, quemado `#e0773a`, aumento > 3 dB
   `#4f8fc4`, disminución > 3 dB `#e0773a`, deslizamiento `#e5566f`. Sin cambio y sin dato: transparente.
+  Convención: los colores de las categorías se asignan por variable (`COLORES_CATEGORIA` en `frontend/src/diseno/rampas.ts`, solo hex de esta sección; el color heredado de la leyenda del contrato se ignora), el código k de la rejilla corresponde a la categoría k de la leyenda, «Sin cambio» es transparente y una variable desconocida usa una lista fija de esta sección por posición.
 - Cada tipo de cambio mantiene su rampa en todas las pantallas. Mismo sujeto, mismo tono. En la
   divergente, el signo positivo y el negativo se explican en la leyenda con palabras («más señal»,
   «menos señal»; «hacia el satélite», «alejándose»), no solo con color.
