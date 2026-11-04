@@ -10,6 +10,7 @@ import './diseno/tokens.css'
 import './diseno/componentes.css'
 import './graficos/graficos.css'
 import './tiempo/tiempo.css'
+import './comparador/comparador.css'
 import App from './App.tsx'
 import { crearQueryClient } from './api/consultas'
 

@@ -1,0 +1,40 @@
+/* Comparador antes/después (docs/diseno.md §8). Solo tokens. */
+.comparador { margin: 0; display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+.comparador__titulo { font-size: var(--fs-14); line-height: var(--lh-20); color: var(--secondary); }
+.comparador__escenario {
+  position: relative; width: 100%; overflow: hidden; background: var(--raised);
+  border-radius: var(--radius-card); touch-action: pan-y; user-select: none;
+}
+.comparador__lienzo { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; display: block; }
+.comparador__gesto { position: absolute; inset: 0; cursor: crosshair; touch-action: pan-y; }
+.comparador__cuadrante { position: absolute; border: 1px solid var(--accent); pointer-events: none; }
+.comparador__cruz { position: absolute; width: 0; height: 0; pointer-events: none; }
+.comparador__cruz::before, .comparador__cruz::after { content: ''; position: absolute; background: var(--accent); }
+.comparador__cruz::before { width: var(--space-5); height: 1px; left: calc(var(--space-5) / -2); top: 0; }
+.comparador__cruz::after { height: var(--space-5); width: 1px; top: calc(var(--space-5) / -2); left: 0; }
+.comparador__fecha {
+  position: absolute; top: var(--space-2); padding: var(--space-1) var(--space-2);
+  font-size: var(--fs-12); line-height: var(--lh-16); color: var(--text);
+  background: color-mix(in srgb, var(--surface) 85%, transparent); border-radius: var(--radius-chip);
+  pointer-events: none; max-width: 45%;
+}
+.comparador__fecha--antes { left: var(--space-2); }
+.comparador__fecha--despues { right: var(--space-2); }
+.comparador__divisor {
+  position: absolute; top: 0; bottom: 0; width: var(--h-touch); transform: translateX(-50%);
+  display: flex; align-items: center; justify-content: center; cursor: ew-resize; touch-action: none;
+}
+.comparador__linea { position: absolute; top: 0; bottom: 0; left: 50%; width: var(--size-2); transform: translateX(-50%); background: var(--text); }
+.comparador__tirador {
+  position: relative; width: var(--size-tirador); height: var(--size-tirador); border-radius: var(--radius-pill);
+  background: var(--surface); border: 1px solid var(--text);
+}
+.comparador__tirador::before, .comparador__tirador::after {
+  content: ''; position: absolute; top: 50%; width: 0; height: 0; transform: translateY(-50%);
+  border-top: var(--space-1) solid transparent; border-bottom: var(--space-1) solid transparent;
+}
+.comparador__tirador::before { left: var(--space-2); border-right: var(--space-1) solid var(--text); }
+.comparador__tirador::after { right: var(--space-2); border-left: var(--space-1) solid var(--text); }
+.comparador__divisor:focus-visible { outline: none; }
+.comparador__divisor:focus-visible .comparador__tirador { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+.comparador__aviso, .comparador__nota { margin: 0; font-size: var(--fs-12); line-height: var(--lh-16); color: var(--secondary); }

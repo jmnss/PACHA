@@ -96,6 +96,7 @@ body {
   --focus-offset: 2px;
   --t-respuesta: 150ms;    /* 120–180 ms, solo transform y opacity */
   --size-thumb: 14px;      /* tirador del deslizador */
+  --size-tirador: 32px;    /* tirador del comparador */
   --w-switch: 28px;  --h-switch: 16px;
   --size-thumb-switch: 10px;
   --size-2: 2px;           /* pista del deslizador, desfases finos */

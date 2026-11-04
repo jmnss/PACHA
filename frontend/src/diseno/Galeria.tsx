@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react'
-import { useCambio, useEscenarios, type Escenario } from '../api/consultas'
+import { useCambio, useEscenarios, type Escenario, type ResultadoCambio } from '../api/consultas'
 import { Barras } from '../graficos/Barras'
 import { Linea } from '../graficos/Linea'
 import { CapaLienzo } from '../mapa/CapaLienzo'
 import { MapaBase } from '../mapa/MapaBase'
 import { coloresDeCategorias, rampaDePaleta } from './rampas'
+import { Comparador, type Cuadrante, type Punto } from '../comparador/Comparador'
 import { Boton } from './Boton'
 import { Campo } from './Campo'
 import { CabeceraPantalla } from './CabeceraPantalla'
@@ -84,6 +85,30 @@ function TarjetaCinta({ esc }: { esc: Escenario }) {
           onAtras={() => mover(-pasoMin)} onAdelante={() => mover(pasoMin)}
           onEvento={() => aIndice(iEvento)} />
       </div>
+    </Tarjeta>
+  )
+}
+
+/** Tarjeta del comparador real: las capas antes/después de la API, con punto y cuadrante marcados. */
+function TarjetaComparador({ esc, cambio }: { esc: Escenario; cambio: ResultadoCambio }) {
+  const [punto, setPunto] = useState<Punto | null>(null)
+  const [cuadrante, setCuadrante] = useState<Cuadrante | null>(null)
+  const a = cambio.antes
+  const d = cambio.despues
+  const rampa = rampaDePaleta(a.paleta, a.variable) ?? 'gris'
+  const cat = a.paleta === 'categorias' ? coloresDeCategorias(a.variable, a.leyenda?.length ?? 0) : undefined
+  const pol = a.polarizacion ? ` ${a.polarizacion}` : ''
+  const fecha = (s: string | null) => (s ? s.slice(0, 10) : '')
+  return (
+    <Tarjeta titulo="Comparador antes/después">
+      <Comparador
+        antes={a.rejilla} despues={d.rejilla} rampa={rampa} categorias={cat} variable={a.variable} leyenda={a.leyenda}
+        unidad={a.unidad} titulo={`${a.unidad === 'dB' ? 'σ⁰' : a.variable.replace(/_/g, ' ')}${pol}, ${a.unidad}`}
+        etiquetaAntes={`Antes · ${fecha(a.instante ?? a.adquisicion_id)}`} etiquetaDespues={`Después · ${fecha(d.instante ?? d.adquisicion_id)}`}
+        punto={punto} cuadrante={cuadrante}
+        onPunto={(p) => { setPunto(p); setCuadrante(null) }}
+        onCuadrante={(c) => { setCuadrante(c); setPunto(null) }}
+        origen={a.origen ?? esc.origen} />
     </Tarjeta>
   )
 }
@@ -203,6 +228,9 @@ export function Galeria() {
             </MapaBase>
           </div>
         </Tarjeta>
+      )}
+      {cambio.data && esc && (
+        <TarjetaComparador esc={esc} cambio={cambio.data} />
       )}
       {esc && <TarjetaCinta key={esc.id} esc={esc} />}
       <Tarjeta titulo="Escenarios de demostración" pie={esc && <SelloOrigen origen={esc.origen} />}>
