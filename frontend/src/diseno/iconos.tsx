@@ -82,6 +82,48 @@ export const IconoReintentar = (p: PropsIcono) => (
   </Base>
 )
 
+export const IconoInicio = (p: PropsIcono) => (
+  <Base {...p}>
+    <path d="M3.5 3v10M13 3.5 6.5 8l6.5 4.5z" />
+  </Base>
+)
+
+export const IconoAtras = (p: PropsIcono) => (
+  <Base {...p}>
+    <path d="M12 3.5 5.5 8l6.5 4.5z" />
+  </Base>
+)
+
+export const IconoPlay = (p: PropsIcono) => (
+  <Base {...p}>
+    <path d="M5 3.5 12.5 8 5 12.5z" />
+  </Base>
+)
+
+export const IconoPausa = (p: PropsIcono) => (
+  <Base {...p}>
+    <path d="M5.5 3.5v9M10.5 3.5v9" />
+  </Base>
+)
+
+export const IconoAdelante = (p: PropsIcono) => (
+  <Base {...p}>
+    <path d="M4 3.5 10.5 8 4 12.5z" />
+  </Base>
+)
+
+export const IconoFinal = (p: PropsIcono) => (
+  <Base {...p}>
+    <path d="M12.5 3v10M3 3.5 9.5 8 3 12.5z" />
+  </Base>
+)
+
+export const IconoEvento = (p: PropsIcono) => (
+  <Base {...p}>
+    <path d="M4 14V2.5M4 3h8l-2 3 2 3H4" />
+  </Base>
+)
+
 export const ICONOS = {
   Historias: IconoHistorias,
   Observatorio: IconoObservatorio,
@@ -92,4 +134,11 @@ export const ICONOS = {
   Cerrar: IconoCerrar,
   Mas: IconoMas,
   Reintentar: IconoReintentar,
+  Inicio: IconoInicio,
+  Atras: IconoAtras,
+  Play: IconoPlay,
+  Pausa: IconoPausa,
+  Adelante: IconoAdelante,
+  Final: IconoFinal,
+  Evento: IconoEvento,
 } as const

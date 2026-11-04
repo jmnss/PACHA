@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCambio, useEscenarios, type Escenario } from '../api/consultas'
 import { Barras } from '../graficos/Barras'
 import { Linea } from '../graficos/Linea'
@@ -21,6 +21,9 @@ import { Tabla, type ColumnaTabla } from './Tabla'
 import { Tarjeta } from './Tarjeta'
 import { Termino } from './Termino'
 import { fechaCorta, textoSello } from './origen'
+import { CintaPasadas, type Temporada } from '../tiempo/CintaPasadas'
+import { ControlesReproductor, VELOCIDADES, type Velocidad } from '../tiempo/ControlesReproductor'
+import { usePlayback } from '../tiempo/usePlayback'
 
 const PESTANAS = [
   { id: 'mapa', etiqueta: 'Mapa' },
@@ -43,6 +46,40 @@ function descargarCsv(filas: Record<string, unknown>[], esc: Escenario | undefin
   a.download = 'escenarios-demostracion.csv'
   a.click()
   URL.revokeObjectURL(url)
+}
+
+/** Tarjeta de la cinta de pasadas: el play recorre las pasadas; ±paso mueve el instante en minutos. */
+function TarjetaCinta({ esc }: { esc: Escenario }) {
+  const adq = esc.adquisiciones
+  const [velocidad, setVelocidad] = useState<Velocidad>('normal')
+  const [pasoMin, setPasoMin] = useState(17280)
+  const [instante, setInstante] = useState(adq[0]?.instante ?? '')
+  const pb = usePlayback({ total: adq.length, intervaloMs: VELOCIDADES[velocidad].ms })
+  const t0 = Date.parse(adq[0]?.instante ?? '')
+  const t1 = Date.parse(adq[adq.length - 1]?.instante ?? '')
+  // Ejemplo ilustrativo: evento a media serie y una temporada lluviosa en el primer tercio.
+  const evento = adq[Math.floor(adq.length / 2)]?.instante
+  const temporadas: Temporada[] = adq.length > 1
+    ? [{ inicio: adq[0].instante, fin: new Date(t0 + (t1 - t0) / 3).toISOString(), tipo: 'lluviosa' }]
+    : []
+  const mover = (min: number) => setInstante(new Date(Math.min(t1, Math.max(t0, Date.parse(instante) + min * 60000))).toISOString())
+  const alIndice = (i: number) => { pb.ir(i); setInstante(adq[i].instante) }
+  useEffect(() => { if (adq[pb.indice]) setInstante(adq[pb.indice].instante) }, [pb.indice]) // eslint-disable-line react-hooks/exhaustive-deps
+  if (adq.length === 0) return null
+  return (
+    <Tarjeta titulo="Cinta de pasadas y reproductor" pie={<SelloOrigen origen={esc.origen} />}>
+      <div className="galeria-cinta">
+        <CintaPasadas adquisiciones={adq} evento={evento} instante={instante} temporadas={temporadas}
+          onCambio={(t, i) => { pb.pausa(); pb.ir(i); setInstante(t) }} />
+        <ControlesReproductor
+          pasoMin={pasoMin} onPaso={setPasoMin} velocidad={velocidad} onVelocidad={setVelocidad}
+          reproduciendo={pb.reproduciendo} onPlay={pb.play} onPausa={pb.pausa}
+          onInicio={() => alIndice(0)} onFinal={() => alIndice(adq.length - 1)}
+          onAtras={() => mover(-pasoMin)} onAdelante={() => mover(pasoMin)}
+          onEvento={() => alIndice(Math.floor(adq.length / 2))} />
+      </div>
+    </Tarjeta>
+  )
 }
 
 /** Galería de todos los componentes con datos reales de la API (/_sistema). */
@@ -161,6 +198,7 @@ export function Galeria() {
           </div>
         </Tarjeta>
       )}
+      {esc && <TarjetaCinta key={esc.id} esc={esc} />}
       <Tarjeta titulo="Escenarios de demostración" pie={esc && <SelloOrigen origen={esc.origen} />}>
         <Tabla titulo="Escenarios" columnas={columnasEsc} filas={filasEsc} />
       </Tarjeta>

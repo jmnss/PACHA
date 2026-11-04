@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 // Ningún valor suelto en componentes.css: todo sale de tokens.css (docs/diseno.md §6).
-const css = ['componentes.css', '../graficos/graficos.css']
+const css = ['componentes.css', '../graficos/graficos.css', '../tiempo/tiempo.css']
   .map((f) => readFileSync(resolve(__dirname, f), 'utf8'))
   .join('\n')
   .replace(/\/\*[\s\S]*?\*\//g, '')
