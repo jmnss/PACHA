@@ -9,7 +9,7 @@ English: [README.md](README.md)
 Una app web abierta que muestra cómo el radar NISAR (NASA-ISRO) puede «ver» **inundaciones y humedales** (historia principal, Costa baja de Ecuador) e **incendios forestales** (segunda historia, Sierra), con un observatorio para los seis tipos de cambio que menciona el challenge. Se hizo para el NASA Space Apps Challenge **«Dancing with the SARs»**, cuyo objetivo (resumen propio, no el texto oficial) es una app interactiva y fácil de usar que traduzca observaciones de radar en información legible sobre cambios en la superficie. Ver [docs/challenge.md](docs/challenge.md).
 
 - **Historias** (`/`): lectura guiada de cada caso, con comparador antes/después, polarizaciones, cinta de pasadas e hipótesis ilustrativas.
-- **Observatorio** (`/observatorio`): vistas Mapa, Antes y después y Serie, mediciones y un panel de simulación.
+- **Observatorio** (`/observatorio`): vistas Mapa, Antes y después y Serie, mediciones y un panel de simulación. El mapa es una carta geográfica con mapas base Oscuro, Satélite y Relieve de **Esri**, que se piden por internet (sin clave ni cuenta); sin conexión sigue funcionando con las provincias locales y las ciudades principales, sin las etiquetas ni el terreno de Esri.
 
 ## Instalación y arranque
 

@@ -9,7 +9,7 @@ Español: [README.es.md](README.es.md)
 An open web app that shows how the NISAR radar (NASA-ISRO) can "see" **floods and wetlands** (main story, lowland coast of Ecuador) and **wildfires** (second story, Andes), plus an observatory for the six change types named by the challenge. It was built for the NASA Space Apps Challenge **"Dancing with the SARs"**, whose goal (our own summary, not the official text) is an easy-to-use interactive app that turns radar observations into readable information about surface change. See [docs/challenge.md](docs/challenge.md).
 
 - **Stories** (`/`): a guided read of each case, with a before/after slider, polarizations, a pass timeline and illustrative hypotheses.
-- **Observatory** (`/observatorio`): Map, Before/after and Time series views, measurements, and a simulation panel.
+- **Observatory** (`/observatorio`): Map, Before/after and Time series views, measurements, and a simulation panel. The map is a geographic chart with Dark, Satellite and Relief base maps from **Esri**, fetched over the internet (no key or account); offline it still works with local provinces and main cities, without the Esri labels and terrain.
 
 ## Install and run
 

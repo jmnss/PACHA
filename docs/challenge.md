@@ -92,7 +92,7 @@ la lista oficial y los requisitos de entrega cuando estén disponibles.
 | geoBoundaries gbOpen ECU ADM1, CC0 (`scripts/preparar_datos_ecuador.py:20`) → `data/ecuador_provincias.geojson` | Provincias | Dato real complementario ya descargado |
 | Teselas Terrarium de AWS Open Data (`modelo/desastres.py:49`) | Relieve SRTM del Modo Dios | Dato real complementario, se descarga al usar el Modo Dios |
 | OpenStreetMap Nominatim (`app.py:660`) | Geocodificación | Servicio externo |
-| Esri World Dark Gray e Imagery (`app.py:503-508`) | Mapas base | Servicio externo |
+| Esri World Dark Gray e Imagery (`app.py:503-508`) | Mapas base; el frontend React los usa (más Topo y etiquetas de referencia) cuando hay internet | Servicio externo, sin clave; ya en uso |
 
 ## Requisitos de entrega
 

@@ -221,13 +221,29 @@ Un pronóstico va punteado. Cero real: línea plana dibujada, no «sin datos».
 13 px gris sobre valor de 20 px en 400 a 600. La cifra de la respuesta es 1,3 veces mayor que sus vecinas.
 Cada cifra relativa dice su base («frente a la pasada anterior, 24 abr»).
 
-**Mapa (MapLibre).** Estilo propio en estos colores: tierra `#1b1b1f`, agua `#101014`, frontera de
-Ecuador en blanco al 60 % de 1 px, provincias en `#2e2e33`, fuera de Ecuador `#171719` al 80 %. **Primero
-local:** fondo, provincias, contorno y máscara salen del GeoJSON del repositorio, así que el mapa se
-dibuja sin internet; el mapa vectorial de OpenFreeMap es una capa opcional encima, y si falla no se
-nota más que la falta de calles. La capa de datos se pinta en un lienzo con las rampas de §4. Solo se
-pueden colocar puntos dentro de Ecuador. Atribución visible y pequeña, abajo a la derecha: geoBoundaries
-y, si está cargada, OpenFreeMap y OpenStreetMap.
+**Mapa (MapLibre) — carta geográfica.** Decisión del usuario (sustituye a «primero local, OpenFreeMap opcional»):
+el mapa **puede requerir internet** y es una carta con colores, etiquetas y terreno, porque eso sirve para
+analizar los datos. Estilo propio sobre un **fondo local** siempre presente: tierra `#1b1b1f`, agua
+`#101014`, provincias `#2e2e33` y fuera de Ecuador `#171719` al 80 % (el GeoJSON del repositorio, sin
+glyphs), frontera de Ecuador en blanco al 60 % de 1 px.
+
+- **Mapas base seleccionables** (control flotante «Mapa base», pestañas con línea de 1 px `--accent`):
+  *Oscuro* (Esri Canvas World_Dark_Gray_Base + World_Dark_Gray_Reference), *Satélite* (Esri World_Imagery +
+  Reference/World_Boundaries_and_Places) y *Relieve* (Esri World_Topo_Map, que ya trae sus etiquetas). Son
+  fuentes raster de MapLibre de `server.arcgisonline.com` (sin clave ni cuenta; URLs en `frontend/src/mapa/estilo.ts`).
+- **Orden de capas:** fondo local → mapa base → **capa de datos** (lienzo `nearest`, el 0 transparente,
+  opacidad regulable 10–100 %) → etiquetas de referencia → máscara de fuera de Ecuador → frontera y
+  límites provinciales. En *Relieve* las etiquetas van dentro de la tesela, bajo los datos.
+- **Sin red** (`VITE_MAPA_REMOTO=0`, `navigator.onLine` falso o cuatro errores de tesela sin ninguna cargada)
+  el mapa queda como el fondo local con provincias, y aparecen las **ciudades de respaldo**
+  (`frontend/src/mapa/ciudades.ts`: capitales de provincia y ciudades grandes, marcadores HTML de 12 px;
+  solo las tres mayores con el país entero). Con los mapas de Esri no se dibujan, para no duplicar etiquetas.
+- **Inmersión:** el mapa mide `--h-mapa` (alto de la ventana menos cabecera, con mínimo y máximo en tokens).
+  La leyenda (plegable), el rótulo de la pasada, el mapa base y la opacidad son placas flotantes `--surface`
+  al 85 % sobre el mapa, sin degradados ni brillos; la cinta de pasadas y sus controles siguen debajo.
+- Solo se pueden colocar puntos dentro de Ecuador. **Atribución** visible abajo a la derecha: geoBoundaries y
+  el texto que exige Esri para el mapa base elegido. La imagen satelital es fondo real; la capa de datos
+  sigue siendo sintética y su sello lo dice.
 
 **Origen de los datos (honestidad, obligatorio).**
 - **Banda de demostración:** franja de 36 px, ancho completo del lienzo, fondo `--demo-bg`, borde
@@ -309,7 +325,7 @@ Tres anchos de verificación: **1440 (escritorio), 768 (tablet), 390 (móvil)**.
 La app **no necesita fotografías**: los visuales son los mapas, las imágenes de radar y los gráficos que
 genera. Por eso no hay búsqueda de imágenes en colecciones abiertas. Los créditos van en `CREDITOS.md`,
 al pie de Historias y, en pequeño, sobre el mapa: NASA POWER, geoBoundaries (CC0), SRTM / Terrain Tiles
-(AWS Open Data, solo Modo Dios), OpenFreeMap y OpenStreetMap si se carga esa capa, Public Sans (SIL OFL).
+(AWS Open Data, solo Modo Dios), los mapas base de Esri (Dark Gray, World Imagery, World Topo y sus etiquetas; OpenStreetMap, HERE, Garmin y otros según la atribución del servicio) cuando hay internet, Public Sans (SIL OFL).
 ASF DAAC y cualquier producto NISAR se acreditan solo cuando se usen datos reales, con la cita oficial.
 
 ## 12. Lista «anti-slop»: lo que NO debe aparecer

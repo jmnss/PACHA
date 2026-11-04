@@ -58,8 +58,8 @@ Las cifras se leen en pantalla (las calcula la app); no las memorices ni las inv
 
 ## Extra (si sobra tiempo): el Observatorio
 
-Ruta `/observatorio`. Mismo escenario, tres vistas: **Mapa** (capas sobre el mapa; la base de OpenFreeMap es
-opcional), **Antes y después** (comparador deslizante) y **Serie** (serie temporal del escenario). Un panel de
+Ruta `/observatorio`. Mismo escenario, tres vistas: **Mapa** (capas sobre el mapa; los mapas base de Esri (Oscuro, Satélite, Relieve) son
+opcionales: requieren internet), **Antes y después** (comparador deslizante) y **Serie** (serie temporal del escenario). Un panel de
 **simulación** permite cambiar parámetros (semilla, miradas/ENL, dirección de la órbita, variación estacional y los
 controles propios de cada tipo de cambio) y ver otra escena sintética; con la misma semilla se repite la misma escena.
 Los seis tipos de cambio del challenge están en el selector. Sigue siendo demostración: la banda no se cierra.

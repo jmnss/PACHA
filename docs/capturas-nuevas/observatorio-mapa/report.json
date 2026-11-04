@@ -1,6 +1,6 @@
 {
  "url": "http://localhost:8000/observatorio",
- "at": "2026-11-04T12:09:06.363Z",
+ "at": "2026-11-04T14:04:11.041Z",
  "allow": [
   "palette-terracotta"
  ],
@@ -12,14 +12,14 @@
    "screens": 3,
    "filled": [
     0.81,
-    0.93,
-    0.83
+    0.72,
+    0.26
    ],
    "motion": {
-    "elements": 0,
+    "elements": 31,
     "css": 0,
     "transitions": 0,
-    "scripted": 0,
+    "scripted": 31,
     "videos": 0,
     "playingVideos": 0
    },
@@ -29,9 +29,9 @@
      "h": 900
     },
     "page": {
-     "height": 2602,
-     "screens": 2.9,
-     "words": 544,
+     "height": 2672,
+     "screens": 3,
+     "words": 611,
      "img": 0,
      "video": 0,
      "canvas": 1,
@@ -89,19 +89,25 @@
      "families": [
       {
        "family": "Public Sans",
-       "share": 1,
+       "share": 0.94,
+       "mono": false
+      },
+      {
+       "family": "Helvetica Neue",
+       "share": 0.06,
        "mono": false
       }
      ],
-     "familyCount": 1,
+     "familyCount": 2,
      "sizes": [
       12,
       13,
+      14,
       16,
       20,
       26
      ],
-     "sizeCount": 5,
+     "sizeCount": 6,
      "notLoaded": [],
      "body": {
       "font": "Public Sans",
@@ -111,7 +117,7 @@
       "tracking": 0,
       "contrast": 5.5
      },
-     "measureChars": 53,
+     "measureChars": 58,
      "max": {
       "size": 26,
       "vw": 1.8,
@@ -127,7 +133,7 @@
      "microSamples": [],
      "upperShare": 0,
      "centerShare": 0.06,
-     "smallText": 26
+     "smallText": 33
     },
     "eyebrows": [],
     "numbered": [],
@@ -162,19 +168,19 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.54
-      },
-      {
-       "color": "#ffffff",
-       "share": 0.23
+       "share": 0.44
       },
       {
        "color": "#b4b4b8",
-       "share": 0.21
+       "share": 0.29
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.24
       },
       {
        "color": "#f0a868",
-       "share": 0.03
+       "share": 0.02
       }
      ],
      "button": null,
@@ -212,7 +218,7 @@
      "outlinedBoxes": 6,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 7,
+     "roundedBoxes": 8,
      "boxRadius": 6,
      "squareMedia": 0,
      "roundedMedia": 1,
@@ -249,7 +255,7 @@
      "w": 1440,
      "h": 900
     },
-    "pageH": 2602,
+    "pageH": 2672,
     "margins": {
      "left": 82,
      "right": 53
@@ -259,15 +265,15 @@
       "sel": "section.tarjeta.vista-mapa",
       "tag": "section",
       "top": 237,
-      "height": 1957,
-      "words": 59,
+      "height": 831,
+      "words": 67,
       "media": 1,
       "middle": 0,
       "heading": null,
       "left": 103,
       "right": 461,
       "textLeft": 103,
-      "textRight": 469,
+      "textRight": 477,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -277,11 +283,11 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 2218,
-      "height": 352,
-      "words": 41,
+      "top": 1092,
+      "height": 384,
+      "words": 59,
       "media": 0,
-      "middle": 303,
+      "middle": 222,
       "heading": {
        "text": "Cinta de pasadas",
        "size": 16,
@@ -310,8 +316,8 @@
     "edgeText": [],
     "edges": [
      {
-      "x": 1045,
-      "n": 3
+      "x": 1041,
+      "n": 5
      },
      {
       "x": 82,
@@ -322,7 +328,7 @@
       "n": 1
      }
     ],
-    "leftBlocks": 6,
+    "leftBlocks": 8,
     "bodySize": 12,
     "stage": false,
     "explains": false,
@@ -346,7 +352,7 @@
     "topbar": null,
     "canvas": {
      "left": 82,
-     "right": 44
+     "right": -19997
     },
     "hero": {
      "text": "Observatorio",
@@ -400,7 +406,7 @@
     "numbers": {
      "cells": 2,
      "leftAligned": 0,
-     "figures": 4,
+     "figures": 5,
      "tabularShare": 1,
      "kpiMax": 13
     },
@@ -411,12 +417,13 @@
     "chartHues": 1,
     "placeholders": [],
     "type": {
-     "under13": 0.43,
+     "under13": 0.46,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
       12,
       13,
+      14,
       16,
       20,
       26
@@ -427,7 +434,7 @@
      "size": 26,
      "top": 68
     },
-    "colourShare": 0.039
+    "colourShare": 0.063
    },
    "consoleErrors": []
   },
@@ -438,15 +445,15 @@
    "screens": 4,
    "filled": [
     0.74,
-    0.86,
-    0.69,
+    0.9,
+    0.92,
     0.8
    ],
    "motion": {
-    "elements": 0,
+    "elements": 31,
     "css": 0,
     "transitions": 0,
-    "scripted": 0,
+    "scripted": 31,
     "videos": 0,
     "playingVideos": 0
    },
@@ -456,9 +463,9 @@
      "h": 1024
     },
     "page": {
-     "height": 3763,
-     "screens": 3.7,
-     "words": 544,
+     "height": 4017,
+     "screens": 3.9,
+     "words": 611,
      "img": 0,
      "video": 0,
      "canvas": 1,
@@ -538,19 +545,25 @@
      "families": [
       {
        "family": "Public Sans",
-       "share": 1,
+       "share": 0.94,
+       "mono": false
+      },
+      {
+       "family": "Helvetica Neue",
+       "share": 0.06,
        "mono": false
       }
      ],
-     "familyCount": 1,
+     "familyCount": 2,
      "sizes": [
       12,
       13,
+      14,
       16,
       20,
       26
      ],
-     "sizeCount": 5,
+     "sizeCount": 6,
      "notLoaded": [],
      "body": {
       "font": "Public Sans",
@@ -560,7 +573,7 @@
       "tracking": 0,
       "contrast": 5.5
      },
-     "measureChars": 94,
+     "measureChars": 103,
      "max": {
       "size": 26,
       "vw": 3.4,
@@ -576,7 +589,7 @@
      "microSamples": [],
      "upperShare": 0,
      "centerShare": 0.06,
-     "smallText": 26
+     "smallText": 33
     },
     "eyebrows": [],
     "numbered": [],
@@ -611,19 +624,19 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.54
-      },
-      {
-       "color": "#ffffff",
-       "share": 0.23
+       "share": 0.44
       },
       {
        "color": "#b4b4b8",
-       "share": 0.21
+       "share": 0.29
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.24
       },
       {
        "color": "#f0a868",
-       "share": 0.03
+       "share": 0.02
       }
      ],
      "button": null,
@@ -661,7 +674,7 @@
      "outlinedBoxes": 6,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 7,
+     "roundedBoxes": 8,
      "boxRadius": 6,
      "squareMedia": 0,
      "roundedMedia": 1,
@@ -672,14 +685,14 @@
        "count": 4,
        "iconTopped": false,
        "rounded": true,
-       "top": 1518
+       "top": 1702
       }
      ]
     },
     "heroMedia": [
      {
       "type": "canvas",
-      "ratio": 0.44
+      "ratio": 0.49
      }
     ],
     "nav": {
@@ -698,7 +711,7 @@
      "w": 768,
      "h": 1024
     },
-    "pageH": 3763,
+    "pageH": 4017,
     "margins": {
      "left": 82,
      "right": 53
@@ -731,8 +744,8 @@
       "sel": "div.observatorio__principal",
       "tag": "div",
       "top": 319,
-      "height": 1175,
-      "words": 100,
+      "height": 1359,
+      "words": 126,
       "media": 1,
       "middle": 0,
       "heading": null,
@@ -749,7 +762,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 1518,
+      "top": 1702,
       "height": 1098,
       "words": 172,
       "media": 0,
@@ -772,7 +785,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 2774,
+      "top": 3028,
       "height": 354,
       "words": 68,
       "media": 0,
@@ -795,7 +808,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 3152,
+      "top": 3406,
       "height": 579,
       "words": 75,
       "media": 1,
@@ -828,15 +841,15 @@
     "edgeText": [],
     "edges": [
      {
-      "x": 103,
-      "n": 4
+      "x": 99,
+      "n": 6
      },
      {
       "x": 82,
       "n": 2
      }
     ],
-    "leftBlocks": 6,
+    "leftBlocks": 8,
     "bodySize": 12,
     "stage": false,
     "explains": false,
@@ -855,7 +868,7 @@
     "topbar": null,
     "canvas": {
      "left": 82,
-     "right": 53
+     "right": -18943
     },
     "hero": {
      "text": "Observatorio",
@@ -909,7 +922,7 @@
     "numbers": {
      "cells": 2,
      "leftAligned": 0,
-     "figures": 4,
+     "figures": 5,
      "tabularShare": 1,
      "kpiMax": 13
     },
@@ -920,12 +933,13 @@
     "chartHues": 1,
     "placeholders": [],
     "type": {
-     "under13": 0.43,
+     "under13": 0.46,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
       12,
       13,
+      14,
       16,
       20,
       26
@@ -936,7 +950,7 @@
      "size": 26,
      "top": 68
     },
-    "colourShare": 0.1
+    "colourShare": 0.081
    },
    "consoleErrors": []
   },
@@ -947,15 +961,15 @@
    "screens": 4,
    "filled": [
     0.78,
-    0.87,
-    0.76,
+    0.9,
+    0.7,
     0.93
    ],
    "motion": {
-    "elements": 0,
+    "elements": 31,
     "css": 0,
     "transitions": 0,
-    "scripted": 0,
+    "scripted": 31,
     "videos": 0,
     "playingVideos": 0
    },
@@ -965,9 +979,9 @@
      "h": 844
     },
     "page": {
-     "height": 3140,
-     "screens": 3.7,
-     "words": 376,
+     "height": 3301,
+     "screens": 3.9,
+     "words": 436,
      "img": 0,
      "video": 0,
      "canvas": 1,
@@ -1047,11 +1061,16 @@
      "families": [
       {
        "family": "Public Sans",
-       "share": 1,
+       "share": 0.92,
+       "mono": false
+      },
+      {
+       "family": "Helvetica Neue",
+       "share": 0.08,
        "mono": false
       }
      ],
-     "familyCount": 1,
+     "familyCount": 2,
      "sizes": [
       12,
       13,
@@ -1070,7 +1089,7 @@
       "tracking": 0,
       "contrast": 5.5
      },
-     "measureChars": 49,
+     "measureChars": 54,
      "max": {
       "size": 22,
       "vw": 5.6,
@@ -1084,9 +1103,9 @@
      "microLabels": 0,
      "microLabelShare": 0,
      "microSamples": [],
-     "upperShare": 0.01,
-     "centerShare": 0.09,
-     "smallText": 16
+     "upperShare": 0,
+     "centerShare": 0.07,
+     "smallText": 20
     },
     "eyebrows": [],
     "numbered": [],
@@ -1121,19 +1140,19 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.51
-      },
-      {
-       "color": "#ffffff",
-       "share": 0.23
+       "share": 0.4
       },
       {
        "color": "#b4b4b8",
-       "share": 0.22
+       "share": 0.32
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.26
       },
       {
        "color": "#f0a868",
-       "share": 0.03
+       "share": 0.02
       }
      ],
      "button": null,
@@ -1172,7 +1191,7 @@
      "outlinedBoxes": 5,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 6,
+     "roundedBoxes": 7,
      "boxRadius": 6,
      "squareMedia": 0,
      "roundedMedia": 1,
@@ -1202,7 +1221,7 @@
      "w": 390,
      "h": 844
     },
-    "pageH": 3140,
+    "pageH": 3301,
     "margins": {
      "left": 16,
      "right": 16
@@ -1235,15 +1254,15 @@
       "sel": "section.tarjeta.vista-mapa",
       "tag": "section",
       "top": 397,
-      "height": 803,
-      "words": 62,
+      "height": 846,
+      "words": 63,
       "media": 1,
       "middle": 0,
       "heading": null,
       "left": 37,
       "right": 37,
       "textLeft": 37,
-      "textRight": 45,
+      "textRight": 46,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -1253,9 +1272,9 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 1224,
-      "height": 552,
-      "words": 41,
+      "top": 1267,
+      "height": 600,
+      "words": 59,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -1276,9 +1295,9 @@
      {
       "sel": "aside.observatorio__lado",
       "tag": "aside",
-      "top": 1800,
-      "height": 1268,
-      "words": 152,
+      "top": 1891,
+      "height": 1338,
+      "words": 244,
       "media": 1,
       "middle": 0,
       "heading": {
@@ -1286,9 +1305,9 @@
        "size": 16,
        "tag": "h2"
       },
-      "left": 37,
+      "left": 33,
       "right": 37,
-      "textLeft": 37,
+      "textLeft": 33,
       "textRight": 37,
       "fullBleed": false,
       "footer": true,
@@ -1309,15 +1328,15 @@
     "edgeText": [],
     "edges": [
      {
-      "x": 37,
-      "n": 3
+      "x": 33,
+      "n": 5
      },
      {
       "x": 16,
       "n": 2
      }
     ],
-    "leftBlocks": 5,
+    "leftBlocks": 7,
     "bodySize": 12,
     "stage": false,
     "explains": false,
@@ -1336,7 +1355,7 @@
     "topbar": null,
     "canvas": {
      "left": 16,
-     "right": 16
+     "right": -9664
     },
     "hero": {
      "text": "Observatorio",
@@ -1386,7 +1405,7 @@
     "numbers": {
      "cells": 2,
      "leftAligned": 0,
-     "figures": 1,
+     "figures": 2,
      "tabularShare": 1,
      "kpiMax": 14
     },
@@ -1397,7 +1416,7 @@
     "chartHues": 1,
     "placeholders": [],
     "type": {
-     "under13": 0.4,
+     "under13": 0.43,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -1414,12 +1433,22 @@
      "size": 22,
      "top": 48
     },
-    "colourShare": 0.035
+    "colourShare": 0.014
    },
    "consoleErrors": []
   }
  ],
  "findings": [
+  {
+   "level": "WARN",
+   "id": "tiny-text",
+   "width": 1440,
+   "message": "46% of the text is under 13px.",
+   "fix": "Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks.",
+   "alsoAt": [
+    768
+   ]
+  },
   {
    "level": "WARN",
    "id": "below-fold",
