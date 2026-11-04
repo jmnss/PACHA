@@ -108,7 +108,7 @@ def test_escenario_inexistente_404_con_mensaje_y_validacion_422(_demo):
         assert r.status_code == 404 and "no-existe" in r.json()["mensaje"]
         r = c.get("/api/_e/x?n=abc")
         assert r.status_code == 422
-        assert r.json()["mensaje"].startswith("Entrada no válida.") and "n:" in r.json()["mensaje"]
+        assert r.json()["mensaje"].startswith("Entrada no válida.") and "El valor de n no es válido" in r.json()["mensaje"]
 
 
 def test_servidor_sirve_cliente_y_api_desconocida_404(tmp_path):

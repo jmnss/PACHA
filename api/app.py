@@ -44,9 +44,17 @@ def _registrar_errores(app: FastAPI) -> None:
 
     @app.exception_handler(RequestValidationError)
     async def _entrada(_: Request, exc: RequestValidationError) -> JSONResponse:
-        partes = [f"{'.'.join(str(p) for p in e['loc'] if p != 'query')}: {e['msg']}"
-                  for e in exc.errors()]
-        return _error(422, "Entrada no válida. " + "; ".join(partes))
+        return _error(422, "Entrada no válida. " + " ".join(_mensaje_validacion(e) for e in exc.errors()))
+
+
+def _mensaje_validacion(e: dict) -> str:
+    campo = ".".join(str(p) for p in e["loc"] if p not in ("query", "body"))
+    tipo = e["type"]
+    if tipo == "missing":
+        return f"Falta el campo {campo}."
+    if tipo == "value_error":
+        return str(e["msg"]).removeprefix("Value error, ")
+    return f"El valor de {campo} no es válido." if campo else "El valor no es válido."
 
 
 def _origenes(proveedor: ProveedorDatos) -> tuple[str, bool]:

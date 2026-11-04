@@ -1,7 +1,10 @@
-"""Modelos de respuesta de la API (los de datos se añaden en las tareas siguientes)."""
+"""Modelos de petición y respuesta de la API."""
+from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
+
+from datos.contrato import CampoVectorial, Metrica, Origen, Paleta, SerieTemporal, TablaResultado
 
 
 class Salud(BaseModel):
@@ -29,13 +32,6 @@ class Rejilla(BaseModel):
 
 
 # --- Capas, cambio y medición -------------------------------------------------------------------
-
-from datetime import datetime  # noqa: E402
-
-from pydantic import model_validator  # noqa: E402
-
-from datos.contrato import CampoVectorial, Metrica, Origen, Paleta, SerieTemporal, TablaResultado  # noqa: E402
-
 
 class CapaDto(BaseModel):
     """Metadatos de una `CapaRaster` más su rejilla cuantizada (vmin/vmax de la capa)."""
@@ -72,7 +68,10 @@ class PeticionCambio(BaseModel):
 
 
 class PeticionMedicion(BaseModel):
-    """`cuadrante` = [x0, y0, x1, y1] y `punto` = [x, y], normalizados 0–1 (x columnas, y filas)."""
+    """`cuadrante` = [x0, y0, x1, y1] y `punto` = [x, y], normalizados 0–1 sobre la imagen.
+
+    x crece hacia la derecha (columnas); y=0 es la fila superior (norte) y crece hacia abajo.
+    """
     antes: str
     despues: str
     cuadrante: tuple[float, float, float, float] | None = None

@@ -1,4 +1,6 @@
 """Capas ráster, resultado de cambio y mediciones."""
+import math
+
 from fastapi import APIRouter, Depends, Query
 
 from api.deps import obtener
@@ -39,28 +41,44 @@ def cambio(id: str, cuerpo: PeticionCambio, prov: ProveedorDatos = Depends(obten
         capas_extra=[_dto(c) for c in r.capas_extra], origen=r.origen)
 
 
-def _pixel(v: float, n: int) -> int:
-    return min(n, max(0, int(round(v * n))))
+def _forma_de_medicion(prov: ProveedorDatos, id: str, antes: str, despues: str) -> tuple[int, int]:
+    """Forma (filas, columnas) de la malla de análisis, la misma sobre la que `prov.medir` mide.
+
+    El proveedor debe medir sobre esa malla (la de `cambio.cambio.datos`), no sobre otra resolución.
+    """
+    esc = prov.escenario(id)
+    pol = esc.polarizaciones[0] if esc.polarizaciones else None
+    ny, nx = prov.cambio(id, antes, despues, pol).cambio.datos.shape
+    return ny, nx
+
+
+def _indice(v: float, n: int) -> int:
+    return min(n - 1, int(math.floor(v * n)))
+
+
+def _intervalo(a: float, b: float, n: int) -> tuple[int, int]:
+    """Intervalo normalizado -> píxeles [inicio, fin): inicio floor, fin ceil, mínimo 1 píxel."""
+    lo, hi = sorted((a, b))
+    if lo == hi:
+        raise ValueError("El cuadrante no tiene área.")
+    i0 = min(n - 1, int(math.floor(lo * n)))
+    i1 = max(i0 + 1, min(n, int(math.ceil(hi * n))))
+    return i0, i1
 
 
 @router.post("/escenarios/{id}/medicion", response_model=MedicionDto)
 def medicion(id: str, cuerpo: PeticionMedicion, prov: ProveedorDatos = Depends(obtener)) -> MedicionDto:
     _distintas(cuerpo.antes, cuerpo.despues)
-    esc = prov.escenario(id)
-    # Tamaño de la rejilla COMPLETA (no la reducida) para convertir 0–1 a píxeles del contrato.
-    ref = prov.capa(id, cuerpo.antes, esc.variables[0], esc.polarizaciones[0] if esc.polarizaciones else None)
-    ny, nx = ref.datos.shape
+    ny, nx = _forma_de_medicion(prov, id, cuerpo.antes, cuerpo.despues)
     cuadrante = punto = None
     if cuerpo.cuadrante is not None:
         x0, y0, x1, y1 = cuerpo.cuadrante
-        c0, c1 = sorted((_pixel(x0, nx), _pixel(x1, nx)))
-        f0, f1 = sorted((_pixel(y0, ny), _pixel(y1, ny)))
-        if c1 <= c0 or f1 <= f0:
-            raise ValueError("El cuadrante no tiene área.")
+        c0, c1 = _intervalo(x0, x1, nx)
+        f0, f1 = _intervalo(y0, y1, ny)
         cuadrante = (f0, f1, c0, c1)
     else:
         x, y = cuerpo.punto
-        punto = (min(ny - 1, _pixel(y, ny)), min(nx - 1, _pixel(x, nx)))
+        punto = (_indice(y, ny), _indice(x, nx))
     m = prov.medir(id, cuerpo.antes, cuerpo.despues, cuadrante=cuadrante, punto=punto)
     return MedicionDto(cuadrante=m.cuadrante, punto=m.punto, metricas=m.metricas, tabla=m.tabla,
                        origen=m.origen)
