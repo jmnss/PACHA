@@ -7,6 +7,7 @@ import { Deslizador } from './Deslizador'
 import { Cargando, ErrorBloque, Vacio } from './Estados'
 import { FranjaKpi } from './FranjaKpi'
 import { ICONOS, IconoDescargar } from './iconos'
+import { Leyenda } from './Leyenda'
 import { Interruptor } from './Interruptor'
 import { Pestanas } from './Pestanas'
 import { Selector } from './Selector'
@@ -137,6 +138,14 @@ export function Galeria() {
 
       <Tarjeta titulo="Escenarios de demostración" pie={esc && <SelloOrigen origen={esc.origen} />}>
         <Tabla titulo="Escenarios" columnas={columnasEsc} filas={filasEsc} />
+      </Tarjeta>
+      <Tarjeta titulo="Leyendas de las capas" pie={esc && <SelloOrigen origen={esc.origen} />}>
+        <div className="galeria__leyendas">
+          <Leyenda paleta="gris" vmin={-30} vmax={0} unidad="dB" />
+          <Leyenda paleta="divergente" vmin={-6} vmax={6} unidad="dB" />
+          <Leyenda paleta="categorias" vmin={0} vmax={0} unidad="categoría"
+            leyenda={[['Agua abierta', ''], ['Vegetación inundada', '']]} />
+        </div>
       </Tarjeta>
       {tablaCambio && (
         <Tarjeta titulo={tablaCambio.titulo} pie={<SelloOrigen origen={tablaCambio.origen} />}>

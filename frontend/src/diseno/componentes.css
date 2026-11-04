@@ -257,3 +257,16 @@ button { font: inherit; color: inherit; }
   .tabla td:first-child { font-size: var(--fs-14); }
   .tabla td { font-size: var(--fs-14); }
 }
+
+/* ---------- Leyenda ---------- */
+.leyenda { display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--fs-12); color: var(--secondary); min-width: 0; }
+.leyenda__pasos { display: flex; height: var(--space-3); border-radius: var(--radius-chip); overflow: hidden; }
+.leyenda__paso { flex: 1; }
+.leyenda__marcas { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+.leyenda__pie { display: flex; justify-content: space-between; gap: var(--space-2); color: var(--muted); }
+.leyenda__unidad { color: var(--secondary); }
+.leyenda__categorias { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); }
+.leyenda__categoria { display: inline-flex; align-items: center; gap: var(--space-2); }
+.leyenda__muestra { width: var(--space-3); height: var(--space-3); border-radius: var(--radius-chip); flex: none; }
+.leyenda__muestra--sin { border: 1px solid var(--control); }
+.galeria__leyendas { display: grid; gap: var(--space-5); }
