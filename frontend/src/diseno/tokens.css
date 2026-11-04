@@ -76,3 +76,22 @@ body {
 .tabular, .num {
   font-variant-numeric: tabular-nums;
 }
+
+/* estructura y componentes (docs/diseno.md §6, §7, §8, §10) */
+:root {
+  --w-rail: 50px;          /* riel de iconos */
+  --h-banda: 36px;         /* banda de demostración (32 px en móvil) */
+  --h-banda-movil: 32px;
+  --h-barra-inferior: 56px;
+  --w-columna: 384px;      /* columna fija del Observatorio */
+  --h-touch: 44px;         /* objetivo táctil mínimo en móvil */
+  --w-lectura: 68ch;       /* medida máxima de Historias */
+  --focus-ring: 2px solid var(--text);
+  --focus-offset: 2px;
+  --t-respuesta: 150ms;    /* 120–180 ms, solo transform y opacity */
+  --size-thumb: 14px;      /* tirador del deslizador */
+  --w-switch: 28px;  --h-switch: 16px;
+  --size-thumb-switch: 10px;
+  --z-flotante: 20;
+  --z-banda: 30;
+}

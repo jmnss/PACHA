@@ -1,0 +1,83 @@
+import { useState, type ReactNode } from 'react'
+
+export interface ColumnaTabla<F> {
+  clave: string
+  etiqueta: string
+  numerica?: boolean
+  /** Primera columna: identidad, en blanco. */
+  identidad?: boolean
+  formato?: (valor: unknown, fila: F) => ReactNode
+}
+
+interface Props<F extends Record<string, unknown>> {
+  columnas: ColumnaTabla<F>[]
+  filas: F[]
+  /** Descripción para lectores de pantalla. */
+  titulo: string
+  /** Filas por página; con más filas aparece «1–50 de N» y la cabecera queda fija. */
+  porPagina?: number
+}
+
+const AUSENTE = <span className="tabla__ausente" aria-label="sin dato">—</span>
+
+/** Tabla de docs/diseno.md §8: números a la derecha y tabulares, valor ausente = guion gris. */
+export function Tabla<F extends Record<string, unknown>>({ columnas, filas, titulo, porPagina = 50 }: Props<F>) {
+  const [pagina, setPagina] = useState(0)
+  const paginada = filas.length > porPagina
+  const total = filas.length
+  const desde = paginada ? pagina * porPagina : 0
+  const hasta = paginada ? Math.min(desde + porPagina, total) : total
+  const visibles = filas.slice(desde, hasta)
+
+  return (
+    <div className="tabla">
+      <div className={`tabla__marco${paginada ? ' tabla__marco--fijo' : ''}`} tabIndex={paginada ? 0 : undefined} role={paginada ? 'region' : undefined} aria-label={paginada ? titulo : undefined}>
+        <table>
+          <caption className="solo-lectores">{titulo}</caption>
+          <thead>
+            <tr>
+              {columnas.map((c) => (
+                <th key={c.clave} scope="col" className={c.numerica ? 'tabla__num' : undefined}>
+                  {c.etiqueta}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {visibles.map((f, i) => (
+              <tr key={desde + i}>
+                {columnas.map((c) => {
+                  const v = f[c.clave]
+                  const vacio = v === null || v === undefined || v === ''
+                  const clases = [c.numerica ? 'tabla__num num' : '', c.identidad ? 'tabla__identidad' : '']
+                    .filter(Boolean)
+                    .join(' ')
+                  return (
+                    <td key={c.clave} className={clases || undefined} data-etiqueta={c.etiqueta}>
+                      {vacio ? AUSENTE : c.formato ? c.formato(v, f) : String(v)}
+                    </td>
+                  )
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {paginada && (
+        <div className="tabla__pie">
+          <span className="num" aria-live="polite">
+            {desde + 1}–{hasta} de {total}
+          </span>
+          <div className="tabla__paginas">
+            <button type="button" className="boton boton--secundario" disabled={pagina === 0} onClick={() => setPagina((p) => p - 1)}>
+              Anterior
+            </button>
+            <button type="button" className="boton boton--secundario" disabled={hasta >= total} onClick={() => setPagina((p) => p + 1)}>
+              Siguiente
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}

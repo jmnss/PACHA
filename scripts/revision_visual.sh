@@ -44,7 +44,8 @@ node "$SKILL/lint.mjs" --app frontend/src
 LINT=$?
 
 echo "== Inspección a 1440, 768 y 390 px: $BASE$RUTA =="
-node "$SKILL/inspect.mjs" "$BASE$RUTA" --app --widths 1440,768,390 --out "$SALIDA"
+# palette-terracotta: --demo-ink (#f0a868) lo fija docs/diseno.md §4 para la banda de demostración.
+node "$SKILL/inspect.mjs" "$BASE$RUTA" --app --widths 1440,768,390 --allow palette-terracotta --out "$SALIDA"
 INSP=$?
 
 # Comprueba que se capturaron los tres anchos.
