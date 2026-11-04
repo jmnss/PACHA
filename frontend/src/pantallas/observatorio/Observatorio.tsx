@@ -187,7 +187,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
           {url.vista === 'comparar' && peticion && (
             <Mediciones
               esc={esc} antesId={antesId} despuesId={despuesId} bbox={resultado.data?.antes.rejilla.bbox ?? esc.bbox}
-              punto={punto} cuadrante={cuadrante} onBorrar={() => cambiar({ p: '', c: '' })}
+              punto={punto} cuadrante={cuadrante} polarizacion={polarizacion} onBorrar={() => cambiar({ p: '', c: '' })}
             />
           )}
           <PanelMetricas esc={esc} resultado={resultado} indice={tiempo.pasadaActiva} antesId={antesId} despuesId={despuesId} />

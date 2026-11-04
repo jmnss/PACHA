@@ -12,8 +12,15 @@ const limpio = (t: string) => t.normalize('NFD').replace(/[̀-ͯ]/g, '').replace
 
 /** Tabla de resultados de la API (p. ej. una fila por parcela): una columna por métrica, paginada desde 50 filas, con CSV. */
 export function TablaResultados({ tabla, escenario }: { tabla: Resultado; escenario: string }) {
-  const filas = tabla.filas.map((f) => Object.fromEntries(tabla.columnas.map((c, i) => [c, f[i] ?? null])))
-  const columnas = tabla.columnas.map((c, i) => {
+  // Nombres únicos: dos columnas con el mismo rótulo no se pisan (la segunda lleva «(2)», etc.).
+  const vistos = new Map<string, number>()
+  const nombres = tabla.columnas.map((c) => {
+    const n = (vistos.get(c) ?? 0) + 1
+    vistos.set(c, n)
+    return n === 1 ? c : `${c} (${n})`
+  })
+  const filas = tabla.filas.map((f) => Object.fromEntries(nombres.map((c, i) => [c, f[i] ?? null])))
+  const columnas = nombres.map((c, i) => {
     const numerica = tabla.filas.every((f) => f[i] === null || f[i] === undefined || typeof f[i] === 'number')
     const dec = tabla.filas.every((f) => typeof f[i] !== 'number' || Number.isInteger(f[i])) ? 0 : 2
     return {
@@ -21,7 +28,7 @@ export function TablaResultados({ tabla, escenario }: { tabla: Resultado; escena
       formato: numerica ? (v: unknown) => (typeof v === 'number' ? formatoNumero(v, dec) : '') : undefined,
     }
   })
-  const descargar = () => descargarCsv(`${limpio(tabla.titulo) || 'tabla'}_${limpio(escenario)}.csv`, aCsv(filas, tabla.columnas, tabla.origen))
+  const descargar = () => descargarCsv(`${limpio(tabla.titulo) || 'tabla'}_${limpio(escenario)}.csv`, aCsv(filas, nombres, tabla.origen))
   return (
     <Tarjeta titulo={tabla.titulo} pie={<SelloOrigen origen={tabla.origen} />}>
       <Tabla titulo={tabla.titulo} columnas={columnas} filas={filas} porPagina={50} />

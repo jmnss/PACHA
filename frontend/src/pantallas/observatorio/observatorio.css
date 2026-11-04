@@ -54,7 +54,6 @@
 .vista-comparar__selectores { display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--w-fecha-min), 1fr)); gap: var(--space-4); align-items: end; }
 .vista-comparar .pestanas { border-bottom: 1px solid var(--rule); overflow-x: auto; }
 .vista-comparar__error { margin: 0; color: var(--warning); font-size: var(--fs-13); }
-.vista-comparar__notas { margin: 0; padding-left: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); color: var(--secondary); font-size: var(--fs-13); line-height: var(--lh-20); }
 .medicion__coordenadas { margin: 0; font-size: var(--fs-14); }
 .medicion__etiqueta { display: block; color: var(--muted); font-size: var(--fs-12); }
 .medicion__nota { margin: 0; color: var(--muted); font-size: var(--fs-12); line-height: var(--lh-16); }
@@ -71,3 +70,4 @@
 .observatorio__principal > .vista-comparar { flex: 1; }
 .vista-comparar .comparador__escenario { width: min(100%, calc(var(--h-comparador) * var(--razon, 1))); margin-inline: auto; }
 @media (max-width: 699px) { .vista-comparar .comparador__escenario { width: 100%; } }
+.medicion__nota a { color: var(--text); text-decoration: underline; }

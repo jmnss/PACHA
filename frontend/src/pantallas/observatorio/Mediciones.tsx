@@ -1,3 +1,4 @@
+import { Link, useSearchParams } from 'react-router-dom'
 import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
 import { useMedicion, type Escenario, type Medicion } from '../../api/consultas'
 import type { Cuadrante, Punto } from '../../comparador/Comparador'
@@ -9,7 +10,7 @@ import { Tabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { descargarCsv } from '../../exportar/csv'
 import { formatoNumero } from '../../graficos/formato'
-import { coordenadasAprox, csvDeMedicion, nombreCsv } from './medicion'
+import { coordenadasAprox, csvDeMedicion, nombreCsv, NOTA_POLARIZACION, polarizacionMedida } from './medicion'
 
 interface Props {
   esc: Escenario
@@ -19,6 +20,8 @@ interface Props {
   bbox: readonly number[]
   punto: Punto | null
   cuadrante: Cuadrante | null
+  /** Polarización elegida en el selector. */
+  polarizacion?: string
   onBorrar: () => void
 }
 
@@ -36,7 +39,8 @@ function columnasDe(filas: Fila[]) {
 const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }) : undefined)
 
 /** Medición sobre la imagen: un punto (valores en las dos pasadas) o un cuadrante (resumen, tabla y CSV). */
-export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, onBorrar }: Props) {
+export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, polarizacion, onBorrar }: Props) {
+  const [params] = useSearchParams()
   const hay = !!(punto || cuadrante)
   // Un solo gesto a la vez: el cuadrante manda si hubiera los dos.
   const peticion = hay && antesId !== despuesId
@@ -56,6 +60,9 @@ export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, on
   const borrar = <Boton variante="terciario" onClick={onBorrar}>Borrar selección</Boton>
   const filas = (m?.tabla ?? []) as Fila[]
   const enCuadrante = !!cuadrante
+  const medida = m ? polarizacionMedida(m) : null
+  const aSerie = new URLSearchParams(params)
+  aSerie.set('vista', 'serie')
   const coordenadas = !enCuadrante && punto ? coordenadasAprox(bbox, punto) : null
 
   return (
@@ -74,8 +81,15 @@ export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, on
         <FranjaKpi items={m.metricas.map((x, i) => ({ etiqueta: x.etiqueta, valor: x.valor, unidad: x.unidad || undefined, principal: i === 0 }))} />
       )}
       {m && !enCuadrante && m.metricas.length > 0 && (
-        <p className="medicion__nota">{m.metricas[0].ayuda}. Valor medido en el píxel más cercano al punto.</p>
+        <p className="medicion__nota">{[m.metricas[0].ayuda, 'Valor medido en el píxel más cercano al punto'].filter(Boolean).join('. ')}.</p>
       )}
+      {m && !enCuadrante && (
+        <p className="medicion__nota">
+          Serie temporal del punto: pendiente (la API aún no la ofrece).{' '}
+          La serie del escenario está en la <Link to={{ search: aSerie.toString() }}>vista Serie</Link>.
+        </p>
+      )}
+      {m && polarizacion && medida && medida !== polarizacion && <p className="medicion__nota">{NOTA_POLARIZACION}</p>}
       {m && filas.length > 0 && (
         <Tabla titulo={enCuadrante ? 'Medidas del cuadrante' : 'Valores en el punto'} columnas={columnasDe(filas)} filas={filas} porPagina={50} />
       )}

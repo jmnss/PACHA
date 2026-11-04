@@ -6,15 +6,17 @@ import { Comparador, type Cuadrante, type Punto } from '../../comparador/Compara
 import { Boton } from '../../diseno/Boton'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
 import { Pestanas } from '../../diseno/Pestanas'
+import { NotasModelo } from '../../diseno/NotasModelo'
 import { Selector } from '../../diseno/Selector'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tarjeta } from '../../diseno/Tarjeta'
+import { Termino } from '../../diseno/Termino'
 import { descargarPng } from '../../exportar/png'
 import { formatearFecha } from '../../tiempo/fechas'
 import { CampoFlujo } from './CampoFlujo'
 import { estiloDeCapa } from './derivados'
 import { LienzoCapa } from './LienzoCapa'
-import { etiquetaCapa, nombreVariable } from './medicion'
+import { etiquetaCapa, NOTA_POLARIZACION, nombreVariable } from './medicion'
 import { pngDeCapa } from './pngCapa'
 import { TablaResultados } from './TablaResultados'
 
@@ -32,6 +34,17 @@ interface Props {
   onPolarizacion: (p: string) => void
 }
 
+export const AVISO_SIN_AREA = 'Dibuja un recuadro con área'
+const MIN_LADO = 0.002
+
+const EXPLICACIONES: Record<string, string> = {
+  'σ⁰': 'Cuánta señal vuelve al satélite desde cada punto del suelo. El agua lisa devuelve poca; las copas de los árboles, mucha.',
+  Polarización: 'Orientación de la onda de radar al emitirse y al recibirse. Cada combinación responde distinto al agua, la vegetación y el suelo.',
+  HH: 'Se emite y se recibe con la onda en horizontal.',
+  HV: 'Se emite en horizontal y se recibe en vertical.',
+}
+const termino = (n: string) => <Termino nombre={n} explicacion={EXPLICACIONES[n]} />
+
 export const ELIGE_DOS = 'Elige dos fechas distintas'
 const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }) : undefined)
 const fecha = (iso: string | undefined) => formatearFecha(iso) ?? '—'
@@ -42,6 +55,7 @@ interface Vista { id: string; etiqueta: string; capa?: CapaDto }
 export function VistaAntesDespues({ esc, resultado, antesId, despuesId, polarizacion, punto, cuadrante, onPunto, onCuadrante, onPareja, onPolarizacion }: Props) {
   const [ver, setVer] = useState('comparar')
   const [errorPng, setErrorPng] = useState<string | null>(null)
+  const [aviso, setAviso] = useState<string | null>(null)
   const pasadas = esc.adquisiciones
   const iAntes = pasadas.findIndex((p) => p.id === antesId)
   const iDespues = pasadas.findIndex((p) => p.id === despuesId)
@@ -57,6 +71,13 @@ export function VistaAntesDespues({ esc, resultado, antesId, despuesId, polariza
   const vista = vistas.find((v) => v.id === ver) ?? vistas[0]
 
   // Solo la fecha; la dirección orbital se añade únicamente si dos pasadas comparten día.
+  const alPunto = (q: Punto) => { setAviso(null); onPunto(q) }
+  const alCuadrante = (q: Cuadrante) => {
+    if (q[2] - q[0] < MIN_LADO || q[3] - q[1] < MIN_LADO) { setAviso(AVISO_SIN_AREA); return }
+    setAviso(null)
+    onCuadrante(q)
+  }
+
   const opciones = (desde: number, hasta: number) =>
     pasadas.slice(desde, hasta).map((p) => {
       const repetida = pasadas.some((q) => q.id !== p.id && fecha(q.instante) === fecha(p.instante))
@@ -71,6 +92,14 @@ export function VistaAntesDespues({ esc, resultado, antesId, despuesId, polariza
           opciones={esc.polarizaciones.map((p) => ({ valor: p, texto: p }))} />
       )}
     </div>
+  )
+  const conocidas = ['HH', 'HV'].filter((x) => esc.polarizaciones.includes(x))
+  const ayudaPolarizacion = esc.polarizaciones.length > 0 && (
+    <p className="vista-mapa__ayuda">
+      {termino('Polarización')}: {esc.polarizaciones.map((x, i) => (
+        <span key={x}>{i > 0 && ', '}{conocidas.includes(x) ? termino(x) : x}</span>
+      ))}.
+    </p>
   )
 
   if (!antesId || !despuesId || antesId === despuesId) {
@@ -100,21 +129,26 @@ export function VistaAntesDespues({ esc, resultado, antesId, despuesId, polariza
     const sel = { punto, cuadrante }
     if (vista.id === 'comparar') {
       const estilo = estiloDeCapa(r.antes)
-      const etiquetaPol = polarizacion && r.antes.polarizacion ? ` ${r.antes.polarizacion}` : ''
+      const pol = polarizacion && r.antes.polarizacion ? r.antes.polarizacion : null
+      const sigma = r.antes.variable === 'sigma0'
+      const nombre = sigma ? termino('σ⁰') : nombreVariable(r.antes.variable)
       cuerpo = (
         <Comparador
           antes={r.antes.rejilla} despues={r.despues.rejilla} rampa={estilo.rampa} categorias={estilo.categorias}
           etiquetaAntes={etiquetaAntes} etiquetaDespues={etiquetaDespues}
-          titulo={`${nombreVariable(r.antes.variable)}${etiquetaPol}, ${r.antes.unidad}`}
+          titulo={<>{nombre}{pol ? ` ${pol}` : ''}, {r.antes.unidad}</>}
           origen={r.antes.origen} origenDespues={r.despues.origen} unidad={r.antes.unidad} variable={r.antes.variable} leyenda={r.antes.leyenda}
-          onPunto={onPunto} onCuadrante={onCuadrante} {...sel}
+          onPunto={alPunto} onCuadrante={alCuadrante} {...sel}
         />
       )
     } else if (vista.capa) {
       cuerpo = (
         <>
           <LienzoCapa capa={vista.capa} titulo={`${vista.etiqueta} · ${fecha(pasadas[iAntes]?.instante)} a ${fecha(pasadas[iDespues]?.instante)}`}
-            onPunto={onPunto} onCuadrante={onCuadrante} {...sel} />
+            onPunto={alPunto} onCuadrante={alCuadrante} {...sel} />
+          {vista.capa.polarizacion && polarizacion && vista.capa.polarizacion !== polarizacion && (
+            <p className="medicion__nota">{NOTA_POLARIZACION}</p>
+          )}
           <div>
             <Boton variante="secundario" onClick={() => void descargar(vista.capa!)}>Descargar PNG</Boton>
           </div>
@@ -128,8 +162,10 @@ export function VistaAntesDespues({ esc, resultado, antesId, despuesId, polariza
     <>
       <Tarjeta className="vista-comparar">
         {selectores}
+        {ayudaPolarizacion}
         {vistas.length > 0 && <Pestanas etiqueta="Ver" pestanas={vistas} activa={vista?.id ?? 'comparar'} onCambiar={setVer} />}
         {cuerpo}
+        {aviso && <p className="vista-comparar__error" role="status">{aviso}</p>}
         <p className="vista-mapa__ayuda">Pulsa la imagen para medir un punto, o arrástrala para medir un cuadrante.</p>
       </Tarjeta>
       {r?.vectores && <CampoFlujo vectores={r.vectores} />}
@@ -138,15 +174,13 @@ export function VistaAntesDespues({ esc, resultado, antesId, despuesId, polariza
   )
 }
 
-/** Notas del resultado (qué significa lo que se ve). Vienen del modelo de demostración, no de una fuente oficial de NISAR. */
+/** Notas del resultado (qué significa lo que se ve), con el aviso de que lo dicho sobre NISAR no está verificado. */
 export function NotasResultado({ resultado }: { resultado: UseQueryResult<ResultadoCambio> }) {
   const notas = resultado.data?.notas ?? []
   if (notas.length === 0) return null
   return (
     <Tarjeta titulo="Cómo leer esto" pie={<SelloOrigen origen={resultado.data!.origen} />}>
-      <ul className="vista-comparar__notas">
-        {notas.map((n) => <li key={n}>{n}</li>)}
-      </ul>
+      <NotasModelo notas={notas} />
     </Tarjeta>
   )
 }

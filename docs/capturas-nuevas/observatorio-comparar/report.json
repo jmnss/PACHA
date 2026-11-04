@@ -1,6 +1,6 @@
 {
  "url": "http://localhost:8000/observatorio?vista=comparar",
- "at": "2026-11-04T11:29:08.716Z",
+ "at": "2026-11-04T11:35:09.308Z",
  "allow": [
   "palette-terracotta"
  ],
@@ -28,9 +28,9 @@
      "h": 900
     },
     "page": {
-     "height": 1222,
+     "height": 1282,
      "screens": 1.4,
-     "words": 476,
+     "words": 502,
      "img": 0,
      "video": 0,
      "canvas": 2,
@@ -127,7 +127,7 @@
      "microSamples": [],
      "upperShare": 0,
      "centerShare": 0.05,
-     "smallText": 10
+     "smallText": 13
     },
     "eyebrows": [],
     "numbered": [],
@@ -153,19 +153,19 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.56
+       "share": 0.61
       },
       {
        "color": "#ffffff",
-       "share": 0.21
+       "share": 0.18
       },
       {
        "color": "#b4b4b8",
-       "share": 0.19
+       "share": 0.17
       },
       {
        "color": "#f0a868",
-       "share": 0.05
+       "share": 0.04
       }
      ],
      "button": null,
@@ -217,11 +217,11 @@
     "heroMedia": [
      {
       "type": "canvas",
-      "ratio": 0.23
+      "ratio": 0.21
      },
      {
       "type": "canvas",
-      "ratio": 0.23
+      "ratio": 0.21
      }
     ],
     "nav": {
@@ -240,10 +240,10 @@
      "w": 1440,
      "h": 900
     },
-    "pageH": 1222,
+    "pageH": 1282,
     "margins": {
      "left": 82,
-     "right": 32
+     "right": 53
     },
     "sections": [],
     "gaps": [],
@@ -271,12 +271,12 @@
     "stage": false,
     "explains": false,
     "slivers": [],
-    "voidShare": 0.07,
+    "voidShare": 0.06,
     "voidBox": {
      "x": 0,
-     "y": 420,
+     "y": 480,
      "w": 180,
-     "h": 480
+     "h": 420
     }
    },
    "app": {
@@ -351,7 +351,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.27,
+     "under13": 0.32,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -379,8 +379,8 @@
    "screens": 3,
    "filled": [
     0.76,
-    0.74,
-    0.79
+    0.68,
+    0.69
    ],
    "motion": {
     "elements": 0,
@@ -396,9 +396,9 @@
      "h": 1024
     },
     "page": {
-     "height": 2181,
-     "screens": 2.1,
-     "words": 476,
+     "height": 2257,
+     "screens": 2.2,
+     "words": 502,
      "img": 0,
      "video": 0,
      "canvas": 2,
@@ -517,7 +517,7 @@
      "microSamples": [],
      "upperShare": 0,
      "centerShare": 0.05,
-     "smallText": 10
+     "smallText": 13
     },
     "eyebrows": [],
     "numbered": [],
@@ -541,7 +541,7 @@
       },
       {
        "color": "#212023",
-       "top": 499,
+       "top": 531,
        "hsl": {
         "h": 260,
         "s": 0.04,
@@ -552,19 +552,19 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.56
+       "share": 0.61
       },
       {
        "color": "#ffffff",
-       "share": 0.21
+       "share": 0.18
       },
       {
        "color": "#b4b4b8",
-       "share": 0.19
+       "share": 0.17
       },
       {
        "color": "#f0a868",
-       "share": 0.05
+       "share": 0.04
       }
      ],
      "button": null,
@@ -609,18 +609,18 @@
        "count": 4,
        "iconTopped": false,
        "rounded": true,
-       "top": 1288
+       "top": 1320
       }
      ]
     },
     "heroMedia": [
      {
       "type": "canvas",
-      "ratio": 0.41
+      "ratio": 0.38
      },
      {
       "type": "canvas",
-      "ratio": 0.41
+      "ratio": 0.38
      }
     ],
     "nav": {
@@ -639,10 +639,10 @@
      "w": 768,
      "h": 1024
     },
-    "pageH": 2181,
+    "pageH": 2257,
     "margins": {
      "left": 82,
-     "right": 48
+     "right": 53
     },
     "sections": [
      {
@@ -672,8 +672,8 @@
       "sel": "div.observatorio__principal",
       "tag": "div",
       "top": 319,
-      "height": 945,
-      "words": 60,
+      "height": 977,
+      "words": 63,
       "media": 2,
       "middle": 0,
       "heading": null,
@@ -690,9 +690,9 @@
      {
       "sel": "aside.observatorio__lado",
       "tag": "aside",
-      "top": 1288,
-      "height": 861,
-      "words": 154,
+      "top": 1320,
+      "height": 905,
+      "words": 182,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -811,7 +811,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.27,
+     "under13": 0.32,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -839,8 +839,8 @@
    "screens": 3,
    "filled": [
     0.78,
-    0.83,
-    0.71
+    0.87,
+    0.74
    ],
    "motion": {
     "elements": 0,
@@ -856,9 +856,9 @@
      "h": 844
     },
     "page": {
-     "height": 2334,
-     "screens": 2.8,
-     "words": 476,
+     "height": 2426,
+     "screens": 2.9,
+     "words": 502,
      "img": 0,
      "video": 0,
      "canvas": 2,
@@ -977,7 +977,7 @@
      "microSamples": [],
      "upperShare": 0,
      "centerShare": 0.05,
-     "smallText": 12
+     "smallText": 15
     },
     "eyebrows": [],
     "numbered": [],
@@ -1001,7 +1001,7 @@
       },
       {
        "color": "#212023",
-       "top": 679,
+       "top": 711,
        "hsl": {
         "h": 260,
         "s": 0.04,
@@ -1012,19 +1012,19 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.56
+       "share": 0.61
       },
       {
        "color": "#ffffff",
-       "share": 0.21
-      },
-      {
-       "color": "#b4b4b8",
        "share": 0.19
       },
       {
+       "color": "#b4b4b8",
+       "share": 0.17
+      },
+      {
        "color": "#f0a868",
-       "share": 0.04
+       "share": 0.03
       }
      ],
      "button": null,
@@ -1069,11 +1069,11 @@
     "heroMedia": [
      {
       "type": "canvas",
-      "ratio": 0.16
+      "ratio": 0.13
      },
      {
       "type": "canvas",
-      "ratio": 0.16
+      "ratio": 0.13
      }
     ],
     "nav": {
@@ -1092,7 +1092,7 @@
      "w": 390,
      "h": 844
     },
-    "pageH": 2334,
+    "pageH": 2426,
     "margins": {
      "left": 16,
      "right": 16
@@ -1125,8 +1125,8 @@
       "sel": "div.observatorio__principal",
       "tag": "div",
       "top": 397,
-      "height": 783,
-      "words": 60,
+      "height": 815,
+      "words": 63,
       "media": 2,
       "middle": 0,
       "heading": null,
@@ -1143,9 +1143,9 @@
      {
       "sel": "aside.observatorio__lado",
       "tag": "aside",
-      "top": 1204,
-      "height": 1058,
-      "words": 152,
+      "top": 1236,
+      "height": 1118,
+      "words": 180,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -1154,9 +1154,9 @@
        "tag": "h2"
       },
       "left": 37,
-      "right": 45,
+      "right": 43,
       "textLeft": 37,
-      "textRight": 45,
+      "textRight": 43,
       "fullBleed": false,
       "footer": true,
       "hero": false,
@@ -1264,7 +1264,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.3,
+     "under13": 0.35,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [

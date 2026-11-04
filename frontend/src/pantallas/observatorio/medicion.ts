@@ -57,13 +57,38 @@ export function nombreCsv(escenario: string, antes: string, despues: string): st
   return `medicion_${limpio(escenario)}_${limpio(antes)}_a_${limpio(despues)}.csv`
 }
 
-const NOMBRES: Record<string, string> = { sigma0: 'σ⁰' }
-/** Nombre legible de una variable del contrato («cambio_de_inundacion» → «Cambio de inundación» no se puede inventar: se separa por guiones bajos). */
+const NOMBRES: Record<string, string> = {
+  sigma0: 'σ⁰',
+  fase_interferometrica: 'Fase interferométrica',
+  coherencia_interferometrica: 'Coherencia interferométrica',
+  desplazamiento_los: 'Desplazamiento en la línea de vista',
+  desplazamiento_los_acumulado: 'Desplazamiento acumulado en la línea de vista',
+  desplazamiento_los_desenrollado: 'Desplazamiento en la línea de vista desenrollado',
+  velocidad_vertical: 'Velocidad vertical',
+  error_frente_a_la_verdad_sintetica: 'Error frente a la verdad sintética',
+  cambio_de_inundacion: 'Cambio de inundación',
+  cambio_por_parcela: 'Cambio por parcela',
+  cambio_de_velocidad: 'Cambio de velocidad',
+  cambio_del_frente: 'Cambio del frente',
+  area_quemada_detectada: 'Área quemada detectada',
+}
+/** Nombre legible de una variable del contrato: mapa explícito de las conocidas; si no, guiones bajos por espacios y mayúscula inicial. */
 export function nombreVariable(variable: string): string {
   if (NOMBRES[variable]) return NOMBRES[variable]
   const t = variable.replace(/_/g, ' ')
   return t.charAt(0).toUpperCase() + t.slice(1)
 }
 
-/** Nombre de una capa para el selector «Ver»: la leyenda no lo trae, se deriva de la variable. */
+/** Nombre de una capa para el selector «Ver». */
 export const etiquetaCapa = (c: CapaDto) => nombreVariable(c.variable)
+
+export const NOTA_POLARIZACION = 'La medición y el cambio detectado usan las polarizaciones del análisis, no la elegida en el selector.'
+
+/** Polarización que menciona una fila de la tabla de medición («σ⁰ HV · 24/04/2026»), si alguna. */
+export function polarizacionMedida(m: Medicion): string | null {
+  for (const f of m.tabla) {
+    const hit = /σ⁰ (HH|HV|VH|VV)\b/.exec(String(f['Capa'] ?? ''))
+    if (hit) return hit[1]
+  }
+  return null
+}

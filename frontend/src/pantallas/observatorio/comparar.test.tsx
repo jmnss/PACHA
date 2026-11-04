@@ -6,6 +6,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import Observatorio from './Observatorio'
 import { coordenadasAprox, filasCsv, leerCuadrante, leerPunto, nombreCsv, textoPunto } from './medicion'
 import { valorRedondo } from './flujo'
+import { NotasModelo } from '../../diseno/NotasModelo'
+import { AVISO_NOTAS, esNotaSinVerificar } from '../../diseno/notasModelo'
+import { nombreVariable } from './medicion'
 
 vi.mock('../../mapa/MapaBase', () => ({ MapaBase: ({ children }: { children?: ReactNode }) => <div>{children}</div> }))
 
@@ -33,6 +36,7 @@ const escenario = (id: string, extra: object = {}) => ({
 })
 const ESCENARIOS: Record<string, ReturnType<typeof escenario>> = {
   ec_x: escenario('ec_x'),
+  ec_pol: escenario('ec_pol'),
   ec_uno: escenario('ec_uno', { adquisiciones: [{ id: fechas[0], instante: `${fechas[0]}T00:00:00Z`, direccion_orbital: 'Ascendente', polarizaciones: ['HH'] }] }),
   ec_glaciar: escenario('ec_glaciar', { tipo_cambio: 'glaciares', polarizaciones: [] }),
   ec_agri: escenario('ec_agri', { tipo_cambio: 'agricultura' }),
@@ -44,7 +48,7 @@ const BASE = {
   despues: capa({ variable: 'sigma0', paleta: 'gris', unidad: 'dB', leyenda: null }),
   cambio: capa({ variable: 'cambio_de_inundacion', paleta: 'categorias', unidad: '', leyenda: [['Nueva inundación', '#009dcc'], ['Pérdida de inundación', '#e0369b'], ['Inundación persistente', '#8a63f0']] }),
   capas_extra: [], clasificacion: null, tablas: [], vectores: null, origen,
-  notas: ['Bajo el dosel inundado, el doble rebote eleva HH.'],
+  notas: ['Bajo el dosel inundado, el doble rebote eleva HH.', 'Vector LOS (este, norte, arriba) = (+0.64, +0.09, +0.77).'],
   metricas: [{ etiqueta: 'Área inundada inicial', valor: '26,8', unidad: 'km²', ayuda: 'Agua abierta' }],
   series: [],
 }
@@ -53,8 +57,12 @@ const PARCELAS = {
   titulo: 'Resultados por parcela', origen, columnas: ['Parcela', 'Δσ⁰ HV (dB)', 'Cambio detectado'],
   filas: Array.from({ length: 60 }, (_, i) => [`P-${i + 1}`, i / 10, i % 2 ? 'Cosecha' : null]),
 }
+/** La API devuelve las capas con la polarización pedida; `fija` la ignora (simula un análisis con otra). */
+function conPolarizacion(base: typeof BASE, pol: string | undefined) {
+  return pol ? { ...base, antes: { ...base.antes, polarizacion: pol }, despues: { ...base.despues, polarizacion: pol }, cambio: { ...base.cambio, polarizacion: pol } } : base
+}
 const CAMBIOS: Record<string, object> = {
-  ec_x: BASE,
+  ec_x: BASE, ec_pol: BASE,
   ec_glaciar: { ...BASE, vectores: VECTORES },
   ec_agri: { ...BASE, tablas: [PARCELAS] },
 }
@@ -69,6 +77,8 @@ const MED_CUADRANTE = {
   metricas: [{ etiqueta: 'Área del cuadrante', valor: '3,2', unidad: 'km²', ayuda: '' }, { etiqueta: 'Nueva inundación', valor: '1,1', unidad: 'km²', ayuda: '' }],
   tabla: [{ Capa: 'σ⁰ HH · 12/04/2026', Medida: 'Media', Valor: '-6,25 dB', '% del cuadrante': null }],
 }
+
+const NOTA = 'La medición y el cambio detectado usan las polarizaciones del análisis, no la elegida en el selector.'
 
 type Llamada = { url: string; metodo: string; cuerpo: any } // eslint-disable-line @typescript-eslint/no-explicit-any
 let llamadas: Llamada[]
@@ -85,7 +95,10 @@ function simularFetch() {
     const m = /^\/api\/escenarios\/([^/?]+)(\/.*)?$/.exec(url)
     if (m) {
       if (!m[2]) return json(ESCENARIOS[m[1]])
-      if (m[2] === '/cambio') return json(CAMBIOS[m[1]] ?? BASE)
+      if (m[2] === '/cambio') {
+        const base = (CAMBIOS[m[1]] ?? BASE) as typeof BASE
+        return json(m[1] === 'ec_pol' ? base : conPolarizacion(base, JSON.parse(String(init?.body)).polarizacion))
+      }
       if (m[2] === '/medicion') return json(JSON.parse(String(init?.body)).cuadrante ? MED_CUADRANTE : MED_PUNTO)
     }
     return json({ mensaje: 'no previsto' }, 404)
@@ -124,7 +137,7 @@ describe('Observatorio · antes y después', () => {
     const fig = await listo()
     expect(within(fig).getByText('Antes · 24 abr 2026')).toBeInTheDocument()
     expect(within(fig).getByText('Después · 18 may 2026')).toBeInTheDocument()
-    expect(within(fig).getByText(/σ⁰ HH, dB|σ⁰ HV, dB/)).toBeInTheDocument()
+    expect(fig.querySelector('figcaption')?.textContent).toBe('σ⁰ HV, dB')
     expect(cambios()[0].cuerpo).toEqual({ antes: '2026-04-24', despues: '2026-05-18', polarizacion: 'HV' })
     expect(screen.getByLabelText('Polarización')).toHaveValue('HV')
     // «Antes» solo ofrece fechas anteriores a «después»; «después», posteriores a «antes».
@@ -182,6 +195,8 @@ describe('Observatorio · antes y después', () => {
     // Centro del bbox [-80.24, -0.74, -80.16, -0.66]: 0,700° S, 80,200° O.
     expect(tarjeta).toHaveTextContent(/0,700° S, 80,200° O/)
     expect(medidas()[0].cuerpo).toEqual({ antes: '2026-04-12', despues: '2026-05-18', punto: [0.5, 0.5] })
+    expect(tarjeta).toHaveTextContent('Serie temporal del punto: pendiente (la API aún no la ofrece). La serie del escenario está en la vista Serie.')
+    expect(within(tarjeta).getByRole('link', { name: 'vista Serie' }).getAttribute('href')).toContain('vista=serie')
     expect(within(tarjeta).queryByRole('button', { name: 'Descargar CSV' })).not.toBeInTheDocument()
     expect(within(tarjeta).getByText(/Sintético|demostración/i)).toBeInTheDocument()
   })
@@ -238,7 +253,14 @@ describe('Observatorio · antes y después', () => {
 
   it('las notas del resultado son visibles', async () => {
     montar()
-    expect(await screen.findByText('Bajo el dosel inundado, el doble rebote eleva HH.')).toBeInTheDocument()
+    const nota = await screen.findByText('Bajo el dosel inundado, el doble rebote eleva HH.')
+    expect(nota).toBeInTheDocument()
+    const tarjeta = nota.closest('section') as HTMLElement
+    expect(within(tarjeta).getByText(AVISO_NOTAS)).toBeInTheDocument()
+    // Solo la nota que habla de la misión lleva la marca.
+    const marcas = within(tarjeta).getAllByText('(sin verificar)', { exact: false })
+    expect(marcas).toHaveLength(1)
+    expect(marcas[0].closest('li')).toHaveTextContent('Vector LOS')
   })
 
   it('el PNG del mapa de cambio lleva la franja de demostración', async () => {
@@ -263,6 +285,88 @@ describe('Observatorio · antes y después', () => {
     expect(salida.height).toBeGreaterThan(24 + 1) // imagen ampliada + franja
     expect(ops.some((o) => o.startsWith('texto DATOS DE DEMOSTRACIÓN'))).toBe(true)
     expect(ops.some((o) => /^rect 0,\d+,\d+,24$/.test(o))).toBe(true)
+  })
+})
+
+describe('Observatorio · honestidad y avisos', () => {
+  it('avisa si la polarización medida no es la elegida (medición y capa de cambio)', async () => {
+    const { container } = montar('/observatorio?escenario=ec_pol&vista=comparar&pol=HV')
+    const fig = await listo()
+    expect(fig.querySelector('figcaption')?.textContent).toBe('σ⁰ HH, dB')
+    const g = conLienzo(container)
+    clic(g, 100, 50)
+    const tarjeta = (await screen.findByText('Medición en un punto')).closest('section') as HTMLElement
+    await within(tarjeta).findByText('-4,36 dB')
+    expect(within(tarjeta).getByText(NOTA)).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('tab', { name: 'Cambio detectado' }))
+    expect(await screen.findAllByText(NOTA)).toHaveLength(2)
+  })
+
+  it('con HV elegida y medición en HH la nota sale una sola vez en la tarjeta del punto', async () => {
+    const { container } = montar('/observatorio?escenario=ec_x&vista=comparar&pol=HV')
+    await listo()
+    clic(conLienzo(container), 100, 50)
+    await screen.findByText('Medición en un punto')
+    expect(await screen.findAllByText(NOTA)).toHaveLength(1)
+  })
+
+  it('un arrastre sin área muestra un aviso en lugar de desaparecer', async () => {
+    const { container } = montar()
+    const g = conLienzo(await listo().then(() => container))
+    arrastre(g, 100, 10, 100, 80)
+    expect(await screen.findByText('Dibuja un recuadro con área')).toBeInTheDocument()
+    expect(medidas()).toHaveLength(0)
+    arrastre(g, 20, 10, 100, 60)
+    await screen.findByText('Medición en un cuadrante')
+    expect(screen.queryByText('Dibuja un recuadro con área')).not.toBeInTheDocument()
+  })
+
+  it('la primera aparición de σ⁰, Polarización, HH y HV es un término con explicación', async () => {
+    montar()
+    await listo()
+    for (const n of ['σ⁰', 'Polarización', 'HH', 'HV']) {
+      expect(screen.getAllByRole('button', { name: n }).length).toBeGreaterThan(0)
+    }
+  })
+
+  it('una ayuda vacía no deja «. Valor medido» suelto', async () => {
+    const previo = globalThis.fetch
+    vi.stubGlobal('fetch', vi.fn((url: string, init?: RequestInit) => (url.endsWith('/medicion')
+      ? json({ ...MED_PUNTO, metricas: [{ ...MED_PUNTO.metricas[0], ayuda: '' }] })
+      : previo(url, init))))
+    montar('/observatorio?escenario=ec_x&vista=comparar&p=0.5,0.5')
+    expect(await screen.findByText('Valor medido en el píxel más cercano al punto.')).toBeInTheDocument()
+  })
+
+  it('las columnas repetidas de una tabla no se pisan', async () => {
+    const dup = { ...PARCELAS, titulo: 'Doble', columnas: ['Parcela', 'Valor', 'Valor'], filas: [['A', 1, 2]] }
+    CAMBIOS.ec_agri = { ...BASE, tablas: [dup] }
+    montar('/observatorio?escenario=ec_agri&vista=comparar')
+    const tarjeta = (await screen.findByRole('heading', { name: 'Doble' })).closest('section') as HTMLElement
+    expect(within(tarjeta).getAllByRole('columnheader').map((c) => c.textContent)).toEqual(['Parcela', 'Valor', 'Valor (2)'])
+    expect(within(tarjeta).getByText('1')).toBeInTheDocument()
+    expect(within(tarjeta).getByText('2')).toBeInTheDocument()
+    CAMBIOS.ec_agri = { ...BASE, tablas: [PARCELAS] }
+  })
+})
+
+describe('NotasModelo y nombres', () => {
+  it('exige la línea de aviso y marca solo las notas de misión', () => {
+    render(<NotasModelo notas={['Se ve agua.', 'Producto GUNW enmascarado.', 'Mira a la izquierda: banda L.', 'Cubre todos los píxeles.']} />)
+    expect(screen.getByText(AVISO_NOTAS)).toBeInTheDocument()
+    expect(screen.getAllByText('(sin verificar)', { exact: false })).toHaveLength(2)
+    expect(esNotaSinVerificar('Cubre los píxeles LOS')).toBe(true)
+    expect(esNotaSinVerificar('Se ve en los píxeles')).toBe(false)
+    expect(esNotaSinVerificar('NISAR mira')).toBe(true)
+  })
+  it('sin notas no pinta nada', () => {
+    const { container } = render(<NotasModelo notas={[]} />)
+    expect(container).toBeEmptyDOMElement()
+  })
+  it('humaniza variables conocidas y desconocidas', () => {
+    expect(nombreVariable('fase_interferometrica')).toBe('Fase interferométrica')
+    expect(nombreVariable('coherencia_interferometrica')).toBe('Coherencia interferométrica')
+    expect(nombreVariable('algo_nuevo_aqui')).toBe('Algo nuevo aqui')
   })
 })
 
