@@ -69,3 +69,43 @@ def test_vmin_igual_vmax_no_divide_por_cero():
     d = np.array([[5.0, np.nan]], dtype=np.float32)
     v = de_rejilla(a_rejilla(_capa(d, vmin=5.0, vmax=5.0)))
     assert v[0, 0] == 5.0 and np.isnan(v[0, 1])
+
+
+# ---- capas categóricas: los códigos viajan tal cual ----
+def _capa_cat(datos, leyenda=("a", "b", "c", "d")):
+    c = _capa(datos)
+    return CapaRaster(**{**c.__dict__, "paleta": "categorias", "vmin": 0.0, "vmax": 1.0,
+                         "leyenda": [(e, "#000000") for e in leyenda]})
+
+
+def test_categorica_codigos_0_a_4_sobreviven():
+    d = np.array([[0, 1, 2], [3, 4, np.nan]], dtype=np.float32)
+    r = a_rejilla(_capa_cat(d))
+    assert (r.vmin, r.vmax) == (0.0, 4.0)
+    v = de_rejilla(r, categorica=True)
+    assert v[0, 1] == 1 and v[0, 2] == 2 and v[1, 0] == 3 and v[1, 1] == 4
+    assert np.isnan(v[0, 0]) and np.isnan(v[1, 2])
+
+
+def test_categorica_reduccion_usa_moda_sin_inventar_valores():
+    rng = np.random.default_rng(3)
+    d = rng.integers(0, 5, (2048, 2048)).astype(np.float32)
+    d[:4, :4] = 3  # bloque uniforme
+    r = a_rejilla(_capa_cat(d), max_lado=512)
+    assert (r.filas, r.columnas) == (512, 512)
+    v = de_rejilla(r, categorica=True)
+    assert v[0, 0] == 3
+    assert set(np.unique(v[~np.isnan(v)])) <= {1.0, 2.0, 3.0, 4.0}
+
+
+def test_categorica_real_del_demo_conserva_codigos():
+    p = ProveedorDemostracion()
+    e = next(x for x in p.escenarios() if x.id == "ec_daule")
+    a = e.adquisiciones
+    cap = p.cambio(e.id, a[0].id, a[-1].id, None).cambio
+    assert cap.paleta == "categorias" and cap.leyenda
+    r = a_rejilla(cap, max_lado=10_000)
+    v = de_rejilla(r, categorica=True)
+    esperado = np.where(np.nan_to_num(cap.datos) == 0, np.nan, cap.datos)
+    assert np.array_equal(np.nan_to_num(v), np.nan_to_num(esperado))
+    assert r.vmax == len(cap.leyenda)
