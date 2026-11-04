@@ -45,8 +45,8 @@ const CAMBIO = {
   capas_extra: [], clasificacion: null, notas: [], tablas: [], vectores: null, origen: origenSint,
   metricas: [{ etiqueta: 'Área inundada inicial', valor: '26,8', unidad: 'km²', ayuda: 'Agua abierta + vegetación inundada' }],
   series: [{ titulo: 'Superficie inundada', unidad: 'km²', origen: origenSint, puntos: [
-    ['2026-04-12T00:00:00Z', 26.8, 'Detectada con NISAR'], ['2026-04-24T00:00:00Z', 20.1, 'Detectada con NISAR'],
-    ['2026-05-06T00:00:00Z', 9.0, 'Detectada con NISAR'], ['2026-05-18T00:00:00Z', 5.5, 'Detectada con NISAR'],
+    ['2026-04-12T00:00:00Z', 26.8, 'Detectada por el modelo (simulación)'], ['2026-04-24T00:00:00Z', 20.1, 'Detectada por el modelo (simulación)'],
+    ['2026-05-06T00:00:00Z', 9.0, 'Detectada por el modelo (simulación)'], ['2026-05-18T00:00:00Z', 5.5, 'Detectada por el modelo (simulación)'],
     ['2026-05-18T00:00:00Z', 5.8, 'Verdad del modelo'],
   ] }],
 }

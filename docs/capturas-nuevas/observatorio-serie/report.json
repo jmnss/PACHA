@@ -1,6 +1,6 @@
 {
  "url": "http://localhost:8000/observatorio?vista=serie",
- "at": "2026-11-04T11:56:18.437Z",
+ "at": "2026-11-04T12:00:59.886Z",
  "allow": [
   "palette-terracotta"
  ],
@@ -11,8 +11,8 @@
    "load": "load",
    "screens": 2,
    "filled": [
-    0.6,
-    0.69
+    0.61,
+    0.71
    ],
    "motion": {
     "elements": 0,
@@ -30,7 +30,7 @@
     "page": {
      "height": 1412,
      "screens": 1.6,
-     "words": 728,
+     "words": 780,
      "img": 0,
      "video": 0,
      "canvas": 0,
@@ -152,15 +152,15 @@
      "textColors": [
       {
        "color": "#b4b4b8",
-       "share": 0.42
+       "share": 0.49
       },
       {
        "color": "#8a8c92",
-       "share": 0.31
+       "share": 0.28
       },
       {
        "color": "#ffffff",
-       "share": 0.24
+       "share": 0.22
       },
       {
        "color": "#f0a868",
@@ -248,7 +248,7 @@
       "tag": "section",
       "top": 237,
       "height": 824,
-      "words": 100,
+      "words": 110,
       "media": 1,
       "middle": 0,
       "heading": {
@@ -321,7 +321,7 @@
     "slivers": [],
     "voidShare": 0.07,
     "voidBox": {
-     "x": 180,
+     "x": 720,
      "y": 600,
      "w": 300,
      "h": 300
@@ -404,7 +404,7 @@
     "chartHues": 1,
     "placeholders": [],
     "type": {
-     "under13": 0.24,
+     "under13": 0.22,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -430,8 +430,8 @@
    "load": "load",
    "screens": 3,
    "filled": [
-    0.56,
-    0.75,
+    0.57,
+    0.76,
     0.83
    ],
    "motion": {
@@ -450,7 +450,7 @@
     "page": {
      "height": 2537,
      "screens": 2.5,
-     "words": 728,
+     "words": 780,
      "img": 0,
      "video": 0,
      "canvas": 0,
@@ -594,15 +594,15 @@
      "textColors": [
       {
        "color": "#b4b4b8",
-       "share": 0.42
+       "share": 0.49
       },
       {
        "color": "#8a8c92",
-       "share": 0.31
+       "share": 0.28
       },
       {
        "color": "#ffffff",
-       "share": 0.24
+       "share": 0.22
       },
       {
        "color": "#f0a868",
@@ -713,7 +713,7 @@
       "tag": "div",
       "top": 319,
       "height": 1071,
-      "words": 183,
+      "words": 193,
       "media": 1,
       "middle": 0,
       "heading": {
@@ -855,7 +855,7 @@
     "chartHues": 1,
     "placeholders": [],
     "type": {
-     "under13": 0.24,
+     "under13": 0.22,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -882,8 +882,8 @@
    "screens": 4,
    "filled": [
     0.78,
-    0.68,
-    0.83,
+    0.66,
+    0.8,
     0.93
    ],
    "motion": {
@@ -900,9 +900,9 @@
      "h": 844
     },
     "page": {
-     "height": 2960,
-     "screens": 3.5,
-     "words": 725,
+     "height": 3024,
+     "screens": 3.6,
+     "words": 777,
      "img": 0,
      "video": 0,
      "canvas": 0,
@@ -1047,19 +1047,19 @@
      "textColors": [
       {
        "color": "#b4b4b8",
-       "share": 0.43
+       "share": 0.49
       },
       {
        "color": "#8a8c92",
-       "share": 0.31
+       "share": 0.27
       },
       {
        "color": "#ffffff",
-       "share": 0.25
+       "share": 0.22
       },
       {
        "color": "#f0a868",
-       "share": 0.02
+       "share": 0.01
       }
      ],
      "button": null,
@@ -1125,7 +1125,7 @@
      "w": 390,
      "h": 844
     },
-    "pageH": 2960,
+    "pageH": 3024,
     "margins": {
      "left": 16,
      "right": 16
@@ -1158,8 +1158,8 @@
       "sel": "div.observatorio__principal",
       "tag": "div",
       "top": 397,
-      "height": 1199,
-      "words": 166,
+      "height": 1263,
+      "words": 168,
       "media": 1,
       "middle": 0,
       "heading": {
@@ -1170,7 +1170,7 @@
       "left": 37,
       "right": 37,
       "textLeft": 37,
-      "textRight": 37,
+      "textRight": 43,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -1180,7 +1180,7 @@
      {
       "sel": "aside.observatorio__lado",
       "tag": "aside",
-      "top": 1620,
+      "top": 1684,
       "height": 1268,
       "words": 152,
       "media": 1,
@@ -1296,12 +1296,12 @@
     },
     "rows": {
      "count": 54,
-     "median": 65
+     "median": 82
     },
     "chartHues": 1,
     "placeholders": [],
     "type": {
-     "under13": 0.25,
+     "under13": 0.23,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [

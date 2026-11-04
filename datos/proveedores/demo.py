@@ -70,11 +70,21 @@ def _slug(texto: str) -> str:
 _NUM = re.compile(r"^([−+\-]?\d+(?:[\s\u2009\u00a0]\d{3})*(?:,\d+)?(?:[\s\u2009\u00a0]mil)?)\s*(.*)$")
 
 
+_DETECTADA_NISAR = re.compile(r"detectad[oa]s?\s+(?:con|por)\s+NISAR", re.IGNORECASE)
+
+
+def _sin_nisar(texto: str) -> str:
+    """Los datos de demostración no los detecta NISAR: lo hace el modelo de simulación (regla 7).
+    Se aplica a series, métricas, tablas y leyendas; las `notas` conservan su propio aviso."""
+    texto = _DETECTADA_NISAR.sub("Detectada por el modelo (simulación)", str(texto))
+    return re.sub(r"\bNISAR\b", "el modelo", texto)
+
+
 def _metrica(etiqueta: str, valor: str, ayuda: str) -> Metrica:
     """Separa «12,3 km²» en valor y unidad; si no tiene forma numérica, deja el texto entero."""
     m = _NUM.match(str(valor).strip())
     num, unidad = (m.group(1).strip(), m.group(2)) if m else (str(valor), "")
-    return Metrica(etiqueta=str(etiqueta), valor=num, unidad=unidad, ayuda=str(ayuda))
+    return Metrica(etiqueta=_sin_nisar(etiqueta), valor=num, unidad=unidad, ayuda=_sin_nisar(ayuda))
 
 
 def _utc(d: date) -> datetime:
@@ -136,10 +146,10 @@ def _celda(v):
     except (TypeError, ValueError):
         pass
     if isinstance(v, (bool, np.bool_)):
-        return str(v)
+        return _sin_nisar(str(v))
     if isinstance(v, (int, float, np.floating, np.integer)):
         return float(v)
-    return str(v)
+    return _sin_nisar(str(v))
 
 
 def _capa_de_panel(escenario_id, adquisicion_id, panel, variable, polarizacion, bbox, origen,
@@ -148,7 +158,7 @@ def _capa_de_panel(escenario_id, adquisicion_id, panel, variable, polarizacion, 
         escenario_id=escenario_id, adquisicion_id=adquisicion_id, variable=variable,
         polarizacion=polarizacion, unidad=panel.unidad, paleta=_paleta(panel.paleta),
         vmin=float(panel.vmin if vmin is None else vmin), vmax=float(panel.vmax if vmax is None else vmax),
-        leyenda=[(str(e), str(c)) for e, c in panel.leyenda] if panel.leyenda else None,
+        leyenda=[(_sin_nisar(e), str(c)) for e, c in panel.leyenda] if panel.leyenda else None,
         datos=_rejilla(panel.datos), bbox=bbox, origen=origen, instante=instante,
     )
 
@@ -159,8 +169,8 @@ def _serie_contrato(s: nisar.Serie, origen: Origen) -> SerieTemporal:
         if not math.isfinite(fila.valor):
             continue  # NaN no viaja en JSON; un hueco en la serie es un punto ausente
         t = pd.Timestamp(fila.fecha).to_pydatetime().replace(tzinfo=timezone.utc)
-        puntos.append((t, float(fila.valor), str(fila.serie)))
-    return SerieTemporal(titulo=s.titulo, unidad=s.unidad, puntos=puntos, origen=origen)
+        puntos.append((t, float(fila.valor), _sin_nisar(fila.serie)))
+    return SerieTemporal(titulo=_sin_nisar(s.titulo), unidad=s.unidad, puntos=puntos, origen=origen)
 
 
 # --- sitio del mapa (réplica de app.py:sitio_en_mapa; no se importa app.py) ---------------------
@@ -435,7 +445,7 @@ class ProveedorDemostracion:
         if a.tabla is not None:
             tablas.append(TablaResultado(
                 titulo="Resultados por parcela" if escena.tipo == "agricultura" else "Resultados",
-                columnas=[str(c) for c in a.tabla.columns],
+                columnas=[_sin_nisar(c) for c in a.tabla.columns],
                 filas=[[_celda(x) for x in fila] for fila in a.tabla.itertuples(index=False, name=None)],
                 origen=esc.origen))
         vectores = None

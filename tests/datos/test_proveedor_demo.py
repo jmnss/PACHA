@@ -365,3 +365,31 @@ def test_simular_fuera_de_ecuador_valueerror():
     assert en_ecuador(-2.0, -79.9) and not en_ecuador(50.0, 0.0)
     with pytest.raises(ValueError, match="fuera de Ecuador"):
         ProveedorDemostracion().simular("ec_la_segua", {"lat": 50.0, "lon": 0.0})
+
+
+def _textos_sin_notas(r) -> list[str]:
+    """Todo texto de un ResultadoCambio salvo las notas (que llevan su propio aviso)."""
+    t = [m.etiqueta for m in r.metricas] + [m.ayuda for m in r.metricas]
+    for s in r.series:
+        t += [s.titulo, s.unidad] + [p[2] for p in s.puntos]
+    for tb in r.tablas:
+        t += [tb.titulo] + list(tb.columnas) + [c for f in tb.filas for c in f if isinstance(c, str)]
+    for capa in [r.cambio, r.clasificacion, *r.capas_extra]:
+        if capa is not None:
+            t += [capa.variable, capa.unidad] + [x for par in (capa.leyenda or []) for x in par]
+    return [x for x in t if isinstance(x, str)]
+
+
+def test_ninguna_etiqueta_del_demo_atribuye_a_nisar_una_deteccion(prov):
+    for e in prov.escenarios():
+        a, d = _por_defecto(prov, e.id)
+        r = prov.cambio(e.id, a, d, None)
+        for texto in _textos_sin_notas(r):
+            assert "NISAR" not in texto.upper(), f"{e.id}: «{texto}»"
+
+
+def test_la_serie_detectada_se_llama_detectada_por_el_modelo(prov):
+    a, d = _por_defecto(prov, "ec_la_segua")
+    r = prov.cambio("ec_la_segua", a, d, None)
+    nombres = {p[2] for s in r.series for p in s.puntos}
+    assert "Detectada por el modelo (simulación)" in nombres
