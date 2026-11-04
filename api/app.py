@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import APIRouter, Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.gzip import GZipMiddleware
 
 from api import VERSION
@@ -39,6 +40,11 @@ def _registrar_errores(app: FastAPI) -> None:
     async def _valor(_: Request, exc: ValueError) -> JSONResponse:
         return _error(422, str(exc))
 
+    @app.exception_handler(StarletteHTTPException)
+    async def _http(_: Request, exc: StarletteHTTPException) -> JSONResponse:
+        mensajes = {404: "No existe el recurso pedido.", 405: "Método no permitido."}
+        return _error(exc.status_code, mensajes.get(exc.status_code, str(exc.detail)))
+
     @app.exception_handler(RequestValidationError)
     async def _entrada(_: Request, exc: RequestValidationError) -> JSONResponse:
         partes = [f"{'.'.join(str(p) for p in e['loc'] if p != 'query')}: {e['msg']}"
@@ -46,13 +52,15 @@ def _registrar_errores(app: FastAPI) -> None:
         return _error(422, "Entrada no válida. " + "; ".join(partes))
 
 
-def _tipo_de_origen(proveedor: ProveedorDatos) -> str:
+def _origenes(proveedor: ProveedorDatos) -> tuple[str, bool]:
+    """(origen_tipo informativo, hay_sinteticos). La banda de demostración usa el segundo."""
     tipos = {e.origen.tipo for e in proveedor.escenarios()}
-    if tipos == {"sintetico"}:
-        return "sintetico"
-    if tipos == {"real"}:
-        return "real"
-    return "mixto"  # con tipos mezclados (o sin escenarios) se avisa como mixto: la banda se muestra
+    hay_sinteticos = "sintetico" in tipos
+    if not tipos:
+        return "desconocido", False
+    if len(tipos) > 1:
+        return "mixto", hay_sinteticos
+    return tipos.pop(), hay_sinteticos
 
 
 def create_app(proveedor: ProveedorDatos | None = None) -> FastAPI:
@@ -69,8 +77,9 @@ def create_app(proveedor: ProveedorDatos | None = None) -> FastAPI:
 
     @rutas.get("/salud", response_model=Salud, responses={503: {"model": ErrorDto}})
     def salud(prov: ProveedorDatos = Depends(obtener)) -> Salud:
+        tipo, hay = _origenes(prov)
         return Salud(estado="ok", version=VERSION, proveedor=prov.nombre(),
-                     origen_tipo=_tipo_de_origen(prov))
+                     origen_tipo=tipo, hay_sinteticos=hay)
 
     app.include_router(rutas)
     return app

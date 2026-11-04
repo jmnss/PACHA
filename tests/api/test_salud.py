@@ -1,3 +1,4 @@
+import pytest
 from fastapi.testclient import TestClient
 
 from api.app import create_app
@@ -9,6 +10,7 @@ def test_salud_informa_proveedor_y_origen(cliente_demo):
     cuerpo = r.json()
     assert cuerpo["estado"] == "ok"
     assert cuerpo["origen_tipo"] == "sintetico"
+    assert cuerpo["hay_sinteticos"] is True
     assert cuerpo["proveedor"] and cuerpo["version"]
 
 
@@ -58,14 +60,71 @@ def test_errores_de_contrato_son_json_en_espanol(_demo):
         assert c.get("/api/_v").status_code == 422
 
 
+class _Falso:
+    def __init__(self, escenarios):
+        self._e = escenarios
+
+    def nombre(self):
+        return "falso"
+
+    def escenarios(self):
+        return self._e
+
+
+def _con_tipo(base, tipo):
+    return base.model_copy(update={"origen": base.origen.model_copy(update={"tipo": tipo})})
+
+
+@pytest.mark.parametrize("tipos,esperado", [
+    (["sintetico"], ("sintetico", True)),
+    (["real"], ("real", False)),
+    (["real", "sintetico"], ("mixto", True)),
+    ([], ("desconocido", False)),
+])
+def test_hay_sinteticos_segun_origenes(_demo, tipos, esperado):
+    base = _demo.escenarios()[0]
+    prov = _Falso([_con_tipo(base, t) for t in tipos])
+    with TestClient(create_app(prov)) as c:
+        cuerpo = c.get("/api/salud").json()
+    assert (cuerpo["origen_tipo"], cuerpo["hay_sinteticos"]) == esperado
+
+
+def test_404_y_405_son_json_en_espanol(cliente_demo):
+    r = cliente_demo.get("/api/no-existe")
+    assert r.status_code == 404 and r.json() == {"mensaje": "No existe el recurso pedido."}
+    r = cliente_demo.post("/api/salud")
+    assert r.status_code == 405 and r.json() == {"mensaje": "Método no permitido."}
+
+
+def test_escenario_inexistente_404_con_mensaje_y_validacion_422(_demo):
+    app = create_app(_demo)
+
+    @app.get("/api/_e/{id}")
+    def _e(id: str, n: int = 1):
+        return _demo.escenario(id)
+
+    with TestClient(app) as c:
+        r = c.get("/api/_e/no-existe")
+        assert r.status_code == 404 and "no-existe" in r.json()["mensaje"]
+        r = c.get("/api/_e/x?n=abc")
+        assert r.status_code == 422
+        assert r.json()["mensaje"].startswith("Entrada no válida.") and "n:" in r.json()["mensaje"]
+
+
 def test_servidor_sirve_cliente_y_api_desconocida_404(tmp_path):
     from servidor import crear_servidor
-    (tmp_path / "index.html").write_text("<html>cliente</html>")
-    (tmp_path / "a.js").write_text("1")
-    with TestClient(crear_servidor(tmp_path)) as c:
+    dist = tmp_path / "dist"
+    dist.mkdir()
+    (dist / "index.html").write_text("<html>cliente</html>")
+    (dist / "a.js").write_text("1")
+    (tmp_path / "secreto.txt").write_text("TOP-SECRETO")
+    with TestClient(crear_servidor(dist)) as c:
         assert c.get("/observatorio").text == "<html>cliente</html>"
         assert c.get("/a.js").text == "1"
-        assert c.get("/..%2f..%2fetc/passwd").text == "<html>cliente</html>"
+        for ruta in ["/../secreto.txt", "/%2e%2e/secreto.txt", "/..%2fsecreto.txt",
+                     "/%2e%2e%2fsecreto.txt", "/a/../../secreto.txt"]:
+            assert "TOP-SECRETO" not in c.get(ruta).text
+        assert c.get("/falta.js").status_code == 404
         r = c.get("/api/nada")
         assert r.status_code == 404 and r.headers["content-type"] == "application/json"
         assert c.get("/api/salud").status_code == 200

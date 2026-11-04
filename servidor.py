@@ -22,6 +22,8 @@ def crear_servidor(dist: Path = DIST):
             candidato = (raiz / ruta).resolve()
             if candidato.is_file() and candidato.is_relative_to(raiz):
                 return FileResponse(candidato)
+            if Path(ruta).suffix:  # un archivo con extensión que no existe no es una ruta del cliente
+                raise HTTPException(404, "No existe el archivo.")
             return FileResponse(raiz / "index.html")  # rutas del cliente (React Router)
     return app
 

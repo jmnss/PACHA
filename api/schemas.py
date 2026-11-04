@@ -8,7 +8,10 @@ class Salud(BaseModel):
     estado: Literal["ok"]
     version: str
     proveedor: str
-    origen_tipo: Literal["sintetico", "real", "mixto"]
+    # Informativo. "mixto" solo si hay escenarios reales y sintéticos; "desconocido" si no hay escenarios.
+    origen_tipo: Literal["sintetico", "real", "mixto", "desconocido"]
+    # La banda «DATOS DE DEMOSTRACIÓN» depende de este campo: true si CUALQUIER escenario es sintético.
+    hay_sinteticos: bool
 
 
 class ErrorDto(BaseModel):
