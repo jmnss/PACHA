@@ -1,5 +1,5 @@
 """Modelos de petición y respuesta de la API."""
-from datetime import datetime
+from datetime import date, datetime
 from typing import Literal
 
 from pydantic import BaseModel, Field, model_validator
@@ -93,3 +93,56 @@ class MedicionDto(BaseModel):
     metricas: list[Metrica]
     tabla: list[dict[str, str | float | None]]
     origen: Origen
+
+
+# --- Contexto climático (dato real complementario, NO es NISAR) ---------------------------------
+
+class AstronomiaDto(BaseModel):
+    estacion: str
+    hemisferio: Literal["norte", "sur"]
+    declinacion_deg: float
+    elevacion_mediodia_deg: float
+    duracion_dia_h: float
+    proximo_hito: str
+    fecha_proximo_hito: date
+    pasos_cenitales: list[date]
+
+
+class TemporadaDto(BaseModel):
+    temporada: str
+    nombre_local: str
+    prec_mes_mm: float
+    prec_media_mm: float
+    et0_mes_mm: float
+    t2m_c: float
+    regimen: str
+    meses_lluviosos: list[str]
+    meses_secos: list[str]
+
+
+class MesClimaDto(BaseModel):
+    mes: str
+    mes_num: int
+    precipitacion_mm: float
+    et0_mm: float
+    temperatura_c: float
+    temporada: str
+
+
+class ContextoDto(BaseModel):
+    """Clima, temporada y suelo de un punto. Es contexto real complementario (NASA POWER y
+    geoBoundaries): NO es una observación de NISAR y su `origen.tipo="real"` no activa la banda
+    de demostración. La respuesta es `null` si el punto cae fuera de la malla o de Ecuador."""
+    origen: Origen
+    lat: float
+    lon: float
+    fecha: date
+    mes_actual: int = Field(ge=1, le=12)
+    region: str
+    provincia: str
+    estacion_astronomica: AstronomiaDto
+    temporada: TemporadaDto
+    humedad_suelo: float
+    elevacion_malla_m: float
+    metodo_climatologia: str
+    clima_mensual: list[MesClimaDto]
