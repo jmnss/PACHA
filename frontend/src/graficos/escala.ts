@@ -1,7 +1,11 @@
+import { ANCHO_CARACTER, SEPARACION } from './geometria'
+
 /** Escala de ticks redondos (1, 2 o 5 × 10^k) con el tope siempre por encima del máximo. */
 export interface Escala {
   ticks: number[]
   tope: number
+  /** Decimales que hacen únicas todas las etiquetas (derivados del paso). */
+  decimales: number
 }
 
 function decimales(paso: number): number {
@@ -42,9 +46,9 @@ export function escalaRedonda(min: number, max: number, n = 5): Escala {
     const cuenta = Math.round((tope - inicio) / paso) + 1
     if (cuenta > maxLineas) continue
     const ticks = Array.from({ length: cuenta }, (_, i) => Number((inicio + i * paso).toFixed(d)))
-    return { ticks, tope: ticks[ticks.length - 1] }
+    return { ticks, tope: ticks[ticks.length - 1], decimales: d }
   }
-  return { ticks: [lo, hi], tope: hi }
+  return { ticks: [lo, hi], tope: hi, decimales: Math.max(2, decimales(hi - lo)) }
 }
 
 export interface MarcaEntrada {
@@ -53,67 +57,55 @@ export interface MarcaEntrada {
 }
 export interface EtiquetaColocada {
   x: number
+  /** Texto final (puede venir recortado con «…»); vacío si se omitió: la marca de 1 px permanece. */
   texto: string
   fila: number
   ancla: 'start' | 'end'
 }
 
-export const ANCHO_CARACTER = 6.6 // px por carácter a 12 px (aproximado)
-const SEPARACION = 6
 const ELIPSIS = '…'
 
-function recortar(texto: string, ancho: number): string {
+/** Recorta con elipsis para que quepa en `ancho` px (única implementación, la usan Barras y Linea). */
+export function recortar(texto: string, ancho: number): string {
   const max = Math.floor(ancho / ANCHO_CARACTER)
   if (texto.length <= max) return texto
   return max <= 1 ? ELIPSIS : texto.slice(0, max - 1).trimEnd() + ELIPSIS
 }
 
+interface Caja {
+  l: number
+  r: number
+}
+
 /**
- * Coloca etiquetas de marcas verticales sin que se solapen: cada una va en la primera fila
- * libre (decalaje vertical); si no hay filas, se recorta con elipsis la etiqueta previa de la
- * última fila. Función pura: el ancho del texto se estima por número de caracteres.
+ * Coloca etiquetas de marcas verticales sin solape y dentro de [0, anchoTotal]. Para cada etiqueta
+ * prueba el texto completo y, si no cabe, versiones cada vez más cortas; para cada versión prueba
+ * ambas anclas (a la derecha de la marca, o a la izquierda) y todas las filas, comparando contra
+ * TODAS las cajas ya colocadas. Si nada cabe, la etiqueta se omite (texto vacío).
  */
-export function colocarEtiquetas(
-  marcas: MarcaEntrada[],
-  anchoTotal: number,
-  maxFilas = 3,
-): EtiquetaColocada[] {
-  const orden = [...marcas].sort((a, b) => a.x - b.x)
-  const filas: { l: number; r: number; idx: number }[][] = Array.from({ length: maxFilas }, () => [])
-  const res: (EtiquetaColocada & { l: number; r: number })[] = []
-  const caja = (x: number, ancho: number) =>
-    x + SEPARACION + ancho <= anchoTotal
-      ? { ancla: 'start' as const, l: x + 3, r: x + 3 + ancho }
-      : { ancla: 'end' as const, l: x - 3 - ancho, r: x - 3 }
+export function colocarEtiquetas(marcas: MarcaEntrada[], anchoTotal: number, maxFilas = 3): EtiquetaColocada[] {
+  const orden = marcas.map((m, i) => ({ ...m, i })).sort((a, b) => a.x - b.x || a.i - b.i)
+  const filas: Caja[][] = Array.from({ length: maxFilas }, () => [])
+  const res: EtiquetaColocada[] = []
+  const libre = (f: number, c: Caja) => filas[f].every((o) => c.l >= o.r + SEPARACION || c.r <= o.l - SEPARACION)
   for (const m of orden) {
-    const ancho = m.texto.length * ANCHO_CARACTER
-    const c = caja(m.x, ancho)
-    const libre = (f: number) => filas[f].every((o) => c.l >= o.r + SEPARACION || c.r <= o.l - SEPARACION)
-    let fila = Array.from({ length: maxFilas }, (_, i) => i).find(libre)
-    let texto = m.texto
-    const { l } = c
-    let r = c.r
-    if (fila === undefined) {
-      // Sin fila libre: se recorta la etiqueta previa de la última fila para dejar sitio.
-      fila = maxFilas - 1
-      const previo = filas[fila][filas[fila].length - 1]
-      if (previo) {
-        const p = res[previo.idx]
-        if (p.ancla === 'start') {
-          const espacio = Math.max(ANCHO_CARACTER, l - SEPARACION - p.l)
-          p.texto = recortar(p.texto, espacio)
-          p.r = p.l + p.texto.length * ANCHO_CARACTER
-          previo.r = p.r
-        }
-        if (l < previo.r + SEPARACION) {
-          texto = recortar(texto, Math.max(ANCHO_CARACTER, anchoTotal - c.l))
-          r = l + texto.length * ANCHO_CARACTER
+    let puesta: EtiquetaColocada | undefined
+    for (let n = m.texto.length; n >= 1 && !puesta; n--) {
+      const texto = n === m.texto.length ? m.texto : recortar(m.texto, n * ANCHO_CARACTER)
+      const w = texto.length * ANCHO_CARACTER
+      const anclas = [
+        { ancla: 'start' as const, l: m.x + 3, r: m.x + 3 + w },
+        { ancla: 'end' as const, l: m.x - 3 - w, r: m.x - 3 },
+      ].filter((a) => a.l >= 0 && a.r <= anchoTotal)
+      for (let f = 0; f < maxFilas && !puesta; f++) {
+        const a = anclas.find((c) => libre(f, c))
+        if (a) {
+          filas[f].push({ l: a.l, r: a.r })
+          puesta = { x: m.x, texto, fila: f, ancla: a.ancla }
         }
       }
     }
-    const idx = res.length
-    res.push({ x: m.x, texto, fila, ancla: c.ancla, l, r })
-    filas[fila].push({ l, r, idx })
+    res.push(puesta ?? { x: m.x, texto: '', fila: 0, ancla: 'start' })
   }
-  return res.map(({ x, texto, fila, ancla }) => ({ x, texto, fila, ancla }))
+  return res
 }

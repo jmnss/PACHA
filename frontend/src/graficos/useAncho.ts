@@ -18,6 +18,3 @@ export function useAncho(inicial = 640) {
   }, [])
   return { ref, ancho }
 }
-
-const NUM = new Intl.NumberFormat('es-EC', { maximumFractionDigits: 2 })
-export const formatoNumero = (v: number) => NUM.format(v)
