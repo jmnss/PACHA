@@ -1,6 +1,6 @@
 # INFORME — Migración a React
 
-Estado: **Fase 2 terminada: alcance de la primera noche completo (bloques 0 a 5).** Verificación final: build OK, vitest 282, lint OK, Playwright 22/22, pytest 174 (+2 omitidas por diseño), unittest 13 OK.
+Estado: **Fase 2 terminada: alcance de la primera noche completo (bloques 0 a 5).** Verificación final: build OK, vitest 282, lint OK, Playwright 22/22, pytest 175 (+2 omitidas por diseño), unittest 13 OK.
 Última actualización: 2026-11-04
 
 Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea.
