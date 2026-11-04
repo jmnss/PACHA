@@ -1,7 +1,7 @@
 """Modelos de respuesta de la API (los de datos se añaden en las tareas siguientes)."""
 from typing import Literal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Salud(BaseModel):
@@ -16,3 +16,13 @@ class Salud(BaseModel):
 
 class ErrorDto(BaseModel):
     mensaje: str
+
+
+class Rejilla(BaseModel):
+    """Ráster cuantizado a uint8: 0 = sin dato, 1..255 = lineal entre vmin y vmax. Máximo 512 por lado."""
+    filas: int = Field(ge=1, le=512)
+    columnas: int = Field(ge=1, le=512)
+    vmin: float
+    vmax: float
+    bbox: tuple[float, float, float, float]  # (oeste, sur, este, norte) en WGS84
+    datos_b64: str
