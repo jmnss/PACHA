@@ -1,6 +1,6 @@
 {
  "url": "http://localhost:8000/observatorio",
- "at": "2026-11-04T11:17:38.764Z",
+ "at": "2026-11-04T12:09:06.363Z",
  "allow": [
   "palette-terracotta"
  ],
@@ -9,9 +9,10 @@
    "width": 1440,
    "height": 900,
    "load": "load",
-   "screens": 2,
+   "screens": 3,
    "filled": [
-    0.76,
+    0.81,
+    0.93,
     0.83
    ],
    "motion": {
@@ -28,14 +29,14 @@
      "h": 900
     },
     "page": {
-     "height": 1412,
-     "screens": 1.6,
-     "words": 373,
+     "height": 2602,
+     "screens": 2.9,
+     "words": 544,
      "img": 0,
      "video": 0,
      "canvas": 1,
-     "svg": 13,
-     "sections": 4,
+     "svg": 14,
+     "sections": 5,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
      "uiFragments": 0,
@@ -124,9 +125,9 @@
      "microLabels": 0,
      "microLabelShare": 0,
      "microSamples": [],
-     "upperShare": 0.01,
-     "centerShare": 0.08,
-     "smallText": 14
+     "upperShare": 0,
+     "centerShare": 0.06,
+     "smallText": 26
     },
     "eyebrows": [],
     "numbered": [],
@@ -161,26 +162,26 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.52
-      },
-      {
-       "color": "#b4b4b8",
-       "share": 0.22
+       "share": 0.54
       },
       {
        "color": "#ffffff",
-       "share": 0.22
+       "share": 0.23
+      },
+      {
+       "color": "#b4b4b8",
+       "share": 0.21
       },
       {
        "color": "#f0a868",
-       "share": 0.04
+       "share": 0.03
       }
      ],
      "button": null,
      "lowContrast": []
     },
     "buttons": {
-     "count": 3,
+     "count": 4,
      "inHero": 1,
      "radius": "pill",
      "height": 34,
@@ -200,7 +201,7 @@
      "scrims": 0,
      "gradientSamples": [],
      "gradientText": 0,
-     "hairlines": 11,
+     "hairlines": 13,
      "hairlineSamples": [
       "nav.riel 50px",
       "div.banda-demo__fila 1390px",
@@ -208,10 +209,10 @@
       "div.tarjeta__pie 876px",
       "div.cinta__pista 876px"
      ],
-     "outlinedBoxes": 5,
+     "outlinedBoxes": 6,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 6,
+     "roundedBoxes": 7,
      "boxRadius": 6,
      "squareMedia": 0,
      "roundedMedia": 1,
@@ -219,7 +220,7 @@
      "textShadow": 0,
      "cardRows": [
       {
-       "count": 3,
+       "count": 4,
        "iconTopped": false,
        "rounded": true,
        "top": 237
@@ -229,7 +230,7 @@
     "heroMedia": [
      {
       "type": "canvas",
-      "ratio": 0.36
+      "ratio": 0.4
      }
     ],
     "nav": {
@@ -248,7 +249,7 @@
      "w": 1440,
      "h": 900
     },
-    "pageH": 1412,
+    "pageH": 2602,
     "margins": {
      "left": 82,
      "right": 53
@@ -258,7 +259,7 @@
       "sel": "section.tarjeta.vista-mapa",
       "tag": "section",
       "top": 237,
-      "height": 767,
+      "height": 1957,
       "words": 59,
       "media": 1,
       "middle": 0,
@@ -276,7 +277,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 1028,
+      "top": 2218,
       "height": 352,
       "words": 41,
       "media": 0,
@@ -309,11 +310,11 @@
     "edgeText": [],
     "edges": [
      {
-      "x": 82,
-      "n": 2
+      "x": 1045,
+      "n": 3
      },
      {
-      "x": 1045,
+      "x": 82,
       "n": 2
      },
      {
@@ -321,7 +322,7 @@
       "n": 1
      }
     ],
-    "leftBlocks": 5,
+    "leftBlocks": 6,
     "bodySize": 12,
     "stage": false,
     "explains": false,
@@ -344,8 +345,8 @@
     "sidebar": null,
     "topbar": null,
     "canvas": {
-     "left": 17,
-     "right": 32
+     "left": 82,
+     "right": 44
     },
     "hero": {
      "text": "Observatorio",
@@ -366,18 +367,22 @@
     },
     "charts": 1,
     "layout": {
-     "panels": 5,
-     "firstScreen": 4,
+     "panels": 6,
+     "firstScreen": 2,
      "ragged": [],
      "voids": []
     },
     "tiles": 0,
     "panels": {
-     "count": 6,
+     "count": 8,
      "radii": [
       [
        6,
-       6
+       7
+      ],
+      [
+       0,
+       1
       ]
      ],
      "heavyBorders": 0,
@@ -395,7 +400,7 @@
     "numbers": {
      "cells": 2,
      "leftAligned": 0,
-     "figures": 1,
+     "figures": 4,
      "tabularShare": 1,
      "kpiMax": 13
     },
@@ -406,7 +411,7 @@
     "chartHues": 1,
     "placeholders": [],
     "type": {
-     "under13": 0.37,
+     "under13": 0.43,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -422,7 +427,7 @@
      "size": 26,
      "top": 68
     },
-    "colourShare": 0.054
+    "colourShare": 0.039
    },
    "consoleErrors": []
   },
@@ -430,10 +435,11 @@
    "width": 768,
    "height": 1024,
    "load": "load",
-   "screens": 3,
+   "screens": 4,
    "filled": [
-    0.76,
-    0.73,
+    0.74,
+    0.86,
+    0.69,
     0.8
    ],
    "motion": {
@@ -450,14 +456,14 @@
      "h": 1024
     },
     "page": {
-     "height": 2641,
-     "screens": 2.6,
-     "words": 373,
+     "height": 3763,
+     "screens": 3.7,
+     "words": 544,
      "img": 0,
      "video": 0,
      "canvas": 1,
-     "svg": 13,
-     "sections": 4,
+     "svg": 14,
+     "sections": 5,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
      "uiFragments": 0,
@@ -512,8 +518,8 @@
       "italic": false,
       "mono": false,
       "align": "left",
-      "position": "center",
-      "widthRatio": 0.85,
+      "position": "left",
+      "widthRatio": 0.61,
       "top": 68,
       "tag": "h1",
       "kind": "heading"
@@ -568,9 +574,9 @@
      "microLabels": 0,
      "microLabelShare": 0,
      "microSamples": [],
-     "upperShare": 0.01,
-     "centerShare": 0.08,
-     "smallText": 14
+     "upperShare": 0,
+     "centerShare": 0.06,
+     "smallText": 26
     },
     "eyebrows": [],
     "numbered": [],
@@ -605,26 +611,26 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.52
-      },
-      {
-       "color": "#b4b4b8",
-       "share": 0.22
+       "share": 0.54
       },
       {
        "color": "#ffffff",
-       "share": 0.22
+       "share": 0.23
+      },
+      {
+       "color": "#b4b4b8",
+       "share": 0.21
       },
       {
        "color": "#f0a868",
-       "share": 0.04
+       "share": 0.03
       }
      ],
      "button": null,
      "lowContrast": []
     },
     "buttons": {
-     "count": 3,
+     "count": 4,
      "inHero": 1,
      "radius": "pill",
      "height": 34,
@@ -644,7 +650,7 @@
      "scrims": 0,
      "gradientSamples": [],
      "gradientText": 0,
-     "hairlines": 11,
+     "hairlines": 13,
      "hairlineSamples": [
       "nav.riel 50px",
       "div.banda-demo__fila 718px",
@@ -652,10 +658,10 @@
       "div.tarjeta__pie 612px",
       "div.cinta__pista 612px"
      ],
-     "outlinedBoxes": 5,
+     "outlinedBoxes": 6,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 6,
+     "roundedBoxes": 7,
      "boxRadius": 6,
      "squareMedia": 0,
      "roundedMedia": 1,
@@ -663,7 +669,7 @@
      "textShadow": 0,
      "cardRows": [
       {
-       "count": 3,
+       "count": 4,
        "iconTopped": false,
        "rounded": true,
        "top": 1518
@@ -692,7 +698,7 @@
      "w": 768,
      "h": 1024
     },
-    "pageH": 2641,
+    "pageH": 3763,
     "margins": {
      "left": 82,
      "right": 53
@@ -712,9 +718,9 @@
        "tag": "h1"
       },
       "left": 82,
-      "right": 48,
+      "right": 217,
       "textLeft": 82,
-      "textRight": 48,
+      "textRight": 217,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -741,15 +747,61 @@
       "pinned": false
      },
      {
-      "sel": "aside.observatorio__lado",
-      "tag": "aside",
+      "sel": "section.tarjeta",
+      "tag": "section",
       "top": 1518,
-      "height": 1091,
-      "words": 154,
-      "media": 1,
+      "height": 1098,
+      "words": 172,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Parámetros del modelo",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 53,
+      "textLeft": 103,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 2774,
+      "height": 354,
+      "words": 68,
+      "media": 0,
       "middle": 0,
       "heading": {
        "text": "Cambio entre dos pasadas",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 53,
+      "textLeft": 103,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 3152,
+      "height": 579,
+      "words": 75,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Contexto del lugar",
        "size": 16,
        "tag": "h2"
       },
@@ -777,14 +829,14 @@
     "edges": [
      {
       "x": 103,
-      "n": 3
+      "n": 4
      },
      {
       "x": 82,
       "n": 2
      }
     ],
-    "leftBlocks": 5,
+    "leftBlocks": 6,
     "bodySize": 12,
     "stage": false,
     "explains": false,
@@ -802,8 +854,8 @@
     "sidebar": null,
     "topbar": null,
     "canvas": {
-     "left": 17,
-     "right": 48
+     "left": 82,
+     "right": 53
     },
     "hero": {
      "text": "Observatorio",
@@ -824,18 +876,22 @@
     },
     "charts": 1,
     "layout": {
-     "panels": 5,
+     "panels": 6,
      "firstScreen": 1,
      "ragged": [],
      "voids": []
     },
     "tiles": 0,
     "panels": {
-     "count": 6,
+     "count": 8,
      "radii": [
       [
        6,
-       6
+       7
+      ],
+      [
+       0,
+       1
       ]
      ],
      "heavyBorders": 0,
@@ -853,7 +909,7 @@
     "numbers": {
      "cells": 2,
      "leftAligned": 0,
-     "figures": 1,
+     "figures": 4,
      "tabularShare": 1,
      "kpiMax": 13
     },
@@ -864,7 +920,7 @@
     "chartHues": 1,
     "placeholders": [],
     "type": {
-     "under13": 0.37,
+     "under13": 0.43,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -909,9 +965,9 @@
      "h": 844
     },
     "page": {
-     "height": 3088,
+     "height": 3140,
      "screens": 3.7,
-     "words": 373,
+     "words": 376,
      "img": 0,
      "video": 0,
      "canvas": 1,
@@ -1029,7 +1085,7 @@
      "microLabelShare": 0,
      "microSamples": [],
      "upperShare": 0.01,
-     "centerShare": 0.08,
+     "centerShare": 0.09,
      "smallText": 16
     },
     "eyebrows": [],
@@ -1054,7 +1110,7 @@
       },
       {
        "color": "#171719",
-       "top": 538,
+       "top": 590,
        "hsl": {
         "h": 240,
         "s": 0.04,
@@ -1065,14 +1121,14 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.52
-      },
-      {
-       "color": "#b4b4b8",
-       "share": 0.23
+       "share": 0.51
       },
       {
        "color": "#ffffff",
+       "share": 0.23
+      },
+      {
+       "color": "#b4b4b8",
        "share": 0.22
       },
       {
@@ -1084,8 +1140,8 @@
      "lowContrast": []
     },
     "buttons": {
-     "count": 3,
-     "inHero": 1,
+     "count": 4,
+     "inHero": 2,
      "radius": "pill",
      "height": 44,
      "withShadow": 0,
@@ -1093,6 +1149,7 @@
      "mono": 0,
      "upper": 0,
      "heroLabels": [
+      "Parámetros del modelo",
       "Ver todo Ecuador"
      ]
     },
@@ -1126,7 +1183,7 @@
     "heroMedia": [
      {
       "type": "canvas",
-      "ratio": 0.29
+      "ratio": 0.24
      }
     ],
     "nav": {
@@ -1145,7 +1202,7 @@
      "w": 390,
      "h": 844
     },
-    "pageH": 3088,
+    "pageH": 3140,
     "margins": {
      "left": 16,
      "right": 16
@@ -1175,18 +1232,18 @@
       "pinned": false
      },
      {
-      "sel": "div.observatorio__principal",
-      "tag": "div",
+      "sel": "section.tarjeta.vista-mapa",
+      "tag": "section",
       "top": 397,
-      "height": 1327,
-      "words": 100,
+      "height": 803,
+      "words": 62,
       "media": 1,
       "middle": 0,
       "heading": null,
       "left": 37,
       "right": 37,
       "textLeft": 37,
-      "textRight": 37,
+      "textRight": 45,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -1194,9 +1251,32 @@
       "pinned": false
      },
      {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 1224,
+      "height": 552,
+      "words": 41,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Cinta de pasadas",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 37,
+      "right": 37,
+      "textLeft": 37,
+      "textRight": 37,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
       "sel": "aside.observatorio__lado",
       "tag": "aside",
-      "top": 1748,
+      "top": 1800,
       "height": 1268,
       "words": 152,
       "media": 1,
@@ -1317,7 +1397,7 @@
     "chartHues": 1,
     "placeholders": [],
     "type": {
-     "under13": 0.41,
+     "under13": 0.4,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -1334,12 +1414,20 @@
      "size": 22,
      "top": 48
     },
-    "colourShare": 0.047
+    "colourShare": 0.035
    },
    "consoleErrors": []
   }
  ],
- "findings": [],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "below-fold",
+   "width": 1440,
+   "message": "Only 2 of 6 blocks start on the first 1440px screen.",
+   "fix": "Every block the brief names shows its header and first rows on the first desktop screen: size the headline block to its question, cap long lists with \"View all\", and put time-sensitive blocks before long tables."
+  }
+ ],
  "images": [
   {
    "viewport": "desktop",

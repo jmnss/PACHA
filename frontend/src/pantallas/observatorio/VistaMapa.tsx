@@ -12,6 +12,7 @@ import { formatearFecha } from '../../tiempo/fechas'
 import { dentroDeEcuador } from '../../mapa/dentroDeEcuador'
 import { CapaLienzo } from '../../mapa/CapaLienzo'
 import { MapaBase } from '../../mapa/MapaBase'
+import type { Valores } from './parametros'
 import { BloqueTiempo } from './BloqueTiempo'
 import { estiloDeCapa, temporadasLluviosas } from './derivados'
 import type { TiempoObservatorio } from './useTiempoObservatorio'
@@ -34,8 +35,13 @@ interface Props {
   despuesId: string
   polarizacion?: string
   onFijar: (cual: 'antes' | 'despues', id: string) => void
-  /** Id del escenario derivado creado al pulsar un punto del mapa. */
-  onEscenarioNuevo: (id: string) => void
+  /** Id del escenario derivado creado al pulsar un punto del mapa, con los parámetros que lo crearon. */
+  onEscenarioNuevo: (id: string, parametros: Valores) => void
+  /** Parámetros vigentes: el punto nuevo los conserva. */
+  parametros?: Valores
+  /** Solo en móvil: abre la hoja de parámetros del modelo. */
+  onAbrirParametros?: () => void
+  motivoReproductor?: string
 }
 
 /** Última respuesta buena: la capa anterior sigue visible mientras llega la nueva. */
@@ -53,7 +59,7 @@ function extremosDe(capa: CapaDto): [string, string] | undefined {
 }
 
 /** Mapa con la capa elegida, su leyenda y sello, y la cinta de pasadas con sus controles debajo. */
-export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId, polarizacion, onFijar, onEscenarioNuevo }: Props) {
+export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId, polarizacion, onFijar, onEscenarioNuevo, parametros, onAbrirParametros, motivoReproductor }: Props) {
   const [modo, setModo] = useState<ModoCapa>('cambio')
   const [pais, setPais] = useState(false)
   const [aviso, setAviso] = useState<string | null>(null)
@@ -82,7 +88,8 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
     if (!dentroDeEcuador(lat, lon)) { setAviso(AVISO_FUERA); return }
     setAviso(null)
     const base = esc.id.split('~')[0]
-    simular.mutate({ escenario_id: base, parametros: { lat, lon } }, { onSuccess: (nuevo) => onEscenarioNuevo(nuevo.id) })
+    const enviados: Valores = { ...parametros, lat, lon }
+    simular.mutate({ escenario_id: base, parametros: enviados }, { onSuccess: (nuevo) => onEscenarioNuevo(nuevo.id, enviados) })
   }
 
   // Se compara por posición en la lista de pasadas, no por el texto de los ids.
@@ -104,9 +111,12 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
       <Tarjeta pie={capa ? <SelloOrigen origen={capa.origen} /> : undefined} className="vista-mapa">
         <div className="vista-mapa__barra">
           <Pestanas etiqueta="Capa del mapa" pestanas={MODOS} activa={modo} onCambiar={(id) => setModo(id as ModoCapa)} />
-          <Boton variante="secundario" onClick={() => setPais((p) => !p)} aria-pressed={pais}>
-            {pais ? 'Ver el escenario' : 'Ver todo Ecuador'}
-          </Boton>
+          <div className="vista-mapa__acciones">
+            {onAbrirParametros && <Boton variante="secundario" onClick={onAbrirParametros}>Parámetros del modelo</Boton>}
+            <Boton variante="secundario" onClick={() => setPais((p) => !p)} aria-pressed={pais}>
+              {pais ? 'Ver el escenario' : 'Ver todo Ecuador'}
+            </Boton>
+          </div>
         </div>
         <div className="vista-mapa__mapa">
           <MapaBase bbox={pais ? undefined : esc.bbox} onClic={alClic} onFueraDeEcuador={alClic} marcadores={marcadores}>
@@ -146,7 +156,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
           alInteractuar={() => setModo('modelo')}
           onFijarAntes={() => pasada && onFijar('antes', pasada.id)}
           onFijarDespues={() => pasada && onFijar('despues', pasada.id)}
-          motivoAntes={motivoAntes} motivoDespues={motivoDespues}
+          motivoAntes={motivoAntes} motivoDespues={motivoDespues} motivoReproductor={motivoReproductor}
         />
       </Tarjeta>
     </>

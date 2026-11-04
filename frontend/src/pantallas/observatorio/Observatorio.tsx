@@ -1,12 +1,18 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
 import { useCambio, useContexto, useEscenario, useEscenarios, useTipos, type Escenario, type TipoCambio } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { Cargando, ErrorBloque } from '../../diseno/Estados'
+import { HojaInferior } from '../../diseno/HojaInferior'
+import { Tarjeta } from '../../diseno/Tarjeta'
 import { Pestanas } from '../../diseno/Pestanas'
 import { Selector } from '../../diseno/Selector'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
+import { useMovil } from '../../estado/useMovil'
+import { codificar, type Control, type Valores } from './parametros'
+import { PanelSimulacion } from './PanelSimulacion'
+import { useSimulacion } from './useSimulacion'
 import { hallazgo, parejaValida } from './derivados'
 import { leerCuadrante, leerPunto, textoCuadrante, textoPunto } from './medicion'
 import { Mediciones } from './Mediciones'
@@ -28,6 +34,7 @@ const ESQUEMA = {
   pol: { tipo: 'string', porDefecto: '' },
   p: { tipo: 'string', porDefecto: '' },
   c: { tipo: 'string', porDefecto: '' },
+  par: { tipo: 'string', porDefecto: '' },
   vista: { tipo: 'enum', valores: ['mapa', 'comparar', 'serie'], porDefecto: 'mapa' },
 } as const satisfies Esquema
 
@@ -46,7 +53,7 @@ export default function Observatorio() {
   const escenario = useEscenario(url.escenario)
   const escenarios = useEscenarios()
   const tipos = useTipos()
-  const irA = (id: string) => cambiar({ escenario: id, antes: '', despues: '', t: '', pol: '', p: '', c: '' })
+  const irA = (id: string) => cambiar({ escenario: id, antes: '', despues: '', t: '', pol: '', p: '', c: '', par: '' })
 
   if (escenario.isPending) {
     return (
@@ -149,11 +156,30 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
   const texto = frase ?? (!peticion ? SIN_PAREJA : resultado.isError ? 'No se pudo calcular el cambio entre las dos pasadas elegidas.' : resultado.isPending ? 'Calculando el cambio entre las dos pasadas…' : PREGUNTA)
 
   const lista = escenarios.data ?? []
-  const irA = (id: string) => cambiar({ escenario: id, antes: '', despues: '', t: '', pol: '', p: '', c: '' })
+  const irA = (id: string) => cambiar({ escenario: id, antes: '', despues: '', t: '', pol: '', p: '', c: '', par: '' })
+  // Escenario derivado de un clic en el mapa: otro lugar, así que se reinicia la selección.
+  const irAPunto = (id: string, v: Valores) => cambiar({ escenario: id, antes: '', despues: '', t: '', pol: '', p: '', c: '', par: codificar(v) })
   const alTipo = (tipo: string) => {
     const destino = lista.find((e) => e.tipo_cambio === tipo)
     if (destino) irA(destino.id)
   }
+  const puedeSimular = esc.capacidades.simulacion
+  const controles = useMemo<Control[]>(() => tipos.data?.find((t) => t.id === esc.tipo_cambio)?.controles ?? [], [tipos.data, esc.tipo_cambio])
+  // Cambiar parámetros mantiene el lugar, la pareja y el instante: solo cambia la escena.
+  const alNuevo = useCallback((id: string, v: Valores) => cambiar({ escenario: id, par: codificar(v) }, { reemplazar: true }), [cambiar])
+  const sim = useSimulacion(esc, controles, url.par, alNuevo)
+  const movil = useMovil()
+  const [hoja, setHoja] = useState(false)
+  const motivoReproductor = sim.calculando ? 'Se está calculando un escenario nuevo; el reproductor vuelve al terminar.' : undefined
+  const panel = !puedeSimular ? null : tipos.isPending ? (
+    <Tarjeta titulo="Parámetros del modelo"><Cargando texto="Cargando los parámetros…" filas={4} /></Tarjeta>
+  ) : tipos.isError ? (
+    <Tarjeta titulo="Parámetros del modelo">
+      <ErrorBloque mensaje={tipos.error instanceof ErrorApi ? tipos.error.mensaje : MENSAJE_RED} onReintentar={() => void tipos.refetch()} />
+    </Tarjeta>
+  ) : (
+    <PanelSimulacion esc={esc} controles={controles} sim={sim} enHoja={movil} />
+  )
   const selectores = (
     <Selectores tipos={tipos.data} lista={lista} escenarioId={esc.id} tipoId={esc.tipo_cambio} actual={esc} onEscenario={irA} onTipo={alTipo} />
   )
@@ -169,7 +195,8 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
               esc={esc} resultado={resultado} tiempo={tiempo} contexto={contexto.data}
               antesId={antesId} despuesId={despuesId} polarizacion={polarizacion}
               onFijar={(cual, id) => cambiar({ [cual === 'antes' ? 'antes' : 'despues']: id })}
-              onEscenarioNuevo={irA}
+              onEscenarioNuevo={irAPunto} parametros={sim.valores} motivoReproductor={motivoReproductor}
+              onAbrirParametros={puedeSimular && movil ? () => setHoja(true) : undefined}
             />
           ) : url.vista === 'comparar' ? (
             <VistaAntesDespues
@@ -185,6 +212,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
           )}
         </div>
         <aside className="observatorio__lado" aria-label="Métricas y contexto">
+          {!movil && panel}
           {url.vista === 'comparar' && peticion && (
             <Mediciones
               esc={esc} antesId={antesId} despuesId={despuesId} bbox={resultado.data?.antes.rejilla.bbox ?? esc.bbox}
@@ -196,6 +224,9 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
           {url.vista !== 'comparar' && <PanelContexto consulta={contexto} ms={tiempo.ms} />}
         </aside>
       </div>
+      {movil && hoja && panel && (
+        <HojaInferior titulo="Parámetros del modelo" onCerrar={() => setHoja(false)}>{panel}</HojaInferior>
+      )}
     </>
   )
 }

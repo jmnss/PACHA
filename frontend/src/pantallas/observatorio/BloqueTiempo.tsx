@@ -19,10 +19,12 @@ interface Props {
   onFijarDespues?: () => void
   motivoAntes?: string
   motivoDespues?: string
+  /** Motivo por el que el reproductor está desactivado (p. ej. se está calculando un escenario). */
+  motivoReproductor?: string
 }
 
 /** Reloj, cinta de pasadas y controles de tiempo: la misma cinta bajo todas las vistas del Observatorio. */
-export function BloqueTiempo({ pasadas, tiempo, contexto, temporadas, alInteractuar, onFijarAntes, onFijarDespues, motivoAntes, motivoDespues }: Props) {
+export function BloqueTiempo({ pasadas, tiempo, contexto, temporadas, alInteractuar, onFijarAntes, onFijarDespues, motivoAntes, motivoDespues, motivoReproductor }: Props) {
   const idMotivos = useId()
   const ts = pasadas.map((p) => Date.parse(p.instante))
   const { anterior, siguiente } = vecinas(ts, tiempo.ms)
@@ -50,7 +52,7 @@ export function BloqueTiempo({ pasadas, tiempo, contexto, temporadas, alInteract
         onPlay={antes(tiempo.play)} onPausa={tiempo.pausa}
         onInicio={antes(tiempo.inicio)} onFinal={antes(tiempo.final)}
         onAtras={antes(tiempo.atras)} onAdelante={antes(tiempo.adelante)}
-        deshabilitado={pasadas.length < 2 ? 'Este escenario tiene una sola pasada.' : undefined}
+        deshabilitado={motivoReproductor ?? (pasadas.length < 2 ? 'Este escenario tiene una sola pasada.' : undefined)}
       />
       {(onFijarAntes || onFijarDespues) && (
         <div className="bloque-tiempo__fijar">

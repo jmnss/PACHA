@@ -110,6 +110,7 @@ body {
   --h-mapa-movil: clamp(280px, 46vh, 400px);
   --w-kpi-min: 160px;      /* ancho mínimo de una cifra de la franja */
   --w-icono-min: 120px;    /* celda de la galería de iconos */
+  --scrim: rgba(0, 0, 0, 0.6); /* fondo tras una hoja modal */
   --z-flotante: 20;
   --z-banda: 30;
 }
