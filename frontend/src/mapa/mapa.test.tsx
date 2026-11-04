@@ -1,0 +1,78 @@
+import { describe, expect, it, vi } from 'vitest'
+import { render } from '@testing-library/react'
+import { dentroDeEcuador } from './dentroDeEcuador'
+import { construirEstilo, mapaRemotoActivo } from './estilo'
+import { esquinas, pixelesDeRejilla } from './lienzo'
+import { COLORES_MAPA } from './colores'
+
+describe('dentroDeEcuador', () => {
+  it('acepta Quito y Puerto Ayora (Galápagos)', () => {
+    expect(dentroDeEcuador(-0.18, -78.47)).toBe(true)
+    expect(dentroDeEcuador(-0.74, -90.31)).toBe(true)
+  })
+  it('rechaza Lima y el Pacífico', () => {
+    expect(dentroDeEcuador(-12.05, -77.04)).toBe(false)
+    expect(dentroDeEcuador(-1, -83)).toBe(false)
+  })
+  it('rechaza valores no finitos', () => {
+    expect(dentroDeEcuador(NaN, -78)).toBe(false)
+  })
+})
+
+describe('CapaLienzo (píxeles)', () => {
+  it('deja el 0 transparente y pinta el resto', () => {
+    const datos = new Uint8Array([0, 1, 128, 255])
+    const rej = { bbox: [0, 0, 1, 1] as [number, number, number, number], columnas: 2, filas: 2, vmin: 0, vmax: 1, datos_b64: btoa(String.fromCharCode(...datos)) }
+    const px = pixelesDeRejilla(rej, 'agua')
+    expect(px.data[3]).toBe(0)
+    expect(px.data[7]).toBe(255)
+    expect(px.data[11]).toBe(255)
+    expect(px.width).toBe(2)
+    expect(px.height).toBe(2)
+  })
+  it('esquinas: noroeste, noreste, sureste, suroeste', () => {
+    expect(esquinas([-80, -1, -79, 0])).toEqual([[-80, 0], [-79, 0], [-79, -1], [-80, -1]])
+  })
+})
+
+describe('estilo', () => {
+  it('funciona sin la fuente remota y no contiene URLs', () => {
+    const e = construirEstilo({ remoto: false })
+    expect(Object.keys(e.sources).sort()).toEqual(['contorno', 'exterior', 'provincias'])
+    expect(JSON.stringify(e)).not.toMatch(/https?:/)
+    expect(e.glyphs).toBeUndefined()
+    expect(e.sprite).toBeUndefined()
+    expect(e.layers.map((l) => l.id)).toEqual(['fondo', 'tierra', 'provincias', 'provincias-linea', 'exterior', 'frontera'])
+  })
+  it('con remoto añade solo una fuente vectorial opcional', () => {
+    const e = construirEstilo({ remoto: true })
+    expect(e.sources.openfreemap.type).toBe('vector')
+    expect(e.layers.some((l) => l.id === 'remoto-calles')).toBe(true)
+  })
+  it('usa los colores del diseño', () => {
+    expect(COLORES_MAPA.tierra).toBe('#1b1b1f')
+    expect(COLORES_MAPA.provincia).toBe('#2e2e33')
+  })
+  it('la capa remota se desactiva con VITE_MAPA_REMOTO=0', () => {
+    vi.stubEnv('VITE_MAPA_REMOTO', '0')
+    expect(mapaRemotoActivo()).toBe(false)
+    vi.unstubAllEnvs()
+  })
+})
+
+describe('MapaBase', () => {
+  it('monta con maplibre-gl simulado y atribuye geoBoundaries', async () => {
+    const on = vi.fn()
+    vi.resetModules()
+    vi.doMock('maplibre-gl', () => ({
+      default: { Map: vi.fn(() => ({ on, remove: vi.fn(), fitBounds: vi.fn() })), Marker: vi.fn() },
+    }))
+    vi.doMock('maplibre-gl/dist/maplibre-gl.css', () => ({}))
+    const { MapaBase } = await import('./MapaBase')
+    const { getByText, getByTestId } = render(<MapaBase />)
+    expect(getByTestId('mapa')).toBeTruthy()
+    expect(getByText('geoBoundaries')).toBeTruthy()
+    expect(on).toHaveBeenCalledWith('click', expect.any(Function))
+    vi.doUnmock('maplibre-gl')
+  })
+})

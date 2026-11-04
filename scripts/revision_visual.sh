@@ -23,7 +23,8 @@ apagar() { [ -n "$PID" ] && kill "$PID" 2>/dev/null && wait "$PID" 2>/dev/null; 
 trap apagar EXIT
 
 echo "== Compilando el frontend =="
-(cd frontend && npm run build) || { echo "RESULT: la compilación falló." >&2; exit 1; }
+# VITE_MAPA_REMOTO=0: el mapa no pide nada a OpenFreeMap en la revisión (solo capas locales).
+(cd frontend && VITE_MAPA_REMOTO=0 npm run build) || { echo "RESULT: la compilación falló." >&2; exit 1; }
 
 if curl -sf "$BASE/api/salud" >/dev/null; then
   echo "== Servidor ya en marcha; se reutiliza (no se apagará) =="
@@ -39,9 +40,9 @@ else
   curl -sf "$BASE/api/salud" >/dev/null || { echo "El servidor no respondió en 60 s." >&2; exit 1; }
 fi
 
-echo "== Guard: colores solo en tokens.css y rampas.ts =="
+echo "== Guard: colores solo en tokens.css, rampas.ts y mapa/colores.ts =="
 if grep -rnE '#[0-9a-fA-F]{3,8}\b|\brgba?\(' frontend/src --include='*.css' --include='*.ts' --include='*.tsx' \
-    | grep -vE 'frontend/src/diseno/(tokens\.css|rampas\.ts|tokens\.test\.ts)|frontend/src/api/tipos\.ts|\.test\.tsx?:'; then
+    | grep -vE 'frontend/src/diseno/(tokens\.css|rampas\.ts|tokens\.test\.ts)|frontend/src/mapa/colores\.ts|frontend/src/api/tipos\.ts|\.test\.tsx?:'; then
   echo "RESULT: hay colores fuera de tokens.css/rampas.ts (arriba)." >&2; exit 1
 fi
 

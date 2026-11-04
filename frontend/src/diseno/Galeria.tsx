@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { useCambio, useEscenarios, type Escenario } from '../api/consultas'
 import { Barras } from '../graficos/Barras'
 import { Linea } from '../graficos/Linea'
+import { CapaLienzo } from '../mapa/CapaLienzo'
+import { MapaBase } from '../mapa/MapaBase'
+import { coloresDeCategorias, rampaDePaleta } from './rampas'
 import { Boton } from './Boton'
 import { Campo } from './Campo'
 import { CabeceraPantalla } from './CabeceraPantalla'
@@ -143,6 +146,21 @@ export function Galeria() {
         <Cargando texto="Calculando métricas del cambio…" filas={1} />
       )}
 
+      {cambio.data && (
+        <Tarjeta titulo="Mapa con una capa de cambio" pie={<SelloOrigen origen={cambio.data.cambio.origen} />}>
+          <div className="galeria-mapa">
+            <MapaBase bbox={esc?.bbox}>
+              <CapaLienzo
+                rejilla={cambio.data.cambio.rejilla}
+                bbox={cambio.data.cambio.rejilla.bbox}
+                rampa={rampaDePaleta(cambio.data.cambio.paleta, cambio.data.cambio.variable) ?? 'gris'}
+                categorias={cambio.data.cambio.paleta === 'categorias'
+                  ? coloresDeCategorias(cambio.data.cambio.variable, cambio.data.cambio.leyenda?.length ?? 0) : undefined}
+              />
+            </MapaBase>
+          </div>
+        </Tarjeta>
+      )}
       <Tarjeta titulo="Escenarios de demostración" pie={esc && <SelloOrigen origen={esc.origen} />}>
         <Tabla titulo="Escenarios" columnas={columnasEsc} filas={filasEsc} />
       </Tarjeta>

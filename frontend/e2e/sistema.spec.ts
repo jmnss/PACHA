@@ -45,3 +45,11 @@ for (const [nombre, ancho, alto] of [['escritorio', 1440, 900], ['móvil', 390, 
     await lineaVisible(nav.locator(clase), nav)
   })
 }
+
+test('el mapa de /_sistema crea su lienzo WebGL sin internet', async ({ page }) => {
+  await page.route(/openfreemap|openstreetmap/, (r) => r.abort())
+  await page.goto('/_sistema')
+  const mapa = page.getByTestId('mapa')
+  await mapa.scrollIntoViewIfNeeded()
+  await expect(mapa.locator('canvas.maplibregl-canvas')).toHaveCount(1)
+})

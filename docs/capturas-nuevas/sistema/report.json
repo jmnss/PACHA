@@ -1,6 +1,6 @@
 {
  "url": "http://localhost:8000/_sistema",
- "at": "2026-11-04T08:38:34.513Z",
+ "at": "2026-11-04T08:42:08.035Z",
  "allow": [
   "palette-terracotta"
  ],
@@ -9,10 +9,11 @@
    "width": 1440,
    "height": 900,
    "load": "load",
-   "screens": 4,
+   "screens": 5,
    "filled": [
-    0.62,
-    0.89,
+    0.87,
+    0.66,
+    0.96,
     0.75,
     0.65
    ],
@@ -30,14 +31,14 @@
      "h": 900
     },
     "page": {
-     "height": 2781,
-     "screens": 3.1,
-     "words": 498,
+     "height": 3654,
+     "screens": 4.1,
+     "words": 521,
      "img": 0,
      "video": 0,
-     "canvas": 0,
+     "canvas": 1,
      "svg": 18,
-     "sections": 8,
+     "sections": 9,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
      "uiFragments": 0,
@@ -128,7 +129,7 @@
      "microSamples": [],
      "upperShare": 0.02,
      "centerShare": 0.04,
-     "smallText": 20
+     "smallText": 22
     },
     "eyebrows": [],
     "numbered": [],
@@ -149,16 +150,25 @@
         "s": 0.12,
         "l": 0.08
        }
+      },
+      {
+       "color": "#171719",
+       "top": 380,
+       "hsl": {
+        "h": 240,
+        "s": 0.04,
+        "l": 0.09
+       }
       }
      ],
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.49
+       "share": 0.51
       },
       {
        "color": "#b4b4b8",
-       "share": 0.26
+       "share": 0.25
       },
       {
        "color": "#ffffff",
@@ -205,26 +215,31 @@
      "scrims": 0,
      "gradientSamples": [],
      "gradientText": 0,
-     "hairlines": 8,
+     "hairlines": 9,
      "hairlineSamples": [
       "nav.riel 50px",
       "div.banda-demo__fila 1390px",
       "div.tarjeta__pie 1284px",
       "div.tarjeta__pie 1284px",
-      "div.tarjeta__pie 609px"
+      "div.tarjeta__pie 1284px"
      ],
-     "outlinedBoxes": 9,
+     "outlinedBoxes": 10,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 9,
+     "roundedBoxes": 11,
      "boxRadius": 6,
      "squareMedia": 0,
-     "roundedMedia": 0,
-     "mediaRadius": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 6,
      "textShadow": 0,
      "cardRows": []
     },
-    "heroMedia": [],
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.52
+     }
+    ],
     "nav": {
      "links": 2,
      "fixed": true,
@@ -241,7 +256,7 @@
      "w": 1440,
      "h": 900
     },
-    "pageH": 2781,
+    "pageH": 3654,
     "margins": {
      "left": 103,
      "right": 53
@@ -251,6 +266,29 @@
       "sel": "section.tarjeta",
       "tag": "section",
       "top": 319,
+      "height": 849,
+      "words": 21,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Mapa con una capa de cambio",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 53,
+      "textLeft": 103,
+      "textRight": 61,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 1192,
       "height": 418,
       "words": 74,
       "media": 0,
@@ -266,14 +304,14 @@
       "textRight": 53,
       "fullBleed": false,
       "footer": false,
-      "hero": true,
+      "hero": false,
       "continues": false,
       "pinned": false
      },
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 761,
+      "top": 1634,
       "height": 339,
       "words": 43,
       "media": 0,
@@ -296,7 +334,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 1124,
+      "top": 1997,
       "height": 618,
       "words": 37,
       "media": 2,
@@ -319,7 +357,7 @@
      {
       "sel": "div.galeria-rejilla",
       "tag": "div",
-      "top": 1766,
+      "top": 2639,
       "height": 857,
       "words": 191,
       "media": 0,
@@ -353,7 +391,7 @@
     "edges": [
      {
       "x": 103,
-      "n": 6
+      "n": 7
      },
      {
       "x": 82,
@@ -364,17 +402,17 @@
       "n": 2
      }
     ],
-    "leftBlocks": 10,
+    "leftBlocks": 11,
     "bodySize": 12,
     "stage": false,
     "explains": false,
     "slivers": [],
-    "voidShare": 0.11,
+    "voidShare": 0.05,
     "voidBox": {
-     "x": 300,
-     "y": 720,
-     "w": 1140,
-     "h": 120
+     "x": 360,
+     "y": 300,
+     "w": 1080,
+     "h": 60
     }
    },
    "app": {
@@ -409,18 +447,18 @@
     },
     "charts": 2,
     "layout": {
-     "panels": 9,
-     "firstScreen": 3,
+     "panels": 10,
+     "firstScreen": 2,
      "ragged": [],
      "voids": []
     },
     "tiles": 0,
     "panels": {
-     "count": 9,
+     "count": 11,
      "radii": [
       [
        6,
-       9
+       11
       ]
      ],
      "heavyBorders": 0,
@@ -449,7 +487,7 @@
     "chartHues": 1,
     "placeholders": [],
     "type": {
-     "under13": 0.43,
+     "under13": 0.45,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -465,7 +503,7 @@
      "size": 26,
      "top": 68
     },
-    "colourShare": 0.007
+    "colourShare": 0.078
    },
    "consoleErrors": []
   },
@@ -473,11 +511,12 @@
    "width": 768,
    "height": 1024,
    "load": "load",
-   "screens": 4,
+   "screens": 5,
    "filled": [
-    0.68,
-    0.88,
-    0.68,
+    0.87,
+    0.74,
+    0.64,
+    0.81,
     0.86
    ],
    "motion": {
@@ -494,14 +533,14 @@
      "h": 1024
     },
     "page": {
-     "height": 3792,
-     "screens": 3.7,
-     "words": 498,
+     "height": 4287,
+     "screens": 4.2,
+     "words": 521,
      "img": 0,
      "video": 0,
-     "canvas": 0,
+     "canvas": 1,
      "svg": 18,
-     "sections": 8,
+     "sections": 9,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
      "uiFragments": 0,
@@ -635,7 +674,7 @@
      "microSamples": [],
      "upperShare": 0.02,
      "centerShare": 0.04,
-     "smallText": 20
+     "smallText": 22
     },
     "eyebrows": [
      {
@@ -672,11 +711,11 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.49
+       "share": 0.51
       },
       {
        "color": "#b4b4b8",
-       "share": 0.26
+       "share": 0.25
       },
       {
        "color": "#ffffff",
@@ -723,7 +762,7 @@
      "scrims": 0,
      "gradientSamples": [],
      "gradientText": 0,
-     "hairlines": 8,
+     "hairlines": 9,
      "hairlineSamples": [
       "nav.riel 50px",
       "div.banda-demo__fila 718px",
@@ -731,25 +770,30 @@
       "div.tarjeta__pie 612px",
       "div.tarjeta__pie 612px"
      ],
-     "outlinedBoxes": 9,
+     "outlinedBoxes": 10,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 9,
+     "roundedBoxes": 11,
      "boxRadius": 6,
      "squareMedia": 0,
-     "roundedMedia": 0,
-     "mediaRadius": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 6,
      "textShadow": 0,
      "cardRows": [
       {
-       "count": 5,
+       "count": 6,
        "iconTopped": false,
        "rounded": true,
        "top": 234
       }
      ]
     },
-    "heroMedia": [],
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.27
+     }
+    ],
     "nav": {
      "links": 2,
      "fixed": true,
@@ -766,9 +810,9 @@
      "w": 768,
      "h": 1024
     },
-    "pageH": 3792,
+    "pageH": 4287,
     "margins": {
-     "left": 82,
+     "left": 103,
      "right": 53
     },
     "sections": [
@@ -822,6 +866,29 @@
       "sel": "section.tarjeta",
       "tag": "section",
       "top": 417,
+      "height": 471,
+      "words": 21,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Mapa con una capa de cambio",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 53,
+      "textLeft": 103,
+      "textRight": 61,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 912,
       "height": 418,
       "words": 74,
       "media": 0,
@@ -837,14 +904,14 @@
       "textRight": 53,
       "fullBleed": false,
       "footer": false,
-      "hero": true,
+      "hero": false,
       "continues": false,
       "pinned": false
      },
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 859,
+      "top": 1354,
       "height": 339,
       "words": 43,
       "media": 0,
@@ -867,7 +934,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 1222,
+      "top": 1717,
       "height": 618,
       "words": 37,
       "media": 2,
@@ -890,7 +957,7 @@
      {
       "sel": "div.galeria-col",
       "tag": "div",
-      "top": 1864,
+      "top": 2359,
       "height": 857,
       "words": 110,
       "media": 0,
@@ -913,7 +980,7 @@
      {
       "sel": "div.galeria-col",
       "tag": "div",
-      "top": 2745,
+      "top": 3240,
       "height": 817,
       "words": 81,
       "media": 0,
@@ -936,7 +1003,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 3586,
+      "top": 4081,
       "height": 174,
       "words": 12,
       "media": 0,
@@ -970,14 +1037,14 @@
     "edges": [
      {
       "x": 103,
-      "n": 8
+      "n": 9
      },
      {
       "x": 82,
       "n": 2
      }
     ],
-    "leftBlocks": 10,
+    "leftBlocks": 11,
     "bodySize": 12,
     "stage": false,
     "explains": false,
@@ -1017,18 +1084,18 @@
     },
     "charts": 2,
     "layout": {
-     "panels": 9,
+     "panels": 10,
      "firstScreen": 3,
      "ragged": [],
      "voids": []
     },
     "tiles": 0,
     "panels": {
-     "count": 9,
+     "count": 11,
      "radii": [
       [
        6,
-       9
+       11
       ]
      ],
      "heavyBorders": 0,
@@ -1057,7 +1124,7 @@
     "chartHues": 1,
     "placeholders": [],
     "type": {
-     "under13": 0.43,
+     "under13": 0.45,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -1073,7 +1140,7 @@
      "size": 26,
      "top": 68
     },
-    "colourShare": 0.009
+    "colourShare": 0.036
    },
    "consoleErrors": []
   },
@@ -1083,10 +1150,10 @@
    "load": "load",
    "screens": 6,
    "filled": [
-    0.73,
-    0.72,
-    0.85,
-    0.78,
+    0.87,
+    0.55,
+    0.93,
+    0.64,
     0.86,
     0.87
    ],
@@ -1104,14 +1171,14 @@
      "h": 844
     },
     "page": {
-     "height": 4631,
-     "screens": 5.5,
-     "words": 495,
+     "height": 4968,
+     "screens": 5.9,
+     "words": 518,
      "img": 0,
      "video": 0,
-     "canvas": 0,
+     "canvas": 1,
      "svg": 18,
-     "sections": 8,
+     "sections": 9,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
      "uiFragments": 0,
@@ -1247,7 +1314,7 @@
      "microSamples": [],
      "upperShare": 0.02,
      "centerShare": 0.04,
-     "smallText": 20
+     "smallText": 22
     },
     "eyebrows": [],
     "numbered": [],
@@ -1273,11 +1340,11 @@
      "textColors": [
       {
        "color": "#8a8c92",
-       "share": 0.48
+       "share": 0.5
       },
       {
        "color": "#b4b4b8",
-       "share": 0.27
+       "share": 0.25
       },
       {
        "color": "#ffffff",
@@ -1324,7 +1391,7 @@
      "scrims": 0,
      "gradientSamples": [],
      "gradientText": 0,
-     "hairlines": 8,
+     "hairlines": 9,
      "hairlineSamples": [
       "nav.riel 390px",
       "div.banda-demo__fila 390px",
@@ -1332,18 +1399,23 @@
       "div.tarjeta__pie 316px",
       "div.tarjeta__pie 316px"
      ],
-     "outlinedBoxes": 9,
+     "outlinedBoxes": 10,
      "dashed": 0,
      "blurred": 0,
-     "roundedBoxes": 9,
+     "roundedBoxes": 11,
      "boxRadius": 6,
      "squareMedia": 0,
-     "roundedMedia": 0,
-     "mediaRadius": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 6,
      "textShadow": 0,
      "cardRows": []
     },
-    "heroMedia": [],
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.17
+     }
+    ],
     "nav": {
      "links": 0,
      "fixed": true,
@@ -1360,7 +1432,7 @@
      "w": 390,
      "h": 844
     },
-    "pageH": 4631,
+    "pageH": 4968,
     "margins": {
      "left": 16,
      "right": 37
@@ -1416,6 +1488,29 @@
       "sel": "section.tarjeta",
       "tag": "section",
       "top": 499,
+      "height": 321,
+      "words": 21,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Mapa con una capa de cambio",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 37,
+      "right": 37,
+      "textLeft": 37,
+      "textRight": 45,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 836,
       "height": 753,
       "words": 66,
       "media": 0,
@@ -1438,7 +1533,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 1268,
+      "top": 1605,
       "height": 379,
       "words": 43,
       "media": 0,
@@ -1461,7 +1556,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 1663,
+      "top": 2000,
       "height": 650,
       "words": 37,
       "media": 2,
@@ -1484,9 +1579,9 @@
      {
       "sel": "div.galeria-col",
       "tag": "div",
-      "top": 2329,
+      "top": 2666,
       "height": 1013,
-      "words": 91,
+      "words": 94,
       "media": 0,
       "middle": 0,
       "heading": {
@@ -1507,7 +1602,7 @@
      {
       "sel": "div.galeria-col",
       "tag": "div",
-      "top": 3366,
+      "top": 3703,
       "height": 931,
       "words": 81,
       "media": 0,
@@ -1530,7 +1625,7 @@
      {
       "sel": "section.tarjeta",
       "tag": "section",
-      "top": 4313,
+      "top": 4650,
       "height": 246,
       "words": 12,
       "media": 0,
@@ -1575,14 +1670,14 @@
     "edges": [
      {
       "x": 37,
-      "n": 9
+      "n": 10
      },
      {
       "x": 16,
       "n": 2
      }
     ],
-    "leftBlocks": 11,
+    "leftBlocks": 12,
     "bodySize": 12,
     "stage": false,
     "explains": false,
@@ -1622,18 +1717,18 @@
     },
     "charts": 2,
     "layout": {
-     "panels": 9,
+     "panels": 10,
      "firstScreen": 2,
      "ragged": [],
      "voids": []
     },
     "tiles": 0,
     "panels": {
-     "count": 11,
+     "count": 13,
      "radii": [
       [
        6,
-       9
+       11
       ],
       [
        0,
@@ -1666,7 +1761,7 @@
     "chartHues": 1,
     "placeholders": [],
     "type": {
-     "under13": 0.45,
+     "under13": 0.47,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -1684,7 +1779,7 @@
      "size": 22,
      "top": 48
     },
-    "colourShare": 0.002
+    "colourShare": 0.019
    },
    "consoleErrors": []
   }
@@ -1694,7 +1789,7 @@
    "level": "WARN",
    "id": "below-fold",
    "width": 1440,
-   "message": "Only 3 of 9 blocks start on the first 1440px screen.",
+   "message": "Only 2 of 10 blocks start on the first 1440px screen.",
    "fix": "Every block the brief names shows its header and first rows on the first desktop screen: size the headline block to its question, cap long lists with \"View all\", and put time-sensitive blocks before long tables."
   },
   {
@@ -1703,6 +1798,13 @@
    "width": 390,
    "message": "2 text block(s) sit 12–15px from the phone's edge: \"DEMOSTRACIÓN · no son datos re\" (12px); \"Qué significa\" (12px)",
    "fix": "The page margin is 16–20px on a phone; the header and the corner labels sit on it too."
+  },
+  {
+   "level": "WARN",
+   "id": "tiny-text",
+   "width": 390,
+   "message": "47% of the text is under 13px.",
+   "fix": "Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks."
   }
  ],
  "images": [
@@ -1711,7 +1813,8 @@
    "width": 1440,
    "fold": "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/sistema/desktop-fold.jpg",
    "pages": [
-    "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/sistema/desktop-page-01.jpg"
+    "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/sistema/desktop-page-01.jpg",
+    "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/sistema/desktop-page-02.jpg"
    ],
    "film": []
   },

@@ -270,3 +270,6 @@ button { font: inherit; color: inherit; }
 .leyenda__muestra { width: var(--space-3); height: var(--space-3); border-radius: var(--radius-chip); flex: none; }
 .leyenda__muestra--sin { border: 1px solid var(--control); }
 .galeria__leyendas { display: grid; gap: var(--space-5); }
+
+.galeria-mapa { aspect-ratio: 16 / 9; min-height: 0; }
+.galeria-mapa .mapa { min-height: 0; }
