@@ -104,8 +104,34 @@ def test_categorica_real_del_demo_conserva_codigos():
     a = e.adquisiciones
     cap = p.cambio(e.id, a[0].id, a[-1].id, None).cambio
     assert cap.paleta == "categorias" and cap.leyenda
-    r = a_rejilla(cap, max_lado=10_000)
+    r = a_rejilla(cap, max_lado=512)
     v = de_rejilla(r, categorica=True)
     esperado = np.where(np.nan_to_num(cap.datos) == 0, np.nan, cap.datos)
     assert np.array_equal(np.nan_to_num(v), np.nan_to_num(esperado))
     assert r.vmax == len(cap.leyenda)
+
+
+def test_ida_y_vuelta_conserva_el_orden_de_filas():
+    # Rejilla 2x2 asimétrica: fila 0 (norte) = [-20 (mín), 0 (máx)], fila 1 = [NaN, -10].
+    d = np.array([[-20.0, 0.0], [np.nan, -10.0]], dtype=np.float32)
+    v = de_rejilla(a_rejilla(_capa(d)))
+    assert v.shape == (2, 2)
+    assert abs(v[0, 0] + 20) < 0.1 and abs(v[0, 1]) < 0.1
+    assert np.isnan(v[1, 0]) and abs(v[1, 1] + 10) < 0.1
+
+
+def test_max_lado_fuera_de_rango_es_error():
+    import pytest
+    d = np.zeros((4, 4), dtype=np.float32)
+    for malo in (0, -1, 513):
+        with pytest.raises(ValueError, match="max_lado"):
+            a_rejilla(_capa(d), max_lado=malo)
+
+
+def test_vmin_vmax_no_finitos_son_error():
+    import pytest
+    d = np.zeros((4, 4), dtype=np.float32)
+    with pytest.raises(ValueError, match="finitos"):
+        a_rejilla(_capa(d, vmin=float("nan")))
+    with pytest.raises(ValueError, match="finitos"):
+        a_rejilla(_capa(d, vmax=float("inf")))

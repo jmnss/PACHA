@@ -30,6 +30,19 @@ describe('CapaLienzo (píxeles)', () => {
     expect(px.width).toBe(2)
     expect(px.height).toBe(2)
   })
+  it('conserva el orden de filas: la fila 0 (norte) queda arriba y la columna 0 al oeste', () => {
+    // Rejilla 2×2 asimétrica: solo el píxel noreste (fila 0, columna 1) tiene dato.
+    const datos = new Uint8Array([0, 255, 0, 0])
+    const rej = { bbox: [0, 0, 1, 1] as [number, number, number, number], columnas: 2, filas: 2, vmin: 0, vmax: 1, datos_b64: btoa(String.fromCharCode(...datos)) }
+    const px = pixelesDeRejilla(rej, 'agua')
+    const alfa = (f: number, c: number) => px.data[(f * 2 + c) * 4 + 3]
+    expect(alfa(0, 1)).toBe(255)
+    expect(alfa(0, 0)).toBe(0)
+    expect(alfa(1, 0)).toBe(0)
+    expect(alfa(1, 1)).toBe(0)
+    // La primera esquina (origen de la imagen) es el noroeste.
+    expect(esquinas([-80, -1, -79, 0])[0]).toEqual([-80, 0])
+  })
   it('esquinas: noroeste, noreste, sureste, suroeste', () => {
     expect(esquinas([-80, -1, -79, 0])).toEqual([[-80, 0], [-79, 0], [-79, -1], [-80, -1]])
   })

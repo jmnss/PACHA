@@ -72,6 +72,10 @@ def _a_rejilla_categorica(capa: CapaRaster, max_lado: int) -> Rejilla:
 
 
 def a_rejilla(capa: CapaRaster, max_lado: int = 512) -> Rejilla:
+    if not isinstance(max_lado, int) or not 1 <= max_lado <= 512:
+        raise ValueError("max_lado debe ser un entero entre 1 y 512")
+    if capa.paleta != "categorias" and not (np.isfinite(capa.vmin) and np.isfinite(capa.vmax)):
+        raise ValueError("vmin y vmax de la capa deben ser números finitos")
     if capa.paleta == "categorias":
         return _a_rejilla_categorica(capa, max_lado)
     datos = np.asarray(capa.datos, dtype=np.float32)
