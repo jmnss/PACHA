@@ -2,6 +2,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import APIRouter, Depends, FastAPI, Request
+from fastapi.routing import APIRoute
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -70,13 +71,19 @@ def _origenes(proveedor: ProveedorDatos) -> tuple[str, bool]:
     return tipos.pop(), hay_sinteticos
 
 
+def _id_operacion(ruta: APIRoute) -> str:
+    """operationId corto y legible: el nombre de la función de la ruta."""
+    return ruta.name
+
+
 def create_app(proveedor: ProveedorDatos | None = None) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         app.state.proveedor = proveedor if proveedor is not None else obtener_proveedor()
         yield
 
-    app = FastAPI(title="NISAR · Ecuador", version=VERSION, lifespan=lifespan)
+    app = FastAPI(title="NISAR · Ecuador", version=VERSION, lifespan=lifespan,
+                  generate_unique_id_function=_id_operacion)
     app.add_middleware(GZipMiddleware, minimum_size=1000)
     _registrar_errores(app)
 
