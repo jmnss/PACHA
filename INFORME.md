@@ -81,7 +81,7 @@ Primera noche, en orden (`docs/plan-migracion.md`): 0.1–0.3, 1.1–1.5, 2.1–
 
 | Pantalla | Rondas usadas | 1440 | 768 | 390 | Pendientes |
 |---|---|---|---|---|---|
-| Sistema de diseño | 0 de 3 | — | — | — | — |
+| Sistema de diseño (`/_sistema`) | 3 de 3 + 1 de corrección del revisor | 0 FAIL | 0 FAIL | 0 FAIL (1 WARN `edge-text`) | WARN `edge-text` a 390 px: la banda de demostración usa margen de 12 px (diseno.md §10 pide 16) para que su texto obligatorio quepa; tabla móvil en 3 líneas por fila y sin semántica de tabla (display:block); `--allow palette-terracotta` en `revision_visual.sh` por `--demo-ink` fijado en §4 (con guard de hex fuera de tokens) |
 | Historias | 0 de 3 | — | — | — | — |
 | Observatorio · mapa | 0 de 3 | — | — | — | — |
 | Observatorio · comparar | 0 de 3 | — | — | — | — |
