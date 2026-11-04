@@ -52,6 +52,9 @@ CICLO_DIAS = 12
 INCLINACION_DEG = 98.4
 MU_CORTE_PA = 3.0e10
 
+# pendiente de confirmar con la documentación oficial
+MISION_VERIFICADA = False
+
 MISION = {
     "Agencias": "NASA (JPL) e ISRO",
     "Lanzamiento": "30 de julio de 2025, GSLV-F16 desde Sriharikota (India)",
@@ -1193,7 +1196,7 @@ def _analizar_humedales(e: Escena, i0: int, i1: int) -> Analisis:
             ("Área inundada inicial", f"{_fmt(area0)} km²", "Agua abierta + vegetación inundada"),
             ("Área inundada final", f"{_fmt(area1)} km²", ""),
             ("Cambio neto", f"{_fmt(cambio)} %", "Negativo = pérdida de humedal"),
-            ("Exactitud vs. verdad", f"{_fmt(exactitud)} %", "Clasificación píxel a píxel en la fecha final"),
+            ("Acierto del detector (verdad sintética)", f"{_fmt(exactitud)} %", "Clasificación píxel a píxel en la fecha final"),
         ],
         series=[Serie("Superficie inundada", "km²", serie)],
         notas=["El agua abierta refleja la señal lejos del radar (HH muy bajo); bajo el dosel inundado, "
@@ -1238,8 +1241,8 @@ def _analizar_incendios(e: Escena, i0: int, i1: int) -> Analisis:
         capa_mapa=panel_cat,
         metricas=[
             ("Área quemada detectada", f"{_fmt(_km2(quemado.sum(), e.pixel_m))} km²", ""),
-            ("Área quemada real", f"{_fmt(_km2(real.sum(), e.pixel_m))} km²", "Verdad del modelo en el intervalo"),
-            ("Puntuación F1", f"{_fmt(f1)} %", "Coincidencia entre detección y verdad"),
+            ("Área quemada simulada (verdad sintética)", f"{_fmt(_km2(real.sum(), e.pixel_m))} km²", "Verdad del modelo en el intervalo"),
+            ("F1 del detector (verdad sintética)", f"{_fmt(f1)} %", "Coincidencia entre detección y verdad"),
             ("Biomasa perdida", f"{_fmt(perdida_mg / 1e3)} mil Mg", "Inversión del modelo de nube de agua"),
             ("CO₂ emitido (estimado)", f"{_fmt(co2_t / 1e3)} mil t", "47 % de carbono en la biomasa × 44/12"),
         ],
@@ -1342,14 +1345,14 @@ def _analizar_subsidencia(e: Escena, i0: int, i1: int) -> Analisis:
         paneles=[
             Panel("Desplazamiento LOS acumulado", acumulado, "divergente", -lim_d, lim_d, "cm"),
             panel_v,
-            Panel("Error vs. verdad del modelo", v_vert - verdad, "divergente", -3, 3, "cm/año"),
+            Panel("Error frente a la verdad sintética", v_vert - verdad, "divergente", -3, 3, "cm/año"),
         ],
         capa_mapa=panel_v,
         metricas=[
             ("Hundimiento máximo", f"{_fmt(maximo)} cm/año", "Percentil 1 de la velocidad vertical"),
             ("Área con > 5 cm/año", f"{_fmt(_km2(critico.sum(), e.pixel_m))} km²", "Umbral de daño a infraestructura"),
             ("Adquisiciones usadas", str(len(t)), "Pila de interferogramas de 12 días"),
-            ("RMSE vs. verdad", f"{_fmt(rmse, 2)} cm/año", "Atmósfera y decorrelación residuales"),
+            ("RMSE frente a la verdad sintética", f"{_fmt(rmse, 2)} cm/año", "Atmósfera y decorrelación residuales"),
         ],
         series=[Serie("Desplazamiento vertical acumulado", "cm", serie)],
         notas=["Se ajusta, píxel a píxel, d(t) = a + v·t (+ término estacional si la serie supera ~10 meses). "
@@ -1511,7 +1514,7 @@ def _analizar_agricultura(e: Escena, i0: int, i1: int) -> Analisis:
         metricas=[
             ("Parcelas analizadas", str(nf), ""),
             ("Cosechas detectadas", str(int(cosecha.sum())), "Caída de HV > 3 dB hasta nivel de suelo"),
-            ("Exactitud de detección", f"{_fmt(exactitud)} %", "Cosechada / no cosechada vs. verdad"),
+            ("Acierto de detección (verdad sintética)", f"{_fmt(exactitud)} %", "Cosechada / no cosechada vs. verdad"),
             ("Error medio de fecha", f"{_fmt(np.mean(errores), 0)} días" if errores else "—",
              "Limitado por la revisita de 12 días"),
         ],

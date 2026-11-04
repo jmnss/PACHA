@@ -44,7 +44,7 @@
           "341"
         ],
         [
-          "Exactitud de detección",
+          "Acierto de detección (verdad sintética)",
           "98,9 %"
         ],
         [
@@ -73,13 +73,13 @@
           "30"
         ],
         [
-          "RMSE vs. verdad",
+          "RMSE frente a la verdad sintética",
           "1,93 cm/año"
         ]
       ],
       "paneles": {
         "Desplazamiento LOS acumulado": -6238.234,
-        "Error vs. verdad del modelo": -1274.693,
+        "Error frente a la verdad sintética": -1274.693,
         "Velocidad vertical": -9947.573
       }
     },
@@ -98,7 +98,7 @@
           "-79,4 %"
         ],
         [
-          "Exactitud vs. verdad",
+          "Acierto del detector (verdad sintética)",
           "98,8 %"
         ]
       ],
@@ -115,11 +115,11 @@
           "11,2 km²"
         ],
         [
-          "Área quemada real",
+          "Área quemada simulada (verdad sintética)",
           "14,2 km²"
         ],
         [
-          "Puntuación F1",
+          "F1 del detector (verdad sintética)",
           "86,2 %"
         ],
         [
