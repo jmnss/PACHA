@@ -143,3 +143,26 @@ def test_punto_negativo_invalido():
     with pytest.raises(ValidationError):
         Medicion(punto=(-1, 0), metricas=[], tabla=[], origen=origen())
     assert Medicion(punto=(0, 0), metricas=[], tabla=[], origen=origen()).punto == (0, 0)
+
+
+# --- ampliaciones aditivas (ronda de corrección de la Tarea 1.3) ---------------------------------
+
+def test_capa_instante_opcional_exige_zona():
+    ok = CapaRaster("e", None, "v", None, "u", "gris", 0.0, 1.0, None, np.zeros((2, 2)), BBOX, origen(),
+                    instante=AHORA)
+    assert ok.instante == AHORA
+    assert capa(np.zeros((2, 2), dtype=np.float32)).instante is None
+    with pytest.raises(ValueError):
+        CapaRaster("e", None, "v", None, "u", "gris", 0.0, 1.0, None, np.zeros((2, 2)), BBOX, origen(),
+                   instante=datetime(2026, 1, 1))
+
+
+def test_resultado_cambio_campos_nuevos_son_opcionales():
+    from datos.contrato import CampoVectorial, ResultadoCambio, TablaResultado
+    c = capa(np.zeros((2, 2), dtype=np.float32))
+    r = ResultadoCambio(c, c, c, None, [], [], [], origen())
+    assert r.tablas == [] and r.vectores is None and r.capas_extra == []
+    TablaResultado(titulo="t", columnas=["a"], filas=[["x"], [1.5], [None]], origen=origen())
+    CampoVectorial(x=[0.0], y=[0.0], u=[1.0], v=[2.0], unidad="m/día", origen=origen())
+    with pytest.raises(ValidationError):
+        CampoVectorial(x=[0.0], y=[], u=[1.0], v=[2.0], unidad="m/día", origen=origen())

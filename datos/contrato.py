@@ -5,7 +5,7 @@ Todo dato lleva su `Origen`. Ver docs/contrato-datos.md.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Literal, Protocol, runtime_checkable
 
@@ -98,8 +98,11 @@ class CapaRaster:
     datos: np.ndarray
     bbox: BBox
     origen: Origen
+    instante: AwareDatetime | None = None  # solo en fotogramas del modelo continuo (UTC)
 
     def __post_init__(self) -> None:
+        if self.instante is not None and (self.instante.tzinfo is None or self.instante.utcoffset() is None):
+            raise ValueError("CapaRaster.instante debe llevar zona horaria")
         arr = np.asarray(self.datos)
         if arr.ndim != 2:
             raise ValueError(f"CapaRaster.datos debe ser 2D, recibió {arr.ndim}D")
@@ -131,6 +134,31 @@ class Metrica(BaseModel):
     ayuda: str
 
 
+class TablaResultado(BaseModel):
+    """Tabla de resultados (p. ej. una fila por parcela). Celdas: texto, número o nulo (sin valor)."""
+    titulo: str
+    columnas: list[str]
+    filas: list[list[str | float | None]]
+    origen: Origen
+
+
+class CampoVectorial(BaseModel):
+    """Flechas de flujo: posiciones `x`, `y` en km (respecto al centro de la escena, y hacia el norte) y
+    componentes `u` (este) y `v` (norte) en `unidad`."""
+    x: list[float]
+    y: list[float]
+    u: list[float]
+    v: list[float]
+    unidad: str
+    origen: Origen
+
+    @model_validator(mode="after")
+    def _misma_longitud(self) -> "CampoVectorial":
+        if not len(self.x) == len(self.y) == len(self.u) == len(self.v):
+            raise ValueError("CampoVectorial exige x, y, u y v de la misma longitud")
+        return self
+
+
 @dataclass(frozen=True)
 class ResultadoCambio:
     antes: CapaRaster
@@ -141,6 +169,9 @@ class ResultadoCambio:
     series: list[SerieTemporal]
     notas: list[str]
     origen: Origen
+    tablas: list[TablaResultado] = field(default_factory=list)
+    vectores: CampoVectorial | None = None
+    capas_extra: list[CapaRaster] = field(default_factory=list)
 
 
 class Medicion(BaseModel):
@@ -184,3 +215,6 @@ class ProveedorDatos(Protocol):
     # Opcionales si `capacidades.simulacion` (si no, CapacidadNoDisponible):
     #   simular(escenario_id, parametros) -> Escenario
     #   fotogramas(escenario_id, parametros, inicio, fin, paso_min) -> list[CapaRaster]
+    # Opcionales de conveniencia (el proveedor demo los ofrece):
+    #   intervalo_por_defecto(escenario_id) -> (antes_id, despues_id)
+    #   serie_seleccion(escenario_id, cuadrante=None, punto=None) -> SerieTemporal | None

@@ -5,24 +5,27 @@ Todo lo que sale de aquí es SINTÉTICO y lo declara en su `Origen`. Las escenas
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import re
 import unicodedata
 import warnings
+from collections import OrderedDict
 from datetime import date, datetime, timezone
 
 import numpy as np
 import pandas as pd
 
 from datos.contrato import (
-    PALETAS, Adquisicion, CapaRaster, Capacidades, Escenario, Medicion, Metrica, Origen,
-    ResultadoCambio, SerieTemporal,
+    PALETAS, Adquisicion, CampoVectorial, CapaRaster, Capacidades, Escenario, Medicion, Metrica, Origen,
+    ResultadoCambio, SerieTemporal, TablaResultado,
 )
 from datos.generador import ESCENARIOS_DEMO, PARAMETROS_DEMO, generar_escena, origen_demo
 from modelo import estaciones, nisar
 
 MAX_FOTOGRAMAS = 500
+MAX_CACHE = 32  # escenas, escenarios simulados registrados y análisis en memoria
 ORBITAS = ("Ascendente", "Descendente")
 # Parámetros de la simulación que no son controles físicos del tipo de cambio.
 GENERICOS = ("semilla", "looks", "orbita", "estacional", "lat", "lon")
@@ -43,6 +46,8 @@ _PANELES_CAMBIO = {
     "humedales": (2, None), "incendios": (2, 3), "terremotos": (1, None),
     "glaciares": (2, 3), "agricultura": (2, None), "subsidencia": (1, None),
 }
+# Paneles secundarios que se exponen como `capas_extra` (interferograma/coherencia; acumulado/error).
+_PANELES_EXTRA = {"terremotos": (0, 2), "subsidencia": (0, 2)}
 _PALETA_DE_PANEL = {"secuencial_naranja": "secuencial"}  # el contrato solo tiene una rampa secuencial
 
 
@@ -96,14 +101,50 @@ def _paleta(nombre: str) -> str:
     return p
 
 
+class _LRU(OrderedDict):
+    """Diccionario acotado: al superar `maximo` descarta lo menos usado."""
+
+    def __init__(self, maximo: int = MAX_CACHE) -> None:
+        super().__init__()
+        self.maximo = maximo
+
+    def obtener(self, clave):
+        if clave in self:
+            self.move_to_end(clave)
+            return self[clave]
+        return None
+
+    def poner(self, clave, valor):
+        self[clave] = valor
+        self.move_to_end(clave)
+        while len(self) > self.maximo:
+            self.popitem(last=False)
+        return valor
+
+
+def _celda(v):
+    if v is None or (isinstance(v, float) and not math.isfinite(v)):
+        return None
+    try:
+        if pd.isna(v):
+            return None
+    except (TypeError, ValueError):
+        pass
+    if isinstance(v, (bool, np.bool_)):
+        return str(v)
+    if isinstance(v, (int, float, np.floating, np.integer)):
+        return float(v)
+    return str(v)
+
+
 def _capa_de_panel(escenario_id, adquisicion_id, panel, variable, polarizacion, bbox, origen,
-                   vmin=None, vmax=None) -> CapaRaster:
+                   vmin=None, vmax=None, instante=None) -> CapaRaster:
     return CapaRaster(
         escenario_id=escenario_id, adquisicion_id=adquisicion_id, variable=variable,
         polarizacion=polarizacion, unidad=panel.unidad, paleta=_paleta(panel.paleta),
         vmin=float(panel.vmin if vmin is None else vmin), vmax=float(panel.vmax if vmax is None else vmax),
         leyenda=[(str(e), str(c)) for e, c in panel.leyenda] if panel.leyenda else None,
-        datos=_rejilla(panel.datos), bbox=bbox, origen=origen,
+        datos=_rejilla(panel.datos), bbox=bbox, origen=origen, instante=instante,
     )
 
 
@@ -204,7 +245,10 @@ def _validar(tipo: str, parametros: dict | None) -> dict:
                 raise ValueError(f"«{c.etiqueta}» debe estar entre {c.minimo:g} y {c.maximo:g}.")
             ajustes[clave] = v / c.escala
         mostrados[clave] = v
-    return {"sim": sim, "ajustes": ajustes, "mostrados": mostrados, "punto": punto}
+    por_defecto = {k: PARAMETROS_DEMO[k] for k in sim if sim[k] == PARAMETROS_DEMO[k]}
+    sim = {k: x for k, x in sim.items() if k not in por_defecto}  # igual a la demostración = no cambia nada
+    canonico = {"sim": sim, "ajustes": ajustes, "punto": list(punto) if punto else None}
+    return {"sim": sim, "ajustes": ajustes, "mostrados": mostrados, "punto": punto, "canonico": canonico}
 
 
 class ProveedorDemostracion:
@@ -213,27 +257,44 @@ class ProveedorDemostracion:
     capacidades = Capacidades(simulacion=True, modelo_continuo=True, verdad_terreno=True)
 
     def __init__(self) -> None:
-        self._cache: dict[str, tuple[nisar.Escena, Escenario]] = {}
+        self._cache: _LRU = _LRU()        # id de escenario -> (escena, Escenario)
+        self._simulados: _LRU = _LRU()    # id derivado -> (id base, parámetros originales)
+        self._analisis_cache: _LRU = _LRU()  # (id, i0, i1) -> Analisis
 
-    # --- construcción de escenarios ---------------------------------------------------------
-
-    def _tipo(self, escenario_id: str) -> str:
-        if escenario_id not in ESCENARIOS_DEMO:
-            raise KeyError(f"Escenario de demostración desconocido: {escenario_id}")
+    def _tipo(self, base: str) -> str:
+        if base not in ESCENARIOS_DEMO:
+            raise KeyError(f"Escenario de demostración desconocido: {base}")
         df = nisar.cargar_sitios()
-        return str(df[df["id"] == escenario_id].iloc[0]["tipo_cambio"])
+        return str(df[df["id"] == base].iloc[0]["tipo_cambio"])
 
     def _contexto(self, escenario_id: str, parametros: dict | None = None) -> tuple[nisar.Escena, Escenario]:
-        tipo = self._tipo(escenario_id)
+        """Escena y escenario de un id base (con `parametros` opcionales) o de un id simulado registrado."""
+        if "~" in escenario_id:
+            registro = self._simulados.obtener(escenario_id)
+            if registro is None:
+                raise KeyError(f"Escenario simulado desconocido o caducado: {escenario_id}")
+            if parametros:
+                raise ValueError("Un escenario simulado ya lleva sus parámetros; no se pueden dar otros.")
+            base, parametros = registro
+        else:
+            base = escenario_id
+        tipo = self._tipo(base)
         v = _validar(tipo, parametros)
-        clave = json.dumps({"id": escenario_id, "p": parametros or {}}, sort_keys=True, default=str)
-        if clave in self._cache:
-            return self._cache[clave]
+        canon = v["canonico"]
+        if canon == {"sim": {}, "ajustes": {}, "punto": None}:
+            id_final = base
+        else:
+            huella = hashlib.sha256(json.dumps(canon, sort_keys=True).encode()).hexdigest()[:8]
+            id_final = f"{base}~{huella}"
+            self._simulados.poner(id_final, (base, dict(parametros or {})))
+        hecho = self._cache.obtener(id_final)
+        if hecho is not None:
+            return hecho
         completos = {**PARAMETROS_DEMO, **v["sim"]}
         sitio = None
         if v["punto"] is not None:
             sitio = sitio_en_mapa(tipo, *v["punto"], nisar.cargar_sitios())
-        escena = generar_escena(sitio["id"] if sitio else escenario_id, completos, sitio=sitio,
+        escena = generar_escena(sitio["id"] if sitio else base, completos, sitio=sitio,
                                 ajustes=v["ajustes"] or None)
         origen = origen_demo(completos)
         extra = []
@@ -249,8 +310,8 @@ class ProveedorDemostracion:
         variables = list(dict.fromkeys(_VARIABLE_DE_CUBO[k][0] for k in cubos))
         orbita = str(completos["orbita"])
         esc = Escenario(
-            id=escenario_id, nombre=str(escena.sitio["sitio"]), tipo_cambio=escena.tipo,
-            historia=ESCENARIOS_DEMO[escenario_id]["historia"],
+            id=id_final, nombre=str(escena.sitio["sitio"]), tipo_cambio=escena.tipo,
+            historia=ESCENARIOS_DEMO[base]["historia"],
             region=f"{reg['provincia']} ({reg['region']})" if reg else "Fuera de Ecuador",
             bbox=escena.limites(), resolucion_m=float(escena.pixel_m), polarizaciones=pols,
             variables=variables,
@@ -258,8 +319,7 @@ class ProveedorDemostracion:
                                        polarizaciones=pols) for f in escena.fechas],
             capacidades=self.capacidades, origen=origen,
         )
-        self._cache[clave] = (escena, esc)
-        return escena, esc
+        return self._cache.poner(id_final, (escena, esc))
 
     @staticmethod
     def _indice(esc: Escenario, adquisicion_id: str) -> int:
@@ -317,7 +377,11 @@ class ProveedorDemostracion:
     def _analisis(self, escenario_id: str, antes_id: str, despues_id: str):
         escena, esc = self._contexto(escenario_id)
         i0, i1 = self._indice(esc, antes_id), self._indice(esc, despues_id)
-        return escena, esc, i0, i1, nisar.analizar(escena, i0, i1)  # ValueError si i0 >= i1
+        clave = (esc.id, i0, i1)
+        a = self._analisis_cache.obtener(clave)
+        if a is None:
+            a = self._analisis_cache.poner(clave, nisar.analizar(escena, i0, i1))  # ValueError si i0 >= i1
+        return escena, esc, i0, i1, a
 
     def cambio(self, escenario_id: str, antes_id: str, despues_id: str,
                polarizacion: str | None) -> ResultadoCambio:
@@ -328,6 +392,23 @@ class ProveedorDemostracion:
         def de_panel(panel):
             return _capa_de_panel(esc.id, None, panel, _slug(panel.titulo), None, esc.bbox, esc.origen)
 
+        extras = [de_panel(a.paneles[k]) for k in _PANELES_EXTRA.get(escena.tipo, ())]
+        tablas = []
+        if a.tabla is not None:
+            tablas.append(TablaResultado(
+                titulo="Resultados por parcela" if escena.tipo == "agricultura" else "Resultados",
+                columnas=[str(c) for c in a.tabla.columns],
+                filas=[[_celda(x) for x in fila] for fila in a.tabla.itertuples(index=False, name=None)],
+                origen=esc.origen))
+        vectores = None
+        if a.flechas is not None and len(a.flechas):
+            f = a.flechas
+            ang = np.radians(f["angulo"].to_numpy(float))  # grados desde el norte, sentido horario
+            vel = f["velocidad"].to_numpy(float)
+            vectores = CampoVectorial(
+                x=f["x_km"].astype(float).tolist(), y=f["y_km"].astype(float).tolist(),
+                u=(vel * np.sin(ang)).tolist(), v=(vel * np.cos(ang)).tolist(),
+                unidad="m/día", origen=esc.origen)
         return ResultadoCambio(
             antes=self._capa_cubo(escena, esc, i0, variable, polarizacion),
             despues=self._capa_cubo(escena, esc, i1, variable, polarizacion),
@@ -337,6 +418,7 @@ class ProveedorDemostracion:
             series=[_serie_contrato(s, esc.origen) for s in a.series],
             notas=[str(n) for n in a.notas],
             origen=esc.origen,
+            tablas=tablas, vectores=vectores, capas_extra=extras,
         )
 
     def medir(self, escenario_id: str, antes_id: str, despues_id: str,
@@ -375,15 +457,19 @@ class ProveedorDemostracion:
     # --- simulación (opcional del contrato) ----------------------------------------------------
 
     def simular(self, escenario_id: str, parametros: dict | None) -> Escenario:
-        """Escenario con parámetros propios; con `lat` y `lon`, un punto del mapa del mismo tipo de cambio."""
+        """Escenario con parámetros propios; con `lat` y `lon`, un punto del mapa del mismo tipo de cambio.
+
+        Devuelve un id derivado `base~huella` (huella de los parámetros normalizados) que `capa`, `cambio`,
+        `medir`, `fotogramas` y `escenario` resuelven mientras siga en el registro (LRU de `MAX_CACHE`);
+        después `KeyError`. Parámetros vacíos o iguales a los de demostración dan el id base."""
         return self._contexto(escenario_id, parametros)[1]
 
     def fotogramas(self, escenario_id: str, parametros: dict | None, inicio: datetime, fin: datetime,
                    paso_min: int) -> list[CapaRaster]:
         """Estado continuo del modelo cada `paso_min` minutos entre `inicio` y `fin` (UTC, inclusive).
 
-        Cada capa lleva su instante UTC (ISO 8601 con «Z») en `adquisicion_id`, porque `CapaRaster` no
-        tiene campo de instante; todas comparten vmin/vmax.
+        Cada capa lleva su instante UTC en `CapaRaster.instante`; todas comparten vmin/vmax. Un id simulado
+        (`base~huella`) ya lleva sus parámetros: `parametros` debe quedar vacío.
         """
         for nombre, t in (("inicio", inicio), ("fin", fin)):
             if t.tzinfo is None or t.utcoffset() is None:
@@ -405,7 +491,7 @@ class ProveedorDemostracion:
         vmin = min(float(p.vmin) for _, p in paneles)
         vmax = max(float(p.vmax) for _, p in paneles)
         return [
-            _capa_de_panel(esc.id, t.strftime("%Y-%m-%dT%H:%M:%SZ"), p, "estado_modelo", None, esc.bbox,
-                           esc.origen, vmin, vmax)
+            _capa_de_panel(esc.id, None, p, "estado_modelo", None, esc.bbox, esc.origen, vmin, vmax,
+                           instante=t)
             for t, p in paneles
         ]

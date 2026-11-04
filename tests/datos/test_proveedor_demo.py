@@ -116,8 +116,10 @@ def test_simular_con_parametros_devuelve_origen_con_parametros(prov):
     assert e.origen.semilla == 3
     assert "semilla=3" in e.origen.notas and "fraccion_inundada" in e.origen.notas
     assert {a.direccion_orbital for a in e.adquisiciones} == {"Descendente"}
-    assert e.id == "ec_la_segua"
+    assert e.id.startswith("ec_la_segua~")
     base = prov.simular("ec_la_segua", {})
+    assert base.id == "ec_la_segua"  # parámetros vacíos o iguales a los de demostración = escena por defecto
+    assert prov.simular("ec_la_segua", {"semilla": 7, "orbita": "Ascendente"}).id == "ec_la_segua"
     assert base.origen.semilla == PARAMETROS_DEMO["semilla"]
 
 
@@ -151,7 +153,7 @@ def test_simular_en_punto_del_mapa_usa_sitio_en_mapa(prov):
     assert abs((o + es) / 2 - lon) < 1e-6 and abs((s + n) / 2 - lat) < 1e-6
     base = prov.escenario("ec_la_segua")
     assert [a.id for a in e.adquisiciones] == [a.id for a in base.adquisiciones]  # misma fecha de referencia
-    assert e.tipo_cambio == "humedales"
+    assert e.tipo_cambio == "humedales" and e.id.startswith("ec_la_segua~")
     assert e.origen.tipo == "sintetico" and "lat" in e.origen.notas
 
 
@@ -162,7 +164,9 @@ def test_fotogramas_respetan_el_paso(prov):
     assert all(isinstance(c, CapaRaster) for c in caps)
     assert len({(c.vmin, c.vmax) for c in caps}) == 1
     assert all(c.origen.tipo == "sintetico" for c in caps)
-    instantes = [datetime.fromisoformat(c.adquisicion_id.replace("Z", "+00:00")) for c in caps]
+    assert all(c.adquisicion_id is None for c in caps)
+    instantes = [c.instante for c in caps]
+    assert instantes[0] == t0 and all(i.utcoffset() == timedelta(0) for i in instantes)
     assert [b - a for a, b in zip(instantes, instantes[1:])] == [timedelta(minutes=60)] * 6
     assert len(prov.fotogramas("ec_loja", {}, t0, t0 + timedelta(minutes=90), 60)) == 2  # sin pasarse del fin
     assert prov.fotogramas("ec_loja", {}, t0, t0, 30)[0].datos.shape[0] > 0
@@ -225,3 +229,104 @@ def test_serie_seleccion(prov):
 def test_escena_demo_es_la_del_generador(prov):
     assert generar_escena("ec_la_segua") is generar_escena("ec_la_segua", dict(PARAMETROS_DEMO))
     assert nisar.intervalo_por_defecto(generar_escena("ec_la_segua")) == (10, 29)
+
+
+# --- ronda de corrección 1 -----------------------------------------------------------------------
+
+def test_cambio_glaciares_lleva_vectores(prov):
+    antes, despues = _por_defecto(prov, "ec_antisana")
+    r = prov.cambio("ec_antisana", antes, despues, None)
+    v = r.vectores
+    assert v is not None and v.origen.tipo == "sintetico" and v.unidad == "m/día"
+    assert len(v.x) == len(v.y) == len(v.u) == len(v.v) > 0
+    assert all(np.isfinite(v.u)) and all(np.isfinite(v.v))
+    v.model_dump_json()
+    assert r.clasificacion is not None
+    assert r.tablas == [] and r.capas_extra == []
+
+
+def test_cambio_agricultura_lleva_tabla_por_parcela(prov):
+    antes, despues = _por_defecto(prov, "ec_daule")
+    r = prov.cambio("ec_daule", antes, despues, None)
+    assert len(r.tablas) == 1
+    t = r.tablas[0]
+    assert t.origen.tipo == "sintetico" and "Parcela" in t.columnas and "Cosecha real" in t.columnas
+    assert len(t.filas) == 464 and all(len(f) == len(t.columnas) for f in t.filas)
+    for fila in t.filas:
+        for c in fila:
+            assert c is None or isinstance(c, (str, float))
+            assert not (isinstance(c, float) and np.isnan(c))
+    t.model_dump_json()
+    assert r.vectores is None
+
+
+def test_cambio_terremotos_y_subsidencia_llevan_capas_extra(prov):
+    a, d = _por_defecto(prov, "ec_pedernales")
+    r = prov.cambio("ec_pedernales", a, d, None)
+    assert [c.variable for c in r.capas_extra] == ["interferograma_envuelto_1_ciclo_11_9_cm", "coherencia_interferometrica"] \
+        or len(r.capas_extra) == 2
+    assert any(c.paleta == "ciclico" for c in r.capas_extra)
+    assert all(c.origen.tipo == "sintetico" for c in r.capas_extra)
+    a, d = _por_defecto(prov, "ec_guayaquil")
+    r = prov.cambio("ec_guayaquil", a, d, None)
+    assert any("error" in c.variable for c in r.capas_extra)
+
+
+def test_escenario_simulado_se_puede_consultar(prov):
+    sim = prov.simular("ec_la_segua", {"fraccion_inundada": 30})
+    assert sim.id.startswith("ec_la_segua~") and sim.id != "ec_la_segua"
+    assert prov.escenario(sim.id).id == sim.id
+    assert prov.simular("ec_la_segua", {"fraccion_inundada": 30}).id == sim.id  # determinista
+    a = sim.adquisiciones[15].id
+    c_sim = prov.capa(sim.id, a, "sigma0", "HH")
+    c_base = prov.capa("ec_la_segua", a, "sigma0", "HH")
+    assert c_sim.escenario_id == sim.id
+    assert not np.array_equal(np.nan_to_num(c_sim.datos), np.nan_to_num(c_base.datos))
+    antes, despues = sim.adquisiciones[10].id, sim.adquisiciones[29].id
+    assert prov.cambio(sim.id, antes, despues, None).cambio.escenario_id == sim.id
+    assert prov.medir(sim.id, antes, despues, punto=(5, 5)).punto == (5, 5)
+    t = datetime(2026, 5, 1, tzinfo=timezone.utc)
+    assert prov.fotogramas(sim.id, None, t, t, 60)[0].escenario_id == sim.id
+    with pytest.raises(ValueError, match="parámetros"):
+        prov.fotogramas(sim.id, {"semilla": 1}, t, t, 60)
+    with pytest.raises(KeyError):
+        prov.escenario("ec_la_segua~noexiste")
+    with pytest.raises(KeyError):
+        prov.capa("ec_la_segua~noexiste", a, "sigma0", None)
+    with pytest.raises(KeyError):
+        prov.escenario("otro~abc")
+
+
+def test_cache_y_registro_acotados():
+    from datos.proveedores.demo import MAX_CACHE
+    p = ProveedorDemostracion()
+    assert MAX_CACHE == 32
+    ids = [p.simular("ec_pedernales", {"deslizamiento_m": 0.5 + 0.1 * k}).id for k in range(40)]
+    assert len(set(ids)) == 40
+    assert len(p._cache) <= MAX_CACHE and len(p._simulados) <= MAX_CACHE and len(p._analisis_cache) <= MAX_CACHE
+    with pytest.raises(KeyError):
+        p.escenario(ids[0])  # el más antiguo salió del registro
+    assert p.escenario(ids[-1]).id == ids[-1]
+    a, d = p.intervalo_por_defecto("ec_pedernales")
+    for k in range(40):
+        p.simular("ec_pedernales", {"deslizamiento_m": 0.5 + 0.1 * k})
+        p.cambio("ec_pedernales", a, d, None)
+    assert len(p._analisis_cache) <= MAX_CACHE
+
+
+def test_analisis_se_cachea(prov, monkeypatch):
+    llamadas = []
+    original = nisar.analizar
+    monkeypatch.setattr(nisar, "analizar", lambda *a, **k: llamadas.append(a) or original(*a, **k))
+    a, d = _por_defecto(prov, "ec_loja")
+    prov.cambio("ec_loja", a, d, None)
+    prov.medir("ec_loja", a, d, punto=(1, 1))
+    prov.cambio("ec_loja", a, d, None)
+    assert len(llamadas) <= 1
+
+
+def test_clave_de_cache_usa_parametros_normalizados(prov):
+    a = prov.simular("ec_loja", {"radio_km": 3, "semilla": 5})
+    b = prov.simular("ec_loja", {"semilla": 5, "radio_km": 3.0})
+    assert a.id == b.id
+    assert prov.simular("ec_loja", {"radio_km": 3.0, "looks": 12}).id == prov.simular("ec_loja", {"radio_km": 3}).id
