@@ -1,0 +1,12 @@
+node_modules/
+frontend/dist/
+.taste-skill/**/inspect/
+__pycache__/
+.venv/
+.env
+data/terreno/
+data/demo/
+.inicio_noche
+test-results/
+playwright-report/
+.superpowers/
