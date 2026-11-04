@@ -1,5 +1,7 @@
+import { useLocation } from 'react-router-dom'
 import { useEffect, useId, useRef, useState } from 'react'
-import { useEscenarios } from '../api/consultas'
+import { useQueryClient } from '@tanstack/react-query'
+import { useEscenarios, type Escenario } from '../api/consultas'
 import { useHayDatosSinteticos } from '../estado/useHayDatosSinteticos'
 import { fechaCorta } from './origen'
 
@@ -11,6 +13,8 @@ import { fechaCorta } from './origen'
 export function BandaDemostracion() {
   const hay = useHayDatosSinteticos()
   const escenarios = useEscenarios()
+  const cliente = useQueryClient()
+  const { search } = useLocation()
   const [abierto, setAbierto] = useState(false)
   const idPanel = useId()
   const raiz = useRef<HTMLDivElement>(null)
@@ -42,7 +46,10 @@ export function BandaDemostracion() {
 
   if (!hay) return null
 
-  const origen = escenarios.data?.[0]?.origen
+  // Si se está viendo un escenario simulado (id con «~» en la URL), su semilla y generador mandan.
+  const idActual = new URLSearchParams(search).get('escenario') ?? ''
+  const simulado = idActual.includes('~') ? cliente.getQueryData<Escenario>(['escenario', idActual]) : undefined
+  const origen = simulado?.origen ?? escenarios.data?.[0]?.origen
   return (
     <div className="banda-demo" ref={raiz}>
       <div className="banda-demo__fila" role="region" aria-label="Aviso de datos de demostración">

@@ -22,10 +22,9 @@ function simularApi(hay: boolean) {
       url.includes('/api/salud') ? salud(hay) : [{ id: 'a', nombre: 'A', origen: hay ? origenSint : { ...origenSint, tipo: 'real' }, adquisiciones: [] }],
     )))))
 }
-function envolver(ui: React.ReactElement) {
-  const cliente = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+function envolver(ui: React.ReactElement, ruta = '/', cliente = new QueryClient({ defaultOptions: { queries: { retry: false } } })) {
   return render(
-    <QueryClientProvider client={cliente}><MemoryRouter>{ui}</MemoryRouter></QueryClientProvider>,
+    <QueryClientProvider client={cliente}><MemoryRouter initialEntries={[ruta]}>{ui}</MemoryRouter></QueryClientProvider>,
   )
 }
 afterEach(() => vi.unstubAllGlobals())
@@ -47,6 +46,17 @@ describe('BandaDemostracion', () => {
     await waitFor(() => expect(within(panel).getByText('2026-11-05')).toBeInTheDocument())
     expect(within(panel).getByText('7')).toBeInTheDocument()
     expect(within(panel).getByText(/datos\/generador\.py v1/)).toBeInTheDocument()
+  })
+
+  it('con un escenario simulado activo muestra su semilla y generador', async () => {
+    simularApi(true)
+    const cliente = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    cliente.setQueryData(['escenario', 'a~x1'], { id: 'a~x1', nombre: 'Simulado', origen: { ...origenSint, semilla: 4242, generador: 'datos/generador.py (simulado)' } })
+    envolver(<BandaDemostracion />, '/observatorio?escenario=a%7Ex1', cliente)
+    fireEvent.click(await screen.findByRole('button', { name: 'Qué significa' }))
+    const panel = await screen.findByRole('dialog')
+    expect(within(panel).getByText('4242')).toBeInTheDocument()
+    expect(within(panel).getByText(/\(simulado\)/)).toBeInTheDocument()
   })
 
   it('Escape cierra el panel y devuelve el foco al botón; el foco entra al abrir', async () => {

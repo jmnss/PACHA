@@ -19,6 +19,7 @@ import { leerCuadrante, leerPunto, textoCuadrante, textoPunto } from './medicion
 import { Mediciones } from './Mediciones'
 import { NotasResultado, VistaAntesDespues } from './VistaAntesDespues'
 import { SIN_PAREJA } from './VistaMapa'
+import { AyudaRadar } from './AyudaRadar'
 import { PanelContexto } from './PanelContexto'
 import { PanelMetricas } from './PanelMetricas'
 import { VistaSerie } from './VistaSerie'
@@ -191,6 +192,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
     if (destino) irA(destino.id)
   }
   const puedeSimular = esc.capacidades.simulacion
+  const tipoActual = tipos.data?.find((t) => t.id === esc.tipo_cambio)
   const controles = useMemo<Control[]>(() => tipos.data?.find((t) => t.id === esc.tipo_cambio)?.controles ?? [], [tipos.data, esc.tipo_cambio])
   // Cambiar parámetros mantiene el lugar, la pareja y el instante: solo cambia la escena.
   const alNuevo = useCallback((id: string, v: Valores) => cambiar({ escenario: id, par: codificar(v) }, { reemplazar: true }), [cambiar])
@@ -240,6 +242,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
         </div>
         <aside className="observatorio__lado" aria-label="Métricas y contexto">
           {!movil && panel}
+          <AyudaRadar descripcion={tipoActual?.descripcion} nombreTipo={tipoActual?.nombre} />
           {url.vista === 'comparar' && peticion && (
             <Mediciones
               esc={esc} antesId={antesId} despuesId={despuesId} bbox={resultado.data?.antes.rejilla.bbox ?? esc.bbox}

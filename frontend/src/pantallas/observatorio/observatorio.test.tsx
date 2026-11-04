@@ -73,7 +73,7 @@ function simularFetch() {
     llamadas.push({ url, metodo, cuerpo: init?.body ? JSON.parse(String(init.body)) : undefined })
     if (url === '/api/salud') return json({ estado: 'ok', hay_sinteticos: true, origen_tipo: 'sintetico', proveedor: 'demo', version: '1' })
     if (url === '/api/escenarios') return json([BASE])
-    if (url === '/api/tipos') return json([{ id: 'humedales', nombre: 'Pérdida de humedales' }, { id: 'incendios', nombre: 'Incendios forestales' }])
+    if (url === '/api/tipos') return json([{ id: 'humedales', nombre: 'Pérdida de humedales', descripcion: 'El agua refleja el radar lejos del satélite y se ve oscura.' }, { id: 'incendios', nombre: 'Incendios forestales' }])
     if (url === '/api/escenarios/ec_x') return json(BASE)
     if (url === '/api/escenarios/ec_uno') return json({ ...BASE, id: 'ec_uno', nombre: 'Escena de una pasada', adquisiciones: BASE.adquisiciones.slice(0, 1) })
     if (url.startsWith('/api/escenarios/ec_x~caducado')) return json({ mensaje: 'El escenario no existe.' }, 404)
@@ -237,6 +237,17 @@ describe('Observatorio · casos límite', () => {
     expect(await screen.findByRole('button', { name: 'Volver a Humedal de prueba' })).toBeInTheDocument()
     expect(posts()).toHaveLength(1)
     expect(screen.getByRole('alert')).toHaveTextContent('El escenario no existe.')
+  })
+
+  it('la ayuda plegable explica cómo ve el radar el tipo actual y avisa que NISAR está por confirmar', async () => {
+    montar()
+    await listo()
+    const resumen = await screen.findByText('Cómo ve el radar este tipo de cambio')
+    expect(resumen.closest('details')).not.toHaveAttribute('open')
+    expect(await screen.findByText(/El agua refleja el radar/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'interferometría' })).toBeInTheDocument()
+    expect(screen.getAllByText(/pendientes? de confirmar con la documentación oficial/).length).toBeGreaterThan(0)
+    expect(screen.getByText(/escala de centímetros/)).toBeInTheDocument()
   })
 
   it('el mapa y el reloj hablan de la misma pasada: la anterior o igual al instante', async () => {
