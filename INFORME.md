@@ -97,6 +97,12 @@ Ver `.superpowers/sdd/plan-migracion/progress.md` (no versionado): validar `max_
 - Categorías: se transportan como códigos enteros y se colorean por variable con hex de `docs/diseno.md` §4 (Severidad alta usa `#9a3412`, parada de `fuego`, por distinguibilidad con daltonismo).
 - `--allow palette-terracotta` en `revision_visual.sh` (el color `--demo-ink` lo fija diseno.md §4), con un guard de hex fuera de tokens.
 
+## Cambio posterior: mapa tipo carta geográfica (a petición del usuario)
+
+- El mapa ahora puede usar mapas base de Esri con internet (Oscuro, Satélite, Relieve, con etiquetas), ciudades locales de respaldo sin red y control de opacidad de la capa de datos; capturas en `docs/capturas-nuevas/mapa-carta/`. Sin red o con `VITE_MAPA_REMOTO=0` se dibuja solo con las provincias locales (las pruebas y la revisión visual usan ese modo).
+- Pendientes: en Relieve el radar puede tapar etiquetas (vienen dentro de la tesela); hueco bajo la cinta en escritorio; en móvil las placas flotantes ocupan ~130 px; el aviso «Unexpected }» de minificación de CSS; sin prueba automática del mapa con red.
+- Importante: para ver el mapa con Esri hay que compilar sin `VITE_MAPA_REMOTO=0` (`cd frontend && npm run build`).
+
 ## Pendientes tras la primera noche
 
 - **Funcionales (paridad N1 incompleta):** serie temporal del punto/cuadrante (la API no expone `serie_seleccion`), modelo en el tiempo por fotogramas continuos (`/api/simulacion/fotogramas` existe pero la pantalla no lo usa), fecha del evento (el servidor no la acepta), tooltip de provincia y marcadores del catálogo en el mapa, marcas de evento y cursor en la vista Serie, observable del tipo en la cabecera.
