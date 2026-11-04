@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "setup": "integrated",
+  "languages": [
+    "Python"
+  ],
+  "stacks": [
+    "pip"
+  ],
+  "markers": [
+    "requirements.txt"
+  ],
+  "suggestedRun": "python -m src.main",
+  "suggestedTest": "pytest",
+  "createdAt": "2026-10-12T04:31:45.738Z",
+  "tool": "xgrok"
+}

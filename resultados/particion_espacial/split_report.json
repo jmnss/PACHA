@@ -1,0 +1,14 @@
+{
+    "counts_by_set": {
+        "train": 15,
+        "val": 5,
+        "test": 5
+    },
+    "surface_area_m2_by_set": {
+        "test": 320000000.0,
+        "train": 708906222.8742205,
+        "val": 320000000.0
+    },
+    "excluded_blocks_count": 0,
+    "verification_passed": true
+}

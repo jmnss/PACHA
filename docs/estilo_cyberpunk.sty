@@ -1,0 +1,156 @@
+% estilo_cyberpunk.sty — estilo común de los informes del proyecto (mismos colores que interfaz/tema.py).
+%   \usepackage{estilo_cyberpunk}             fondo oscuro con neones (pantalla)
+%   \usepackage[impresion]{estilo_cyberpunk}  misma maqueta sobre fondo blanco (para imprimir)
+% Cargar después de fontenc y antes de hyperref. Solo usa fuentes incluidas en MiKTeX/TeX Live:
+% TeX Gyre Adventor (títulos), TeX Gyre Heros (texto) y Latin Modern Mono (rótulos).
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{estilo_cyberpunk}[2026/11/01 Estilo cyberpunk de los informes NISAR Ecuador]
+
+\newif\ifcpimpresion
+\DeclareOption{impresion}{\cpimpresiontrue}
+\ProcessOptions\relax
+
+\RequirePackage{xcolor}
+\RequirePackage{tgheros}
+\renewcommand{\familydefault}{\sfdefault}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+\RequirePackage{colortbl}
+\RequirePackage{tikz}
+\RequirePackage[skins,breakable]{tcolorbox}
+\RequirePackage{caption}
+\RequirePackage{pgfplots}
+
+% --- Colores ------------------------------------------------------------------------------------
+\ifcpimpresion
+  \definecolor{cpfondo}{HTML}{FFFFFF}
+  \definecolor{cptexto}{HTML}{14132A}
+  \definecolor{cptenue}{HTML}{5A6178}
+  \definecolor{cpcaja}{HTML}{F2F4FA}
+  \definecolor{cprejilla}{HTML}{DCE0EC}
+  \definecolor{cpcian}{HTML}{00708F}
+  \definecolor{cpmagenta}{HTML}{A8186E}
+  \definecolor{cpamarillo}{HTML}{7A6C00}
+  \definecolor{cpvioleta}{HTML}{5B33C2}
+\else
+  \definecolor{cpfondo}{HTML}{07060F}
+  \definecolor{cptexto}{HTML}{E6F7FF}
+  \definecolor{cptenue}{HTML}{8F98B8}
+  \definecolor{cpcaja}{HTML}{110E22}
+  \definecolor{cprejilla}{HTML}{2A2350}
+  \definecolor{cpcian}{HTML}{00F0FF}
+  \definecolor{cpmagenta}{HTML}{FF2BD6}
+  \definecolor{cpamarillo}{HTML}{FCEE0A}
+  \definecolor{cpvioleta}{HTML}{9D4BFF}
+\fi
+% Colores de datos (validados para fondo oscuro; idénticos a los de la aplicación)
+\definecolor{lluviosa}{HTML}{009DCC}
+\definecolor{transicion}{HTML}{6F6D7A}
+\definecolor{seca}{HTML}{E0369B}
+\colorlet{cplinea}{cptexto}
+\colorlet{cpumbral}{cptenue}
+
+% El color de texto también debe ser el «color por defecto»: LaTeX lo restablece en tablas, figuras y
+% leyendas (\normalcolor), que de otro modo saldrían en negro sobre el fondo oscuro.
+\AtBeginDocument{\pagecolor{cpfondo}\color{cptexto}\let\default@color\current@color}
+
+% --- Tipografía ----------------------------------------------------------------------------------
+\newcommand{\cptitulofuente}{\fontfamily{qag}\selectfont}
+\newcommand{\cpmono}{\fontfamily{lmtt}\selectfont}
+\newcommand{\cpcodigo}[1]{\texttt{\textcolor{cpamarillo}{#1}}}
+
+% --- Títulos de sección ---------------------------------------------------------------------------
+\titleformat{\section}
+  {\cptitulofuente\Large\bfseries\color{cpcian}}
+  {\textcolor{cpmagenta}{//\thesection}}{0.6em}{\MakeUppercase}
+  [\vspace{-0.4ex}{\color{cpmagenta}\titlerule[0.5pt]}]
+\titleformat{\subsection}
+  {\cptitulofuente\large\bfseries\color{cpcian}}
+  {\textcolor{cpmagenta}{\thesubsection}}{0.6em}{}
+\titleformat{\paragraph}[runin]
+  {\cptitulofuente\bfseries\color{cpamarillo}}{}{0pt}{}[\enspace]
+\titlespacing*{\section}{0pt}{2.6ex plus 1ex minus .2ex}{1.4ex}
+\titlespacing*{\subsection}{0pt}{2ex plus .8ex minus .2ex}{0.8ex}
+
+% --- Encabezado y pie ------------------------------------------------------------------------------
+\newcommand{\cpcorto}{}
+\newcommand{\cptitulocorto}[1]{\renewcommand{\cpcorto}{#1}}
+\setlength{\headheight}{14pt}
+\newcommand{\cpcabecera}{%
+  \fancyhf{}%
+  \fancyhead[L]{\cpmono\scriptsize\textcolor{cpmagenta}{NISAR//ECUADOR}}%
+  \fancyhead[R]{\cpmono\scriptsize\textcolor{cptenue}{\cpcorto}}%
+  \fancyfoot[C]{\cpmono\small\textcolor{cpcian}{[\,\thepage\,]}}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+  \renewcommand{\headrule}{{\color{cpcian}\hrule width\headwidth height\headrulewidth}}%
+  \renewcommand{\footrulewidth}{0pt}}
+\fancypagestyle{cyber}{\cpcabecera}
+\fancypagestyle{plain}{\cpcabecera}
+\pagestyle{cyber}
+
+% --- Listas, tablas, leyendas y enlaces ---------------------------------------------------------
+\AtBeginDocument{%
+  \renewcommand{\labelitemi}{\textcolor{cpmagenta}{\rule[0.3ex]{0.75ex}{0.75ex}}}%
+  \renewcommand{\labelitemii}{\textcolor{cpcian}{\rule[0.3ex]{0.6ex}{0.6ex}}}%
+  \arrayrulecolor{cpcian}%
+  \hypersetup{colorlinks=true, linkcolor=cpcian, citecolor=cpamarillo, urlcolor=cpmagenta}}
+\DeclareCaptionFont{cpetiqueta}{\cptitulofuente\bfseries\color{cpmagenta}}
+\captionsetup{labelfont=cpetiqueta, font=small, labelsep=period}
+
+% --- Cajas -----------------------------------------------------------------------------------------
+\newtcolorbox{cpcaja}[1][]{enhanced, breakable, sharp corners, colback=cpcaja, colframe=cpcian,
+  coltext=cptexto, boxrule=0.5pt, borderline west={2.5pt}{0pt}{cpmagenta},
+  attach boxed title to top left={xshift=4mm, yshift=-2.2mm},
+  boxed title style={sharp corners, colback=cpmagenta, boxrule=0pt},
+  coltitle=cpfondo, fonttitle=\cptitulofuente\bfseries\small, #1}
+
+% --- Gráficos pgfplots ------------------------------------------------------------------------------
+\pgfplotsset{every axis/.append style={
+  axis line style={cptenue}, every tick/.style={cptenue},
+  tick label style={color=cptexto, font=\scriptsize}, label style={color=cptexto},
+  title style={color=cpcian, font=\cptitulofuente\small\bfseries},
+  major grid style={cprejilla},
+  legend style={fill=cpcaja, draw=cpcian, text=cptexto, font=\scriptsize}}}
+
+% --- Portada -------------------------------------------------------------------------------------------
+% Texto con efecto «glitch»: dos copias desplazadas en cian y magenta bajo el texto principal.
+\newcommand{\cpglitch}[2][\Huge]{%
+  \begin{tikzpicture}[baseline]
+    \node[anchor=north west, inner sep=0pt, text width=0.95\textwidth, align=left,
+          font=\cptitulofuente#1\bfseries, text=cpmagenta, opacity=0.9] at (-0.07,0.05) {#2};
+    \node[anchor=north west, inner sep=0pt, text width=0.95\textwidth, align=left,
+          font=\cptitulofuente#1\bfseries, text=cpcian, opacity=0.9] at (0.07,-0.05) {#2};
+    \node[anchor=north west, inner sep=0pt, text width=0.95\textwidth, align=left,
+          font=\cptitulofuente#1\bfseries, text=cptexto] at (0,0) {#2};
+  \end{tikzpicture}}
+
+% \cpportada{rótulo}{título}{subtítulo}{autor}{fecha}
+\newcommand{\cpportada}[5]{%
+  \begin{titlepage}
+  \begin{tikzpicture}[remember picture, overlay]
+    \draw[cprejilla, line width=0.3pt, step=8mm] (current page.south west) grid (current page.north east);
+    \fill[cpmagenta, opacity=0.12] ([yshift=-7.2cm]current page.north west) rectangle ([yshift=-7.6cm]current page.north east);
+    \foreach \y in {0,0.25,...,2} {\draw[cpcian, opacity=0.18, line width=0.4pt]
+      ([yshift=-\y cm-2cm]current page.north west) -- ++(3+\y,0);}
+    \draw[cpcian, line width=1.4pt] ([xshift=1.4cm,yshift=-1.4cm]current page.north west) -- ++(2.6,0)
+      ([xshift=1.4cm,yshift=-1.4cm]current page.north west) -- ++(0,-2.6);
+    \draw[cpmagenta, line width=1.4pt] ([xshift=-1.4cm,yshift=1.4cm]current page.south east) -- ++(-2.6,0)
+      ([xshift=-1.4cm,yshift=1.4cm]current page.south east) -- ++(0,2.6);
+    \node[anchor=south west, font=\cpmono\scriptsize, text=cptenue] at ([xshift=1.5cm,yshift=1.5cm]current page.south west)
+      {SYS://NISAR-L\quad BANDA L 1,257 GHz\quad CICLO 12 D\quad ECUADOR + GAL\'APAGOS};
+  \end{tikzpicture}
+  \thispagestyle{empty}
+  \vspace*{2.6cm}
+  {\cpmono\large\color{cpamarillo}#1\par}
+  \vspace{1.1cm}
+  \noindent\cpglitch{#2}\par
+  \vspace{1.0cm}
+  {\cptitulofuente\Large\color{cpcian}#3\par}
+  \vfill
+  \noindent{\color{cpmagenta}\rule{\textwidth}{0.6pt}\par}
+  \vspace{2mm}
+  \noindent{\cpmono\color{cptexto}#4\hfill#5\par}
+  \vspace*{1.2cm}
+  \end{titlepage}}
+
+\endinput
