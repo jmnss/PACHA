@@ -1,0 +1,78 @@
+:root {
+  /* superficies: la elevación se marca solo por luminosidad */
+  --ground:   #171719;   /* fondo de la app */
+  --surface:  #131217;   /* tarjetas, más oscuras que el fondo */
+  --raised:   #212023;   /* paneles anidados, campos */
+  --border:   #222224;
+  --rule:     #1b1a1f;   /* filas de tablas */
+  --control:  #3a3a3e;   /* bordes de controles */
+  --grid:     #2b2b2b;   /* rejilla de gráficos */
+
+  /* texto: dos grises, y se ven distintos */
+  --text:      #ffffff;
+  --secondary: #b4b4b8;
+  --muted:     #8a8c92;  /* 4,5:1 sobre --surface */
+
+  /* acento: una línea de 1 px, nunca un relleno */
+  --accent:   #e5b93c;   /* amarillo cenit */
+
+  /* estado */
+  --positive: #44a282;   --pill-positive-bg: #1b2828; --pill-positive-ink: #5fc39c;
+  --negative: #e5566f;   --pill-negative-bg: #2c1a20; --pill-negative-ink: #e5566f;
+  --warning:  #e0773a;   --pill-warning-bg:  #2a1c14; --pill-warning-ink:  #e0773a;
+  --pill-neutral-bg: #212023; --pill-neutral-ink: #bdbdc0;
+
+  /* gráficos: un solo tono */
+  --chart-1: #e5b93c;    /* serie principal: lo detectado, hoy, el periodo actual */
+  --chart-2: #f2f2f3;    /* referencia: la verdad sintética del modelo (punteada) */
+  --chart-3: #8a8c92;    /* comparación o lo posterior al cursor */
+
+  /* origen de los datos (banda y sellos de demostración) */
+  --demo-bg:  #2a1c14;
+  --demo-ink: #f0a868;   /* 8,2:1 sobre --demo-bg */
+  --demo-edge:#e0773a;
+
+  /* escala de espaciado (docs/diseno.md §6), base de 4 px */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  --gap: 24px;            /* un solo hueco, horizontal y vertical */
+  --page-padding: 32px;   /* relleno de página */
+  --card-padding: 20px;   /* relleno de tarjeta */
+
+  /* radios */
+  --radius-card: 6px;
+  --radius-pill: 999px;   /* campos y botones */
+  --radius-chip: 4px;
+
+  /* alturas */
+  --h-control: 34px;
+  --h-table-row: 42px;
+  --h-table-head: 38px;
+  --h-list-row: 28px;
+
+  /* solo lo que flota */
+  --shadow-float: 0 12px 28px rgba(0, 0, 0, 0.2);
+
+  /* tipografía (docs/diseno.md §5) */
+  --font-sans: 'Public Sans', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
+/* Cifras tabulares en todo lo que sea número (docs/diseno.md §5) */
+.tabular, .num {
+  font-variant-numeric: tabular-nums;
+}
