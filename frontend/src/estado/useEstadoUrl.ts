@@ -49,7 +49,7 @@ export function useEstadoUrl<E extends Esquema>(esquema: E) {
   }, [esquema, params])
 
   const cambiar = useCallback(
-    (parcial: Partial<Estado<E>>) => {
+    (parcial: Partial<Estado<E>>, opciones?: { reemplazar?: boolean }) => {
       setParams((previos) => {
         const nuevos = new URLSearchParams(previos)
         for (const [clave, valor] of Object.entries(parcial)) {
@@ -59,7 +59,7 @@ export function useEstadoUrl<E extends Esquema>(esquema: E) {
           else nuevos.set(clave, String(valor))
         }
         return nuevos
-      })
+      }, { replace: opciones?.reemplazar ?? false })
     },
     [esquema, setParams],
   )

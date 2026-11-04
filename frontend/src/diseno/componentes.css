@@ -77,7 +77,7 @@ button { font: inherit; color: inherit; }
 .banda-demo__datos dd { margin: 0; color: var(--text); text-align: right; }
 @media (max-width: 699px) {
   .banda-demo { position: sticky; top: 0; }
-  .banda-demo__fila { min-height: var(--h-banda-movil); padding: 0 var(--space-3); gap: var(--space-2); font-size: var(--fs-12); }
+  .banda-demo__fila { min-height: var(--h-banda-movil); padding: 0 var(--space-4); gap: var(--space-2); font-size: var(--fs-12); }
   .banda-demo__enlace { font-weight: 500; }
   .banda-demo__largo { display: none; }
   .banda-demo__corto { display: inline; }

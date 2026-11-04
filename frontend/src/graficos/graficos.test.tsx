@@ -201,4 +201,10 @@ describe('Barras', () => {
     expect(screen.getByText('HH')).toBeInTheDocument()
     expect(screen.getByText(/^Sintético · /)).toBeInTheDocument()
   })
+  it('usa el rótulo corto en el eje, deja el largo en el resumen y puede omitir los valores', () => {
+    const { container } = render(<Barras datos={[{ etiqueta: 'enero', corta: 'E', valor: 12 }]} unidad="mm" origen={origen} valores={false} />)
+    expect(container.querySelector('.grafico__eje--valor')).toBeNull()
+    expect(screen.getByText('E')).toBeInTheDocument()
+    expect(screen.getByRole('img').getAttribute('aria-label')).toMatch(/enero 12/)
+  })
 })

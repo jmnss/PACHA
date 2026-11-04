@@ -8,6 +8,8 @@ import { useAncho } from './useAncho'
 export interface BarraDato {
   etiqueta: string
   valor: number
+  /** Rótulo corto del eje (p. ej. la inicial); el resumen accesible usa `etiqueta`. */
+  corta?: string
 }
 interface Props {
   datos: BarraDato[]
@@ -15,10 +17,12 @@ interface Props {
   origen: Origen
   titulo?: string
   alto?: number
+  /** Rotula cada barra con su valor (por defecto sí); apágalo si las barras son estrechas. */
+  valores?: boolean
 }
 
 /** Barras planas de un solo tono sobre escala redonda, con el valor rotulado y el sello de origen. */
-export function Barras({ datos: entrada, unidad, origen, titulo, alto = 220 }: Props) {
+export function Barras({ datos: entrada, unidad, origen, titulo, alto = 220, valores: rotular = true }: Props) {
   const { ref, ancho } = useAncho()
   const datos = entrada.filter((d) => Number.isFinite(d.valor))
   const valores = datos.map((d) => d.valor)
@@ -59,11 +63,13 @@ export function Barras({ datos: entrada, unidad, origen, titulo, alto = 220 }: P
             return (
               <g key={`${d.etiqueta}-${i}`}>
                 <rect className="grafico__barra" x={cx - grosor / 2} y={y} width={grosor} height={Math.max(1, Math.abs(py(0) - yv))} />
-                <text className="grafico__eje grafico__eje--valor" x={cx} y={(d.valor >= 0 ? y : Math.max(yv, py(0))) + (d.valor >= 0 ? -6 : 14)} textAnchor="middle">
-                  {formatoNumero(d.valor, dec)}
-                </text>
+                {rotular && (
+                  <text className="grafico__eje grafico__eje--valor" x={cx} y={(d.valor >= 0 ? y : Math.max(yv, py(0))) + (d.valor >= 0 ? -6 : 14)} textAnchor="middle">
+                    {formatoNumero(d.valor, dec)}
+                  </text>
+                )}
                 <text className="grafico__eje" x={cx} y={y1 + 18} textAnchor="middle">
-                  {recortar(d.etiqueta, slot - 4)}
+                  {recortar(d.corta ?? d.etiqueta, slot - 4)}
                 </text>
               </g>
             )
