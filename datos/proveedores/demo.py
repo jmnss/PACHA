@@ -426,11 +426,13 @@ class ProveedorDemostracion:
     def _analisis(self, escenario_id: str, antes_id: str, despues_id: str):
         escena, esc = self._contexto(escenario_id)
         i0, i1 = self._indice(esc, antes_id), self._indice(esc, despues_id)
+        if i0 >= i1:
+            raise EntradaNoValida("La fecha 'después' debe ser posterior a la fecha 'antes'.")
         clave = (esc.id, i0, i1)
         with self._cerrojo:
             a = self._analisis_cache.obtener(clave)
             if a is None:
-                a = self._analisis_cache.poner(clave, nisar.analizar(escena, i0, i1))  # ValueError si i0 >= i1
+                a = self._analisis_cache.poner(clave, nisar.analizar(escena, i0, i1))
         return escena, esc, i0, i1, a
 
     def cambio(self, escenario_id: str, antes_id: str, despues_id: str,

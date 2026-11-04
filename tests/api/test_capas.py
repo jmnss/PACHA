@@ -43,6 +43,14 @@ def test_antes_igual_despues_422(cliente):
         assert r.status_code == 422 and "Elige dos fechas distintas" in r.json()["mensaje"]
 
 
+def test_antes_posterior_a_despues_422_con_mensaje(cliente):
+    esc, a, d = _par(cliente)
+    for ruta, extra in (("cambio", {}), ("medicion", {"punto": [0.5, 0.5]})):
+        r = cliente.post(f"/api/escenarios/{esc['id']}/{ruta}", json={"antes": d, "despues": a, **extra})
+        assert r.status_code == 422, ruta
+        assert "posterior" in r.json()["mensaje"]
+
+
 def test_cuadrante_vacio_422(cliente):
     esc, a, d = _par(cliente)
     r = cliente.post(f"/api/escenarios/{esc['id']}/medicion",
