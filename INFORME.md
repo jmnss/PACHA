@@ -93,7 +93,7 @@ Primera noche, en orden (`docs/plan-migracion.md`): 0.1–0.3, 1.1–1.5, 2.1–
 | Historias (`/`) | 3 de 3 (2 de implementación + 1 de revisor) | 0 FAIL | 0 FAIL | 0 FAIL | En móvil el comparador queda tras el texto de las partes 1–2 (se respeta el orden de lectura); la tarjeta del comparador a 1440×900 termina a 10 px del borde inferior (depende del viewport); la pareja de pasadas se elige por el mayor cambio de la serie (criterio de la demo); sin e2e propio |
 | Observatorio · mapa | 3 de 3 (2 de implementación + 1 de revisor) | 0 FAIL | 0 FAIL | 0 FAIL | Con OpenFreeMap apagado el mapa a escala de escenario (~8 km) es un fondo gris con la capa: falta un localizador de Ecuador o escala gráfica; hoja inferior de parámetros en móvil y menú de tres puntos (§10) pendientes; sin prueba e2e propia |
 | Observatorio · comparar | 3 de 3 + 1 de revisor | 0 FAIL | 0 FAIL | 0 FAIL | Sin captura con punto/cuadrante seleccionado ni e2e propio; serie del punto pendiente (la API no expone `serie_seleccion`); medición y cambio usan las polarizaciones del análisis, no el selector (avisado en pantalla); notas del modelo heredado mostradas con aviso «pendiente de confirmar» |
-| Observatorio · serie | 0 de 3 | — | — | — | — |
+| Observatorio · serie | 1 de 3 | 0 FAIL | 0 FAIL | 0 FAIL (1 WARN `ragged-row` a 1440, defendido: distribución de dos columnas) | Sin marcas de evento ni cursor de instante (la API no trae fecha de evento; Linea no soporta cursor); tabla intercalada de 60 filas en La Segua; sin revisión independiente de esta tarea |
 
 Para cada pantalla cerrada se pega aquí la crítica de las siete preguntas de `app-screens.md §2.7`.
 
