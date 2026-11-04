@@ -39,12 +39,12 @@ def test_sin_gzip_en_respuestas_pequenas(cliente_demo):
 
 
 def test_errores_de_contrato_son_json_en_espanol(_demo):
-    from datos.contrato import CapacidadNoDisponible
+    from datos.contrato import CapacidadNoDisponible, EntradaNoValida, NoEncontrado
     app = create_app(_demo)
 
     @app.get("/api/_k")
     def _k():
-        raise KeyError("x")
+        raise NoEncontrado("x")
 
     @app.get("/api/_c")
     def _c():
@@ -52,12 +52,24 @@ def test_errores_de_contrato_son_json_en_espanol(_demo):
 
     @app.get("/api/_v")
     def _v():
-        raise ValueError("bbox inválido")
+        raise EntradaNoValida("bbox inválido")
+
+    @app.get("/api/_ik")
+    def _ik():
+        raise KeyError("secreto-interno")
+
+    @app.get("/api/_iv")
+    def _iv():
+        raise ValueError("detalle-interno")
 
     with TestClient(app) as c:
         assert c.get("/api/_k").status_code == 404
         assert c.get("/api/_c").json() == {"mensaje": "no simula"}
         assert c.get("/api/_v").status_code == 422
+        for ruta in ("/api/_ik", "/api/_iv"):
+            r = c.get(ruta)
+            assert r.status_code == 500 and "inesperado" in r.json()["mensaje"]
+            assert "interno" not in r.json()["mensaje"]
 
 
 class _Falso:

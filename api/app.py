@@ -12,7 +12,8 @@ from api import VERSION
 from api.deps import obtener
 from api.rutas import capas, contexto, escenarios, simulacion
 from api.schemas import ErrorDto, Salud
-from datos.contrato import CapacidadNoDisponible, DatosRealesNoDisponibles, ProveedorDatos
+from datos.contrato import (CapacidadNoDisponible, DatosRealesNoDisponibles, EntradaNoValida, NoEncontrado,
+                            ProveedorDatos)
 from datos.seleccion import obtener_proveedor
 
 
@@ -29,14 +30,21 @@ def _registrar_errores(app: FastAPI) -> None:
     async def _sin_capacidad(_: Request, exc: CapacidadNoDisponible) -> JSONResponse:
         return _error(409, str(exc))
 
-    @app.exception_handler(KeyError)
-    async def _no_existe(_: Request, exc: KeyError) -> JSONResponse:
+    @app.exception_handler(NoEncontrado)
+    async def _no_existe(_: Request, exc: NoEncontrado) -> JSONResponse:
         clave = exc.args[0] if exc.args else ""
         return _error(404, f"No existe el recurso pedido: {clave}")
 
-    @app.exception_handler(ValueError)
-    async def _valor(_: Request, exc: ValueError) -> JSONResponse:
+    @app.exception_handler(EntradaNoValida)
+    async def _valor(_: Request, exc: EntradaNoValida) -> JSONResponse:
         return _error(422, str(exc))
+
+    # Errores inesperados (un KeyError o ValueError que no son de la petición): 500 con mensaje genérico,
+    # sin filtrar detalles internos.
+    @app.exception_handler(KeyError)
+    @app.exception_handler(ValueError)
+    async def _inesperado(_: Request, exc: Exception) -> JSONResponse:
+        return _error(500, "Ocurrió un error inesperado en el servidor. Inténtalo de nuevo.")
 
     @app.exception_handler(StarletteHTTPException)
     async def _http(_: Request, exc: StarletteHTTPException) -> JSONResponse:

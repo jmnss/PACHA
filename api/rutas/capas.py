@@ -7,7 +7,7 @@ from api.deps import obtener
 from api.encoding import a_rejilla
 from api.schemas import (CapaDto, MedicionDto, PeticionCambio, PeticionMedicion,
                          ResultadoCambioDto)
-from datos.contrato import CapaRaster, ProveedorDatos
+from datos.contrato import CapaRaster, EntradaNoValida, ProveedorDatos
 
 router = APIRouter()
 
@@ -21,7 +21,7 @@ def _dto(capa: CapaRaster) -> CapaDto:
 
 def _distintas(antes: str, despues: str) -> None:
     if antes == despues:
-        raise ValueError("Elige dos fechas distintas.")
+        raise EntradaNoValida("Elige dos fechas distintas.")
 
 
 @router.get("/escenarios/{id}/capa", response_model=CapaDto)
@@ -60,7 +60,7 @@ def _intervalo(a: float, b: float, n: int) -> tuple[int, int]:
     """Intervalo normalizado -> píxeles [inicio, fin): inicio floor, fin ceil, mínimo 1 píxel."""
     lo, hi = sorted((a, b))
     if lo == hi:
-        raise ValueError("El cuadrante no tiene área.")
+        raise EntradaNoValida("El cuadrante no tiene área.")
     i0 = min(n - 1, int(math.floor(lo * n)))
     i1 = max(i0 + 1, min(n, int(math.ceil(hi * n))))
     return i0, i1

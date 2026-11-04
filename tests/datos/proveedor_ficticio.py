@@ -10,6 +10,7 @@ from datetime import datetime, timedelta, timezone
 import numpy as np
 
 from datos.contrato import (
+    NoEncontrado,
     Adquisicion, CapaRaster, Capacidades, CapacidadNoDisponible, Escenario, Medicion, Metrica, Origen,
     ResultadoCambio,
 )
@@ -44,13 +45,13 @@ class ProveedorFicticio:
         try:
             return self._escenarios[id]
         except KeyError:
-            raise KeyError(f"escenario desconocido: {id}") from None
+            raise NoEncontrado(f"escenario desconocido: {id}") from None
 
     def _indice(self, esc: Escenario, adquisicion_id: str) -> int:
         for i, a in enumerate(esc.adquisiciones):
             if a.id == adquisicion_id:
                 return i
-        raise KeyError(f"adquisición desconocida: {adquisicion_id}")
+        raise NoEncontrado(f"adquisición desconocida: {adquisicion_id}")
 
     def _rejilla(self, i: int, pol: str | None) -> np.ndarray:
         # Gradiente determinista barato (sin RNG): una pasada de float32 por capa.

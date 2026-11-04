@@ -19,6 +19,14 @@ Paleta = Literal["gris", "secuencial", "divergente", "ciclico", "categorias"]
 PALETAS: tuple[str, ...] = ("gris", "secuencial", "divergente", "ciclico", "categorias")
 
 
+class EntradaNoValida(ValueError):
+    """La petición o sus parámetros no son válidos (la API responde 422)."""
+
+
+class NoEncontrado(KeyError):
+    """El recurso pedido no existe o caducó (la API responde 404)."""
+
+
 class DatosRealesNoDisponibles(RuntimeError):
     """El proveedor real aún no está integrado (o no hay datos reales accesibles)."""
 
@@ -30,9 +38,9 @@ class CapacidadNoDisponible(RuntimeError):
 def validar_bbox(bbox: BBox) -> BBox:
     oeste, sur, este, norte = bbox
     if not oeste < este:
-        raise ValueError(f"bbox inválido: oeste ({oeste}) debe ser menor que este ({este})")
+        raise EntradaNoValida(f"bbox inválido: oeste ({oeste}) debe ser menor que este ({este})")
     if not sur < norte:
-        raise ValueError(f"bbox inválido: sur ({sur}) debe ser menor que norte ({norte})")
+        raise EntradaNoValida(f"bbox inválido: sur ({sur}) debe ser menor que norte ({norte})")
     return bbox
 
 

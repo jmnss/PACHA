@@ -19,6 +19,8 @@ import numpy as np
 import pandas as pd
 
 from datos.contrato import (
+    EntradaNoValida,
+    NoEncontrado,
     PALETAS, Adquisicion, CampoVectorial, CapaRaster, Capacidades, Control, Escenario, Opcion, TipoCambio, Medicion, Metrica, Origen,
     ResultadoCambio, SerieTemporal, TablaResultado,
 )
@@ -109,7 +111,7 @@ def _rango(datos: np.ndarray, paleta: str) -> tuple[float, float]:
 def _paleta(nombre: str) -> str:
     p = _PALETA_DE_PANEL.get(nombre, nombre)
     if p not in PALETAS:
-        raise ValueError(f"Paleta desconocida en el modelo: {nombre}")
+        raise EntradaNoValida(f"Paleta desconocida en el modelo: {nombre}")
     return p
 
 
@@ -201,7 +203,7 @@ def sitio_en_mapa(tipo: str, lat: float, lon: float, sitios: pd.DataFrame) -> di
 
 def _numero(valor, nombre: str) -> float:
     if isinstance(valor, bool) or not isinstance(valor, (int, float)) or not math.isfinite(valor):
-        raise ValueError(f"«{nombre}» debe ser un número finito.")
+        raise EntradaNoValida(f"«{nombre}» debe ser un número finito.")
     return float(valor)
 
 
@@ -212,35 +214,35 @@ def _validar(tipo: str, parametros: dict | None) -> dict:
     controles = {c.clave: c for c in nisar.CONTROLES[tipo]}
     for k in parametros:
         if k not in controles and k not in GENERICOS:
-            raise ValueError(f"Parámetro desconocido para este tipo de cambio: {k}")
+            raise EntradaNoValida(f"Parámetro desconocido para este tipo de cambio: {k}")
     sim: dict = {}
     if "semilla" in parametros:
         s = parametros["semilla"]
         if isinstance(s, bool) or not isinstance(s, int) or not 0 <= s < 2**31:
-            raise ValueError("semilla debe ser un entero entre 0 y 2147483647.")
+            raise EntradaNoValida("semilla debe ser un entero entre 0 y 2147483647.")
         sim["semilla"] = s
     if "looks" in parametros:
         looks = _numero(parametros["looks"], "looks")
         if not 1.0 <= looks <= 100.0:
-            raise ValueError("looks debe estar entre 1 y 100.")
+            raise EntradaNoValida("looks debe estar entre 1 y 100.")
         sim["looks"] = looks
     if "orbita" in parametros:
         if parametros["orbita"] not in ORBITAS:
-            raise ValueError(f"orbita debe ser una de: {', '.join(ORBITAS)}.")
+            raise EntradaNoValida(f"orbita debe ser una de: {', '.join(ORBITAS)}.")
         sim["orbita"] = parametros["orbita"]
     if "estacional" in parametros:
         if not isinstance(parametros["estacional"], bool):
-            raise ValueError("estacional debe ser verdadero o falso.")
+            raise EntradaNoValida("estacional debe ser verdadero o falso.")
         sim["estacional"] = parametros["estacional"]
     punto = None
     if "lat" in parametros or "lon" in parametros:
         if "lat" not in parametros or "lon" not in parametros:
-            raise ValueError("Para colocar un punto en el mapa hacen falta lat y lon.")
+            raise EntradaNoValida("Para colocar un punto en el mapa hacen falta lat y lon.")
         lat, lon = _numero(parametros["lat"], "lat"), _numero(parametros["lon"], "lon")
         if not (-90 <= lat <= 90 and -180 <= lon <= 180):
-            raise ValueError("lat debe estar entre -90 y 90, y lon entre -180 y 180.")
+            raise EntradaNoValida("lat debe estar entre -90 y 90, y lon entre -180 y 180.")
         if not en_ecuador(lat, lon):
-            raise ValueError(MENSAJE_FUERA_DE_ECUADOR)
+            raise EntradaNoValida(MENSAJE_FUERA_DE_ECUADOR)
         punto = (lat, lon)
     ajustes: dict = {}
     mostrados: dict = {}
@@ -251,15 +253,15 @@ def _validar(tipo: str, parametros: dict | None) -> dict:
         if c.opciones:
             validos = [o for o, _ in c.opciones]
             if v not in validos:
-                raise ValueError(f"«{c.etiqueta}» debe ser uno de: " + ", ".join(f"{n} ({o:g})" for o, n in c.opciones) + ".")
+                raise EntradaNoValida(f"«{c.etiqueta}» debe ser uno de: " + ", ".join(f"{n} ({o:g})" for o, n in c.opciones) + ".")
             ajustes[clave] = v
         elif c.hora:
             if not 0 <= v < 24:
-                raise ValueError(f"«{c.etiqueta}» debe estar entre 0 y 24 horas (sin incluir 24).")
+                raise EntradaNoValida(f"«{c.etiqueta}» debe estar entre 0 y 24 horas (sin incluir 24).")
             ajustes[clave] = v
         else:
             if not c.minimo <= v <= c.maximo:
-                raise ValueError(f"«{c.etiqueta}» debe estar entre {c.minimo:g} y {c.maximo:g}.")
+                raise EntradaNoValida(f"«{c.etiqueta}» debe estar entre {c.minimo:g} y {c.maximo:g}.")
             ajustes[clave] = v / c.escala
         mostrados[clave] = v
     por_defecto = {k: PARAMETROS_DEMO[k] for k in sim if sim[k] == PARAMETROS_DEMO[k]}
@@ -282,7 +284,7 @@ class ProveedorDemostracion:
 
     def _tipo(self, base: str) -> str:
         if base not in ESCENARIOS_DEMO:
-            raise KeyError(f"Escenario de demostración desconocido: {base}")
+            raise NoEncontrado(f"Escenario de demostración desconocido: {base}")
         df = nisar.cargar_sitios()
         return str(df[df["id"] == base].iloc[0]["tipo_cambio"])
 
@@ -295,9 +297,9 @@ class ProveedorDemostracion:
         if "~" in escenario_id:
             registro = self._simulados.obtener(escenario_id)
             if registro is None:
-                raise KeyError(f"Escenario simulado desconocido o caducado: {escenario_id}")
+                raise NoEncontrado(f"Escenario simulado desconocido o caducado: {escenario_id}")
             if parametros:
-                raise ValueError("Un escenario simulado ya lleva sus parámetros; no se pueden dar otros.")
+                raise EntradaNoValida("Un escenario simulado ya lleva sus parámetros; no se pueden dar otros.")
             base, parametros = registro
         else:
             base = escenario_id
@@ -349,7 +351,7 @@ class ProveedorDemostracion:
         for i, a in enumerate(esc.adquisiciones):
             if a.id == adquisicion_id:
                 return i
-        raise KeyError(f"Adquisición desconocida: {adquisicion_id}")
+        raise NoEncontrado(f"Adquisición desconocida: {adquisicion_id}")
 
     # --- protocolo ----------------------------------------------------------------------------
 
@@ -395,15 +397,15 @@ class ProveedorDemostracion:
     def _capa_cubo(self, escena: nisar.Escena, esc: Escenario, i: int, variable: str,
                    polarizacion: str | None) -> CapaRaster:
         if variable not in esc.variables:
-            raise ValueError(f"variable desconocida: {variable}; disponibles: {', '.join(esc.variables)}")
+            raise EntradaNoValida(f"variable desconocida: {variable}; disponibles: {', '.join(esc.variables)}")
         if variable == "sigma0":
             polarizacion = polarizacion or nisar.SERIE_SELECCION[escena.tipo][0]
             if polarizacion not in esc.polarizaciones:
-                raise ValueError(f"polarización no disponible: {polarizacion}; disponibles: {', '.join(esc.polarizaciones)}")
+                raise EntradaNoValida(f"polarización no disponible: {polarizacion}; disponibles: {', '.join(esc.polarizaciones)}")
             cubo_clave = polarizacion
         else:
             if polarizacion is not None:
-                raise ValueError(f"La variable {variable} no tiene polarización.")
+                raise EntradaNoValida(f"La variable {variable} no tiene polarización.")
             cubo_clave = next(k for k, (var, _) in _VARIABLE_DE_CUBO.items() if var == variable and k in escena.cubos)
         unidad, paleta = _META_VARIABLE[variable]
         cubo = escena.cubos[cubo_clave]
@@ -473,19 +475,19 @@ class ProveedorDemostracion:
               cuadrante: tuple[int, int, int, int] | None = None,
               punto: tuple[int, int] | None = None) -> Medicion:
         if (cuadrante is None) == (punto is None):
-            raise ValueError("Indica exactamente uno de `cuadrante` o `punto`.")
+            raise EntradaNoValida("Indica exactamente uno de `cuadrante` o `punto`.")
         escena, esc, _, _, a = self._analisis(escenario_id, antes_id, despues_id)
         ny = nx = escena.n
         if cuadrante is not None:
             f0, f1, c0, c1 = cuadrante
             if not (0 <= f0 < f1 <= ny and 0 <= c0 < c1 <= nx):
-                raise ValueError(f"El cuadrante {cuadrante} queda fuera de la imagen ({ny}×{nx} píxeles).")
+                raise EntradaNoValida(f"El cuadrante {cuadrante} queda fuera de la imagen ({ny}×{nx} píxeles).")
             metricas, tabla = nisar.medir_cuadrante(a, cuadrante)
             ms = [_metrica(e, v, ay) for e, v, ay in metricas]
         else:
             f, c = punto
             if not (0 <= f < ny and 0 <= c < nx):
-                raise ValueError(f"El punto {punto} queda fuera de la imagen ({ny}×{nx} píxeles).")
+                raise EntradaNoValida(f"El punto {punto} queda fuera de la imagen ({ny}×{nx} píxeles).")
             tabla = nisar.valores_en_punto(a, punto)
             lat, lon = nisar.coordenadas_punto(a.limites, ((c + 0.5) / nx, (f + 0.5) / ny))
             ms = [Metrica(etiqueta="Posición", valor=_coordenadas(lat, lon), unidad="",
@@ -509,7 +511,7 @@ class ProveedorDemostracion:
 
         Devuelve un id derivado `base~huella` (huella de los parámetros normalizados) que `capa`, `cambio`,
         `medir`, `fotogramas` y `escenario` resuelven mientras siga en el registro (LRU de `MAX_CACHE`);
-        después `KeyError`. Parámetros vacíos o iguales a los de demostración dan el id base."""
+        después `NoEncontrado`. Parámetros vacíos o iguales a los de demostración dan el id base."""
         return self._contexto(escenario_id, parametros)[1]
 
     def fotogramas(self, escenario_id: str, parametros: dict | None, inicio: datetime, fin: datetime,
@@ -521,25 +523,25 @@ class ProveedorDemostracion:
         """
         for nombre, t in (("inicio", inicio), ("fin", fin)):
             if t.tzinfo is None or t.utcoffset() is None:
-                raise ValueError(f"{nombre} debe llevar zona horaria.")
+                raise EntradaNoValida(f"{nombre} debe llevar zona horaria.")
         if isinstance(paso_min, bool) or not isinstance(paso_min, int) or paso_min <= 0:
-            raise ValueError("El paso debe ser un número entero de minutos mayor que 0.")
+            raise EntradaNoValida("El paso debe ser un número entero de minutos mayor que 0.")
         try:
             ini, fi = inicio.astimezone(timezone.utc), fin.astimezone(timezone.utc)
         except OverflowError:
-            raise ValueError("Las fechas quedan fuera del rango admitido.") from None
+            raise EntradaNoValida("Las fechas quedan fuera del rango admitido.") from None
         if fi < ini:
-            raise ValueError("El fin debe ser igual o posterior al inicio.")
+            raise EntradaNoValida("El fin debe ser igual o posterior al inicio.")
         n = int((fi - ini).total_seconds() // (paso_min * 60)) + 1
         if n > MAX_FOTOGRAMAS:
-            raise ValueError(f"Se pedirían {n} fotogramas; el máximo es {MAX_FOTOGRAMAS}. Amplía el paso o acorta el intervalo.")
+            raise EntradaNoValida(f"Se pedirían {n} fotogramas; el máximo es {MAX_FOTOGRAMAS}. Amplía el paso o acorta el intervalo.")
         escena, esc = self._contexto(escenario_id, parametros)
         paneles = []
         for k in range(n):
             try:
                 t = ini + pd.Timedelta(minutes=paso_min * k)
             except (OverflowError, pd.errors.OutOfBoundsDatetime):
-                raise ValueError("Las fechas quedan fuera del rango admitido.") from None
+                raise EntradaNoValida("Las fechas quedan fuera del rango admitido.") from None
             panel, _ = nisar.estado_modelo(escena, t.replace(tzinfo=None))
             paneles.append((t, panel))
         vmin = min(float(p.vmin) for _, p in paneles)

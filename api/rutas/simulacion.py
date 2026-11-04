@@ -12,7 +12,7 @@ from pydantic import (AwareDatetime, BaseModel, StrictBool, StrictFloat, StrictI
 from api.deps import obtener
 from api.rutas.capas import _dto
 from api.schemas import CapaDto
-from datos.contrato import Escenario, ProveedorDatos
+from datos.contrato import EntradaNoValida, Escenario, ProveedorDatos
 from datos.geografia import MENSAJE_FUERA_DE_ECUADOR, en_ecuador
 from datos.proveedores.demo import MAX_FOTOGRAMAS
 
@@ -121,7 +121,7 @@ def fotogramas(cuerpo: PeticionFotogramas, request: Request,
                prov: ProveedorDatos = Depends(obtener)) -> list[CapaDto]:
     n = _numero(cuerpo.inicio, cuerpo.fin, cuerpo.paso_min)
     if n > MAX_FOTOGRAMAS:
-        raise ValueError(f"Pide como máximo {MAX_FOTOGRAMAS} fotogramas por vez; esta petición "
+        raise EntradaNoValida(f"Pide como máximo {MAX_FOTOGRAMAS} fotogramas por vez; esta petición "
                          f"pedía {n}. Amplía el paso o acorta el intervalo.")
     cache, clave = _cache(request), _canonica(cuerpo)
     hit = cache.obtener(clave)
@@ -130,7 +130,7 @@ def fotogramas(cuerpo: PeticionFotogramas, request: Request,
             capas = prov.fotogramas(cuerpo.escenario_id, dict(cuerpo.parametros), cuerpo.inicio,
                                     cuerpo.fin, cuerpo.paso_min)
         except OverflowError:
-            raise ValueError("Las fechas quedan fuera del rango admitido.") from None
+            raise EntradaNoValida("Las fechas quedan fuera del rango admitido.") from None
         hit = [_dto(c) for c in capas]
         cache.guardar(clave, hit)
     return hit

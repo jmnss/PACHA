@@ -14,7 +14,7 @@ from pathlib import Path
 
 import numpy as np
 
-from datos.contrato import Origen
+from datos.contrato import EntradaNoValida, NoEncontrado, Origen
 from modelo import nisar
 
 # Los seis sitios de Ecuador del catálogo; `historia` marca las dos historias narradas.
@@ -39,7 +39,7 @@ def _parametros(parametros: dict | None) -> dict:
     p = dict(PARAMETROS_DEMO)
     for k, v in (parametros or {}).items():
         if k not in PARAMETROS_DEMO:
-            raise ValueError(f"Parámetro desconocido: {k}")
+            raise EntradaNoValida(f"Parámetro desconocido: {k}")
         p[k] = v
     p["semilla"] = int(p["semilla"])
     p["looks"] = float(p["looks"])
@@ -60,11 +60,11 @@ def origen_demo(parametros: dict) -> Origen:
 
 def _sitio_catalogo(sitio_id: str) -> dict:
     if sitio_id not in ESCENARIOS_DEMO:
-        raise KeyError(f"Escenario de demostración desconocido: {sitio_id}")
+        raise NoEncontrado(f"Escenario de demostración desconocido: {sitio_id}")
     df = nisar.cargar_sitios()
     fila = df[df["id"] == sitio_id]
     if fila.empty:
-        raise KeyError(f"El sitio {sitio_id} no está en el catálogo")
+        raise NoEncontrado(f"El sitio {sitio_id} no está en el catálogo")
     return fila.iloc[0].to_dict()
 
 
