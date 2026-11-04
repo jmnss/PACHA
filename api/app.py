@@ -8,14 +8,11 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.gzip import GZipMiddleware
 
 from api import VERSION
+from api.deps import obtener
+from api.rutas import escenarios
 from api.schemas import ErrorDto, Salud
 from datos.contrato import CapacidadNoDisponible, DatosRealesNoDisponibles, ProveedorDatos
 from datos.seleccion import obtener_proveedor
-
-
-def obtener(request: Request) -> ProveedorDatos:
-    """Dependencia reutilizable: el proveedor activo de la aplicación."""
-    return request.app.state.proveedor
 
 
 def _error(estado: int, mensaje: str) -> JSONResponse:
@@ -81,5 +78,6 @@ def create_app(proveedor: ProveedorDatos | None = None) -> FastAPI:
         return Salud(estado="ok", version=VERSION, proveedor=prov.nombre(),
                      origen_tipo=tipo, hay_sinteticos=hay)
 
+    rutas.include_router(escenarios.router)
     app.include_router(rutas)
     return app

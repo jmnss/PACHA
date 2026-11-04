@@ -200,6 +200,34 @@ class Medicion(BaseModel):
         return self
 
 
+class Opcion(BaseModel):
+    valor: float
+    etiqueta: str
+
+
+class Control(BaseModel):
+    """Parámetro ajustable de la simulación. `minimo`, `maximo`, `paso` y `valor_defecto` están en las
+    unidades del modelo (las que recibe `simular`); el valor mostrado es valor × `escala`."""
+    id: str
+    etiqueta: str
+    tipo: Literal["deslizador", "selector", "hora", "interruptor"]
+    minimo: float | None = None
+    maximo: float | None = None
+    paso: float | None = None
+    valor_defecto: float | None = None
+    opciones: list[Opcion] | None = None
+    unidad: str | None = None
+    ayuda: str | None = None
+    escala: float = 1.0
+
+
+class TipoCambio(BaseModel):
+    id: str
+    nombre: str
+    descripcion: str | None = None
+    controles: list[Control] = Field(default_factory=list)
+
+
 @runtime_checkable
 class ProveedorDatos(Protocol):
     def nombre(self) -> str: ...
@@ -216,5 +244,6 @@ class ProveedorDatos(Protocol):
     #   simular(escenario_id, parametros) -> Escenario
     #   fotogramas(escenario_id, parametros, inicio, fin, paso_min) -> list[CapaRaster]
     # Opcionales de conveniencia (el proveedor demo los ofrece):
+    #   tipos() -> list[TipoCambio]   (tipos de cambio con sus controles)
     #   intervalo_por_defecto(escenario_id) -> (antes_id, despues_id)
     #   serie_seleccion(escenario_id, cuadrante=None, punto=None) -> SerieTemporal | None

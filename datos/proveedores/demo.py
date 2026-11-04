@@ -19,7 +19,7 @@ import numpy as np
 import pandas as pd
 
 from datos.contrato import (
-    PALETAS, Adquisicion, CampoVectorial, CapaRaster, Capacidades, Escenario, Medicion, Metrica, Origen,
+    PALETAS, Adquisicion, CampoVectorial, CapaRaster, Capacidades, Control, Escenario, Opcion, TipoCambio, Medicion, Metrica, Origen,
     ResultadoCambio, SerieTemporal, TablaResultado,
 )
 from datos.generador import ESCENARIOS_DEMO, PARAMETROS_DEMO, generar_escena, origen_demo
@@ -348,6 +348,30 @@ class ProveedorDemostracion:
 
     def escenario(self, id: str) -> Escenario:
         return self._contexto(id)[1]
+
+    def tipos(self) -> list[TipoCambio]:
+        """Los seis tipos de cambio con los controles de la simulación (de `nisar.TIPOS/CONTROLES`)."""
+        salida = []
+        for clave, t in nisar.TIPOS.items():
+            controles = []
+            for c in nisar.CONTROLES.get(clave, []):
+                defecto = nisar.PARAMETROS_BASE[clave].get(c.clave)
+                if c.opciones:
+                    controles.append(Control(
+                        id=c.clave, etiqueta=c.etiqueta, tipo="selector", valor_defecto=defecto,
+                        opciones=[Opcion(valor=float(v), etiqueta=e) for v, e in c.opciones],
+                        ayuda=c.ayuda or None))
+                elif c.hora:
+                    controles.append(Control(
+                        id=c.clave, etiqueta=c.etiqueta, tipo="hora", minimo=0.0, maximo=24.0,
+                        paso=0.25, valor_defecto=defecto, unidad="h", ayuda=c.ayuda or None))
+                else:
+                    controles.append(Control(
+                        id=c.clave, etiqueta=c.etiqueta, tipo="deslizador", minimo=c.minimo,
+                        maximo=c.maximo, paso=c.paso, valor_defecto=defecto, escala=c.escala,
+                        ayuda=c.ayuda or None))
+            salida.append(TipoCambio(id=clave, nombre=t.nombre, descripcion=t.metodo, controles=controles))
+        return salida
 
     def intervalo_por_defecto(self, escenario_id: str) -> tuple[str, str]:
         """Ids (antes, después) del intervalo que el modelo propone para este escenario."""
