@@ -1,0 +1,171 @@
+{
+  "resumen": {
+    "estacion": "otoño austral",
+    "humedad_suelo": 0.998,
+    "provincia": "Manabí",
+    "region": "Costa",
+    "temporada": "Transición"
+  },
+  "sitios": {
+    "ec_antisana": {
+      "metricas": [
+        [
+          "Velocidad máxima inicial",
+          "0,12 m/día"
+        ],
+        [
+          "Velocidad máxima final",
+          "0,13 m/día"
+        ],
+        [
+          "Retroceso del frente",
+          "15 m"
+        ],
+        [
+          "Hielo perdido",
+          "0,00 km²"
+        ]
+      ],
+      "paneles": {
+        "Cambio de velocidad": -1.887,
+        "Cambio del frente": 2.0,
+        "Velocidad · 13/01/2026": 757.924,
+        "Velocidad · 27/12/2026": 755.996
+      }
+    },
+    "ec_daule": {
+      "metricas": [
+        [
+          "Parcelas analizadas",
+          "464"
+        ],
+        [
+          "Cosechas detectadas",
+          "341"
+        ],
+        [
+          "Exactitud de detección",
+          "98,9 %"
+        ],
+        [
+          "Error medio de fecha",
+          "3 días"
+        ]
+      ],
+      "paneles": {
+        "Cambio por parcela": 48740.0,
+        "σ⁰ HV · 01/06/2026": -574425.875,
+        "σ⁰ HV · 26/04/2026": -475044.031
+      }
+    },
+    "ec_guayaquil": {
+      "metricas": [
+        [
+          "Hundimiento máximo",
+          "-6,8 cm/año"
+        ],
+        [
+          "Área con > 5 cm/año",
+          "28,9 km²"
+        ],
+        [
+          "Adquisiciones usadas",
+          "30"
+        ],
+        [
+          "RMSE vs. verdad",
+          "1,93 cm/año"
+        ]
+      ],
+      "paneles": {
+        "Desplazamiento LOS acumulado": -6238.234,
+        "Error vs. verdad del modelo": -1274.693,
+        "Velocidad vertical": -9947.573
+      }
+    },
+    "ec_la_segua": {
+      "metricas": [
+        [
+          "Área inundada inicial",
+          "26,8 km²"
+        ],
+        [
+          "Área inundada final",
+          "5,5 km²"
+        ],
+        [
+          "Cambio neto",
+          "-79,4 %"
+        ],
+        [
+          "Exactitud vs. verdad",
+          "98,8 %"
+        ]
+      ],
+      "paneles": {
+        "Cambio de inundación": 23681.0,
+        "σ⁰ HH · 12/04/2026": -277237.781,
+        "σ⁰ HH · 26/11/2026": -268293.625
+      }
+    },
+    "ec_loja": {
+      "metricas": [
+        [
+          "Área quemada detectada",
+          "11,2 km²"
+        ],
+        [
+          "Área quemada real",
+          "14,2 km²"
+        ],
+        [
+          "Puntuación F1",
+          "86,2 %"
+        ],
+        [
+          "Biomasa perdida",
+          "153,1 mil Mg"
+        ],
+        [
+          "CO₂ emitido (estimado)",
+          "263,9 mil t"
+        ]
+      ],
+      "paneles": {
+        "Razón logarítmica HV (después/antes)": -6376.036,
+        "Área quemada detectada": 1646.0,
+        "σ⁰ HV · 03/09/2026": -360424.781,
+        "σ⁰ HV · 09/10/2026": -366760.75
+      }
+    },
+    "ec_pedernales": {
+      "metricas": [
+        [
+          "Magnitud del escenario",
+          "Mw 7,7"
+        ],
+        [
+          "Máx. hacia el satélite",
+          "45,6 cm"
+        ],
+        [
+          "Máx. alejándose",
+          "-85,3 cm"
+        ],
+        [
+          "Franjas interferométricas",
+          "11"
+        ],
+        [
+          "Área deformada > 5 cm",
+          "7 926 km²"
+        ]
+      ],
+      "paneles": {
+        "Coherencia interferométrica": 9615.498,
+        "Desplazamiento LOS desenrollado": -530310.309,
+        "Interferograma envuelto (1 ciclo = 11,9 cm)": 362.974
+      }
+    }
+  }
+}
