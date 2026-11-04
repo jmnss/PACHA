@@ -146,11 +146,11 @@
         ],
         [
           "Máx. hacia el satélite",
-          "45,6 cm"
+          "45,5 cm"
         ],
         [
           "Máx. alejándose",
-          "-85,3 cm"
+          "-85,2 cm"
         ],
         [
           "Franjas interferométricas",
@@ -163,8 +163,8 @@
       ],
       "paneles": {
         "Coherencia interferométrica": 9615.498,
-        "Desplazamiento LOS desenrollado": -530310.309,
-        "Interferograma envuelto (1 ciclo = 11,9 cm)": 362.974
+        "Desplazamiento LOS desenrollado": -530340.165,
+        "Interferograma envuelto (1 ciclo = 11,9 cm)": 322.156
       }
     }
   }

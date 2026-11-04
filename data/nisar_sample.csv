@@ -1,7 +1,7 @@
 id,tipo_cambio,sitio,pais,lat,lon,fecha_evento,descripcion
 ec_la_segua,humedales,Humedal La Segua (Manabí),Ecuador,-0.70,-80.20,2026-05-01,"Escenario ilustrativo: humedal Ramsar en la confluencia de los ríos Chone y Carrizal; la estación seca y la expansión agrícola reducen su espejo de agua."
 ec_loja,incendios,Bosques andinos de Loja,Ecuador,-4.05,-79.25,2026-09-10,"Escenario ilustrativo: bosque andino y matorral seco donde los incendios se concentran entre agosto y octubre."
-ec_pedernales,terremotos,Pedernales (Manabí),Ecuador,-0.07,-80.05,2026-04-16,"Escenario ilustrativo: sismo de subducción frente a Manabí. El océano, al oeste, no tiene datos de radar."
+ec_pedernales,terremotos,Pedernales (Manabí),Ecuador,-0.07,-80.05,2026-06-10,"Escenario ilustrativo: sismo de subducción frente a Manabí. El océano, al oeste, no tiene datos de radar."
 ec_antisana,glaciares,Glaciares del volcán Antisana,Ecuador,-0.47,-78.17,2026-06-01,"Escenario ilustrativo: glaciares tropicales que terminan en tierra y retroceden con el calentamiento; velocidades de decenas de metros al año."
 ec_daule,agricultura,Arrozales de Daule (Guayas),Ecuador,-1.86,-79.98,2026-05-15,"Escenario ilustrativo: dos ciclos de arroz bajo riego al año, con maíz y banano, en la cuenca baja del Guayas."
 ec_guayaquil,subsidencia,Guayaquil,Ecuador,-2.19,-79.89,2026-01-01,"Escenario ilustrativo: hundimiento de rellenos sobre arcillas blandas y antiguos manglares del estuario del Guayas."
