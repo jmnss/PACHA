@@ -111,6 +111,13 @@ describe('ControlesReproductor', () => {
     expect(screen.getByRole('combobox', { name: 'Paso' }).querySelectorAll('option')).toHaveLength(6)
     expect(screen.getByRole('combobox', { name: 'Velocidad' }).querySelectorAll('option')).toHaveLength(3)
   })
+  it('con motivoPasosCortos deshabilita los pasos menores de 12 días y muestra el motivo', () => {
+    render(<ControlesReproductor {...props} pasoMin={17280} motivoPasosCortos="Pendiente: fotogramas." />)
+    expect(screen.getByText('Pendiente: fotogramas.')).toBeInTheDocument()
+    const opciones = Array.from(screen.getByRole('combobox', { name: 'Paso' }).querySelectorAll('option'))
+    expect(opciones.filter((o) => !o.disabled).map((o) => o.textContent)).toEqual(['12 días'])
+    expect(screen.getByRole('combobox', { name: 'Paso' })).toHaveAccessibleDescription('Pendiente: fotogramas.')
+  })
   it('deshabilitado muestra el motivo y desactiva todo', () => {
     render(<ControlesReproductor {...props} deshabilitado="Calculando 120 fotogramas…" />)
     expect(screen.getByText('Calculando 120 fotogramas…')).toBeInTheDocument()

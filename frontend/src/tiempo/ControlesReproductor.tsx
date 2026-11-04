@@ -34,12 +34,18 @@ interface Props {
   onEvento?: () => void
   /** Motivo visible por el que los controles están desactivados. */
   deshabilitado?: string
+  /** Motivo visible por el que los pasos más cortos que una pasada no se pueden elegir. */
+  motivoPasosCortos?: string
 }
+
+/** Paso que lleva de pasada en pasada (12 días): el único que el mapa puede mostrar hoy. */
+export const PASO_PASADA = 17280
 
 /** Inicio, −paso, play/pausa, +paso, final, ir al evento, paso y velocidad. */
 export function ControlesReproductor(p: Props) {
   const off = p.deshabilitado !== undefined
   const idMotivo = useId()
+  const idCortos = useId()
   return (
     <div className="reproductor" role="group" aria-label="Controles de tiempo" aria-describedby={off ? idMotivo : undefined}>
       <div className="reproductor__botones">
@@ -55,12 +61,14 @@ export function ControlesReproductor(p: Props) {
       </div>
       <div className="reproductor__ajustes">
         <Selector etiqueta="Paso" value={String(p.pasoMin)} disabled={off}
+          aria-describedby={p.motivoPasosCortos ? idCortos : undefined}
           onChange={(e) => p.onPaso(Number(e.target.value))}
-          opciones={PASOS.map((o) => ({ valor: String(o.min), texto: o.texto }))} />
+          opciones={PASOS.map((o) => ({ valor: String(o.min), texto: o.texto, deshabilitada: !!p.motivoPasosCortos && o.min < PASO_PASADA }))} />
         <Selector etiqueta="Velocidad" value={p.velocidad} disabled={off}
           onChange={(e) => p.onVelocidad(e.target.value as Velocidad)}
           opciones={(Object.keys(VELOCIDADES) as Velocidad[]).map((k) => ({ valor: k, texto: VELOCIDADES[k].texto }))} />
       </div>
+      {p.motivoPasosCortos && <p id={idCortos} className="reproductor__motivo">{p.motivoPasosCortos}</p>}
       {off && <p id={idMotivo} className="reproductor__motivo" role="status">{p.deshabilitado}</p>}
     </div>
   )
