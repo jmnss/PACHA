@@ -27,7 +27,7 @@ son UTC. Las rejillas son 2D `float32`, con `NaN` = sin dato (la API las cuantiz
 (desplazamiento LOS acumulado, error frente a la verdad sintética).
 
 Escenarios simulados (proveedor demo): `simular(id, parametros)` devuelve un `Escenario` con id derivado
-`<base>~<huella>` (huella SHA-256 de los parámetros normalizados). `capa`, `cambio`, `medir`, `fotogramas` y
+`<base>~<huella>` (huella SHA-256 (12 hex) de los parámetros normalizados). `capa`, `cambio`, `medir`, `fotogramas` y
 `escenario` lo resuelven mientras esté en el registro (acotado a 32; luego `KeyError`). Parámetros vacíos o
 iguales a los de demostración devuelven el id base. Con `lat` y `lon` coloca un punto del mapa.
 `fotogramas` sobre un id derivado exige `parametros` vacíos.

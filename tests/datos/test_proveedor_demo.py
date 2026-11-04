@@ -263,13 +263,12 @@ def test_cambio_agricultura_lleva_tabla_por_parcela(prov):
 def test_cambio_terremotos_y_subsidencia_llevan_capas_extra(prov):
     a, d = _por_defecto(prov, "ec_pedernales")
     r = prov.cambio("ec_pedernales", a, d, None)
-    assert [c.variable for c in r.capas_extra] == ["interferograma_envuelto_1_ciclo_11_9_cm", "coherencia_interferometrica"] \
-        or len(r.capas_extra) == 2
+    assert [c.variable for c in r.capas_extra] == ["interferograma_envuelto_1_ciclo_11_9_cm", "coherencia_interferometrica"]
     assert any(c.paleta == "ciclico" for c in r.capas_extra)
     assert all(c.origen.tipo == "sintetico" for c in r.capas_extra)
     a, d = _por_defecto(prov, "ec_guayaquil")
     r = prov.cambio("ec_guayaquil", a, d, None)
-    assert any("error" in c.variable for c in r.capas_extra)
+    assert [c.variable for c in r.capas_extra] == ["desplazamiento_los_acumulado", "error_frente_a_la_verdad_sintetica"]
 
 
 def test_escenario_simulado_se_puede_consultar(prov):
@@ -330,3 +329,31 @@ def test_clave_de_cache_usa_parametros_normalizados(prov):
     b = prov.simular("ec_loja", {"semilla": 5, "radio_km": 3.0})
     assert a.id == b.id
     assert prov.simular("ec_loja", {"radio_km": 3.0, "looks": 12}).id == prov.simular("ec_loja", {"radio_km": 3}).id
+
+
+def test_huella_del_id_derivado_es_de_12_hex(prov):
+    sufijo = prov.simular("ec_loja", {"radio_km": 2.5}).id.split("~")[1]
+    assert len(sufijo) == 12 and int(sufijo, 16) >= 0
+
+
+def test_concurrencia_sin_excepciones_ni_perdida_de_topes():
+    from concurrent.futures import ThreadPoolExecutor
+    from datos.proveedores.demo import MAX_CACHE
+    p = ProveedorDemostracion()
+    a, d = p.intervalo_por_defecto("ec_pedernales")
+
+    def trabajo(k):
+        e = p.simular("ec_pedernales", {"deslizamiento_m": 0.5 + 0.1 * (k % 45)})
+        try:
+            p.capa(e.id, e.adquisiciones[3].id, "desplazamiento_los", None)
+            p.cambio(e.id, a, d, None)
+        except KeyError:
+            pass  # caducó del registro por otro hilo: comportamiento previsto del LRU
+        return e.id
+
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        ids = list(ex.map(trabajo, range(90)))  # sin excepciones: ex.map las relanza
+    assert len(set(ids)) == 45
+    assert len(p._cache) <= MAX_CACHE and len(p._simulados) <= MAX_CACHE and len(p._analisis_cache) <= MAX_CACHE
+    # el mismo id siempre da la misma escena
+    assert p.simular("ec_pedernales", {"deslizamiento_m": 0.5}).id == ids[0]

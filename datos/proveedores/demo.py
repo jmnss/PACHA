@@ -10,6 +10,7 @@ import json
 import math
 import re
 import unicodedata
+import threading
 import warnings
 from collections import OrderedDict
 from datetime import date, datetime, timezone
@@ -107,19 +108,22 @@ class _LRU(OrderedDict):
     def __init__(self, maximo: int = MAX_CACHE) -> None:
         super().__init__()
         self.maximo = maximo
+        self._cerrojo = threading.RLock()
 
     def obtener(self, clave):
-        if clave in self:
-            self.move_to_end(clave)
-            return self[clave]
-        return None
+        with self._cerrojo:
+            if clave in self:
+                self.move_to_end(clave)
+                return self[clave]
+            return None
 
     def poner(self, clave, valor):
-        self[clave] = valor
-        self.move_to_end(clave)
-        while len(self) > self.maximo:
-            self.popitem(last=False)
-        return valor
+        with self._cerrojo:
+            self[clave] = valor
+            self.move_to_end(clave)
+            while len(self) > self.maximo:
+                self.popitem(last=False)
+            return valor
 
 
 def _celda(v):
@@ -260,6 +264,8 @@ class ProveedorDemostracion:
         self._cache: _LRU = _LRU()        # id de escenario -> (escena, Escenario)
         self._simulados: _LRU = _LRU()    # id derivado -> (id base, parámetros originales)
         self._analisis_cache: _LRU = _LRU()  # (id, i0, i1) -> Analisis
+        # Reentrante: consultar-generar-guardar es un bloque único (FastAPI llama desde un pool de hilos).
+        self._cerrojo = threading.RLock()
 
     def _tipo(self, base: str) -> str:
         if base not in ESCENARIOS_DEMO:
@@ -269,6 +275,10 @@ class ProveedorDemostracion:
 
     def _contexto(self, escenario_id: str, parametros: dict | None = None) -> tuple[nisar.Escena, Escenario]:
         """Escena y escenario de un id base (con `parametros` opcionales) o de un id simulado registrado."""
+        with self._cerrojo:
+            return self._contexto_sin_cerrojo(escenario_id, parametros)
+
+    def _contexto_sin_cerrojo(self, escenario_id: str, parametros: dict | None) -> tuple[nisar.Escena, Escenario]:
         if "~" in escenario_id:
             registro = self._simulados.obtener(escenario_id)
             if registro is None:
@@ -284,7 +294,7 @@ class ProveedorDemostracion:
         if canon == {"sim": {}, "ajustes": {}, "punto": None}:
             id_final = base
         else:
-            huella = hashlib.sha256(json.dumps(canon, sort_keys=True).encode()).hexdigest()[:8]
+            huella = hashlib.sha256(json.dumps(canon, sort_keys=True).encode()).hexdigest()[:12]
             id_final = f"{base}~{huella}"
             self._simulados.poner(id_final, (base, dict(parametros or {})))
         hecho = self._cache.obtener(id_final)
@@ -378,9 +388,10 @@ class ProveedorDemostracion:
         escena, esc = self._contexto(escenario_id)
         i0, i1 = self._indice(esc, antes_id), self._indice(esc, despues_id)
         clave = (esc.id, i0, i1)
-        a = self._analisis_cache.obtener(clave)
-        if a is None:
-            a = self._analisis_cache.poner(clave, nisar.analizar(escena, i0, i1))  # ValueError si i0 >= i1
+        with self._cerrojo:
+            a = self._analisis_cache.obtener(clave)
+            if a is None:
+                a = self._analisis_cache.poner(clave, nisar.analizar(escena, i0, i1))  # ValueError si i0 >= i1
         return escena, esc, i0, i1, a
 
     def cambio(self, escenario_id: str, antes_id: str, despues_id: str,
