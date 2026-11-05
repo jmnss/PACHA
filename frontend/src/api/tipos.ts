@@ -157,6 +157,74 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/simulador/catalogo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Catalogo Simulador */
+        get: operations["catalogo_simulador"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/simulador/ciudad": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Fundar Ciudad */
+        post: operations["fundar_ciudad"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/simulador/evento": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Desatar Evento */
+        post: operations["desatar_evento"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/simulador/mundo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Crear Mundo */
+        post: operations["crear_mundo"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/tipos": {
         parameters: {
             query?: never;
@@ -265,6 +333,19 @@ export interface components {
             /** Variable */
             variable: string;
         };
+        /** CapaEventoDto */
+        CapaEventoDto: {
+            /** Clave */
+            clave: string;
+            /** Estilo */
+            estilo: string;
+            /** Etiquetas */
+            etiquetas: string[];
+            /** Nombre */
+            nombre: string;
+            /** Unidad */
+            unidad: string;
+        };
         /** Capacidades */
         Capacidades: {
             /** Modelo Continuo */
@@ -273,6 +354,28 @@ export interface components {
             simulacion: boolean;
             /** Verdad Terreno */
             verdad_terreno: boolean;
+        };
+        /** CatalogoDto */
+        CatalogoDto: {
+            /** Extensiones Km */
+            extensiones_km: number[];
+            /** Herramientas */
+            herramientas: components["schemas"]["HerramientaDto"][];
+            /** Mundos */
+            mundos: components["schemas"]["MundoPredefinidoDto"][];
+            /** Volcanes */
+            volcanes: components["schemas"]["VolcanDto"][];
+        };
+        /** CiudadExtra */
+        CiudadExtra: {
+            /** Habitantes */
+            habitantes: number;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Nombre */
+            nombre: string;
         };
         /**
          * ContextoDto
@@ -343,6 +446,31 @@ export interface components {
             /** Valor Defecto */
             valor_defecto?: number | null;
         };
+        /** ControlDto */
+        ControlDto: {
+            /** Ayuda */
+            ayuda: string;
+            /** Defecto */
+            defecto: number | string | boolean;
+            /** Escala */
+            escala: number;
+            /** Etiqueta */
+            etiqueta: string;
+            /** Id */
+            id: string;
+            /** Maximo */
+            maximo: number | null;
+            /** Minimo */
+            minimo: number | null;
+            /** Opciones */
+            opciones: string[] | null;
+            /** Paso */
+            paso: number | null;
+            /** Tipo */
+            tipo: string;
+            /** Unidad */
+            unidad: string;
+        };
         /** ErrorDto */
         ErrorDto: {
             /** Mensaje */
@@ -378,10 +506,90 @@ export interface components {
             /** Variables */
             variables: string[];
         };
+        /** EsperaRadarDto */
+        EsperaRadarDto: {
+            /** Ciclo Dias */
+            ciclo_dias: number;
+            /** Duracion Evento H */
+            duracion_evento_h: number | null;
+            /** Maximo Dias */
+            maximo_dias: number;
+            /** Medio Dias */
+            medio_dias: number;
+            /** Minimo Dias */
+            minimo_dias: number;
+            /** Verificado */
+            verificado: boolean;
+        };
+        /** EventoDto */
+        EventoDto: {
+            /** Capas */
+            capas: components["schemas"]["CapaEventoDto"][];
+            /** Celda */
+            celda: [
+                number,
+                number
+            ];
+            /** Comparable */
+            comparable: boolean;
+            /** Cuadros Png B64 */
+            cuadros_png_b64: string[];
+            espera_radar: components["schemas"]["EsperaRadarDto"];
+            /** Herramienta */
+            herramienta: string;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Metricas */
+            metricas: components["schemas"]["MetricaEventoDto"][];
+            /** Metricas Radar */
+            metricas_radar: components["schemas"]["MetricaEventoDto"][];
+            /** Modelos */
+            modelos: string[];
+            /** Notas */
+            notas: string[];
+            origen: components["schemas"]["Origen"];
+            /** Paneles */
+            paneles: components["schemas"]["CapaDto"][];
+            /** Polarizacion */
+            polarizacion: string | null;
+            /** Resumen */
+            resumen: {
+                [key: string]: number | null;
+            };
+            tabla: components["schemas"]["TablaEventoDto"] | null;
+            /** Tiempos */
+            tiempos: string[];
+            /** Titulo */
+            titulo: string;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** HerramientaDto */
+        HerramientaDto: {
+            /** Controles */
+            controles: components["schemas"]["ControlDto"][];
+            /** Icono */
+            icono: string;
+            /** Id */
+            id: string;
+            /** Nombre */
+            nombre: string;
+        };
+        /** MarcaDto */
+        MarcaDto: {
+            /** Texto */
+            texto: string;
+            /** Tipo */
+            tipo: string;
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
         };
         /** MedicionDto */
         MedicionDto: {
@@ -431,6 +639,65 @@ export interface components {
             /** Valor */
             valor: string;
         };
+        /** MetricaEventoDto */
+        MetricaEventoDto: {
+            /** Ayuda */
+            ayuda: string;
+            /** Etiqueta */
+            etiqueta: string;
+            /** Valor */
+            valor: string;
+        };
+        /** MundoDto */
+        MundoDto: {
+            /** Bbox */
+            bbox: [
+                number,
+                number,
+                number,
+                number
+            ];
+            /** Fuente Dem */
+            fuente_dem: string;
+            /** Habitantes */
+            habitantes: number;
+            /** Humedad Combustible Defecto */
+            humedad_combustible_defecto: number;
+            /** Humedad Suelo Pct */
+            humedad_suelo_pct: number;
+            /** Id */
+            id: string;
+            /** Marcas */
+            marcas: components["schemas"]["MarcaDto"][];
+            /** N */
+            n: number;
+            origen: components["schemas"]["Origen"];
+            /** Pixel M */
+            pixel_m: number;
+            /** Prec Anual Mm */
+            prec_anual_mm: number;
+            /** Region */
+            region: string;
+            /** Relieve Png B64 */
+            relieve_png_b64: string;
+            /** Temporada */
+            temporada: string | null;
+        };
+        /** MundoPredefinidoDto */
+        MundoPredefinidoDto: {
+            /** Descripcion */
+            descripcion: string;
+            /** Extension Km */
+            extension_km: number;
+            /** Herramienta */
+            herramienta: string;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Nombre */
+            nombre: string;
+        };
         /** Opcion */
         Opcion: {
             /** Etiqueta */
@@ -475,6 +742,19 @@ export interface components {
             /** Polarizacion */
             polarizacion?: string | null;
         };
+        /** PeticionCiudad */
+        PeticionCiudad: {
+            /** Celda */
+            celda: [
+                number,
+                number
+            ];
+            /** Habitantes */
+            habitantes: number;
+            mundo: components["schemas"]["PeticionMundo"];
+            /** Nombre */
+            nombre: string;
+        };
         /** PeticionEscenario */
         PeticionEscenario: {
             /** Escenario Id */
@@ -484,6 +764,21 @@ export interface components {
              * @default {}
              */
             parametros: {
+                [key: string]: boolean | number | string;
+            };
+        };
+        /** PeticionEvento */
+        PeticionEvento: {
+            /** Celda */
+            celda: [
+                number,
+                number
+            ];
+            /** Herramienta */
+            herramienta: string;
+            mundo: components["schemas"]["PeticionMundo"];
+            /** Parametros */
+            parametros?: {
                 [key: string]: boolean | number | string;
             };
         };
@@ -534,6 +829,30 @@ export interface components {
                 number,
                 number
             ] | null;
+        };
+        /** PeticionMundo */
+        PeticionMundo: {
+            /** Ciudades */
+            ciudades?: components["schemas"]["CiudadExtra"][];
+            /**
+             * Extension Km
+             * @default 40
+             */
+            extension_km: number;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /**
+             * Usar Dem
+             * @default true
+             */
+            usar_dem: boolean;
         };
         /**
          * Rejilla
@@ -610,6 +929,13 @@ export interface components {
             /** Unidad */
             unidad: string;
         };
+        /** TablaEventoDto */
+        TablaEventoDto: {
+            /** Columnas */
+            columnas: string[];
+            /** Filas */
+            filas: (number | string | null)[][];
+        };
         /**
          * TablaResultado
          * @description Tabla de resultados (p. ej. una fila por parcela). Celdas: texto, número o nulo (sin valor).
@@ -667,6 +993,15 @@ export interface components {
             msg: string;
             /** Error Type */
             type: string;
+        };
+        /** VolcanDto */
+        VolcanDto: {
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Nombre */
+            nombre: string;
         };
     };
     responses: never;
@@ -948,6 +1283,125 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CapaDto"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    catalogo_simulador: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CatalogoDto"];
+                };
+            };
+        };
+    };
+    fundar_ciudad: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PeticionCiudad"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PeticionMundo"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    desatar_evento: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PeticionEvento"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventoDto"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_mundo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PeticionMundo"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MundoDto"];
                 };
             };
             /** @description Validation Error */

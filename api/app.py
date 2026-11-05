@@ -10,7 +10,7 @@ from starlette.middleware.gzip import GZipMiddleware
 
 from api import VERSION
 from api.deps import obtener
-from api.rutas import capas, contexto, escenarios, simulacion
+from api.rutas import capas, contexto, escenarios, simulacion, simulador
 from api.schemas import ErrorDto, Salud
 from datos.contrato import (CapacidadNoDisponible, DatosRealesNoDisponibles, EntradaNoValida, NoEncontrado,
                             ProveedorDatos)
@@ -107,5 +107,6 @@ def create_app(proveedor: ProveedorDatos | None = None) -> FastAPI:
     rutas.include_router(capas.router)
     rutas.include_router(simulacion.router)
     rutas.include_router(contexto.router)
+    rutas.include_router(simulador.router)
     app.include_router(rutas)
     return app

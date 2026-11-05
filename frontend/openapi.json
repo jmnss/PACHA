@@ -252,6 +252,42 @@
         "title": "CapaDto",
         "type": "object"
       },
+      "CapaEventoDto": {
+        "properties": {
+          "clave": {
+            "title": "Clave",
+            "type": "string"
+          },
+          "estilo": {
+            "title": "Estilo",
+            "type": "string"
+          },
+          "etiquetas": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Etiquetas",
+            "type": "array"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "unidad": {
+            "title": "Unidad",
+            "type": "string"
+          }
+        },
+        "required": [
+          "clave",
+          "nombre",
+          "estilo",
+          "unidad",
+          "etiquetas"
+        ],
+        "title": "CapaEventoDto",
+        "type": "object"
+      },
       "Capacidades": {
         "properties": {
           "modelo_continuo": {
@@ -273,6 +309,82 @@
           "verdad_terreno"
         ],
         "title": "Capacidades",
+        "type": "object"
+      },
+      "CatalogoDto": {
+        "properties": {
+          "extensiones_km": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Extensiones Km",
+            "type": "array"
+          },
+          "herramientas": {
+            "items": {
+              "$ref": "#/components/schemas/HerramientaDto"
+            },
+            "title": "Herramientas",
+            "type": "array"
+          },
+          "mundos": {
+            "items": {
+              "$ref": "#/components/schemas/MundoPredefinidoDto"
+            },
+            "title": "Mundos",
+            "type": "array"
+          },
+          "volcanes": {
+            "items": {
+              "$ref": "#/components/schemas/VolcanDto"
+            },
+            "title": "Volcanes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "herramientas",
+          "mundos",
+          "volcanes",
+          "extensiones_km"
+        ],
+        "title": "CatalogoDto",
+        "type": "object"
+      },
+      "CiudadExtra": {
+        "properties": {
+          "habitantes": {
+            "maximum": 1000000.0,
+            "minimum": 1000.0,
+            "title": "Habitantes",
+            "type": "integer"
+          },
+          "lat": {
+            "maximum": 2.0,
+            "minimum": -6.0,
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "maximum": -75.0,
+            "minimum": -93.0,
+            "title": "Lon",
+            "type": "number"
+          },
+          "nombre": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Nombre",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nombre",
+          "lat",
+          "lon",
+          "habitantes"
+        ],
+        "title": "CiudadExtra",
         "type": "object"
       },
       "ContextoDto": {
@@ -467,6 +579,110 @@
         "title": "Control",
         "type": "object"
       },
+      "ControlDto": {
+        "properties": {
+          "ayuda": {
+            "title": "Ayuda",
+            "type": "string"
+          },
+          "defecto": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              }
+            ],
+            "title": "Defecto"
+          },
+          "escala": {
+            "title": "Escala",
+            "type": "number"
+          },
+          "etiqueta": {
+            "title": "Etiqueta",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "maximo": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Maximo"
+          },
+          "minimo": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minimo"
+          },
+          "opciones": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Opciones"
+          },
+          "paso": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Paso"
+          },
+          "tipo": {
+            "title": "Tipo",
+            "type": "string"
+          },
+          "unidad": {
+            "title": "Unidad",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "etiqueta",
+          "tipo",
+          "minimo",
+          "maximo",
+          "paso",
+          "defecto",
+          "opciones",
+          "ayuda",
+          "unidad",
+          "escala"
+        ],
+        "title": "ControlDto",
+        "type": "object"
+      },
       "ErrorDto": {
         "properties": {
           "mensaje": {
@@ -583,6 +799,209 @@
         "title": "Escenario",
         "type": "object"
       },
+      "EsperaRadarDto": {
+        "properties": {
+          "ciclo_dias": {
+            "title": "Ciclo Dias",
+            "type": "integer"
+          },
+          "duracion_evento_h": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duracion Evento H"
+          },
+          "maximo_dias": {
+            "title": "Maximo Dias",
+            "type": "integer"
+          },
+          "medio_dias": {
+            "title": "Medio Dias",
+            "type": "number"
+          },
+          "minimo_dias": {
+            "title": "Minimo Dias",
+            "type": "integer"
+          },
+          "verificado": {
+            "title": "Verificado",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ciclo_dias",
+          "minimo_dias",
+          "maximo_dias",
+          "medio_dias",
+          "duracion_evento_h",
+          "verificado"
+        ],
+        "title": "EsperaRadarDto",
+        "type": "object"
+      },
+      "EventoDto": {
+        "properties": {
+          "capas": {
+            "items": {
+              "$ref": "#/components/schemas/CapaEventoDto"
+            },
+            "title": "Capas",
+            "type": "array"
+          },
+          "celda": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Celda",
+            "type": "array"
+          },
+          "comparable": {
+            "title": "Comparable",
+            "type": "boolean"
+          },
+          "cuadros_png_b64": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cuadros Png B64",
+            "type": "array"
+          },
+          "espera_radar": {
+            "$ref": "#/components/schemas/EsperaRadarDto"
+          },
+          "herramienta": {
+            "title": "Herramienta",
+            "type": "string"
+          },
+          "lat": {
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "title": "Lon",
+            "type": "number"
+          },
+          "metricas": {
+            "items": {
+              "$ref": "#/components/schemas/MetricaEventoDto"
+            },
+            "title": "Metricas",
+            "type": "array"
+          },
+          "metricas_radar": {
+            "items": {
+              "$ref": "#/components/schemas/MetricaEventoDto"
+            },
+            "title": "Metricas Radar",
+            "type": "array"
+          },
+          "modelos": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Modelos",
+            "type": "array"
+          },
+          "notas": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Notas",
+            "type": "array"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "paneles": {
+            "items": {
+              "$ref": "#/components/schemas/CapaDto"
+            },
+            "title": "Paneles",
+            "type": "array"
+          },
+          "polarizacion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Polarizacion"
+          },
+          "resumen": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Resumen",
+            "type": "object"
+          },
+          "tabla": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TablaEventoDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "tiempos": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tiempos",
+            "type": "array"
+          },
+          "titulo": {
+            "title": "Titulo",
+            "type": "string"
+          }
+        },
+        "required": [
+          "herramienta",
+          "titulo",
+          "celda",
+          "lat",
+          "lon",
+          "tiempos",
+          "cuadros_png_b64",
+          "capas",
+          "metricas",
+          "tabla",
+          "notas",
+          "modelos",
+          "paneles",
+          "comparable",
+          "polarizacion",
+          "metricas_radar",
+          "espera_radar",
+          "resumen",
+          "origen"
+        ],
+        "title": "EventoDto",
+        "type": "object"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -594,6 +1013,65 @@
           }
         },
         "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HerramientaDto": {
+        "properties": {
+          "controles": {
+            "items": {
+              "$ref": "#/components/schemas/ControlDto"
+            },
+            "title": "Controles",
+            "type": "array"
+          },
+          "icono": {
+            "title": "Icono",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "icono",
+          "nombre",
+          "controles"
+        ],
+        "title": "HerramientaDto",
+        "type": "object"
+      },
+      "MarcaDto": {
+        "properties": {
+          "texto": {
+            "title": "Texto",
+            "type": "string"
+          },
+          "tipo": {
+            "title": "Tipo",
+            "type": "string"
+          },
+          "x": {
+            "title": "X",
+            "type": "number"
+          },
+          "y": {
+            "title": "Y",
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y",
+          "texto",
+          "tipo"
+        ],
+        "title": "MarcaDto",
         "type": "object"
       },
       "MedicionDto": {
@@ -753,6 +1231,170 @@
         "title": "Metrica",
         "type": "object"
       },
+      "MetricaEventoDto": {
+        "properties": {
+          "ayuda": {
+            "title": "Ayuda",
+            "type": "string"
+          },
+          "etiqueta": {
+            "title": "Etiqueta",
+            "type": "string"
+          },
+          "valor": {
+            "title": "Valor",
+            "type": "string"
+          }
+        },
+        "required": [
+          "etiqueta",
+          "valor",
+          "ayuda"
+        ],
+        "title": "MetricaEventoDto",
+        "type": "object"
+      },
+      "MundoDto": {
+        "properties": {
+          "bbox": {
+            "maxItems": 4,
+            "minItems": 4,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "Bbox",
+            "type": "array"
+          },
+          "fuente_dem": {
+            "title": "Fuente Dem",
+            "type": "string"
+          },
+          "habitantes": {
+            "title": "Habitantes",
+            "type": "number"
+          },
+          "humedad_combustible_defecto": {
+            "title": "Humedad Combustible Defecto",
+            "type": "number"
+          },
+          "humedad_suelo_pct": {
+            "title": "Humedad Suelo Pct",
+            "type": "number"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "marcas": {
+            "items": {
+              "$ref": "#/components/schemas/MarcaDto"
+            },
+            "title": "Marcas",
+            "type": "array"
+          },
+          "n": {
+            "title": "N",
+            "type": "integer"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "pixel_m": {
+            "title": "Pixel M",
+            "type": "number"
+          },
+          "prec_anual_mm": {
+            "title": "Prec Anual Mm",
+            "type": "number"
+          },
+          "region": {
+            "title": "Region",
+            "type": "string"
+          },
+          "relieve_png_b64": {
+            "title": "Relieve Png B64",
+            "type": "string"
+          },
+          "temporada": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Temporada"
+          }
+        },
+        "required": [
+          "id",
+          "n",
+          "bbox",
+          "region",
+          "fuente_dem",
+          "pixel_m",
+          "habitantes",
+          "humedad_suelo_pct",
+          "humedad_combustible_defecto",
+          "temporada",
+          "prec_anual_mm",
+          "relieve_png_b64",
+          "marcas",
+          "origen"
+        ],
+        "title": "MundoDto",
+        "type": "object"
+      },
+      "MundoPredefinidoDto": {
+        "properties": {
+          "descripcion": {
+            "title": "Descripcion",
+            "type": "string"
+          },
+          "extension_km": {
+            "title": "Extension Km",
+            "type": "integer"
+          },
+          "herramienta": {
+            "title": "Herramienta",
+            "type": "string"
+          },
+          "lat": {
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "title": "Lon",
+            "type": "number"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nombre",
+          "lat",
+          "lon",
+          "extension_km",
+          "herramienta",
+          "descripcion"
+        ],
+        "title": "MundoPredefinidoDto",
+        "type": "object"
+      },
       "Opcion": {
         "properties": {
           "etiqueta": {
@@ -884,6 +1526,43 @@
         "title": "PeticionCambio",
         "type": "object"
       },
+      "PeticionCiudad": {
+        "properties": {
+          "celda": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Celda",
+            "type": "array"
+          },
+          "habitantes": {
+            "title": "Habitantes",
+            "type": "integer"
+          },
+          "mundo": {
+            "$ref": "#/components/schemas/PeticionMundo"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          }
+        },
+        "required": [
+          "mundo",
+          "celda",
+          "nombre",
+          "habitantes"
+        ],
+        "title": "PeticionCiudad",
+        "type": "object"
+      },
       "PeticionEscenario": {
         "properties": {
           "escenario_id": {
@@ -916,6 +1595,60 @@
           "escenario_id"
         ],
         "title": "PeticionEscenario",
+        "type": "object"
+      },
+      "PeticionEvento": {
+        "properties": {
+          "celda": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Celda",
+            "type": "array"
+          },
+          "herramienta": {
+            "maxLength": 20,
+            "title": "Herramienta",
+            "type": "string"
+          },
+          "mundo": {
+            "$ref": "#/components/schemas/PeticionMundo"
+          },
+          "parametros": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "maxProperties": 16,
+            "title": "Parametros",
+            "type": "object"
+          }
+        },
+        "required": [
+          "mundo",
+          "herramienta",
+          "celda"
+        ],
+        "title": "PeticionEvento",
         "type": "object"
       },
       "PeticionFotogramas": {
@@ -1034,6 +1767,48 @@
           "despues"
         ],
         "title": "PeticionMedicion",
+        "type": "object"
+      },
+      "PeticionMundo": {
+        "properties": {
+          "ciudades": {
+            "items": {
+              "$ref": "#/components/schemas/CiudadExtra"
+            },
+            "maxItems": 8,
+            "title": "Ciudades",
+            "type": "array"
+          },
+          "extension_km": {
+            "default": 40,
+            "title": "Extension Km",
+            "type": "integer"
+          },
+          "fecha": {
+            "format": "date",
+            "title": "Fecha",
+            "type": "string"
+          },
+          "lat": {
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "title": "Lon",
+            "type": "number"
+          },
+          "usar_dem": {
+            "default": true,
+            "title": "Usar Dem",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "lat",
+          "lon",
+          "fecha"
+        ],
+        "title": "PeticionMundo",
         "type": "object"
       },
       "Rejilla": {
@@ -1265,6 +2040,43 @@
         "title": "SerieTemporal",
         "type": "object"
       },
+      "TablaEventoDto": {
+        "properties": {
+          "columnas": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Columnas",
+            "type": "array"
+          },
+          "filas": {
+            "items": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "title": "Filas",
+            "type": "array"
+          }
+        },
+        "required": [
+          "columnas",
+          "filas"
+        ],
+        "title": "TablaEventoDto",
+        "type": "object"
+      },
       "TablaResultado": {
         "description": "Tabla de resultados (p. ej. una fila por parcela). Celdas: texto, número o nulo (sin valor).",
         "properties": {
@@ -1445,6 +2257,29 @@
           "type"
         ],
         "title": "ValidationError",
+        "type": "object"
+      },
+      "VolcanDto": {
+        "properties": {
+          "lat": {
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "title": "Lon",
+            "type": "number"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nombre",
+          "lat",
+          "lon"
+        ],
+        "title": "VolcanDto",
         "type": "object"
       }
     }
@@ -1870,6 +2705,138 @@
           }
         },
         "summary": "Fotogramas"
+      }
+    },
+    "/api/simulador/catalogo": {
+      "get": {
+        "operationId": "catalogo_simulador",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogoDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Catalogo Simulador"
+      }
+    },
+    "/api/simulador/ciudad": {
+      "post": {
+        "operationId": "fundar_ciudad",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeticionCiudad"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PeticionMundo"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Fundar Ciudad"
+      }
+    },
+    "/api/simulador/evento": {
+      "post": {
+        "operationId": "desatar_evento",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeticionEvento"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventoDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Desatar Evento"
+      }
+    },
+    "/api/simulador/mundo": {
+      "post": {
+        "operationId": "crear_mundo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeticionMundo"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MundoDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Crear Mundo"
       }
     },
     "/api/tipos": {
