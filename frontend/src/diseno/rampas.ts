@@ -34,6 +34,11 @@ export const COLORES_CATEGORIA: Record<string, ColorCategoria[]> = {
   cambio_por_parcela: [null, '#5fc39c', '#e0773a', '#4f8fc4'],
   // Hielo nuevo (avance), Hielo perdido (retroceso del frente)
   cambio_del_frente: ['#4f8fc4', '#e0773a'],
+  // Laboratorio: Sin cambio (transparente), Cambio detectado, Cambio sin detectar, Tapado por nube
+  clasificacion_optico: [null, '#5fc39c', '#e0773a', '#cfcfd2'],
+  clasificacion_radar: [null, '#5fc39c', '#e0773a', '#cfcfd2'],
+  // Laboratorio: Bosque, Agua, Bosque inundado, Cultivo, Quemado
+  superficies: ['#5fc39c', '#2a6496', '#8fc0e6', '#efa04a', '#9a3412'],
 }
 
 /** Lista fija de §4 para una variable categórica desconocida: por posición, nunca una casilla vacía. */

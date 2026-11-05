@@ -45,6 +45,32 @@ export const IconoSimulador = (p: PropsIcono) => (
   </Base>
 )
 
+export const IconoLaboratorio = (p: PropsIcono) => (
+  <Base {...p}>
+    <path d="M6 2h4M7 2v4.5L3.5 12.5a1 1 0 0 0 .9 1.5h7.2a1 1 0 0 0 .9-1.5L9 6.5V2" />
+    <path d="M5 10h6" />
+  </Base>
+)
+
+export const IconoRecorrido = (p: PropsIcono) => (
+  <Base {...p}>
+    <path d="M5 3.5v9l7-4.5-7-4.5Z" />
+  </Base>
+)
+
+export const IconoLibro = (p: PropsIcono) => (
+  <Base {...p}>
+    <path d="M3 3h4.5a1.5 1.5 0 0 1 1.5 1.5V13a1 1 0 0 0-1-1H3V3ZM13 3H8.5M13 3v9H9" />
+  </Base>
+)
+
+export const IconoEstacion = (p: PropsIcono) => (
+  <Base {...p}>
+    <circle cx="8" cy="8" r="2.5" />
+    <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4" />
+  </Base>
+)
+
 export const IconoChevron = (p: PropsIcono) => (
   <Base {...p}>
     <path d="m4 6 4 4 4-4" />

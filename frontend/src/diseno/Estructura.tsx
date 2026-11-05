@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { BandaDemostracion } from './BandaDemostracion'
-import { IconoHistorias, IconoObservatorio, IconoSimulador } from './iconos'
+import { IconoHistorias, IconoLaboratorio, IconoObservatorio, IconoSimulador } from './iconos'
 import { Marca } from './marca'
 
 interface Destino {
@@ -16,6 +16,7 @@ interface Destino {
 const DESTINOS: Destino[] = [
   { ruta: '/', etiqueta: 'Historias', etiquetaCorta: 'Historias', Icono: IconoHistorias, fin: true },
   { ruta: '/observatorio', etiqueta: 'Observatorio', etiquetaCorta: 'Observ.', Icono: IconoObservatorio },
+  { ruta: '/laboratorio', etiqueta: 'Laboratorio del radar', etiquetaCorta: 'Lab.', Icono: IconoLaboratorio },
   { ruta: '/simulador', etiqueta: 'Simulador de eventos', etiquetaCorta: 'Simul.', Icono: IconoSimulador },
 ]
 
