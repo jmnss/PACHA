@@ -1,0 +1,25 @@
+/* Simulador de eventos (docs/diseno.md). Solo tokens. */
+.simulador { display: grid; grid-template-columns: minmax(0, 1fr) var(--w-columna); gap: var(--gap); align-items: start; }
+.simulador__principal, .simulador__lado { display: flex; flex-direction: column; gap: var(--gap); min-width: 0; }
+@media (max-width: 1099px) { .simulador { grid-template-columns: minmax(0, 1fr); } }
+
+.simulador__fila { display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: flex-end; }
+.simulador__fila .campo { min-width: var(--w-selector-min); flex: 1; }
+.simulador__acciones { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.simulador__chips { margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); color: var(--secondary); font-size: var(--fs-13); }
+.simulador__nota { margin: 0; color: var(--muted); font-size: var(--fs-12); line-height: var(--lh-16); }
+.simulador__aviso { margin: 0; color: var(--warning); font-size: var(--fs-13); }
+
+.panel-herramienta { display: flex; flex-direction: column; gap: var(--space-4); }
+
+/* Tablero: relieve y cuadro de la animación apilados; las celdas se ven como píxeles. */
+.tablero { position: relative; width: 100%; aspect-ratio: 1; max-height: var(--h-mapa-max); margin-inline: auto; cursor: crosshair; border-radius: var(--radius-card); overflow: hidden; background: var(--ground); touch-action: manipulation; }
+.tablero:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+.tablero__capa { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; user-select: none; pointer-events: none; }
+.tablero__marca { position: absolute; transform: translate(-50%, -50%); padding: 0 var(--space-1); font-size: var(--fs-12); line-height: var(--lh-16); color: var(--text); background: color-mix(in srgb, var(--surface) 70%, transparent); border-radius: var(--radius-chip); white-space: nowrap; pointer-events: none; }
+.tablero__marca--volcan { color: var(--warning); }
+.tablero__evento { position: absolute; width: var(--size-thumb); height: var(--size-thumb); transform: translate(-50%, -50%); border-radius: 50%; border: var(--size-2) solid var(--text); box-sizing: border-box; pointer-events: none; }
+.tablero__cursor { position: absolute; border: var(--size-2) solid var(--accent); min-width: var(--size-thumb); min-height: var(--size-thumb); box-sizing: border-box; pointer-events: none; }
+
+.reproductor-evento { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+.reproductor-evento .campo { flex: 1; min-width: var(--w-selector-min); }
