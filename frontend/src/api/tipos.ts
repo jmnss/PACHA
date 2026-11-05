@@ -89,6 +89,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/escenarios/{id}/impacto": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Resumen Impacto */
+        get: operations["resumen_impacto"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/escenarios/{id}/medicion": {
         parameters: {
             query?: never;
@@ -413,6 +430,17 @@ export interface components {
             /** Volcanes */
             volcanes: components["schemas"]["VolcanDto"][];
         };
+        /** CategoriaImpactoDto */
+        CategoriaImpactoDto: {
+            /** Etiqueta */
+            etiqueta: string;
+            /** Ha */
+            ha: number;
+            /** Km2 */
+            km2: number;
+            /** Pct Escena */
+            pct_escena: number;
+        };
         /** CiudadExtra */
         CiudadExtra: {
             /** Habitantes */
@@ -628,6 +656,37 @@ export interface components {
             id: string;
             /** Nombre */
             nombre: string;
+        };
+        /** ImpactoDto */
+        ImpactoDto: {
+            /** Acciones */
+            acciones: string[];
+            /** Antes */
+            antes: string;
+            /** Area Escena Km2 */
+            area_escena_km2: number;
+            capa: components["schemas"]["CapaDto"];
+            /** Categorias */
+            categorias: components["schemas"]["CategoriaImpactoDto"][];
+            /** Cifras */
+            cifras: components["schemas"]["Metrica"][];
+            /** Despues */
+            despues: string;
+            /** Escenario */
+            escenario: string;
+            /** Evolucion */
+            evolucion: components["schemas"]["PuntoEvolucionDto"][];
+            /** Lectura */
+            lectura: string[];
+            /** Notas */
+            notas: string[];
+            origen: components["schemas"]["Origen"];
+            /** Resolucion Celda M */
+            resolucion_celda_m: number;
+            /** Tipo */
+            tipo: string;
+            /** Titulo */
+            titulo: string;
         };
         /** MarcaDto */
         MarcaDto: {
@@ -918,6 +977,16 @@ export interface components {
              * @default true
              */
             usar_dem: boolean;
+        };
+        /** PuntoEvolucionDto */
+        PuntoEvolucionDto: {
+            /** Ha */
+            ha: number;
+            /**
+             * Instante
+             * Format: date-time
+             */
+            instante: string;
         };
         /**
          * Rejilla
@@ -1243,6 +1312,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CapaDto"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resumen_impacto: {
+        parameters: {
+            query: {
+                antes: string;
+                despues: string;
+                polarizacion?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImpactoDto"];
                 };
             };
             /** @description Validation Error */

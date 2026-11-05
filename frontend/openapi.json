@@ -382,6 +382,34 @@
         "title": "CatalogoDto",
         "type": "object"
       },
+      "CategoriaImpactoDto": {
+        "properties": {
+          "etiqueta": {
+            "title": "Etiqueta",
+            "type": "string"
+          },
+          "ha": {
+            "title": "Ha",
+            "type": "number"
+          },
+          "km2": {
+            "title": "Km2",
+            "type": "number"
+          },
+          "pct_escena": {
+            "title": "Pct Escena",
+            "type": "number"
+          }
+        },
+        "required": [
+          "etiqueta",
+          "km2",
+          "ha",
+          "pct_escena"
+        ],
+        "title": "CategoriaImpactoDto",
+        "type": "object"
+      },
       "CiudadExtra": {
         "properties": {
           "habitantes": {
@@ -1083,6 +1111,105 @@
           "controles"
         ],
         "title": "HerramientaDto",
+        "type": "object"
+      },
+      "ImpactoDto": {
+        "properties": {
+          "acciones": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Acciones",
+            "type": "array"
+          },
+          "antes": {
+            "title": "Antes",
+            "type": "string"
+          },
+          "area_escena_km2": {
+            "title": "Area Escena Km2",
+            "type": "number"
+          },
+          "capa": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "categorias": {
+            "items": {
+              "$ref": "#/components/schemas/CategoriaImpactoDto"
+            },
+            "title": "Categorias",
+            "type": "array"
+          },
+          "cifras": {
+            "items": {
+              "$ref": "#/components/schemas/Metrica"
+            },
+            "title": "Cifras",
+            "type": "array"
+          },
+          "despues": {
+            "title": "Despues",
+            "type": "string"
+          },
+          "escenario": {
+            "title": "Escenario",
+            "type": "string"
+          },
+          "evolucion": {
+            "items": {
+              "$ref": "#/components/schemas/PuntoEvolucionDto"
+            },
+            "title": "Evolucion",
+            "type": "array"
+          },
+          "lectura": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Lectura",
+            "type": "array"
+          },
+          "notas": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Notas",
+            "type": "array"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "resolucion_celda_m": {
+            "title": "Resolucion Celda M",
+            "type": "number"
+          },
+          "tipo": {
+            "title": "Tipo",
+            "type": "string"
+          },
+          "titulo": {
+            "title": "Titulo",
+            "type": "string"
+          }
+        },
+        "required": [
+          "titulo",
+          "tipo",
+          "escenario",
+          "antes",
+          "despues",
+          "cifras",
+          "categorias",
+          "evolucion",
+          "lectura",
+          "acciones",
+          "notas",
+          "capa",
+          "area_escena_km2",
+          "resolucion_celda_m",
+          "origen"
+        ],
+        "title": "ImpactoDto",
         "type": "object"
       },
       "MarcaDto": {
@@ -1899,6 +2026,25 @@
           "fecha"
         ],
         "title": "PeticionMundo",
+        "type": "object"
+      },
+      "PuntoEvolucionDto": {
+        "properties": {
+          "ha": {
+            "title": "Ha",
+            "type": "number"
+          },
+          "instante": {
+            "format": "date-time",
+            "title": "Instante",
+            "type": "string"
+          }
+        },
+        "required": [
+          "instante",
+          "ha"
+        ],
+        "title": "PuntoEvolucionDto",
         "type": "object"
       },
       "Rejilla": {
@@ -2719,6 +2865,79 @@
           }
         },
         "summary": "Capa"
+      }
+    },
+    "/api/escenarios/{id}/impacto": {
+      "get": {
+        "operationId": "resumen_impacto",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "antes",
+            "required": true,
+            "schema": {
+              "title": "Antes",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "despues",
+            "required": true,
+            "schema": {
+              "title": "Despues",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "polarizacion",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Polarizacion"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImpactoDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resumen Impacto"
       }
     },
     "/api/escenarios/{id}/medicion": {
