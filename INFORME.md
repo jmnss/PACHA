@@ -175,11 +175,23 @@ Copia de la lista de `docs/plan-migracion.md` (N1 primera noche, N2 segunda, R c
 - [~] N1 · Antes / después (parcial: sin serie del punto) (paneles, punto y cuadrante, medición y CSV, punto y serie, borrar, flujo, notas, PNG, parcelas) + comparador
 - [~] N1 · Serie temporal (parcial: sin marcas de evento) (gráficos, tabla y CSV)
 - [~] N1 · Física por tipo (inundación e incendio en Historias; los otros cuatro con la ayuda «Cómo ve el radar»)
-- [ ] N2 · Estación y temporada
+- [x] N2 · Estación y temporada (cubierta por `PanelContexto` del Observatorio: estación astronómica, próximo hito, temporada y clima mensual; no se duplica en pantalla propia)
 - [x] N2 · Modo Dios → Simulador de Eventos (herramientas, parámetros, animación, efectos, vista radar, bitácora, PNG; fase 2 pendiente)
-- [ ] N2 · Fundamentos (misión marcada pendiente, fenómenos, polarización y bandas)
+- [x] N2 · Fundamentos (`/fundamentos`: misión marcada pendiente, fenómenos, polarización y bandas)
 - [ ] N2 · Validación (si se confirma)
 - [ ] R · HDF5 reales, catálogo ASF, explorador geográfico
+
+## Laboratorio del radar, recorrido y fundamentos (2026-11-05)
+
+Spec: `docs/superpowers/specs/2026-11-05-laboratorio-recorrido-design.md`.
+
+- **Laboratorio** (`/laboratorio`): «La nube no lo detiene» (cobertura de nubes sobre un óptico simulado; el radar no cambia) y «Polarización y banda» (qué polarización resalta cada cambio, calculado en `datos/laboratorio.py`). API `GET /api/laboratorio/nubes` y `/respuesta`. Escena genérica, coeficientes **ilustrativos**; la banda S va marcada «pendiente de confirmar con la documentación oficial».
+- **Recorrido** (`/recorrido`): guion de 6 pasos (≤ 2 min) que incrusta pantallas reales (`?incrustado=1` oculta el riel; la banda de demostración se queda). Teclado, pausa y respeto a «menos movimiento».
+- **Fundamentos** (`/fundamentos`): física general; todo lo específico de NISAR queda «pendiente de confirmar».
+- Riel con seis destinos; etiqueta móvil de Historias acortada a «Inicio» (el inspector marcaba `edge-text`).
+- Revisión visual: 0 FAIL a 1440/768/390 en laboratorio (ambas vistas), recorrido y fundamentos. Capturas en `docs/capturas-nuevas/{laboratorio-nubes,laboratorio-pol,recorrido,fundamentos}/`.
+- Pendiente: el rótulo del valor de la barra «Agua» (−20 dB) se solapa con el rótulo del eje en `Barras`; localizador de Ecuador y hoja de parámetros móvil del Observatorio siguen pendientes; Validación sigue sin decidir.
+- Nota de proceso: se detuvo un `servidor.py` obsoleto en el puerto 8000 que hacía que `revision_visual.sh` revisara el build viejo (el script reutiliza el servidor que encuentre).
 
 ## Cumplimiento de `docs/challenge.md` (con evidencia)
 
@@ -190,11 +202,11 @@ Copia de la lista de `docs/plan-migracion.md` (N1 primera noche, N2 segunda, R c
 | Comparador deslizante antes/después | Cumple | `comparador/Comparador.tsx`; Historias y Observatorio; e2e con teclado |
 | Dashboards y métricas | Cumple | `PanelMetricas.tsx`, `Mediciones.tsx`, `TablaResultados.tsx`, vista Serie |
 | Público amplio | Cumple | Términos explicados (`Termino`), accesibilidad por teclado/ARIA, tres anchos revisados |
-| Qué polarización resalta el cambio | Cumple | Historias: HH inundación, HV incendio, con conmutador |
+| Qué polarización resalta el cambio | Cumple | Historias (conmutador) y Laboratorio (calculado por cambio y banda) |
 | Hipótesis de impulsores (físicos y humanos) | Cumple (ejemplos ilustrativos) | `pantallas/historias/contenido/*.ts` |
 | Aplicaciones futuras de NISAR | Cumple (condicionales, «pendiente de confirmar») | contenido de Historias, parte 5 |
 | Series con varias fechas | Cumple | Cinta de pasadas (30 adquisiciones) y vista Serie |
-| Distintas frecuencias | No cumple | Solo banda L en el demo |
+| Distintas frecuencias | Parcial (ilustrativo) | Laboratorio: banda S como ejemplo, marcada «pendiente de confirmar»; el demo de escenarios sigue en banda L |
 | Conceptos clave (activo, dieléctrica, polarización, centímetros) | Cumple | Historias parte 2 y ayuda «Cómo ve el radar» (centímetros marcado «pendiente de confirmar») |
 | Datos NISAR reales | No cumple (por diseño) | Proveedor real = esqueleto; sin recursos oficiales |
 | Honestidad (reglas 1–5) | Cumple | Banda permanente (`hay_sinteticos`, fail-safe), sellos de origen, exportaciones con marca (CSV/PNG, e2e), `esReal` único criterio, notas heredadas con aviso |
