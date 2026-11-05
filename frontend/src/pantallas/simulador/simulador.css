@@ -7,7 +7,7 @@
 .simulador__fila .campo { min-width: var(--w-selector-min); flex: 1; }
 .simulador__acciones { display: flex; gap: var(--space-2); flex-wrap: wrap; }
 .simulador__chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); color: var(--secondary); font-size: var(--fs-13); }
-.simulador__nota { margin: 0; color: var(--muted); font-size: var(--fs-12); line-height: var(--lh-16); }
+.simulador__nota { margin: 0; color: var(--muted); font-size: var(--fs-13); line-height: var(--lh-16); }
 .simulador__aviso { margin: 0; color: var(--warning); font-size: var(--fs-13); }
 
 .panel-herramienta { display: flex; flex-direction: column; gap: var(--space-4); }

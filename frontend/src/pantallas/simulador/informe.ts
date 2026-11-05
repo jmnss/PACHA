@@ -31,12 +31,12 @@ export async function generarInforme(e: EventoDto, m: MundoDto): Promise<Blob> {
   lienzo.height = lado + 22 * lineas.length + 16
   const ctx = lienzo.getContext('2d')
   if (!ctx) throw new Error('No se pudo crear el lienzo del informe.')
-  ctx.fillStyle = token('--ground', '#0b0b0d')
+  ctx.fillStyle = token('--ground', 'black')
   ctx.fillRect(0, 0, lienzo.width, lienzo.height)
   ctx.drawImage(relieve, 0, 0, lado, lado)
   ctx.imageSmoothingEnabled = false
   ctx.drawImage(final, 0, 0, lado, lado)
-  ctx.fillStyle = token('--text', '#ffffff')
+  ctx.fillStyle = token('--text', 'white')
   ctx.textBaseline = 'top'
   lineas.forEach((l, i) => {
     ctx.font = `${i === 0 ? '600 16px' : '13px'} ${token('--font-sans', 'sans-serif')}`

@@ -1,7 +1,7 @@
 # INFORME — Migración a React
 
 Estado: **Fase 2 terminada: alcance de la primera noche completo (bloques 0 a 5).** Verificación final: build OK, vitest 282, lint OK, Playwright 22/22, pytest 175 (+2 omitidas por diseño), unittest 13 OK.
-Última actualización: 2026-11-04
+Última actualización: 2026-11-05
 
 Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea.
 
@@ -103,13 +103,23 @@ Ver `.superpowers/sdd/plan-migracion/progress.md` (no versionado): validar `max_
 - Pendientes: en Relieve el radar puede tapar etiquetas (vienen dentro de la tesela); hueco bajo la cinta en escritorio; en móvil las placas flotantes ocupan ~130 px; el aviso «Unexpected }» de minificación de CSS; sin prueba automática del mapa con red.
 - Importante: para ver el mapa con Esri hay que compilar sin `VITE_MAPA_REMOTO=0` (`cd frontend && npm run build`).
 
+## Segunda noche: Simulador de Eventos (antes «Modo Dios»), 2026-11-05
+
+A petición del equipo se conserva el Modo Dios de la app heredada, renombrado **Simulador de Eventos**, y se amplía. Spec: `docs/superpowers/specs/2026-11-05-simulador-de-eventos-design.md`; plan: `docs/superpowers/plans/2026-11-05-simulador-de-eventos.md`.
+
+- **Hecho:** `datos/simulador.py` + `datos/simulador_render.py` (puente sin estado sobre `modelo/desastres.py`, que no se modificó), `api/rutas/simulador.py` (`/api/simulador/{catalogo,mundo,evento,ciudad}`), pantalla `/simulador` (tablero con teclado, animación, parámetros desde el catálogo, KPI, tabla, bitácora en el navegador con CSV marcado, PNG de informe con franja).
+- **Ideas diferenciadoras:** (1) *Gemelo del radar*: comparador deslizante antes/después con la polarización nombrada (HV incendio; HH agua) y rejilla de paneles si no son comparables (terremoto, erupción); (2) *¿Cuándo lo vería el radar?*: espera 0–12 días con el ciclo **supuesto, pendiente de confirmar**, determinista (sustituye el sorteo aleatorio del código heredado); (6) *Compartir*: el escenario viaja en la URL (valores inválidos se ignoran) y se exporta como informe PNG.
+- **Rulings:** malla de 128 celdas (el solver de aguas someras escala ~n³: 160 tardaba hasta 85 s en 20 km); las capas animadas se colorean en el servidor (PNG) por sus estilos físicos propios, no por las rampas del sistema de diseño; el simulador es sintético por naturaleza y no depende de `NISAR_PROVEEDOR`.
+- **Verificación:** pytest 206 (+2 omitidas), unittest 13, vitest 321, lint OK, Playwright 28/28, revisión visual `/simulador` 0 FAIL.
+- **Pendientes del simulador:** `tormenta`/`inundacion` tardan ~10–30 s (ver «Simulando…»); en el demo sintético un incendio en una celda aislada puede quemar ~1 celda; avisos visuales `ragged-row` y `below-fold`; sin captura en móvil con resultados completos; **fase 2:** decisión A/B (cortafuegos, dique, evacuación), cascadas, retos educativos; falta Estación y temporada, Fundamentos y Validación (noche 2).
+
 ## Pendientes tras la primera noche
 
 - **Funcionales (paridad N1 incompleta):** serie temporal del punto/cuadrante (la API no expone `serie_seleccion`), fecha del evento (el servidor no la acepta), tooltip de provincia y marcadores del catálogo en el mapa, marcas de evento y cursor en la vista Serie, observable del tipo en la cabecera.
 - **Visuales:** mapa gris sin contexto a escala de escenario (falta localizador/escala), menú de tres puntos en móvil, tabla móvil en tres líneas y sin semántica de tabla, margen de la banda móvil (12 px), sin captura con punto/cuadrante seleccionado.
 - **Datos reales:** `/api/tipos` mezcla unidades (el panel multiplica por `escala`); `/cambio` pesado con rejillas reales (capas extra a demanda); `/medicion` recalcula el cambio; `RLock` global en el proveedor demo; `/api/salud` depende de `escenarios()`; el proveedor real es un esqueleto.
 - **Equipo:** confirmar licencia (MIT provisional), requisitos de entrega, si Validación se conserva, y qué hacer con `/_sistema` (galería publicada en producción).
-- **Noche 2:** Estación y temporada, Modo Dios, Fundamentos, Validación (N2.1–N2.6).
+- **Noche 2:** Estación y temporada, Fundamentos, Validación (N2.1, N2.4, N2.5); el Modo Dios ya está hecho como Simulador de Eventos.
 
 ## Pendientes (plan completo)
 
@@ -166,7 +176,7 @@ Copia de la lista de `docs/plan-migracion.md` (N1 primera noche, N2 segunda, R c
 - [~] N1 · Serie temporal (parcial: sin marcas de evento) (gráficos, tabla y CSV)
 - [~] N1 · Física por tipo (inundación e incendio en Historias; los otros cuatro con la ayuda «Cómo ve el radar»)
 - [ ] N2 · Estación y temporada
-- [ ] N2 · Modo Dios
+- [x] N2 · Modo Dios → Simulador de Eventos (herramientas, parámetros, animación, efectos, vista radar, bitácora, PNG; fase 2 pendiente)
 - [ ] N2 · Fundamentos (misión marcada pendiente, fenómenos, polarización y bandas)
 - [ ] N2 · Validación (si se confirma)
 - [ ] R · HDF5 reales, catálogo ASF, explorador geográfico
