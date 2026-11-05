@@ -976,6 +976,13 @@
           "titulo": {
             "title": "Titulo",
             "type": "string"
+          },
+          "titulos_paneles": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Titulos Paneles",
+            "type": "array"
           }
         },
         "required": [
@@ -992,6 +999,7 @@
           "notas",
           "modelos",
           "paneles",
+          "titulos_paneles",
           "comparable",
           "polarizacion",
           "metricas_radar",

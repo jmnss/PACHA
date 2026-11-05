@@ -312,7 +312,7 @@ def desatar(p: PeticionEvento) -> dict:
         cuadros_png_b64=[render.png_b64(render.componer(ev, ev.cuadros[k], ESCALA_CUADRO)) for k in idx],
         capas=[dict(clave=c.clave, nombre=c.nombre, estilo=c.estilo, unidad=c.unidad, etiquetas=list(c.etiquetas)) for c in ev.capas],
         metricas=[dict(etiqueta=e, valor=str(v), ayuda=a) for e, v, a in ev.metricas],
-        tabla=tabla, notas=notas, modelos=list(ev.modelos), paneles=paneles, comparable=comparable,
+        tabla=tabla, notas=notas, modelos=list(ev.modelos), paneles=paneles, titulos_paneles=[pn.titulo for pn in ev.nisar_paneles], comparable=comparable,
         polarizacion=paneles[0].polarizacion if comparable else None,
         metricas_radar=[dict(etiqueta=e, valor=str(v), ayuda=a) for e, v, a in ev.nisar_metricas],
         espera_radar=dict(ciclo_dias=CICLO_DIAS_SUPUESTO, minimo_dias=0, maximo_dias=CICLO_DIAS_SUPUESTO,

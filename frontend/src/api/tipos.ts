@@ -563,6 +563,8 @@ export interface components {
             tiempos: string[];
             /** Titulo */
             titulo: string;
+            /** Titulos Paneles */
+            titulos_paneles: string[];
         };
         /** HTTPValidationError */
         HTTPValidationError: {

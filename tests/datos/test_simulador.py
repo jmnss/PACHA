@@ -86,6 +86,11 @@ def test_incendio_es_comparable_en_hv():
     assert ev["comparable"] is True and ev["polarizacion"] == "HV"
 
 
+def test_paneles_llevan_su_titulo():
+    ev = evento("incendio", celda_en_tierra())
+    assert len(ev["titulos_paneles"]) == len(ev["paneles"]) and "HV antes" in ev["titulos_paneles"][0]
+
+
 def test_terremoto_no_comparable():
     assert evento("terremoto", celda_en_tierra())["comparable"] is False
 

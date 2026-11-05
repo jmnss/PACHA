@@ -6,7 +6,7 @@
 .simulador__fila { display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: flex-end; }
 .simulador__fila .campo { min-width: var(--w-selector-min); flex: 1; }
 .simulador__acciones { display: flex; gap: var(--space-2); flex-wrap: wrap; }
-.simulador__chips { margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); color: var(--secondary); font-size: var(--fs-13); }
+.simulador__chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); color: var(--secondary); font-size: var(--fs-13); }
 .simulador__nota { margin: 0; color: var(--muted); font-size: var(--fs-12); line-height: var(--lh-16); }
 .simulador__aviso { margin: 0; color: var(--warning); font-size: var(--fs-13); }
 
@@ -23,3 +23,5 @@
 
 .reproductor-evento { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
 .reproductor-evento .campo { flex: 1; min-width: var(--w-selector-min); }
+@media (min-width: 700px) { .simulador__chips li + li::before { content: '|'; color: var(--control); margin-right: var(--space-4); } }
+@media (max-width: 699px) { .simulador__chips { flex-direction: column; } }

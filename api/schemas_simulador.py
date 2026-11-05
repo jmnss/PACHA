@@ -115,6 +115,7 @@ class EventoDto(BaseModel):
     notas: list[str]
     modelos: list[str]
     paneles: list[CapaDto]
+    titulos_paneles: list[str]
     comparable: bool
     polarizacion: str | None
     metricas_radar: list[MetricaEventoDto]
