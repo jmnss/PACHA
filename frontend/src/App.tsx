@@ -9,6 +9,7 @@ import { LimiteError } from './diseno/LimiteError'
 const Galeria = lazy(() => import('./diseno/Galeria').then((m) => ({ default: m.Galeria })))
 const Historias = lazy(() => import('./pantallas/historias/Historias'))
 const Observatorio = lazy(() => import('./pantallas/observatorio/Observatorio'))
+const Simulador = lazy(() => import('./pantallas/simulador/Simulador'))
 
 export default function App() {
   return (
@@ -30,6 +31,16 @@ export default function App() {
             <LimiteError>
               <Suspense fallback={<Cargando texto="Cargando…" />}>
                 <Observatorio />
+              </Suspense>
+            </LimiteError>
+          }
+        />
+        <Route
+          path="simulador"
+          element={
+            <LimiteError>
+              <Suspense fallback={<Cargando texto="Cargando…" />}>
+                <Simulador />
               </Suspense>
             </LimiteError>
           }

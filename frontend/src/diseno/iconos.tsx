@@ -38,6 +38,13 @@ export const IconoObservatorio = (p: PropsIcono) => (
   </Base>
 )
 
+export const IconoSimulador = (p: PropsIcono) => (
+  <Base {...p}>
+    <path d="M2 13.5h12M3.5 13.5 6 7l2 3 2-5 2.5 8.5" />
+    <circle cx="12.5" cy="3.5" r="1.5" />
+  </Base>
+)
+
 export const IconoChevron = (p: PropsIcono) => (
   <Base {...p}>
     <path d="m4 6 4 4 4-4" />

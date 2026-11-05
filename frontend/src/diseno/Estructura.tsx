@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { BandaDemostracion } from './BandaDemostracion'
-import { IconoHistorias, IconoObservatorio } from './iconos'
+import { IconoHistorias, IconoObservatorio, IconoSimulador } from './iconos'
 import { Marca } from './marca'
 
 interface Destino {
@@ -16,6 +16,7 @@ interface Destino {
 const DESTINOS: Destino[] = [
   { ruta: '/', etiqueta: 'Historias', etiquetaCorta: 'Historias', Icono: IconoHistorias, fin: true },
   { ruta: '/observatorio', etiqueta: 'Observatorio', etiquetaCorta: 'Observ.', Icono: IconoObservatorio },
+  { ruta: '/simulador', etiqueta: 'Simulador de eventos', etiquetaCorta: 'Simul.', Icono: IconoSimulador },
 ]
 
 /** Riel de 50 px (escritorio, tablet) o barra inferior (< 700 px) más el lienzo con la banda arriba. */
