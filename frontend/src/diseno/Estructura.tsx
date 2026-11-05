@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react'
 import { NavLink, Outlet, useSearchParams } from 'react-router-dom'
 import { BandaDemostracion } from './BandaDemostracion'
-import { IconoHistorias, IconoLaboratorio, IconoObservatorio, IconoRecorrido, IconoSimulador } from './iconos'
+import { IconoHistorias, IconoLaboratorio, IconoLibro, IconoObservatorio, IconoRecorrido, IconoSimulador } from './iconos'
 import { Marca } from './marca'
 
 interface Destino {
@@ -14,11 +14,12 @@ interface Destino {
 
 /** Solo destinos que existen (docs/diseno.md §7). Se añaden con cada pantalla nueva. */
 const DESTINOS: Destino[] = [
-  { ruta: '/', etiqueta: 'Historias', etiquetaCorta: 'Historias', Icono: IconoHistorias, fin: true },
+  { ruta: '/', etiqueta: 'Historias', etiquetaCorta: 'Inicio', Icono: IconoHistorias, fin: true },
   { ruta: '/observatorio', etiqueta: 'Observatorio', etiquetaCorta: 'Observ.', Icono: IconoObservatorio },
   { ruta: '/laboratorio', etiqueta: 'Laboratorio del radar', etiquetaCorta: 'Lab.', Icono: IconoLaboratorio },
   { ruta: '/simulador', etiqueta: 'Simulador de eventos', etiquetaCorta: 'Simul.', Icono: IconoSimulador },
   { ruta: '/recorrido', etiqueta: 'Recorrido guiado', etiquetaCorta: 'Tour', Icono: IconoRecorrido },
+  { ruta: '/fundamentos', etiqueta: 'Fundamentos', etiquetaCorta: 'Base', Icono: IconoLibro },
 ]
 
 /** Riel de 50 px (escritorio, tablet) o barra inferior (< 700 px) más el lienzo con la banda arriba. */

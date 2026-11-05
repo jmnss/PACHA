@@ -11,6 +11,7 @@ const Historias = lazy(() => import('./pantallas/historias/Historias'))
 const Observatorio = lazy(() => import('./pantallas/observatorio/Observatorio'))
 const Laboratorio = lazy(() => import('./pantallas/laboratorio/Laboratorio'))
 const Recorrido = lazy(() => import('./pantallas/recorrido/Recorrido'))
+const Fundamentos = lazy(() => import('./pantallas/fundamentos/Fundamentos'))
 const Simulador = lazy(() => import('./pantallas/simulador/Simulador'))
 
 export default function App() {
@@ -63,6 +64,16 @@ export default function App() {
             <LimiteError>
               <Suspense fallback={<Cargando texto="Cargando…" />}>
                 <Recorrido />
+              </Suspense>
+            </LimiteError>
+          }
+        />
+        <Route
+          path="fundamentos"
+          element={
+            <LimiteError>
+              <Suspense fallback={<Cargando texto="Cargando…" />}>
+                <Fundamentos />
               </Suspense>
             </LimiteError>
           }

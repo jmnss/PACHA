@@ -1,0 +1,4 @@
+/* Fundamentos (docs/diseno.md). Solo tokens. */
+.fundamentos { display: flex; flex-direction: column; gap: var(--gap); min-width: 0; }
+.fundamentos__texto { margin: 0 0 var(--space-3); max-width: var(--w-lectura); color: var(--secondary); line-height: var(--lh-24); }
+.fundamentos__nota { margin: var(--space-3) 0 0; color: var(--muted); font-size: var(--fs-13); line-height: var(--lh-16); }
