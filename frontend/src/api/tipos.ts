@@ -106,6 +106,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/laboratorio/nubes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Nubes */
+        get: operations["nubes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/laboratorio/respuesta": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Respuesta */
+        get: operations["respuesta"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/salud": {
         parameters: {
             query?: never;
@@ -284,6 +318,19 @@ export interface components {
             pasos_cenitales: string[];
             /** Proximo Hito */
             proximo_hito: string;
+        };
+        /** CambioResaltadoDto */
+        CambioResaltadoDto: {
+            /** Cambio */
+            cambio: string;
+            /** Contraste Db */
+            contraste_db: number;
+            /** Contrastes */
+            contrastes: {
+                [key: string]: number;
+            };
+            /** Mejor Pol */
+            mejor_pol: string;
         };
         /**
          * CampoVectorial
@@ -700,6 +747,22 @@ export interface components {
             /** Nombre */
             nombre: string;
         };
+        /** NubesDto */
+        NubesDto: {
+            cambio_optico: components["schemas"]["CapaDto"];
+            cambio_radar: components["schemas"]["CapaDto"];
+            /** Cobertura Real */
+            cobertura_real: number;
+            /** Metricas */
+            metricas: components["schemas"]["Metrica"][];
+            optico: components["schemas"]["CapaDto"];
+            origen: components["schemas"]["Origen"];
+            /** Porcentaje Optico */
+            porcentaje_optico: number;
+            /** Porcentaje Radar */
+            porcentaje_radar: number;
+            radar: components["schemas"]["CapaDto"];
+        };
         /** Opcion */
         Opcion: {
             /** Etiqueta */
@@ -878,6 +941,31 @@ export interface components {
             vmax: number;
             /** Vmin */
             vmin: number;
+        };
+        /** RespuestaDto */
+        RespuestaDto: {
+            /** Aviso Banda */
+            aviso_banda: string | null;
+            /** Banda */
+            banda: string;
+            /** Cambios */
+            cambios: components["schemas"]["CambioResaltadoDto"][];
+            capa: components["schemas"]["CapaDto"];
+            origen: components["schemas"]["Origen"];
+            /** Pol */
+            pol: string;
+            /** Respuestas */
+            respuestas: components["schemas"]["RespuestaSuperficieDto"][];
+            superficies: components["schemas"]["CapaDto"];
+        };
+        /** RespuestaSuperficieDto */
+        RespuestaSuperficieDto: {
+            /** Db */
+            db: number;
+            /** Pol */
+            pol: string;
+            /** Superficie */
+            superficie: string;
         };
         /** ResultadoCambioDto */
         ResultadoCambioDto: {
@@ -1190,6 +1278,71 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MedicionDto"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    nubes: {
+        parameters: {
+            query?: {
+                /** @description Cobertura de nubes, % (0–100) */
+                cobertura?: number;
+                semilla?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NubesDto"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    respuesta: {
+        parameters: {
+            query?: {
+                banda?: string;
+                pol?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RespuestaDto"];
                 };
             };
             /** @description Validation Error */

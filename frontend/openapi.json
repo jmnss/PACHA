@@ -96,6 +96,37 @@
         "title": "AstronomiaDto",
         "type": "object"
       },
+      "CambioResaltadoDto": {
+        "properties": {
+          "cambio": {
+            "title": "Cambio",
+            "type": "string"
+          },
+          "contraste_db": {
+            "title": "Contraste Db",
+            "type": "number"
+          },
+          "contrastes": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "title": "Contrastes",
+            "type": "object"
+          },
+          "mejor_pol": {
+            "title": "Mejor Pol",
+            "type": "string"
+          }
+        },
+        "required": [
+          "cambio",
+          "mejor_pol",
+          "contraste_db",
+          "contrastes"
+        ],
+        "title": "CambioResaltadoDto",
+        "type": "object"
+      },
       "CampoVectorial": {
         "description": "Flechas de flujo: posiciones `x`, `y` en km (respecto al centro de la escena, y hacia el norte) y\ncomponentes `u` (este) y `v` (norte) en `unidad`.",
         "properties": {
@@ -1403,6 +1434,57 @@
         "title": "MundoPredefinidoDto",
         "type": "object"
       },
+      "NubesDto": {
+        "properties": {
+          "cambio_optico": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "cambio_radar": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "cobertura_real": {
+            "title": "Cobertura Real",
+            "type": "number"
+          },
+          "metricas": {
+            "items": {
+              "$ref": "#/components/schemas/Metrica"
+            },
+            "title": "Metricas",
+            "type": "array"
+          },
+          "optico": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "porcentaje_optico": {
+            "title": "Porcentaje Optico",
+            "type": "number"
+          },
+          "porcentaje_radar": {
+            "title": "Porcentaje Radar",
+            "type": "number"
+          },
+          "radar": {
+            "$ref": "#/components/schemas/CapaDto"
+          }
+        },
+        "required": [
+          "optico",
+          "radar",
+          "cambio_optico",
+          "cambio_radar",
+          "metricas",
+          "porcentaje_radar",
+          "porcentaje_optico",
+          "cobertura_real",
+          "origen"
+        ],
+        "title": "NubesDto",
+        "type": "object"
+      },
       "Opcion": {
         "properties": {
           "etiqueta": {
@@ -1876,6 +1958,87 @@
           "datos_b64"
         ],
         "title": "Rejilla",
+        "type": "object"
+      },
+      "RespuestaDto": {
+        "properties": {
+          "aviso_banda": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Aviso Banda"
+          },
+          "banda": {
+            "title": "Banda",
+            "type": "string"
+          },
+          "cambios": {
+            "items": {
+              "$ref": "#/components/schemas/CambioResaltadoDto"
+            },
+            "title": "Cambios",
+            "type": "array"
+          },
+          "capa": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "pol": {
+            "title": "Pol",
+            "type": "string"
+          },
+          "respuestas": {
+            "items": {
+              "$ref": "#/components/schemas/RespuestaSuperficieDto"
+            },
+            "title": "Respuestas",
+            "type": "array"
+          },
+          "superficies": {
+            "$ref": "#/components/schemas/CapaDto"
+          }
+        },
+        "required": [
+          "banda",
+          "pol",
+          "capa",
+          "superficies",
+          "respuestas",
+          "cambios",
+          "aviso_banda",
+          "origen"
+        ],
+        "title": "RespuestaDto",
+        "type": "object"
+      },
+      "RespuestaSuperficieDto": {
+        "properties": {
+          "db": {
+            "title": "Db",
+            "type": "number"
+          },
+          "pol": {
+            "title": "Pol",
+            "type": "string"
+          },
+          "superficie": {
+            "title": "Superficie",
+            "type": "string"
+          }
+        },
+        "required": [
+          "superficie",
+          "pol",
+          "db"
+        ],
+        "title": "RespuestaSuperficieDto",
         "type": "object"
       },
       "ResultadoCambioDto": {
@@ -2605,6 +2768,110 @@
           }
         },
         "summary": "Medicion"
+      }
+    },
+    "/api/laboratorio/nubes": {
+      "get": {
+        "operationId": "nubes",
+        "parameters": [
+          {
+            "description": "Cobertura de nubes, % (0–100)",
+            "in": "query",
+            "name": "cobertura",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "description": "Cobertura de nubes, % (0–100)",
+              "title": "Cobertura",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "semilla",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "maximum": 999,
+              "minimum": 0,
+              "title": "Semilla",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NubesDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Nubes"
+      }
+    },
+    "/api/laboratorio/respuesta": {
+      "get": {
+        "operationId": "respuesta",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "banda",
+            "required": false,
+            "schema": {
+              "default": "L",
+              "title": "Banda",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pol",
+            "required": false,
+            "schema": {
+              "default": "HH",
+              "title": "Pol",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespuestaDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Respuesta"
       }
     },
     "/api/salud": {
