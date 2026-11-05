@@ -155,7 +155,7 @@ describe('Estructura', () => {
     expect(within(nav).getByRole('link', { name: 'Historias' })).toHaveAttribute('href', '/')
     expect(within(nav).getByRole('link', { name: 'Observatorio' })).toHaveAttribute('href', '/observatorio')
     expect(within(nav).getByRole('link', { name: 'Simulador de eventos' })).toHaveAttribute('href', '/simulador')
-    expect(within(nav).getAllByRole('link')).toHaveLength(3)
+    expect(within(nav).getAllByRole('link')).toHaveLength(4)
     expect(within(nav).getByRole('link', { name: 'Historias' })).toHaveAttribute('aria-current', 'page')
   })
 })
