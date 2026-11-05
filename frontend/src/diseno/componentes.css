@@ -32,6 +32,7 @@ button { font: inherit; color: inherit; }
 .riel__etiqueta { display: none; }
 
 .lienzo { flex: 1; min-width: 0; margin-left: var(--w-rail); display: flex; flex-direction: column; }
+.lienzo--incrustado { margin-left: 0; padding-bottom: 0; }
 .lienzo__contenido { padding: var(--page-padding); display: flex; flex-direction: column; gap: var(--gap); flex: 1; }
 
 @media (max-width: 699px) {

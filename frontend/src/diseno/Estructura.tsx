@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useSearchParams } from 'react-router-dom'
 import { BandaDemostracion } from './BandaDemostracion'
-import { IconoHistorias, IconoLaboratorio, IconoObservatorio, IconoSimulador } from './iconos'
+import { IconoHistorias, IconoLaboratorio, IconoObservatorio, IconoRecorrido, IconoSimulador } from './iconos'
 import { Marca } from './marca'
 
 interface Destino {
@@ -18,13 +18,16 @@ const DESTINOS: Destino[] = [
   { ruta: '/observatorio', etiqueta: 'Observatorio', etiquetaCorta: 'Observ.', Icono: IconoObservatorio },
   { ruta: '/laboratorio', etiqueta: 'Laboratorio del radar', etiquetaCorta: 'Lab.', Icono: IconoLaboratorio },
   { ruta: '/simulador', etiqueta: 'Simulador de eventos', etiquetaCorta: 'Simul.', Icono: IconoSimulador },
+  { ruta: '/recorrido', etiqueta: 'Recorrido guiado', etiquetaCorta: 'Tour', Icono: IconoRecorrido },
 ]
 
 /** Riel de 50 px (escritorio, tablet) o barra inferior (< 700 px) más el lienzo con la banda arriba. */
 export function Estructura() {
+  // `?incrustado=1`: pantalla dentro del recorrido; sin riel (la banda de demostración se queda).
+  const incrustado = useSearchParams()[0].get('incrustado') === '1'
   return (
     <div className="estructura">
-      <nav className="riel" aria-label="Principal">
+      {!incrustado && <nav className="riel" aria-label="Principal">
         <span className="riel__marca" role="img" aria-label="NISAR · Ecuador">
           <Marca />
         </span>
@@ -46,8 +49,8 @@ export function Estructura() {
             </li>
           ))}
         </ul>
-      </nav>
-      <div className="lienzo">
+      </nav>}
+      <div className={incrustado ? 'lienzo lienzo--incrustado' : 'lienzo'}>
         <BandaDemostracion />
         <main className="lienzo__contenido">
           <Outlet />

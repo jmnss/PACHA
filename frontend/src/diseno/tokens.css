@@ -108,6 +108,7 @@ body {
   --w-fecha-min: 140px;    /* selectores de fecha y polarización de «Antes y después» */
   --h-mapa: clamp(440px, calc(100vh - 240px), 780px); /* mapa inmersivo del Observatorio: el alto de la ventana menos cabecera y barra */
   --h-mapa-max: 820px;
+  --h-recorrido: clamp(420px, calc(100vh - 140px), 760px); /* pantalla incrustada del recorrido */
   --h-mapa-movil: clamp(360px, 62vh, 540px);
   --w-controles-mapa: 240px; /* placa flotante: mapa base y opacidad */
   --w-leyenda-mapa: 280px;
