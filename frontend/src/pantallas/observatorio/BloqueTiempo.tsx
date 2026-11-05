@@ -7,7 +7,7 @@ import { formatearFecha } from '../../tiempo/fechas'
 import { temporadaDelMes, vecinas } from './derivados'
 import type { TiempoObservatorio } from './useTiempoObservatorio'
 
-const MOTIVO_PASOS_CORTOS = 'El modelo en el tiempo por fotogramas sigue pendiente; hoy el reproductor avanza de pasada en pasada.'
+const MOTIVO_PASOS_CORTOS = 'Este escenario no tiene modelo continuo: el reproductor solo avanza de pasada en pasada.'
 
 interface Props {
   pasadas: Escenario['adquisiciones']
@@ -23,10 +23,12 @@ interface Props {
   motivoDespues?: string
   /** Motivo por el que el reproductor está desactivado (p. ej. se está calculando un escenario). */
   motivoReproductor?: string
+  /** El escenario tiene modelo continuo: se admiten pasos menores que una pasada (fotogramas). */
+  pasosCortos?: boolean
 }
 
 /** Reloj, cinta de pasadas y controles de tiempo: la misma cinta bajo todas las vistas del Observatorio. */
-export function BloqueTiempo({ pasadas, tiempo, contexto, temporadas, alInteractuar, onFijarAntes, onFijarDespues, motivoAntes, motivoDespues, motivoReproductor }: Props) {
+export function BloqueTiempo({ pasadas, tiempo, contexto, temporadas, alInteractuar, onFijarAntes, onFijarDespues, motivoAntes, motivoDespues, motivoReproductor, pasosCortos }: Props) {
   const idMotivos = useId()
   const ts = pasadas.map((p) => Date.parse(p.instante))
   const { anterior, siguiente } = vecinas(ts, tiempo.ms)
@@ -54,7 +56,7 @@ export function BloqueTiempo({ pasadas, tiempo, contexto, temporadas, alInteract
         onPlay={antes(tiempo.play)} onPausa={tiempo.pausa}
         onInicio={antes(tiempo.inicio)} onFinal={antes(tiempo.final)}
         onAtras={antes(tiempo.atras)} onAdelante={antes(tiempo.adelante)}
-        motivoPasosCortos={MOTIVO_PASOS_CORTOS}
+        motivoPasosCortos={pasosCortos ? undefined : MOTIVO_PASOS_CORTOS}
         deshabilitado={motivoReproductor ?? (pasadas.length < 2 ? 'Este escenario tiene una sola pasada.' : undefined)}
       />
       {(onFijarAntes || onFijarDespues) && (

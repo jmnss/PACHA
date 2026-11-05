@@ -105,7 +105,7 @@ Ver `.superpowers/sdd/plan-migracion/progress.md` (no versionado): validar `max_
 
 ## Pendientes tras la primera noche
 
-- **Funcionales (paridad N1 incompleta):** serie temporal del punto/cuadrante (la API no expone `serie_seleccion`), modelo en el tiempo por fotogramas continuos (`/api/simulacion/fotogramas` existe pero la pantalla no lo usa), fecha del evento (el servidor no la acepta), tooltip de provincia y marcadores del catálogo en el mapa, marcas de evento y cursor en la vista Serie, observable del tipo en la cabecera.
+- **Funcionales (paridad N1 incompleta):** serie temporal del punto/cuadrante (la API no expone `serie_seleccion`), fecha del evento (el servidor no la acepta), tooltip de provincia y marcadores del catálogo en el mapa, marcas de evento y cursor en la vista Serie, observable del tipo en la cabecera.
 - **Visuales:** mapa gris sin contexto a escala de escenario (falta localizador/escala), menú de tres puntos en móvil, tabla móvil en tres líneas y sin semántica de tabla, margen de la banda móvil (12 px), sin captura con punto/cuadrante seleccionado.
 - **Datos reales:** `/api/tipos` mezcla unidades (el panel multiplica por `escala`); `/cambio` pesado con rejillas reales (capas extra a demanda); `/medicion` recalcula el cambio; `RLock` global en el proveedor demo; `/api/salud` depende de `escenarios()`; el proveedor real es un esqueleto.
 - **Equipo:** confirmar licencia (MIT provisional), requisitos de entrega, si Validación se conserva, y qué hacer con `/_sistema` (galería publicada en producción).
@@ -161,7 +161,7 @@ Copia de la lista de `docs/plan-migracion.md` (N1 primera noche, N2 segunda, R c
 
 - [~] N1 · Parámetros (parcial: sin fecha del evento) (tipo, lugar, clic en mapa, estacionalidad, radar, intervalo, controles con hora, fecha, restablecer, resumen)
 - [~] N1 · Cabecera y contexto (parcial: sin «observable»)
-- [~] N1 · Mapa (parcial: sin fotogramas continuos, tooltip de provincia ni marcadores del catálogo) (capas, reproductor completo, deslizador, reloj, métricas, provincias, catálogo, aviso fuera de Ecuador)
+- [~] N1 · Mapa (parcial: sin tooltip de provincia ni marcadores del catálogo; fotogramas continuos hechos 2026-11-05) (capas, reproductor completo, deslizador, reloj, métricas, provincias, catálogo, aviso fuera de Ecuador)
 - [~] N1 · Antes / después (parcial: sin serie del punto) (paneles, punto y cuadrante, medición y CSV, punto y serie, borrar, flujo, notas, PNG, parcelas) + comparador
 - [~] N1 · Serie temporal (parcial: sin marcas de evento) (gráficos, tabla y CSV)
 - [~] N1 · Física por tipo (inundación e incendio en Historias; los otros cuatro con la ayuda «Cómo ve el radar»)
@@ -176,7 +176,7 @@ Copia de la lista de `docs/plan-migracion.md` (N1 primera noche, N2 segunda, R c
 | Requisito | Estado | Evidencia |
 |---|---|---|
 | Mapa interactivo de cambio | Cumple | `frontend/src/pantallas/observatorio/VistaMapa.tsx` (capa de cambio, clic para simular, aviso fuera de Ecuador); e2e `flujos.spec.ts` |
-| Animación de series temporales | Parcial | Reproductor por pasadas (`tiempo/usePlayback.ts`, `BloqueTiempo.tsx`); sin fotogramas continuos |
+| Animación de series temporales | Cumple | Reproductor por pasadas y, con paso menor de 12 días, fotogramas continuos del modelo (`observatorio/fotogramas.ts`, `useTiempoObservatorio.ts`, `VistaMapa.tsx`); e2e «anima los fotogramas» |
 | Comparador deslizante antes/después | Cumple | `comparador/Comparador.tsx`; Historias y Observatorio; e2e con teclado |
 | Dashboards y métricas | Cumple | `PanelMetricas.tsx`, `Mediciones.tsx`, `TablaResultados.tsx`, vista Serie |
 | Público amplio | Cumple | Términos explicados (`Termino`), accesibilidad por teclado/ARIA, tres anchos revisados |

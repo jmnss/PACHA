@@ -10,3 +10,11 @@ export function formatearFecha(iso: string | null | undefined): string | null {
   const d = new Date(t)
   return `${d.getUTCDate()} ${MESES[d.getUTCMonth()]} ${d.getUTCFullYear()}`
 }
+
+/** «12 abr 2026 14:05 UTC»: la fecha con la hora, para fotogramas dentro de un mismo día. */
+export function formatearInstante(ms: number): string | null {
+  const fecha = formatearFecha(new Date(ms).toISOString())
+  if (!fecha) return null
+  const d = new Date(ms)
+  return `${fecha} ${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')} UTC`
+}

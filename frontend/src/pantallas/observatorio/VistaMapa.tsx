@@ -1,14 +1,14 @@
 import type { UseQueryResult } from '@tanstack/react-query'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
-import { useCapa, useSimular, type CapaDto, type Contexto, type Escenario, type ResultadoCambio } from '../../api/consultas'
+import { useCapa, useFotogramas, useSimular, type CapaDto, type Contexto, type Escenario, type ResultadoCambio } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
 import { Leyenda } from '../../diseno/Leyenda'
 import { Pestanas } from '../../diseno/Pestanas'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tarjeta } from '../../diseno/Tarjeta'
-import { formatearFecha } from '../../tiempo/fechas'
+import { formatearFecha, formatearInstante } from '../../tiempo/fechas'
 import { dentroDeEcuador } from '../../mapa/dentroDeEcuador'
 import { CapaLienzo } from '../../mapa/CapaLienzo'
 import { ControlesMapa } from '../../mapa/ControlesMapa'
@@ -17,6 +17,8 @@ import { MapaBase } from '../../mapa/MapaBase'
 import type { Valores } from './parametros'
 import { BloqueTiempo } from './BloqueTiempo'
 import { estiloDeCapa, temporadasLluviosas } from './derivados'
+import { ventanaFotogramas } from './fotogramas'
+import { PASO_PASADA_MIN } from './useTiempoObservatorio'
 import type { TiempoObservatorio } from './useTiempoObservatorio'
 
 export type ModoCapa = 'modelo' | 'cambio'
@@ -89,10 +91,23 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
 
   const pasada = esc.adquisiciones[tiempo.pasadaActiva]
   const variable = esc.variables[0]
-  const modelo = useCapa(esc.id, modo === 'modelo' && pasada ? { adquisicion: pasada.id, variable, polarizacion } : undefined)
-  const consulta = modo === 'modelo' ? modelo : resultado
-  const capaNueva = modo === 'modelo' ? modelo.data : resultado.data?.cambio
-  const ultimaModelo = useUltimo(modelo.data)
+  // Con un paso menor que una pasada el mapa muestra el estado continuo del modelo (fotogramas).
+  const instantesMs = esc.adquisiciones.map((a) => Date.parse(a.instante))
+  const ventana = modo === 'modelo' && esc.capacidades.modelo_continuo && tiempo.pasoMin < PASO_PASADA_MIN
+    ? ventanaFotogramas(Math.min(...instantesMs), Math.max(...instantesMs), tiempo.ms, tiempo.pasoMin)
+    : null
+  const fotogramas = useFotogramas(ventana ? {
+    escenario_id: esc.id, parametros: {}, paso_min: tiempo.pasoMin,
+    inicio: new Date(ventana.inicio).toISOString(), fin: new Date(ventana.fin).toISOString(),
+  } : undefined)
+  const fotograma = ventana ? fotogramas.data?.[ventana.indice] : undefined
+  const { setEsperando } = tiempo
+  const esperandoFotogramas = !!ventana && !fotogramas.data && !fotogramas.isError
+  useEffect(() => { setEsperando(esperandoFotogramas) }, [esperandoFotogramas, setEsperando])
+  const modelo = useCapa(esc.id, modo === 'modelo' && pasada && !ventana ? { adquisicion: pasada.id, variable, polarizacion } : undefined)
+  const consulta = modo === 'modelo' ? (ventana ? fotogramas : modelo) : resultado
+  const capaNueva = modo === 'modelo' ? (ventana ? fotograma : modelo.data) : resultado.data?.cambio
+  const ultimaModelo = useUltimo(ventana ? fotograma : modelo.data)
   const ultimaCambio = useUltimo(resultado.data?.cambio)
   const capa = capaNueva ?? (modo === 'modelo' ? ultimaModelo : ultimaCambio)
 
@@ -125,7 +140,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
   const sinPareja = modo === 'cambio' && resultado.fetchStatus === 'idle' && !resultado.data
   const cargando = !sinPareja && (consulta.isPending || (consulta.isFetching && !capa))
   const rotulo = modo === 'modelo'
-    ? (pasada ? `Pasada · ${formatearFecha(pasada.instante) ?? '—'}` : null)
+    ? (ventana ? `Modelo · ${formatearInstante(tiempo.ms) ?? '—'}` : pasada ? `Pasada · ${formatearFecha(pasada.instante) ?? '—'}` : null)
     : `Cambio · antes ${formatearFecha(esc.adquisiciones[iAntes]?.instante) ?? '—'}, después ${formatearFecha(esc.adquisiciones[iDespues]?.instante) ?? '—'}`
 
   return (
@@ -191,6 +206,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
           onFijarAntes={() => pasada && onFijar('antes', pasada.id)}
           onFijarDespues={() => pasada && onFijar('despues', pasada.id)}
           motivoAntes={motivoAntes} motivoDespues={motivoDespues} motivoReproductor={motivoReproductor}
+          pasosCortos={esc.capacidades.modelo_continuo}
         />
       </Tarjeta>
     </>

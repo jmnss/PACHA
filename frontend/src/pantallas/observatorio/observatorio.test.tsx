@@ -82,6 +82,7 @@ function simularFetch() {
     if (url.endsWith('/cambio')) return json(CAMBIO)
     if (url.startsWith('/api/contexto')) return json(CONTEXTO)
     if (url === '/api/simulacion/escenario') return json(DERIVADO)
+    if (url === '/api/simulacion/fotogramas') return json(Array.from({ length: 120 }, (_, i) => capa({ variable: 'estado_modelo', paleta: 'gris', unidad: 'dB', leyenda: null, instante: new Date(Date.parse('2026-04-12T00:00:00Z') + i * 3_600_000).toISOString() })))
     return json({ mensaje: 'no previsto' }, 404)
   }))
 }
@@ -182,6 +183,33 @@ describe('Observatorio · mapa y tiempo', () => {
     montar('/observatorio?escenario=ec_x&vista=serie')
     expect(await screen.findByRole('tab', { name: 'Serie', selected: true })).toBeInTheDocument()
     expect(screen.queryByTestId('mapa-falso')).not.toBeInTheDocument()
+  })
+})
+
+describe('Observatorio · fotogramas del modelo continuo', () => {
+  const fotogramas = () => llamadas.filter((l) => l.url === '/api/simulacion/fotogramas')
+
+  it('con un paso de 1 h pide un bloque de fotogramas y avanzar mueve el instante en horas', async () => {
+    montar()
+    await listo()
+    fireEvent.click(screen.getByRole('tab', { name: 'Modelo en el tiempo' }))
+    fireEvent.change(screen.getByRole('combobox', { name: 'Paso' }), { target: { value: '60' } })
+    await waitFor(() => expect(fotogramas()).toHaveLength(1))
+    expect(fotogramas()[0].cuerpo).toEqual({
+      escenario_id: 'ec_x', parametros: {}, paso_min: 60,
+      inicio: '2026-04-12T00:00:00.000Z', fin: '2026-04-16T23:00:00.000Z',
+    })
+    expect(await screen.findByText(/Modelo · 12 abr 2026 00:00 UTC/)).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Avanzar un paso' }))
+    expect(await screen.findByText(/Modelo · 12 abr 2026 01:00 UTC/)).toBeInTheDocument()
+    expect(fotogramas()).toHaveLength(1)
+  })
+
+  it('el selector de paso admite pasos cortos y no muestra el motivo de «pendiente»', async () => {
+    montar()
+    await listo()
+    expect(screen.getByRole('option', { name: '1 h' })).not.toBeDisabled()
+    expect(screen.queryByText(/sigue pendiente/)).not.toBeInTheDocument()
   })
 })
 

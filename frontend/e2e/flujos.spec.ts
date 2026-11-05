@@ -36,6 +36,19 @@ for (const { nombre, ancho, alto } of ANCHOS) {
       await expect.poll(valor).toBeCloseTo(v0 + 11, 5)
     })
 
+    test('Observatorio: con paso de 1 h el mapa anima los fotogramas del modelo', async ({ page }) => {
+      await page.goto('/observatorio')
+      await page.getByRole('tab', { name: 'Modelo en el tiempo' }).click()
+      await page.getByRole('combobox', { name: 'Paso' }).selectOption('60')
+      const rotulo = page.getByText(/^Modelo · /)
+      await expect(rotulo).toBeVisible({ timeout: 60_000 })
+      const t0 = await rotulo.textContent()
+      await page.getByRole('combobox', { name: 'Velocidad' }).selectOption('rapida')
+      await page.getByRole('button', { name: 'Reproducir' }).click()
+      await expect.poll(async () => rotulo.textContent(), { timeout: 15_000 }).not.toBe(t0)
+      await page.getByRole('button', { name: 'Pausa' }).click()
+    })
+
     test('Observatorio: Play avanza el instante de la cinta', async ({ page }) => {
       await page.goto('/observatorio')
       const cinta = page.getByRole('slider', { name: 'Instante de la cinta de pasadas' })
