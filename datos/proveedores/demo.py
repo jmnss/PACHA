@@ -111,7 +111,7 @@ def _rango(datos: np.ndarray, paleta: str) -> tuple[float, float]:
 def _paleta(nombre: str) -> str:
     p = _PALETA_DE_PANEL.get(nombre, nombre)
     if p not in PALETAS:
-        raise EntradaNoValida(f"Paleta desconocida en el modelo: {nombre}")
+        raise EntradaNoValida.con("api.error.paleta_desconocida", nombre=nombre)
     return p
 
 
@@ -203,7 +203,7 @@ def sitio_en_mapa(tipo: str, lat: float, lon: float, sitios: pd.DataFrame) -> di
 
 def _numero(valor, nombre: str) -> float:
     if isinstance(valor, bool) or not isinstance(valor, (int, float)) or not math.isfinite(valor):
-        raise EntradaNoValida(f"«{nombre}» debe ser un número finito.")
+        raise EntradaNoValida.con("api.error.numero_finito", nombre=nombre)
     return float(valor)
 
 
@@ -214,35 +214,35 @@ def _validar(tipo: str, parametros: dict | None) -> dict:
     controles = {c.clave: c for c in nisar.CONTROLES[tipo]}
     for k in parametros:
         if k not in controles and k not in GENERICOS:
-            raise EntradaNoValida(f"Parámetro desconocido para este tipo de cambio: {k}")
+            raise EntradaNoValida.con("api.error.parametro_desconocido_tipo", parametro=k)
     sim: dict = {}
     if "semilla" in parametros:
         s = parametros["semilla"]
         if isinstance(s, bool) or not isinstance(s, int) or not 0 <= s < 2**31:
-            raise EntradaNoValida("semilla debe ser un entero entre 0 y 2147483647.")
+            raise EntradaNoValida.con("api.error.semilla_rango")
         sim["semilla"] = s
     if "looks" in parametros:
         looks = _numero(parametros["looks"], "looks")
         if not 1.0 <= looks <= 100.0:
-            raise EntradaNoValida("looks debe estar entre 1 y 100.")
+            raise EntradaNoValida.con("api.error.looks_rango")
         sim["looks"] = looks
     if "orbita" in parametros:
         if parametros["orbita"] not in ORBITAS:
-            raise EntradaNoValida(f"orbita debe ser una de: {', '.join(ORBITAS)}.")
+            raise EntradaNoValida.con("api.error.orbita_opcion", opciones=", ".join(ORBITAS))
         sim["orbita"] = parametros["orbita"]
     if "estacional" in parametros:
         if not isinstance(parametros["estacional"], bool):
-            raise EntradaNoValida("estacional debe ser verdadero o falso.")
+            raise EntradaNoValida.con("api.error.estacional_booleano")
         sim["estacional"] = parametros["estacional"]
     punto = None
     if "lat" in parametros or "lon" in parametros:
         if "lat" not in parametros or "lon" not in parametros:
-            raise EntradaNoValida("Para colocar un punto en el mapa hacen falta lat y lon.")
+            raise EntradaNoValida.con("api.error.punto_faltan_coordenadas")
         lat, lon = _numero(parametros["lat"], "lat"), _numero(parametros["lon"], "lon")
         if not (-90 <= lat <= 90 and -180 <= lon <= 180):
-            raise EntradaNoValida("lat debe estar entre -90 y 90, y lon entre -180 y 180.")
+            raise EntradaNoValida.con("api.error.latlon_rango")
         if not en_ecuador(lat, lon):
-            raise EntradaNoValida(MENSAJE_FUERA_DE_ECUADOR)
+            raise EntradaNoValida.con("api.error.fuera_de_ecuador")
         punto = (lat, lon)
     ajustes: dict = {}
     mostrados: dict = {}
@@ -253,15 +253,16 @@ def _validar(tipo: str, parametros: dict | None) -> dict:
         if c.opciones:
             validos = [o for o, _ in c.opciones]
             if v not in validos:
-                raise EntradaNoValida(f"«{c.etiqueta}» debe ser uno de: " + ", ".join(f"{n} ({o:g})" for o, n in c.opciones) + ".")
+                raise EntradaNoValida.con("api.error.control_opcion", nombre=c.etiqueta,
+                                          opciones=", ".join(f"{n} ({o:g})" for o, n in c.opciones))
             ajustes[clave] = v
         elif c.hora:
             if not 0 <= v < 24:
-                raise EntradaNoValida(f"«{c.etiqueta}» debe estar entre 0 y 24 horas (sin incluir 24).")
+                raise EntradaNoValida.con("api.error.control_hora", nombre=c.etiqueta)
             ajustes[clave] = v
         else:
             if not c.minimo <= v <= c.maximo:
-                raise EntradaNoValida(f"«{c.etiqueta}» debe estar entre {c.minimo:g} y {c.maximo:g}.")
+                raise EntradaNoValida.con("api.error.control_rango", nombre=c.etiqueta, minimo=f"{c.minimo:g}", maximo=f"{c.maximo:g}")
             ajustes[clave] = v / c.escala
         mostrados[clave] = v
     por_defecto = {k: PARAMETROS_DEMO[k] for k in sim if sim[k] == PARAMETROS_DEMO[k]}
@@ -284,7 +285,7 @@ class ProveedorDemostracion:
 
     def _tipo(self, base: str) -> str:
         if base not in ESCENARIOS_DEMO:
-            raise NoEncontrado(f"Escenario de demostración desconocido: {base}")
+            raise NoEncontrado.con("api.error.escenario_desconocido", id=base)
         df = nisar.cargar_sitios()
         return str(df[df["id"] == base].iloc[0]["tipo_cambio"])
 
@@ -297,9 +298,9 @@ class ProveedorDemostracion:
         if "~" in escenario_id:
             registro = self._simulados.obtener(escenario_id)
             if registro is None:
-                raise NoEncontrado(f"Escenario simulado desconocido o caducado: {escenario_id}")
+                raise NoEncontrado.con("api.error.escenario_simulado_caducado", id=escenario_id)
             if parametros:
-                raise EntradaNoValida("Un escenario simulado ya lleva sus parámetros; no se pueden dar otros.")
+                raise EntradaNoValida.con("api.error.simulado_sin_parametros")
             base, parametros = registro
         else:
             base = escenario_id
@@ -351,7 +352,7 @@ class ProveedorDemostracion:
         for i, a in enumerate(esc.adquisiciones):
             if a.id == adquisicion_id:
                 return i
-        raise NoEncontrado(f"Adquisición desconocida: {adquisicion_id}")
+        raise NoEncontrado.con("api.error.adquisicion_desconocida", id=adquisicion_id)
 
     # --- protocolo ----------------------------------------------------------------------------
 
@@ -397,15 +398,16 @@ class ProveedorDemostracion:
     def _capa_cubo(self, escena: nisar.Escena, esc: Escenario, i: int, variable: str,
                    polarizacion: str | None) -> CapaRaster:
         if variable not in esc.variables:
-            raise EntradaNoValida(f"variable desconocida: {variable}; disponibles: {', '.join(esc.variables)}")
+            raise EntradaNoValida.con("api.error.variable_desconocida", variable=variable, disponibles=", ".join(esc.variables))
         if variable == "sigma0":
             polarizacion = polarizacion or nisar.SERIE_SELECCION[escena.tipo][0]
             if polarizacion not in esc.polarizaciones:
-                raise EntradaNoValida(f"polarización no disponible: {polarizacion}; disponibles: {', '.join(esc.polarizaciones)}")
+                raise EntradaNoValida.con("api.error.polarizacion_no_disponible", polarizacion=polarizacion,
+                                          disponibles=", ".join(esc.polarizaciones))
             cubo_clave = polarizacion
         else:
             if polarizacion is not None:
-                raise EntradaNoValida(f"La variable {variable} no tiene polarización.")
+                raise EntradaNoValida.con("api.error.variable_sin_polarizacion", variable=variable)
             cubo_clave = next(k for k, (var, _) in _VARIABLE_DE_CUBO.items() if var == variable and k in escena.cubos)
         unidad, paleta = _META_VARIABLE[variable]
         cubo = escena.cubos[cubo_clave]
@@ -427,7 +429,7 @@ class ProveedorDemostracion:
         escena, esc = self._contexto(escenario_id)
         i0, i1 = self._indice(esc, antes_id), self._indice(esc, despues_id)
         if i0 >= i1:
-            raise EntradaNoValida("La fecha 'después' debe ser posterior a la fecha 'antes'.")
+            raise EntradaNoValida.con("api.error.fecha_despues_antes")
         clave = (esc.id, i0, i1)
         with self._cerrojo:
             a = self._analisis_cache.obtener(clave)
@@ -477,19 +479,19 @@ class ProveedorDemostracion:
               cuadrante: tuple[int, int, int, int] | None = None,
               punto: tuple[int, int] | None = None) -> Medicion:
         if (cuadrante is None) == (punto is None):
-            raise EntradaNoValida("Indica exactamente uno de `cuadrante` o `punto`.")
+            raise EntradaNoValida.con("api.error.medir_uno_de_dos")
         escena, esc, _, _, a = self._analisis(escenario_id, antes_id, despues_id)
         ny = nx = escena.n
         if cuadrante is not None:
             f0, f1, c0, c1 = cuadrante
             if not (0 <= f0 < f1 <= ny and 0 <= c0 < c1 <= nx):
-                raise EntradaNoValida(f"El cuadrante {cuadrante} queda fuera de la imagen ({ny}×{nx} píxeles).")
+                raise EntradaNoValida.con("api.error.cuadrante_fuera", cuadrante=cuadrante, ny=ny, nx=nx)
             metricas, tabla = nisar.medir_cuadrante(a, cuadrante)
             ms = [_metrica(e, v, ay) for e, v, ay in metricas]
         else:
             f, c = punto
             if not (0 <= f < ny and 0 <= c < nx):
-                raise EntradaNoValida(f"El punto {punto} queda fuera de la imagen ({ny}×{nx} píxeles).")
+                raise EntradaNoValida.con("api.error.punto_fuera", punto=punto, ny=ny, nx=nx)
             tabla = nisar.valores_en_punto(a, punto)
             lat, lon = nisar.coordenadas_punto(a.limites, ((c + 0.5) / nx, (f + 0.5) / ny))
             ms = [Metrica(etiqueta="Posición", valor=_coordenadas(lat, lon), unidad="",
@@ -525,25 +527,25 @@ class ProveedorDemostracion:
         """
         for nombre, t in (("inicio", inicio), ("fin", fin)):
             if t.tzinfo is None or t.utcoffset() is None:
-                raise EntradaNoValida(f"{nombre} debe llevar zona horaria.")
+                raise EntradaNoValida.con("api.error.fecha_sin_zona", nombre=nombre)
         if isinstance(paso_min, bool) or not isinstance(paso_min, int) or paso_min <= 0:
-            raise EntradaNoValida("El paso debe ser un número entero de minutos mayor que 0.")
+            raise EntradaNoValida.con("api.error.paso_invalido")
         try:
             ini, fi = inicio.astimezone(timezone.utc), fin.astimezone(timezone.utc)
         except OverflowError:
-            raise EntradaNoValida("Las fechas quedan fuera del rango admitido.") from None
+            raise EntradaNoValida.con("api.error.fechas_fuera_rango") from None
         if fi < ini:
-            raise EntradaNoValida("El fin debe ser igual o posterior al inicio.")
+            raise EntradaNoValida.con("api.error.fin_anterior_inicio")
         n = int((fi - ini).total_seconds() // (paso_min * 60)) + 1
         if n > MAX_FOTOGRAMAS:
-            raise EntradaNoValida(f"Se pedirían {n} fotogramas; el máximo es {MAX_FOTOGRAMAS}. Amplía el paso o acorta el intervalo.")
+            raise EntradaNoValida.con("api.error.fotogramas_maximo", n=n, maximo=MAX_FOTOGRAMAS)
         escena, esc = self._contexto(escenario_id, parametros)
         paneles = []
         for k in range(n):
             try:
                 t = ini + pd.Timedelta(minutes=paso_min * k)
             except (OverflowError, pd.errors.OutOfBoundsDatetime):
-                raise EntradaNoValida("Las fechas quedan fuera del rango admitido.") from None
+                raise EntradaNoValida.con("api.error.fechas_fuera_rango") from None
             panel, _ = nisar.estado_modelo(escena, t.replace(tzinfo=None))
             paneles.append((t, panel))
         vmin = min(float(p.vmin) for _, p in paneles)

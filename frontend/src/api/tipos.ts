@@ -548,8 +548,14 @@ export interface components {
         };
         /** ErrorDto */
         ErrorDto: {
+            /** Clave Texto */
+            clave_texto?: string | null;
             /** Mensaje */
             mensaje: string;
+            /** Valores Texto */
+            valores_texto?: {
+                [key: string]: number | string;
+            } | null;
         };
         /** Escenario */
         Escenario: {

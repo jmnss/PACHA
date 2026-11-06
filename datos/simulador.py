@@ -129,9 +129,9 @@ class PeticionMundo(BaseModel):
 
     def validar(self) -> None:
         if not en_ecuador(self.lat, self.lon):
-            raise EntradaNoValida(MENSAJE_FUERA_DE_ECUADOR)
+            raise EntradaNoValida.con("api.error.fuera_de_ecuador")
         if self.extension_km not in EXTENSIONES_KM:
-            raise EntradaNoValida("El lado del mundo debe ser uno de: " + ", ".join(map(str, EXTENSIONES_KM)) + " km.")
+            raise EntradaNoValida.con("api.error.lado_mundo", opciones=", ".join(map(str, EXTENSIONES_KM)))
 
     def clave(self) -> str:
         return json.dumps(self.model_dump(mode="json"), sort_keys=True, separators=(",", ":"))
@@ -225,20 +225,20 @@ def _validar_parametros(herramienta: str, parametros: dict[str, Valor]) -> dict[
     for k, v in parametros.items():
         c = controles.get(k)
         if c is None:
-            raise EntradaNoValida(f"El parámetro {k} no existe para esta herramienta.")
+            raise EntradaNoValida.con("api.error.sim_parametro_no_existe", parametro=k)
         if c["tipo"] == "numero":
             if isinstance(v, bool) or not isinstance(v, (int, float)) or not np.isfinite(v):
-                raise EntradaNoValida(f"{k} debe ser un número.")
+                raise EntradaNoValida.con("api.error.sim_numero", parametro=k)
             if not c["minimo"] <= v <= c["maximo"]:
-                raise EntradaNoValida(f"{k} debe estar entre {c['minimo']:g} y {c['maximo']:g}.")
+                raise EntradaNoValida.con("api.error.sim_rango", parametro=k, minimo=f"{c['minimo']:g}", maximo=f"{c['maximo']:g}")
             limpios[k] = int(v) if k in ("semilla", "vei") else float(v)
         elif c["tipo"] == "seleccion":
             if v not in c["opciones"]:
-                raise EntradaNoValida(f"{k} debe ser una de: {', '.join(c['opciones'])}.")
+                raise EntradaNoValida.con("api.error.sim_opcion", parametro=k, opciones=", ".join(c["opciones"]))
             limpios[k] = v
         elif c["tipo"] == "interruptor":
             if not isinstance(v, bool):
-                raise EntradaNoValida(f"{k} debe ser verdadero o falso.")
+                raise EntradaNoValida.con("api.error.sim_interruptor", parametro=k)
             limpios[k] = v
         else:
             limpios[k] = str(v)[:40]
@@ -276,11 +276,11 @@ def _duracion_h(herramienta: str, par: dict[str, Valor]) -> float | None:
 def desatar(p: PeticionEvento) -> dict:
     """Ejecuta el desastre y devuelve el `EventoDto` (con los paneles de radar como `CapaRaster`)."""
     if p.herramienta not in desastres.DESASTRES:
-        raise EntradaNoValida("La herramienta no existe o no es un evento: elige incendio, tormenta, inundacion, terremoto o erupcion.")
+        raise EntradaNoValida.con("api.error.herramienta_no_evento")
     m, dto_mundo = crear(p.mundo)
     i, j = p.celda
     if not (0 <= i < m.n and 0 <= j < m.n):
-        raise EntradaNoValida(f"La celda ({i}, {j}) queda fuera de la malla de {m.n}×{m.n}.")
+        raise EntradaNoValida.con("api.error.celda_fuera_malla", i=i, j=j, n=m.n)
     par = _validar_parametros(p.herramienta, p.parametros)
     clave = json.dumps([p.mundo.clave(), p.herramienta, i, j, sorted(par.items())], default=str)
     hit = _EVENTOS.obtener(clave)
@@ -327,10 +327,10 @@ def fundar_ciudad(p: PeticionMundo, i: int, j: int, nombre: str, habitantes: int
     """Devuelve la petición de mundo con la ciudad añadida (el mundo se vuelve a poblar con ella)."""
     m, _ = crear(p)
     if not (0 <= i < m.n and 0 <= j < m.n):
-        raise EntradaNoValida(f"La celda ({i}, {j}) queda fuera de la malla de {m.n}×{m.n}.")
+        raise EntradaNoValida.con("api.error.celda_fuera_malla", i=i, j=j, n=m.n)
     if m.mar[i, j]:
-        raise EntradaNoValida("No se puede fundar una ciudad en el mar.")
+        raise EntradaNoValida.con("api.error.ciudad_en_mar")
     if len(p.ciudades) >= MAX_CIUDADES:
-        raise EntradaNoValida(f"Se admiten como máximo {MAX_CIUDADES} ciudades fundadas.")
+        raise EntradaNoValida.con("api.error.ciudades_maximo", maximo=MAX_CIUDADES)
     n_, la, lo, h = desastres.ciudad_fundada(m, i, j, habitantes, nombre.strip()[:40] or "Ciudad sin nombre")
     return p.model_copy(update={"ciudades": [*p.ciudades, CiudadExtra(nombre=n_, lat=la, lon=lo, habitantes=h)]})

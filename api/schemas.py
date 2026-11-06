@@ -19,6 +19,8 @@ class Salud(BaseModel):
 
 class ErrorDto(BaseModel):
     mensaje: str
+    clave_texto: str | None = None
+    valores_texto: dict[str, float | int | str] | None = None
 
 
 class Rejilla(BaseModel):

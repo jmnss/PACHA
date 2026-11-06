@@ -88,7 +88,7 @@ def _capa(variable: str, pol: str | None, unidad: str, paleta: str, vmin: float,
 
 def _validar(valor: str, validos: tuple[str, ...], nombre: str) -> str:
     if valor not in validos:
-        raise EntradaNoValida(f"{nombre} no válida: elige una de {', '.join(validos)}.")
+        raise EntradaNoValida.con("api.error.lab_no_valida", nombre=nombre, opciones=", ".join(validos))
     return valor
 
 
@@ -107,7 +107,7 @@ def mascara_nubes(cobertura: float, semilla: int) -> np.ndarray:
 def nubes(cobertura_pct: float, semilla: int = 1) -> dict:
     """Radar y óptico sobre la misma inundación, con `cobertura_pct` % de nubes sobre la imagen óptica posterior."""
     if not 0 <= cobertura_pct <= 100:
-        raise EntradaNoValida("La cobertura de nubes va de 0 a 100 %.")
+        raise EntradaNoValida.con("api.error.nubes_rango", min=0, max=100)
     antes, despues = escena(False), escena(True)
     real = antes != despues
     rng = np.random.default_rng(SEMILLA)

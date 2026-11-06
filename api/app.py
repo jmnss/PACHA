@@ -12,13 +12,20 @@ from api import VERSION
 from api.deps import obtener
 from api.rutas import capas, contexto, escenarios, impacto, laboratorio, simulacion, simulador
 from api.schemas import ErrorDto, Salud
+from datos.claves import texto
 from datos.contrato import (CapacidadNoDisponible, DatosRealesNoDisponibles, EntradaNoValida, NoEncontrado,
                             ProveedorDatos)
 from datos.seleccion import obtener_proveedor
 
 
-def _error(estado: int, mensaje: str) -> JSONResponse:
-    return JSONResponse({"mensaje": mensaje}, status_code=estado)
+def _error(estado: int, mensaje: str, clave: str | None = None, valores: dict | None = None) -> JSONResponse:
+    """Cuerpo de error: el texto en español y, si lo hay, su clave para traducirlo en el cliente."""
+    cuerpo: dict = {"mensaje": mensaje}
+    if clave:   # sin clave el cuerpo queda como siempre: solo el mensaje
+        cuerpo["clave_texto"] = clave
+        if valores:
+            cuerpo["valores_texto"] = valores
+    return JSONResponse(cuerpo, status_code=estado)
 
 
 def _registrar_errores(app: FastAPI) -> None:
@@ -32,19 +39,21 @@ def _registrar_errores(app: FastAPI) -> None:
 
     @app.exception_handler(NoEncontrado)
     async def _no_existe(_: Request, exc: NoEncontrado) -> JSONResponse:
-        clave = exc.args[0] if exc.args else ""
-        return _error(404, f"No existe el recurso pedido: {clave}")
+        detalle = exc.args[0] if exc.args else ""
+        if exc.clave:   # el mensaje de un error con clave ya trae el prefijo
+            return _error(404, detalle, exc.clave, exc.valores)
+        return _error(404, f"No existe el recurso pedido: {detalle}")
 
     @app.exception_handler(EntradaNoValida)
     async def _valor(_: Request, exc: EntradaNoValida) -> JSONResponse:
-        return _error(422, str(exc))
+        return _error(422, str(exc), exc.clave, exc.valores)
 
     # Errores inesperados (un KeyError o ValueError que no son de la petición): 500 con mensaje genérico,
     # sin filtrar detalles internos.
     @app.exception_handler(KeyError)
     @app.exception_handler(ValueError)
     async def _inesperado(_: Request, exc: Exception) -> JSONResponse:
-        return _error(500, "Ocurrió un error inesperado en el servidor. Inténtalo de nuevo.")
+        return _error(500, texto("api.error.inesperado"), "api.error.inesperado")
 
     @app.exception_handler(StarletteHTTPException)
     async def _http(_: Request, exc: StarletteHTTPException) -> JSONResponse:
@@ -53,7 +62,9 @@ def _registrar_errores(app: FastAPI) -> None:
 
     @app.exception_handler(RequestValidationError)
     async def _entrada(_: Request, exc: RequestValidationError) -> JSONResponse:
-        return _error(422, "Entrada no válida. " + " ".join(_mensaje_validacion(e) for e in exc.errors()))
+        detalle = " ".join(_mensaje_validacion(e) for e in exc.errors())
+        return _error(422, texto("api.error.entrada_no_valida", detalle=detalle),
+                      "api.error.entrada_no_valida", {"detalle": detalle})
 
 
 def _mensaje_validacion(e: dict) -> str:

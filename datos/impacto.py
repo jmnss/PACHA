@@ -53,7 +53,7 @@ def _area_pixel_km2(capa: CapaRaster) -> float:
 def _capa_de_impacto(r) -> CapaRaster:
     capa = r.clasificacion if r.clasificacion is not None else r.cambio
     if capa.paleta != "categorias" or not capa.leyenda:
-        raise EntradaNoValida("Este escenario no tiene un cambio por categorías para resumir.")
+        raise EntradaNoValida.con("api.error.impacto_sin_categorias")
     return capa
 
 
@@ -61,7 +61,7 @@ def _codigos(capa: CapaRaster, prefijos: tuple[str, ...]) -> set[int]:
     """Códigos (posición + 1) de las categorías cuya etiqueta empieza por alguno de los prefijos."""
     cods = {k for k, (etiqueta, _c) in enumerate(capa.leyenda or [], start=1) if etiqueta.startswith(prefijos)}
     if not cods:
-        raise EntradaNoValida("La clasificación del escenario no trae las categorías esperadas para resumir el impacto.")
+        raise EntradaNoValida.con("api.error.impacto_categorias_inesperadas")
     return cods
 
 
@@ -95,7 +95,7 @@ def _calcular(prov: ProveedorDatos, escenario_id: str, antes: str, despues: str,
     esc = prov.escenario(escenario_id)
     historia = esc.historia
     if historia not in AFECTADO:
-        raise EntradaNoValida("El resumen de impacto está disponible para inundaciones e incendios.")
+        raise EntradaNoValida.con("api.error.impacto_no_disponible")
     r = prov.cambio(escenario_id, antes, despues, pol)
     capa = _capa_de_impacto(r)
     px = _area_pixel_km2(capa)
@@ -112,7 +112,7 @@ def _calcular(prov: ProveedorDatos, escenario_id: str, antes: str, despues: str,
     por_id_todas = {a.id: a for a in esc.adquisiciones}
     t_antes, t_despues = por_id_todas[antes].instante, por_id_todas[despues].instante
     if t_despues <= t_antes:
-        raise EntradaNoValida("La pasada «después» debe ser posterior a la pasada «antes».")
+        raise EntradaNoValida.con("api.error.pasada_despues_antes")
     # Solo el intervalo analizado (hasta «después» incluida), y «después» siempre está en la serie.
     en_rango = sorted((a for a in esc.adquisiciones if t_antes < a.instante <= t_despues), key=lambda a: a.instante)
     por_id = {a.id: a for a in en_rango}

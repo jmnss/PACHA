@@ -12,6 +12,7 @@ from typing import Literal, Protocol, runtime_checkable
 import numpy as np
 import math
 
+from datos.claves import texto
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, model_validator
 
 BBox = tuple[float, float, float, float]  # (oeste, sur, este, norte) en WGS84
@@ -19,12 +20,33 @@ Paleta = Literal["gris", "secuencial", "divergente", "ciclico", "categorias"]
 PALETAS: tuple[str, ...] = ("gris", "secuencial", "divergente", "ciclico", "categorias")
 
 
-class EntradaNoValida(ValueError):
+class _ConClave:
+    """Mezcla: un error puede llevar `clave` (de `datos.claves.REGISTRO`) y `valores` para traducirlo."""
+    clave: str | None
+    valores: dict | None
+
+    @classmethod
+    def con(cls, clave: str, **valores):
+        """Error cuyo mensaje es la plantilla registrada de `clave` formateada con `valores`."""
+        return cls(texto(clave, **valores), clave=clave, valores=valores or None)
+
+
+class EntradaNoValida(_ConClave, ValueError):
     """La petición o sus parámetros no son válidos (la API responde 422)."""
 
+    def __init__(self, mensaje: str = "", *, clave: str | None = None, valores: dict | None = None):
+        super().__init__(mensaje)
+        self.clave, self.valores = clave, valores
 
-class NoEncontrado(KeyError):
-    """El recurso pedido no existe o caducó (la API responde 404)."""
+
+class NoEncontrado(_ConClave, KeyError):
+    """El recurso pedido no existe o caducó (la API responde 404).
+
+    Con `clave`, el mensaje ya trae el prefijo «No existe el recurso pedido: »."""
+
+    def __init__(self, mensaje: str = "", *, clave: str | None = None, valores: dict | None = None):
+        super().__init__(mensaje)
+        self.clave, self.valores = clave, valores
 
 
 class DatosRealesNoDisponibles(RuntimeError):
@@ -38,9 +60,9 @@ class CapacidadNoDisponible(RuntimeError):
 def validar_bbox(bbox: BBox) -> BBox:
     oeste, sur, este, norte = bbox
     if not oeste < este:
-        raise EntradaNoValida(f"bbox inválido: oeste ({oeste}) debe ser menor que este ({este})")
+        raise EntradaNoValida.con("api.error.bbox_oeste_este", oeste=oeste, este=este)
     if not sur < norte:
-        raise EntradaNoValida(f"bbox inválido: sur ({sur}) debe ser menor que norte ({norte})")
+        raise EntradaNoValida.con("api.error.bbox_sur_norte", sur=sur, norte=norte)
     return bbox
 
 

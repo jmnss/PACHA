@@ -21,7 +21,7 @@ def _dto(capa: CapaRaster) -> CapaDto:
 
 def _distintas(antes: str, despues: str) -> None:
     if antes == despues:
-        raise EntradaNoValida("Elige dos fechas distintas.")
+        raise EntradaNoValida.con("api.error.fechas_distintas")
 
 
 @router.get("/escenarios/{id}/capa", response_model=CapaDto)
@@ -60,7 +60,7 @@ def _intervalo(a: float, b: float, n: int) -> tuple[int, int]:
     """Intervalo normalizado -> píxeles [inicio, fin): inicio floor, fin ceil, mínimo 1 píxel."""
     lo, hi = sorted((a, b))
     if lo == hi:
-        raise EntradaNoValida("El cuadrante no tiene área.")
+        raise EntradaNoValida.con("api.error.cuadrante_sin_area")
     i0 = min(n - 1, int(math.floor(lo * n)))
     i1 = max(i0 + 1, min(n, int(math.ceil(hi * n))))
     return i0, i1

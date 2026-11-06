@@ -39,7 +39,7 @@ def _parametros(parametros: dict | None) -> dict:
     p = dict(PARAMETROS_DEMO)
     for k, v in (parametros or {}).items():
         if k not in PARAMETROS_DEMO:
-            raise EntradaNoValida(f"Parámetro desconocido: {k}")
+            raise EntradaNoValida.con("api.error.parametro_desconocido", parametro=k)
         p[k] = v
     p["semilla"] = int(p["semilla"])
     p["looks"] = float(p["looks"])
@@ -60,11 +60,11 @@ def origen_demo(parametros: dict) -> Origen:
 
 def _sitio_catalogo(sitio_id: str) -> dict:
     if sitio_id not in ESCENARIOS_DEMO:
-        raise NoEncontrado(f"Escenario de demostración desconocido: {sitio_id}")
+        raise NoEncontrado.con("api.error.escenario_desconocido", id=sitio_id)
     df = nisar.cargar_sitios()
     fila = df[df["id"] == sitio_id]
     if fila.empty:
-        raise NoEncontrado(f"El sitio {sitio_id} no está en el catálogo")
+        raise NoEncontrado.con("api.error.sitio_no_catalogo", id=sitio_id)
     return fila.iloc[0].to_dict()
 
 

@@ -121,8 +121,7 @@ def fotogramas(cuerpo: PeticionFotogramas, request: Request,
                prov: ProveedorDatos = Depends(obtener)) -> list[CapaDto]:
     n = _numero(cuerpo.inicio, cuerpo.fin, cuerpo.paso_min)
     if n > MAX_FOTOGRAMAS:
-        raise EntradaNoValida(f"Pide como máximo {MAX_FOTOGRAMAS} fotogramas por vez; esta petición "
-                         f"pedía {n}. Amplía el paso o acorta el intervalo.")
+        raise EntradaNoValida.con("api.error.fotogramas_por_vez", maximo=MAX_FOTOGRAMAS, n=n)
     cache, clave = _cache(request), _canonica(cuerpo)
     hit = cache.obtener(clave)
     if hit is None:
@@ -130,7 +129,7 @@ def fotogramas(cuerpo: PeticionFotogramas, request: Request,
             capas = prov.fotogramas(cuerpo.escenario_id, dict(cuerpo.parametros), cuerpo.inicio,
                                     cuerpo.fin, cuerpo.paso_min)
         except OverflowError:
-            raise EntradaNoValida("Las fechas quedan fuera del rango admitido.") from None
+            raise EntradaNoValida.con("api.error.fechas_fuera_rango") from None
         hit = [_dto(c) for c in capas]
         cache.guardar(clave, hit)
     return hit
