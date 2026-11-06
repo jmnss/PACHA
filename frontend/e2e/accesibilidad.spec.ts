@@ -84,3 +84,21 @@ test('teclado a 390 px: el foco no queda tapado y los objetivos miden ≥ 24 px'
   }
   expect(problemas).toEqual([])
 })
+
+test('al navegar por el riel el foco va al h1 de la pantalla nueva (también desde una que carga)', async ({ page }) => {
+  test.setTimeout(90_000)
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/fundamentos?idioma=es')
+  await page.waitForLoadState('networkidle')
+  const riel = page.getByRole('navigation', { name: 'Principal' })
+  const foco = () => page.evaluate(() => {
+    const el = document.activeElement
+    return el?.tagName === 'H1' && !!el.closest('#contenido') ? 'h1' : `${el?.tagName}.${(el as HTMLElement | null)?.className ?? ''}`
+  })
+  // El Observatorio monta una cabecera mientras carga y la cambia por la definitiva.
+  for (const destino of [/Observatorio/, /Fundamentos/, /Fundamentos/, /Historias/, /Observatorio/]) {
+    await riel.getByRole('link', { name: destino }).click()
+    await expect(page.locator('[aria-busy="true"]')).toHaveCount(0, { timeout: 20_000 })
+    await expect.poll(foco, { timeout: 10_000 }).toBe('h1')
+  }
+})

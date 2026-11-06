@@ -5,6 +5,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { BandaDemostracion } from './BandaDemostracion'
 import { Cargando, ErrorBloque, Vacio } from './Estados'
 import { Estructura } from './Estructura'
+import { CabeceraPantalla } from './CabeceraPantalla'
+import { useEffect, useState } from 'react'
 import { Pestanas } from './Pestanas'
 import { SelloOrigen } from './SelloOrigen'
 import { Tabla } from './Tabla'
@@ -152,11 +154,62 @@ describe('Estructura', () => {
       <Routes><Route element={<Estructura />}><Route index element={<p>hola</p>} /></Route></Routes>,
     )
     const nav = screen.getByRole('navigation', { name: 'Principal' })
-    expect(within(nav).getByRole('link', { name: 'Historias' })).toHaveAttribute('href', '/')
-    expect(within(nav).getByRole('link', { name: 'Observatorio' })).toHaveAttribute('href', '/observatorio')
-    expect(within(nav).getByRole('link', { name: 'Simulador de eventos' })).toHaveAttribute('href', '/simulador')
+    // WCAG 2.5.3: el nombre empieza por la etiqueta corta visible en móvil y sigue con la larga.
+    expect(within(nav).getByRole('link', { name: 'Inicio · Historias' })).toHaveAttribute('href', '/')
+    expect(within(nav).getByRole('link', { name: 'Observ. · Observatorio' })).toHaveAttribute('href', '/observatorio')
+    expect(within(nav).getByRole('link', { name: 'Simul. · Simulador de eventos' })).toHaveAttribute('href', '/simulador')
     expect(within(nav).getAllByRole('link')).toHaveLength(6)
-    expect(within(nav).getByRole('link', { name: 'Historias' })).toHaveAttribute('aria-current', 'page')
+    expect(within(nav).getByRole('link', { name: 'Inicio · Historias' })).toHaveAttribute('aria-current', 'page')
+    for (const l of within(nav).getAllByRole('link')) {
+      const visible = l.querySelector('.riel__etiqueta')!.textContent!
+      expect(within(nav).getAllByRole('link', { name: (nombre) => nombre.startsWith(`${visible} · `) })).toContain(l)
+    }
+  })
+})
+
+/** Pantalla que monta una cabecera mientras «carga» y la cambia por la definitiva (como el Observatorio). */
+function PantallaQueCarga() {
+  const [lista, setLista] = useState(false)
+  useEffect(() => { const id = setTimeout(() => setLista(true), 30); return () => clearTimeout(id) }, [])
+  return lista ? <section><CabeceraPantalla titulo="Definitiva" /></section> : <CabeceraPantalla titulo="Cargando" />
+}
+
+describe('foco al navegar (spec §4.3)', () => {
+  const rutas = (
+    <Routes>
+      <Route element={<Estructura />}>
+        <Route index element={<CabeceraPantalla titulo="Inicio" />} />
+        <Route path="observatorio" element={<PantallaQueCarga />} />
+        <Route path="fundamentos" element={<CabeceraPantalla titulo="Base" />} />
+      </Route>
+    </Routes>
+  )
+  const enlace = (nombre: RegExp) => within(screen.getByRole('navigation', { name: 'Principal' })).getByRole('link', { name: nombre })
+
+  it('en la carga inicial no mueve el foco', async () => {
+    simularApi(true)
+    envolver(rutas)
+    await new Promise((r) => setTimeout(r, 30))
+    expect(document.activeElement).toBe(document.body)
+  })
+
+  it('va al h1 en cada visita, también al volver a la misma ruta', async () => {
+    simularApi(true)
+    envolver(rutas)
+    for (const [destino, titulo] of [[/Fundamentos/, 'Base'], [/Historias/, 'Inicio'], [/Fundamentos/, 'Base'], [/Fundamentos/, 'Base']] as const) {
+      enlace(destino).focus()
+      fireEvent.click(enlace(destino))
+      await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('heading', { level: 1, name: titulo })))
+    }
+  })
+
+  it('desde una pantalla que carga, acaba en el h1 definitivo y no en <body>', async () => {
+    simularApi(true)
+    envolver(rutas)
+    enlace(/Observatorio/).focus()
+    fireEvent.click(enlace(/Observatorio/))
+    await screen.findByRole('heading', { level: 1, name: 'Definitiva' })
+    await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('heading', { level: 1, name: 'Definitiva' })))
   })
 })
 

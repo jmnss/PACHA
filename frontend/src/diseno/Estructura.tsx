@@ -59,11 +59,13 @@ export function Estructura() {
         <ul className="riel__lista">
           {DESTINOS.map(({ ruta, etiqueta, etiquetaCorta, Icono, fin }) => (
             <li key={ruta}>
-              <NavLink to={ruta} end={fin} className="riel__destino" title={t(etiqueta)}>
+              <NavLink to={ruta} end={fin} className="riel__destino" title={t(etiqueta)}
+                onClick={() => { if (ruta === pathname) marcarNavegacion() }}>
                 {({ isActive }) => (
                   <>
                     <Icono />
-                    <span className="solo-lectores">{t(etiqueta)}</span>
+                    {/* WCAG 2.5.3: el nombre accesible empieza por la etiqueta corta, la que se ve en móvil. */}
+                    <span className="solo-lectores">{t(etiquetaCorta) === t(etiqueta) ? t(etiqueta) : `${t(etiquetaCorta)} · ${t(etiqueta)}`}</span>
                     <span className="riel__etiqueta" aria-hidden="true">
                       {t(etiquetaCorta)}
                       {isActive && <span className="riel__linea riel__linea--etiqueta" aria-hidden="true" />}
