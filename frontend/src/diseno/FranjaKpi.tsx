@@ -1,6 +1,8 @@
+import type { ReactNode } from 'react'
+
 export interface Kpi {
   etiqueta: string
-  valor: string
+  valor: ReactNode
   unidad?: string
   /** Base de una cifra relativa: «frente a la pasada anterior, 24 abr». */
   base?: string

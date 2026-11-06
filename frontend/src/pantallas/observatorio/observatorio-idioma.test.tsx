@@ -131,6 +131,24 @@ describe('Observatorio · idioma', () => {
     },
   )
 
+  it('mapa, cinta de tiempo y métricas pasan por el traductor', async () => {
+    const { container } = montar('/observatorio?escenario=ec_x&vista=mapa')
+    await screen.findByRole('button', { name: '⟦Ver todo Ecuador⟧' })
+    await screen.findByText('⟦Métricas del cambio⟧')
+    const tarjetas = container.querySelectorAll<HTMLElement>('.vista-mapa, .bloque-tiempo, .panel-metricas__base, .franja-kpi, .observatorio__lado')
+    const salida: string[] = []
+    for (const el of tarjetas) salida.push(...textosSinTraducir(el))
+    expect(salida.filter((x) => !API.includes(x) && !DATO.test(x) && x !== 'Costa' && !x.startsWith('Clic '))).toEqual([])
+  })
+
+  it.each<[CodigoIdioma, string]>([['en', 'That point is outside Ecuador. Choose a point inside the country.'], ['qu', 'Chay punto Ecuador hawapi kan. Mamallaktapi ukupi shuk puntota akllay.']])(
+    'el aviso de «fuera de Ecuador» sale en %s', async (idioma, aviso) => {
+      montar('/observatorio?escenario=ec_x&vista=mapa', (ui) => renderConIdioma(ui, idioma))
+      fireEvent.click(await screen.findByText('Clic fuera de Ecuador'))
+      expect(await screen.findByRole('alert')).toHaveTextContent(aviso)
+    },
+  )
+
   it('el hallazgo se arma con claves e interpola cifras y fechas del idioma', () => {
     const r = { series: [{ titulo: 'Superficie inundada', unidad: 'km²', puntos: [['2026-04-12T00:00:00Z', 26.8, 'D'], ['2026-05-18T00:00:00Z', 5.5, 'D']] }], origen: { tipo: 'sintetico' } } as never
     expect(hallazgo(r, '2026-04-12T00:00:00Z', '2026-05-18T00:00:00Z')).toBe('En este escenario de demostración, superficie inundada baja de 26,8 a 5,5 km² entre el 12 abr 2026 y el 18 may 2026.')

@@ -42,6 +42,11 @@ export function temporadaDelMes(ctx: Contexto | null | undefined, ms: number): s
   return ctx.clima_mensual.find((m) => m.mes_num === mes)?.temporada ?? null
 }
 
+/** «Lluviosa» y «Seca» de la climatología, en el idioma activo; un nombre desconocido se deja tal cual. */
+export function nombreTemporada(s: string, t: T = traductor('es').t): string {
+  return /^lluv/i.test(s) ? t('obs.contexto.temporada_lluviosa') : /^seca/i.test(s) ? t('obs.contexto.temporada_seca') : s
+}
+
 /** Franjas de temporada lluviosa entre dos instantes, unidas por meses consecutivos. */
 export function temporadasLluviosas(ctx: Contexto | null | undefined, t0: number, t1: number): Temporada[] {
   if (!ctx || !Number.isFinite(t0) || !Number.isFinite(t1) || t1 < t0) return []

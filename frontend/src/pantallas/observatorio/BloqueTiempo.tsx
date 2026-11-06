@@ -1,13 +1,12 @@
 import { useId } from 'react'
 import type { Contexto, Escenario } from '../../api/consultas'
+import { useT } from '../../idioma/useT'
 import { Boton } from '../../diseno/Boton'
 import { CintaPasadas, type Temporada } from '../../tiempo/CintaPasadas'
 import { ControlesReproductor } from '../../tiempo/ControlesReproductor'
 import { formatearFecha } from '../../tiempo/fechas'
-import { temporadaDelMes, vecinas } from './derivados'
+import { nombreTemporada, temporadaDelMes, vecinas } from './derivados'
 import type { TiempoObservatorio } from './useTiempoObservatorio'
-
-const MOTIVO_PASOS_CORTOS = 'Este escenario no tiene modelo continuo: el reproductor solo avanza de pasada en pasada.'
 
 interface Props {
   pasadas: Escenario['adquisiciones']
@@ -29,19 +28,20 @@ interface Props {
 
 /** Reloj, cinta de pasadas y controles de tiempo: la misma cinta bajo todas las vistas del Observatorio. */
 export function BloqueTiempo({ pasadas, tiempo, contexto, temporadas, alInteractuar, onFijarAntes, onFijarDespues, motivoAntes, motivoDespues, motivoReproductor, pasosCortos }: Props) {
+  const { t, idioma } = useT()
   const idMotivos = useId()
   const ts = pasadas.map((p) => Date.parse(p.instante))
   const { anterior, siguiente } = vecinas(ts, tiempo.ms)
   const temporada = temporadaDelMes(contexto, tiempo.ms)
   const antes = (f: () => void) => () => { alInteractuar?.(); f() }
-  const fecha = (t: number | null) => (t === null ? '—' : formatearFecha(new Date(t).toISOString()) ?? '—')
+  const fecha = (ms1: number | null) => (ms1 === null ? '—' : formatearFecha(new Date(ms1).toISOString(), idioma) ?? '—')
 
   return (
     <div className="bloque-tiempo">
       <p className="bloque-tiempo__reloj num" aria-live="off" data-testid="reloj">
-        <span>Pasada anterior · {fecha(anterior)}</span>
-        <span>Siguiente · {fecha(siguiente)}</span>
-        {temporada && <span>Temporada {temporada.toLowerCase()}</span>}
+        <span>{t('obs.tiempo.anterior', { fecha: fecha(anterior) })}</span>
+        <span>{t('obs.tiempo.siguiente', { fecha: fecha(siguiente) })}</span>
+        {temporada && <span>{t('obs.tiempo.temporada', { temporada: nombreTemporada(temporada, t).toLowerCase() })}</span>}
       </p>
       <CintaPasadas
         adquisiciones={pasadas}
@@ -56,13 +56,13 @@ export function BloqueTiempo({ pasadas, tiempo, contexto, temporadas, alInteract
         onPlay={antes(tiempo.play)} onPausa={tiempo.pausa}
         onInicio={antes(tiempo.inicio)} onFinal={antes(tiempo.final)}
         onAtras={antes(tiempo.atras)} onAdelante={antes(tiempo.adelante)}
-        motivoPasosCortos={pasosCortos ? undefined : MOTIVO_PASOS_CORTOS}
-        deshabilitado={motivoReproductor ?? (pasadas.length < 2 ? 'Este escenario tiene una sola pasada.' : undefined)}
+        motivoPasosCortos={pasosCortos ? undefined : t('obs.tiempo.sin_modelo_continuo')}
+        deshabilitado={motivoReproductor ?? (pasadas.length < 2 ? t('obs.tiempo.una_pasada') : undefined)}
       />
       {(onFijarAntes || onFijarDespues) && (
         <div className="bloque-tiempo__fijar">
-          <Boton variante="secundario" onClick={onFijarAntes} disabled={!!motivoAntes} aria-describedby={motivoAntes ? `${idMotivos}-antes` : undefined}>Fijar como «antes»</Boton>
-          <Boton variante="secundario" onClick={onFijarDespues} disabled={!!motivoDespues} aria-describedby={motivoDespues ? `${idMotivos}-despues` : undefined}>Fijar como «después»</Boton>
+          <Boton variante="secundario" onClick={onFijarAntes} disabled={!!motivoAntes} aria-describedby={motivoAntes ? `${idMotivos}-antes` : undefined}>{t('obs.tiempo.fijar_antes')}</Boton>
+          <Boton variante="secundario" onClick={onFijarDespues} disabled={!!motivoDespues} aria-describedby={motivoDespues ? `${idMotivos}-despues` : undefined}>{t('obs.tiempo.fijar_despues')}</Boton>
         </div>
       )}
       {(motivoAntes || motivoDespues) && (

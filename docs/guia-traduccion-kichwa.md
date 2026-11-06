@@ -117,3 +117,12 @@ todo sin validar por hablantes (los relatos cuentan como contenido largo: `CONTE
 - **Marca de honestidad**: «Kay rikuchiy escenariopi» (en este escenario de demostración) abre cada hipótesis y
   «kamachik panka-wan chiqanyachina kan» (pendiente de confirmar con la documentación oficial) cierra lo específico
   de la misión; se reutiliza la frase de `origen.notas.aviso`. Sigue la duda sobre «chiqan».
+
+## Tarea 10 · Observatorio: mapa, tiempo y métricas
+
+Borrador de las claves `obs.mapa.*`, `obs.tiempo.*` y `obs.metricas.*`; todo sin validar por hablantes:
+
+- **Se dejaron en español**: modelo, capa, pasada, leyenda, temporada, escenario, Ecuador (nombre propio). Sin
+  equivalente asentado; no se inventaron neologismos.
+- **Dudas**: «rikushka» (detectado, de «rikuy»), «katik» (siguiente), «yupay» (métrica, de «yupay», contar),
+  «chaninchay» (valor), «pakay» (ocultar), «ñitiy» (pulsar), «hawapi / ukupi» (fuera / dentro), «mamallaktapi» (en el país).

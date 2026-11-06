@@ -1,7 +1,9 @@
 import type { UseQueryResult } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { langDe } from '../../idioma/idiomas'
 import type { Clave } from '../../idioma/traductor'
-import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
+import { useT } from '../../idioma/useT'
+import { mensajeDeError } from '../../api/cliente'
 import { useCapa, useFotogramas, useSimular, type CapaDto, type Contexto, type Escenario, type ResultadoCambio } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
@@ -24,12 +26,10 @@ import { PASO_PASADA_MIN } from './useTiempoObservatorio'
 import type { TiempoObservatorio } from './useTiempoObservatorio'
 
 export type ModoCapa = 'modelo' | 'cambio'
-export const SIN_PAREJA = 'Elige dos pasadas distintas para ver el cambio.'
-export const AVISO_FUERA = 'Ese punto está fuera de Ecuador. Elige un punto dentro del país.'
 
-const MODOS = [
-  { id: 'modelo', etiqueta: 'Modelo en el tiempo' },
-  { id: 'cambio', etiqueta: 'Cambio detectado' },
+const MODOS: { id: ModoCapa; clave: Clave }[] = [
+  { id: 'modelo', clave: 'obs.mapa.modo_modelo' },
+  { id: 'cambio', clave: 'obs.mapa.modo_cambio' },
 ]
 
 interface Props {
@@ -69,8 +69,7 @@ function baseGuardada(): MapaBaseId {
 /** En móvil la leyenda empieza plegada para no tapar el mapa. */
 const esMovil = () => typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 699px)').matches
 
-const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }) : undefined)
-const mensaje = (e: unknown) => (e instanceof ErrorApi ? e.mensaje : MENSAJE_RED)
+const hora = (ms: number, lang: string) => (ms > 0 ? new Date(ms).toLocaleTimeString(lang === 'es' ? 'es-EC' : lang, { hour: '2-digit', minute: '2-digit' }) : undefined)
 
 function extremosDe(capa: CapaDto): [Clave, Clave] | undefined {
   return capa.variable.includes('desplazamiento')
@@ -80,6 +79,8 @@ function extremosDe(capa: CapaDto): [Clave, Clave] | undefined {
 
 /** Mapa con la capa elegida, su leyenda y sello, y la cinta de pasadas con sus controles debajo. */
 export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId, polarizacion, onFijar, onEscenarioNuevo, parametros, onAbrirParametros, motivoReproductor }: Props) {
+  const { t, idioma } = useT()
+  const lang = langDe(idioma)
   const [modo, setModo] = useState<ModoCapa>('cambio')
   const [pais, setPais] = useState(false)
   const [aviso, setAviso] = useState<string | null>(null)
@@ -118,15 +119,15 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
   const [lat0, lon0] = [(esc.bbox[1] + esc.bbox[3]) / 2, (esc.bbox[0] + esc.bbox[2]) / 2]
   const marcadores = useMemo(() => (pais ? [{ lat: lat0, lon: lon0, etiqueta: esc.nombre }] : []), [pais, lat0, lon0, esc.nombre])
   const estilo = useMemo(() => (capa ? estiloDeCapa(capa) : null), [capa])
-  const t = esc.adquisiciones.map((a) => Date.parse(a.instante))
+  const tsPasadas = esc.adquisiciones.map((a) => Date.parse(a.instante))
   const temporadas = useMemo(
-    () => temporadasLluviosas(contexto, Math.min(...t), Math.max(...t)),
+    () => temporadasLluviosas(contexto, Math.min(...tsPasadas), Math.max(...tsPasadas)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [contexto, esc.id],
   )
 
   const alClic = (lat: number, lon: number) => {
-    if (!dentroDeEcuador(lat, lon)) { setAviso(AVISO_FUERA); return }
+    if (!dentroDeEcuador(lat, lon)) { setAviso(t('obs.mapa.aviso_fuera')); return }
     setAviso(null)
     const base = esc.id.split('~')[0]
     const enviados: Valores = { ...parametros, lat, lon }
@@ -137,25 +138,25 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
   const ids = esc.adquisiciones.map((a) => a.id)
   const [iAntes, iDespues] = [ids.indexOf(antesId), ids.indexOf(despuesId)]
   const ordinal = tiempo.pasadaActiva
-  const motivoAntes = ordinal >= iDespues ? 'La pasada «antes» debe ser anterior a la pasada «después».' : undefined
-  const motivoDespues = ordinal <= iAntes ? 'La pasada «después» debe ser posterior a la pasada «antes».' : undefined
+  const motivoAntes = ordinal >= iDespues ? t('obs.mapa.motivo_antes') : undefined
+  const motivoDespues = ordinal <= iAntes ? t('obs.mapa.motivo_despues') : undefined
 
   // Sin pareja válida la consulta no se lanza (idle): se explica en vez de quedarse cargando.
   const sinPareja = modo === 'cambio' && resultado.fetchStatus === 'idle' && !resultado.data
   const cargando = !sinPareja && (consulta.isPending || (consulta.isFetching && !capa))
   const rotulo = modo === 'modelo'
-    ? (ventana ? `Modelo · ${formatearInstante(tiempo.ms) ?? '—'}` : pasada ? `Pasada · ${formatearFecha(pasada.instante) ?? '—'}` : null)
-    : `Cambio · antes ${formatearFecha(esc.adquisiciones[iAntes]?.instante) ?? '—'}, después ${formatearFecha(esc.adquisiciones[iDespues]?.instante) ?? '—'}`
+    ? (ventana ? t('obs.mapa.rotulo_modelo', { instante: formatearInstante(tiempo.ms, idioma) ?? '—' }) : pasada ? t('obs.mapa.rotulo_pasada', { fecha: formatearFecha(pasada.instante, idioma) ?? '—' }) : null)
+    : t('obs.mapa.rotulo_cambio', { antes: formatearFecha(esc.adquisiciones[iAntes]?.instante, idioma) ?? '—', despues: formatearFecha(esc.adquisiciones[iDespues]?.instante, idioma) ?? '—' })
 
   return (
     <>
       <Tarjeta pie={capa ? <SelloOrigen origen={capa.origen} /> : undefined} className="vista-mapa">
         <div className="vista-mapa__barra">
-          <Pestanas etiqueta="Capa del mapa" pestanas={MODOS} activa={modo} onCambiar={(id) => setModo(id as ModoCapa)} />
+          <Pestanas etiqueta={t('obs.mapa.capa_etiqueta')} pestanas={MODOS.map((m) => ({ id: m.id, etiqueta: t(m.clave) }))} activa={modo} onCambiar={(id) => setModo(id as ModoCapa)} />
           <div className="vista-mapa__acciones">
-            {onAbrirParametros && <Boton variante="secundario" onClick={onAbrirParametros}>Parámetros del modelo</Boton>}
+            {onAbrirParametros && <Boton variante="secundario" onClick={onAbrirParametros}>{t('obs.parametros.titulo')}</Boton>}
             <Boton variante="secundario" onClick={() => setPais((p) => !p)} aria-pressed={pais}>
-              {pais ? 'Ver el escenario' : 'Ver todo Ecuador'}
+              {pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo')}
             </Boton>
           </div>
         </div>
@@ -173,7 +174,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
             {capa && estilo && (
               <div className="vista-mapa__leyenda">
                 <button type="button" className="vista-mapa__plegar" aria-expanded={leyendaAbierta} onClick={() => setLeyendaAbierta((a) => !a)}>
-                  {leyendaAbierta ? 'Ocultar leyenda' : 'Mostrar leyenda'}
+                  {leyendaAbierta ? t('obs.mapa.ocultar_leyenda') : t('obs.mapa.mostrar_leyenda')}
                 </button>
                 {leyendaAbierta && (
                   <Leyenda paleta={capa.paleta} vmin={capa.rejilla.vmin} vmax={capa.rejilla.vmax} unidad={capa.unidad}
@@ -183,28 +184,28 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
             )}
           </div>
           {!pais && <div className="vista-mapa__localizador"><Localizador bbox={esc.bbox} /></div>}
-          {cargando && <div className="vista-mapa__estado"><Cargando texto="Calculando la capa…" filas={2} /></div>}
+          {cargando && <div className="vista-mapa__estado"><Cargando texto={t('obs.mapa.calculando_capa')} filas={2} /></div>}
           {sinPareja && (
-            <div className="vista-mapa__estado"><Vacio titulo="Sin cambio que mostrar" texto={SIN_PAREJA} /></div>
+            <div className="vista-mapa__estado"><Vacio titulo={t('obs.mapa.sin_cambio_titulo')} texto={t('obs.estructura.sin_pareja')} /></div>
           )}
           {consulta.isError && !capa && (
             <div className="vista-mapa__estado">
-              <ErrorBloque mensaje={mensaje(consulta.error)} ultimoDato={hora(consulta.dataUpdatedAt)} onReintentar={() => void consulta.refetch()} />
+              <ErrorBloque mensaje={mensajeDeError(consulta.error, t)} ultimoDato={hora(consulta.dataUpdatedAt, lang)} onReintentar={() => void consulta.refetch()} />
             </div>
           )}
         </div>
         {aviso && <p className="vista-mapa__aviso" role="alert">{aviso}</p>}
-        {simular.isPending && <p className="vista-mapa__aviso" role="status">Calculando la escena en ese punto…</p>}
+        {simular.isPending && <p className="vista-mapa__aviso" role="status">{t('obs.mapa.calculando_escena')}</p>}
         {simular.isError && (
           <div className="vista-mapa__aviso">
-            <ErrorBloque mensaje={mensaje(simular.error)} onReintentar={() => simular.reset()} />
+            <ErrorBloque mensaje={mensajeDeError(simular.error, t)} onReintentar={() => simular.reset()} />
           </div>
         )}
         <p className="vista-mapa__ayuda">
-          {pais ? 'Pulsa un punto dentro de Ecuador para simular una escena allí.' : 'Pulsa el mapa para simular una escena en ese punto, o abre todo Ecuador para elegir otro lugar.'}
+          {pais ? t('obs.mapa.ayuda_pais') : t('obs.mapa.ayuda_escenario')}
         </p>
       </Tarjeta>
-      <Tarjeta titulo="Cinta de pasadas">
+      <Tarjeta titulo={t('obs.mapa.cinta_titulo')}>
         <BloqueTiempo
           pasadas={esc.adquisiciones} tiempo={tiempo} contexto={contexto} temporadas={temporadas}
           alInteractuar={() => setModo('modelo')}
