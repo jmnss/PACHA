@@ -60,3 +60,28 @@ describe('claves de la API', () => {
     expect(screen.queryByText('api.no.existe')).toBeNull()
   })
 })
+
+describe('textoApi: español y claves derivadas (spec §3)', () => {
+  it('en español devuelve el texto de la API aunque la clave exista con otro texto', () => {
+    renderConIdioma(createElement(TextoApi, { texto: 'Descripción de otro proveedor', clave: clavesApi.tipo('humedales', 'descripcion') }), 'es')
+    expect(screen.getByText('Descripción de otro proveedor')).toBeInTheDocument()
+  })
+
+  it('una clave derivada por id solo traduce si el español coincide', () => {
+    const { container, unmount } = renderConIdioma(createElement(TextoApi, { texto: 'Descripción de otro proveedor', clave: clavesApi.tipo('humedales', 'descripcion') }), 'en')
+    expect(container.querySelector('[lang="es"]')?.textContent).toBe('Descripción de otro proveedor')
+    unmount()
+    renderConIdioma(createElement(TextoApi, { texto: es['api.tipo.humedales.descripcion'], clave: clavesApi.tipo('humedales', 'descripcion') }), 'en')
+    expect(screen.getByText(en['api.tipo.humedales.descripcion'])).not.toHaveAttribute('lang')
+  })
+
+  it('una clave_texto emitida por la API se traduce aunque el texto no sea la plantilla', () => {
+    renderConIdioma(createElement(TextoApi, { texto: 'Terremoto Mw 7,0', clave: 'api.sim.titulo.terremoto', valores: { mw: 7 } }), 'en')
+    expect(screen.getByText('Earthquake Mw 7.0')).toBeInTheDocument()
+  })
+
+  it('las fechas ISO de valores_texto se escriben a la manera del idioma', () => {
+    renderConIdioma(createElement(TextoApi, { texto: 'El máximo de la serie llega el 05/01/2026 con unas 12 ha.', clave: 'api.impacto.lectura.pico', valores: { fecha: '2026-01-05', ha: 12 } }), 'en')
+    expect(screen.getByText(/January 5, 2026/)).toBeInTheDocument()
+  })
+})

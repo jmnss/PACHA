@@ -26,9 +26,23 @@ export const clavesApi = {
   simOpcion: (h: string, c: string, etiquetaEs: string) => `api.sim.opcion.${h}.${c}.${slug(etiquetaEs)}`,
   simMundo: (nombreEs: string, campo: 'nombre' | 'descripcion') => `api.sim.mundo.${slug(nombreEs)}.${campo}`,
   labCambio: (nombreEs: string) => `api.lab.cambio.${slug(nombreEs)}`,
+  simPanel: (tituloEs: string) => `api.sim.panel.${slug(tituloEs)}`,
+  simColumna: (columnaEs: string) => `api.sim.columna.${slug(columnaEs)}`,
+  /** Nota del modelo por escenario (sin el sufijo `~…`) y posición (desde 1). */
+  nota: (escenarioId: string, posicion: number) => `api.nota.${idBase(escenarioId)}.${posicion + 1}`,
+  unidad: (unidadEs: string) => `api.unidad.${slug(unidadEs)}`,
+  orbita: (direccionEs: string) => `api.obs.orbita.${slug(direccionEs)}`,
   /** Métricas con `clave_texto` base: el campo se añade. */
   metrica: (clave: string | null | undefined, campo: 'etiqueta' | 'ayuda') => (clave ? `${clave}.${campo}` : null),
 }
+
+/** Familias de claves que el frontend deriva del id o del texto en español (no las emite la API). */
+const PREFIJOS_DERIVADOS = [
+  'api.tipo.', 'api.control.', 'api.opcion.', 'api.categoria.', 'api.escenario.', 'api.contexto.',
+  'api.sim.herramienta.', 'api.sim.control.', 'api.sim.opcion.', 'api.sim.mundo.', 'api.sim.panel.', 'api.sim.columna.',
+  'api.lab.cambio.', 'api.lab.leyenda.', 'api.nota.', 'api.unidad.', 'api.obs.orbita.',
+]
+export const esClaveDerivada = (clave: string): boolean => PREFIJOS_DERIVADOS.some((p) => clave.startsWith(p))
 
 /** Cifras de `valores_texto` que Python escribe con un número fijo de decimales. */
 const DECIMALES: Record<string, number> = { pct: 1, mw: 1, ha: 0, metros: 0 }
@@ -37,10 +51,13 @@ const DECIMALES: Record<string, number> = { pct: 1, mw: 1, ha: 0, metros: 0 }
 export function valoresApi(
   valores: Record<string, string | number> | null | undefined,
   formato: (n: number, op?: Intl.NumberFormatOptions) => string,
+  fecha?: (iso: string) => string,
 ): Record<string, string | number> | undefined {
   if (!valores) return undefined
   return Object.fromEntries(
     Object.entries(valores).map(([k, v]) => {
+      // Las fechas viajan en ISO (aaaa-mm-dd) y se escriben a la manera del idioma.
+      if (typeof v === 'string' && fecha && /^\d{4}-\d{2}-\d{2}$/.test(v)) return [k, fecha(v)]
       if (typeof v !== 'number') return [k, v]
       const d = DECIMALES[k]
       return [k, d === undefined ? formato(v) : formato(v, { minimumFractionDigits: d, maximumFractionDigits: d })]
