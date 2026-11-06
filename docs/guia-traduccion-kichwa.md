@@ -96,3 +96,23 @@ Borrador de `catalogos/qu/exportar.ts`; todo sin validar por hablantes:
   «chiqan rikuykuna mana kanchu» (no son observaciones reales). Sigue la duda sobre «chiqan» (véase la Tarea 3).
 - **«servidor», «lienzo», «PNG»**: préstamos del español / sigla, sin equivalente asentado.
 - Las líneas de máquina del CSV (`# origen: …`, `# idioma: …`) no se traducen: siguen en español.
+
+## Tarea 8 · Historias
+
+Borrador de `catalogos/qu/historias.ts`, `contenido/{inundacion,incendio}.qu.ts` y `contenido/terminos.qu.ts`;
+todo sin validar por hablantes (los relatos cuentan como contenido largo: `CONTENIDO_LARGO_QU_VALIDADO` sigue en `false`):
+
+- **Se dejaron en español**: radar, satélite, misión, sensor activo, señal, onda, banda L, polarización, constante
+  dieléctrica, rugosidad, humedal, humedad, biomasa, combustible, restauración, riesgo, cobertura, pasada, escenario,
+  divisor, cuadrante, cámara, producto, ladera, humo, parcela, cicatriz (de quemado), validación, tipografía, límites,
+  clima, provincia. Sin equivalente asentado; no se inventaron neologismos. Los nombres de los términos técnicos
+  (`terminos.qu.ts`) también quedan en español; solo sus explicaciones están en kichwa.
+- **«Sierra» y «Costa»** se conservan como nombres de región.
+- **Dudas de vocabulario**: «jundashka / jundachin» (lleno / llenar, de «hunta»), «wicharina» (subir el agua),
+  «llampu» (liso), «suni» (largo), «chimpana» (atravesar), «kutimuk señal» (señal que vuelve), «mikuchin» (alimentar),
+  «ejemplo yuyay» (hipótesis de ejemplo), «rikuchik yuyay» (hipótesis ilustrativa), «tukuri yuyay» (conclusión),
+  «runakunapa ruray» (impulsor humano), «yupaychay» (créditos), «ruranapak» (recomendada), «tupachik» (comparador),
+  «ñawpa / washa» (antes / después). Todas son propuestas del equipo.
+- **Marca de honestidad**: «Kay rikuchiy escenariopi» (en este escenario de demostración) abre cada hipótesis y
+  «kamachik panka-wan chiqanyachina kan» (pendiente de confirmar con la documentación oficial) cierra lo específico
+  de la misión; se reutiliza la frase de `origen.notas.aviso`. Sigue la duda sobre «chiqan».

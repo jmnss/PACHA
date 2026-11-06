@@ -1,7 +1,7 @@
 import { t, type ContenidoHistoria } from './tipos'
 
 /** Redactada como ejemplo ilustrativo: sin cifras ni nombres de eventos, sin años (docs/challenge.md, honestidad). */
-export const inundacion: ContenidoHistoria = {
+export const inundacionEs: ContenidoHistoria = {
   clave: 'inundacion',
   etiqueta: 'Inundación en la Costa',
   titulo: 'Cuando el agua sube en la Costa baja',

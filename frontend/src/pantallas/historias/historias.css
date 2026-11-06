@@ -21,7 +21,6 @@
   .historia__parte--4 { grid-column: 1; grid-row: 3; }
   .historia__parte--5 { grid-column: 1; grid-row: 4; }
 }
-}
 .historia__cabecera { display: flex; flex-direction: column; gap: var(--space-5); min-width: 0; }
 .historia__titulo { margin: 0; font-size: var(--fs-26); line-height: var(--lh-32); font-weight: 600; }
 .historia__lectura { display: flex; flex-direction: column; gap: var(--space-7); min-width: 0; }

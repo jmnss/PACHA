@@ -1,7 +1,7 @@
 import { t, type ContenidoHistoria } from './tipos'
 
 /** Redactada como ejemplo ilustrativo: sin cifras ni nombres de eventos, sin años (docs/challenge.md, honestidad). */
-export const incendio: ContenidoHistoria = {
+export const incendioEs: ContenidoHistoria = {
   clave: 'incendio',
   etiqueta: 'Incendio en la Sierra',
   titulo: 'Cuando arde el bosque en la Sierra',

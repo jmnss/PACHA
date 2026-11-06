@@ -1,6 +1,6 @@
 {
  "url": "http://localhost:8000/",
- "at": "2026-11-04T11:51:19.634Z",
+ "at": "2026-11-06T05:54:08.895Z",
  "allow": [
   "palette-terracotta"
  ],
@@ -11,9 +11,9 @@
    "load": "load",
    "screens": 3,
    "filled": [
-    0.68,
-    0.46,
-    0.32
+    0.69,
+    0.47,
+    0.31
    ],
    "motion": {
     "elements": 0,
@@ -29,13 +29,13 @@
      "h": 900
     },
     "page": {
-     "height": 2368,
+     "height": 2328,
      "screens": 2.6,
-     "words": 934,
+     "words": 890,
      "img": 0,
      "video": 0,
      "canvas": 2,
-     "svg": 3,
+     "svg": 8,
      "sections": 6,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -162,7 +162,7 @@
       },
       {
        "color": "#b4b4b8",
-       "share": 0.1
+       "share": 0.09
       },
       {
        "color": "#f0a868",
@@ -248,7 +248,7 @@
      "w": 1440,
      "h": 900
     },
-    "pageH": 2368,
+    "pageH": 2328,
     "margins": {
      "left": 82,
      "right": 53
@@ -267,14 +267,14 @@
     "edges": [
      {
       "x": 82,
-      "n": 19
+      "n": 20
      },
      {
       "x": 600,
       "n": 5
      }
     ],
-    "leftBlocks": 24,
+    "leftBlocks": 25,
     "bodySize": 16,
     "stage": false,
     "explains": true,
@@ -294,10 +294,17 @@
     },
     "dark": true,
     "ground": "#171719",
-    "sidebar": null,
-    "topbar": null,
+    "sidebar": {
+     "w": 50,
+     "tag": "nav",
+     "links": 7,
+     "share": 0.03
+    },
+    "topbar": {
+     "h": 36
+    },
     "canvas": {
-     "left": 17,
+     "left": 32,
      "right": 32
     },
     "hero": {
@@ -383,10 +390,10 @@
    "load": "load",
    "screens": 4,
    "filled": [
-    0.6,
-    0.72,
-    0.48,
-    0.61
+    0.59,
+    0.79,
+    0.59,
+    0.57
    ],
    "motion": {
     "elements": 0,
@@ -402,13 +409,13 @@
      "h": 1024
     },
     "page": {
-     "height": 3715,
+     "height": 3653,
      "screens": 3.6,
-     "words": 934,
+     "words": 890,
      "img": 0,
      "video": 0,
      "canvas": 2,
-     "svg": 3,
+     "svg": 8,
      "sections": 6,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -471,9 +478,9 @@
       "kind": "heading"
      },
      {
-      "text": "Cuando el agua sube en la Costa baja",
+      "text": "When the water rises on the lowland Coast",
       "words": 8,
-      "chars": 36,
+      "chars": 41,
       "lines": 1,
       "size": 26,
       "vw": 3.4,
@@ -487,7 +494,7 @@
       "align": "left",
       "position": "center",
       "widthRatio": 0.85,
-      "top": 354,
+      "top": 378,
       "tag": "h2",
       "kind": "heading"
      }
@@ -559,7 +566,7 @@
      "sectionBgs": [
       {
        "color": "#131217",
-       "top": 1490,
+       "top": 1466,
        "hsl": {
         "h": 252,
         "s": 0.12,
@@ -578,7 +585,7 @@
       },
       {
        "color": "#b4b4b8",
-       "share": 0.1
+       "share": 0.09
       },
       {
        "color": "#f0a868",
@@ -655,7 +662,7 @@
      "w": 768,
      "h": 1024
     },
-    "pageH": 3715,
+    "pageH": 3653,
     "margins": {
      "left": 82,
      "right": 53
@@ -665,19 +672,19 @@
       "sel": "div.historia__cabecera",
       "tag": "div",
       "top": 176,
-      "height": 210,
-      "words": 70,
+      "height": 234,
+      "words": 65,
       "media": 0,
       "middle": 0,
       "heading": {
-       "text": "Cuando el agua sube en la Costa baja",
+       "text": "When the water rises on the lowland Coast",
        "size": 26,
        "tag": "h2"
       },
       "left": 82,
-      "right": 224,
+      "right": 167,
       "textLeft": 82,
-      "textRight": 224,
+      "textRight": 167,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -687,20 +694,20 @@
      {
       "sel": "div.historia__lectura",
       "tag": "div",
-      "top": 434,
-      "height": 964,
-      "words": 312,
+      "top": 458,
+      "height": 916,
+      "words": 308,
       "media": 0,
       "middle": 0,
       "heading": {
-       "text": "Qué cambia y por qué importa",
+       "text": "What changes and why it matters",
        "size": 20,
        "tag": "h3"
       },
       "left": 82,
-      "right": 217,
+      "right": 216,
       "textLeft": 82,
-      "textRight": 217,
+      "textRight": 216,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -710,13 +717,13 @@
      {
       "sel": "section.historia__parte.historia__parte--comparador",
       "tag": "section",
-      "top": 1446,
-      "height": 1299,
-      "words": 245,
+      "top": 1422,
+      "height": 1309,
+      "words": 240,
       "media": 2,
       "middle": 0,
       "heading": {
-       "text": "Antes y después, en el comparador",
+       "text": "Before and after, in the comparator",
        "size": 20,
        "tag": "h3"
       },
@@ -733,20 +740,20 @@
      {
       "sel": "section.historia__parte.historia__parte--4",
       "tag": "section",
-      "top": 2793,
-      "height": 414,
-      "words": 127,
+      "top": 2779,
+      "height": 382,
+      "words": 122,
       "media": 0,
       "middle": 0,
       "heading": {
-       "text": "Qué podría explicar lo que se ve",
+       "text": "What could explain what is seen",
        "size": 20,
        "tag": "h3"
       },
       "left": 82,
-      "right": 217,
+      "right": 223,
       "textLeft": 82,
-      "textRight": 217,
+      "textRight": 223,
       "fullBleed": false,
       "footer": false,
       "hero": false,
@@ -756,20 +763,20 @@
      {
       "sel": "section.historia__parte.historia__parte--5",
       "tag": "section",
-      "top": 3255,
-      "height": 372,
-      "words": 117,
+      "top": 3209,
+      "height": 356,
+      "words": 112,
       "media": 0,
       "middle": 0,
       "heading": {
-       "text": "Aplicaciones futuras y qué haría falta",
+       "text": "Future applications and what would be needed",
        "size": 20,
        "tag": "h3"
       },
       "left": 82,
-      "right": 218,
+      "right": 224,
       "textLeft": 82,
-      "textRight": 218,
+      "textRight": 224,
       "fullBleed": false,
       "footer": true,
       "hero": false,
@@ -790,10 +797,10 @@
     "edges": [
      {
       "x": 82,
-      "n": 24
+      "n": 25
      }
     ],
-    "leftBlocks": 24,
+    "leftBlocks": 25,
     "bodySize": 16,
     "stage": false,
     "explains": true,
@@ -808,10 +815,17 @@
     },
     "dark": true,
     "ground": "#171719",
-    "sidebar": null,
-    "topbar": null,
+    "sidebar": {
+     "w": 50,
+     "tag": "nav",
+     "links": 7,
+     "share": 0.07
+    },
+    "topbar": {
+     "h": 36
+    },
     "canvas": {
-     "left": 17,
+     "left": 32,
      "right": 32
     },
     "hero": {
@@ -897,12 +911,12 @@
    "load": "load",
    "screens": 6,
    "filled": [
-    0.67,
-    0.76,
+    0.75,
+    0.84,
     0.93,
-    0.57,
-    0.76,
-    0.8
+    0.62,
+    0.83,
+    0.82
    ],
    "motion": {
     "elements": 0,
@@ -918,13 +932,13 @@
      "h": 844
     },
     "page": {
-     "height": 4350,
-     "screens": 5.2,
-     "words": 934,
+     "height": 4244,
+     "screens": 5,
+     "words": 895,
      "img": 0,
      "video": 0,
      "canvas": 2,
-     "svg": 3,
+     "svg": 8,
      "sections": 6,
      "horizontalOverflow": 0,
      "overflowCulprits": [],
@@ -987,9 +1001,9 @@
       "kind": "heading"
      },
      {
-      "text": "Cuando el agua sube en la Costa baja",
+      "text": "When the water rises on the lowland Coast",
       "words": 8,
-      "chars": 36,
+      "chars": 41,
       "lines": 2,
       "size": 26,
       "vw": 6.7,
@@ -1003,7 +1017,7 @@
       "align": "left",
       "position": "center",
       "widthRatio": 0.92,
-      "top": 362,
+      "top": 366,
       "tag": "h2",
       "kind": "heading"
      }
@@ -1050,7 +1064,7 @@
       "size": 26,
       "vw": 6.7,
       "font": "Public Sans",
-      "text": "Cuando el agua sube en la Costa baja"
+      "text": "When the water rises on the lowland Coas"
      },
      "monoShare": 0,
      "monoProseShare": 0,
@@ -1076,7 +1090,7 @@
      "sectionBgs": [
       {
        "color": "#131217",
-       "top": 1764,
+       "top": 1772,
        "hsl": {
         "h": 252,
         "s": 0.12,
@@ -1085,7 +1099,7 @@
       },
       {
        "color": "#212023",
-       "top": 1879,
+       "top": 1887,
        "hsl": {
         "h": 260,
         "s": 0.04,
@@ -1104,7 +1118,7 @@
       },
       {
        "color": "#b4b4b8",
-       "share": 0.1
+       "share": 0.09
       },
       {
        "color": "#f0a868",
@@ -1181,29 +1195,29 @@
      "w": 390,
      "h": 844
     },
-    "pageH": 4350,
+    "pageH": 4244,
     "margins": {
      "left": 16,
-     "right": 17
+     "right": 18
     },
     "sections": [
      {
       "sel": "div.historia__cabecera",
       "tag": "div",
       "top": 144,
-      "height": 282,
-      "words": 70,
+      "height": 286,
+      "words": 65,
       "media": 0,
       "middle": 0,
       "heading": {
-       "text": "Cuando el agua sube en la Costa baja",
+       "text": "When the water rises on the lowland Coast",
        "size": 26,
        "tag": "h2"
       },
       "left": 16,
-      "right": 21,
+      "right": 23,
       "textLeft": 16,
-      "textRight": 21,
+      "textRight": 23,
       "fullBleed": false,
       "footer": false,
       "hero": true,
@@ -1213,20 +1227,20 @@
      {
       "sel": "div.historia__lectura",
       "tag": "div",
-      "top": 474,
-      "height": 1198,
-      "words": 312,
+      "top": 478,
+      "height": 1202,
+      "words": 308,
       "media": 0,
       "middle": 0,
       "heading": {
-       "text": "Qué cambia y por qué importa",
+       "text": "What changes and why it matters",
        "size": 20,
        "tag": "h3"
       },
       "left": 16,
-      "right": 16,
+      "right": 17,
       "textLeft": 16,
-      "textRight": 16,
+      "textRight": 17,
       "fullBleed": false,
       "footer": false,
       "hero": false,
@@ -1236,9 +1250,9 @@
      {
       "sel": "section.tarjeta.historia__comparador",
       "tag": "section",
-      "top": 1764,
+      "top": 1772,
       "height": 686,
-      "words": 63,
+      "words": 61,
       "media": 2,
       "middle": 0,
       "heading": null,
@@ -1255,9 +1269,9 @@
      {
       "sel": "div.historia__texto",
       "tag": "div",
-      "top": 2466,
-      "height": 438,
-      "words": 106,
+      "top": 2474,
+      "height": 422,
+      "words": 108,
       "media": 0,
       "middle": 0,
       "heading": null,
@@ -1274,9 +1288,9 @@
      {
       "sel": "div.historia__notas",
       "tag": "div",
-      "top": 2920,
+      "top": 2912,
       "height": 160,
-      "words": 66,
+      "words": 61,
       "media": 0,
       "middle": 0,
       "heading": null,
@@ -1293,20 +1307,20 @@
      {
       "sel": "section.historia__parte.historia__parte--4",
       "tag": "section",
-      "top": 3188,
-      "height": 518,
-      "words": 127,
+      "top": 3180,
+      "height": 460,
+      "words": 122,
       "media": 0,
       "middle": 0,
       "heading": {
-       "text": "Qué podría explicar lo que se ve",
+       "text": "What could explain what is seen",
        "size": 20,
        "tag": "h3"
       },
       "left": 16,
-      "right": 22,
+      "right": 21,
       "textLeft": 16,
-      "textRight": 22,
+      "textRight": 21,
       "fullBleed": false,
       "footer": false,
       "hero": false,
@@ -1316,20 +1330,20 @@
      {
       "sel": "section.historia__parte.historia__parte--5",
       "tag": "section",
-      "top": 3754,
-      "height": 476,
-      "words": 117,
+      "top": 3688,
+      "height": 436,
+      "words": 112,
       "media": 0,
       "middle": 0,
       "heading": {
-       "text": "Aplicaciones futuras y qué haría falta",
+       "text": "Future applications and what would be needed",
        "size": 20,
        "tag": "h3"
       },
       "left": 16,
-      "right": 20,
+      "right": 22,
       "textLeft": 16,
-      "textRight": 20,
+      "textRight": 22,
       "fullBleed": false,
       "footer": true,
       "hero": false,
@@ -1346,14 +1360,20 @@
       "firstScreen": true
      }
     ],
-    "edgeText": [],
+    "edgeText": [
+     {
+      "text": "Home",
+      "side": "left",
+      "px": 11
+     }
+    ],
     "edges": [
      {
       "x": 16,
-      "n": 24
+      "n": 25
      }
     ],
-    "leftBlocks": 24,
+    "leftBlocks": 25,
     "bodySize": 16,
     "stage": false,
     "explains": true,
@@ -1430,7 +1450,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.13,
+     "under13": 0.12,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -1453,7 +1473,15 @@
    "consoleErrors": []
   }
  ],
- "findings": [],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "edge-text",
+   "width": 390,
+   "message": "1 text block(s) sit within 12px of the screen edge: \"Home\" (11px from the left)",
+   "fix": "Keep text inside the page margin (16–20px). Only display type deliberately bled past the edge may touch it."
+  }
+ ],
  "images": [
   {
    "viewport": "desktop",

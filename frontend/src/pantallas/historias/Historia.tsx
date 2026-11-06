@@ -1,6 +1,6 @@
 import { Fragment, useMemo, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
+import { mensajeDeError } from '../../api/cliente'
 import { useCambio, useContexto, type Escenario } from '../../api/consultas'
 import { Comparador } from '../../comparador/Comparador'
 import { Cargando, ErrorBloque } from '../../diseno/Estados'
@@ -8,10 +8,14 @@ import { NotasModelo } from '../../diseno/NotasModelo'
 import { Pestanas } from '../../diseno/Pestanas'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
+import { TextoApi } from '../../idioma/TextoApi'
+import { langDe } from '../../idioma/idiomas'
+import { useT } from '../../idioma/useT'
 import { CintaPasadas } from '../../tiempo/CintaPasadas'
 import { formatearFecha } from '../../tiempo/fechas'
 import { estiloDeCapa, hallazgo, temporadasLluviosas } from '../observatorio/derivados'
-import { TERMINOS, type ContenidoHistoria, type Parrafo } from './contenido/tipos'
+import { terminosDe } from './contenido'
+import type { ContenidoHistoria, Parrafo } from './contenido/tipos'
 import { parejaDeMayorCambio } from './pareja'
 
 interface Props {
@@ -21,8 +25,7 @@ interface Props {
   indice?: ReactNode
 }
 
-const fecha = (iso: string | undefined) => formatearFecha(iso) ?? '—'
-const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }) : undefined)
+const hora = (ms: number, lang: string) => (ms > 0 ? new Date(ms).toLocaleTimeString(lang === 'es' ? 'es-EC' : lang, { hour: '2-digit', minute: '2-digit' }) : undefined)
 
 /**
  * Plantilla de una historia: cinco partes fijas, cada una con encabezado de 20 px.
@@ -32,6 +35,9 @@ const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', 
  * hay criterio fiable se queda primera/última. La cinta mueve «después»; «antes» queda fija.
  */
 export function Historia({ contenido: c, esc, indice }: Props) {
+  const { t, idioma } = useT()
+  const fecha = (iso: string | undefined) => formatearFecha(iso, idioma) ?? '—'
+  const TERMINOS = terminosDe(idioma)
   const pasadas = esc.adquisiciones
   const ultima = pasadas.length - 1
   const recomendada = esc.polarizaciones.includes(c.comparador.polarizacion) ? c.comparador.polarizacion : esc.polarizaciones[0]
@@ -82,7 +88,7 @@ export function Historia({ contenido: c, esc, indice }: Props) {
   const frase = hallazgo(r, antes?.instante ?? '', despues?.instante ?? '')
   const polarizaciones = ['HH', 'HV']
     .filter((x) => esc.polarizaciones.includes(x))
-    .map((x) => ({ id: x, etiqueta: x === c.comparador.polarizacion ? `${x} · recomendada` : x }))
+    .map((x) => ({ id: x, etiqueta: x === c.comparador.polarizacion ? t('historias.pol.recomendada', { pol: x }) : x }))
 
   const enlace = `/observatorio?${new URLSearchParams({
     escenario: esc.id,
@@ -103,14 +109,14 @@ export function Historia({ contenido: c, esc, indice }: Props) {
 
   let cuerpo: ReactNode
   if (ultima < 1) {
-    cuerpo = <p className="historia__nota">Este escenario no tiene dos pasadas distintas para comparar.</p>
+    cuerpo = <p className="historia__nota">{t('historias.comparador.sin_pasadas')}</p>
   } else if (!peticion || (resultado.isPending && !r)) {
-    cuerpo = <Cargando texto="Calculando el cambio entre las dos pasadas…" filas={5} />
+    cuerpo = <Cargando texto={t('historias.comparador.calculando')} filas={5} />
   } else if (resultado.isError && !r) {
     cuerpo = (
       <ErrorBloque
-        mensaje={resultado.error instanceof ErrorApi ? resultado.error.mensaje : MENSAJE_RED}
-        ultimoDato={hora(resultado.dataUpdatedAt)}
+        mensaje={mensajeDeError(resultado.error, t)}
+        ultimoDato={hora(resultado.dataUpdatedAt, langDe(idioma))}
         onReintentar={() => void resultado.refetch()}
       />
     )
@@ -119,7 +125,7 @@ export function Historia({ contenido: c, esc, indice }: Props) {
     cuerpo = (
       <Comparador
         antes={r.antes.rejilla} despues={r.despues.rejilla} rampa={estilo.rampa} categorias={estilo.categorias}
-        etiquetaAntes={`Antes · ${fecha(antes?.instante)}`} etiquetaDespues={`Después · ${fecha(despues?.instante)}`}
+        etiquetaAntes={t('historias.comparador.antes', { fecha: fecha(antes?.instante) })} etiquetaDespues={t('historias.comparador.despues', { fecha: fecha(despues?.instante) })}
         titulo={`${r.antes.variable === 'sigma0' ? 'σ⁰' : r.antes.variable}${r.antes.polarizacion ? ` ${r.antes.polarizacion}` : ''}, ${r.antes.unidad}`}
         origen={r.antes.origen} origenDespues={r.despues.origen} unidad={r.antes.unidad} variable={r.antes.variable} leyenda={r.antes.leyenda}
       />
@@ -130,27 +136,27 @@ export function Historia({ contenido: c, esc, indice }: Props) {
     <article className="historia" aria-labelledby="historia-titulo">
       <div className="historia__cabecera">
         {indice}
-        <h2 id="historia-titulo" className="historia__titulo">{c.titulo}</h2>
+        <h2 id="historia-titulo" className="historia__titulo" data-contenido-largo>{c.titulo}</h2>
       </div>
 
       <div className="historia__lectura">
         <section className="historia__parte" aria-labelledby="h-1">
-          <h3 id="h-1" className="historia__encabezado">{c.queCambia.titulo}</h3>
-          {p1}
+          <h3 id="h-1" className="historia__encabezado" data-contenido-largo>{c.queCambia.titulo}</h3>
+          <div data-contenido-largo>{p1}</div>
         </section>
         <section className="historia__parte" aria-labelledby="h-2">
-          <h3 id="h-2" className="historia__encabezado">{c.queVeElRadar.titulo}</h3>
-          {p2}
+          <h3 id="h-2" className="historia__encabezado" data-contenido-largo>{c.queVeElRadar.titulo}</h3>
+          <div data-contenido-largo>{p2}</div>
         </section>
       </div>
 
       <section className="historia__parte historia__parte--comparador" aria-labelledby="h-3">
-        <h3 id="h-3" className="historia__encabezado">{c.comparador.titulo}</h3>
+        <h3 id="h-3" className="historia__encabezado" data-contenido-largo>{c.comparador.titulo}</h3>
         <Tarjeta className="historia__comparador">
           <div className="historia__pestanas">
-            {polarizaciones.length > 1 && <Pestanas etiqueta="Polarización" pestanas={polarizaciones} activa={pol ?? ''} onCambiar={setPol} />}
+            {polarizaciones.length > 1 && <Pestanas etiqueta={t('historias.pol.etiqueta')} pestanas={polarizaciones} activa={pol ?? ''} onCambiar={setPol} />}
             {/* Siempre ocupa su sitio: «Actualizando…» no cambia la altura del bloque. */}
-            <p className="historia__estado" role="status">{resultado.isPlaceholderData ? 'Actualizando…' : ''}</p>
+            <p className="historia__estado" role="status">{resultado.isPlaceholderData ? t('historias.comparador.actualizando') : ''}</p>
           </div>
           {cuerpo}
           {ultima > 0 && (
@@ -159,17 +165,14 @@ export function Historia({ contenido: c, esc, indice }: Props) {
                 adquisiciones={pasadas} instante={despues?.instante ?? ''} temporadas={temporadas}
                 onCambio={(_, i) => setDespuesElegido(Math.max(iAntes + 1, i))}
               />
-              <p className="historia__nota">
-                Una muesca por pasada del satélite. Mueve el cursor para elegir «después»; «antes» queda fija.
-              </p>
+              <p className="historia__nota">{t('historias.comparador.nota_cinta')}</p>
             </>
           )}
         </Tarjeta>
         <div className="historia__texto">
-          {p3a}
-          {frase && <p className="historia__hallazgo">{frase}</p>}
-          {p3b}
-          {p3c}
+          <div data-contenido-largo>{p3a}</div>
+          {frase && <p className="historia__hallazgo"><TextoApi texto={frase} /></p>}
+          <div data-contenido-largo>{p3b}{p3c}</div>
         </div>
         {r && r.notas.length > 0 && (
           <div className="historia__notas">
@@ -177,18 +180,18 @@ export function Historia({ contenido: c, esc, indice }: Props) {
           </div>
         )}
         <div>
-          <Link to={enlace} className="boton boton--primario">Ver en el Observatorio</Link>
+          <Link to={enlace} className="boton boton--primario">{t('historias.comparador.ver_observatorio')}</Link>
         </div>
       </section>
 
       <section className="historia__parte historia__parte--4" aria-labelledby="h-4">
-        <h3 id="h-4" className="historia__encabezado">{c.hipotesis.titulo}</h3>
-        {p4}
+        <h3 id="h-4" className="historia__encabezado" data-contenido-largo>{c.hipotesis.titulo}</h3>
+        <div data-contenido-largo>{p4}</div>
       </section>
 
       <section className="historia__parte historia__parte--5" aria-labelledby="h-5">
-        <h3 id="h-5" className="historia__encabezado">{c.aplicaciones.titulo}</h3>
-        {p5}
+        <h3 id="h-5" className="historia__encabezado" data-contenido-largo>{c.aplicaciones.titulo}</h3>
+        <div data-contenido-largo>{p5}</div>
       </section>
     </article>
   )

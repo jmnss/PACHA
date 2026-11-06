@@ -277,7 +277,7 @@ pendiente — conviene hacerla junto con la actualización de accesibilidad. Con
 | 2026-11-04 | Paso 0 | Node 12 y sin navegador | nvm + Playwright | Resuelto |
 | 2026-11-04 | Revisión | La app presentaba sintético como NISAR («Datos de radar NISAR…», «Producto: NISAR L2 GCOV», «Área quemada real») | — | Se corrige en Tareas 0.3, 3.4, 3.10 |
 | 2026-11-04 | Revisión | Código de lectura HDF5 y búsqueda ASF con detalles de NISAR no verificados | — | Marcado en `docs/challenge.md`; se revisa en la integración de datos reales |
-| 2026-11-06 | Idioma · Tarea 3 | `frontend/src/pantallas/historias/historias.css:24` tiene una `}` sobrante (ya en HEAD): el minificador avisa «Unexpected "}"» y el navegador descarta la regla siguiente (`.historia__cabecera`). | Se confirmó que es anterior a la tarea | Pendiente: fuera del alcance de la tarea de idioma; corregir con revisión visual de Historias |
+| 2026-11-06 | Idioma · Tarea 3 | `frontend/src/pantallas/historias/historias.css:24` tiene una `}` sobrante (ya en HEAD): el minificador avisa «Unexpected "}"» y el navegador descarta la regla siguiente (`.historia__cabecera`). | Se confirmó que es anterior a la tarea | Resuelto en la Tarea 8 (idioma): `}` sobrante eliminada en `historias.css` |
 
 ## Pendientes visuales por pantalla
 
