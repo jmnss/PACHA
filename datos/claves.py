@@ -9,6 +9,7 @@ las genera recorriendo el catálogo y las vuelca a `api/claves.json`.
 """
 from __future__ import annotations
 
+import re
 import unicodedata
 
 from datos.geografia import MENSAJE_FUERA_DE_ECUADOR
@@ -169,9 +170,10 @@ REGISTRO.update({
     "api.sim.metrica.franjas_en_el_interferograma.etiqueta": "Franjas en el interferograma",
     "api.sim.metrica.desplazamiento_los_maximo.etiqueta": "Desplazamiento LOS máximo",
     "api.sim.metrica.deslizamientos_perdida_de_coherencia.etiqueta": "Deslizamientos (pérdida de coherencia)",
-    "api.sim.metrica.area_quemada_detectado_por_nisar.etiqueta": "Área quemada detectado por NISAR",
-    "api.sim.metrica.area_inundada_detectado_por_nisar.etiqueta": "Área inundada detectado por NISAR",
-    "api.sim.metrica.flujos_y_ceniza_10_cm_detectado_por_nisar.etiqueta": "Flujos y ceniza > 10 cm detectado por NISAR",
+    # Regla 7: lo detecta el modelo de simulación, no NISAR (`sin_nisar` reescribe la etiqueta del modelo).
+    "api.sim.metrica.area_quemada_deteccion_del_modelo_simulacion.etiqueta": "Área quemada · detección del modelo (simulación)",
+    "api.sim.metrica.area_inundada_deteccion_del_modelo_simulacion.etiqueta": "Área inundada · detección del modelo (simulación)",
+    "api.sim.metrica.flujos_y_ceniza_10_cm_deteccion_del_modelo_simulacion.etiqueta": "Flujos y ceniza > 10 cm · detección del modelo (simulación)",
     "api.sim.metrica.acierto_iou.etiqueta": "Acierto (IoU)",
     "api.sim.metrica.precision_exhaustividad.etiqueta": "Precisión · exhaustividad",
     "api.sim.capa.estado_del_fuego": "Estado del fuego",
@@ -183,7 +185,155 @@ REGISTRO.update({
     "api.sim.capa.espesor_de_ceniza": "Espesor de ceniza",
     "api.sim.capa.calado_del_lahar": "Calado del lahar",
     "api.sim.capa.corriente_piroclastica": "Corriente piroclástica",
+    # Títulos de los paneles del gemelo del radar (`modelo/desastres.py`): el frontend los traduce por
+    # `api.sim.panel.<slug>` solo si el español coincide.
+    "api.sim.panel.0_hv_antes_db": "σ⁰ HV antes (dB)",
+    "api.sim.panel.0_hv_despues_db": "σ⁰ HV después (dB)",
+    "api.sim.panel.razon_logaritmica_hv_despues_antes": "Razón logarítmica HV después/antes",
+    "api.sim.panel.0_hh_antes_db": "σ⁰ HH antes (dB)",
+    "api.sim.panel.0_hh_en_el_pico_de_la_crecida_db": "σ⁰ HH en el pico de la crecida (dB)",
+    "api.sim.panel.deteccion_de_inundacion": "Detección de inundación",
+    "api.sim.panel.interferograma_envuelto_fase_los": "Interferograma envuelto (fase LOS)",
+    "api.sim.panel.desplazamiento_en_la_linea_de_vista": "Desplazamiento en la línea de vista",
+    "api.sim.panel.coherencia_interferometrica": "Coherencia interferométrica",
+    "api.sim.panel.coherencia_antes_de_la_erupcion": "Coherencia antes de la erupción",
+    "api.sim.panel.coherencia_con_la_erupcion": "Coherencia con la erupción",
+    "api.sim.panel.perdida_de_coherencia_antes_despues": "Pérdida de coherencia (antes − después)",
+    # Encabezados de las tablas del evento (`api.sim.columna.<slug>`); las celdas siguen en español (spec §9.5).
+    "api.sim.columna.cobertura": "Cobertura",
+    "api.sim.columna.area_quemada_km2": "Área quemada (km²)",
+    "api.sim.columna.intensidad": "Intensidad",
+    "api.sim.columna.percepcion": "Percepción",
+    "api.sim.columna.poblacion": "Población",
+    "api.sim.columna.peligro": "Peligro",
+    "api.sim.columna.area_km2": "Área (km²)",
+    "api.sim.columna.modelo": "Modelo",
 })
+
+# --- observatorio (prefijo api.obs.): métricas del cambio y de la medición, órbita y unidades -------
+# Las métricas las escribe `modelo/nisar.py`; `datos/proveedores/demo.py` les da clave por el slug de la
+# etiqueta solo si etiqueta y ayuda coinciden con estas plantillas (`clave_metrica`).
+REGISTRO.update({
+    "api.obs.metrica.area_inundada_inicial.etiqueta": "Área inundada inicial",
+    "api.obs.metrica.area_inundada_inicial.ayuda": "Agua abierta + vegetación inundada",
+    "api.obs.metrica.area_inundada_final.etiqueta": "Área inundada final",
+    "api.obs.metrica.cambio_neto.etiqueta": "Cambio neto",
+    "api.obs.metrica.cambio_neto.ayuda": "Negativo = pérdida de humedal",
+    "api.obs.metrica.acierto_del_detector_verdad_sintetica.etiqueta": "Acierto del detector (verdad sintética)",
+    "api.obs.metrica.acierto_del_detector_verdad_sintetica.ayuda": "Clasificación píxel a píxel en la fecha final",
+    "api.obs.metrica.area_quemada_detectada.etiqueta": "Área quemada detectada",
+    "api.obs.metrica.area_quemada_simulada_verdad_sintetica.etiqueta": "Área quemada simulada (verdad sintética)",
+    "api.obs.metrica.area_quemada_simulada_verdad_sintetica.ayuda": "Verdad del modelo en el intervalo",
+    "api.obs.metrica.f1_del_detector_verdad_sintetica.etiqueta": "F1 del detector (verdad sintética)",
+    "api.obs.metrica.f1_del_detector_verdad_sintetica.ayuda": "Coincidencia entre detección y verdad",
+    "api.obs.metrica.biomasa_perdida.etiqueta": "Biomasa perdida",
+    "api.obs.metrica.biomasa_perdida.ayuda": "Inversión del modelo de nube de agua",
+    "api.obs.metrica.co2_emitido_estimado.etiqueta": "CO₂ emitido (estimado)",
+    "api.obs.metrica.co2_emitido_estimado.ayuda": "47 % de carbono en la biomasa × 44/12",
+    "api.obs.metrica.magnitud_del_escenario.etiqueta": "Magnitud del escenario",
+    "api.obs.metrica.magnitud_del_escenario.ayuda": "Okada: M0 = μ·L·W·deslizamiento",
+    "api.obs.metrica.max_hacia_el_satelite.etiqueta": "Máx. hacia el satélite",
+    "api.obs.metrica.max_hacia_el_satelite.ayuda": "LOS positivo",
+    "api.obs.metrica.max_alejandose.etiqueta": "Máx. alejándose",
+    "api.obs.metrica.max_alejandose.ayuda": "LOS negativo",
+    "api.obs.metrica.franjas_interferometricas.etiqueta": "Franjas interferométricas",
+    "api.obs.metrica.franjas_interferometricas.ayuda": "Una franja = λ/2 = 11,9 cm",
+    "api.obs.metrica.area_deformada_5_cm.etiqueta": "Área deformada > 5 cm",
+    "api.obs.metrica.velocidad_maxima_inicial.etiqueta": "Velocidad máxima inicial",
+    "api.obs.metrica.velocidad_maxima_final.etiqueta": "Velocidad máxima final",
+    "api.obs.metrica.retroceso_del_frente.etiqueta": "Retroceso del frente",
+    "api.obs.metrica.retroceso_del_frente.ayuda": "Sobre la línea de flujo central",
+    "api.obs.metrica.hielo_perdido.etiqueta": "Hielo perdido",
+    "api.obs.metrica.parcelas_analizadas.etiqueta": "Parcelas analizadas",
+    "api.obs.metrica.cosechas_detectadas.etiqueta": "Cosechas detectadas",
+    "api.obs.metrica.cosechas_detectadas.ayuda": "Caída de HV > 3 dB hasta nivel de suelo",
+    "api.obs.metrica.acierto_de_deteccion_verdad_sintetica.etiqueta": "Acierto de detección (verdad sintética)",
+    "api.obs.metrica.acierto_de_deteccion_verdad_sintetica.ayuda": "Cosechada / no cosechada vs. verdad",
+    "api.obs.metrica.error_medio_de_fecha.etiqueta": "Error medio de fecha",
+    "api.obs.metrica.error_medio_de_fecha.ayuda": "Limitado por la revisita de 12 días",
+    "api.obs.metrica.hundimiento_maximo.etiqueta": "Hundimiento máximo",
+    "api.obs.metrica.hundimiento_maximo.ayuda": "Percentil 1 de la velocidad vertical",
+    "api.obs.metrica.area_con_5_cm_ano.etiqueta": "Área con > 5 cm/año",
+    "api.obs.metrica.area_con_5_cm_ano.ayuda": "Umbral de daño a infraestructura",
+    "api.obs.metrica.adquisiciones_usadas.etiqueta": "Adquisiciones usadas",
+    "api.obs.metrica.adquisiciones_usadas.ayuda": "Pila de interferogramas de 12 días",
+    "api.obs.metrica.rmse_frente_a_la_verdad_sintetica.etiqueta": "RMSE frente a la verdad sintética",
+    "api.obs.metrica.rmse_frente_a_la_verdad_sintetica.ayuda": "Atmósfera y decorrelación residuales",
+    # Medición de un cuadrante.
+    "api.obs.metrica.area_del_cuadrante.etiqueta": "Área del cuadrante",
+    "api.obs.metrica.area_del_cuadrante.ayuda": "{filas} × {columnas} píxeles de {metros} m",
+    "api.obs.metrica.nueva_inundacion.etiqueta": "Nueva inundación",
+    "api.obs.metrica.nueva_inundacion.ayuda": "{pct} % del cuadrante",
+    "api.obs.metrica.perdida_de_inundacion.etiqueta": "Pérdida de inundación",
+    "api.obs.metrica.perdida_de_inundacion.ayuda": "{pct} % del cuadrante",
+    "api.obs.metrica.inundacion_persistente.etiqueta": "Inundación persistente",
+    "api.obs.metrica.inundacion_persistente.ayuda": "{pct} % del cuadrante",
+    "api.obs.metrica.severidad_moderada_2_5_a_4_5_db.etiqueta": "Severidad moderada (−2,5 a −4,5 dB)",
+    "api.obs.metrica.severidad_moderada_2_5_a_4_5_db.ayuda": "{pct} % del cuadrante",
+    "api.obs.metrica.severidad_alta_4_5_db.etiqueta": "Severidad alta (< −4,5 dB)",
+    "api.obs.metrica.severidad_alta_4_5_db.ayuda": "{pct} % del cuadrante",
+    "api.obs.metrica.sin_cambio.etiqueta": "Sin cambio",
+    "api.obs.metrica.sin_cambio.ayuda": "{pct} % del cuadrante",
+    "api.obs.metrica.crecimiento_del_cultivo.etiqueta": "Crecimiento del cultivo",
+    "api.obs.metrica.crecimiento_del_cultivo.ayuda": "{pct} % del cuadrante",
+    "api.obs.metrica.cosecha_labranza.etiqueta": "Cosecha / labranza",
+    "api.obs.metrica.cosecha_labranza.ayuda": "{pct} % del cuadrante",
+    "api.obs.metrica.inundacion_trasplante_de_arroz.etiqueta": "Inundación (trasplante de arroz)",
+    "api.obs.metrica.inundacion_trasplante_de_arroz.ayuda": "{pct} % del cuadrante",
+    "api.obs.metrica.media_velocidad_vertical.etiqueta": "Media · Velocidad vertical",
+    "api.obs.metrica.minimo_velocidad_vertical.etiqueta": "Mínimo · Velocidad vertical",
+    "api.obs.metrica.maximo_velocidad_vertical.etiqueta": "Máximo · Velocidad vertical",
+    # Dirección orbital de las adquisiciones de demostración (`Adquisicion.direccion_orbital`).
+    "api.obs.orbita.ascendente": "Ascendente",
+    "api.obs.orbita.descendente": "Descendente",
+    # Unidades con palabras (`api.unidad.<slug>`); las siglas y símbolos no se traducen.
+    "api.unidad.dias": "días",
+    "api.unidad.m_dia": "m/día",
+    "api.unidad.cm_ano": "cm/año",
+})
+
+
+_NUM_PLANTILLA = r"[−+-]?\d+(?:[\s\u2009\u00a0]\d{3})*(?:,\d+)?"
+
+
+def _a_numero(t: str) -> float:
+    return float(re.sub(r"[\s\u2009\u00a0]", "", t).replace("−", "-").replace(",", "."))
+
+
+def reconocer(plantilla: str, texto_es: str) -> dict[str, float] | None:
+    """Valores de `texto_es` si encaja con `plantilla` (cada `{x}` es un número con coma decimal); si no, None."""
+    partes = re.split(r"\{(\w+)\}", plantilla)
+    patron = "".join(f"(?P<{x}>{_NUM_PLANTILLA})" if k % 2 else re.escape(x) for k, x in enumerate(partes))
+    m = re.fullmatch(patron, texto_es)
+    return {k: _a_numero(v) for k, v in m.groupdict().items()} if m else None
+
+
+def clave_metrica(prefijo: str, etiqueta: str, ayuda: str) -> tuple[str | None, dict[str, float]]:
+    """Clave base de una métrica escrita por el modelo: `<prefijo>.<slug(etiqueta)>` si la etiqueta coincide con
+    la registrada y la ayuda encaja con la suya (o no hay ayuda). Si algo no cuadra, sin clave: el cliente la
+    muestra en español con lang="es" en lugar de traducir algo distinto."""
+    base = f"{prefijo}.{slug(etiqueta)}"
+    if REGISTRO.get(f"{base}.etiqueta") != etiqueta:
+        return None, {}
+    plantilla = REGISTRO.get(f"{base}.ayuda")
+    if not ayuda:
+        return (base, {}) if plantilla is None else (None, {})
+    valores = reconocer(plantilla, ayuda) if plantilla is not None else None
+    return (base, valores) if valores is not None else (None, {})
+
+
+def numero_de(texto_valor: str) -> float | None:
+    """Primer número de un valor ya formateado («Mw 7,0», «1 113 viviendas», «−79,4»), o None."""
+    m = re.search(_NUM_PLANTILLA, str(texto_valor))
+    return _a_numero(m.group(0)) if m else None
+
+
+_DETECTADO_NISAR = re.compile(r"\s+detectad[oa]s?\s+(?:con|por)\s+NISAR", re.IGNORECASE)
+
+
+def sin_nisar_simulador(etiqueta: str) -> str:
+    """Regla 7: una cifra del simulador no la detecta NISAR, sino el modelo. Forma neutra en género."""
+    return _DETECTADO_NISAR.sub(" · detección del modelo (simulación)", str(etiqueta))
 
 
 def texto(clave: str, **valores) -> str:

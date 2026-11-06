@@ -14,7 +14,7 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 from datos import simulador_render as render
-from datos.claves import REGISTRO, slug
+from datos.claves import REGISTRO, numero_de, sin_nisar_simulador, slug
 from datos.contrato import EntradaNoValida, Origen
 from datos.geografia import MENSAJE_FUERA_DE_ECUADOR, en_ecuador
 from modelo import desastres, estaciones
@@ -276,7 +276,6 @@ def _duracion_h(herramienta: str, par: dict[str, Valor]) -> float | None:
 
 # --- claves de texto del evento -----------------------------------------------------------------
 
-_NUMERO = re.compile(r"^([−+-]?\d+(?:[\s\u2009\u00a0]\d{3})*(?:,\d+)?)")
 
 
 def _clave_capa(nombre: str) -> str | None:
@@ -286,13 +285,16 @@ def _clave_capa(nombre: str) -> str | None:
 
 def _metrica_evento(etiqueta: str, valor: Any, ayuda: str) -> dict:
     """Métrica con la clave de su etiqueta (si está registrada) y el número del valor sin formato.
-    La ayuda lleva cifras incrustadas por el modelo: se queda en español sin clave (spec §9.5)."""
+    La ayuda lleva cifras incrustadas por el modelo: se queda en español sin clave (spec §9.5).
+    Regla 7: «… detectado por NISAR» pasa a «… · detección del modelo (simulación)»."""
+    etiqueta = sin_nisar_simulador(etiqueta)
     texto_valor = str(valor)
     clave = f"api.sim.metrica.{slug(etiqueta)}"
     if f"{clave}.etiqueta" not in REGISTRO:
         return dict(etiqueta=etiqueta, valor=texto_valor, ayuda=ayuda)
-    m = _NUMERO.match(texto_valor.strip())
-    valores = {"valor": float(re.sub(r"[\s\u2009\u00a0]", "", m.group(1)).replace(",", ".").replace("−", "-"))} if m else None
+    # El número puede ir tras una sigla («Mw 7,0», «MMI 7,4»): el cliente lo reescribe a su manera.
+    numero = numero_de(texto_valor)
+    valores = {"valor": numero} if numero is not None else None
     return dict(etiqueta=etiqueta, valor=texto_valor, ayuda=ayuda, clave_texto=clave, valores_texto=valores)
 
 

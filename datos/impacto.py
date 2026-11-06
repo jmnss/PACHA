@@ -48,6 +48,12 @@ def _cifra(historia: str, etiqueta: str, valor: str, numero: float, unidad: str)
                    clave_texto=clave, valores_texto={"valor": numero})
 
 
+def _fecha(instante) -> tuple:
+    """Fecha de una frase: el español la escribe dd/mm/aaaa; el cliente recibe la ISO (aaaa-mm-dd) y la escribe
+    a la manera de su idioma (en inglés «05/01/2026» se leería 1 de mayo)."""
+    return (lambda iso: f"{iso[8:10]}/{iso[5:7]}/{iso[0:4]}", instante.date().isoformat())
+
+
 def _n(x: float) -> str:
     """Entero con espacio fino como separador de miles (1 113)."""
     return f"{x:,.0f}".replace(",", " ")
@@ -159,7 +165,7 @@ def _calcular(prov: ProveedorDatos, escenario_id: str, antes: str, despues: str,
                   _cifra("incendio", "Parte de la escena", _pct(pct_afectada), pct_afectada, "%")]
         lectura = [_frase("api.impacto.lectura.incendio", ha=(_n, ha), pct=(_pct, pct_afectada))]
     if pico is not None:
-        lectura.append(_frase("api.impacto.lectura.pico", fecha=f"{pico['instante']:%d/%m/%Y}", ha=(_n, pico["ha"])))
+        lectura.append(_frase("api.impacto.lectura.pico", fecha=_fecha(pico["instante"]), ha=(_n, pico["ha"])))
     sintetico = r.origen.tipo != "real"
     acciones = [_frase(f"api.impacto.accion.{historia}.{i + 1}" + ("_hipotetica" if i == 0 and sintetico else ""))
                 for i in range(len(ACCIONES[historia]))]

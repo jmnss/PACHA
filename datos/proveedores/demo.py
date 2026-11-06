@@ -18,7 +18,7 @@ from datetime import date, datetime, timezone
 import numpy as np
 import pandas as pd
 
-from datos.claves import texto
+from datos.claves import clave_metrica, numero_de, texto
 from datos.contrato import (
     EntradaNoValida,
     NoEncontrado,
@@ -84,10 +84,17 @@ def _sin_nisar(texto: str) -> str:
 
 
 def _metrica(etiqueta: str, valor: str, ayuda: str) -> Metrica:
-    """Separa «12,3 km²» en valor y unidad; si no tiene forma numérica, deja el texto entero."""
+    """Separa «12,3 km²» en valor y unidad; si no tiene forma numérica, deja el texto entero.
+    Con etiqueta y ayuda registradas (`api.obs.metrica.<slug>`) lleva su clave y las cifras sin formato."""
     m = _NUM.match(str(valor).strip())
     num, unidad = (m.group(1).strip(), m.group(2)) if m else (str(valor), "")
-    return Metrica(etiqueta=_sin_nisar(etiqueta), valor=num, unidad=unidad, ayuda=_sin_nisar(ayuda))
+    etiqueta, ayuda = _sin_nisar(etiqueta), _sin_nisar(ayuda)
+    clave, valores = clave_metrica("api.obs.metrica", etiqueta, ayuda)
+    numero = numero_de(num)
+    if clave is not None and numero is not None:
+        valores = {"valor": numero, **valores}
+    return Metrica(etiqueta=etiqueta, valor=num, unidad=unidad, ayuda=ayuda,
+                   clave_texto=clave, valores_texto=valores or None)
 
 
 def _utc(d: date) -> datetime:

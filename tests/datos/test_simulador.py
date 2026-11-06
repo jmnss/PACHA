@@ -7,6 +7,7 @@ from pydantic import ValidationError
 from datos import simulador
 from datos.contrato import EntradaNoValida
 from datos.simulador import PeticionMundo
+from datos.claves import slug
 
 FECHA = date(2026, 8, 15)
 
@@ -179,3 +180,33 @@ def test_metrica_sin_registrar_queda_sin_clave():
     assert m["clave_texto"] == "api.sim.metrica.perdidas_en_viviendas" and m["valores_texto"] == {"valor": 6.4}
     m = simulador._metrica_evento("Población expuesta", "6 837", "x")
     assert m["valores_texto"] == {"valor": 6837.0}
+
+
+@pytest.mark.parametrize("herramienta", ["incendio", "inundacion", "erupcion"])
+def test_metricas_del_radar_no_dicen_detectado_por_nisar(herramienta):
+    """Regla 7 de CLAUDE.md: la detección del simulador la hace el modelo, no NISAR."""
+    from tests.api.test_claves_api import CLAVES
+    rapidos = {"incendio": {"horas": 6}, "inundacion": {"duracion_h": 2}, "erupcion": {"duracion_h": 2}}
+    ev = evento(herramienta, celda_en_tierra(), rapidos.get(herramienta))
+    primera = ev["metricas_radar"][0]
+    assert "NISAR" not in primera["etiqueta"] and primera["etiqueta"].endswith("· detección del modelo (simulación)")
+    assert CLAVES[primera["clave_texto"] + ".etiqueta"] == primera["etiqueta"]
+    assert not any("NISAR" in m["etiqueta"] for m in [*ev["metricas"], *ev["metricas_radar"]])
+
+
+@pytest.mark.parametrize("herramienta", ["incendio", "tormenta", "terremoto", "erupcion"])
+def test_paneles_y_columnas_tienen_clave_derivada(herramienta):
+    from tests.api.test_claves_api import CLAVES
+    rapidos = {"incendio": {"horas": 6}, "tormenta": {"duracion_h": 2}, "erupcion": {"duracion_h": 2}}
+    ev = evento(herramienta, celda_en_tierra(), rapidos.get(herramienta))
+    for t in ev["titulos_paneles"]:
+        assert CLAVES[f"api.sim.panel.{slug(t)}"] == t
+    for c in (ev["tabla"] or {}).get("columnas", []):
+        assert CLAVES[f"api.sim.columna.{slug(c)}"] == c
+
+
+def test_magnitud_e_intensidad_traen_su_numero():
+    ev = evento("terremoto", celda_en_tierra())
+    por = {m["etiqueta"]: m for m in ev["metricas"]}
+    assert por["Magnitud"]["valores_texto"]["valor"] == pytest.approx(float(por["Magnitud"]["valor"].split()[1].replace(",", ".")))
+    assert por["Intensidad máxima"]["valores_texto"] is not None

@@ -42,6 +42,10 @@ def _escenarios(salida: dict[str, str], prov) -> None:
         # Categorías de las capas (leyenda): código = posición + 1, como en `CapaRaster.leyenda`.
         antes, despues = prov.intervalo_por_defecto(e.id)
         r = prov.cambio(e.id, antes, despues, None)
+        # Notas del modelo heredado (spec §3, tipo 4): clave por id de escenario y posición. El cliente solo
+        # traduce si el español coincide (con otros parámetros la nota cambia y se queda en español).
+        for k, nota in enumerate(r.notas, start=1):
+            salida[f"api.nota.{e.id}.{k}"] = str(nota)
         for capa in filter(None, (r.antes, r.despues, r.cambio, r.clasificacion, *r.capas_extra)):
             for k, (etiqueta, _color) in enumerate(capa.leyenda or [], start=1):
                 salida[f"api.categoria.{capa.variable}.{k}"] = etiqueta

@@ -121,3 +121,49 @@ def test_catalogo_derivado_cubre_tipos_y_escenarios(cliente_demo):
                 assert CLAVES[f"api.opcion.{t['id']}.{c['id']}.{slug(o['etiqueta'])}"] == o["etiqueta"]
     for e in cliente_demo.get("/api/escenarios").json():
         assert CLAVES[f"api.escenario.{e['id']}.sitio"] == e["nombre"]
+
+
+def test_metricas_del_cambio_y_de_la_medicion_traen_claves(cliente_demo):
+    """Criterio de éxito 1: las métricas que escribe el modelo heredado llevan clave si su texto es el registrado."""
+    con_clave = 0
+    for e in cliente_demo.get("/api/escenarios").json():
+        a, d = e["adquisiciones"][0]["id"], e["adquisiciones"][-1]["id"]
+        assert CLAVES[f"api.obs.orbita.{slug(e['adquisiciones'][0]['direccion_orbital'])}"] == e["adquisiciones"][0]["direccion_orbital"]
+        r = cliente_demo.post(f"/api/escenarios/{e['id']}/cambio", json={"antes": a, "despues": d}).json()
+        med = cliente_demo.post(f"/api/escenarios/{e['id']}/medicion",
+                                json={"antes": a, "despues": d, "cuadrante": [0.2, 0.2, 0.6, 0.7]}).json()
+        for m in [*r["metricas"], *med["metricas"]]:
+            if m["clave_texto"] is None or m["clave_texto"] == "api.medicion.posicion":
+                continue
+            con_clave += 1
+            assert CLAVES[m["clave_texto"] + ".etiqueta"] == m["etiqueta"]
+            if m["ayuda"]:
+                plantilla = CLAVES[m["clave_texto"] + ".ayuda"]
+                assert plantilla == m["ayuda"] or _variables(plantilla) <= set(m["valores_texto"]), m
+            else:
+                assert m["clave_texto"] + ".ayuda" not in CLAVES
+            assert isinstance(m["valores_texto"]["valor"], float)
+        # Las métricas fijas del cambio (sin cifras en la etiqueta) siempre llevan clave.
+        assert sum(m["clave_texto"] is not None for m in r["metricas"]) >= 3, e["id"]
+    assert con_clave >= 40
+
+
+def test_notas_del_modelo_tienen_clave_por_escenario():
+    from datos.proveedores.demo import ProveedorDemostracion
+    prov = ProveedorDemostracion()
+    for e in prov.escenarios():
+        r = prov.cambio(e.id, *prov.intervalo_por_defecto(e.id), None)
+        assert r.notas
+        for k, nota in enumerate(r.notas, start=1):
+            assert CLAVES[f"api.nota.{e.id}.{k}"] == nota
+
+
+def test_fecha_del_pico_viaja_en_iso(cliente_demo):
+    """En la frase el español conserva dd/mm/aaaa; el cliente recibe aaaa-mm-dd para escribirla en su idioma."""
+    e = cliente_demo.get("/api/escenarios/ec_la_segua").json()
+    a, b = e["adquisiciones"][0]["id"], e["adquisiciones"][-1]["id"]
+    d = cliente_demo.get(f"/api/escenarios/ec_la_segua/impacto?antes={a}&despues={b}").json()
+    pico = next((f, t) for f, t in zip(d["lectura_frases"], d["lectura"]) if f["clave_texto"] == "api.impacto.lectura.pico")
+    iso = pico[0]["valores_texto"]["fecha"]
+    assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", iso)
+    assert f"llega el {iso[8:10]}/{iso[5:7]}/{iso[:4]} con" in pico[1]
