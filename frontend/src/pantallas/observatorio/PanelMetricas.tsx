@@ -10,7 +10,7 @@ import { Tarjeta } from '../../diseno/Tarjeta'
 import { TextoApi } from '../../idioma/TextoApi'
 import { AyudaMetrica, EtiquetaMetrica, UnidadMetrica, ValorMetrica } from '../../idioma/MetricaApi'
 import { clavesApi } from '../../idioma/clavesApi'
-import { langDe } from '../../idioma/idiomas'
+import { formatoHora } from '../../idioma/formato'
 import { useT } from '../../idioma/useT'
 import { formatearFecha } from '../../tiempo/fechas'
 
@@ -24,7 +24,6 @@ interface Props {
 
 type Metrica = components['schemas']['Metrica']
 
-const hora = (ms: number, lang: string) => (ms > 0 ? new Date(ms).toLocaleTimeString(lang === 'es' ? 'es-EC' : lang, { hour: '2-digit', minute: '2-digit' }) : undefined)
 
 /** Pasada activa y métricas del cambio entre «antes» y «después» (valores tal como los calcula la API). */
 export function PanelMetricas({ esc, resultado, indice, antesId, despuesId }: Props) {
@@ -51,7 +50,7 @@ export function PanelMetricas({ esc, resultado, indice, antesId, despuesId }: Pr
         {resultado.isPending && !sinPareja && <Cargando texto={t('obs.metricas.calculando')} filas={4} />}
         {resultado.isError && !r && (
           <ErrorBloque mensaje={mensajeDeError(resultado.error, t)}
-            ultimoDato={hora(resultado.dataUpdatedAt, langDe(idioma))} onReintentar={() => void resultado.refetch()} />
+            ultimoDato={formatoHora(idioma, resultado.dataUpdatedAt)} onReintentar={() => void resultado.refetch()} />
         )}
         {r && (
           <Tabla<Metrica>

@@ -12,8 +12,8 @@ import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
 import { descargarPng } from '../../exportar/png'
-import { langDe } from '../../idioma/idiomas'
 import { clavesApi } from '../../idioma/clavesApi'
+import { formatoHora } from '../../idioma/formato'
 import { useT } from '../../idioma/useT'
 import { formatearFecha } from '../../tiempo/fechas'
 import { CampoFlujo } from './CampoFlujo'
@@ -39,7 +39,6 @@ interface Props {
 
 const MIN_LADO = 0.002
 
-const hora = (ms: number, lang: string) => (ms > 0 ? new Date(ms).toLocaleTimeString(lang === 'es' ? 'es-EC' : lang, { hour: '2-digit', minute: '2-digit' }) : undefined)
 
 interface Vista { id: string; etiqueta: string; capa?: CapaDto }
 
@@ -125,7 +124,7 @@ export function VistaAntesDespues({ esc, resultado, antesId, despuesId, polariza
   if (resultado.isPending) cuerpo = <Cargando texto={t('obs.comparar.cargando')} filas={5} />
   else if (resultado.isError && !r) {
     cuerpo = <ErrorBloque mensaje={mensajeDeError(resultado.error, t)}
-      ultimoDato={hora(resultado.dataUpdatedAt, langDe(idioma))} onReintentar={() => void resultado.refetch()} />
+      ultimoDato={formatoHora(idioma, resultado.dataUpdatedAt)} onReintentar={() => void resultado.refetch()} />
   } else if (r && vista) {
     const sel = { punto, cuadrante }
     if (vista.id === 'comparar') {

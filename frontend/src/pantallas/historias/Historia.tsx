@@ -8,7 +8,7 @@ import { NotasModelo } from '../../diseno/NotasModelo'
 import { Pestanas } from '../../diseno/Pestanas'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
-import { langDe } from '../../idioma/idiomas'
+import { formatoHora } from '../../idioma/formato'
 import { useT } from '../../idioma/useT'
 import { CintaPasadas } from '../../tiempo/CintaPasadas'
 import { formatearFecha } from '../../tiempo/fechas'
@@ -24,7 +24,6 @@ interface Props {
   indice?: ReactNode
 }
 
-const hora = (ms: number, lang: string) => (ms > 0 ? new Date(ms).toLocaleTimeString(lang === 'es' ? 'es-EC' : lang, { hour: '2-digit', minute: '2-digit' }) : undefined)
 
 /**
  * Plantilla de una historia: cinco partes fijas, cada una con encabezado de 20 px.
@@ -115,7 +114,7 @@ export function Historia({ contenido: c, esc, indice }: Props) {
     cuerpo = (
       <ErrorBloque
         mensaje={mensajeDeError(resultado.error, t)}
-        ultimoDato={hora(resultado.dataUpdatedAt, langDe(idioma))}
+        ultimoDato={formatoHora(idioma, resultado.dataUpdatedAt)}
         onReintentar={() => void resultado.refetch()}
       />
     )

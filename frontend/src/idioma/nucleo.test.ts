@@ -37,3 +37,14 @@ describe('núcleo del idioma', () => {
     expect(esCodigoIdioma('fr')).toBe(false)
   })
 })
+
+describe('formatoHora', () => {
+  it('kichwa escribe la hora como es-EC (sin el «a.m.» del quechua de CLDR) y 0 es «sin dato»', async () => {
+    const { formatoHora } = await import('./formato')
+    const ms = Date.UTC(2026, 0, 5, 15, 7)
+    expect(formatoHora('qu', ms)).toBe(formatoHora('es', ms))
+    expect(formatoHora('qu', ms)).toBe(new Date(ms).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }))
+    expect(formatoHora('en', ms)).toBe(new Date(ms).toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit' }))
+    expect(formatoHora('es', 0)).toBeUndefined()
+  })
+})

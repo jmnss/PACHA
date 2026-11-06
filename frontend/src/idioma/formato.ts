@@ -5,6 +5,12 @@ function locale(idioma: CodigoIdioma): string {
   return idioma === 'en' ? 'en' : 'es-EC'
 }
 
+/** Hora (hh:mm) de un instante en milisegundos, o undefined si no hay dato. El kichwa usa la hora de es-EC
+ * (CLDR da a «qu» un «a.m.» que no corresponde). */
+export function formatoHora(idioma: CodigoIdioma, ms: number): string | undefined {
+  return ms > 0 ? new Date(ms).toLocaleTimeString(locale(idioma), { hour: '2-digit', minute: '2-digit' }) : undefined
+}
+
 export function formatoNumero(idioma: CodigoIdioma, n: number, op?: Intl.NumberFormatOptions): string {
   return new Intl.NumberFormat(locale(idioma), op).format(n)
 }

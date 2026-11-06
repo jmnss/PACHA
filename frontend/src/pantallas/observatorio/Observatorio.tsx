@@ -13,6 +13,7 @@ import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
 import { useMovil } from '../../estado/useMovil'
 import { clavesApi } from '../../idioma/clavesApi'
 import { useTituloPagina } from '../../estado/useTituloPagina'
+import { formatoHora } from '../../idioma/formato'
 import { useT } from '../../idioma/useT'
 import { codificar, decodificar, type Control, type Valores } from './parametros'
 import { PanelSimulacion } from './PanelSimulacion'
@@ -50,11 +51,10 @@ const VISTAS = [
   { id: 'impacto', clave: 'obs.estructura.vista_impacto' },
 ] as const
 
-const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }) : undefined)
 
 /** Ruta /observatorio: mapa y tiempo (esta tarea); «Antes y después» y «Serie» son las otras dos vistas. */
 export default function Observatorio() {
-  const { t } = useT()
+  const { t, idioma } = useT()
   useTituloPagina('titulos.observatorio')
   const [url, cambiar] = useEstadoUrl(ESQUEMA)
   const escenario = useEscenario(url.escenario)
@@ -118,7 +118,7 @@ export default function Observatorio() {
         <div className="observatorio__salida">
           <ErrorBloque
             mensaje={mensajeDeError(e, t)}
-            ultimoDato={hora(escenario.dataUpdatedAt)}
+            ultimoDato={formatoHora(idioma, escenario.dataUpdatedAt)}
             onReintentar={() => void escenario.refetch()}
           />
           {noExiste && destino && <Boton variante="secundario" onClick={() => irA(destino.id)}>{t('obs.estructura.volver_a', { nombre: destino.nombre })}</Boton>}

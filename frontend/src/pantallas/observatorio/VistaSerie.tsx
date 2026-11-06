@@ -9,8 +9,8 @@ import { Tabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { aCsv, descargarCsv } from '../../exportar/csv'
 import { esReal } from '../../diseno/origen'
-import { langDe } from '../../idioma/idiomas'
 import { TextoApi } from '../../idioma/TextoApi'
+import { formatoHora } from '../../idioma/formato'
 import { useT } from '../../idioma/useT'
 import { Linea, type MarcaLinea, type SerieLinea } from '../../graficos/Linea'
 import { esVerdad, parseInstante, rotulo } from '../../graficos/fechas'
@@ -27,7 +27,6 @@ interface Props {
 }
 
 const limpio = (t: string) => t.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase()
-const hora = (ms: number, lang: string) => (ms > 0 ? new Date(ms).toLocaleTimeString(lang === 'es' ? 'es-EC' : lang, { hour: '2-digit', minute: '2-digit' }) : undefined)
 const nombreCsvSerie = (escenario: string, serie: string) => `serie_${limpio(escenario)}_${limpio(serie) || 'serie'}.csv`
 
 /** Agrupa los puntos [instante, valor, nombre] de una serie de la API por nombre, conservando el orden de aparición. */
@@ -48,7 +47,7 @@ export function VistaSerie({ esc, resultado, antesId, despuesId }: Props) {
     return (
       <ErrorBloque
         mensaje={mensajeDeError(resultado.error, t)}
-        ultimoDato={hora(resultado.dataUpdatedAt, langDe(idioma))}
+        ultimoDato={formatoHora(idioma, resultado.dataUpdatedAt)}
         onReintentar={() => void resultado.refetch()}
       />
     )

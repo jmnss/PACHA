@@ -8,6 +8,7 @@ import { Termino } from '../../diseno/Termino'
 import { Barras } from '../../graficos/Barras'
 import { clavesApi } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
+import { formatoHora } from '../../idioma/formato'
 import { useT } from '../../idioma/useT'
 import { temporadaDelMes } from './derivados'
 
@@ -17,7 +18,6 @@ interface Props {
   ms: number
 }
 
-const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }) : undefined)
 
 /** Contexto climático REAL del lugar (NASA POWER): no son datos de NISAR, y el sello lo dice. */
 export function PanelContexto({ consulta, ms }: Props) {
@@ -27,7 +27,7 @@ export function PanelContexto({ consulta, ms }: Props) {
   if (consulta.isError) {
     return (
       <Tarjeta titulo={titulo}>
-        <ErrorBloque mensaje={mensajeDeError(consulta.error, t)} ultimoDato={hora(consulta.dataUpdatedAt)} onReintentar={() => void consulta.refetch()} />
+        <ErrorBloque mensaje={mensajeDeError(consulta.error, t)} ultimoDato={formatoHora(idioma, consulta.dataUpdatedAt)} onReintentar={() => void consulta.refetch()} />
       </Tarjeta>
     )
   }

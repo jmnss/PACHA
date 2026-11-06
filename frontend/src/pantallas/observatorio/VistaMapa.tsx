@@ -1,8 +1,8 @@
 import type { UseQueryResult } from '@tanstack/react-query'
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
-import { langDe } from '../../idioma/idiomas'
 import type { Clave } from '../../idioma/traductor'
 import { clavesApi } from '../../idioma/clavesApi'
+import { formatoHora } from '../../idioma/formato'
 import { useT } from '../../idioma/useT'
 import { mensajeDeError } from '../../api/cliente'
 import { useCapa, useFotogramas, useSimular, type CapaDto, type Contexto, type Escenario, type ResultadoCambio } from '../../api/consultas'
@@ -70,7 +70,6 @@ function baseGuardada(): MapaBaseId {
 /** En móvil la leyenda empieza plegada para no tapar el mapa. */
 const esMovil = () => typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 699px)').matches
 
-const hora = (ms: number, lang: string) => (ms > 0 ? new Date(ms).toLocaleTimeString(lang === 'es' ? 'es-EC' : lang, { hour: '2-digit', minute: '2-digit' }) : undefined)
 
 function extremosDe(capa: CapaDto): [Clave, Clave] | undefined {
   return capa.variable.includes('desplazamiento')
@@ -81,7 +80,6 @@ function extremosDe(capa: CapaDto): [Clave, Clave] | undefined {
 /** Mapa con la capa elegida, su leyenda y sello, y la cinta de pasadas con sus controles debajo. */
 export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId, polarizacion, onFijar, onEscenarioNuevo, parametros, onAbrirParametros, motivoReproductor }: Props) {
   const { t, idioma, textoApi } = useT()
-  const lang = langDe(idioma)
   const idNota = useId()
   const [modo, setModo] = useState<ModoCapa>('cambio')
   const [pais, setPais] = useState(false)
@@ -193,7 +191,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
           )}
           {consulta.isError && !capa && (
             <div className="vista-mapa__estado">
-              <ErrorBloque mensaje={mensajeDeError(consulta.error, t)} ultimoDato={hora(consulta.dataUpdatedAt, lang)} onReintentar={() => void consulta.refetch()} />
+              <ErrorBloque mensaje={mensajeDeError(consulta.error, t)} ultimoDato={formatoHora(idioma, consulta.dataUpdatedAt)} onReintentar={() => void consulta.refetch()} />
             </div>
           )}
         </div>
