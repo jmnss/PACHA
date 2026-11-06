@@ -41,6 +41,7 @@ Criterios del borrador:
 | señal, productos, geometría, bandas | Leyendas y aviso de notas (`catalogos/qu/origen.ts`) | Términos de teledetección sin equivalente asentado; se dejan en español. |
 | Rurashka (sintético), Chiqan (real), rurachik (generador), muju (semilla) | Sellos de origen | Vocabulario ya usado en la banda; a confirmar con hablantes. |
 | Paso orbital, interferometría, ENL, moteado, escenario, evento, parámetro, control, pixel, órbita, temporada, región, provincia, hito, clima, humedad, Observatorio | Parámetros, contexto y ayuda del Observatorio (`catalogos/qu/observatorio.ts`) | Términos técnicos sin equivalente asentado; se dejan en español (los nombres de los términos con explicación también). «Costa» y «Sierra» se conservan como regiones. |
+| SAR, activo, rugosidad, constante dieléctrica, polarización, banda, interferometría, fase, frente, glaciar, humedal, incendio, erupción, simulación, Observatorio, Simulador de eventos | Recorrido y Fundamentos (`recorrido/guion.qu.ts`, `fundamentos/contenido.qu.ts`) | Términos técnicos sin equivalente asentado; se dejan en español (los nombres de los términos con explicación también). «Purina» (recorrido) y «Tiksi yachaykuna» (fundamentos) son títulos provisionales a confirmar. |
 
 ## Dudas abiertas
 

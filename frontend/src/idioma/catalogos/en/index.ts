@@ -1,6 +1,8 @@
 import { comun } from './comun'
 import { fecha } from './fecha'
 import { exportar } from './exportar'
+import { fundamentos } from './fundamentos'
+import { recorrido } from './recorrido'
 import { estructura } from './estructura'
 import { historias } from './historias'
 import { laboratorio } from './laboratorio'
@@ -10,4 +12,4 @@ import { origen } from './origen'
 import { piezas } from './piezas'
 import { simulador } from './simulador'
 
-export const en = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador, ...laboratorio }
+export const en = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador, ...laboratorio, ...recorrido, ...fundamentos }

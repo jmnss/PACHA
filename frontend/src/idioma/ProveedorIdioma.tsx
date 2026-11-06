@@ -69,6 +69,16 @@ export function ProveedorIdioma({ inicial, catalogos, children }: Props) {
     guardar(c)
   }, [])
 
+  // Otra pestaña o la ventana que contiene a esta (el recorrido incrusta pantallas en un iframe) cambió el idioma:
+  // se aplica sin volver a guardarlo, y sin tocar la red.
+  useEffect(() => {
+    const alAlmacenar = (e: StorageEvent) => {
+      if (e.key === CLAVE && esCodigoIdioma(e.newValue)) setIdioma(e.newValue)
+    }
+    window.addEventListener('storage', alAlmacenar)
+    return () => window.removeEventListener('storage', alAlmacenar)
+  }, [])
+
   useEffect(() => {
     document.documentElement.lang = langDe(idioma)
   }, [idioma])

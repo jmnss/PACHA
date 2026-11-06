@@ -1,45 +1,19 @@
-/**
- * Guion del recorrido: datos, sin lógica científica. Cada paso incrusta una pantalla real.
- * Todo el texto es de demostración: se redacta como ejemplo, nunca como hallazgo sobre un lugar real.
- */
-export interface Paso {
-  id: string
-  titulo: string
-  texto: string
-  /** Ruta de la app (sin `incrustado`; lo añade el recorrido). */
-  ruta: string
-  segundos: number
+import type { CodigoIdioma } from '../../idioma/idiomas'
+import { guionEn } from './guion.en'
+import { guionEs, type Paso, type TextoPaso } from './guion.es'
+import { guionQu } from './guion.qu'
+
+export type { Paso, TextoPaso }
+
+const TEXTOS: Record<CodigoIdioma, TextoPaso[]> = { es: guionEs, en: guionEn, qu: guionQu }
+
+const fusionar = (textos: TextoPaso[]): Paso[] => guionEs.map((base, i) => ({ ...base, titulo: textos[i].titulo, texto: textos[i].texto }))
+const POR_IDIOMA: Record<CodigoIdioma, Paso[]> = { es: guionEs, en: fusionar(TEXTOS.en), qu: fusionar(TEXTOS.qu) }
+
+/** El guion en un idioma. Ruta y duración son las del español (fuente de verdad); solo cambia el texto. */
+export function guionDe(idioma: CodigoIdioma): Paso[] {
+  return POR_IDIOMA[idioma]
 }
 
-export const GUION: Paso[] = [
-  {
-    id: 'problema', titulo: 'Un río crece y nadie ve hasta dónde',
-    texto: 'Ejemplo ilustrativo en la Costa baja de Ecuador: cuando una inundación llega, las nubes suelen cubrir el cielo justo cuando más hace falta mirar.',
-    ruta: '/', segundos: 12,
-  },
-  {
-    id: 'nubes', titulo: 'La nube no lo detiene',
-    texto: 'Un radar emite su propia señal, de día y de noche. Sube las nubes: la imagen óptica se pierde y el radar sigue viendo la inundación.',
-    ruta: '/laboratorio?nubes=70', segundos: 14,
-  },
-  {
-    id: 'polarizacion', titulo: 'Cada polarización cuenta algo distinto',
-    texto: 'El agua abierta, el agua bajo los árboles y un bosque quemado responden distinto según cómo se emite y se recibe la onda.',
-    ruta: '/laboratorio?vista=polarizacion', segundos: 14,
-  },
-  {
-    id: 'mapa', titulo: 'Del dato al mapa de cambio',
-    texto: 'En el Observatorio, dos pasadas se convierten en un mapa de qué cambió, con su serie en el tiempo y la medición de un cuadrante.',
-    ruta: '/observatorio', segundos: 14,
-  },
-  {
-    id: 'incendio', titulo: 'Otro cambio, otra señal',
-    texto: 'Un incendio en la Sierra: la polarización cruzada (HV) cae donde el bosque pierde estructura. Desliza para comparar antes y después.',
-    ruta: '/?historia=incendio', segundos: 12,
-  },
-  {
-    id: 'simulador', titulo: 'Y si pasa mañana',
-    texto: 'El Simulador de eventos lanza un terremoto, una erupción o un incendio sobre el relieve real de Ecuador y muestra lo que vería un radar.',
-    ruta: '/simulador', segundos: 12,
-  },
-]
+/** Versión en español (fuente de verdad): las pruebas de siempre. */
+export const GUION: Paso[] = guionDe('es')

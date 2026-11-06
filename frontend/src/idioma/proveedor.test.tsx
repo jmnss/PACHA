@@ -135,3 +135,25 @@ describe('textosSinTraducir', () => {
     expect(de('<p aria-label="Hola">⟦x⟧</p>')).toEqual(['Hola'])
   })
 })
+
+describe('ProveedorIdioma · evento storage', () => {
+  const evento = (key: string | null, newValue: string | null) => act(() => { window.dispatchEvent(new StorageEvent('storage', { key, newValue })) })
+
+  it('aplica el idioma nuevo de la clave nisar.idioma', () => {
+    idiomas(['es-EC'])
+    montar()
+    expect(screen.getByTestId('idioma').textContent).toBe('es')
+    evento('nisar.idioma', 'en')
+    expect(screen.getByTestId('idioma').textContent).toBe('en')
+    expect(document.documentElement.lang).toBe('en')
+  })
+
+  it('ignora otras claves y valores inválidos', () => {
+    idiomas(['es-EC'])
+    montar()
+    evento('otra.clave', 'en')
+    evento('nisar.idioma', 'fr')
+    evento('nisar.idioma', null)
+    expect(screen.getByTestId('idioma').textContent).toBe('es')
+  })
+})
