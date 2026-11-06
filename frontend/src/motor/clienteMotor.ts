@@ -86,13 +86,20 @@ export function crearClienteMotor(crearPuerto: () => PuertoMotor, motorUrl: stri
   }
 }
 
-function crearPuertoDedicado(): PuertoMotor {
+/** Un solo motor por pestaña (y entre marcos): `SharedWorker` si existe; si no, un `Worker` por documento. */
+export function elegirPuerto(): PuertoMotor {
+  // Vite solo empaqueta el worker si `new URL(..., import.meta.url)` va escrito dentro de la llamada.
+  if (typeof SharedWorker !== 'undefined') {
+    const puerto = new SharedWorker(new URL('./motor.worker.ts', import.meta.url), { type: 'module', name: 'nisar-motor' }).port
+    puerto.start()
+    return puerto as unknown as PuertoMotor
+  }
   return new Worker(new URL('./motor.worker.ts', import.meta.url), { type: 'module' }) as unknown as PuertoMotor
 }
 
 /** Instancia de la app. */
 export const motor: ClienteMotor = crearClienteMotor(
-  crearPuertoDedicado,
+  elegirPuerto,
   new URL(conBase('/motor/'), globalThis.location?.origin ?? 'http://localhost').href,
 )
 

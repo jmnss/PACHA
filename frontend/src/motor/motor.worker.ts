@@ -80,8 +80,28 @@ function manejar(m: MensajeAlMotor, responder: Responder) {
 interface AmbitoWorker {
   postMessage(m: MensajeDelMotor): void
   onmessage: ((e: { data: MensajeAlMotor }) => void) | null
+  onconnect: ((e: { ports: PuertoCompartido[] }) => void) | null
+}
+interface PuertoCompartido {
+  postMessage(m: MensajeDelMotor): void
+  onmessage: ((e: { data: MensajeAlMotor }) => void) | null
+  start(): void
 }
 const ambito = self as unknown as AmbitoWorker
-const aqui: Responder = (m) => ambito.postMessage(m)
-puertos.add(aqui)
-ambito.onmessage = (e) => manejar(e.data, aqui)
+
+// Worker compartido: cada marco se conecta con su puerto y recibe el estado actual; una sola inicialización.
+ambito.onconnect = (e) => {
+  const puerto = e.ports[0]
+  const responder: Responder = (m) => puerto.postMessage(m)
+  puertos.add(responder)
+  puerto.onmessage = (ev) => manejar(ev.data, responder)
+  puerto.start()
+  responder({ tipo: 'estado', estado, detalle })
+}
+
+// Worker dedicado (sin SharedWorker): un único interlocutor.
+const dedicado: Responder = (m) => ambito.postMessage(m)
+ambito.onmessage = (e) => {
+  puertos.add(dedicado)
+  manejar(e.data, dedicado)
+}

@@ -1,5 +1,5 @@
-import { describe, expect, it, vi } from 'vitest'
-import { crearClienteMotor, MotorNoDisponible } from './clienteMotor'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { crearClienteMotor, elegirPuerto, MotorNoDisponible } from './clienteMotor'
 import type { MensajeAlMotor, MensajeDelMotor, PuertoMotor } from './protocolo'
 
 function puertoFalso() {
@@ -70,5 +70,30 @@ describe('clienteMotor', () => {
     await r
     expect(c.pendientes()).toBe(0)
     expect(aviso).toHaveBeenCalled()
+  })
+})
+
+describe('elegirPuerto', () => {
+  afterEach(() => vi.unstubAllGlobals())
+
+  it('elegirPuerto usa SharedWorker si existe', () => {
+    const port = { postMessage: vi.fn(), start: vi.fn(), onmessage: null }
+    const Compartido = vi.fn(() => ({ port }))
+    const Dedicado = vi.fn()
+    vi.stubGlobal('SharedWorker', Compartido)
+    vi.stubGlobal('Worker', Dedicado)
+    expect(elegirPuerto()).toBe(port)
+    expect(Compartido).toHaveBeenCalledTimes(1)
+    expect(port.start).toHaveBeenCalled()
+    expect(Dedicado).not.toHaveBeenCalled()
+  })
+
+  it('elegirPuerto cae a Worker si no hay SharedWorker', () => {
+    const w = { postMessage: vi.fn(), onmessage: null }
+    const Dedicado = vi.fn(() => w)
+    vi.stubGlobal('SharedWorker', undefined)
+    vi.stubGlobal('Worker', Dedicado)
+    expect(elegirPuerto()).toBe(w)
+    expect(Dedicado).toHaveBeenCalledTimes(1)
   })
 })
