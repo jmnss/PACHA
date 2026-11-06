@@ -107,6 +107,6 @@ describe('simulador · idioma', () => {
   it('el informe lleva el aviso de simulación en los tres idiomas', () => {
     expect(lineasInforme(INCENDIO, MUNDO, traductor('es').t).join('\n')).toContain('no son observaciones reales de NISAR')
     expect(lineasInforme(INCENDIO, MUNDO, traductor('en').t).join('\n')).toContain('not real NISAR observations')
-    expect(lineasInforme(INCENDIO, MUNDO, traductor('qu').t).join('\n')).toContain('mana NISARpa chiqan rikuymi')
+    expect(lineasInforme(INCENDIO, MUNDO, traductor('qu').t).join('\n')).toContain('mana NISAR-pa chiqan rikuychu')
   })
 })

@@ -152,7 +152,7 @@ describe('Observatorio · idioma', () => {
     expect(salida.filter((x) => !API.includes(x) && !DATO.test(x) && x !== 'Costa' && !x.startsWith('Clic '))).toEqual([])
   })
 
-  it.each<[CodigoIdioma, string]>([['en', 'That point is outside Ecuador. Choose a point inside the country.'], ['qu', 'Chay punto Ecuador hawapi kan. Mamallaktapi ukupi shuk puntota akllay.']])(
+  it.each<[CodigoIdioma, string]>([['en', 'That point is outside Ecuador. Choose a point inside the country.'], ['qu', 'Chay punto Ecuador hawapi kan. Mamallakta ukupi shuk puntota akllay.']])(
     'el aviso de «fuera de Ecuador» sale en %s', async (idioma, aviso) => {
       montar('/observatorio?escenario=ec_x&vista=mapa', (ui) => renderConIdioma(ui, idioma))
       fireEvent.click(await screen.findByText('Clic fuera de Ecuador'))

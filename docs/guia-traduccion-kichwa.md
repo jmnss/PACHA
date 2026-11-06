@@ -3,206 +3,300 @@
 ## Propósito
 
 La app se ofrece en español (fuente de verdad), inglés y **kichwa unificado** (`qu`, `lang="qu-EC"`).
-El kichwa de los catálogos (`frontend/src/idioma/catalogos/qu/`) es un **borrador**: lo escribió el equipo
-sin revisión de hablantes. Mientras no esté validado, la app lo dice con el aviso que va bajo la banda de
-demostración («Traducción en revisión por hablantes · N de M textos validados»).
+El kichwa de la app es un **borrador**: lo escribió el equipo, por partes y sin revisión de hablantes.
+Mientras no esté validado, la app lo dice con el aviso que va bajo la banda de demostración
+(«Traducción en revisión por hablantes · N de M textos validados»). **Nada está validado todavía.**
+
+Esta guía es para la persona hablante que revise el borrador: qué revisar, cómo devolver las
+correcciones, qué se dejó en español a propósito y qué dudas concretas tiene el equipo.
 
 Criterios del borrador:
 
 - Kichwa unificado; frases cortas y llanas.
 - **No se inventan neologismos.** Un término técnico sin equivalente asentado se deja en español y se
-  anota en la tabla de abajo.
+  anota en la tabla «Términos dejados en español».
 - No se traducen nombres propios de lugares, unidades (km², ha, dB, %, m, h) ni siglas (HH, HV, VV, VH,
   SAR, NISAR, NASA, ISRO, ASF).
 - La banda «DATOS DE DEMOSTRACIÓN», los sellos de origen y «pendiente de confirmar con la documentación
-  oficial» tienen en kichwa el mismo peso que en español.
+  oficial» tienen en kichwa el mismo peso que en español. **Son lo primero que hay que revisar**
+  (ver «Prioridad 1» en las dudas).
+
+## Qué hay que revisar
+
+| Qué | Dónde | Cuántos textos |
+|---|---|---|
+| Textos cortos de la interfaz (botones, títulos, avisos, errores, textos de la API) | `docs/traduccion-kichwa.csv` (generado desde `frontend/src/idioma/catalogos/qu/*.ts`) | 816 claves |
+| Relatos de las Historias | `frontend/src/pantallas/historias/contenido/inundacion.qu.ts`, `incendio.qu.ts` | 2 relatos |
+| Explicaciones de términos de las Historias | `frontend/src/pantallas/historias/contenido/terminos.qu.ts` | 9 términos |
+| Guion del recorrido guiado | `frontend/src/pantallas/recorrido/guion.qu.ts` | 6 pasos |
+| Fundamentos (radar, polarización, bandas, misión) | `frontend/src/pantallas/fundamentos/contenido.qu.ts` | 1 pantalla |
+
+Cada archivo `.qu.ts` tiene al lado su original en español (`.es.ts`) y en inglés (`.en.ts`), con la
+misma estructura. Los fragmentos `t('radar')`, `t('HH')`… insertan un término con su explicación: se dejan
+como están.
 
 ## Cómo validar
 
-1. Un hablante revisa un área del catálogo (`catalogos/qu/<área>.ts`) frente a su original en
-   `catalogos/es/<área>.ts`, en la app con el idioma Kichwa activo.
-2. Las correcciones se escriben en el archivo `qu` del área.
-3. Cada clave aprobada se añade a `VALIDADAS_QU` en `frontend/src/idioma/catalogos/validadas.ts`; el
-   aviso cuenta esas claves.
-4. Cuando también se hayan validado los textos largos (relatos de Historias, explicaciones),
-   `CONTENIDO_LARGO_QU_VALIDADO` pasa a `true`. Con todo validado, el aviso desaparece.
-5. Los términos de la tabla que reciban un equivalente asentado se traducen y se borran de la tabla.
+### Textos cortos: con la hoja de cálculo
+
+1. Generar la hoja (desde la raíz del repo): `node scripts/traducciones_csv.mjs exportar`. Escribe
+   `docs/traduccion-kichwa.csv` (UTF-8 con BOM, para que Excel, LibreOffice o Google Sheets muestren bien
+   ñ y tildes). Columnas: `clave, es, en, qu, validada`; una fila por texto, ordenadas por clave.
+2. La persona hablante solo cambia dos columnas:
+   - `qu`: el texto corregido.
+   - `validada`: `si` cuando aprueba el texto (corregido o no); `no` si sigue en duda.
+   No se tocan `clave`, `es` ni `en`.
+3. **Las variables entre llaves no se traducen ni se borran**: `{n}`, `{fecha}`, `{total}`… deben seguir
+   en el texto kichwa (pueden cambiar de lugar). Los sufijos se pegan con guion: `{desde}-manta`.
+4. Guardar como CSV (UTF-8) y devolverla. El equipo la importa con
+   `node scripts/traducciones_csv.mjs importar <archivo.csv>`. El script reescribe los textos cambiados en
+   `catalogos/qu/<área>.ts` y la lista de claves validadas (`VALIDADAS_QU` en
+   `frontend/src/idioma/catalogos/validadas.ts`). **No escribe nada** si falta una columna, si una clave no
+   existe, si un texto queda vacío, si `validada` no es `si`/`no` o si un texto cambia las variables
+   `{x}`; en ese caso dice en español qué fila falla.
+5. Después de importar: `cd frontend && npm test` y revisar la app en kichwa. El aviso cuenta las claves
+   validadas.
+
+### Textos largos: en sus archivos
+
+Los relatos y explicaciones largas no van en la hoja: se revisan en los archivos `.qu.ts` de la tabla de
+arriba, frente a su `.es.ts`, y se corrigen ahí mismo (o se devuelven en un documento con el párrafo
+corregido). Cuando todos estén revisados, `CONTENIDO_LARGO_QU_VALIDADO` pasa a `true` en
+`frontend/src/idioma/catalogos/validadas.ts`. Con todas las claves validadas y el contenido largo también,
+el aviso desaparece.
+
+### Términos
+
+Cuando un término de la tabla «Términos dejados en español» reciba un equivalente asentado, se traduce en
+todos los textos donde aparece (buscar la palabra en el CSV) y se borra de la tabla.
 
 ## Términos dejados en español
 
-| Término | Dónde aparece | Motivo |
+Se dejaron en español porque el equipo no conoce un equivalente asentado. Llevan sufijos kichwa
+(«capakuna», «escenariopi», «rangomanta»). Si hay un término kichwa ya en uso, se agradece.
+
+| Término | Dónde aparece (claves o archivos) | Motivo |
 |---|---|---|
-| Nombres de los meses (Enero…Diciembre) y de los días | `catalogos/qu/fecha.ts` | Sin forma asentada confirmada por hablantes; ver «Dudas abiertas». |
-| Observatorio | Riel (`estructura.riel.observatorio`) | Sin equivalente asentado; la etiqueta corta usa «Rikuy» (mirar), a confirmar. |
-| Laboratorio, Simulador de eventos | Riel (`estructura.riel.laboratorio`, `.simulador`) | Préstamos del español sin término asentado; «Laboratorio radarpa» solo añade el genitivo. |
-| Lab., Simul. (etiquetas cortas) | Riel móvil | Abreviaturas en español para no pasar de 7 caracteres. |
-| Observatorio, radar, app | Banda y pantallas | Préstamos del español sin equivalente asentado. |
-| transparente | Leyendas (`origen.leyenda.transparente`) | Sin equivalente asentado; se deja en español. |
-| señal, productos, geometría, bandas | Leyendas y aviso de notas (`catalogos/qu/origen.ts`) | Términos de teledetección sin equivalente asentado; se dejan en español. |
-| Rurashka (sintético), Chiqan (real), rurachik (generador), muju (semilla) | Sellos de origen | Vocabulario ya usado en la banda; a confirmar con hablantes. |
-| Paso orbital, interferometría, ENL, moteado, escenario, evento, parámetro, control, pixel, órbita, temporada, región, provincia, hito, clima, humedad, Observatorio | Parámetros, contexto y ayuda del Observatorio (`catalogos/qu/observatorio.ts`) | Términos técnicos sin equivalente asentado; se dejan en español (los nombres de los términos con explicación también). «Costa» y «Sierra» se conservan como regiones. |
-| SAR, activo, rugosidad, constante dieléctrica, polarización, banda, interferometría, fase, frente, glaciar, humedal, incendio, erupción, simulación, Observatorio, Simulador de eventos | Recorrido y Fundamentos (`recorrido/guion.qu.ts`, `fundamentos/contenido.qu.ts`) | Términos técnicos sin equivalente asentado; se dejan en español (los nombres de los términos con explicación también). «Purina» (recorrido) y «Tiksi yachaykuna» (fundamentos) son títulos provisionales a confirmar. |
+| Nombres de los meses (Enero…Diciembre) y de los días (lunes…domingo) | `fecha.mes.1`…`12`, `fecha.dia.1`…`7`; meses abreviados en gráficos y cinta | Sin forma confirmada por hablantes; ver la duda D3. |
+| Observatorio, Simulador de eventos, laboratorio | Riel (`estructura.riel.*`), títulos de pestaña (`titulos.*`), `lab.pantalla.titulo` | Nombres de pantalla; préstamos sin término asentado. «Radarpa laboratorio» solo añade el genitivo. |
+| Lab., Simul. (etiquetas cortas) | `estructura.riel.laboratorio_corto`, `.simulador_corto` | Abreviaturas en español para no pasar de 7 caracteres en el riel móvil. |
+| radar, satélite, misión, sensor, sensor activo, señal, onda, microonda, eco | Todas las áreas; Historias, Fundamentos | Préstamos sin equivalente asentado. |
+| polarización, banda (banda L, banda S), frecuencia, longitud de onda (como «onda»), fase, interferometría, coherencia, desenrollado, interferograma, moteado (speckle), ENL, píxel, paso orbital, órbita | `obs.*`, `lab.*`, `fundamentos.*`, `api.tipo.*` | Términos de teledetección. |
+| rugosidad, constante dieléctrica, reflexión especular, doble rebote, biomasa, dosel (como «sacha panka»), estructura | Historias, Laboratorio, Simulador | Términos físicos; «doble rebote» también aparece descrito en kichwa (duda C6). |
+| humedal, humedad, glaciar, frente (del glaciar), cicatriz (de quemado), ladera, humo, combustible, parcela, cultivo (como «tarpushka»), riego | Historias, `api.*` | Sin equivalente técnico asentado. |
+| incendio, tormenta, crecida, marejada, erupción, volcán, lahar, tsunami, deslizamiento, ceniza, flujos/corriente piroclástica, fase explosiva, explosividad (IEV), magnitud, intensidad (MMI), mecanismo, falla, rumbo, buzamiento, ruptura, centroide, hipocentro, epicentro, subducción, subsidencia, cohesión, fricción | `sim.*`, `api.sim.*`, `api.control.*` | Términos de amenazas naturales. «Allpa kuyuy» (terremoto) sí es término asentado y se usa. |
+| escenario, escena, evento, simulación, simulador, modelo, parámetro, control, celda, malla, tablero, herramienta, bitácora, cursor | `obs.*`, `sim.*` | Vocabulario de la app. |
+| capa, leyenda, mapa base, relieve, satélite (mapa base), opacidad, transparente, rango, marca, paso (del reproductor), pasada, clasificación, cuadrante/cuadro, gráfico, barras, lienzo | `piezas.*`, `obs.*`, `origen.leyenda.transparente` | Piezas de interfaz. «Opacidad de la capa» quedó «Capapa opacidad». |
+| coordenadas, latitud, longitud, horizontal, vertical, N/S/E/O | `obs.medicion.*`, `sim.mundo.*`, `sim.coords.*` | En kichwa se usa «O» para el oeste, como en español. |
+| productos, geometría | `origen.notas.aviso` | Detalles de NISAR pendientes de confirmar. |
+| servidor, navegador, enlace, dirección (web), app, CSV, PNG, API | `exportar.*`, `sim.res.*`, `estructura.no_encontrada.*` | Términos informáticos. |
+| clima, temporada (en algunas claves), región, provincia, hito, estaciones astronómicas (invierno/verano boreal y austral), equinoccio, solsticio, transición, bimodal/unimodal | `obs.contexto.*`, `api.contexto.*` | «Costa» y «Sierra» se conservan como regiones. |
+| validación, restauración, riesgo, cobertura, tipografía, límites, créditos de fuentes | Historias | Sin equivalente asentado. |
+| hectárea, a lo menos, ejemplo, óptico, contraste, coeficientes, cruzada, paralela | `obs.serie.*`, `obs.impacto.*`, `lab.*` | «a lo menos» queda en español hasta que un hablante proponga la forma natural. «Demostración» se dice «rikuchiy» (H1). |
+| Nombres de los términos con explicación | `historias/contenido/terminos.qu.ts`, nombres en `fundamentos/contenido.qu.ts` | El nombre queda en español; solo la explicación está en kichwa. |
 
 ## Dudas abiertas
 
+Cada duda indica dónde está (clave del CSV o archivo) para que se pueda buscar directamente.
 
-- **Código de idioma:** se usa `qu-EC` (quechua de Ecuador) para el atributo `lang`. Pendiente de
-  confirmar con hablantes y con el uso en lectores de pantalla si conviene `qu-EC`, `qug` (kichwa de la
-  Sierra) u otro código.
-- **Plurales:** el borrador usa el sufijo `-kuna` para varios («1 capa», «3 capakuna»). Falta confirmar
-  si, con una cifra delante, el kichwa omite `-kuna` (una sola forma para todos los números).
-- **Nombres de los meses:** se dejaron en español; falta decidir si se usan los nombres kichwa
-  tradicionales (por ejemplo, de calendario agrícola) o los préstamos del español.
-- **«Capa» (capa de mapa):** se dejó «capa», préstamo del español; pendiente de un término asentado.
-- **«Cargando…»:** el borrador dice «Chaskishka…», que significa más bien «recibido»; necesita revisión.
-- **«Real / verdadero» en la banda:** el borrador usa «chiqan» (cierto, verdadero) en «mana NISAR-pa chiqan
-  rikuykuna kanchu»; confirmar que comunica «observaciones reales» y no solo «correctas».
-- **«Datos» como «willaykuna»:** se usa «willay» (aviso, noticia) para «dato»; confirmar si hay un término
-  mejor para datos de medición.
-- **Riel:** «Hatun» (principal), «Sapi yachay» (fundamentos), «Pushashka purina» (recorrido guiado) y
-  «Kallari» (inicio) son propuestas del equipo sin validar.
-- **«Rikuchik» (leyenda):** el borrador lo usa para «leyenda» (`origen.leyenda.titulo*`); es una propuesta
-  del equipo, sin validar.
-- **«Rurashka» con dos acepciones:** se usa para «sintético» (sellos) y para «generado» (`origen.sello.generado`,
-  «rurashka puncha»); confirmar que no se confunden y que «sintético» no se lee como «fabricado».
-- **«Chiqan» (= real):** duda de ortografía (¿«chiqan» o «chikan» en la ortografía unificada?) y de sentido
-  («chikan» puede significar «distinto»). No se cambia sin hablante. Aparece en
-  `catalogos/qu/origen.ts` (`origen.sello.real`), en `catalogos/qu/estructura.ts`
-  (`estructura.banda.largo`, `estructura.banda.corto`) y en la derivada «chiqanyachishka» (verificado) de
-  `origen.sello.sintetico_no_verificado`, `origen.notas.aviso` y `origen.notas.sin_verificar`.
+### Prioridad 1 · Textos de honestidad (revisar primero)
 
-## Tarea 6 · Piezas (gráficos, tiempo, comparador y mapa)
+Estas frases avisan que los datos son de demostración o que algo no está confirmado. Deben decir
+exactamente eso, con el mismo peso que en español.
 
-Términos que se dejaron en español por no tener equivalente asentado (`catalogos/qu/piezas.ts`):
+- **H1. Banda de demostración** — `estructura.banda.largo` «RIKUCHIY WILLAYKUNA · mana NISAR-pa chiqan
+  rikuykuna kanchu», `estructura.banda.corto`, `exportar.franja.demo`. ¿«Rikuchiy willaykuna» se entiende
+  como «datos de demostración» (datos para mostrar, no reales)? ¿«chiqan» comunica «real» y no solo
+  «correcto»?
+- **H2. «Pendiente de confirmar con la documentación oficial»** — `historias.marca.pendiente` «kamachik
+  panka-wan chiqanyachina kan»; se repite en `obs.ayuda.aviso`, `origen.notas.aviso`,
+  `sim.espera.intro_pendiente`, `lab.pol.aviso_banda`, `api.lab.aviso_banda`, Historias y Fundamentos.
+  ¿«kamachik panka» se entiende como «documentación oficial»?
+- **H3. Sellos de origen** — `origen.sello.sintetico` «Rurashka», `origen.sello.real` «Chiqan»,
+  `origen.sello.sintetico_no_verificado`, `origen.notas.sin_verificar` «(mana chiqanyachishka)».
+  «Rurashka» (hecho) se usa también para «generado» y «creado» (ver C1): ¿se lee «sintético» como «hecho
+  por un programa», y no como «fabricado / falso»?
+- **H4. Aviso del kichwa** — `idioma.aviso_qu` «Kichwa tikrayka manaraka chiqanyachishkachu · {total}-manta
+  {validadas} chiqanyachishka». En la revisión de la Tarea 27 se reescribió (el borrador anterior decía
+  «ashtawan ñawpachishkapi», que no significaba «en revisión»). Falta una fórmula natural para «en revisión
+  por hablantes».
+- **H5. Hipótesis de ejemplo** — `historias.marca.ejemplo` «Kay rikuchiy escenariopi», `obs.hallazgo.demo`,
+  `obs.impacto.informe_ejemplo`, párrafos `hipotesis` de los relatos («ejemplo yuyay», «rikuchik yuyay»).
+  ¿Queda claro que son ejemplos ilustrativos y no hallazgos?
 
-- **«rango»** (rango de fechas o de valores, `piezas.grafico.*`, `piezas.comparador.aviso_rangos`): se usa
-  «rango» con sufijos kichwa («rangopi», «rangomanta»).
-- **«marca»** (marcas del gráfico), **«paso»** (paso del reproductor), **«evento»**, **«pasada»** (adquisición
-  del satélite), **«banda»** (franja tenue de la cinta), **«Barras»**, **«Gráfico»**, **«Satélite»**,
-  **«Relieve»**, **«Mapa base»**, **«Normal»** (velocidad), **«min»/«h»**: préstamos del español.
-- **Leyenda del mapa y de los gráficos**: las palabras «alejándose», «hacia el satélite» y «señal» en
-  `origen.leyenda.*` siguen en español (ver las notas de la Tarea 3).
-- **«Utkay» (velocidad)**, **«utka» / «mana utka» (rápida / lenta)**: propuesta del equipo; confirmar.
-- **«Yana» (oscuro)**, **«Panka mana rikuy» (opacidad de la capa)**: propuestas sin validar; «opacidad» no
-  tiene término asentado.
-- **«Rurashka chiqan» (verdad sintética)**: calco que mezcla «sintético» con «chiqan»; revisar con un
-  hablante (véase también la duda sobre «chiqan»).
-- **Meses y fechas**: los gráficos y la cinta muestran los meses abreviados en español en kichwa, hasta decidir
-  los nombres de los meses.
+### D · Decisiones generales
 
-## Tarea 7 · Exportaciones y errores del cliente
+- **D1. Código de idioma.** Se usa `qu-EC` para el atributo `lang`. Confirmar con hablantes y con el uso en
+  lectores de pantalla si conviene `qu-EC`, `qug` (kichwa de la Sierra de Ecuador) u otro código.
+- **D2. Plurales con cifra.** El borrador usa `-kuna` también detrás de una cifra («{n} capakuna»,
+  «{n} rikuykuna», «{medio} punchakuna»), pero no siempre («12 puncha», `piezas.tiempo.paso.17280`). La
+  regla de plural del kichwa en el código usa por ahora una sola forma para todos los números
+  (`formaPlural` en `frontend/src/idioma/interpolar.ts`). ¿Con una cifra delante se omite `-kuna`?
+- **D3. Meses y días.** Quedaron en español (`fecha.mes.*`, `fecha.dia.*`). ¿Se usan los nombres kichwa
+  tradicionales (calendario agrícola) o los préstamos del español?
+- **D4. Ortografía con k.** En la Tarea 27 se unificó a k/h lo que ya tenía su forma unificada en el
+  borrador (Qipa → Kipa, lluqshin → llukshin, tukuriq → tukurik, callari → kallari, jatun → hatun,
+  Horkoy → Hurkuy, kocha → kucha). **No se cambió «chiqan»** (real, cierto), que aparece 36 veces junto con
+  «chiqanyachishka» (verificado) y «chiqanyachina» (confirmar): ¿se escribe «chiqan» o «chikan»? El equipo
+  no lo cambió porque «chikan» puede significar «distinto/otro».
+- **D5. j/h y nd/nt en «inundación».** Se usa «jundashka / jundachin / junday / jundarin» (lleno, llenar,
+  inundación) unas 30 veces (`obs.variable.cambio_de_inundacion`, `api.categoria.cambio_de_inundacion.*`,
+  `api.sim.metrica.area_inundada*`, relatos). El alfabeto unificado no tiene «j»: ¿se escribe
+  «huntashka / huntay»? Además, ¿«yaku junday» es la forma natural de decir «inundación»? No se cambió
+  sin hablante.
+- **D6. «Hayk» y «mashna».** «Hayk» (cuánto) aparece 16 veces en los relatos, Fundamentos y términos; en
+  otros textos se usa «mashna». ¿Cuál corresponde al kichwa unificado?
+- **D7. Conjunciones.** El borrador usa «o» del español para «o» (y quitó «y» del español, que se cambió
+  por comas o `-pash`). Para cerrar listas usa «ima» («sara, palanda ima»). ¿Es natural?
+- **D8. Guion antes de sufijos.** Detrás de siglas y préstamos el borrador pone guion de forma irregular
+  («NISAR-pa», «app-pi», «Enter-ta», pero «PNGta», «CSVta», «Ecuadorpa»). En la Tarea 27 se unificó solo
+  «NISAR-pa». ¿Qué regla seguir?
+- **D9. Modo de los botones.** Se unificaron los botones a imperativo `-y` («Sayachiy», «Kallarichiy»,
+  «Kallariman riy», «{nombre}-man kutiy»). Confirmar que es la forma natural para un botón.
 
-Borrador de `catalogos/qu/exportar.ts`; todo sin validar por hablantes:
+### C · Palabras con varios sentidos (posible confusión)
 
-- **Franja del PNG de demostración** (`exportar.franja.demo`): «Rikuchiy willaykuna» (datos de demostración) y
-  «chiqan rikuykuna mana kanchu» (no son observaciones reales). Sigue la duda sobre «chiqan» (véase la Tarea 3).
-- **«servidor», «lienzo», «PNG»**: préstamos del español / sigla, sin equivalente asentado.
-- Las líneas de máquina del CSV (`# origen: …`, `# idioma: …`) no se traducen: siguen en español.
+- **C1. «Rurashka»**: sintético (`origen.sello.sintetico`), generado (`origen.sello.generado`), inventado
+  (`lab.nubes.nota`, `lab.pantalla.hallazgo`, «escena inventada»), verdad sintética («rurashka chiqan»,
+  `piezas.grafico.verdad_sintetica`), y también «Mundota rurashka…» (`sim.mundo.creando`, «Creando el
+  mundo…», ver C3).
+- **C2. «Rikuy»**: observación (banda), vista (`obs.estructura.vistas_etiqueta`, «Shuyu rikuy»), mirada
+  (ENL, `obs.parametros.miradas*`), y el verbo «ver». **«Rikcha»** es imagen (unificado en la Tarea 27:
+  antes también «imagen», «rikchay» y «rikuy»). **«Rikchay»** es tipo («tikray rikchay», tipo de cambio) y
+  muesca (`historias.comparador.nota_cinta`). **«Rikuchiy»** es demostración; **«rikuchik»** es leyenda
+  (`origen.leyenda.titulo*`), ilustrativo («rikuchik yuyay») y «que resalta» («ashtawan rikuchik
+  polarización»). ¿Es demasiado?
+- **C3. Participio `-shka` en mensajes de espera.** «Cargando…», «Calculando…», «Midiendo…»,
+  «Actualizando…», «Simulando…», «Creando el mundo…» están en `-shka` («Chaskishka…», «Yupachishka…»,
+  «Tupushka…», «Mushukyachishka…», «simulashka…», «rurashka…»), que significa «hecho / ya ocurrido»
+  (`comun.cargando`, `historias.cargando`, `obs.*.calculando*`, `obs.*.cargando*`, `obs.medicion.midiendo`,
+  `sim.pantalla.*`, `sim.mundo.creando`). Solo `lab.comun.preparando` usa gerundio («allichishpa…»). ¿Se
+  usa el progresivo (`-kun`, «yupachikun…») u otra forma? Además «chaskiy» es «recibir», no «cargar».
+- **C4. «Pacha»**: tiempo, lugar («Pachapa tiyashka pacha», `obs.contexto.titulo`), temporada
+  (`sim.pantalla.temporada`, `sim.bitacora.col_temporada`), superficie (`lab.pol.barras_titulo`,
+  `lab.pol.superficies`, «sapa pachapi»). La fecha se unificó a «puncha» en la Tarea 27.
+- **C5. «Willay»**: dato («willaykuna»), informe (`obs.impacto.descargar`, `sim.res.informe`), aviso
+  (`estructura.banda.aviso`, «willachiy»), detalle (`sim.res.detalle`), contenido (`a11y.saltar`,
+  «Willaykunaman pasay»). «Willayta mana rurayta ushashkachu» puede leerse «no se pudo generar el dato» en
+  lugar de «el informe». ¿Hay una palabra para «informe» y otra para «dato de medición»?
+- **C6. «Ñan»**: paso del recorrido (`recorrido.*`), dirección orbital (`obs.metricas.direccion`), línea de
+  vista («rikuy ñan», `obs.variable.desplazamiento_los*`), huella (`fundamentos.tabla.cambios`), dirección
+  web (`estructura.no_encontrada.hallazgo`), cauce (`api.sim.control.erupcion.volumen_lahar_hm3.etiqueta`).
+  El reproductor usa «paso» en español.
+- **C7. «Panka»**: página (`estructura.no_encontrada.titulo`), documentación («kamachik panka»), pantalla y
+  panel (`a11y.mapa.nota`), hoja (`fundamentos`, «sacha panka»).
+- **C8. «Yupay»**: métrica (`obs.metricas.col_metrica`), número (`obs.parametros.miradas`), «entero»
+  («tukuy yupay», `obs.parametros.semilla_*`; «tukuy» es «todo»), y «yupachiy / yupay» para calcular y
+  estimar.
+- **C9. «Kallari»**: inicio (`estructura.riel.historias_corto`), origen (`estructura.banda.sin_origen`,
+  «Sapa willaypak kallarishkami tiyan»), activa (`obs.parametros.estacional_ayuda`). En
+  `a11y.lienzo.*` origen es «Maypi llukshishka».
+- **C10. «Shuklla» / «mana kikin».** «Shuklla» (solo uno) se usaba para «distinto»; en la Tarea 27 se
+  cambió por «mana kikin» como en el resto del catálogo. Confirmar «mana kikinta kutichin» (responde
+  distinto).
 
-## Tarea 8 · Historias
+### I · Misma palabra española, traducciones distintas (sin resolver)
 
-Borrador de `catalogos/qu/historias.ts`, `contenido/{inundacion,incendio}.qu.ts` y `contenido/terminos.qu.ts`;
-todo sin validar por hablantes (los relatos cuentan como contenido largo: `CONTENIDO_LARGO_QU_VALIDADO` sigue en `false`):
+| Español | Traducciones en el borrador | Claves |
+|---|---|---|
+| origen | «kallari», «maypi llukshishka» | `estructura.banda.sin_origen`, `estructura.banda.panel_texto`, `a11y.lienzo.*` |
+| desconocido | «mana yachashka», «mana riksishka» | `origen.sello.desconocida`, `exportar.franja.fuente_desconocida`, `api.error.*_desconocid*` |
+| expuestos / población expuesta | «llakichishka» (dañado), «rikuchishka runakuna» (mostrado) | `sim.bitacora.col_expuestos`, `api.sim.metrica.poblacion_expuesta.etiqueta` |
+| víctimas | «wañushka» (muerto), «wañuk runakuna» | `sim.bitacora.col_victimas`, `api.sim.metrica.victimas_*` — confirmar si «víctimas» incluye heridos |
+| pérdidas | «chinkachishka», «tukuri» | `sim.bitacora.col_perdidas`, `api.sim.metrica.perdidas_en_viviendas.etiqueta` |
+| temporada | «pacha», «temporada», «tamya pacha» | `sim.pantalla.temporada`, `obs.tiempo.temporada`, `piezas.tiempo.cinta.*` |
+| superficie | «pacha», «allpa», «pacha pata», «hawa» | `lab.pol.*`, `api.impacto.*`, `obs.ayuda.interferometria_antes`, `terminos.qu.ts` |
+| doble rebote | «ishkay kutin tupashpa», «ishkay kuti kutichiy», «sachapa-yakupa ishkay kutichiy», «doble rebote» | `lab.*`, relatos, `api.tipo.humedales.descripcion`, `sim.gemelo.por_que_hh` |
+| ejemplo ilustrativo / hipótesis | «ejemplo yuyay», «rikuchik yuyay», «rikuchiy ejemplo» | `obs.impacto.informe_ejemplo`, `lab.*`, `api.lab.aviso_banda`, relatos |
+| recorrido | «Purina», «Pushashka purina» | `recorrido.titulo`, `estructura.riel.recorrido*`, `titulos.recorrido` |
+| lugar / sitio | «maypi», «pacha», «llakta», «kuska», «uku» («kay ukuta», `sim.espera.intro_*`) | varias |
+| leer | «ñawinchiy» (unificado en la Tarea 27; antes «killkay», que es escribir) | `obs.comparar.como_leer`, `fundamentos.hallazgo` |
 
-- **Se dejaron en español**: radar, satélite, misión, sensor activo, señal, onda, banda L, polarización, constante
-  dieléctrica, rugosidad, humedal, humedad, biomasa, combustible, restauración, riesgo, cobertura, pasada, escenario,
-  divisor, cuadrante, cámara, producto, ladera, humo, parcela, cicatriz (de quemado), validación, tipografía, límites,
-  clima, provincia. Sin equivalente asentado; no se inventaron neologismos. Los nombres de los términos técnicos
-  (`terminos.qu.ts`) también quedan en español; solo sus explicaciones están en kichwa.
-- **«Sierra» y «Costa»** se conservan como nombres de región.
-- **Dudas de vocabulario**: «jundashka / jundachin» (lleno / llenar, de «hunta»), «wicharina» (subir el agua),
-  «llampu» (liso), «suni» (largo), «chimpana» (atravesar), «kutimuk señal» (señal que vuelve), «mikuchin» (alimentar),
-  «ejemplo yuyay» (hipótesis de ejemplo), «rikuchik yuyay» (hipótesis ilustrativa), «tukuri yuyay» (conclusión),
-  «runakunapa ruray» (impulsor humano), «yupaychay» (créditos), «ruranapak» (recomendada), «tupachik» (comparador),
-  «ñawpa / washa» (antes / después), «wiñachik» (serie), «llakichiy» (impacto), «uraykun / wicharin» (baja / sube), «tamya / chaki» (lluviosa / seca), «pachapa tiyashka pacha» (contexto del lugar). Todas son propuestas del equipo.
-- **Marca de honestidad**: «Kay rikuchiy escenariopi» (en este escenario de demostración) abre cada hipótesis y
-  «kamachik panka-wan chiqanyachina kan» (pendiente de confirmar con la documentación oficial) cierra lo específico
-  de la misión; se reutiliza la frase de `origen.notas.aviso`. Sigue la duda sobre «chiqan».
+### P · Propuestas del equipo sin validar
 
-## Tarea 10 · Observatorio: mapa, tiempo y métricas
+Riel y títulos: «Hatun» (principal), «Willakuykuna» (historias), «Kallari» (inicio), «Rikuy» (observatorio,
+corto), «Sapi yachay» / «Sapi» (fundamentos; también el título de la pantalla desde la Tarea 27, antes
+«Tiksi yachaykuna»), «Pushashka purina» / «Purina» (recorrido), «Radarpa laboratorio» (laboratorio; antes
+«Laboratorio radarpa» en el riel y «Radarpa yachana wasi» en la pantalla), «Willaykunaman pasay» (saltar al
+contenido).
 
-Borrador de las claves `obs.mapa.*`, `obs.tiempo.*` y `obs.metricas.*`; todo sin validar por hablantes:
+Vocabulario: «Shimi» (idioma), «Rikuchik» (leyenda), «yanayashka / yurakyashka» (más oscuro / más claro),
+«Yana» (mapa base oscuro), «utkay» (velocidad), «utka / mana utka» (rápida / lenta), «shuyan» y «shuyashka»
+(espera, pendiente), «yuyashka» (supuesto), «allpa pata» (relieve), «tarinakuy» (detección), «kinray»
+(lado), «maypi» (lugar), «punchapacha» → «puncha» (fecha), «kawsay» (duración del evento), «shuyay»
+(espera), «llakichishka» (expuestos), «chinkachishka» (pérdidas), «chullayachiy» (vaciar), «paskashka yaku»
+(agua abierta), «tupuy» (medir), «chullunku» (hielo), «kutichin» (devuelve), «tinkichiy» (combinación),
+«yaklla» (aproximado), «uraykachay» (descargar), «tukuchiy» (borrar), «rakirina» (apartado),
+«pishiyachishka / hatunyachishka» (resumen / detalle), «wiñachik» (serie), «llakichiy» (impacto), «puntukuna
+siki» (línea punteada), «tupachishpa wiñay» (evolución frente a), «katik» (siguiente; unificado en la Tarea
+27, antes también «Qipa» y «Washa»), «Kipa» (último), «chaninchay» → «chanin» (valor), «pakay» (ocultar),
+«ñitiy» (pulsar), «hawapi / ukupi» (fuera / dentro), «yupaychay» (créditos), «ruranapak» (recomendada),
+«tupachik» / «rakik» (comparador / divisor), «ñawpa / washa» (antes / después), «uraykun / wicharin» (baja /
+sube), «tamya / chaki» (lluviosa / seca), «jundashka / jundachin» (lleno / llenar; D5), «wicharina» (subir el
+agua), «llampu» (liso), «suni» (largo), «chimpana» (atravesar), «kutimuk señal» (señal que vuelve),
+«mikuchin» (alimentar), «tukuri yuyay» (conclusión), «runakunapa ruray» (impulsor humano), «puyu» (nube),
+«pakashka» (tapado), «ecota tupun» (mide el eco), «kiwa ukupi yaku» (agua bajo los árboles), «sacha pakana
+uku» (bajo dosel), «inti achik» (luz del Sol), «Maypi llukshishka» (origen), «Allpapa chawpi chanin» (valor
+medio; ¿o «tantachishka chanin»?), «makiwan llamkachishka» (interactivo), «Áreayuk shuk cuadrota shuyuy»
+(dibuja un recuadro con área), «kuntuy» (orientación de la onda), «chapuk» (que mezcla), «sapa kutin
+sunilla» (longitud típica), «tukuy ima kawsaymanta» (por convención general, `fundamentos.nota.bandas`;
+dudoso), «Ninan ukuta rikuchin» (detalle fino, banda X en Fundamentos; dudoso).
 
-- **Se dejaron en español**: modelo, capa, pasada, leyenda, temporada, escenario, Ecuador (nombre propio). Sin
-  equivalente asentado; no se inventaron neologismos.
-- **Dudas**: «rikushka» (detectado, de «rikuy»), «katik» (siguiente), «yupay» (métrica, de «yupay», contar),
-  «chaninchay» (valor), «pakay» (ocultar), «ñitiy» (pulsar), «hawapi / ukupi» (fuera / dentro), «mamallaktapi» (en el país).
+API (`api.*`): «sacha» (bosque), «mushuk» (nuevo), «pishiyay» (disminución), «Llulla alarma» (falsa
+alarma), «tarpushka» (cultivo), «kuchuy» (cosecha), «chawpi» (moderada), «sinchi» (alta / fuerte),
+«kunuk / chiri» (cálida / fría), «waranka» (mil), «hunu» (millón), «ukku» (profundidad), «wichay / uray»
+(subir / bajar), «allpa uraykay» (hundimiento), «Pachapa muju» (semilla del azar; «mana yuyashka ruray» en
+`obs.parametros.semilla_ayuda`), «intipa chinkana kinray» (oeste), «Kikin kashpaka» (por defecto),
+«rikurishka» (vigilado, `api.sim.mundo.cotopaxi_y_el_valle_de_latacunga.descripcion`; dudoso), «tukuy invierno
+shina» (casi todos los inviernos; dudoso), «pampa hawa» (a cielo abierto, `api.lab.cambio.inundacion_a_cielo_abierto`;
+dudoso), «Pamba» y «palanda» (llanura, banano), «ashtawan hatunka» (el máximo).
 
-## Tarea 11 · Observatorio: comparar y medir
+### Textos que siguen en español a propósito
 
-Borrador de `obs.comparar.*`, `obs.medicion.*`, `obs.variable.*` y `obs.flujo.*`; todo sin validar por hablantes:
+Los textos que escribe la API sin clave (404/405 genéricos, ayudas de métricas del simulador, notas y celdas
+de la tabla de `modelo/desastres.py`, títulos de la bitácora guardada, informe PNG del simulador) se
+muestran en español con `lang="es"`. Las líneas de máquina del CSV (`# origen: …`, `# fuente: …`,
+`# idioma: …`) siguen en español.
 
-- **Se dejaron en español**: polarización, capa, clasificación, cuadrante/cuadro, horizontal, vertical, fase
-  interferométrica, coherencia interferométrica, desenrollado, frente, parcela, píxel, CSV, PNG, N/S/E (O en lugar de W).
-- **Dudas**: «tupuy» (medir / medición), «chullunku» (hielo), «utkay» (velocidad), «kutichin» (devuelve, de «kutichina»),
-  «tinkichiy» (combinación), «yaklla» (aproximado), «uraykachay» (descargar), «tukuchiy» (borrar), «rakirina»
-  (apartado), «pishiyachishka / hatunyachishka» (resumen / detalle), «chiqan» en «Sintético chiqanwan pantay».
-- Los nombres de columna del CSV de medición se traducen; las líneas `# origen: …` siguen en español.
+## Registro de la revisión del borrador (Tarea 27)
 
-## Tarea 12 · Observatorio: serie e impacto
+Revisión hecha por el equipo (modelo de lenguaje), **no por hablantes**: solo corrige inconsistencias
+internas, errores de sentido evidentes y gramática segura; nada se marca como validado. Las decisiones
+dudosas quedaron arriba como dudas. Cambios hechos:
 
-Borrador de `obs.serie.*` y `obs.impacto.*`; todo sin validar por hablantes:
-
-- **Se dejaron en español**: lienzo, PNG, CSV, hectárea, «a lo menos». Sin equivalente asentado; sin neologismos.
-- **Dudas**: «wiñachik» (serie), «llakichiy» (impacto), «puntukuna siki» (línea punteada), «ejemplo yuyay»
-  (ejemplo ilustrativo; véase la Tarea 8), «tupachishpa wiñay» (evolución frente a), «chiqan» en «Sintético chiqanwan»
-  y en «mana NISARpa chiqan rikuymi» (no es una observación real de NISAR), «uraykachay» (descargar).
-- El aviso «Ejemplo ilustrativo con datos de demostración…» del informe PNG existe en los tres idiomas.
-
-## Tarea 13 · Simulador de eventos
-
-Borrador de `sim.*`; todo sin validar por hablantes:
-
-- **Se dejaron en español**: simulador, simulación, tablero, herramienta, evento, incendio, tormenta, crecida,
-  erupción, volcán, celda, parámetros, cursor, coordenadas, latitud, longitud, polarización, reflexión
-  especular, doble rebote, biomasa, bitácora, modelos, ciclo, imagen, enlace, navegador, dirección, mundo.
-  Sin equivalente asentado; sin neologismos. «Allpa kuyuy» (terremoto) sí es término asentado.
-- **Dudas**: «yuyashka» (supuesto), «allpa pata» (relieve), «kinray» (lado), «maypi» (lugar), «pacha»
-  (temporada, también «tiempo»), «punchapacha» (fecha), «kawsay» (duración del evento), «shuyay» (espera),
-  «tarinakuy» (detección), «llakichishka» (expuestos), «chinkachishka» (pérdidas), «chullayachiy» (vaciar),
-  «paskashka yaku» (agua abierta), «sintético chiqanwan» (frente a la verdad sintética).
-- La letra de hemisferio oeste es «O» en español y kichwa, «W» en inglés.
-- Los textos que escribe la API (títulos de evento, etiquetas de métricas, controles, notas del modelo) y
-  las celdas de la tabla de efectos que escribe `modelo/desastres.py` se quedan en español con `lang="es"`.
-
-## Tarea 14 · Laboratorio del radar
-
-Borrador de `lab.*`; todo sin validar por hablantes:
-
-- **Se dejaron en español**: laboratorio (como «yachana wasi», casa de aprender, es descriptivo), polarización, banda,
-  óptico, activo, sensor, imagen, cambio, contraste, coeficientes, biomasa, cruzada, paralela, ejemplo.
-  Sin equivalente asentado; sin neologismos.
-- **Dudas**: «puyu» (nube), «pakashka» (tapado), «ecota tupun» (mide el eco), «kiwa ukupi yaku» (agua bajo los
-  árboles), «ishkay kutin tupashpa» (doble rebote), «sinchiyachina» (confirmar), «shuyan» (espera; la banda S
-  queda «pendiente de confirmar» con el mismo peso que en español e inglés), «ejemplo yuyay» (ejemplo ilustrativo).
-- Los nombres de superficie y de cambio que escribe la API se quedan en español con `lang="es"`.
-
-## Tarea 19 · Texto de la API (`catalogos/qu/api.ts`)
-
-Borrador de las 310 claves de `api/claves.json` (más `api.valor.mil` = «waranka» y `api.valor.personas` = «runakuna»,
-que traducen esas palabras dentro de los valores de métricas); todo sin validar por hablantes:
-
-- **Se dejaron en español**: estaciones astronómicas y sus hitos (equinoccio, solsticio), «Transición», «bimodal/unimodal»,
-  incendio, tormenta, erupción, lahar, tsunami, deslizamiento, buzamiento, rumbo, mecanismo, inversa/normal, severidad,
-  magnitud, intensidad (MMI), semilla de IEV/PAGER, siglas y nombres de modelos (Okada, InSAR, Ramsar, PAGER). Sin equivalente asentado.
-- **Dudas de vocabulario**: «sacha» (bosque), «mushuk» (nuevo), «pishiyay» (disminución), «Llulla alarma» (falsa alarma), «tarpushka»
-  (cultivo), «kuchuy» (cosecha), «chawpi» (moderada), «sinchi» (alta/fuerte), «kunuk / chiri» (cálida / fría), «waranka» (mil),
-  «hunu» (millón), «ukku» (profundidad), «wichay / uray» (subir / bajar), «allpa uraykay» (hundimiento del terreno), «Pachapa muju»
-  (semilla del azar). Todas son propuestas del equipo.
-- Los textos de los 404/405 genéricos, las ayudas de métricas del simulador, las notas y celdas de tabla de `modelo/desastres.py`,
-  los títulos de la bitácora guardada y el informe PNG siguen en español con `lang="es"` (spec §9.5).
-
-## Tarea 21 · Orientación (`catalogos/qu/titulos.ts`, `catalogos/qu/a11y.ts`)
-
-Borrador sin validar por hablantes:
-
-- **Títulos de pantalla** (pestaña del navegador): reutilizan los nombres del riel (`Willakuykuna`, `Observatorio`,
-  `Simulador de eventos`, `Laboratorio radarpa`, `Pushashka purina`, `Sapi yachay`); el sufijo « · NISAR Ecuador» no se traduce.
-- **Dudas**: «Willaykunaman pasay» (saltar al contenido; «willaykuna» = noticias/mensajes, «pasay» = pasar), propuesta del equipo;
-  confirmar si hay una fórmula más natural para un enlace de «ir directo a».
-
-## Tarea 25 · Alternativas textuales (`catalogos/qu/a11y.ts`)
-
-Borrador sin validar por hablantes: «Maypi llukshishka» (origen/fuente), «Allpapa chawpi chanin» (valor medio de la zona),
-«makiwan llamkachishka» (interactivo), «panka» (pantalla). Se reutiliza «shuyu» (mapa) del riel. Dudas: fórmula natural para
-«valor medio» (¿«chawpi chanin» o «tantachishka chanin»?) y para «interactivo».
+- **Ortografía unificada** (D4): Kipa, llukshin, tukurik, kallari, hatun, Hurkuy, kucha, Ishkay (antes
+  «Iskay»), allichishpa (antes «alichishpa»), alli (antes «allí», con tilde del español), «-manta» con
+  guion, «NISAR-pa».
+- **«Más» = «ashtawan»** (antes también «aswa»).
+- **Negación con `-chu`**: «Kay panka mana tiyanchu», «… mana kanchu», «mana tupushkachu», «mana NISAR-pa
+  chiqan rikuychu» (antes «… rikuymi», que afirmaba), «mana charinchu», «mana rikunchu», «mana
+  yaykunchu», «mana minishtinchu».
+- **Obligación «-na kan»** en los errores de la API (antes «kanan kan»), y «entre X y Y» como
+  «X-manta Y-kama» (antes «X shuk Y chawpipi»; «shuk» es «uno/otro»).
+- **Errores de sentido**: «aycha» (carne) en «más miradas» → «ashtawan achka rikuykuna»; «inti killa» (sol y
+  luna) → «inti achik» (luz del Sol); «Cayna» (ayer) → «Kaya» (mañana) en el recorrido; «kuyakun» (ama) →
+  «kun» (da) en «la API aún no la ofrece»; «utka» (rápido) usado como «o» → «o»; «ima» usado como «o» en
+  `sim.pantalla.hallazgo` → «o»; «chusku panka» (cuatro hojas) → «chaki panka» (hojas secas);
+  «satélitemanta kutimun» (vuelve desde el satélite) → «satéliteman kutimun»; «chullunkuna maymanta»
+  (desde dónde) → «mayman kuyukta» (hacia dónde se mueve); «hanak ñanman / uranman» → «norteman / surman»;
+  «Mamallaktapi ukupi» → «Mamallakta ukupi»; «killkana» (escribir) por «leer» → «ñawinchina»; «Chikan
+  tukuyla ruray shuk cuadrota» (sin sentido) → «Áreayuk shuk cuadrota shuyuy»; «Panka mana rikuy» → «Capapa
+  opacidad»; «ichuriy», «plawa», «elektrico kampo», «islla» (no identificadas) → «riego», «fase
+  explosiva / explosividad», «campo eléctrico», «isla» en español; «mastaka» → «ashtawan hatunka»;
+  «biomasa chinkaykan» → «biomasa chinkayka».
+- **Una palabra por concepto**: cambio = «tikray» (el Laboratorio usaba «cambio»); señal = «señal» (el
+  Laboratorio usaba «chimpay», atravesar); imagen = «rikcha» (antes también «imagen», «rikuy»,
+  «rikchay»); fecha = «puncha» (antes también «pacha», «punchapacha»); valor = «chanin» (antes también
+  «chaninchay»); comparar = «tupachiy» (antes también «tupuchiy»); siguiente = «Katik» (antes también «Qipa»
+  y «Washa»); después = «washa» (antes también «kipa» en el divisor); distinto = «mana kikin» (antes
+  también «shuklla»); agua abierta = «paskashka yaku» (antes también «kicharishka»); demostración =
+  «rikuchiy» (Fundamentos y recorrido usaban «demostración»); verificado = «chiqanyachishka» (antes también
+  «chiqanyashka»); «pendiente de confirmar» = «kamachik panka-wan chiqanyachina kan» también en
+  `lab.pol.aviso_banda` (antes «oficial documentacionwan sinchiyachinata shuyan»); «Inténtalo de nuevo» =
+  «Kutin ruray» como el botón «Reintentar».
+- **Nombres de pantalla iguales en riel, pestaña y encabezado**: «Radarpa laboratorio» (genitivo delante;
+  antes «Laboratorio radarpa» y «Radarpa yachana wasi»), «Sapi yachay» (antes también «Tiksi yachaykuna»).
+- **Conjunción «y» del español** quitada («Polarizacionpash bandapash», «HH, VV»); comillas «» en
+  `sim.gemelo.nota` (antes “ ”).
+- **Aviso del kichwa** (H4) reescrito con el vocabulario de verificación ya usado en el borrador.
+- **Botones en imperativo** (D9) en el reproductor y «Volver a».

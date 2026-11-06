@@ -19,7 +19,7 @@ export const incendioQu: ContenidoHistoria = {
     parrafos: [
       ['NISARka NASA-pa shinallatak India espacial agencia (ISRO)-pa ', t('radar'), ' satélite misiónmi; paypa técnico willaykunaka kamachik panka-wan chiqanyachina kan. Kay shina radarka sensor activomi: pay kikin señalta kachan, kutimukta tupun. Chayrayku punchapipash tutapipash llankan, señalka humotapash puyukunatapash chimpan. Sapa puntopi tupushkataka ', t('sigma0'), ' nin, ', t('dB'), '-pi killkan.'],
       ['Kutimuk señalka allpapa ', t('rugosidad'), ' shinallatak ', t('dielectrica'), 'manta karin. Sachaka ramakunapa tullukunapa tantachiymi, paykunaka señalta tukuy ladoman kachan; ashtawan kaspi shinallatak panka kakpi, ashtawan señal kutimun, shinapash mana tukuy ladopi: achka biomasa kakpi señalka saturakun, mana ashtawan wiñanchu.'],
-      ['Shuk ', t('bandaL'), ' ondaka suni, pankakunata chimpashpa ramakunamanpash tullukunamanpash chayan. Ninaka paykunata tukuchikpi, chay señal kachayka illakun, señalka urmarin. Shinallatak radarka ondata shuk ñanta katishpa kachan chaskinpash, chayta ', t('polarizacion'), ' nin, sapa tantachiyka ramakunata, allpata, humedadtapash mana shuklla kutichin. NISAR-pa productokuna ima bandakunata shinallatak polarizacionkunata charinka, kamachik panka-wan chiqanyachina kan.'],
+      ['Shuk ', t('bandaL'), ' ondaka suni, pankakunata chimpashpa ramakunamanpash tullukunamanpash chayan. Ninaka paykunata tukuchikpi, chay señal kachayka illakun, señalka urmarin. Shinallatak radarka ondata shuk ñanta katishpa kachan chaskinpash, chayta ', t('polarizacion'), ' nin, sapa tantachiyka ramakunata, allpata, humedadtapash mana kikinta kutichin. NISAR-pa productokuna ima bandakunata shinallatak polarizacionkunata charinka, kamachik panka-wan chiqanyachina kan.'],
     ],
   },
   comparador: {
@@ -34,7 +34,7 @@ export const incendioQu: ContenidoHistoria = {
   hipotesis: {
     titulo: 'Rikushkata ima willachinman',
     parrafos: [
-      ['Kay rikuchiy escenariopi, shuk ejemplo yuyayka kayshinami: chaki pachaka combustibleta (chusku panka, pasto, chaki ramakuna) rupankapak allichin, wayra wayrakpika nina urku hawaman ashtawan utka rin.'],
+      ['Kay rikuchiy escenariopi, shuk ejemplo yuyayka kayshinami: chaki pachaka combustibleta (chaki panka, pasto, chaki ramakuna) rupankapak allichin, wayra wayrakpika nina urku hawaman ashtawan utka rin.'],
       ['Kay rikuchiy escenariopi, shuk rikuchik yuyayka kayshinami: rupashka kuskaka ashtawan biomasa kuskakunawan tupan: maypi ashtawan rama shinallatak tullu tiyan, chaypi ashtawan combustible tiyan, chayrayku HV señalka ashtawan sinchi urmarin.'],
       ['Kay rikuchiy escenariopi, runakunapa ruray ejemplo kanmi chakra rupay: tarpuy allpata chuyayachinkapak ninata churakpi, allpapash pastopash chakishka kakpi, kuskapi sachaman escapanmanmi.'],
     ],

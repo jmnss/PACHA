@@ -9,11 +9,11 @@ export const guionQu: TextoPaso[] = [
   },
   {
     id: 'nubes', titulo: 'Puyuka mana harkanchu',
-    texto: 'Radarka pay kikin señalta kachan, punchapipash tutapipash. Puyukunata wichachiy: rikuy rikchaka chinkan, radarka yakuwan jundashkata rikushpallami katin.',
+    texto: 'Radarka pay kikin señalta kachan, punchapipash tutapipash. Puyukunata wichachiy: óptico rikchaka chinkan, radarka yakuwan jundashkata rikushpallami katin.',
   },
   {
     id: 'polarizacion', titulo: 'Sapa polarizaciónmi shuk shuk willayta nin',
-    texto: 'Mana pakashka yaku, sachakunapa ukupi yaku, rupashka sachapash mana shuklla kutichin, ondata imashina kachashka, imashina chaskishkamanta.',
+    texto: 'Mana pakashka yaku, sachakunapa ukupi yaku, rupashka sachapash mana kikinta kutichin, ondata imashina kachashka, imashina chaskishkamanta.',
   },
   {
     id: 'mapa', titulo: 'Willaymanta tikray shuyukama',
@@ -24,7 +24,7 @@ export const guionQu: TextoPaso[] = [
     texto: 'Sierrapi incendio: sacha estructurata chinkachikpi, polarización cruzada (HV) uraman shamun. Ñawpa washa tupachinkapak aysay.',
   },
   {
-    id: 'simulador', titulo: 'Cayna shamukpika',
+    id: 'simulador', titulo: 'Kaya shamukpika',
     texto: 'Simulador de eventosmi Ecuadorpa chiqan allpa patapi allpa kuyuyta, volcanpa erupciónta o incendiota rurachin, radar ima rikunatapash rikuchin.',
   },
 ]

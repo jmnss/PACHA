@@ -6,7 +6,7 @@ export const inundacionQu: ContenidoHistoria = {
   clave: 'inundacion',
   etiqueta: 'Costapi yaku wicharishka',
   titulo: 'Costa uraypi yaku wicharikpi',
-  resumen: 'Costapi shuk pampa tamya pachapi yakuwan jundarin, chaymanta chakirin; radarka intita mana minishtin, puyu kakpipash rikun.',
+  resumen: 'Costapi shuk pampa tamya pachapi yakuwan jundarin, chaymanta chakirin; radarka intita mana minishtinchu, puyu kakpipash rikun.',
   queCambia: {
     titulo: 'Ima tikrarin, imarayku ministirin',
     parrafos: [
@@ -19,7 +19,7 @@ export const inundacionQu: ContenidoHistoria = {
     parrafos: [
       ['NISARka NASA-pa shinallatak India espacial agencia (ISRO)-pa ', t('radar'), ' satélite misiónmi; paypa técnico willaykunaka kamachik panka-wan chiqanyachina kan. Kay shina radarka sensor activomi: pay kikin señalta kachan, kutimukta tupun. Chayrayku punchapipash tutapipash llankan, señalka puyukunata chimpan. Sapa puntopi tupushkataka ', t('sigma0'), ' nin, ', t('dB'), '-pi killkan.'],
       ['Kutimuk señalka allpapa ishkay kamaymanta karin: ', t('rugosidad'), ' shinallatak ', t('dielectrica'), '. Mana pakashka upalla yakuka sinchi llampumi: espejo shina señalta satélitemanta anchuchin, chayrayku shuyupi yana rikurin.'],
-      ['Yakuwan jundashka mallkikuna o jatun tarpuy ukupika mana shuklla pasan. Señalka yakupi tupan, chaymanta tullupi (o jatun tarpuypa tullunpi) tupan, satélitemanta kutimun (ishkay kuti kutichiy), chaymi chay allpa ñawpamanta yurakyan. ', t('bandaL'), ' ondaka panka ukutapash chimpan, chayrayku chay kutichiyta killkay ushan. Shinallatak radarka ondata shuk ñanta katishpa kachan chaskinpash, chayta ', t('polarizacion'), ' nin, sapa tantachiyka yakutapash yurakunatapash mana shuklla kutichin. NISAR-pa productokuna ima bandakunata shinallatak polarizacionkunata charinka, kamachik panka-wan chiqanyachina kan.'],
+      ['Yakuwan jundashka mallkikuna o hatun tarpuy ukupika mana shuklla pasan. Señalka yakupi tupan, chaymanta tullupi (o hatun tarpuypa tullunpi) tupan, satéliteman kutimun (ishkay kuti kutichiy), chaymi chay allpa ñawpamanta yurakyan. ', t('bandaL'), ' ondaka panka ukutapash chimpan, chayrayku chay kutichiyta killkay ushan. Shinallatak radarka ondata shuk ñanta katishpa kachan chaskinpash, chayta ', t('polarizacion'), ' nin, sapa tantachiyka yakutapash yurakunatapash mana kikinta kutichin. NISAR-pa productokuna ima bandakunata shinallatak polarizacionkunata charinka, kamachik panka-wan chiqanyachina kan.'],
     ],
   },
   comparador: {
@@ -36,7 +36,7 @@ export const inundacionQu: ContenidoHistoria = {
     parrafos: [
       ['Kay rikuchiy escenariopi, shuk ejemplo yuyayka kayshinami: Costapa tamya pachapi tamyaka humedalta jundachin shinallatak uray allpakunaman paktachin; chaki pacha ñawpaman rikpi, yakuka llukshin, yanayak kuskakunaka pishiyan.'],
       ['Kay rikuchiy escenariopi, shuk rikuchik yuyayka kayshinami: kuskapi yaku ñankunapa llukshiyka yakuwan jundashka yurakunata mikuchin, ishkay kuti kutichiyrayku yurakyak kuskakunata, shinallatak kaykunaka mana pakashka yakumanta ashtawan mana utka chakin.'],
-      ['Kay rikuchiy escenariopi, runakunapa ruray ejemplo kanmi tarpuy mirayka: humedalpa rantipi chakrakuna rurakpi, allpapa rugosidadta shinallatak humedadta, chaywan radar señalta tikrachin, tamyashka shuklla kakpipash.'],
+      ['Kay rikuchiy escenariopi, runakunapa ruray ejemplo kanmi tarpuy mirayka: humedalpa rantipi chakrakuna rurakpi, allpapa rugosidadta shinallatak humedadta, chaywan radar señalta tikrachin, tamya kikin kakpipash.'],
     ],
   },
   aplicaciones: {

@@ -14,7 +14,7 @@ export const historias: Record<keyof typeof esHistorias, string> = {
   'historias.marca.pendiente': 'kamachik panka-wan chiqanyachina kan',
   'historias.pol.etiqueta': 'Polarización',
   'historias.pol.recomendada': '{pol} · ruranapak',
-  'historias.comparador.sin_pasadas': 'Kay escenariopi mana ishkay shuklla pasadakuna tiyanchu tupachinkapak.',
+  'historias.comparador.sin_pasadas': 'Kay escenariopi mana ishkay mana kikin pasadakuna tiyanchu tupachinkapak.',
   'historias.comparador.calculando': 'Ishkay pasadakunapa tikrayta yupachishka…',
   'historias.comparador.actualizando': 'Mushukyachishka…',
   'historias.comparador.antes': 'Ñawpa · {fecha}',

@@ -73,7 +73,7 @@ describe('Laboratorio', () => {
     expect(textosSinTraducir(container)).toEqual([])
   })
 
-  it.each([['es', /pendiente de confirmar/, 'Quema del bosque'], ['en', /pending confirmation/, 'Forest burning'], ['qu', /shuyan/, 'Sachapa rupay']] as const)('la banda S queda marcada como pendiente en %s', async (idioma, patron, cambio) => {
+  it.each([['es', /pendiente de confirmar/, 'Quema del bosque'], ['en', /pending confirmation/, 'Forest burning'], ['qu', /kamachik panka-wan chiqanyachina kan/, 'Sachapa rupay']] as const)('la banda S queda marcada como pendiente en %s', async (idioma, patron, cambio) => {
     renderConIdioma(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><MemoryRouter initialEntries={['/laboratorio?vista=polarizacion&banda=S']}><Laboratorio /></MemoryRouter></QueryClientProvider>, idioma)
     await screen.findByText(cambio)
     expect(screen.getByText(patron)).toBeInTheDocument()

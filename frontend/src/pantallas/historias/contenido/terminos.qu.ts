@@ -9,17 +9,17 @@ export const terminosQu: Terminos = {
   },
   sigma0: {
     nombre: 'σ⁰',
-    explicacion: 'Allpapa sapa puntomanta satélitemanta hayk señal kutimun. Llampu yakuka pishita kutichin; mallkikunapa umakunaka achkata.',
+    explicacion: 'Allpapa sapa puntomanta satéliteman hayk señal kutimun. Llampu yakuka pishita kutichin; mallkikunapa umakunaka achkata.',
   },
   dB: {
     nombre: 'dB',
-    explicacion: 'Decibelios: achka mana shuklla yupaykunata pishiyachik escalami. Sapa 3 dB mana shuklla kayka, yapa ishkay kuti o chawpi señal kan.',
+    explicacion: 'Decibelios: achka mana kikin yupaykunata pishiyachik escalami. Sapa 3 dB mana kikin kayka, yapa ishkay kuti o chawpi señal kan.',
   },
   HH: { nombre: 'HH', explicacion: 'Ondaka horizontalmi kachashka shinallatak chaskishka.' },
   HV: { nombre: 'HV', explicacion: 'Horizontalmi kachashka, verticalmi chaskishka.' },
   polarizacion: {
     nombre: 'polarización',
-    explicacion: 'Radar ondapa kachashka shinallatak chaskishka ñan. Sapa tantachiyka yakuta, yurakunata, allpatapash mana shuklla kutichin.',
+    explicacion: 'Radar ondapa kachashka shinallatak chaskishka ñan. Sapa tantachiyka yakuta, yurakunata, allpatapash mana kikinta kutichin.',
   },
   bandaL: {
     nombre: 'banda L',

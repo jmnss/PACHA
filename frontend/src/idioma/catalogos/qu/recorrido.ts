@@ -3,10 +3,10 @@ import type { recorrido as esRecorrido } from '../es/recorrido'
 // Borrador en kichwa unificado, pendiente de revisión por hablantes (ver docs/guia-traduccion-kichwa.md).
 export const recorrido: Record<keyof typeof esRecorrido, string> = {
   'recorrido.titulo': 'Purina',
-  'recorrido.hallazgo': 'Ishkay minutomanta pishi: radarka imarayku ministirishkata rikuy. Tukuy kaymi demostración willaykuna.',
+  'recorrido.hallazgo': 'Ishkay minutomanta pishi: radarka imarayku ministirishkata rikuy. Tukuy kaykunaka rikuchiy willaykunami.',
   'recorrido.contador': '{n}-manta {i} ñan',
   'recorrido.anterior': 'Ñawpa',
-  'recorrido.siguiente': 'Washa',
+  'recorrido.siguiente': 'Katik',
   'recorrido.pausar': 'Sayachiy',
   'recorrido.reanudar': 'Katichiy',
   'recorrido.pasos': 'Ñankuna',
