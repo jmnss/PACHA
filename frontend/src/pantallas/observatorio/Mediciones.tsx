@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from 'react-router-dom'
-import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
+import { mensajeDeError } from '../../api/cliente'
 import { useMedicion, type Escenario, type Medicion } from '../../api/consultas'
 import type { Cuadrante, Punto } from '../../comparador/Comparador'
 import { Boton } from '../../diseno/Boton'
@@ -10,7 +10,12 @@ import { Tabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { descargarCsv } from '../../exportar/csv'
 import { formatoNumero } from '../../graficos/formato'
-import { coordenadasAprox, csvDeMedicion, nombreCsv, NOTA_POLARIZACION, polarizacionMedida } from './medicion'
+import { langDe } from '../../idioma/idiomas'
+import { TextoApi } from '../../idioma/TextoApi'
+import type { T } from '../../idioma/traductor'
+import type { CodigoIdioma } from '../../idioma/idiomas'
+import { useT } from '../../idioma/useT'
+import { coordenadasAprox, csvDeMedicion, nombreCsv, polarizacionMedida } from './medicion'
 
 interface Props {
   esc: Escenario
@@ -26,20 +31,27 @@ interface Props {
 }
 
 type Fila = Record<string, string | number | null>
+// Las claves de las filas llegan en español de la API; el rótulo de cada columna sale del catálogo.
 const COLUMNAS_ORDEN = ['Capa', 'Medida', 'Valor', '% del cuadrante']
 
-function columnasDe(filas: Fila[]) {
+function columnasDe(filas: Fila[], t: T, idioma: CodigoIdioma) {
+  const rotulo: Record<string, string> = {
+    Capa: t('obs.medicion.col_capa'), Medida: t('obs.medicion.col_medida'), Valor: t('obs.metricas.col_valor'), '% del cuadrante': t('obs.medicion.col_pct'),
+  }
   const claves = COLUMNAS_ORDEN.filter((c) => filas.some((f) => c in f))
   return claves.map((c, i) => ({
-    clave: c, etiqueta: c, identidad: i === 0, numerica: c === 'Valor' || c.startsWith('%'),
-    formato: c.startsWith('%') ? (v: unknown) => (typeof v === 'number' ? `${formatoNumero(v, 1)} %` : '') : undefined,
+    clave: c, etiqueta: rotulo[c], identidad: i === 0, numerica: c === 'Valor' || c.startsWith('%'),
+    formato: c.startsWith('%')
+      ? (v: unknown) => (typeof v === 'number' ? `${formatoNumero(v, 1, idioma)} %` : '')
+      : (v: unknown) => (typeof v === 'string' ? <TextoApi texto={v} /> : null),
   }))
 }
 
-const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }) : undefined)
+const hora = (ms: number, lang: string) => (ms > 0 ? new Date(ms).toLocaleTimeString(lang === 'es' ? 'es-EC' : lang, { hour: '2-digit', minute: '2-digit' }) : undefined)
 
 /** Medición sobre la imagen: un punto (valores en las dos pasadas) o un cuadrante (resumen, tabla y CSV). */
 export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, polarizacion, onBorrar }: Props) {
+  const { t, idioma } = useT()
   const [params] = useSearchParams()
   const hay = !!(punto || cuadrante)
   // Un solo gesto a la vez: el cuadrante manda si hubiera los dos.
@@ -51,51 +63,50 @@ export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, po
 
   if (!hay) {
     return (
-      <Tarjeta titulo="Medición">
-        <Vacio titulo="Nada seleccionado" texto="Pulsa un punto de la imagen para ver sus valores, o arrastra para medir un cuadrante." />
+      <Tarjeta titulo={t('obs.medicion.titulo')}>
+        <Vacio titulo={t('obs.medicion.nada_titulo')} texto={t('obs.medicion.nada_texto')} />
       </Tarjeta>
     )
   }
 
-  const borrar = <Boton variante="terciario" onClick={onBorrar}>Borrar selección</Boton>
+  const borrar = <Boton variante="terciario" onClick={onBorrar}>{t('obs.medicion.borrar')}</Boton>
   const filas = (m?.tabla ?? []) as Fila[]
   const enCuadrante = !!cuadrante
   const medida = m ? polarizacionMedida(m) : null
   const aSerie = new URLSearchParams(params)
   aSerie.set('vista', 'serie')
-  const coordenadas = !enCuadrante && punto ? coordenadasAprox(bbox, punto) : null
+  const coordenadas = !enCuadrante && punto ? coordenadasAprox(bbox, punto, t, idioma) : null
 
   return (
-    <Tarjeta titulo={enCuadrante ? 'Medición en un cuadrante' : 'Medición en un punto'} pie={m ? <SelloOrigen origen={m.origen} /> : undefined}>
+    <Tarjeta titulo={enCuadrante ? t('obs.medicion.cuadrante_titulo') : t('obs.medicion.punto_titulo')} pie={m ? <SelloOrigen origen={m.origen} /> : undefined}>
       {coordenadas && (
         <p className="medicion__coordenadas num">
-          <span className="medicion__etiqueta">Coordenadas aproximadas</span> {coordenadas.texto}
+          <span className="medicion__etiqueta">{t('obs.medicion.coordenadas')}</span> {coordenadas.texto}
         </p>
       )}
-      {consulta.isPending && consulta.fetchStatus !== 'idle' && <Cargando texto="Midiendo…" filas={3} />}
+      {consulta.isPending && consulta.fetchStatus !== 'idle' && <Cargando texto={t('obs.medicion.midiendo')} filas={3} />}
       {consulta.isError && (
-        <ErrorBloque mensaje={consulta.error instanceof ErrorApi ? consulta.error.mensaje : MENSAJE_RED}
-          ultimoDato={hora(consulta.dataUpdatedAt)} onReintentar={() => void consulta.refetch()} />
+        <ErrorBloque mensaje={mensajeDeError(consulta.error, t)}
+          ultimoDato={hora(consulta.dataUpdatedAt, langDe(idioma))} onReintentar={() => void consulta.refetch()} />
       )}
       {m && enCuadrante && (
-        <FranjaKpi items={m.metricas.map((x, i) => ({ etiqueta: x.etiqueta, valor: x.valor, unidad: x.unidad || undefined, principal: i === 0 }))} />
+        <FranjaKpi items={m.metricas.map((x, i) => ({ etiqueta: <TextoApi texto={x.etiqueta} />, valor: <TextoApi texto={x.valor} />, unidad: x.unidad || undefined, principal: i === 0 }))} />
       )}
       {m && !enCuadrante && m.metricas.length > 0 && (
-        <p className="medicion__nota">{[m.metricas[0].ayuda, 'Valor medido en el píxel más cercano al punto'].filter(Boolean).join('. ')}.</p>
+        <p className="medicion__nota">{m.metricas[0].ayuda ? <><TextoApi texto={m.metricas[0].ayuda} />. </> : null}{t('obs.medicion.valor_pixel')}.</p>
       )}
       {m && !enCuadrante && (
         <p className="medicion__nota">
-          Serie temporal del punto: pendiente (la API aún no la ofrece).{' '}
-          La serie del escenario está en la <Link to={{ search: aSerie.toString() }}>vista Serie</Link>.
+          {t('obs.medicion.serie_antes')}<Link to={{ search: aSerie.toString() }}>{t('obs.medicion.serie_enlace')}</Link>{t('obs.medicion.serie_despues')}
         </p>
       )}
-      {m && polarizacion && medida && medida !== polarizacion && <p className="medicion__nota">{NOTA_POLARIZACION}</p>}
+      {m && polarizacion && medida && medida !== polarizacion && <p className="medicion__nota">{t('obs.medicion.nota_polarizacion')}</p>}
       {m && filas.length > 0 && (
-        <Tabla titulo={enCuadrante ? 'Medidas del cuadrante' : 'Valores en el punto'} columnas={columnasDe(filas)} filas={filas} porPagina={50} />
+        <Tabla titulo={enCuadrante ? t('obs.medicion.tabla_cuadrante') : t('obs.medicion.tabla_punto')} columnas={columnasDe(filas, t, idioma)} filas={filas} porPagina={50} />
       )}
       <div className="medicion__acciones">
         {m && enCuadrante && (
-          <Boton variante="secundario" onClick={() => descargarCsv(nombreCsv(esc.id, antesId, despuesId), csvDeMedicion(m))}>Descargar CSV</Boton>
+          <Boton variante="secundario" onClick={() => descargarCsv(nombreCsv(esc.id, antesId, despuesId), csvDeMedicion(m, t, idioma))}>{t('obs.medicion.descargar_csv')}</Boton>
         )}
         {borrar}
       </div>

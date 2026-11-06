@@ -9,6 +9,7 @@ import { valorRedondo } from './flujo'
 import { NotasModelo } from '../../diseno/NotasModelo'
 import { AVISO_NOTAS, esNotaSinVerificar } from '../../diseno/notasModelo'
 import { nombreVariable } from './medicion'
+import { renderConIdioma, renderPseudo, textosSinTraducir } from '../../idioma/pruebas'
 
 vi.mock('../../mapa/MapaBase', () => ({ MapaBase: ({ children }: { children?: ReactNode }) => <div>{children}</div> }))
 
@@ -383,5 +384,48 @@ describe('medicion.ts', () => {
     expect(f.map((x) => x.Apartado)).toEqual(['Resumen', 'Resumen', 'Detalle'])
     expect(f[0].Valor).toBe('3,2 km²')
     expect(nombreCsv('ec_x~ab/c', '2026-04-12', '2026-05-18')).toBe('medicion_ec_x-ab-c_2026-04-12_a_2026-05-18.csv')
+  })
+})
+
+describe('Observatorio · comparar · idioma', () => {
+  const montarCon = (render: typeof renderPseudo, ruta: string) => {
+    const cliente = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    return render(
+      <QueryClientProvider client={cliente}>
+        <MemoryRouter initialEntries={[ruta]}><Observatorio /></MemoryRouter>
+      </QueryClientProvider>,
+    )
+  }
+  // Datos de los mocks de la API (nombres de escenario, columnas y filas de la tabla por parcela).
+  const API = ['Parcela', 'Δσ⁰ HV (dB)', 'Cambio detectado', 'Humedales', 'glaciares', 'agricultura', 'Resultados por parcela']
+  const propios = (raiz: HTMLElement) => textosSinTraducir(raiz)
+    .filter((x) => !API.includes(x) && !/^Escenario ec_|^P-\d+$|^Cosecha$|^Clic /.test(x))
+
+  it.each([
+    ['con medición de un cuadrante', '/observatorio?escenario=ec_x&vista=comparar&c=0.1,0.1,0.5,0.6'],
+    ['con medición de un punto', '/observatorio?escenario=ec_x&vista=comparar&p=0.5,0.5'],
+    ['con campo de flujo', '/observatorio?escenario=ec_glaciar&vista=comparar'],
+    ['con tabla por parcela', '/observatorio?escenario=ec_agri&vista=comparar'],
+    ['sin pareja', '/observatorio?escenario=ec_uno&vista=comparar'],
+  ])('la vista «antes y después» %s pasa por el traductor', async (_n, ruta) => {
+    const { container } = montarCon(renderPseudo, ruta)
+    await screen.findAllByText(/⟦(Antes|Elige dos fechas)/, undefined, { timeout: 3000 })
+    await new Promise((r) => setTimeout(r, 400))
+    expect(propios(container).filter((x) => !/^Escenario |^\d+ \w+ \d{4}/.test(x))).toEqual([])
+  })
+
+  it('el CSV de medición en inglés lleva la cabecera en inglés, `# origen: sintético` y `# idioma: en`', async () => {
+    let contenido: Blob | null = null
+    URL.createObjectURL = vi.fn((b: Blob) => { contenido = b; return 'blob:x' })
+    URL.revokeObjectURL = vi.fn()
+    vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {})
+    montarCon((ui) => renderConIdioma(ui, 'en'), '/observatorio?escenario=ec_x&vista=comparar&c=0.1,0.1,0.5,0.6')
+    fireEvent.click(await screen.findByRole('button', { name: 'Download CSV' }))
+    const texto: string = await new Promise((ok) => { const f = new FileReader(); f.onload = () => ok(String(f.result)); f.readAsText(contenido!) })
+    const lineas = texto.replace(/^\uFEFF/, '').split('\n')
+    expect(lineas[0]).toBe('# origen: sintético')
+    expect(lineas).toContain('# idioma: en')
+    expect(lineas).toContain('Section,Item,Measure,Value,% of quadrant')
+    expect(lineas.some((l) => l.startsWith('Summary,Área del cuadrante'))).toBe(true)
   })
 })

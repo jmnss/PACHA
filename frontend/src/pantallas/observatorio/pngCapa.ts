@@ -2,12 +2,13 @@ import type { CapaDto } from '../../api/consultas'
 import { decodificarRejilla } from '../../api/rejilla'
 import { colorear } from '../../diseno/rampas'
 import { aPng } from '../../exportar/png'
+import { traductor, type T } from '../../idioma/traductor'
 import { estiloDeCapa } from './derivados'
 
 const LADO_OBJETIVO = 768
 
 /** PNG de una capa: la rejilla coloreada y ampliada por un factor entero (sin suavizar), más la franja de origen de `aPng`. */
-export function pngDeCapa(capa: CapaDto): Promise<Blob> {
+export function pngDeCapa(capa: CapaDto, t: T = traductor('es').t): Promise<Blob> {
   const { rejilla } = capa
   const estilo = estiloDeCapa(capa)
   const imagen = colorear(decodificarRejilla(rejilla), estilo.rampa, estilo.categorias, rejilla.columnas)
@@ -20,9 +21,9 @@ export function pngDeCapa(capa: CapaDto): Promise<Blob> {
   grande.width = rejilla.columnas * k
   grande.height = rejilla.filas * k
   const c2 = grande.getContext('2d')
-  if (!c1 || !c2) return Promise.reject(new Error('No se pudo crear el lienzo de exportación.'))
+  if (!c1 || !c2) return Promise.reject(new Error(t('exportar.error.lienzo')))
   c1.putImageData(imagen, 0, 0)
   c2.imageSmoothingEnabled = false
   c2.drawImage(chico, 0, 0, grande.width, grande.height)
-  return aPng(grande, capa.origen)
+  return aPng(grande, capa.origen, t)
 }

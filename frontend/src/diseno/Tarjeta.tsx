@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 interface Props {
-  titulo?: string
+  titulo?: ReactNode
   children: ReactNode
   pie?: ReactNode
   className?: string

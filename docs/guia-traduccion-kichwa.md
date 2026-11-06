@@ -126,3 +126,14 @@ Borrador de las claves `obs.mapa.*`, `obs.tiempo.*` y `obs.metricas.*`; todo sin
   equivalente asentado; no se inventaron neologismos.
 - **Dudas**: «rikushka» (detectado, de «rikuy»), «katik» (siguiente), «yupay» (métrica, de «yupay», contar),
   «chaninchay» (valor), «pakay» (ocultar), «ñitiy» (pulsar), «hawapi / ukupi» (fuera / dentro), «mamallaktapi» (en el país).
+
+## Tarea 11 · Observatorio: comparar y medir
+
+Borrador de `obs.comparar.*`, `obs.medicion.*`, `obs.variable.*` y `obs.flujo.*`; todo sin validar por hablantes:
+
+- **Se dejaron en español**: polarización, capa, clasificación, cuadrante/cuadro, horizontal, vertical, fase
+  interferométrica, coherencia interferométrica, desenrollado, frente, parcela, píxel, CSV, PNG, N/S/E (O en lugar de W).
+- **Dudas**: «tupuy» (medir / medición), «chullunku» (hielo), «utkay» (velocidad), «kutichin» (devuelve, de «kutichina»),
+  «tinkichiy» (combinación), «yaklla» (aproximado), «uraykachay» (descargar), «tukuchiy» (borrar), «rakirina»
+  (apartado), «pishiyachishka / hatunyachishka» (resumen / detalle), «chiqan» en «Sintético chiqanwan pantay».
+- Los nombres de columna del CSV de medición se traducen; las líneas `# origen: …` siguen en español.

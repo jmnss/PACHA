@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 export interface Kpi {
-  etiqueta: string
+  etiqueta: ReactNode
   valor: ReactNode
   unidad?: string
   /** Base de una cifra relativa: «frente a la pasada anterior, 24 abr». */
@@ -14,8 +14,8 @@ export interface Kpi {
 export function FranjaKpi({ items }: { items: Kpi[] }) {
   return (
     <dl className="franja-kpi">
-      {items.map((k) => (
-        <div key={k.etiqueta} className={`franja-kpi__item${k.principal ? ' franja-kpi__item--principal' : ''}`}>
+      {items.map((k, i) => (
+        <div key={i} className={`franja-kpi__item${k.principal ? ' franja-kpi__item--principal' : ''}`}>
           <dt className="franja-kpi__etiqueta">{k.etiqueta}</dt>
           <dd className="franja-kpi__valor num">
             {k.valor}

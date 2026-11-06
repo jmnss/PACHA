@@ -2,6 +2,8 @@ import type { CapaDto, Medicion } from '../../api/consultas'
 import type { Cuadrante, Punto } from '../../comparador/Comparador'
 import { aCsv, type Celda } from '../../exportar/csv'
 import { formatoNumero } from '../../graficos/formato'
+import type { CodigoIdioma } from '../../idioma/idiomas'
+import { traductor, type Clave, type T } from '../../idioma/traductor'
 
 const DECIMALES_URL = 4
 const redondear = (n: number) => Number(n.toFixed(DECIMALES_URL))
@@ -28,61 +30,64 @@ export function leerCuadrante(texto: string): Cuadrante | null {
 export const textoPunto = (p: Punto) => p.map(redondear).join(',')
 export const textoCuadrante = (c: Cuadrante) => c.map(redondear).join(',')
 
-const grados = (v: number, positivo: string, negativo: string) => `${formatoNumero(Math.abs(v), 3)}° ${v >= 0 ? positivo : negativo}`
+const grados = (v: number, positivo: string, negativo: string, idioma: CodigoIdioma) => `${formatoNumero(Math.abs(v), 3, idioma)}° ${v >= 0 ? positivo : negativo}`
 
 /** Latitud y longitud aproximadas de una posición normalizada (x → este, y = 0 al norte) dentro de un bbox [oeste, sur, este, norte]. */
-export function coordenadasAprox(bbox: readonly number[], [x, y]: Punto): { lat: number; lon: number; texto: string } {
+export function coordenadasAprox(bbox: readonly number[], [x, y]: Punto, t: T = traductor('es').t, idioma: CodigoIdioma = 'es'): { lat: number; lon: number; texto: string } {
   const lon = bbox[0] + x * (bbox[2] - bbox[0])
   const lat = bbox[3] - y * (bbox[3] - bbox[1])
-  return { lat, lon, texto: `${grados(lat, 'N', 'S')}, ${grados(lon, 'E', 'O')}` }
+  return { lat, lon, texto: `${grados(lat, t('obs.medicion.hem_n'), t('obs.medicion.hem_s'), idioma)}, ${grados(lon, t('obs.medicion.hem_e'), t('obs.medicion.hem_o'), idioma)}` }
 }
 
-export const COLUMNAS_CSV = ['Apartado', 'Concepto', 'Medida', 'Valor', '% del cuadrante']
+/** Cabeceras del CSV en el idioma de quien llama (las líneas `# origen: …` siguen en español). */
+export function columnasCsv(t: T = traductor('es').t): string[] {
+  return [t('obs.medicion.csv_apartado'), t('obs.medicion.csv_concepto'), t('obs.medicion.col_medida'), t('obs.metricas.col_valor'), t('obs.medicion.col_pct')]
+}
 
-/** Filas del CSV de una medición: primero las métricas (resumen) y luego la tabla detallada. */
-export function filasCsv(m: Medicion): Record<string, Celda>[] {
+/** Filas del CSV de una medición: primero las métricas (resumen) y luego la tabla detallada. Las claves son las cabeceras de `columnasCsv`. */
+export function filasCsv(m: Medicion, t: T = traductor('es').t): Record<string, Celda>[] {
+  const [apartado, concepto, medida, valor, pct] = columnasCsv(t)
   const resumen = m.metricas.map((x) => ({
-    Apartado: 'Resumen', Concepto: x.etiqueta, Medida: '', Valor: x.unidad ? `${x.valor} ${x.unidad}` : x.valor, '% del cuadrante': null,
+    [apartado]: t('obs.medicion.csv_resumen'), [concepto]: x.etiqueta, [medida]: '', [valor]: x.unidad ? `${x.valor} ${x.unidad}` : x.valor, [pct]: null,
   }))
+  // Las filas de la tabla llegan con claves en español de la API.
   const detalle = m.tabla.map((f) => ({
-    Apartado: 'Detalle', Concepto: f['Capa'], Medida: f['Medida'] ?? '', Valor: f['Valor'], '% del cuadrante': f['% del cuadrante'],
+    [apartado]: t('obs.medicion.csv_detalle'), [concepto]: f['Capa'], [medida]: f['Medida'] ?? '', [valor]: f['Valor'], [pct]: f['% del cuadrante'],
   }))
   return [...resumen, ...detalle]
 }
 
-export const csvDeMedicion = (m: Medicion) => aCsv(filasCsv(m), COLUMNAS_CSV, m.origen)
+export const csvDeMedicion = (m: Medicion, t: T = traductor('es').t, idioma?: CodigoIdioma) => aCsv(filasCsv(m, t), columnasCsv(t), m.origen, idioma)
 
 const limpio = (t: string) => t.replace(/[^A-Za-z0-9_-]+/g, '-').replace(/^-+|-+$/g, '')
 export function nombreCsv(escenario: string, antes: string, despues: string): string {
   return `medicion_${limpio(escenario)}_${limpio(antes)}_a_${limpio(despues)}.csv`
 }
 
-const NOMBRES: Record<string, string> = {
-  sigma0: 'σ⁰',
-  fase_interferometrica: 'Fase interferométrica',
-  coherencia_interferometrica: 'Coherencia interferométrica',
-  desplazamiento_los: 'Desplazamiento en la línea de vista',
-  desplazamiento_los_acumulado: 'Desplazamiento acumulado en la línea de vista',
-  desplazamiento_los_desenrollado: 'Desplazamiento en la línea de vista desenrollado',
-  velocidad_vertical: 'Velocidad vertical',
-  error_frente_a_la_verdad_sintetica: 'Error frente a la verdad sintética',
-  cambio_de_inundacion: 'Cambio de inundación',
-  cambio_por_parcela: 'Cambio por parcela',
-  cambio_de_velocidad: 'Cambio de velocidad',
-  cambio_del_frente: 'Cambio del frente',
-  area_quemada_detectada: 'Área quemada detectada',
+const NOMBRES: Record<string, Clave> = {
+  fase_interferometrica: 'obs.variable.fase_interferometrica',
+  coherencia_interferometrica: 'obs.variable.coherencia_interferometrica',
+  desplazamiento_los: 'obs.variable.desplazamiento_los',
+  desplazamiento_los_acumulado: 'obs.variable.desplazamiento_los_acumulado',
+  desplazamiento_los_desenrollado: 'obs.variable.desplazamiento_los_desenrollado',
+  velocidad_vertical: 'obs.variable.velocidad_vertical',
+  error_frente_a_la_verdad_sintetica: 'obs.variable.error_frente_a_la_verdad_sintetica',
+  cambio_de_inundacion: 'obs.variable.cambio_de_inundacion',
+  cambio_por_parcela: 'obs.variable.cambio_por_parcela',
+  cambio_de_velocidad: 'obs.variable.cambio_de_velocidad',
+  cambio_del_frente: 'obs.variable.cambio_del_frente',
+  area_quemada_detectada: 'obs.variable.area_quemada_detectada',
 }
-/** Nombre legible de una variable del contrato: mapa explícito de las conocidas; si no, guiones bajos por espacios y mayúscula inicial. */
-export function nombreVariable(variable: string): string {
-  if (NOMBRES[variable]) return NOMBRES[variable]
-  const t = variable.replace(/_/g, ' ')
-  return t.charAt(0).toUpperCase() + t.slice(1)
+/** Nombre legible de una variable del contrato: las conocidas en el idioma activo; si no, guiones bajos por espacios y mayúscula inicial (en español). */
+export function nombreVariable(variable: string, t: T = traductor('es').t): string {
+  if (variable === 'sigma0') return 'σ⁰'
+  if (NOMBRES[variable]) return t(NOMBRES[variable])
+  const txt = variable.replace(/_/g, ' ')
+  return txt.charAt(0).toUpperCase() + txt.slice(1)
 }
 
 /** Nombre de una capa para el selector «Ver». */
-export const etiquetaCapa = (c: CapaDto) => nombreVariable(c.variable)
-
-export const NOTA_POLARIZACION = 'La medición y el cambio detectado usan las polarizaciones del análisis, no la elegida en el selector.'
+export const etiquetaCapa = (c: CapaDto, t: T = traductor('es').t) => nombreVariable(c.variable, t)
 
 /** Polarización que menciona una fila de la tabla de medición («σ⁰ HV · 24/04/2026»), si alguna. */
 export function polarizacionMedida(m: Medicion): string | null {

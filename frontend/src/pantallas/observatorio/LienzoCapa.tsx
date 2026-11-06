@@ -5,6 +5,7 @@ import { normalizar, ordenarCuadrante, UMBRAL_ARRASTRE } from '../../comparador/
 import type { Cuadrante, Punto } from '../../comparador/Comparador'
 import { Leyenda } from '../../diseno/Leyenda'
 import { colorear } from '../../diseno/rampas'
+import { useT } from '../../idioma/useT'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { estiloDeCapa } from './derivados'
 
@@ -19,6 +20,7 @@ interface Props {
 
 /** Una sola capa (cambio, clasificación…) con los mismos gestos que el comparador: clic = punto, arrastre = cuadrante. */
 export function LienzoCapa({ capa, titulo, onPunto, onCuadrante, punto, cuadrante }: Props) {
+  const { t } = useT()
   const lienzo = useRef<HTMLCanvasElement>(null)
   const escenario = useRef<HTMLDivElement>(null)
   const gesto = useRef<{ inicio: Punto; arrastre: boolean } | null>(null)
@@ -28,9 +30,9 @@ export function LienzoCapa({ capa, titulo, onPunto, onCuadrante, punto, cuadrant
 
   const imagen = useMemo(() => {
     try { return { px: colorear(decodificarRejilla(rejilla), estilo.rampa, estilo.categorias, rejilla.columnas), error: null as string | null } } catch (e) {
-      return { px: null, error: e instanceof Error ? e.message : 'No se pudo dibujar la capa.' }
+      return { px: null, error: e instanceof Error ? e.message : t('obs.comparar.error_lienzo') }
     }
-  }, [rejilla, estilo])
+  }, [rejilla, estilo, t])
   useEffect(() => {
     const c = lienzo.current
     if (!c || !imagen.px) return

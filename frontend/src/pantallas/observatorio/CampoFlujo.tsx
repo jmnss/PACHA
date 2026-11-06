@@ -2,6 +2,8 @@ import type { ResultadoCambio } from '../../api/consultas'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { formatoNumero } from '../../graficos/formato'
+import { TextoApi } from '../../idioma/TextoApi'
+import { useT } from '../../idioma/useT'
 import { valorRedondo } from './flujo'
 
 type Vectores = NonNullable<ResultadoCambio['vectores']>
@@ -10,6 +12,7 @@ const decimalesDe = (v: number) => (v >= 10 ? 0 : v >= 1 ? 1 : v >= 0.1 ? 2 : 3)
 
 /** Campo de flujo: una flecha por celda, escalada a la velocidad (arriba = norte). Cada flecha mide `escala` km por unidad de velocidad. */
 export function CampoFlujo({ vectores }: { vectores: Vectores }) {
+  const { t, idioma } = useT()
   const n = vectores.x.length
   const mag = vectores.u.map((u, i) => Math.hypot(u, vectores.v[i]))
   const maxMag = Math.max(0, ...mag)
@@ -45,10 +48,10 @@ export function CampoFlujo({ vectores }: { vectores: Vectores }) {
   }
 
   return (
-    <Tarjeta titulo="Campo de flujo" pie={<SelloOrigen origen={vectores.origen} />}>
+    <Tarjeta titulo={t('obs.flujo.titulo')} pie={<SelloOrigen origen={vectores.origen} />}>
       <div className="campo-flujo">
         <svg className="campo-flujo__lienzo" viewBox={`${-mitadX - margen} ${-mitadY - margen} ${ancho} ${alto}`}
-          role="img" aria-label={`Campo de flujo: ${n} flechas; la mayor corresponde a ${formatoNumero(maxMag, d)} ${unidad}. Arriba es el norte.`}>
+          role="img" aria-label={t('obs.flujo.aria', { n, max: formatoNumero(maxMag, d, idioma), unidad })}>
           {vectores.u.map((_, i) => flecha(i))}
         </svg>
         {maxMag > 0 ? (
@@ -59,12 +62,12 @@ export function CampoFlujo({ vectores }: { vectores: Vectores }) {
                 <polygon points={`${ref * escala},${cabeza} ${ref * escala - cabeza},${cabeza - cabeza * 0.45} ${ref * escala - cabeza},${cabeza + cabeza * 0.45}`} />
               </g>
             </svg>
-            <span className="campo-flujo__valor num">{formatoNumero(ref, decimalesDe(ref))} {unidad}</span>
+            <span className="campo-flujo__valor num">{formatoNumero(ref, decimalesDe(ref), idioma)} <TextoApi texto={unidad} /></span>
           </div>
         ) : (
-          <p className="campo-flujo__nota">Sin movimiento apreciable entre las dos pasadas.</p>
+          <p className="campo-flujo__nota">{t('obs.flujo.sin_movimiento')}</p>
         )}
-        <p className="campo-flujo__nota">Arriba es el norte. Cada flecha apunta hacia donde se mueve el hielo en esa celda; su largo es proporcional a la velocidad.</p>
+        <p className="campo-flujo__nota">{t('obs.flujo.nota')}</p>
       </div>
     </Tarjeta>
   )
