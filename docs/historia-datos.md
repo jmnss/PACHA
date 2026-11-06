@@ -11,7 +11,7 @@ Las cifras se leen en pantalla (las calcula la app); no las memorices ni las inv
 2. Comprobar que la banda naranja «DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR» está arriba.
 3. Tener a mano el Observatorio (`/observatorio`) por si preguntan por una medición o por los otros tipos de cambio.
 4. Si falla el internet, el mapa base de Esri no carga; la app sigue funcionando con las provincias locales (ver «Plan B» al final).
-5. Idioma: el selector «Idioma» está en la cabecera (español, English, Kichwa) y el cambio es inmediato, sin recargar. Si presentas en otro idioma, elígelo antes de empezar. El kichwa es un **borrador en revisión por hablantes** (0 de 816 claves validadas); la app lo avisa en pantalla. La banda de datos de demostración y los sellos de origen aparecen en los tres idiomas.
+5. Idioma: el selector «Idioma» está en el riel (al pie en escritorio, en la barra inferior en móvil) (español, English, Kichwa) y el cambio es inmediato, sin recargar. Si presentas en otro idioma, elígelo antes de empezar. El kichwa es un **borrador en revisión por hablantes** (0 de 923 claves validadas); la app lo avisa en pantalla. La banda de datos de demostración y los sellos de origen aparecen en los tres idiomas.
 
 ## Versión corta: el recorrido guiado (90 s)
 

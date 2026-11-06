@@ -18,7 +18,7 @@ An open web app that shows how the NISAR radar (NASA-ISRO) can "see" **floods an
 
 ## Language and accessibility
 
-- **Language:** a selector in the header offers Spanish, English and Kichwa. Switching is instant, with no reload or repeated requests, and the choice is remembered in the browser. Kichwa is a **draft under review by speakers** (0 of 816 keys validated; the app shows a notice). To review it, see [docs/guia-traduccion-kichwa.md](docs/guia-traduccion-kichwa.md) (in Spanish) and [docs/traduccion-kichwa.csv](docs/traduccion-kichwa.csv). The demonstration-data band and origin stamps appear in all three languages.
+- **Language:** a selector in the navigation rail offers Spanish, English and Kichwa. Switching is instant, with no reload or repeated requests, and the choice is remembered in the browser. Kichwa is a **draft under review by speakers** (0 of 923 keys validated; the app shows a notice). To review it, see [docs/guia-traduccion-kichwa.md](docs/guia-traduccion-kichwa.md) (in Spanish) and [docs/traduccion-kichwa.csv](docs/traduccion-kichwa.csv). The demonstration-data band and origin stamps appear in all three languages.
 - **Accessibility:** the target is WCAG 2.2 AA. What has been measured: an automated axe audit (6 screens × 3 languages × 2 widths, no serious or critical violations), a keyboard-only walkthrough and reflow at 320 px with no horizontal scroll. A screen-reader test (NVDA or Orca) with a person has **not** been done yet, so full conformance is not claimed. Details in [INFORME.md](INFORME.md) (in Spanish).
 
 ## Event simulator

@@ -2,9 +2,9 @@
 
 Estado: **migración completa (bloques 0 a 5) más Simulador, Laboratorio, Recorrido, Fundamentos e Impacto,
 e idioma (es/en/kichwa) y accesibilidad implementados** (ver «Idioma y accesibilidad (2026-11-05)»). Kichwa:
-borrador sin validar (0 de 816 claves). Prueba con lector de pantalla: pendiente.
-Verificación (corrida el 2026-11-06 sobre `2fee767`): pytest 262 (+2 omitidas por diseño), unittest 13 OK,
-vitest 523 (51 archivos), lint OK, build OK, Playwright 81/81.
+borrador sin validar (0 de 923 claves). Prueba con lector de pantalla: pendiente.
+Verificación (corrida el 2026-11-06 tras la ronda de arreglos final): pytest 273 (+2 omitidas por diseño), unittest 13 OK,
+vitest 545 (52 archivos), lint OK, build OK, Playwright 83/83.
 Última actualización: 2026-11-06
 
 Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea. Las secciones
@@ -52,11 +52,10 @@ Estación y temporada (cubierta por `PanelContexto`), Fundamentos, Modo Dios.
 - Avisos del inspector en el simulador (`ragged-row`, `below-fold`); sin captura móvil con resultados.
 
 **Idioma y accesibilidad (nuevos)**
-- Kichwa: 0 de 816 claves validadas; hacen falta hablantes (`docs/guia-traduccion-kichwa.md`, `docs/traduccion-kichwa.csv`). Dudas abiertas de honestidad y ortografía («chiqan»/«chikan», etc.) en la guía.
+- Kichwa: 0 de 923 claves validadas; hacen falta hablantes (`docs/guia-traduccion-kichwa.md`, `docs/traduccion-kichwa.csv`). Dudas abiertas de honestidad y ortografía («chiqan»/«chikan», etc.) en la guía.
 - Prueba con lector de pantalla (Orca/NVDA) en Historias y Observatorio en los tres idiomas: **pendiente, requiere persona con lector de pantalla**.
 - Prueba con zoom real del navegador y teclado físico en un dispositivo real: pendiente (aquí solo se emuló).
-- **Decisión del equipo:** la etiqueta del simulador «…detectado por NISAR» (`api.sim.metrica.*_detectado_por_nisar`) presenta un resultado sintético como detectado por NISAR y conserva «NISAR» sin pasar por `_sin_nisar` en `datos/simulador.py`. Es preexistente (no lo introdujo el trabajo de idioma); no se cambió el backend. Conviene reformularla (p. ej. «detectado por el radar simulado») para respetar la regla 7.
-- Notas y celdas de tabla que escribe `modelo/desastres.py` con cifras incrustadas quedan en español (`lang="es"`) en `en` y `qu`, porque `modelo/` no se toca.
+- **Texto del demo que sigue en español (`lang="es"`) con `en` y `qu`** (pendiente declarado; `modelo/` no se toca): notas, ayudas de métricas y celdas de tabla que escribe `modelo/desastres.py` con cifras incrustadas; métricas de la medición con fecha en la etiqueta («Media · Velocidad · 27/12/2026»); notas del modelo y métricas cuando los parámetros no son los de por defecto (su español ya no coincide con el registrado y no se traducen); etiquetas de los puntos de las series; columnas de las tablas del Observatorio; títulos de entradas antiguas de la bitácora; líneas del informe PNG y celdas del CSV de la bitácora del simulador.
 - Código de idioma `qu-EC`, plurales con cifra, nombres de meses y días en kichwa: dudas abiertas D1–D3 de la guía.
 
 **Técnicos**
@@ -356,7 +355,7 @@ Corregido: el recorrido se saltaba pasos al avanzar solo (ahora un temporizador 
 | Animación de series temporales | Cumple | Reproductor por pasadas y, con paso menor de 12 días, fotogramas continuos del modelo (`observatorio/fotogramas.ts`, `useTiempoObservatorio.ts`, `VistaMapa.tsx`); e2e «anima los fotogramas» |
 | Comparador deslizante antes/después | Cumple | `comparador/Comparador.tsx`; Historias y Observatorio; e2e con teclado |
 | Dashboards y métricas | Cumple (más resumen de impacto accionable para gestores) | `PanelMetricas.tsx`, `Mediciones.tsx`, `TablaResultados.tsx`, vista Serie |
-| Público amplio | Cumple (kichwa en revisión; prueba con lector de pantalla pendiente) | Términos explicados (`Termino`); español, English y kichwa con selector (`frontend/src/idioma/`); axe WCAG 2.2 AA sin infracciones graves en 36 combinaciones (`e2e/accesibilidad.spec.ts`); teclado y reflujo a 320 px comprobados (ver «Idioma y accesibilidad»). El kichwa es un borrador sin validar (0 de 816) y no se hizo prueba con lector de pantalla |
+| Público amplio | Cumple (kichwa en revisión; prueba con lector de pantalla pendiente) | Términos explicados (`Termino`); español, English y kichwa con selector (`frontend/src/idioma/`); axe WCAG 2.2 AA sin infracciones graves en 36 combinaciones (`e2e/accesibilidad.spec.ts`); teclado y reflujo a 320 px comprobados (ver «Idioma y accesibilidad»). El kichwa es un borrador sin validar (0 de 923) y no se hizo prueba con lector de pantalla |
 | Qué polarización resalta el cambio | Cumple | Historias (conmutador) y Laboratorio (calculado por cambio y banda) |
 | Hipótesis de impulsores (físicos y humanos) | Cumple (ejemplos ilustrativos) | `pantallas/historias/contenido/*.ts` |
 | Aplicaciones futuras de NISAR | Cumple (condicionales, «pendiente de confirmar») | contenido de Historias, parte 5 |
@@ -404,15 +403,26 @@ Auditoría axe (`frontend/e2e/accesibilidad.spec.ts`, etiquetas wcag2a/2aa/21a/2
 - `scripts/revision_visual.sh` acepta un tercer argumento `es|en|qu`.
 - Revisión visual en `en` y `qu` de las seis rutas: en `qu` a 390 px había un FAIL `edge-text` común a todas («Kallari» a 10 px del borde izquierdo y «Ima niyta munan» a 5 px del derecho). Corregido en la primera ronda: padding izquierdo del riel móvil (`--space-2`) y el enlace de la banda puede partirse en dos líneas. Quedan WARN preexistentes (`below-fold` en observatorio; «Start» a 14 px en `en`, defendido arriba). Sin pendientes.
 
+## Ronda de arreglos de la revisión final (2026-11-06)
+
+Hallazgos de la revisión general del plan de idioma y accesibilidad, verificados en navegador y arreglados:
+
+- **Foco al navegar:** la marca ya no se consume al primer intento; se intenta tras pintar y en cada cabecera que se monta mientras el foco siga libre, y un clic en el destino actual también lo mueve. E2E con dos visitas a la misma ruta y desde el Observatorio (que monta una cabecera provisional).
+- **Riel (WCAG 2.5.3):** el nombre de cada destino empieza por la etiqueta corta visible («Inicio · Historias»). axe sigue en 0 infracciones graves en las 36 combinaciones.
+- **Regla 7:** el simulador ya no dice «… detectado por NISAR»: dice «… · detección del modelo (simulación)» (texto español de la API cambiado por decisión del controlador; claves `api.sim.metrica.*_deteccion_del_modelo_simulacion`).
+- **`textoApi`:** en español devuelve el texto de la API; una clave derivada del id o del texto solo traduce si el español del catálogo coincide. Se restauraron los fixtures que la Tarea 19 había cambiado.
+- **Texto del demo con clave:** métricas del cambio y de la medición (`api.obs.metrica.*`), órbita, unidades con palabras, títulos de series (también en el hallazgo de la cabecera), notas del modelo por escenario (`api.nota.<id>.<n>`, el puente en `datos/` sin tocar `modelo/`), títulos de panel y encabezados de tabla del simulador; la bitácora guarda clave y valores del título. Lo que sigue en español está en «Pendientes vigentes».
+- Aviso del kichwa también en español (`lang="es"`); el aviso de la ayuda del radar ya no queda marcado como «sin traducir»; errores sin traducir con `lang="es"`; `--control` a `#6c6c70` (≥ 3:1 también sobre `--raised`); hora del último dato centralizada (`formatoHora`, kichwa como es-EC); fecha del pico de impacto en ISO; «Mw 7,0»/«MMI 7,4» con su número; prueba de claves repetidas entre áreas; extremos de la leyenda de desplazamiento con borrador kichwa anotado en la guía; pruebas de almacenamiento bloqueado con navegador en inglés, `?idioma=` no válido y e2e de cambio de idioma con una erupción reproduciéndose.
+
 ## Idioma y accesibilidad (2026-11-05)
 
 ### Qué se hizo (Tareas 1 a 28)
 
-- **Idioma:** tres idiomas (`es` fuente de verdad, `en`, `qu` kichwa unificado, `lang="qu-EC"`) sin biblioteca de i18n: catálogos por área en `frontend/src/idioma/catalogos/`, `useT()`, selector en la cabecera, elección inicial (`?idioma=` → `localStorage` → `navigator.languages` → `es`), todo en `try/catch`. Las claves de TanStack Query no incluyen el idioma: cambiar de idioma no repite peticiones (e2e `idioma.spec.ts`).
-- **API:** los textos y errores de la API llevan `clave_texto` y `valores_texto` (310 claves en `api/claves.json`); lo que el catálogo no conoce se muestra en español con `lang="es"`, nunca la clave.
+- **Idioma:** tres idiomas (`es` fuente de verdad, `en`, `qu` kichwa unificado, `lang="qu-EC"`) sin biblioteca de i18n: catálogos por área en `frontend/src/idioma/catalogos/`, `useT()`, selector en el riel (al pie en escritorio; séptimo elemento de la barra inferior en móvil), elección inicial (`?idioma=` → `localStorage` → `navigator.languages` → `es`), todo en `try/catch`. Las claves de TanStack Query no incluyen el idioma: cambiar de idioma no repite peticiones (e2e `idioma.spec.ts`).
+- **API:** los textos y errores de la API llevan `clave_texto` y `valores_texto`, o una clave que el frontend deriva del id o del texto y que solo traduce si el español coincide (`api/claves.json`, 417 claves); lo que el catálogo no conoce se muestra en español con `lang="es"`, nunca la clave. No todo el texto del demo se traduce: lo que queda en español está en «Pendientes vigentes».
 - **Honestidad:** la banda «DATOS DE DEMOSTRACIÓN», los sellos de origen y «pendiente de confirmar con la documentación oficial» existen en los tres idiomas; el CSV exportado conserva `# origen: sintético` y añade `# idioma:`.
-- **Accesibilidad:** auditoría axe en CI de pruebas (6 rutas × 3 idiomas × 2 anchos), saltar al contenido, puntos de referencia y encabezados, foco visible sin tapar, trampa de foco en paneles, objetivos de al menos 24 px, contraste (`--control` oscurecido), tabla móvil con semántica, descripciones de mapa y lienzos, y menos movimiento (`prefers-reduced-motion`) en simulador, recorrido y laboratorio.
-- **Kichwa:** `docs/traduccion-kichwa.csv` (816 claves) y `docs/guia-traduccion-kichwa.md` para hablantes; `scripts/traducciones_csv.mjs exportar|importar`.
+- **Accesibilidad:** auditoría axe en CI de pruebas (6 rutas × 3 idiomas × 2 anchos), saltar al contenido, puntos de referencia y encabezados, foco visible sin tapar, trampa de foco en paneles, objetivos de al menos 24 px, contraste (`--control` aclarado de `#3a3a3e` a `#67676b` en la Tarea 22 y a `#6c6c70` en la ronda de arreglos final: ≥ 3:1 sobre `--ground`, `--surface` y `--raised`), tabla móvil con semántica, descripciones de mapa y lienzos, y menos movimiento (`prefers-reduced-motion`) en simulador, recorrido y laboratorio.
+- **Kichwa:** `docs/traduccion-kichwa.csv` (923 claves) y `docs/guia-traduccion-kichwa.md` para hablantes; `scripts/traducciones_csv.mjs exportar|importar`.
 
 ### Cifras de pruebas (corridas el 2026-11-06 sobre `2fee767`)
 
@@ -427,7 +437,7 @@ Auditoría axe (`frontend/e2e/accesibilidad.spec.ts`, etiquetas wcag2a/2aa/21a/2
 
 ### Estado del kichwa
 
-**0 de 816 claves validadas.** Es un borrador redactado por Claude sin hablantes; la app lo avisa («Kichwa tikrayka manaraka chiqanyachishkachu…») y el aviso no desaparece hasta que todas las claves y el contenido largo estén validados. Dudas abiertas por prioridad en la guía (honestidad H1–H5, decisiones D1–D9, palabras con varios sentidos C1–C10).
+**0 de 923 claves validadas.** Es un borrador redactado por Claude sin hablantes; la app lo avisa («Kichwa tikrayka manaraka chiqanyachishkachu…») y el aviso no desaparece hasta que todas las claves y el contenido largo estén validados. Dudas abiertas por prioridad en la guía (honestidad H1–H5, decisiones D1–D9, palabras con varios sentidos C1–C10).
 
 ### Prueba manual (spec §4.7): qué se hizo y con qué herramienta
 

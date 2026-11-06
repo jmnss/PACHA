@@ -18,7 +18,7 @@ Una app web abierta que muestra cómo el radar NISAR (NASA-ISRO) puede «ver» *
 
 ## Idioma y accesibilidad
 
-- **Idioma:** selector en la cabecera con español, English y Kichwa. El cambio es inmediato, sin recargar ni repetir peticiones, y se recuerda en el navegador. El kichwa es un **borrador en revisión por hablantes** (0 de 816 claves validadas; la app muestra un aviso). Para revisarlo: [docs/guia-traduccion-kichwa.md](docs/guia-traduccion-kichwa.md) y [docs/traduccion-kichwa.csv](docs/traduccion-kichwa.csv). La banda de datos de demostración y los sellos de origen se muestran en los tres idiomas.
+- **Idioma:** selector en el riel con español, English y Kichwa. El cambio es inmediato, sin recargar ni repetir peticiones, y se recuerda en el navegador. El kichwa es un **borrador en revisión por hablantes** (0 de 923 claves validadas; la app muestra un aviso). Para revisarlo: [docs/guia-traduccion-kichwa.md](docs/guia-traduccion-kichwa.md) y [docs/traduccion-kichwa.csv](docs/traduccion-kichwa.csv). La banda de datos de demostración y los sellos de origen se muestran en los tres idiomas.
 - **Accesibilidad:** el objetivo es WCAG 2.2 AA. Lo medido: auditoría automática con axe (6 pantallas × 3 idiomas × 2 anchos, sin infracciones graves ni críticas), recorrido solo con teclado y reflujo a 320 px sin scroll horizontal. **No** se ha hecho aún una prueba con lector de pantalla (NVDA u Orca) con personas, así que no se afirma cumplimiento total. Detalle en [INFORME.md](INFORME.md).
 
 ## Simulador de eventos
