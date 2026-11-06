@@ -200,4 +200,30 @@ export const observatorio = {
   'obs.variable.cambio_de_velocidad': 'Cambio de velocidad',
   'obs.variable.cambio_del_frente': 'Cambio del frente',
   'obs.variable.area_quemada_detectada': 'Área quemada detectada',
+
+  // — Serie —
+  'obs.serie.sin_series': 'Sin series',
+  'obs.serie.sin_pareja_texto': 'Este escenario necesita al menos dos pasadas distintas para calcular sus series.',
+  'obs.serie.sin_series_texto': 'Este escenario no devuelve series temporales. Prueba con la vista Mapa o con otro escenario.',
+  'obs.serie.calculando': 'Calculando las series…',
+  'obs.serie.marca_antes': 'antes',
+  'obs.serie.marca_despues': 'después',
+  'obs.serie.nota_verdad': 'La línea punteada es la verdad sintética del modelo de demostración, no una medición.',
+  'obs.serie.valores_de': 'Valores de {titulo}',
+  'obs.serie.col_fecha': 'Fecha',
+  'obs.serie.col_valor': 'Valor ({unidad})',
+  'obs.serie.col_serie': 'Serie',
+
+  // — Impacto —
+  'obs.impacto.elige_dos': 'Elige dos pasadas distintas para resumir el impacto.',
+  'obs.impacto.calculando': 'Calculando el impacto…',
+  'obs.impacto.descargar': 'Descargar informe (PNG)',
+  'obs.impacto.error_informe': 'No se pudo generar el informe.',
+  'obs.impacto.donde': 'Dónde: {antes} → {despues}',
+  'obs.impacto.hectareas': 'Hectáreas por categoría',
+  'obs.impacto.evolucion': 'Evolución frente a la pasada «antes»',
+  'obs.impacto.acciones': 'Qué podría hacerse con esto',
+  'obs.impacto.informe_pasadas': 'Pasadas comparadas: {antes} → {despues}',
+  'obs.impacto.informe_ejemplo': 'Ejemplo ilustrativo con datos de demostración: no es una observación real de NISAR.',
+  'obs.impacto.informe_lienzo': 'No se pudo crear el lienzo del informe.',
 }

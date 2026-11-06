@@ -2,17 +2,18 @@ import type { Impacto } from '../../api/consultas'
 import { decodificarRejilla } from '../../api/rejilla'
 import { colorear } from '../../diseno/rampas'
 import { aPng } from '../../exportar/png'
+import { traductor, type T } from '../../idioma/traductor'
 import { estiloDeCapa } from './derivados'
 
 /** Texto del informe de una página. La línea de aviso va siempre; la franja de origen la añade `aPng`. */
-export function lineasInformeImpacto(i: Impacto): string[] {
+export function lineasInformeImpacto(i: Impacto, t: T = traductor('es').t): string[] {
   return [
     `${i.titulo} · ${i.escenario}`,
-    `Pasadas comparadas: ${i.antes} → ${i.despues}`,
+    t('obs.impacto.informe_pasadas', { antes: i.antes, despues: i.despues }),
     ...i.cifras.map((c) => `${c.etiqueta}: ${c.valor} ${c.unidad}`.trim()),
     ...i.lectura,
     ...i.acciones.map((a) => `· ${a}`),
-    ...(i.origen.tipo === 'real' ? [] : ['Ejemplo ilustrativo con datos de demostración: no es una observación real de NISAR.']),
+    ...(i.origen.tipo === 'real' ? [] : [t('obs.impacto.informe_ejemplo')]),
   ]
 }
 
@@ -32,7 +33,7 @@ function envolver(ctx: CanvasRenderingContext2D, texto: string, ancho: number): 
 }
 
 /** Informe de una página en PNG: mapa de la capa de impacto, cifras, lectura, acciones y franja de origen. */
-export async function generarInformeImpacto(i: Impacto): Promise<Blob> {
+export async function generarInformeImpacto(i: Impacto, t: T = traductor('es').t): Promise<Blob> {
   const px = colorear(decodificarRejilla(i.capa.rejilla), estiloDeCapa(i.capa).rampa, estiloDeCapa(i.capa).categorias, i.capa.rejilla.columnas)
   const mapa = document.createElement('canvas')
   mapa.width = px.width
@@ -44,9 +45,9 @@ export async function generarInformeImpacto(i: Impacto): Promise<Blob> {
   const lienzo = document.createElement('canvas')
   lienzo.width = ANCHO
   const ctx = lienzo.getContext('2d')
-  if (!ctx) throw new Error('No se pudo crear el lienzo del informe.')
+  if (!ctx) throw new Error(t('obs.impacto.informe_lienzo'))
   const fuente = token('--font-sans', 'sans-serif')
-  const lineas = lineasInformeImpacto(i)
+  const lineas = lineasInformeImpacto(i, t)
   const alturas = lineas.map((l, k) => {
     ctx.font = `${k === 0 ? '600 18px' : '14px'} ${fuente}`
     return envolver(ctx, l, ANCHO - 24).length * 21 + (k === 0 ? 6 : 2)
@@ -68,5 +69,5 @@ export async function generarInformeImpacto(i: Impacto): Promise<Blob> {
     for (const parte of envolver(c, l, ANCHO - 24)) { c.fillText(parte, 12, y); y += 21 }
     y += k === 0 ? 6 : 2
   })
-  return aPng(lienzo, i.origen)
+  return aPng(lienzo, i.origen, t)
 }

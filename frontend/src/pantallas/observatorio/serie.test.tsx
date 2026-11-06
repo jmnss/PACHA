@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import Observatorio from './Observatorio'
+import { renderConIdioma, renderPseudo, textosSinTraducir } from '../../idioma/pruebas'
 
 vi.mock('../../mapa/MapaBase', () => ({ MapaBase: ({ children }: { children?: ReactNode }) => <div>{children}</div> }))
 
@@ -116,5 +117,42 @@ describe('Observatorio · series', () => {
     montar()
     const alerta = (await screen.findAllByRole('alert')).find((a) => a.textContent?.includes('Falló el cálculo.')) as HTMLElement
     expect(within(alerta).getByRole('button', { name: 'Reintentar' })).toBeInTheDocument()
+  })
+})
+
+describe('Observatorio · series · idioma', () => {
+  const envolver = (render: typeof renderPseudo) => {
+    const cliente = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    return render(
+      <QueryClientProvider client={cliente}>
+        <MemoryRouter initialEntries={['/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18']}><Observatorio /></MemoryRouter>
+      </QueryClientProvider>,
+    )
+  }
+  // Nombres de serie y de escenario, y títulos, que vienen de la API y los mocks.
+  const API = ['Estimada', 'Humedales', 'Superficie inundada', 'Humedad del suelo', 'Bajo el dosel inundado, el doble rebote eleva HH.', 'Valores de Superficie inundada', 'Valores de Humedad del suelo']
+
+  it('la vista «serie» pasa por el traductor', async () => {
+    const { container } = envolver(renderPseudo)
+    await screen.findAllByRole('figure')
+    const sin = textosSinTraducir(container).filter((x) => !API.includes(x) && !/^Escenario ec_|^\d+ \w+ \d{4}$|^[A-Z][a-z]{2} \d{1,2}$/.test(x))
+    expect(sin).toEqual([])
+  })
+
+  it('en inglés las cabeceras y el CSV de la serie salen en inglés, con las líneas de máquina en español', async () => {
+    let contenido: Blob | null = null
+    URL.createObjectURL = vi.fn((b: Blob) => { contenido = b; return 'blob:x' })
+    URL.revokeObjectURL = vi.fn()
+    vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {})
+    envolver((ui) => renderConIdioma(ui, 'en'))
+    const tabla = await screen.findByRole('table', { name: 'Values of Humedad del suelo' })
+    expect(within(tabla).getAllByRole('columnheader').map((c) => c.textContent)).toEqual(['Date', 'Value (km²)', 'Series'])
+    fireEvent.click(within(tabla.closest('section') as HTMLElement).getByRole('button', { name: 'Download CSV' }))
+    await waitFor(() => expect(contenido).not.toBeNull())
+    const texto = (await leer(contenido!)).replace(/^\uFEFF/, '')
+    expect(texto.startsWith('# origen: sintético')).toBe(true)
+    expect(texto).toContain('# idioma: en')
+    expect(texto).toContain('Date,Value (km²),Series')
+    expect(texto).toContain('12 Apr 2026,10,Estimada')
   })
 })

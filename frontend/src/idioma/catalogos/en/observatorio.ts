@@ -196,4 +196,30 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.variable.cambio_de_velocidad': 'Speed change',
   'obs.variable.cambio_del_frente': 'Front change',
   'obs.variable.area_quemada_detectada': 'Detected burned area',
+
+  // — Serie —
+  'obs.serie.sin_series': 'No series',
+  'obs.serie.sin_pareja_texto': 'This scenario needs at least two different passes to compute its series.',
+  'obs.serie.sin_series_texto': 'This scenario returns no time series. Try the Map view or another scenario.',
+  'obs.serie.calculando': 'Computing the series…',
+  'obs.serie.marca_antes': 'before',
+  'obs.serie.marca_despues': 'after',
+  'obs.serie.nota_verdad': 'The dotted line is the synthetic truth of the demonstration model, not a measurement.',
+  'obs.serie.valores_de': 'Values of {titulo}',
+  'obs.serie.col_fecha': 'Date',
+  'obs.serie.col_valor': 'Value ({unidad})',
+  'obs.serie.col_serie': 'Series',
+
+  // — Impacto —
+  'obs.impacto.elige_dos': 'Choose two different passes to summarize the impact.',
+  'obs.impacto.calculando': 'Computing the impact…',
+  'obs.impacto.descargar': 'Download report (PNG)',
+  'obs.impacto.error_informe': 'The report could not be generated.',
+  'obs.impacto.donde': 'Where: {antes} → {despues}',
+  'obs.impacto.hectareas': 'Hectares by category',
+  'obs.impacto.evolucion': 'Change compared with the “before” pass',
+  'obs.impacto.acciones': 'What could be done with this',
+  'obs.impacto.informe_pasadas': 'Passes compared: {antes} → {despues}',
+  'obs.impacto.informe_ejemplo': 'Illustrative example with demonstration data: this is not a real NISAR observation.',
+  'obs.impacto.informe_lienzo': 'The report canvas could not be created.',
 }

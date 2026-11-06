@@ -197,4 +197,30 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.variable.cambio_de_velocidad': 'Utkaypa tikray',
   'obs.variable.cambio_del_frente': 'Frentepa tikray',
   'obs.variable.area_quemada_detectada': 'Rikushka rupashka pacha',
+
+  // — Serie —
+  'obs.serie.sin_series': 'Wiñachik mana kan',
+  'obs.serie.sin_pareja_texto': 'Kay escenariopika wiñachikkunata yupankapak a lo menos ishkay mana kikin pasadakuna minishtin.',
+  'obs.serie.sin_series_texto': 'Kay escenariopika pachapi wiñachikkuna mana kan. Shuyu rikuypi o shuk escenariopi llankay.',
+  'obs.serie.calculando': 'Wiñachikkunata yupachishka…',
+  'obs.serie.marca_antes': 'ñawpa',
+  'obs.serie.marca_despues': 'washa',
+  'obs.serie.nota_verdad': 'Puntukuna siki rikuchiy modelopa sintético chiqanmi, mana tupushka.',
+  'obs.serie.valores_de': '{titulo}-pa chaninkuna',
+  'obs.serie.col_fecha': 'Pacha',
+  'obs.serie.col_valor': 'Chanin ({unidad})',
+  'obs.serie.col_serie': 'Wiñachik',
+
+  // — Impacto —
+  'obs.impacto.elige_dos': 'Llakichiyta pishiyachinkapak ishkay mana kikin pasadakunata akllay.',
+  'obs.impacto.calculando': 'Llakichiyta yupachishka…',
+  'obs.impacto.descargar': 'Willayta uraykachay (PNG)',
+  'obs.impacto.error_informe': 'Willayta mana rurayta ushashkachu.',
+  'obs.impacto.donde': 'Maypi: {antes} → {despues}',
+  'obs.impacto.hectareas': 'Hectáreakuna sapa rikchaypi',
+  'obs.impacto.evolucion': '«Ñawpa» pasadawan tupachishpa wiñay',
+  'obs.impacto.acciones': 'Kaywan ima rurana kanman',
+  'obs.impacto.informe_pasadas': 'Tupachishka pasadakuna: {antes} → {despues}',
+  'obs.impacto.informe_ejemplo': 'Rikuchiy willaykunawan ejemplo yuyay: mana NISARpa chiqan rikuymi.',
+  'obs.impacto.informe_lienzo': 'Willaypa lienzota mana rurayta ushashkachu.',
 }

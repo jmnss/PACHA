@@ -137,3 +137,13 @@ Borrador de `obs.comparar.*`, `obs.medicion.*`, `obs.variable.*` y `obs.flujo.*`
   «tinkichiy» (combinación), «yaklla» (aproximado), «uraykachay» (descargar), «tukuchiy» (borrar), «rakirina»
   (apartado), «pishiyachishka / hatunyachishka» (resumen / detalle), «chiqan» en «Sintético chiqanwan pantay».
 - Los nombres de columna del CSV de medición se traducen; las líneas `# origen: …` siguen en español.
+
+## Tarea 12 · Observatorio: serie e impacto
+
+Borrador de `obs.serie.*` y `obs.impacto.*`; todo sin validar por hablantes:
+
+- **Se dejaron en español**: lienzo, PNG, CSV, hectárea, «a lo menos». Sin equivalente asentado; sin neologismos.
+- **Dudas**: «wiñachik» (serie), «llakichiy» (impacto), «puntukuna siki» (línea punteada), «ejemplo yuyay»
+  (ejemplo ilustrativo; véase la Tarea 8), «tupachishpa wiñay» (evolución frente a), «chiqan» en «Sintético chiqanwan»
+  y en «mana NISARpa chiqan rikuymi» (no es una observación real de NISAR), «uraykachay» (descargar).
+- El aviso «Ejemplo ilustrativo con datos de demostración…» del informe PNG existe en los tres idiomas.
