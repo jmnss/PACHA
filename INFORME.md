@@ -379,3 +379,13 @@ Corregido: el recorrido se saltaba pasos al avanzar solo (ahora un temporizador 
 - Textos de la API sin clave todavía (nombres de tipos y escenarios, etiquetas y ayudas de controles del simulador, estación astronómica, hito, nombre local de temporada) se muestran en español; los de contexto y ayuda van con `TextoApi`.
 - Revisión visual `/observatorio`: el inspector corre con navegador en inglés. «Home» (riel móvil, `en`) quedó a 11 px del borde (FAIL); se cambió a «Start» y queda WARN `edge-text` (14 px), defendido como las celdas iguales de la barra inferior. WARN `below-fold` (2 de 6 bloques) preexistente.
 - El mes del contexto en `qu` usa los nombres de `fecha.mes.N` (en español hasta decidir los kichwa).
+
+## Accesibilidad: línea base
+
+Auditoría axe (`frontend/e2e/accesibilidad.spec.ts`, etiquetas wcag2a/2aa/21a/21aa/22aa) en 6 rutas × 3 idiomas × 2 anchos (1440, 390), con `PENDIENTES = []`. Solo se cuentan infracciones `serious`/`critical`. Resultado: 18 de 36 combinaciones fallan (todas a 390 px); a 1440 px no hay infracciones graves.
+
+| Regla | Impacto | Rutas | Nodos por ruta |
+|---|---|---|---|
+| `label-content-name-mismatch` | serious | las 6 (`/`, `/observatorio`, `/simulador`, `/laboratorio`, `/recorrido`, `/fundamentos`), solo a 390 px, en `es`, `en` y `qu` | 6 en `es`, 4 en `en` y `qu` (enlaces del riel/barra inferior: `aria-label` largo distinto del texto corto visible) |
+
+`PENDIENTES = ['label-content-name-mismatch']`. Nota: `bypass`, `document-title`, `page-has-heading-one`, etc. no aparecen como serious/critical (son moderate); se resuelven igualmente en la Tarea 21.
