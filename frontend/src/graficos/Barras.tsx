@@ -11,6 +11,8 @@ export interface BarraDato {
   valor: number
   /** Rótulo corto del eje (p. ej. la inicial); el resumen accesible usa `etiqueta`. */
   corta?: string
+  /** Idioma de la etiqueta si no es el de la interfaz (texto que escribe la API en español). */
+  lang?: string
 }
 interface Props {
   datos: BarraDato[]
@@ -78,7 +80,7 @@ export function Barras({ datos: entrada, unidad, origen, titulo, alto = 220, val
                     {fmt(d.valor, dec)}
                   </text>
                 )}
-                <text className="grafico__eje" x={cx} y={y1 + 18} textAnchor="middle">
+                <text className="grafico__eje" x={cx} y={y1 + 18} textAnchor="middle" lang={d.lang}>
                   {recortar(d.corta ?? d.etiqueta, slot - 4)}
                 </text>
               </g>

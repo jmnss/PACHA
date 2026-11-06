@@ -7,43 +7,42 @@ import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
 import { PanelRadar } from '../simulador/PanelRadar'
 import { mensajeDeError } from '../../api/cliente'
+import { TextoApi } from '../../idioma/TextoApi'
 import { useT } from '../../idioma/useT'
 
 interface Props { cobertura: number; onCobertura: (n: number) => void }
 
 /** Misma inundación vista por un satélite óptico y por un radar, con nubes ajustables sobre la imagen óptica. */
 export function VistaNubes({ cobertura, onCobertura }: Props) {
-  const { t } = useT()
+  const { t, formatoNumero } = useT()
   const q = useNubes(cobertura)
-  if (q.isPending) return <Cargando texto="Preparando el experimento…" filas={4} />
+  if (q.isPending) return <Cargando texto={t('lab.comun.preparando')} filas={4} />
   if (q.isError) return <ErrorBloque mensaje={mensajeDeError(q.error, t)} onReintentar={() => void q.refetch()} />
   const d = q.data
   return (
     <div className="laboratorio">
-      <Tarjeta titulo="Ajusta las nubes" pie={<SelloOrigen origen={d.origen} />}>
+      <Tarjeta titulo={t('lab.nubes.ajusta')} pie={<SelloOrigen origen={d.origen} />}>
         <Deslizador
-          etiqueta="Cobertura de nubes"
-          valorTexto={`${cobertura} %`}
+          etiqueta={t('lab.nubes.cobertura')}
+          valorTexto={`${formatoNumero(cobertura)} %`}
           min={0} max={100} step={10} value={cobertura}
           onChange={(e) => onCobertura(Number(e.target.value))}
-          limite="Las nubes tapan la imagen óptica posterior a la inundación. Al radar no le afectan."
+          limite={t('lab.nubes.limite')}
         />
-        <FranjaKpi items={d.metricas.map((m, k) => ({ ...m, principal: k === 0 }))} />
+        <FranjaKpi items={d.metricas.map((m, k) => ({ etiqueta: <TextoApi texto={m.etiqueta} />, valor: m.valor, unidad: m.unidad, principal: k === 0 }))} />
       </Tarjeta>
       <div className="laboratorio__rejilla">
-        <PanelRadar capa={d.optico} titulo="Imagen óptica después de la inundación" />
-        <PanelRadar capa={d.radar} titulo="Radar después de la inundación" />
-        <PanelRadar capa={d.cambio_optico} titulo="Cambio que ve el óptico" />
-        <PanelRadar capa={d.cambio_radar} titulo="Cambio que ve el radar" />
+        <PanelRadar capa={d.optico} titulo={t('lab.nubes.optico')} propio />
+        <PanelRadar capa={d.radar} titulo={t('lab.nubes.radar')} propio />
+        <PanelRadar capa={d.cambio_optico} titulo={t('lab.nubes.cambio_optico')} propio />
+        <PanelRadar capa={d.cambio_radar} titulo={t('lab.nubes.cambio_radar')} propio />
       </div>
-      <Tarjeta titulo="Qué muestra este experimento">
+      <Tarjeta titulo={t('lab.nubes.explica_titulo')}>
         <p className="laboratorio__texto">
-          El radar es un sensor <Termino nombre="activo" explicacion="Emite su propia señal y mide el eco, así que no necesita luz del Sol ni se detiene por las nubes." />:
-          lo que ve no depende de la nube. Aun sin nubes, el óptico no detecta el agua bajo el dosel del bosque, y el radar sí
-          (el agua bajo los árboles devuelve más señal por un doble rebote).
+          {t('lab.nubes.explica_antes')}<Termino nombre={t('lab.nubes.activo')} explicacion={t('lab.nubes.activo_explicacion')} />{t('lab.nubes.explica_despues')}
         </p>
         <p className="laboratorio__nota">
-          Escena inventada con coeficientes ilustrativos: sirve para entender el principio, no describe un lugar real ni una observación de NISAR.
+          {t('lab.nubes.nota')}
         </p>
       </Tarjeta>
     </div>

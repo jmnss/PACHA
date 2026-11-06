@@ -163,3 +163,15 @@ Borrador de `sim.*`; todo sin validar por hablantes:
 - La letra de hemisferio oeste es «O» en español y kichwa, «W» en inglés.
 - Los textos que escribe la API (títulos de evento, etiquetas de métricas, controles, notas del modelo) y
   las celdas de la tabla de efectos que escribe `modelo/desastres.py` se quedan en español con `lang="es"`.
+
+## Tarea 14 · Laboratorio del radar
+
+Borrador de `lab.*`; todo sin validar por hablantes:
+
+- **Se dejaron en español**: laboratorio (como «yachana wasi», casa de aprender, es descriptivo), polarización, banda,
+  óptico, activo, sensor, imagen, cambio, contraste, coeficientes, biomasa, cruzada, paralela, ejemplo.
+  Sin equivalente asentado; sin neologismos.
+- **Dudas**: «puyu» (nube), «pakashka» (tapado), «ecota tupun» (mide el eco), «kiwa ukupi yaku» (agua bajo los
+  árboles), «ishkay kutin tupashpa» (doble rebote), «sinchiyachina» (confirmar), «shuyan» (espera; la banda S
+  queda «pendiente de confirmar» con el mismo peso que en español e inglés), «ejemplo yuyay» (ejemplo ilustrativo).
+- Los nombres de superficie y de cambio que escribe la API se quedan en español con `lang="es"`.

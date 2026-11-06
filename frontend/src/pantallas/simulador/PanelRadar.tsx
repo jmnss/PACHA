@@ -9,7 +9,7 @@ import { useT } from '../../idioma/useT'
 import { estiloDeCapa } from '../observatorio/derivados'
 
 /** Un panel del radar simulado: la rejilla de la API con su rampa, leyenda y sello de origen. */
-export function PanelRadar({ capa, titulo }: { capa: CapaDto; titulo: string }) {
+export function PanelRadar({ capa, titulo, propio = false }: { capa: CapaDto; titulo: string; /** El título ya viene traducido por la interfaz (no es texto de la API). */ propio?: boolean }) {
   const { textoApi } = useT()
   const lienzo = useRef<HTMLCanvasElement>(null)
   const estilo = useMemo(() => estiloDeCapa(capa), [capa])
@@ -23,8 +23,8 @@ export function PanelRadar({ capa, titulo }: { capa: CapaDto; titulo: string }) 
   }, [px])
   return (
     <figure className="panel-radar">
-      <figcaption className="panel-radar__titulo"><TextoApi texto={titulo} /></figcaption>
-      <canvas ref={lienzo} className="panel-radar__lienzo" role="img" aria-label={titulo} lang={textoApi(titulo).traducido ? undefined : 'es'} />
+      <figcaption className="panel-radar__titulo">{propio ? titulo : <TextoApi texto={titulo} />}</figcaption>
+      <canvas ref={lienzo} className="panel-radar__lienzo" role="img" aria-label={titulo} lang={propio || textoApi(titulo).traducido ? undefined : 'es'} />
       <Leyenda paleta={capa.paleta} vmin={capa.rejilla.vmin} vmax={capa.rejilla.vmax} unidad={capa.unidad} leyenda={capa.leyenda} variable={capa.variable} />
       <SelloOrigen origen={capa.origen} />
     </figure>

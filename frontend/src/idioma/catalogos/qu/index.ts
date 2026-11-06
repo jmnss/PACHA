@@ -3,10 +3,11 @@ import { fecha } from './fecha'
 import { exportar } from './exportar'
 import { estructura } from './estructura'
 import { historias } from './historias'
+import { laboratorio } from './laboratorio'
 import { idioma } from './idioma'
 import { observatorio } from './observatorio'
 import { origen } from './origen'
 import { piezas } from './piezas'
 import { simulador } from './simulador'
 
-export const qu = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador }
+export const qu = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador, ...laboratorio }

@@ -49,7 +49,7 @@ export function VistaImpacto({ esc, antesId, despuesId, polarizacion }: Props) {
         {aviso && <p className="observatorio__aviso" role="alert">{aviso}</p>}
       </Tarjeta>
       <div className="impacto__rejilla">
-        <PanelRadar capa={d.capa} titulo={t('obs.impacto.donde', { antes: d.antes, despues: d.despues })} />
+        <PanelRadar capa={d.capa} titulo={t('obs.impacto.donde', { antes: d.antes, despues: d.despues })} propio />
         <Tarjeta titulo={t('obs.impacto.hectareas')}>
           <Barras datos={d.categorias.map((c) => ({ etiqueta: c.etiqueta, corta: c.etiqueta.replace(/\s*\(.*\)/, ''), valor: Math.round(c.ha) }))} unidad="ha" origen={d.origen} />
         </Tarjeta>

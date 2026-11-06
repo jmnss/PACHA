@@ -1,6 +1,7 @@
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { Pestanas } from '../../diseno/Pestanas'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
+import { useT } from '../../idioma/useT'
 import { VistaNubes } from './VistaNubes'
 import { VistaPolarizacion } from './VistaPolarizacion'
 import '../simulador/simulador.css'
@@ -16,18 +17,19 @@ const ESQUEMA = {
 
 /** Laboratorio del radar: por qué un radar ve lo que un satélite óptico no, y qué polarización resalta cada cambio. */
 export default function Laboratorio() {
+  const { t } = useT()
   const [url, cambiar] = useEstadoUrl(ESQUEMA)
   return (
     <>
       <CabeceraPantalla
-        titulo="Laboratorio del radar"
-        hallazgo="Dos experimentos con una escena inventada: qué pasa cuando hay nubes y qué polarización resalta cada cambio."
+        titulo={t('lab.pantalla.titulo')}
+        hallazgo={t('lab.pantalla.hallazgo')}
       />
       <Pestanas
-        etiqueta="Experimentos"
+        etiqueta={t('lab.pantalla.experimentos')}
         activa={url.vista}
         onCambiar={(id) => cambiar({ vista: id as (typeof VISTAS)[number] })}
-        pestanas={[{ id: 'nubes', etiqueta: 'La nube no lo detiene' }, { id: 'polarizacion', etiqueta: 'Polarización y banda' }]}
+        pestanas={[{ id: 'nubes', etiqueta: t('lab.pestana.nubes') }, { id: 'polarizacion', etiqueta: t('lab.pestana.polarizacion') }]}
       />
       {url.vista === 'nubes'
         ? <VistaNubes cobertura={url.nubes} onCobertura={(n) => cambiar({ nubes: n }, { reemplazar: true })} />

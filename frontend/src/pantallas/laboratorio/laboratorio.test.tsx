@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import Laboratorio from './Laboratorio'
+import { renderConIdioma, renderPseudo, textosSinTraducir } from '../../idioma/pruebas'
 
 const origen = { tipo: 'sintetico', fuente: 'Laboratorio del radar', generador: 'datos/laboratorio.py', version: '1', semilla: 11, fecha_generacion: '2026-11-01T00:00:00Z' }
 const rejilla = { filas: 2, columnas: 2, vmin: 0, vmax: 4, bbox: [-80.1, -2.1, -79.9, -1.9], datos_b64: btoa(String.fromCharCode(1, 2, 3, 4)) }
@@ -58,5 +59,23 @@ describe('Laboratorio', () => {
     montar('/laboratorio?vista=polarizacion&banda=S')
     expect(await screen.findByText(/pendiente de confirmar/)).toBeInTheDocument()
     expect(screen.getByText('Quema del bosque')).toBeInTheDocument()
+  })
+
+  it('renderPseudo no deja texto de interfaz sin traducir en la vista de nubes', async () => {
+    const { container } = renderPseudo(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><MemoryRouter initialEntries={['/laboratorio']}><Laboratorio /></MemoryRouter></QueryClientProvider>)
+    await screen.findByText(/Cambio visto por el radar/)
+    expect(textosSinTraducir(container)).toEqual([])
+  })
+
+  it('renderPseudo no deja texto de interfaz sin traducir en la vista de polarización', async () => {
+    const { container } = renderPseudo(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><MemoryRouter initialEntries={['/laboratorio?vista=polarizacion&banda=S']}><Laboratorio /></MemoryRouter></QueryClientProvider>)
+    await screen.findByText('Quema del bosque')
+    expect(textosSinTraducir(container)).toEqual([])
+  })
+
+  it.each([['es', /pendiente de confirmar/], ['en', /pending confirmation/], ['qu', /shuyan/]] as const)('la banda S queda marcada como pendiente en %s', async (idioma, patron) => {
+    renderConIdioma(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><MemoryRouter initialEntries={['/laboratorio?vista=polarizacion&banda=S']}><Laboratorio /></MemoryRouter></QueryClientProvider>, idioma)
+    await screen.findByText('Quema del bosque')
+    expect(screen.getByText(patron)).toBeInTheDocument()
   })
 })
