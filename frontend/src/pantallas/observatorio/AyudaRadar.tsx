@@ -1,5 +1,7 @@
 import { NotasModelo } from '../../diseno/NotasModelo'
 import { Termino } from '../../diseno/Termino'
+import { TextoApi } from '../../idioma/TextoApi'
+import { useT } from '../../idioma/useT'
 
 interface Props {
   /** `TipoCambio.descripcion` del tipo actual (de /api/tipos); puede faltar. */
@@ -7,24 +9,20 @@ interface Props {
   nombreTipo?: string
 }
 
-const AVISO = ['Los detalles de NISAR están pendientes de confirmar con la documentación oficial.']
-
 /** Ayuda plegable: cómo ve el radar el tipo de cambio actual y qué puede medir un radar de apertura sintética. */
 export function AyudaRadar({ descripcion, nombreTipo }: Props) {
+  const { t } = useT()
   return (
     <details className="ayuda-radar">
-      <summary className="ayuda-radar__resumen">Cómo ve el radar este tipo de cambio</summary>
+      <summary className="ayuda-radar__resumen">{t('obs.ayuda.resumen')}</summary>
       <div className="ayuda-radar__cuerpo">
-        {descripcion && <p>{nombreTipo ? <strong>{nombreTipo}. </strong> : null}{descripcion}</p>}
+        {descripcion && <p>{nombreTipo ? <strong><TextoApi texto={nombreTipo} />. </strong> : null}<TextoApi texto={descripcion} /></p>}
         <p>
-          Un radar como el de NISAR puede medir movimientos de la superficie a escala de centímetros mediante{' '}
-          <Termino
-            nombre="interferometría"
-            explicacion="Técnica que compara la fase de la señal de radar de dos pasadas sobre el mismo lugar: una diferencia de fase corresponde a un desplazamiento de la superficie, del orden de centímetros."
-          />
+          {t('obs.ayuda.interferometria_antes')}
+          <Termino nombre={t('obs.ayuda.interferometria')} explicacion={t('obs.ayuda.interferometria_explicacion')} />
           .
         </p>
-        <NotasModelo notas={AVISO} />
+        <NotasModelo notas={[t('obs.ayuda.aviso')]} />
       </div>
     </details>
   )

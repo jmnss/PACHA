@@ -3,7 +3,7 @@ import type { estructura as esEstructura } from '../es/estructura'
 export const estructura: Record<keyof typeof esEstructura, string> = {
   'estructura.riel.principal': 'Main',
   'estructura.riel.historias': 'Stories',
-  'estructura.riel.historias_corto': 'Home',
+  'estructura.riel.historias_corto': 'Start',
   'estructura.riel.observatorio': 'Observatory',
   'estructura.riel.observatorio_corto': 'Observ.',
   'estructura.riel.laboratorio': 'Radar lab',

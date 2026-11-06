@@ -40,6 +40,7 @@ Criterios del borrador:
 | transparente | Leyendas (`origen.leyenda.transparente`) | Sin equivalente asentado; se deja en español. |
 | señal, productos, geometría, bandas | Leyendas y aviso de notas (`catalogos/qu/origen.ts`) | Términos de teledetección sin equivalente asentado; se dejan en español. |
 | Rurashka (sintético), Chiqan (real), rurachik (generador), muju (semilla) | Sellos de origen | Vocabulario ya usado en la banda; a confirmar con hablantes. |
+| Paso orbital, interferometría, ENL, moteado, escenario, evento, parámetro, control, pixel, órbita, temporada, región, provincia, hito, clima, humedad, Observatorio | Parámetros, contexto y ayuda del Observatorio (`catalogos/qu/observatorio.ts`) | Términos técnicos sin equivalente asentado; se dejan en español (los nombres de los términos con explicación también). «Costa» y «Sierra» se conservan como regiones. |
 
 ## Dudas abiertas
 
@@ -112,7 +113,7 @@ todo sin validar por hablantes (los relatos cuentan como contenido largo: `CONTE
   «llampu» (liso), «suni» (largo), «chimpana» (atravesar), «kutimuk señal» (señal que vuelve), «mikuchin» (alimentar),
   «ejemplo yuyay» (hipótesis de ejemplo), «rikuchik yuyay» (hipótesis ilustrativa), «tukuri yuyay» (conclusión),
   «runakunapa ruray» (impulsor humano), «yupaychay» (créditos), «ruranapak» (recomendada), «tupachik» (comparador),
-  «ñawpa / washa» (antes / después). Todas son propuestas del equipo.
+  «ñawpa / washa» (antes / después), «wiñachik» (serie), «llakichiy» (impacto), «uraykun / wicharin» (baja / sube), «tamya / chaki» (lluviosa / seca), «pachapa tiyashka pacha» (contexto del lugar). Todas son propuestas del equipo.
 - **Marca de honestidad**: «Kay rikuchiy escenariopi» (en este escenario de demostración) abre cada hipótesis y
   «kamachik panka-wan chiqanyachina kan» (pendiente de confirmar con la documentación oficial) cierra lo específico
   de la misión; se reutiliza la frase de `origen.notas.aviso`. Sigue la duda sobre «chiqan».

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
+import { ErrorApi, mensajeDeError } from '../../api/cliente'
 import { useCambio, useContexto, useEscenario, useEscenarios, useSimular, useTipos, type Escenario, type TipoCambio } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
@@ -11,6 +11,7 @@ import { Pestanas } from '../../diseno/Pestanas'
 import { Selector } from '../../diseno/Selector'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
 import { useMovil } from '../../estado/useMovil'
+import { useT } from '../../idioma/useT'
 import { codificar, decodificar, type Control, type Valores } from './parametros'
 import { PanelSimulacion } from './PanelSimulacion'
 import { useSimulacion } from './useSimulacion'
@@ -19,7 +20,6 @@ import { leerCuadrante, leerPunto, textoCuadrante, textoPunto } from './medicion
 import { Mediciones } from './Mediciones'
 import { NotasResultado, VistaAntesDespues } from './VistaAntesDespues'
 import { VistaImpacto } from './VistaImpacto'
-import { SIN_PAREJA } from './VistaMapa'
 import { AyudaRadar } from './AyudaRadar'
 import { PanelContexto } from './PanelContexto'
 import { PanelMetricas } from './PanelMetricas'
@@ -42,17 +42,17 @@ const ESQUEMA = {
 } as const satisfies Esquema
 
 const VISTAS = [
-  { id: 'mapa', etiqueta: 'Mapa' },
-  { id: 'comparar', etiqueta: 'Antes y después' },
-  { id: 'serie', etiqueta: 'Serie' },
-  { id: 'impacto', etiqueta: 'Impacto' },
-]
+  { id: 'mapa', clave: 'obs.estructura.vista_mapa' },
+  { id: 'comparar', clave: 'obs.estructura.vista_comparar' },
+  { id: 'serie', clave: 'obs.estructura.vista_serie' },
+  { id: 'impacto', clave: 'obs.estructura.vista_impacto' },
+] as const
 
-const PREGUNTA = 'Qué cambió aquí entre dos pasadas y cuánto.'
 const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }) : undefined)
 
 /** Ruta /observatorio: mapa y tiempo (esta tarea); «Antes y después» y «Serie» son las otras dos vistas. */
 export default function Observatorio() {
+  const { t } = useT()
   const [url, cambiar] = useEstadoUrl(ESQUEMA)
   const escenario = useEscenario(url.escenario)
   const escenarios = useEscenarios()
@@ -88,8 +88,8 @@ export default function Observatorio() {
   if (escenario.isPending || resimular.isPending) {
     return (
       <>
-        <CabeceraPantalla titulo="Observatorio" hallazgo={PREGUNTA} />
-        <Cargando texto="Cargando el escenario…" filas={4} />
+        <CabeceraPantalla titulo={t('obs.estructura.titulo')} hallazgo={t('obs.estructura.pregunta')} />
+        <Cargando texto={t('obs.estructura.cargando_escenario')} filas={4} />
       </>
     )
   }
@@ -103,8 +103,8 @@ export default function Observatorio() {
     return (
       <>
         <CabeceraPantalla
-          titulo="Observatorio"
-          hallazgo={PREGUNTA}
+          titulo={t('obs.estructura.titulo')}
+          hallazgo={t('obs.estructura.pregunta')}
           acciones={
             <Selectores
               tipos={tipos.data} lista={catalogo} escenarioId={url.escenario} tipoId=""
@@ -114,11 +114,11 @@ export default function Observatorio() {
         />
         <div className="observatorio__salida">
           <ErrorBloque
-            mensaje={e instanceof ErrorApi ? e.mensaje : MENSAJE_RED}
+            mensaje={mensajeDeError(e, t)}
             ultimoDato={hora(escenario.dataUpdatedAt)}
             onReintentar={() => void escenario.refetch()}
           />
-          {noExiste && destino && <Boton variante="secundario" onClick={() => irA(destino.id)}>Volver a {destino.nombre}</Boton>}
+          {noExiste && destino && <Boton variante="secundario" onClick={() => irA(destino.id)}>{t('obs.estructura.volver_a', { nombre: destino.nombre })}</Boton>}
         </div>
       </>
     )
@@ -140,21 +140,23 @@ interface PropsSelectores {
 
 /** Tipo de cambio y escenario: siguen visibles aunque el escenario no cargue. */
 function Selectores({ tipos, lista, escenarioId, tipoId, actual, onEscenario, onTipo }: PropsSelectores) {
+  const { t } = useT()
   const opciones = lista.map((e) => ({ valor: e.id, texto: e.nombre }))
   if (!lista.some((e) => e.id === escenarioId)) {
-    opciones.push({ valor: escenarioId, texto: actual?.nombre ?? 'Escenario no disponible' })
+    opciones.push({ valor: escenarioId, texto: actual?.nombre ?? t('obs.estructura.escenario_no_disponible') })
   }
-  const opcionesTipo = (tipos ?? []).map((t) => ({ valor: t.id, texto: t.nombre }))
-  if (!opcionesTipo.some((o) => o.valor === tipoId)) opcionesTipo.unshift({ valor: tipoId, texto: tipoId || 'Elige un tipo' })
+  const opcionesTipo = (tipos ?? []).map((x) => ({ valor: x.id, texto: x.nombre }))
+  if (!opcionesTipo.some((o) => o.valor === tipoId)) opcionesTipo.unshift({ valor: tipoId, texto: tipoId || t('obs.estructura.elige_tipo') })
   return (
     <div className="observatorio__selectores">
-      <Selector etiqueta="Tipo de cambio" value={tipoId} onChange={(e) => onTipo(e.target.value)} opciones={opcionesTipo} />
-      <Selector etiqueta="Escenario" value={escenarioId} onChange={(e) => onEscenario(e.target.value)} opciones={opciones} />
+      <Selector etiqueta={t('obs.estructura.tipo_cambio')} value={tipoId} onChange={(e) => onTipo(e.target.value)} opciones={opcionesTipo} />
+      <Selector etiqueta={t('obs.estructura.escenario')} value={escenarioId} onChange={(e) => onEscenario(e.target.value)} opciones={opciones} />
     </div>
   )
 }
 
 function ObservatorioCargado({ esc }: { esc: Escenario }) {
+  const { t, idioma } = useT()
   const [url, cambiar] = useEstadoUrl(ESQUEMA)
   const escenarios = useEscenarios()
   const tipos = useTipos()
@@ -182,8 +184,8 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
   const tiempo = useTiempoObservatorio(instantes, url.t, (t) => { if (t !== url.t) cambiar({ t }, { reemplazar: true }) })
 
   const iso = (id: string) => pasadas.find((p) => p.id === id)?.instante ?? ''
-  const frase = hallazgo(resultado.data, iso(antesId), iso(despuesId))
-  const texto = frase ?? (!peticion ? SIN_PAREJA : resultado.isError ? 'No se pudo calcular el cambio entre las dos pasadas elegidas.' : resultado.isPending ? 'Calculando el cambio entre las dos pasadas…' : PREGUNTA)
+  const frase = hallazgo(resultado.data, iso(antesId), iso(despuesId), t, idioma)
+  const texto = frase ?? (!peticion ? t('obs.estructura.sin_pareja') : resultado.isError ? t('obs.estructura.error_cambio') : resultado.isPending ? t('obs.estructura.calculando_cambio') : t('obs.estructura.pregunta'))
 
   const lista = escenarios.data ?? []
   const irA = (id: string) => cambiar({ escenario: id, antes: '', despues: '', t: '', pol: '', p: '', c: '', par: '' })
@@ -194,19 +196,19 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
     if (destino) irA(destino.id)
   }
   const puedeSimular = esc.capacidades.simulacion
-  const tipoActual = tipos.data?.find((t) => t.id === esc.tipo_cambio)
-  const controles = useMemo<Control[]>(() => tipos.data?.find((t) => t.id === esc.tipo_cambio)?.controles ?? [], [tipos.data, esc.tipo_cambio])
+  const tipoActual = tipos.data?.find((x) => x.id === esc.tipo_cambio)
+  const controles = useMemo<Control[]>(() => tipos.data?.find((x) => x.id === esc.tipo_cambio)?.controles ?? [], [tipos.data, esc.tipo_cambio])
   // Cambiar parámetros mantiene el lugar, la pareja y el instante: solo cambia la escena.
   const alNuevo = useCallback((id: string, v: Valores) => cambiar({ escenario: id, par: codificar(v) }, { reemplazar: true }), [cambiar])
   const sim = useSimulacion(esc, controles, url.par, alNuevo)
   const movil = useMovil()
   const [hoja, setHoja] = useState(false)
-  const motivoReproductor = sim.calculando ? 'Se está calculando un escenario nuevo; el reproductor vuelve al terminar.' : undefined
+  const motivoReproductor = sim.calculando ? t('obs.estructura.motivo_reproductor') : undefined
   const panel = !puedeSimular ? null : tipos.isPending ? (
-    <Tarjeta titulo="Parámetros del modelo"><Cargando texto="Cargando los parámetros…" filas={4} /></Tarjeta>
+    <Tarjeta titulo={t('obs.parametros.titulo')}><Cargando texto={t('obs.estructura.cargando_parametros')} filas={4} /></Tarjeta>
   ) : tipos.isError ? (
-    <Tarjeta titulo="Parámetros del modelo">
-      <ErrorBloque mensaje={tipos.error instanceof ErrorApi ? tipos.error.mensaje : MENSAJE_RED} onReintentar={() => void tipos.refetch()} />
+    <Tarjeta titulo={t('obs.parametros.titulo')}>
+      <ErrorBloque mensaje={mensajeDeError(tipos.error, t)} onReintentar={() => void tipos.refetch()} />
     </Tarjeta>
   ) : (
     <PanelSimulacion esc={esc} controles={controles} sim={sim} enHoja={movil} />
@@ -219,8 +221,8 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
   const vista = url.vista === 'impacto' && !esc.historia ? 'mapa' : url.vista
   return (
     <>
-      <CabeceraPantalla titulo="Observatorio" hallazgo={texto} acciones={selectores} />
-      <Pestanas etiqueta="Vistas del Observatorio" pestanas={esc.historia ? VISTAS : VISTAS.filter((v) => v.id !== 'impacto')} activa={vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
+      <CabeceraPantalla titulo={t('obs.estructura.titulo')} hallazgo={texto} acciones={selectores} />
+      <Pestanas etiqueta={t('obs.estructura.vistas_etiqueta')} pestanas={(esc.historia ? VISTAS : VISTAS.filter((v) => v.id !== 'impacto')).map((v) => ({ id: v.id, etiqueta: t(v.clave) }))} activa={vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
       <div className="observatorio">
         <div className="observatorio__principal">
           {vista === 'mapa' ? (
@@ -246,7 +248,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
             <VistaSerie esc={esc} resultado={resultado} antesId={antesId} despuesId={despuesId} />
           )}
         </div>
-        <aside className="observatorio__lado" aria-label="Métricas y contexto">
+        <aside className="observatorio__lado" aria-label={t('obs.estructura.lado_etiqueta')}>
           {!movil && panel}
           <AyudaRadar descripcion={tipoActual?.descripcion} nombreTipo={tipoActual?.nombre} />
           {vista === 'comparar' && peticion && (
@@ -261,7 +263,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
         </aside>
       </div>
       {movil && hoja && panel && (
-        <HojaInferior titulo="Parámetros del modelo" onCerrar={() => setHoja(false)}>{panel}</HojaInferior>
+        <HojaInferior titulo={t('obs.parametros.titulo')} onCerrar={() => setHoja(false)}>{panel}</HojaInferior>
       )}
     </>
   )

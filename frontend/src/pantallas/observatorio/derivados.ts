@@ -4,6 +4,8 @@ import { coloresDeCategorias, rampaDePaleta, type ColorCategoria, type NombreRam
 import type { Temporada } from '../../tiempo/CintaPasadas'
 import { formatearFecha } from '../../tiempo/fechas'
 import { formatoNumero } from '../../graficos/formato'
+import type { CodigoIdioma } from '../../idioma/idiomas'
+import { traductor, type T } from '../../idioma/traductor'
 
 /** Pasada anterior (la última que no supera el instante) y siguiente (la primera posterior). */
 export function vecinas(ts: number[], ms: number): { anterior: number | null; siguiente: number | null } {
@@ -84,25 +86,32 @@ function masCercano(puntos: [string, number, string][], t: number): number | nul
  * Hallazgo CALCULADO con la primera serie del resultado, entre las pasadas «antes» y «después».
  * Mientras el origen no sea real se redacta como ejemplo («En este escenario de demostración, …»).
  */
-export function hallazgo(r: ResultadoCambio | undefined, antes: string, despues: string): string | null {
+export function hallazgo(
+  r: ResultadoCambio | undefined,
+  antes: string,
+  despues: string,
+  t: T = traductor('es').t,
+  idioma: CodigoIdioma = 'es',
+): string | null {
   const serie = r?.series[0]
   if (!serie || serie.puntos.length === 0) return null
   const etiqueta = serie.puntos[0][2]
   const propios = serie.puntos.filter((p) => p[2] === etiqueta)
   const a = masCercano(propios, Date.parse(antes))
   const b = masCercano(propios, Date.parse(despues))
-  const fa = formatearFecha(antes)
-  const fb = formatearFecha(despues)
+  const fa = formatearFecha(antes, idioma)
+  const fb = formatearFecha(despues, idioma)
   if (a === null || b === null || !fa || !fb) return null
   const d = decimales(a, b)
   // «Detectada» frente a «verdad del modelo» es la misma magnitud dos veces: no se rotula.
   const etiquetas = new Set(serie.puntos.map((p) => p[2]))
   const hayVarias = etiquetas.size > 1 && ![...etiquetas].some((e) => /verdad/i.test(e))
+  // El título y la etiqueta de la serie vienen de la API (en español hasta que lleven clave, Tarea 19).
   const nombre = serie.titulo.charAt(0).toLowerCase() + serie.titulo.slice(1)
   const sujeto = hayVarias ? `${nombre} (${etiqueta.charAt(0).toLowerCase()}${etiqueta.slice(1)})` : nombre
-  const verbo = b < a ? 'baja' : b > a ? 'sube' : 'se mantiene'
-  const trayecto = b === a ? `en ${formatoNumero(a, d)}` : `de ${formatoNumero(a, d)} a ${formatoNumero(b, d)}`
+  const clave = b < a ? 'obs.hallazgo.baja' : b > a ? 'obs.hallazgo.sube' : 'obs.hallazgo.igual'
   const unidad = serie.unidad ? ` ${serie.unidad}` : ''
-  const frase = `${sujeto} ${verbo} ${trayecto}${unidad} entre el ${fa} y el ${fb}`
-  return esReal(r.origen) ? `${frase.charAt(0).toUpperCase()}${frase.slice(1)}.` : `En este escenario de demostración, ${frase}.`
+  const frase = t(clave, { sujeto, a: formatoNumero(a, d, idioma), b: formatoNumero(b, d, idioma), unidad, desde: fa, hasta: fb })
+  // El hallazgo de un origen real va sin la marca de ejemplo.
+  return esReal(r.origen) ? t('obs.hallazgo.real', { frase: `${frase.charAt(0).toUpperCase()}${frase.slice(1)}` }) : t('obs.hallazgo.demo', { frase })
 }

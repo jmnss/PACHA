@@ -8,7 +8,6 @@ import { NotasModelo } from '../../diseno/NotasModelo'
 import { Pestanas } from '../../diseno/Pestanas'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
-import { TextoApi } from '../../idioma/TextoApi'
 import { langDe } from '../../idioma/idiomas'
 import { useT } from '../../idioma/useT'
 import { CintaPasadas } from '../../tiempo/CintaPasadas'
@@ -85,7 +84,7 @@ export function Historia({ contenido: c, esc, indice }: Props) {
   const parrafos = (lista: Parrafo[]) => lista.map((p, i) => <p key={i} className="historia__parrafo">{texto(p)}</p>)
 
   const r = resultado.data
-  const frase = hallazgo(r, antes?.instante ?? '', despues?.instante ?? '')
+  const frase = hallazgo(r, antes?.instante ?? '', despues?.instante ?? '', t, idioma)
   const polarizaciones = ['HH', 'HV']
     .filter((x) => esc.polarizaciones.includes(x))
     .map((x) => ({ id: x, etiqueta: x === c.comparador.polarizacion ? t('historias.pol.recomendada', { pol: x }) : x }))
@@ -171,7 +170,7 @@ export function Historia({ contenido: c, esc, indice }: Props) {
         </Tarjeta>
         <div className="historia__texto">
           <div data-contenido-largo>{p3a}</div>
-          {frase && <p className="historia__hallazgo"><TextoApi texto={frase} /></p>}
+          {frase && <p className="historia__hallazgo">{frase}</p>}
           <div data-contenido-largo>{p3b}{p3c}</div>
         </div>
         {r && r.notas.length > 0 && (

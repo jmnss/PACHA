@@ -20,8 +20,8 @@ export function renderPseudo(ui: ReactElement): RenderResult {
   )
 }
 
-export const SIGLAS = ['HH', 'HV', 'VV', 'VH', 'SAR', 'NISAR', 'NASA', 'ISRO', 'ASF', 'L', 'S', 'ES', 'EN', 'QU']
-export const NOMBRES_PROPIOS = ['Ecuador', 'La Segua', 'Manabí', 'Loja', 'NISAR · Ecuador']
+export const SIGLAS = ['ENL', 'HH', 'HV', 'VV', 'VH', 'SAR', 'NISAR', 'NASA', 'ISRO', 'ASF', 'L', 'S', 'ES', 'EN', 'QU']
+export const NOMBRES_PROPIOS = ['Costa', 'NASA POWER', 'Ecuador', 'La Segua', 'Manabí', 'Loja', 'NISAR · Ecuador']
 
 const NUMERICO =
   /^[\d\s.,:;%°+\-−–—·/()×≈<>=±…]*(km²|km|ha|dB|m|h|s|%|px)?[\d\s.,:;%°+\-−–—·/()]*$/

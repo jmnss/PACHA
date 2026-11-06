@@ -371,3 +371,11 @@ Corregido: el recorrido se saltaba pasos al avanzar solo (ahora un temporizador 
 7. Haz clic fuera de Ecuador: debe avisar.
 8. Reduce la ventana a 390 px: el riel pasa a barra inferior y nada se desborda.
 9. Pruebas completas: `python -m pytest tests -q`, `python -m unittest modelo.clima modelo.desastres`, y en `frontend/`: `VITE_MAPA_REMOTO=0 npm run build && npm test && npm run lint && npx playwright test` (ver también la tabla de `CLAUDE.md`).
+
+## Idioma · Tarea 9 (Observatorio: estructura, parámetros, contexto y ayuda)
+
+- Área `observatorio` creada en los tres catálogos (secciones `obs.estructura|hallazgo|parametros|contexto|ayuda`).
+- `derivados.hallazgo()` ahora arma la frase con claves (`obs.hallazgo.*`), cifras y fechas del idioma; `Historia.tsx` la usa igual. El título y la etiqueta de la serie vienen de la API y siguen en español dentro de la frase hasta la Tarea 19 (mezcla de idiomas visible en `en`/`qu`).
+- Textos de la API sin clave todavía (nombres de tipos y escenarios, etiquetas y ayudas de controles del simulador, estación astronómica, hito, nombre local de temporada) se muestran en español; los de contexto y ayuda van con `TextoApi`.
+- Revisión visual `/observatorio`: el inspector corre con navegador en inglés. «Home» (riel móvil, `en`) quedó a 11 px del borde (FAIL); se cambió a «Start» y queda WARN `edge-text` (14 px), defendido como las celdas iguales de la barra inferior. WARN `below-fold` (2 de 6 bloques) preexistente.
+- El mes del contexto en `qu` usa los nombres de `fecha.mes.N` (en español hasta decidir los kichwa).

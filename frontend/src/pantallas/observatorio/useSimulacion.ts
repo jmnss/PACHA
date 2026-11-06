@@ -1,7 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
+import { mensajeDeError } from '../../api/cliente'
 import { useSimular, type Escenario } from '../../api/consultas'
+import { useT } from '../../idioma/useT'
 import { decodificar, normalizar, type Control, type Valor, type Valores } from './parametros'
 
 /** Espera tras la última edición antes de pedir el escenario nuevo. */
@@ -35,7 +36,9 @@ export function useSimulacion(
   const [edicion, setEdicion] = useState<Valores | null>(null)
   const valores = edicion ?? deUrl
   const [pendiente, setPendiente] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const { t } = useT()
+  // Se guarda el error y se traduce al leerlo, así sigue al idioma activo.
+  const [fallo, setFallo] = useState<unknown>(null)
   const [segundos, setSegundos] = useState(0)
   const temporizador = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const secuencia = useRef(0)
@@ -53,7 +56,7 @@ export function useSimulacion(
         setEdicion(null)
       },
       onError: (e) => {
-        if (mia === secuencia.current) setError(e instanceof ErrorApi ? e.mensaje : MENSAJE_RED)
+        if (mia === secuencia.current) setFallo(e)
       },
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,7 +68,7 @@ export function useSimulacion(
     else siguiente[clave] = valor
     const limpio = normalizar(siguiente, controles)
     setEdicion(limpio)
-    setError(null)
+    setFallo(null)
     setPendiente(true)
     clearTimeout(temporizador.current)
     temporizador.current = setTimeout(() => enviar(limpio), ANTIRREBOTE_MS)
@@ -76,7 +79,7 @@ export function useSimulacion(
     const punto: Valores = {}
     if ('lat' in valores && 'lon' in valores) { punto.lat = valores.lat; punto.lon = valores.lon }
     setEdicion(punto)
-    setError(null)
+    setFallo(null)
     enviar(punto)
   }, [valores, enviar])
 
@@ -89,5 +92,6 @@ export function useSimulacion(
     return () => clearInterval(id)
   }, [calculando])
 
+  const error = fallo === null ? null : mensajeDeError(fallo, t)
   return { valores, cambiar, restablecer, calculando, segundos, error }
 }
