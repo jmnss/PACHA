@@ -163,7 +163,7 @@ describe('Observatorio · idioma', () => {
   it('el hallazgo se arma con claves e interpola cifras y fechas del idioma', () => {
     const r = { series: [{ titulo: 'Superficie inundada', unidad: 'km²', puntos: [['2026-04-12T00:00:00Z', 26.8, 'D'], ['2026-05-18T00:00:00Z', 5.5, 'D']] }], origen: { tipo: 'sintetico' } } as never
     expect(hallazgo(r, '2026-04-12T00:00:00Z', '2026-05-18T00:00:00Z')).toBe('En este escenario de demostración, superficie inundada baja de 26,8 a 5,5 km² entre el 12 abr 2026 y el 18 may 2026.')
-    expect(hallazgo(r, '2026-04-12T00:00:00Z', '2026-05-18T00:00:00Z', traductor('en').t, 'en')).toBe('In this demonstration scenario, superficie inundada falls from 26.8 to 5.5 km² between 12 Apr 2026 and 18 May 2026.')
+    expect(hallazgo(r, '2026-04-12T00:00:00Z', '2026-05-18T00:00:00Z', traductor('en').t, 'en')).toBe('In this demonstration scenario, flooded area falls from 26.8 to 5.5 km² between 12 Apr 2026 and 18 May 2026.') // el título de la serie ya tiene clave (api.serie.*)
   })
 })
 

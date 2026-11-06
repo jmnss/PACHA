@@ -62,3 +62,19 @@ describe('unidades', () => {
     expect(container.textContent).toBe('days km²')
   })
 })
+
+describe('hallazgo de la cabecera', () => {
+  it('traduce el título de la serie si el español coincide', async () => {
+    const { hallazgo } = await import('../pantallas/observatorio/derivados')
+    const { traductor } = await import('./traductor')
+    const r = {
+      series: [{ titulo: 'Superficie inundada', unidad: 'km²', puntos: [['2025-12-13T00:00:00Z', 18.3, 'A'], ['2026-11-26T00:00:00Z', 5.5, 'A']] }],
+      origen: { tipo: 'sintetico' },
+    } as unknown as Parameters<typeof hallazgo>[0]
+    const f = hallazgo(r, '2025-12-13T00:00:00Z', '2026-11-26T00:00:00Z', traductor('en').t, 'en')
+    expect(f).toContain('flooded area')
+    expect(f).not.toContain('superficie')
+    const otra = { ...r!, series: [{ ...r!.series[0], titulo: 'Serie nueva' }] }
+    expect(hallazgo(otra, '2025-12-13T00:00:00Z', '2026-11-26T00:00:00Z', traductor('en').t, 'en')).toContain('serie nueva')
+  })
+})

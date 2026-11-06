@@ -1040,6 +1040,34 @@
     "es": "Rumbo sinistral"
   },
   {
+    "clave": "api.serie.0_hv_medio",
+    "es": "σ⁰ HV medio"
+  },
+  {
+    "clave": "api.serie.0_hv_medio_por_rotacion",
+    "es": "σ⁰ HV medio por rotación"
+  },
+  {
+    "clave": "api.serie.desplazamiento_los_acumulado",
+    "es": "Desplazamiento LOS acumulado"
+  },
+  {
+    "clave": "api.serie.desplazamiento_vertical_acumulado",
+    "es": "Desplazamiento vertical acumulado"
+  },
+  {
+    "clave": "api.serie.posicion_del_frente_respecto_a_la_1_a_fecha",
+    "es": "Posición del frente (respecto a la 1.ª fecha)"
+  },
+  {
+    "clave": "api.serie.superficie_inundada",
+    "es": "Superficie inundada"
+  },
+  {
+    "clave": "api.serie.velocidad_superficial",
+    "es": "Velocidad superficial"
+  },
+  {
     "clave": "api.sim.capa.calado",
     "es": "Calado"
   },

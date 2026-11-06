@@ -263,6 +263,13 @@ api.opcion.terremotos.rake.inversa,Inversa,Reverse,Inversa,no
 api.opcion.terremotos.rake.normal,Normal,Normal,Normal,no
 api.opcion.terremotos.rake.rumbo_dextral,Rumbo dextral,Right-lateral strike-slip,Rumbo dextral,no
 api.opcion.terremotos.rake.rumbo_sinistral,Rumbo sinistral,Left-lateral strike-slip,Rumbo sinistral,no
+api.serie.0_hv_medio,σ⁰ HV medio,Mean σ⁰ HV,σ⁰ HV chawpi,no
+api.serie.0_hv_medio_por_rotacion,σ⁰ HV medio por rotación,Mean σ⁰ HV by rotation,Rotaciónmanta σ⁰ HV chawpi,no
+api.serie.desplazamiento_los_acumulado,Desplazamiento LOS acumulado,Cumulative LOS displacement,Tantachishka LOS kuyuriy,no
+api.serie.desplazamiento_vertical_acumulado,Desplazamiento vertical acumulado,Cumulative vertical displacement,Tantachishka vertical kuyuriy,no
+api.serie.posicion_del_frente_respecto_a_la_1_a_fecha,Posición del frente (respecto a la 1.ª fecha),Front position (relative to the 1st date),Frentepa maypi kashka (1.ª punchamanta),no
+api.serie.superficie_inundada,Superficie inundada,Flooded area,Yakuwan jundashka allpa,no
+api.serie.velocidad_superficial,Velocidad superficial,Surface velocity,Hawa utkay,no
 api.sim.capa.calado,Calado,Flow depth,Calado,no
 api.sim.capa.calado_del_lahar,Calado del lahar,Lahar flow depth,Laharpa calado,no
 api.sim.capa.corriente_piroclastica,Corriente piroclástica,Pyroclastic current,Corriente piroclástica,no

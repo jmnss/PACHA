@@ -5,7 +5,9 @@ import type { Temporada } from '../../tiempo/CintaPasadas'
 import { formatearFecha } from '../../tiempo/fechas'
 import { formatoNumero } from '../../graficos/formato'
 import type { CodigoIdioma } from '../../idioma/idiomas'
-import { traductor, type T } from '../../idioma/traductor'
+import { es } from '../../idioma/catalogos/es'
+import { clavesApi } from '../../idioma/clavesApi'
+import { traductor, type Clave, type T } from '../../idioma/traductor'
 
 /** Pasada anterior (la última que no supera el instante) y siguiente (la primera posterior). */
 export function vecinas(ts: number[], ms: number): { anterior: number | null; siguiente: number | null } {
@@ -111,8 +113,12 @@ export function hallazgo(
   // «Detectada» frente a «verdad del modelo» es la misma magnitud dos veces: no se rotula.
   const etiquetas = new Set(serie.puntos.map((p) => p[2]))
   const hayVarias = etiquetas.size > 1 && ![...etiquetas].some((e) => /verdad/i.test(e))
-  // El título y la etiqueta de la serie vienen de la API (en español hasta que lleven clave, Tarea 19).
-  const nombre = serie.titulo.charAt(0).toLowerCase() + serie.titulo.slice(1)
+  // El título viene de la API: se traduce por su clave derivada solo si el español coincide; la etiqueta de
+  // cada serie sigue en español.
+  const claveTitulo = clavesApi.serie(serie.titulo)
+  const titulo = (es as Record<string, string>)[claveTitulo] === serie.titulo ? t(claveTitulo as Clave) : serie.titulo
+  // Siglas (σ⁰, LOS) conservan su caja.
+  const nombre = /^[A-ZÁÉÍÓÚ][a-záéíóúñ]/.test(titulo) ? titulo.charAt(0).toLowerCase() + titulo.slice(1) : titulo
   const sujeto = hayVarias ? `${nombre} (${etiqueta.charAt(0).toLowerCase()}${etiqueta.slice(1)})` : nombre
   const clave = b < a ? 'obs.hallazgo.baja' : b > a ? 'obs.hallazgo.sube' : 'obs.hallazgo.igual'
   const unidad = serie.unidad ? ` ${serie.unidad}` : ''

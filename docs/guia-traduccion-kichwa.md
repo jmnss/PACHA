@@ -25,7 +25,7 @@ Criterios del borrador:
 
 | Qué | Dónde | Cuántos textos |
 |---|---|---|
-| Textos cortos de la interfaz (botones, títulos, avisos, errores, textos de la API) | `docs/traduccion-kichwa.csv` (generado desde `frontend/src/idioma/catalogos/qu/*.ts`) | 916 claves |
+| Textos cortos de la interfaz (botones, títulos, avisos, errores, textos de la API) | `docs/traduccion-kichwa.csv` (generado desde `frontend/src/idioma/catalogos/qu/*.ts`) | 923 claves |
 | Relatos de las Historias | `frontend/src/pantallas/historias/contenido/inundacion.qu.ts`, `incendio.qu.ts` | 2 relatos |
 | Explicaciones de términos de las Historias | `frontend/src/pantallas/historias/contenido/terminos.qu.ts` | 9 términos |
 | Guion del recorrido guiado | `frontend/src/pantallas/recorrido/guion.qu.ts` | 6 pasos |
@@ -261,7 +261,7 @@ como «se aleja del satélite»?). Las métricas del Observatorio usan la misma 
 Textos del modelo con clave (ronda de arreglos final): métricas del cambio y de la medición (`api.obs.metrica.*`),
 notas del modelo por escenario (`api.nota.*`, largas y técnicas: muchos términos quedan en español, p. ej.
 «dispersión de volumen», «reflexión especular», «correlacionar»), títulos de paneles y encabezados del
-simulador (`api.sim.panel.*`, `api.sim.columna.*`), unidades (`api.unidad.*`: «punchakuna», «m/puncha»,
+simulador (`api.sim.panel.*`, `api.sim.columna.*`), títulos de series (`api.serie.*`), unidades (`api.unidad.*`: «punchakuna», «m/puncha»,
 «cm/wata») y «· modelopa rikushka (simulación)» para la detección del simulador.
 
 ### Textos que siguen en español a propósito

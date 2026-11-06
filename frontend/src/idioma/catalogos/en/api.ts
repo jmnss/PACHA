@@ -413,4 +413,11 @@ export const api: Record<keyof typeof esApi, string> = {
   'api.unidad.cm_ano': 'cm/yr',
   'api.unidad.dias': 'days',
   'api.unidad.m_dia': 'm/day',
+  'api.serie.0_hv_medio': 'Mean σ⁰ HV',
+  'api.serie.0_hv_medio_por_rotacion': 'Mean σ⁰ HV by rotation',
+  'api.serie.desplazamiento_los_acumulado': 'Cumulative LOS displacement',
+  'api.serie.desplazamiento_vertical_acumulado': 'Cumulative vertical displacement',
+  'api.serie.posicion_del_frente_respecto_a_la_1_a_fecha': 'Front position (relative to the 1st date)',
+  'api.serie.superficie_inundada': 'Flooded area',
+  'api.serie.velocidad_superficial': 'Surface velocity',
 }

@@ -9,6 +9,7 @@ import { Tabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { aCsv, descargarCsv } from '../../exportar/csv'
 import { esReal } from '../../diseno/origen'
+import { clavesApi } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import { formatoHora } from '../../idioma/formato'
 import { useT } from '../../idioma/useT'
@@ -101,7 +102,7 @@ function BloqueSerie({ s, escenario, marcas }: { s: Serie; escenario: string; ma
   }
   const hayVerdad = series.some((x) => esVerdad(x.nombre, sint))
   return (
-    <Tarjeta titulo={<TextoApi texto={s.titulo} />}>
+    <Tarjeta titulo={<TextoApi texto={s.titulo} clave={clavesApi.serie(s.titulo)} />}>
       <Linea series={series} marcas={marcas} unidad={s.unidad} origen={s.origen} titulo={s.titulo} />
       {hayVerdad && <p className="serie__nota">{t('obs.serie.nota_verdad')}</p>}
       <Tabla titulo={t('obs.serie.valores_de', { titulo: s.titulo })} columnas={columnas} filas={filas} porPagina={50} />

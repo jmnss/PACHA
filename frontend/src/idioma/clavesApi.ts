@@ -31,6 +31,7 @@ export const clavesApi = {
   /** Nota del modelo por escenario (sin el sufijo `~…`) y posición (desde 1). */
   nota: (escenarioId: string, posicion: number) => `api.nota.${idBase(escenarioId)}.${posicion + 1}`,
   unidad: (unidadEs: string) => `api.unidad.${slug(unidadEs)}`,
+  serie: (tituloEs: string) => `api.serie.${slug(tituloEs)}`,
   orbita: (direccionEs: string) => `api.obs.orbita.${slug(direccionEs)}`,
   /** Métricas con `clave_texto` base: el campo se añade. */
   metrica: (clave: string | null | undefined, campo: 'etiqueta' | 'ayuda') => (clave ? `${clave}.${campo}` : null),
@@ -40,7 +41,7 @@ export const clavesApi = {
 const PREFIJOS_DERIVADOS = [
   'api.tipo.', 'api.control.', 'api.opcion.', 'api.categoria.', 'api.escenario.', 'api.contexto.',
   'api.sim.herramienta.', 'api.sim.control.', 'api.sim.opcion.', 'api.sim.mundo.', 'api.sim.panel.', 'api.sim.columna.',
-  'api.lab.cambio.', 'api.lab.leyenda.', 'api.nota.', 'api.unidad.', 'api.obs.orbita.',
+  'api.lab.cambio.', 'api.lab.leyenda.', 'api.nota.', 'api.unidad.', 'api.obs.orbita.', 'api.serie.',
 ]
 export const esClaveDerivada = (clave: string): boolean => PREFIJOS_DERIVADOS.some((p) => clave.startsWith(p))
 

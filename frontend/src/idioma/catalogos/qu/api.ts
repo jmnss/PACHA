@@ -413,4 +413,11 @@ export const api: Record<keyof typeof esApi, string> = {
   'api.unidad.cm_ano': 'cm/wata',
   'api.unidad.dias': 'punchakuna',
   'api.unidad.m_dia': 'm/puncha',
+  'api.serie.0_hv_medio': 'σ⁰ HV chawpi',
+  'api.serie.0_hv_medio_por_rotacion': 'Rotaciónmanta σ⁰ HV chawpi',
+  'api.serie.desplazamiento_los_acumulado': 'Tantachishka LOS kuyuriy',
+  'api.serie.desplazamiento_vertical_acumulado': 'Tantachishka vertical kuyuriy',
+  'api.serie.posicion_del_frente_respecto_a_la_1_a_fecha': 'Frentepa maypi kashka (1.ª punchamanta)',
+  'api.serie.superficie_inundada': 'Yakuwan jundashka allpa',
+  'api.serie.velocidad_superficial': 'Hawa utkay',
 }

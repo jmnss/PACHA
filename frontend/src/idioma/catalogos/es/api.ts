@@ -411,4 +411,11 @@ export const api = {
   'api.unidad.cm_ano': 'cm/año',
   'api.unidad.dias': 'días',
   'api.unidad.m_dia': 'm/día',
+  'api.serie.0_hv_medio': 'σ⁰ HV medio',
+  'api.serie.0_hv_medio_por_rotacion': 'σ⁰ HV medio por rotación',
+  'api.serie.desplazamiento_los_acumulado': 'Desplazamiento LOS acumulado',
+  'api.serie.desplazamiento_vertical_acumulado': 'Desplazamiento vertical acumulado',
+  'api.serie.posicion_del_frente_respecto_a_la_1_a_fecha': 'Posición del frente (respecto a la 1.ª fecha)',
+  'api.serie.superficie_inundada': 'Superficie inundada',
+  'api.serie.velocidad_superficial': 'Velocidad superficial',
 }

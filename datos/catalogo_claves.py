@@ -46,6 +46,9 @@ def _escenarios(salida: dict[str, str], prov) -> None:
         # traduce si el español coincide (con otros parámetros la nota cambia y se queda en español).
         for k, nota in enumerate(r.notas, start=1):
             salida[f"api.nota.{e.id}.{k}"] = str(nota)
+        # Títulos de las series (el hallazgo de la cabecera los usa): clave por su texto, misma guarda.
+        for serie in r.series:
+            salida[f"api.serie.{slug(serie.titulo)}"] = serie.titulo
         for capa in filter(None, (r.antes, r.despues, r.cambio, r.clasificacion, *r.capas_extra)):
             for k, (etiqueta, _color) in enumerate(capa.leyenda or [], start=1):
                 salida[f"api.categoria.{capa.variable}.{k}"] = etiqueta
