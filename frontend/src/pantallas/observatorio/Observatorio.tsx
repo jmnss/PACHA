@@ -18,6 +18,7 @@ import { hallazgo, parejaValida } from './derivados'
 import { leerCuadrante, leerPunto, textoCuadrante, textoPunto } from './medicion'
 import { Mediciones } from './Mediciones'
 import { NotasResultado, VistaAntesDespues } from './VistaAntesDespues'
+import { VistaImpacto } from './VistaImpacto'
 import { SIN_PAREJA } from './VistaMapa'
 import { AyudaRadar } from './AyudaRadar'
 import { PanelContexto } from './PanelContexto'
@@ -37,13 +38,14 @@ const ESQUEMA = {
   p: { tipo: 'string', porDefecto: '' },
   c: { tipo: 'string', porDefecto: '' },
   par: { tipo: 'string', porDefecto: '' },
-  vista: { tipo: 'enum', valores: ['mapa', 'comparar', 'serie'], porDefecto: 'mapa' },
+  vista: { tipo: 'enum', valores: ['mapa', 'comparar', 'serie', 'impacto'], porDefecto: 'mapa' },
 } as const satisfies Esquema
 
 const VISTAS = [
   { id: 'mapa', etiqueta: 'Mapa' },
   { id: 'comparar', etiqueta: 'Antes y después' },
   { id: 'serie', etiqueta: 'Serie' },
+  { id: 'impacto', etiqueta: 'Impacto' },
 ]
 
 const PREGUNTA = 'Qué cambió aquí entre dos pasadas y cuánto.'
@@ -213,13 +215,15 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
     <Selectores tipos={tipos.data} lista={lista} escenarioId={esc.id} tipoId={esc.tipo_cambio} actual={esc} onEscenario={irA} onTipo={alTipo} />
   )
 
+  // «Impacto» solo existe para las historias (inundación, incendio); en otro escenario se muestra el mapa.
+  const vista = url.vista === 'impacto' && !esc.historia ? 'mapa' : url.vista
   return (
     <>
       <CabeceraPantalla titulo="Observatorio" hallazgo={texto} acciones={selectores} />
-      <Pestanas etiqueta="Vistas del Observatorio" pestanas={VISTAS} activa={url.vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
+      <Pestanas etiqueta="Vistas del Observatorio" pestanas={esc.historia ? VISTAS : VISTAS.filter((v) => v.id !== 'impacto')} activa={vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
       <div className="observatorio">
         <div className="observatorio__principal">
-          {url.vista === 'mapa' ? (
+          {vista === 'mapa' ? (
             <VistaMapa
               esc={esc} resultado={resultado} tiempo={tiempo} contexto={contexto.data}
               antesId={antesId} despuesId={despuesId} polarizacion={polarizacion}
@@ -227,7 +231,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
               onEscenarioNuevo={irAPunto} parametros={sim.valores} motivoReproductor={motivoReproductor}
               onAbrirParametros={puedeSimular && movil ? () => setHoja(true) : undefined}
             />
-          ) : url.vista === 'comparar' ? (
+          ) : vista === 'comparar' ? (
             <VistaAntesDespues
               esc={esc} resultado={resultado} antesId={antesId} despuesId={despuesId} polarizacion={polarizacion}
               punto={punto} cuadrante={cuadrante}
@@ -236,6 +240,8 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
               onPareja={(antes, despues) => cambiar({ antes, despues })}
               onPolarizacion={(pol) => cambiar({ pol })}
             />
+          ) : vista === 'impacto' && esc.historia ? (
+            <VistaImpacto esc={esc} antesId={antesId} despuesId={despuesId} polarizacion={polarizacion} />
           ) : (
             <VistaSerie esc={esc} resultado={resultado} antesId={antesId} despuesId={despuesId} />
           )}
@@ -243,15 +249,15 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
         <aside className="observatorio__lado" aria-label="Métricas y contexto">
           {!movil && panel}
           <AyudaRadar descripcion={tipoActual?.descripcion} nombreTipo={tipoActual?.nombre} />
-          {url.vista === 'comparar' && peticion && (
+          {vista === 'comparar' && peticion && (
             <Mediciones
               esc={esc} antesId={antesId} despuesId={despuesId} bbox={resultado.data?.antes.rejilla.bbox ?? esc.bbox}
               punto={punto} cuadrante={cuadrante} polarizacion={polarizacion} onBorrar={() => cambiar({ p: '', c: '' })}
             />
           )}
           <PanelMetricas esc={esc} resultado={resultado} indice={tiempo.pasadaActiva} antesId={antesId} despuesId={despuesId} />
-          {url.vista === 'comparar' && <NotasResultado resultado={resultado} />}
-          {url.vista !== 'comparar' && <PanelContexto consulta={contexto} ms={tiempo.ms} />}
+          {vista === 'comparar' && <NotasResultado resultado={resultado} />}
+          {vista !== 'comparar' && <PanelContexto consulta={contexto} ms={tiempo.ms} />}
         </aside>
       </div>
       {movil && hoja && panel && (

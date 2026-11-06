@@ -111,3 +111,14 @@ export const useFotogramas = (p: PeticionFotogramas | undefined) =>
     queryFn: () => llamar<CapaDto[]>('/api/simulacion/fotogramas', p),
     enabled: !!p,
   })
+
+export type Impacto = S['ImpactoDto']
+
+/** Resumen de impacto (solo inundaciones e incendios). */
+export const useImpacto = (id: string | undefined, antes: string | undefined, despues: string | undefined, polarizacion?: string, habilitado = true) =>
+  useQuery({
+    queryKey: ['impacto', id, antes, despues, polarizacion],
+    queryFn: () => llamar<Impacto>(`/api/escenarios/${e(id!)}/impacto?antes=${e(antes!)}&despues=${e(despues!)}${polarizacion ? `&polarizacion=${e(polarizacion)}` : ''}`),
+    enabled: habilitado && !!id && !!antes && !!despues && antes !== despues,
+    staleTime: Infinity,
+  })

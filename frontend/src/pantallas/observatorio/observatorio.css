@@ -107,3 +107,11 @@
 .ayuda-radar__resumen { cursor: pointer; font-size: var(--fs-14); color: var(--text); }
 .ayuda-radar__cuerpo { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-3); font-size: var(--fs-14); color: var(--secondary); }
 .ayuda-radar__cuerpo p { margin: 0; }
+
+/* Impacto (docs/diseno.md). Solo tokens. */
+.impacto { display: flex; flex-direction: column; gap: var(--gap); min-width: 0; }
+.impacto__rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--w-selector-min), 1fr)); gap: var(--gap); align-items: start; }
+.impacto__texto { margin: var(--space-3) 0 0; max-width: var(--w-lectura); color: var(--secondary); line-height: var(--lh-24); }
+.impacto__acciones { margin-top: var(--space-4); display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.impacto__lista { margin: 0; padding-left: var(--space-4); color: var(--secondary); line-height: var(--lh-24); max-width: var(--w-lectura); }
+.impacto__nota { margin: var(--space-3) 0 0; color: var(--muted); font-size: var(--fs-13); line-height: var(--lh-16); }

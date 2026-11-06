@@ -193,6 +193,13 @@ Spec: `docs/superpowers/specs/2026-11-05-laboratorio-recorrido-design.md`.
 - Pendiente: el rótulo del valor de la barra «Agua» (−20 dB) se solapa con el rótulo del eje en `Barras`; localizador de Ecuador y hoja de parámetros móvil del Observatorio siguen pendientes; Validación sigue sin decidir.
 - Nota de proceso: se detuvo un `servidor.py` obsoleto en el puerto 8000 que hacía que `revision_visual.sh` revisara el build viejo (el script reutiliza el servidor que encuentre).
 
+## Resumen de impacto (2026-11-05)
+
+- Pestaña **Impacto** del Observatorio, solo en los escenarios con historia (inundación e incendio): hectáreas afectadas, parte de la escena, hectáreas por categoría, evolución frente a la pasada «antes», lectura en lenguaje llano, acciones **condicionales** («si esto fuera un evento real…») e **informe de una página en PNG** con aviso de ejemplo ilustrativo y franja de origen.
+- API `GET /api/escenarios/{id}/impacto` (`datos/impacto.py`): solo usa `ProveedorDatos.cambio`, así que sirve igual con el proveedor real. 422 en español para escenarios sin historia o fechas iguales.
+- Las acciones son orientativas, no operativas. Superficies medidas sobre la malla de análisis (celda ~50–100 m según el escenario).
+- Pendiente: el resumen no cubre cultivos, glaciares, terremotos ni subsidencia (sus cambios no son categorías de superficie afectada); la evolución usa hasta 12 pasadas espaciadas, no las 30.
+
 ## Cumplimiento de `docs/challenge.md` (con evidencia)
 
 | Requisito | Estado | Evidencia |
@@ -200,7 +207,7 @@ Spec: `docs/superpowers/specs/2026-11-05-laboratorio-recorrido-design.md`.
 | Mapa interactivo de cambio | Cumple | `frontend/src/pantallas/observatorio/VistaMapa.tsx` (capa de cambio, clic para simular, aviso fuera de Ecuador); e2e `flujos.spec.ts` |
 | Animación de series temporales | Cumple | Reproductor por pasadas y, con paso menor de 12 días, fotogramas continuos del modelo (`observatorio/fotogramas.ts`, `useTiempoObservatorio.ts`, `VistaMapa.tsx`); e2e «anima los fotogramas» |
 | Comparador deslizante antes/después | Cumple | `comparador/Comparador.tsx`; Historias y Observatorio; e2e con teclado |
-| Dashboards y métricas | Cumple | `PanelMetricas.tsx`, `Mediciones.tsx`, `TablaResultados.tsx`, vista Serie |
+| Dashboards y métricas | Cumple (más resumen de impacto accionable para gestores) | `PanelMetricas.tsx`, `Mediciones.tsx`, `TablaResultados.tsx`, vista Serie |
 | Público amplio | Cumple | Términos explicados (`Termino`), accesibilidad por teclado/ARIA, tres anchos revisados |
 | Qué polarización resalta el cambio | Cumple | Historias (conmutador) y Laboratorio (calculado por cambio y banda) |
 | Hipótesis de impulsores (físicos y humanos) | Cumple (ejemplos ilustrativos) | `pantallas/historias/contenido/*.ts` |
