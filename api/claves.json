@@ -732,6 +732,466 @@
     "es": "Rumbo sinistral"
   },
   {
+    "clave": "api.sim.capa.calado",
+    "es": "Calado"
+  },
+  {
+    "clave": "api.sim.capa.calado_del_lahar",
+    "es": "Calado del lahar"
+  },
+  {
+    "clave": "api.sim.capa.corriente_piroclastica",
+    "es": "Corriente piroclástica"
+  },
+  {
+    "clave": "api.sim.capa.deslizamientos",
+    "es": "Deslizamientos"
+  },
+  {
+    "clave": "api.sim.capa.espesor_de_ceniza",
+    "es": "Espesor de ceniza"
+  },
+  {
+    "clave": "api.sim.capa.estado_del_fuego",
+    "es": "Estado del fuego"
+  },
+  {
+    "clave": "api.sim.capa.frentes_de_onda",
+    "es": "Frentes de onda"
+  },
+  {
+    "clave": "api.sim.capa.intensidad_mmi",
+    "es": "Intensidad (MMI)"
+  },
+  {
+    "clave": "api.sim.capa.tsunami_calado_en_tierra_elevacion_del_mar",
+    "es": "Tsunami: calado en tierra / elevación del mar"
+  },
+  {
+    "clave": "api.sim.control.ciudad.habitantes.etiqueta",
+    "es": "Habitantes"
+  },
+  {
+    "clave": "api.sim.control.ciudad.nombre.etiqueta",
+    "es": "Nombre de la ciudad"
+  },
+  {
+    "clave": "api.sim.control.erupcion.duracion_h.etiqueta",
+    "es": "Duración de la fase explosiva"
+  },
+  {
+    "clave": "api.sim.control.erupcion.evacuacion.etiqueta",
+    "es": "Población evacuada a tiempo"
+  },
+  {
+    "clave": "api.sim.control.erupcion.semilla.ayuda",
+    "es": "La misma semilla repite el mismo evento."
+  },
+  {
+    "clave": "api.sim.control.erupcion.semilla.etiqueta",
+    "es": "Semilla del azar"
+  },
+  {
+    "clave": "api.sim.control.erupcion.vei.etiqueta",
+    "es": "Índice de explosividad volcánica (IEV)"
+  },
+  {
+    "clave": "api.sim.control.erupcion.viento_deg.etiqueta",
+    "es": "Viento hacia (° desde el norte)"
+  },
+  {
+    "clave": "api.sim.control.erupcion.viento_ms.etiqueta",
+    "es": "Viento en altura"
+  },
+  {
+    "clave": "api.sim.control.erupcion.volumen_lahar_hm3.ayuda",
+    "es": "1 hm³ = 1 millón de m³."
+  },
+  {
+    "clave": "api.sim.control.erupcion.volumen_lahar_hm3.etiqueta",
+    "es": "Volumen de lahar por cauce"
+  },
+  {
+    "clave": "api.sim.control.incendio.horas.etiqueta",
+    "es": "Duración simulada"
+  },
+  {
+    "clave": "api.sim.control.incendio.humedad_comb.ayuda",
+    "es": "Por defecto se deriva de la humedad del suelo en la fecha elegida."
+  },
+  {
+    "clave": "api.sim.control.incendio.humedad_comb.etiqueta",
+    "es": "Humedad del combustible muerto"
+  },
+  {
+    "clave": "api.sim.control.incendio.semilla.ayuda",
+    "es": "La misma semilla repite el mismo evento."
+  },
+  {
+    "clave": "api.sim.control.incendio.semilla.etiqueta",
+    "es": "Semilla del azar"
+  },
+  {
+    "clave": "api.sim.control.incendio.viento_deg.etiqueta",
+    "es": "Viento hacia (° desde el norte)"
+  },
+  {
+    "clave": "api.sim.control.incendio.viento_ms.etiqueta",
+    "es": "Viento"
+  },
+  {
+    "clave": "api.sim.control.inundacion.altura_marejada_m.etiqueta",
+    "es": "Sobreelevación del mar"
+  },
+  {
+    "clave": "api.sim.control.inundacion.caudal_m3s.ayuda",
+    "es": "Clic en un río → desborde; clic en el mar → marejada costera."
+  },
+  {
+    "clave": "api.sim.control.inundacion.caudal_m3s.etiqueta",
+    "es": "Caudal pico del desborde"
+  },
+  {
+    "clave": "api.sim.control.inundacion.duracion_h.etiqueta",
+    "es": "Duración de la crecida o marejada"
+  },
+  {
+    "clave": "api.sim.control.inundacion.semilla.ayuda",
+    "es": "La misma semilla repite el mismo evento."
+  },
+  {
+    "clave": "api.sim.control.inundacion.semilla.etiqueta",
+    "es": "Semilla del azar"
+  },
+  {
+    "clave": "api.sim.control.terremoto.mecanismo.etiqueta",
+    "es": "Mecanismo"
+  },
+  {
+    "clave": "api.sim.control.terremoto.mw.etiqueta",
+    "es": "Magnitud Mw"
+  },
+  {
+    "clave": "api.sim.control.terremoto.pais.etiqueta",
+    "es": "Vulnerabilidad de las construcciones (PAGER)"
+  },
+  {
+    "clave": "api.sim.control.terremoto.profundidad_km.etiqueta",
+    "es": "Profundidad del hipocentro"
+  },
+  {
+    "clave": "api.sim.control.terremoto.rumbo.ayuda",
+    "es": "La fosa de Ecuador corre aproximadamente N25°E."
+  },
+  {
+    "clave": "api.sim.control.terremoto.rumbo.etiqueta",
+    "es": "Rumbo de la falla"
+  },
+  {
+    "clave": "api.sim.control.terremoto.semilla.ayuda",
+    "es": "La misma semilla repite el mismo evento."
+  },
+  {
+    "clave": "api.sim.control.terremoto.semilla.etiqueta",
+    "es": "Semilla del azar"
+  },
+  {
+    "clave": "api.sim.control.terremoto.tsunami.etiqueta",
+    "es": "Tsunami si el epicentro está en el mar"
+  },
+  {
+    "clave": "api.sim.control.tormenta.cohesion_kpa.ayuda",
+    "es": "Incluye el refuerzo de las raíces; menos cohesión = más deslizamientos."
+  },
+  {
+    "clave": "api.sim.control.tormenta.cohesion_kpa.etiqueta",
+    "es": "Cohesión del suelo c′"
+  },
+  {
+    "clave": "api.sim.control.tormenta.duracion_h.etiqueta",
+    "es": "Duración de la lluvia"
+  },
+  {
+    "clave": "api.sim.control.tormenta.friccion_deg.etiqueta",
+    "es": "Ángulo de fricción φ′"
+  },
+  {
+    "clave": "api.sim.control.tormenta.lluvia_mm.ayuda",
+    "es": "El récord diario en la Costa ecuatoriana ronda los 200–300 mm."
+  },
+  {
+    "clave": "api.sim.control.tormenta.lluvia_mm.etiqueta",
+    "es": "Lluvia total en el centro"
+  },
+  {
+    "clave": "api.sim.control.tormenta.radio_km.etiqueta",
+    "es": "Radio de la tormenta"
+  },
+  {
+    "clave": "api.sim.control.tormenta.semilla.ayuda",
+    "es": "La misma semilla repite el mismo evento."
+  },
+  {
+    "clave": "api.sim.control.tormenta.semilla.etiqueta",
+    "es": "Semilla del azar"
+  },
+  {
+    "clave": "api.sim.herramienta.ciudad.nombre",
+    "es": "Fundar ciudad"
+  },
+  {
+    "clave": "api.sim.herramienta.erupcion.nombre",
+    "es": "Erupción"
+  },
+  {
+    "clave": "api.sim.herramienta.incendio.nombre",
+    "es": "Incendio"
+  },
+  {
+    "clave": "api.sim.herramienta.inundacion.nombre",
+    "es": "Desborde / marejada"
+  },
+  {
+    "clave": "api.sim.herramienta.terremoto.nombre",
+    "es": "Terremoto"
+  },
+  {
+    "clave": "api.sim.herramienta.tormenta.nombre",
+    "es": "Tormenta"
+  },
+  {
+    "clave": "api.sim.metrica.acierto_iou.etiqueta",
+    "es": "Acierto (IoU)"
+  },
+  {
+    "clave": "api.sim.metrica.area_inundada.etiqueta",
+    "es": "Área inundada"
+  },
+  {
+    "clave": "api.sim.metrica.area_inundada_detectado_por_nisar.etiqueta",
+    "es": "Área inundada detectado por NISAR"
+  },
+  {
+    "clave": "api.sim.metrica.area_quemada.etiqueta",
+    "es": "Área quemada"
+  },
+  {
+    "clave": "api.sim.metrica.area_quemada_detectado_por_nisar.etiqueta",
+    "es": "Área quemada detectado por NISAR"
+  },
+  {
+    "clave": "api.sim.metrica.biomasa_consumida.etiqueta",
+    "es": "Biomasa consumida"
+  },
+  {
+    "clave": "api.sim.metrica.ceniza_1_cm.etiqueta",
+    "es": "Ceniza ≥ 1 cm"
+  },
+  {
+    "clave": "api.sim.metrica.co2_emitido.etiqueta",
+    "es": "CO₂ emitido"
+  },
+  {
+    "clave": "api.sim.metrica.columna_eruptiva.etiqueta",
+    "es": "Columna eruptiva"
+  },
+  {
+    "clave": "api.sim.metrica.deslizamientos.etiqueta",
+    "es": "Deslizamientos"
+  },
+  {
+    "clave": "api.sim.metrica.deslizamientos_perdida_de_coherencia.etiqueta",
+    "es": "Deslizamientos (pérdida de coherencia)"
+  },
+  {
+    "clave": "api.sim.metrica.desplazamiento_los_maximo.etiqueta",
+    "es": "Desplazamiento LOS máximo"
+  },
+  {
+    "clave": "api.sim.metrica.flujos_piroclasticos.etiqueta",
+    "es": "Flujos piroclásticos"
+  },
+  {
+    "clave": "api.sim.metrica.flujos_y_ceniza_10_cm_detectado_por_nisar.etiqueta",
+    "es": "Flujos y ceniza > 10 cm detectado por NISAR"
+  },
+  {
+    "clave": "api.sim.metrica.franjas_en_el_interferograma.etiqueta",
+    "es": "Franjas en el interferograma"
+  },
+  {
+    "clave": "api.sim.metrica.humedad_del_combustible.etiqueta",
+    "es": "Humedad del combustible"
+  },
+  {
+    "clave": "api.sim.metrica.intensidad_maxima.etiqueta",
+    "es": "Intensidad máxima"
+  },
+  {
+    "clave": "api.sim.metrica.lahares.etiqueta",
+    "es": "Lahares"
+  },
+  {
+    "clave": "api.sim.metrica.magnitud.etiqueta",
+    "es": "Magnitud"
+  },
+  {
+    "clave": "api.sim.metrica.perdidas_en_viviendas.etiqueta",
+    "es": "Pérdidas en viviendas"
+  },
+  {
+    "clave": "api.sim.metrica.personas_a_evacuar.etiqueta",
+    "es": "Personas a evacuar"
+  },
+  {
+    "clave": "api.sim.metrica.poblacion_con_mmi_vi.etiqueta",
+    "es": "Población con MMI ≥ VI"
+  },
+  {
+    "clave": "api.sim.metrica.poblacion_expuesta.etiqueta",
+    "es": "Población expuesta"
+  },
+  {
+    "clave": "api.sim.metrica.precision_exhaustividad.etiqueta",
+    "es": "Precisión · exhaustividad"
+  },
+  {
+    "clave": "api.sim.metrica.tsunami_en_tierra.etiqueta",
+    "es": "Tsunami en tierra"
+  },
+  {
+    "clave": "api.sim.metrica.victimas_estimadas.etiqueta",
+    "es": "Víctimas estimadas"
+  },
+  {
+    "clave": "api.sim.metrica.victimas_sin_alerta.etiqueta",
+    "es": "Víctimas sin alerta"
+  },
+  {
+    "clave": "api.sim.metrica.viviendas_destruidas_equiv.etiqueta",
+    "es": "Viviendas destruidas (equiv.)"
+  },
+  {
+    "clave": "api.sim.mundo.bosques_secos_de_loja.descripcion",
+    "es": "Bosque andino y matorral seco con incendios recurrentes entre agosto y octubre."
+  },
+  {
+    "clave": "api.sim.mundo.bosques_secos_de_loja.nombre",
+    "es": "Bosques secos de Loja"
+  },
+  {
+    "clave": "api.sim.mundo.cotopaxi_y_el_valle_de_latacunga.descripcion",
+    "es": "Volcán más vigilado del país; en 1877 sus lahares bajaron por los ríos Cutuchi y Pita."
+  },
+  {
+    "clave": "api.sim.mundo.cotopaxi_y_el_valle_de_latacunga.nombre",
+    "es": "Cotopaxi y el valle de Latacunga"
+  },
+  {
+    "clave": "api.sim.mundo.cuenca_baja_del_guayas_babahoyo.descripcion",
+    "es": "Llanura de inundación que se anega en casi todos los inviernos."
+  },
+  {
+    "clave": "api.sim.mundo.cuenca_baja_del_guayas_babahoyo.nombre",
+    "es": "Cuenca baja del Guayas (Babahoyo)"
+  },
+  {
+    "clave": "api.sim.mundo.galapagos_santa_cruz.descripcion",
+    "es": "Isla volcánica con zonas áridas y húmedas; el mar rodea todo el mundo."
+  },
+  {
+    "clave": "api.sim.mundo.galapagos_santa_cruz.nombre",
+    "es": "Galápagos: Santa Cruz"
+  },
+  {
+    "clave": "api.sim.mundo.guayaquil_y_el_estuario.descripcion",
+    "es": "Ciudad baja sobre el estuario: sensible a marejadas y desbordes."
+  },
+  {
+    "clave": "api.sim.mundo.guayaquil_y_el_estuario.nombre",
+    "es": "Guayaquil y el estuario"
+  },
+  {
+    "clave": "api.sim.mundo.pedernales_y_la_costa_de_manabi.descripcion",
+    "es": "Zona de subducción del sismo de 2016 (Mw 7,8); el mar al oeste permite tsunamis."
+  },
+  {
+    "clave": "api.sim.mundo.pedernales_y_la_costa_de_manabi.nombre",
+    "es": "Pedernales y la costa de Manabí"
+  },
+  {
+    "clave": "api.sim.mundo.quito_y_el_guagua_pichincha.descripcion",
+    "es": "Capital sobre el sistema de fallas inversas de Quito, a los pies de un volcán activo."
+  },
+  {
+    "clave": "api.sim.mundo.quito_y_el_guagua_pichincha.nombre",
+    "es": "Quito y el Guagua Pichincha"
+  },
+  {
+    "clave": "api.sim.mundo.tungurahua_y_banos.descripcion",
+    "es": "Activo entre 1999 y 2016; Baños está a 8 km del cráter."
+  },
+  {
+    "clave": "api.sim.mundo.tungurahua_y_banos.nombre",
+    "es": "Tungurahua y Baños"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.mecanismo.inversa_subduccion",
+    "es": "Inversa (subducción)"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.mecanismo.normal",
+    "es": "Normal"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.mecanismo.rumbo_dextral",
+    "es": "Rumbo dextral"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.mecanismo.rumbo_sinistral",
+    "es": "Rumbo sinistral"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.pais.colombia",
+    "es": "Colombia"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.pais.ecuador",
+    "es": "Ecuador"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.pais.peru",
+    "es": "Perú"
+  },
+  {
+    "clave": "api.sim.titulo.erupcion",
+    "es": "Erupción IEV {vei}"
+  },
+  {
+    "clave": "api.sim.titulo.erupcion_volcan",
+    "es": "Erupción IEV {vei} del {volcan}"
+  },
+  {
+    "clave": "api.sim.titulo.incendio",
+    "es": "Incendio forestal"
+  },
+  {
+    "clave": "api.sim.titulo.inundacion",
+    "es": "Desborde de río"
+  },
+  {
+    "clave": "api.sim.titulo.inundacion_marejada",
+    "es": "Marejada costera"
+  },
+  {
+    "clave": "api.sim.titulo.terremoto",
+    "es": "Terremoto Mw {mw}"
+  },
+  {
+    "clave": "api.sim.titulo.tormenta",
+    "es": "Tormenta extrema"
+  },
+  {
     "clave": "api.tipo.agricultura.descripcion",
     "es": "Series temporales por parcela: siembra, crecimiento, inundación de arroz y cosecha."
   },

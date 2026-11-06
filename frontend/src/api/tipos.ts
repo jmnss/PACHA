@@ -401,6 +401,8 @@ export interface components {
         CapaEventoDto: {
             /** Clave */
             clave: string;
+            /** Clave Texto */
+            clave_texto?: string | null;
             /** Estilo */
             estilo: string;
             /** Etiquetas */
@@ -611,6 +613,8 @@ export interface components {
                 number,
                 number
             ];
+            /** Clave Texto */
+            clave_texto?: string | null;
             /** Comparable */
             comparable: boolean;
             /** Cuadros Png B64 */
@@ -646,6 +650,10 @@ export interface components {
             titulo: string;
             /** Titulos Paneles */
             titulos_paneles: string[];
+            /** Valores Texto */
+            valores_texto?: {
+                [key: string]: number | string;
+            } | null;
         };
         /**
          * Frase
@@ -785,10 +793,16 @@ export interface components {
         MetricaEventoDto: {
             /** Ayuda */
             ayuda: string;
+            /** Clave Texto */
+            clave_texto?: string | null;
             /** Etiqueta */
             etiqueta: string;
             /** Valor */
             valor: string;
+            /** Valores Texto */
+            valores_texto?: {
+                [key: string]: number | string;
+            } | null;
         };
         /** MundoDto */
         MundoDto: {

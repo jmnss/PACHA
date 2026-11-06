@@ -289,6 +289,17 @@
             "title": "Clave",
             "type": "string"
           },
+          "clave_texto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clave Texto"
+          },
           "estilo": {
             "title": "Estilo",
             "type": "string"
@@ -961,6 +972,17 @@
             "title": "Celda",
             "type": "array"
           },
+          "clave_texto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clave Texto"
+          },
           "comparable": {
             "title": "Comparable",
             "type": "boolean"
@@ -1077,6 +1099,30 @@
             },
             "title": "Titulos Paneles",
             "type": "array"
+          },
+          "valores_texto": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valores Texto"
           }
         },
         "required": [
@@ -1557,6 +1603,17 @@
             "title": "Ayuda",
             "type": "string"
           },
+          "clave_texto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clave Texto"
+          },
           "etiqueta": {
             "title": "Etiqueta",
             "type": "string"
@@ -1564,6 +1621,30 @@
           "valor": {
             "title": "Valor",
             "type": "string"
+          },
+          "valores_texto": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valores Texto"
           }
         },
         "required": [

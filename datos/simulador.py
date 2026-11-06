@@ -14,6 +14,7 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 from datos import simulador_render as render
+from datos.claves import REGISTRO, slug
 from datos.contrato import EntradaNoValida, Origen
 from datos.geografia import MENSAJE_FUERA_DE_ECUADOR, en_ecuador
 from modelo import desastres, estaciones
@@ -273,6 +274,45 @@ def _duracion_h(herramienta: str, par: dict[str, Valor]) -> float | None:
     return float(par.get(clave, por_defecto))
 
 
+# --- claves de texto del evento -----------------------------------------------------------------
+
+_NUMERO = re.compile(r"^([−+-]?\d+(?:[\s\u2009\u00a0]\d{3})*(?:,\d+)?)")
+
+
+def _clave_capa(nombre: str) -> str | None:
+    clave = f"api.sim.capa.{slug(nombre)}"
+    return clave if clave in REGISTRO else None
+
+
+def _metrica_evento(etiqueta: str, valor: Any, ayuda: str) -> dict:
+    """Métrica con la clave de su etiqueta (si está registrada) y el número del valor sin formato.
+    La ayuda lleva cifras incrustadas por el modelo: se queda en español sin clave (spec §9.5)."""
+    texto_valor = str(valor)
+    clave = f"api.sim.metrica.{slug(etiqueta)}"
+    if f"{clave}.etiqueta" not in REGISTRO:
+        return dict(etiqueta=etiqueta, valor=texto_valor, ayuda=ayuda)
+    m = _NUMERO.match(texto_valor.strip())
+    valores = {"valor": float(re.sub(r"[\s\u2009\u00a0]", "", m.group(1)).replace(",", ".").replace("−", "-"))} if m else None
+    return dict(etiqueta=etiqueta, valor=texto_valor, ayuda=ayuda, clave_texto=clave, valores_texto=valores)
+
+
+def _clave_titulo(herramienta: str, titulo: str, lat: float, lon: float) -> tuple[str | None, dict | None]:
+    """Clave del título del evento y sus valores. El título lo escribe `modelo/desastres.py`; aquí se reconoce
+    contra las plantillas `api.sim.titulo.<herramienta>[_variante]` y, si no encaja ninguna, queda sin clave."""
+    for clave, plantilla in REGISTRO.items():
+        if not (clave == f"api.sim.titulo.{herramienta}" or clave.startswith(f"api.sim.titulo.{herramienta}_")):
+            continue
+        partes = re.split(r"\{(\w+)\}", plantilla)    # texto, nombre, texto, nombre, …
+        patron = "".join(f"(?P<{x}>{r'[\d.,]+' if x in ('mw', 'vei') else '.+'})" if k % 2 else re.escape(x) for k, x in enumerate(partes))
+        m = re.fullmatch(patron, titulo)
+        if m:
+            valores: dict = {"lat": round(float(lat), 5), "lon": round(float(lon), 5)}
+            for k, v in m.groupdict().items():
+                valores[k] = float(v.replace(",", ".")) if k in ("mw", "vei") else v
+            return clave, valores
+    return None, None
+
+
 def desatar(p: PeticionEvento) -> dict:
     """Ejecuta el desastre y devuelve el `EventoDto` (con los paneles de radar como `CapaRaster`)."""
     if p.herramienta not in desastres.DESASTRES:
@@ -306,15 +346,18 @@ def desatar(p: PeticionEvento) -> dict:
                      filas=[[v if isinstance(v, (str, type(None))) else (_numero(v) if _numero(v) is not None else str(v)) for v in fila]
                             for fila in t.itertuples(index=False)])
     la, lo = m.latlon(*ev.celda)
+    clave_t, valores_t = _clave_titulo(p.herramienta, ev.titulo, la, lo)
     dto = dict(
         herramienta=p.herramienta, titulo=ev.titulo, celda=list(ev.celda), lat=la, lon=lo,
         tiempos=[str(ev.tiempos[k]) for k in idx],
         cuadros_png_b64=[render.png_b64(render.componer(ev, ev.cuadros[k], ESCALA_CUADRO)) for k in idx],
-        capas=[dict(clave=c.clave, nombre=c.nombre, estilo=c.estilo, unidad=c.unidad, etiquetas=list(c.etiquetas)) for c in ev.capas],
-        metricas=[dict(etiqueta=e, valor=str(v), ayuda=a) for e, v, a in ev.metricas],
+        clave_texto=clave_t, valores_texto=valores_t,
+        capas=[dict(clave=c.clave, nombre=c.nombre, estilo=c.estilo, unidad=c.unidad, etiquetas=list(c.etiquetas),
+                    clave_texto=_clave_capa(c.nombre)) for c in ev.capas],
+        metricas=[_metrica_evento(e, v, a) for e, v, a in ev.metricas],
         tabla=tabla, notas=notas, modelos=list(ev.modelos), paneles=paneles, titulos_paneles=[pn.titulo for pn in ev.nisar_paneles], comparable=comparable,
         polarizacion=paneles[0].polarizacion if comparable else None,
-        metricas_radar=[dict(etiqueta=e, valor=str(v), ayuda=a) for e, v, a in ev.nisar_metricas],
+        metricas_radar=[_metrica_evento(e, v, a) for e, v, a in ev.nisar_metricas],
         espera_radar=dict(ciclo_dias=CICLO_DIAS_SUPUESTO, minimo_dias=0, maximo_dias=CICLO_DIAS_SUPUESTO,
                           medio_dias=CICLO_DIAS_SUPUESTO / 2, duracion_evento_h=_duracion_h(p.herramienta, par),
                           verificado=False),

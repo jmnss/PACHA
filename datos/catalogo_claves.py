@@ -47,6 +47,25 @@ def _escenarios(salida: dict[str, str], prov) -> None:
                 salida[f"api.categoria.{capa.variable}.{k}"] = etiqueta
 
 
+def _simulador(salida: dict[str, str]) -> None:
+    """Catálogo del simulador: herramientas, controles, opciones y mundos predefinidos."""
+    from datos import simulador
+    c = simulador.catalogo()
+    for h in c["herramientas"]:
+        salida[f"api.sim.herramienta.{h['id']}.nombre"] = h["nombre"]
+        for k in h["controles"]:
+            base = f"api.sim.control.{h['id']}.{k['id']}"
+            salida[f"{base}.etiqueta"] = k["etiqueta"]
+            if k["ayuda"]:
+                salida[f"{base}.ayuda"] = k["ayuda"]
+            for o in k["opciones"] or []:
+                salida[f"api.sim.opcion.{h['id']}.{k['id']}.{slug(o)}"] = o
+    for m in c["mundos"]:
+        base = f"api.sim.mundo.{slug(m['nombre'])}"
+        salida[f"{base}.nombre"] = m["nombre"]
+        salida[f"{base}.descripcion"] = m["descripcion"]
+
+
 def _contexto(salida: dict[str, str]) -> None:
     for campo, valores in (("estacion", ESTACIONES), ("proximo_hito", HITOS), ("temporada", TEMPORADAS),
                            ("nombre_local", NOMBRES_LOCALES), ("regimen", REGIMENES)):
@@ -61,4 +80,5 @@ def generar() -> list[dict[str, str]]:
     _tipos(salida, prov)
     _escenarios(salida, prov)
     _contexto(salida)
+    _simulador(salida)
     return [{"clave": k, "es": salida[k]} for k in sorted(salida)]

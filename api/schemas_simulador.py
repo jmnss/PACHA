@@ -79,12 +79,15 @@ class CapaEventoDto(BaseModel):
     estilo: str
     unidad: str
     etiquetas: list[str]
+    clave_texto: str | None = None  # `api.sim.capa.<slug(nombre)>`; None si el nombre no tiene traducción
 
 
 class MetricaEventoDto(BaseModel):
     etiqueta: str
     valor: str
     ayuda: str
+    clave_texto: str | None = None  # clave base (`api.sim.metrica.<slug>`); el cliente añade `.etiqueta`
+    valores_texto: dict[str, float | int | str] | None = None   # {"valor": número} si el valor es numérico
 
 
 class TablaEventoDto(BaseModel):
@@ -104,6 +107,8 @@ class EsperaRadarDto(BaseModel):
 class EventoDto(BaseModel):
     herramienta: str
     titulo: str
+    clave_texto: str | None = None  # `api.sim.titulo.<herramienta>[_variante]`
+    valores_texto: dict[str, float | int | str] | None = None  # lat, lon y las cifras del título (mw, vei…)
     celda: tuple[int, int]
     lat: float
     lon: float

@@ -143,3 +143,39 @@ def test_ciudad_en_el_mar_rechazada_y_en_tierra_agrega():
     i, j = celda_en_tierra()
     nueva = simulador.fundar_ciudad(mundo(), i, j, "Nueva Esperanza", 50_000)
     assert len(nueva.ciudades) == 1 and nueva.ciudades[0].nombre == "Nueva Esperanza"
+
+
+@pytest.mark.parametrize("herramienta", ["incendio", "tormenta", "inundacion", "terremoto", "erupcion"])
+def test_evento_trae_claves_registradas(herramienta):
+    """Título, capas y métricas con clave usan claves de claves.json; las que no tienen clave quedan en español."""
+    import json
+    from tests.api.test_claves_api import CLAVES
+    ev = simulador.desatar(simulador.PeticionEvento(mundo=mundo(), herramienta=herramienta, celda=(60, 60), parametros={}))
+    assert ev["clave_texto"] in CLAVES and ev["valores_texto"] is not None
+    assert {"lat", "lon"} <= set(ev["valores_texto"])
+    for c in ev["capas"]:
+        assert c["clave_texto"] in CLAVES, c["nombre"]
+        assert CLAVES[c["clave_texto"]] == c["nombre"]
+    for m in [*ev["metricas"], *ev["metricas_radar"]]:
+        assert m["clave_texto"] + ".etiqueta" in {k for k in CLAVES} and CLAVES[m["clave_texto"] + ".etiqueta"] == m["etiqueta"], m["etiqueta"]
+        assert m["valores_texto"] is None or isinstance(m["valores_texto"]["valor"], float)
+    json.dumps(ev["valores_texto"])
+
+
+def test_titulos_con_cifras_reconstruyen_valores():
+    clave, v = simulador._clave_titulo("terremoto", "Terremoto Mw 7,8", -0.1, -80.2)
+    assert clave == "api.sim.titulo.terremoto" and v == {"lat": -0.1, "lon": -80.2, "mw": 7.8}
+    clave, v = simulador._clave_titulo("erupcion", "Erupción IEV 3 del Cotopaxi", 0, 0)
+    assert clave == "api.sim.titulo.erupcion_volcan" and v["vei"] == 3 and v["volcan"] == "Cotopaxi"
+    assert simulador._clave_titulo("erupcion", "Erupción IEV 4", 0, 0)[0] == "api.sim.titulo.erupcion"
+    assert simulador._clave_titulo("inundacion", "Marejada costera", 0, 0)[0] == "api.sim.titulo.inundacion_marejada"
+    assert simulador._clave_titulo("incendio", "Algo nuevo", 0, 0) == (None, None)
+
+
+def test_metrica_sin_registrar_queda_sin_clave():
+    m = simulador._metrica_evento("Métrica desconocida", "12", "ayuda")
+    assert m == {"etiqueta": "Métrica desconocida", "valor": "12", "ayuda": "ayuda"}
+    m = simulador._metrica_evento("Pérdidas en viviendas", "6,4 M USD", "x")
+    assert m["clave_texto"] == "api.sim.metrica.perdidas_en_viviendas" and m["valores_texto"] == {"valor": 6.4}
+    m = simulador._metrica_evento("Población expuesta", "6 837", "x")
+    assert m["valores_texto"] == {"valor": 6837.0}

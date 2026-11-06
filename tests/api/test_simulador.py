@@ -66,3 +66,27 @@ def test_fundar_ciudad_devuelve_el_mundo_con_la_ciudad(cliente_demo):
 def test_funciona_con_cualquier_proveedor(cliente_real):
     # El simulador es sintético por naturaleza: no depende de NISAR_PROVEEDOR.
     assert cliente_real.get("/api/simulador/catalogo").status_code == 200
+
+
+def test_catalogo_trae_claves_derivadas_en_claves_json(cliente_demo):
+    from datos.claves import slug
+    from tests.api.test_claves_api import CLAVES
+    c = cliente_demo.get("/api/simulador/catalogo").json()
+    for h in c["herramientas"]:
+        assert CLAVES[f"api.sim.herramienta.{h['id']}.nombre"] == h["nombre"]
+        for k in h["controles"]:
+            assert CLAVES[f"api.sim.control.{h['id']}.{k['id']}.etiqueta"] == k["etiqueta"]
+            if k["ayuda"]:
+                assert CLAVES[f"api.sim.control.{h['id']}.{k['id']}.ayuda"] == k["ayuda"]
+            for o in k["opciones"] or []:
+                assert CLAVES[f"api.sim.opcion.{h['id']}.{k['id']}.{slug(o)}"] == o
+    for m in c["mundos"]:
+        assert CLAVES[f"api.sim.mundo.{slug(m['nombre'])}.nombre"] == m["nombre"]
+        assert CLAVES[f"api.sim.mundo.{slug(m['nombre'])}.descripcion"] == m["descripcion"]
+
+
+def test_evento_responde_con_clave_de_titulo(cliente_demo):
+    from tests.api.test_claves_api import CLAVES
+    e = cliente_demo.post("/api/simulador/evento", json=evento()).json()
+    assert e["titulo"].startswith("Terremoto Mw ") and e["clave_texto"] == "api.sim.titulo.terremoto"
+    assert e["clave_texto"] in CLAVES and e["valores_texto"]["mw"] == 7.0
