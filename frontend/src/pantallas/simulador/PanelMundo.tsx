@@ -4,6 +4,7 @@ import { Boton } from '../../diseno/Boton'
 import { Campo } from '../../diseno/Campo'
 import { Interruptor } from '../../diseno/Interruptor'
 import { Selector } from '../../diseno/Selector'
+import { clavesApi } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import { useT } from '../../idioma/useT'
 import type { EstadoSimulador } from './estadoSimulador'
@@ -21,7 +22,7 @@ interface Props {
 
 /** Elección del lugar y de la fecha (temporada); el mundo solo se crea al pulsar el botón. */
 export function PanelMundo({ catalogo, actual, cargando, onCrear }: Props) {
-  const { t } = useT()
+  const { t, textoApi } = useT()
   const [b, setB] = useState<BorradorMundo>(actual)
   const [preset, setPreset] = useState(() => catalogo.mundos.find((m) => m.lat === actual.lat && m.lon === actual.lon)?.nombre ?? PROPIO)
   useEffect(() => { setB(actual) }, [actual])
@@ -36,13 +37,14 @@ export function PanelMundo({ catalogo, actual, cargando, onCrear }: Props) {
     setB((v) => ({ ...v, [campo]: e.target.value === '' ? NaN : Number(e.target.value) }))
   }
   const valido = Number.isFinite(b.lat) && Number.isFinite(b.lon) && /^\d{4}-\d{2}-\d{2}$/.test(b.fecha)
-  const descripcion = catalogo.mundos.find((m) => m.nombre === preset)?.descripcion
+  const mundoElegido = catalogo.mundos.find((m) => m.nombre === preset)
+  const descripcion = mundoElegido?.descripcion
 
   return (
     <form className="panel-herramienta" onSubmit={(e) => { e.preventDefault(); if (valido) onCrear(b, catalogo.mundos.find((m) => m.nombre === preset)?.herramienta) }}>
       <Selector etiqueta={t('sim.mundo.lugar')} value={preset} onChange={(e) => elegirPreset(e.target.value)}
-        opciones={[...catalogo.mundos.map((m) => ({ valor: m.nombre, texto: m.nombre, lang: 'es' })), { valor: PROPIO, texto: t('sim.mundo.propio') }]} />
-      {descripcion && <p className="simulador__nota"><TextoApi texto={descripcion} /></p>}
+        opciones={[...catalogo.mundos.map((m) => { const r = textoApi(m.nombre, clavesApi.simMundo(m.nombre, 'nombre')); return { valor: m.nombre, texto: r.texto, lang: r.traducido ? undefined : 'es' } }), { valor: PROPIO, texto: t('sim.mundo.propio') }]} />
+      {descripcion && <p className="simulador__nota"><TextoApi texto={descripcion} clave={clavesApi.simMundo(mundoElegido!.nombre, 'descripcion')} /></p>}
       <div className="simulador__fila">
         <Campo etiqueta={t('sim.mundo.latitud')} type="number" step="0.01" value={Number.isFinite(b.lat) ? b.lat : ''} onChange={num('lat')} />
         <Campo etiqueta={t('sim.mundo.longitud')} type="number" step="0.01" value={Number.isFinite(b.lon) ? b.lon : ''} onChange={num('lon')} />

@@ -10,6 +10,7 @@ import { idioma } from './idioma'
 import { observatorio } from './observatorio'
 import { origen } from './origen'
 import { piezas } from './piezas'
+import { api } from './api'
 import { simulador } from './simulador'
 
-export const qu = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador, ...laboratorio, ...recorrido, ...fundamentos }
+export const qu = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador, ...laboratorio, ...recorrido, ...fundamentos, ...api }

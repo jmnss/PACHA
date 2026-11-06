@@ -11,6 +11,7 @@ import { Pestanas } from '../../diseno/Pestanas'
 import { Selector } from '../../diseno/Selector'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
 import { useMovil } from '../../estado/useMovil'
+import { clavesApi } from '../../idioma/clavesApi'
 import { useT } from '../../idioma/useT'
 import { codificar, decodificar, type Control, type Valores } from './parametros'
 import { PanelSimulacion } from './PanelSimulacion'
@@ -140,12 +141,13 @@ interface PropsSelectores {
 
 /** Tipo de cambio y escenario: siguen visibles aunque el escenario no cargue. */
 function Selectores({ tipos, lista, escenarioId, tipoId, actual, onEscenario, onTipo }: PropsSelectores) {
-  const { t } = useT()
-  const opciones = lista.map((e) => ({ valor: e.id, texto: e.nombre }))
+  const { t, textoApi } = useT()
+  const nombreEsc = (e: Escenario) => textoApi(e.nombre, clavesApi.escenario(e.id, 'sitio')).texto
+  const opciones = lista.map((e) => ({ valor: e.id, texto: nombreEsc(e) }))
   if (!lista.some((e) => e.id === escenarioId)) {
-    opciones.push({ valor: escenarioId, texto: actual?.nombre ?? t('obs.estructura.escenario_no_disponible') })
+    opciones.push({ valor: escenarioId, texto: actual ? nombreEsc(actual) : t('obs.estructura.escenario_no_disponible') })
   }
-  const opcionesTipo = (tipos ?? []).map((x) => ({ valor: x.id, texto: x.nombre }))
+  const opcionesTipo = (tipos ?? []).map((x) => ({ valor: x.id, texto: textoApi(x.nombre, clavesApi.tipo(x.id, 'nombre')).texto }))
   if (!opcionesTipo.some((o) => o.valor === tipoId)) opcionesTipo.unshift({ valor: tipoId, texto: tipoId || t('obs.estructura.elige_tipo') })
   return (
     <div className="observatorio__selectores">
@@ -250,7 +252,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
         </div>
         <aside className="observatorio__lado" aria-label={t('obs.estructura.lado_etiqueta')}>
           {!movil && panel}
-          <AyudaRadar descripcion={tipoActual?.descripcion} nombreTipo={tipoActual?.nombre} />
+          <AyudaRadar descripcion={tipoActual?.descripcion} nombreTipo={tipoActual?.nombre} tipoId={tipoActual?.id} />
           {vista === 'comparar' && peticion && (
             <Mediciones
               esc={esc} antesId={antesId} despuesId={despuesId} bbox={resultado.data?.antes.rejilla.bbox ?? esc.bbox}

@@ -2,6 +2,7 @@ import type { UseQueryResult } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { langDe } from '../../idioma/idiomas'
 import type { Clave } from '../../idioma/traductor'
+import { clavesApi } from '../../idioma/clavesApi'
 import { useT } from '../../idioma/useT'
 import { mensajeDeError } from '../../api/cliente'
 import { useCapa, useFotogramas, useSimular, type CapaDto, type Contexto, type Escenario, type ResultadoCambio } from '../../api/consultas'
@@ -79,7 +80,7 @@ function extremosDe(capa: CapaDto): [Clave, Clave] | undefined {
 
 /** Mapa con la capa elegida, su leyenda y sello, y la cinta de pasadas con sus controles debajo. */
 export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId, polarizacion, onFijar, onEscenarioNuevo, parametros, onAbrirParametros, motivoReproductor }: Props) {
-  const { t, idioma } = useT()
+  const { t, idioma, textoApi } = useT()
   const lang = langDe(idioma)
   const [modo, setModo] = useState<ModoCapa>('cambio')
   const [pais, setPais] = useState(false)
@@ -117,7 +118,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
   const capa = capaNueva ?? (modo === 'modelo' ? ultimaModelo : ultimaCambio)
 
   const [lat0, lon0] = [(esc.bbox[1] + esc.bbox[3]) / 2, (esc.bbox[0] + esc.bbox[2]) / 2]
-  const marcadores = useMemo(() => (pais ? [{ lat: lat0, lon: lon0, etiqueta: esc.nombre }] : []), [pais, lat0, lon0, esc.nombre])
+  const marcadores = useMemo(() => (pais ? [{ lat: lat0, lon: lon0, etiqueta: textoApi(esc.nombre, clavesApi.escenario(esc.id, 'sitio')).texto }] : []), [pais, lat0, lon0, esc.nombre, esc.id, textoApi])
   const estilo = useMemo(() => (capa ? estiloDeCapa(capa) : null), [capa])
   const tsPasadas = esc.adquisiciones.map((a) => Date.parse(a.instante))
   const temporadas = useMemo(

@@ -176,3 +176,18 @@ Borrador de `lab.*`; todo sin validar por hablantes:
   árboles), «ishkay kutin tupashpa» (doble rebote), «sinchiyachina» (confirmar), «shuyan» (espera; la banda S
   queda «pendiente de confirmar» con el mismo peso que en español e inglés), «ejemplo yuyay» (ejemplo ilustrativo).
 - Los nombres de superficie y de cambio que escribe la API se quedan en español con `lang="es"`.
+
+## Tarea 19 · Texto de la API (`catalogos/qu/api.ts`)
+
+Borrador de las 310 claves de `api/claves.json` (más `api.valor.mil` = «waranka» y `api.valor.personas` = «runakuna»,
+que traducen esas palabras dentro de los valores de métricas); todo sin validar por hablantes:
+
+- **Se dejaron en español**: estaciones astronómicas y sus hitos (equinoccio, solsticio), «Transición», «bimodal/unimodal»,
+  incendio, tormenta, erupción, lahar, tsunami, deslizamiento, buzamiento, rumbo, mecanismo, inversa/normal, severidad,
+  magnitud, intensidad (MMI), semilla de IEV/PAGER, siglas y nombres de modelos (Okada, InSAR, Ramsar, PAGER). Sin equivalente asentado.
+- **Dudas de vocabulario**: «sacha» (bosque), «mushuk» (nuevo), «pishiyay» (disminución), «Llulla alarma» (falsa alarma), «tarpushka»
+  (cultivo), «kuchuy» (cosecha), «chawpi» (moderada), «sinchi» (alta/fuerte), «kunuk / chiri» (cálida / fría), «waranka» (mil),
+  «hunu» (millón), «ukku» (profundidad), «wichay / uray» (subir / bajar), «allpa uraykay» (hundimiento del terreno), «Pachapa muju»
+  (semilla del azar). Todas son propuestas del equipo.
+- Los textos de los 404/405 genéricos, las ayudas de métricas del simulador, las notas y celdas de tabla de `modelo/desastres.py`,
+  los títulos de la bitácora guardada y el informe PNG siguen en español con `lang="es"` (spec §9.5).

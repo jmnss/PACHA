@@ -20,6 +20,7 @@ import { valoresIniciales } from './valores'
 import { PanelMundo, type BorradorMundo } from './PanelMundo'
 import { Tablero } from './Tablero'
 import { ResultadosEvento } from './ResultadosEvento'
+import { clavesApi } from '../../idioma/clavesApi'
 import './simulador.css'
 
 /** Simulador de eventos (antes «Modo Dios»): un evento físico sobre el relieve de Ecuador y lo que vería un radar. */
@@ -97,7 +98,7 @@ export default function Simulador() {
         <div className="simulador">
           <div className="simulador__principal">
             <Tarjeta titulo={t('sim.pantalla.tablero')} pie={mundo.data ? <SelloOrigen origen={mundo.data.origen} /> : undefined}>
-              <Pestanas etiqueta={t('sim.pantalla.herramienta')} pestanas={cat.herramientas.map((h) => ({ id: h.id, etiqueta: <TextoApi texto={h.nombre} /> }))} activa={estado.h}
+              <Pestanas etiqueta={t('sim.pantalla.herramienta')} pestanas={cat.herramientas.map((h) => ({ id: h.id, etiqueta: <TextoApi texto={h.nombre} clave={clavesApi.simHerramienta(h.id, 'nombre')} /> }))} activa={estado.h}
                 onCambiar={(id) => { setElegidos({}); actualizar({ h: id, i: null, j: null, p: {} }, false) }} />
               {mundo.isPending && <Cargando texto={t('sim.pantalla.creando_mundo')} filas={2} />}
               {mundo.isError && <ErrorBloque mensaje={mensaje(mundo.error)} onReintentar={() => void mundo.refetch()} />}
@@ -108,10 +109,10 @@ export default function Simulador() {
                     <li>{t('sim.pantalla.relieve')}: <TextoApi texto={mundo.data.fuente_dem} /></li>
                     <li className="num">{t('sim.pantalla.celda', { m: Math.round(mundo.data.pixel_m) })}</li>
                     <li className="num">{t('sim.pantalla.habitantes', { n: formatoNumero(Math.round(mundo.data.habitantes)) })}</li>
-                    {mundo.data.temporada && <li>{t('sim.pantalla.temporada')} <TextoApi texto={mundo.data.temporada.toLowerCase()} /></li>}
+                    {mundo.data.temporada && <li>{t('sim.pantalla.temporada')} <TemporadaMundo temporada={mundo.data.temporada} /></li>}
                   </ul>
                   <Tablero mundo={mundo.data} evento={datos} indice={pb.indice} cursor={cursor} onCursor={setCursor} onCelda={alCelda} />
-                  {evento.isFetching && <Cargando texto={t('sim.pantalla.simulando', { herramienta: textoApi(nombreHerramienta).texto.toLowerCase() })} filas={1} />}
+                  {evento.isFetching && <Cargando texto={t('sim.pantalla.simulando', { herramienta: textoApi(nombreHerramienta, clavesApi.simHerramienta(estado.h, 'nombre')).texto.toLowerCase() })} filas={1} />}
                   {evento.isError && <ErrorBloque mensaje={mensaje(evento.error)} onReintentar={() => void evento.refetch()} />}
                   {ciudad.isError && <p className="simulador__aviso" role="alert">{mensaje(ciudad.error)}</p>}
                   {datos && (
@@ -138,7 +139,7 @@ export default function Simulador() {
                 actual={{ lat: estado.lat, lon: estado.lon, ext: estado.ext, fecha: estado.fecha, dem: estado.dem }} />
             </Tarjeta>
             {herramienta && (
-              <Tarjeta titulo={<>{t('sim.pantalla.parametros')} · <TextoApi texto={herramienta.nombre} /></>}>
+              <Tarjeta titulo={<>{t('sim.pantalla.parametros')} · <TextoApi texto={herramienta.nombre} clave={clavesApi.simHerramienta(herramienta.id, 'nombre')} /></>}>
                 <PanelHerramienta herramienta={herramienta} valores={valores} onCambio={(id, v) => setElegidos((e) => ({ ...e, [id]: v }))} />
                 {estado.ciudades.length > 0 && (
                   <Boton variante="secundario" onClick={() => actualizar({ ciudades: [], i: null, j: null })}>{t('sim.pantalla.quitar_ciudades')}</Boton>
@@ -150,4 +151,11 @@ export default function Simulador() {
       )}
     </>
   )
+}
+
+/** Temporada del mundo («seca», «lluviosa»…) en minúsculas, traducida si el catálogo la conoce. */
+function TemporadaMundo({ temporada }: { temporada: string }) {
+  const { textoApi } = useT()
+  const r = textoApi(temporada, clavesApi.contexto('temporada', temporada))
+  return <span lang={r.traducido ? undefined : 'es'}>{r.texto.toLowerCase()}</span>
 }

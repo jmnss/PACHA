@@ -12,6 +12,7 @@ import { descargarCsv } from '../../exportar/csv'
 import { formatoNumero } from '../../graficos/formato'
 import { langDe } from '../../idioma/idiomas'
 import { TextoApi } from '../../idioma/TextoApi'
+import { AyudaMetrica, EtiquetaMetrica, ValorMetrica } from '../../idioma/MetricaApi'
 import type { T } from '../../idioma/traductor'
 import type { CodigoIdioma } from '../../idioma/idiomas'
 import { useT } from '../../idioma/useT'
@@ -90,10 +91,10 @@ export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, po
           ultimoDato={hora(consulta.dataUpdatedAt, langDe(idioma))} onReintentar={() => void consulta.refetch()} />
       )}
       {m && enCuadrante && (
-        <FranjaKpi items={m.metricas.map((x, i) => ({ etiqueta: <TextoApi texto={x.etiqueta} />, valor: <TextoApi texto={x.valor} />, unidad: x.unidad || undefined, principal: i === 0 }))} />
+        <FranjaKpi items={m.metricas.map((x, i) => ({ etiqueta: <EtiquetaMetrica m={x} />, valor: <ValorMetrica m={x} />, unidad: x.unidad || undefined, principal: i === 0 }))} />
       )}
       {m && !enCuadrante && m.metricas.length > 0 && (
-        <p className="medicion__nota">{m.metricas[0].ayuda ? <><TextoApi texto={m.metricas[0].ayuda} />. </> : null}{t('obs.medicion.valor_pixel')}.</p>
+        <p className="medicion__nota">{m.metricas[0].ayuda ? <><AyudaMetrica m={m.metricas[0]} />. </> : null}{t('obs.medicion.valor_pixel')}.</p>
       )}
       {m && !enCuadrante && (
         <p className="medicion__nota">

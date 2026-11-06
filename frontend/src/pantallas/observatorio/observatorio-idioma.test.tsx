@@ -56,7 +56,7 @@ const CAMBIO = {
 const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
 const CONTEXTO = {
   origen: origenReal, lat: -0.7, lon: -80.2, fecha: '2026-11-04', mes_actual: 11, region: 'Costa', provincia: 'Manabí',
-  estacion_astronomica: { estacion: 'primavera austral', hemisferio: 'sur', declinacion_deg: -15, elevacion_mediodia_deg: 75, duracion_dia_h: 12, proximo_hito: 'solsticio de diciembre', fecha_proximo_hito: '2026-12-22', pasos_cenitales: [] },
+  estacion_astronomica: { estacion: 'primavera austral', hemisferio: 'sur', declinacion_deg: -15, elevacion_mediodia_deg: 75, duracion_dia_h: 12, proximo_hito: 'hito nuevo', fecha_proximo_hito: '2026-12-22', pasos_cenitales: [] },
   temporada: { temporada: 'Seca', nombre_local: '«verano»', prec_mes_mm: 15, prec_media_mm: 79, et0_mes_mm: 145, t2m_c: 25.7, regimen: 'unimodal', meses_lluviosos: [], meses_secos: [] },
   humedad_suelo: 0.0835, elevacion_malla_m: 129, metodo_climatologia: 'bilineal',
   clima_mensual: MESES.map((mes, i) => ({ mes, mes_num: i + 1, precipitacion_mm: 100 - i * 5, et0_mm: 100, temperatura_c: 25, temporada: i < 5 ? 'Lluviosa' : 'Seca' })),
@@ -114,6 +114,15 @@ describe('Observatorio · idioma', () => {
     expect(screen.getByText(/⟦Los detalles de NISAR/)).toBeInTheDocument()
   })
 
+  it('los nombres de tipo y de escenario salen del catálogo por su clave, no del texto de la API', async () => {
+    const { container } = montar('/observatorio?escenario=ec_x')
+    await esperar()
+    expect(await screen.findByRole('option', { name: '⟦Pérdida de humedales⟧' })).toBeInTheDocument()
+    // «ec_x» no tiene clave en el catálogo: su nombre queda en español.
+    expect(screen.getAllByRole('option', { name: 'Humedal de prueba' }).length).toBeGreaterThan(0)
+    expect(textosPropios(container)).toEqual([])
+  })
+
   it('el contexto del lugar pasa por el traductor y deja el texto de la API marcado', async () => {
     const { container } = montar('/observatorio?escenario=ec_x')
     const titulo = await screen.findByRole('heading', { name: '⟦Contexto del lugar⟧' })
@@ -121,7 +130,9 @@ describe('Observatorio · idioma', () => {
     await within(panel).findByText('Costa')
     expect(textosPropios(panel)).toEqual([])
     expect(textosPropios(container)).toEqual([])
-    expect(within(panel).getByText('primavera austral')).toHaveAttribute('lang', 'es')
+    // «primavera austral» tiene clave: se traduce. Lo que el catálogo no conoce queda en español, marcado.
+    expect(within(panel).getByText('⟦primavera austral⟧')).not.toHaveAttribute('lang')
+    expect(within(panel).getByText('hito nuevo')).toHaveAttribute('lang', 'es')
   })
 
   it.each<[CodigoIdioma, string]>([['en', 'Context of the place'], ['qu', 'Pachapa tiyashka pacha'], ['es', 'Contexto del lugar']])(

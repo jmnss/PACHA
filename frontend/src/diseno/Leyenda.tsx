@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import { claveLeyenda } from '../idioma/clavesApi'
 import { TextoApi } from '../idioma/TextoApi'
 import { useT } from '../idioma/useT'
 import type { Clave } from '../idioma/traductor'
@@ -41,7 +42,7 @@ export function Leyenda({ paleta, vmin, vmax, unidad, leyenda, variable, extremo
               <li key={etiqueta} className="leyenda__categoria">
                 <span className={color ? 'leyenda__muestra' : 'leyenda__muestra leyenda__muestra--sin'}
                   style={color ? ({ background: color } as CSSProperties) : undefined} aria-hidden="true" />
-                <TextoApi texto={etiqueta} />{color ? '' : ` ${t('origen.leyenda.transparente')}`}
+                <TextoApi texto={etiqueta} clave={claveLeyenda(variable, i, etiqueta)} />{color ? '' : ` ${t('origen.leyenda.transparente')}`}
               </li>
             )
           })}

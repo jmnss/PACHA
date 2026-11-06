@@ -7,7 +7,7 @@ import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
 import { PanelRadar } from '../simulador/PanelRadar'
 import { mensajeDeError } from '../../api/cliente'
-import { TextoApi } from '../../idioma/TextoApi'
+import { EtiquetaMetrica, ValorMetrica } from '../../idioma/MetricaApi'
 import { useT } from '../../idioma/useT'
 
 interface Props { cobertura: number; onCobertura: (n: number) => void }
@@ -29,7 +29,7 @@ export function VistaNubes({ cobertura, onCobertura }: Props) {
           onChange={(e) => onCobertura(Number(e.target.value))}
           limite={t('lab.nubes.limite')}
         />
-        <FranjaKpi items={d.metricas.map((m, k) => ({ etiqueta: <TextoApi texto={m.etiqueta} />, valor: m.valor, unidad: m.unidad, principal: k === 0 }))} />
+        <FranjaKpi items={d.metricas.map((m, k) => ({ etiqueta: <EtiquetaMetrica m={m} />, valor: <ValorMetrica m={m} />, unidad: m.unidad, principal: k === 0 }))} />
       </Tarjeta>
       <div className="laboratorio__rejilla">
         <PanelRadar capa={d.optico} titulo={t('lab.nubes.optico')} propio />

@@ -6,6 +6,7 @@ import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tabla, type ColumnaTabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { descargarPng } from '../../exportar/png'
+import { EtiquetaMetrica, ValorMetrica } from '../../idioma/MetricaApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import type { Clave } from '../../idioma/traductor'
 import { useT } from '../../idioma/useT'
@@ -20,7 +21,7 @@ interface Props { evento: EventoDto; mundo: MundoDto; estado: EstadoSimulador }
 
 /** KPI, radar simulado, espera, efectos, bitácora, enlace e informe de un evento. */
 export function ResultadosEvento({ evento, mundo, estado }: Props) {
-  const { t } = useT()
+  const { t, textoApi } = useT()
   const consulta = `?${escribirEstado(estado)}`
   const [bitacora, setBitacora] = useState(leerBitacora)
   const [aviso, setAviso] = useState<Clave | null>(null)
@@ -53,15 +54,15 @@ export function ResultadosEvento({ evento, mundo, estado }: Props) {
 
   return (
     <>
-      <Tarjeta titulo={<TextoApi texto={evento.titulo} />} pie={<SelloOrigen origen={evento.origen} />}>
-        <FranjaKpi items={evento.metricas.slice(0, 5).map((m, k) => ({ etiqueta: <TextoApi texto={m.etiqueta} />, valor: <TextoApi texto={m.valor} />, principal: k === 0 }))} />
-        {evento.metricas.length > 5 && <FranjaKpi items={evento.metricas.slice(5).map((m) => ({ etiqueta: <TextoApi texto={m.etiqueta} />, valor: <TextoApi texto={m.valor} /> }))} />}
+      <Tarjeta titulo={<TextoApi texto={evento.titulo} clave={evento.clave_texto} valores={evento.valores_texto} />} pie={<SelloOrigen origen={evento.origen} />}>
+        <FranjaKpi items={evento.metricas.slice(0, 5).map((m, k) => ({ etiqueta: <EtiquetaMetrica m={m} />, valor: <ValorMetrica m={m} />, principal: k === 0 }))} />
+        {evento.metricas.length > 5 && <FranjaKpi items={evento.metricas.slice(5).map((m) => ({ etiqueta: <EtiquetaMetrica m={m} />, valor: <ValorMetrica m={m} /> }))} />}
         <div className="simulador__acciones">
           <Boton variante="secundario" onClick={() => void copiar()}>{t('sim.res.copiar')}</Boton>
           <Boton variante="secundario" onClick={() => void informe()}>{t('sim.res.informe')}</Boton>
         </div>
         {aviso && <p className="simulador__nota" role="status">{t(aviso)}</p>}
-        {evento.tabla && filas.length > 0 && <Tabla columnas={columnas} filas={filas} titulo={t('sim.res.detalle', { titulo: evento.titulo })} porPagina={15} />}
+        {evento.tabla && filas.length > 0 && <Tabla columnas={columnas} filas={filas} titulo={t('sim.res.detalle', { titulo: textoApi(evento.titulo, evento.clave_texto, evento.valores_texto).texto })} porPagina={15} />}
         {evento.notas.map((n) => <p key={n} className="simulador__nota"><TextoApi texto={n} /></p>)}
         {evento.modelos.length > 0 && (
           <details className="simulador__modelos">

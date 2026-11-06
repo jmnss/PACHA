@@ -1,0 +1,78 @@
+import { es } from './catalogos/es'
+
+/** Claves de los textos de la API que no traen campo `clave_texto`: se derivan del id o del texto en español,
+ * con las mismas reglas que `datos/claves.py` (`slug` incluido). */
+
+/** Idéntico a `datos.claves.slug`: minúsculas, sin tildes (NFKD: «CO₂» → «co2»), lo no alfanumérico pasa a `_`. */
+export function slug(t: string): string {
+  const sinMarcas = t.normalize('NFKD').replace(/\p{M}/gu, '')
+  const salida = [...sinMarcas.toLowerCase()].map((c) => (/^[a-z0-9]$/.test(c) ? c : '_'))
+  return salida.join('').split('_').filter(Boolean).join('_')
+}
+
+/** El id de un escenario simulado lleva un sufijo `~…`; las claves usan el id del catálogo. */
+const idBase = (id: string) => id.split('~')[0]
+
+export const clavesApi = {
+  tipo: (id: string, campo: 'nombre' | 'descripcion') => `api.tipo.${id}.${campo}`,
+  control: (tipo: string, id: string, campo: 'etiqueta' | 'ayuda' | 'unidad') => `api.control.${tipo}.${id}.${campo}`,
+  opcion: (tipo: string, control: string, etiquetaEs: string) => `api.opcion.${tipo}.${control}.${slug(etiquetaEs)}`,
+  categoria: (variable: string, codigo: number | string) => `api.categoria.${slug(variable)}.${codigo}`,
+  escenario: (id: string, campo: 'sitio' | 'descripcion') => `api.escenario.${idBase(id)}.${campo}`,
+  contexto: (campo: 'estacion' | 'temporada' | 'nombre_local' | 'regimen' | 'proximo_hito', valorEs: string) =>
+    `api.contexto.${campo}.${slug(valorEs)}`,
+  simHerramienta: (id: string, campo: 'nombre') => `api.sim.herramienta.${id}.${campo}`,
+  simControl: (h: string, id: string, campo: 'etiqueta' | 'ayuda') => `api.sim.control.${h}.${id}.${campo}`,
+  simOpcion: (h: string, c: string, etiquetaEs: string) => `api.sim.opcion.${h}.${c}.${slug(etiquetaEs)}`,
+  simMundo: (nombreEs: string, campo: 'nombre' | 'descripcion') => `api.sim.mundo.${slug(nombreEs)}.${campo}`,
+  labCambio: (nombreEs: string) => `api.lab.cambio.${slug(nombreEs)}`,
+  /** Métricas con `clave_texto` base: el campo se añade. */
+  metrica: (clave: string | null | undefined, campo: 'etiqueta' | 'ayuda') => (clave ? `${clave}.${campo}` : null),
+}
+
+/** Cifras de `valores_texto` que Python escribe con un número fijo de decimales. */
+const DECIMALES: Record<string, number> = { pct: 1, mw: 1, ha: 0, metros: 0 }
+
+/** Los números de la API llegan sin formato: se escriben a la manera del idioma activo. */
+export function valoresApi(
+  valores: Record<string, string | number> | null | undefined,
+  formato: (n: number, op?: Intl.NumberFormatOptions) => string,
+): Record<string, string | number> | undefined {
+  if (!valores) return undefined
+  return Object.fromEntries(
+    Object.entries(valores).map(([k, v]) => {
+      if (typeof v !== 'number') return [k, v]
+      const d = DECIMALES[k]
+      return [k, d === undefined ? formato(v) : formato(v, { minimumFractionDigits: d, maximumFractionDigits: d })]
+    }),
+  )
+}
+
+const NUMERO = /\d+(?:[\s\u2009\u00a0]\d{3})*(?:,\d+)?/g
+
+/** Valor de una métrica de la API («1 113 viviendas», «0,22 km²»): reescribe las cifras con el formato del idioma,
+ * conservando sus decimales, y traduce las palabras «mil» y «personas». Sin `valores_texto.valor`, el texto queda tal cual. */
+export function valorMetrica(
+  valorEs: string,
+  valores: Record<string, string | number> | null | undefined,
+  formato: (n: number, op?: Intl.NumberFormatOptions) => string,
+  palabras: { mil: string; personas: string },
+): string {
+  if (!valores || typeof valores.valor !== 'number') return valorEs
+  return valorEs
+    .replace(NUMERO, (m) => {
+      const dec = m.includes(',') ? m.split(',')[1].length : 0
+      const n = Number(m.replace(/[\s\u2009\u00a0]/g, '').replace(',', '.'))
+      return formato(n, { minimumFractionDigits: dec, maximumFractionDigits: dec })
+    })
+    .replace(/\bmil\b/g, palabras.mil)
+    .replace(/\bpersonas\b/g, palabras.personas)
+}
+
+/** Clave de una etiqueta de leyenda: la de su categoría (`variable` + posición) o, si no, la del laboratorio.
+ * Solo vale si el español del catálogo coincide con el de la API: así una categoría nueva nunca se traduce mal. */
+export function claveLeyenda(variable: string | undefined, posicion: number, etiquetaEs: string): string | null {
+  const candidatas = [variable ? clavesApi.categoria(variable, posicion + 1) : null, `api.lab.leyenda.${slug(etiquetaEs)}`]
+  for (const c of candidatas) if (c && (es as Record<string, string>)[c] === etiquetaEs) return c
+  return null
+}

@@ -3,6 +3,7 @@ import { Campo } from '../../diseno/Campo'
 import { Deslizador } from '../../diseno/Deslizador'
 import { Interruptor } from '../../diseno/Interruptor'
 import { Selector } from '../../diseno/Selector'
+import { clavesApi } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import { useT } from '../../idioma/useT'
 import type { ValorParametro } from './estadoSimulador'
@@ -16,11 +17,11 @@ interface Props {
   defectos?: Valores
 }
 
-function Control({ c, valor, onCambio }: { c: Control; valor: ValorParametro; onCambio: Props['onCambio'] }) {
+function Control({ h, c, valor, onCambio }: { h: string; c: Control; valor: ValorParametro; onCambio: Props['onCambio'] }) {
   const { formatoNumero, textoApi } = useT()
-  // Etiqueta y ayuda las escribe la API: sin clave se ven en español marcados con lang="es".
-  const etiqueta = <TextoApi texto={c.etiqueta} />
-  const ayuda = c.ayuda ? <TextoApi texto={c.ayuda} /> : undefined
+  // Etiqueta, ayuda y opciones llevan clave derivada del id; si el catálogo no la conoce, se ven en español con lang="es".
+  const etiqueta = <TextoApi texto={c.etiqueta} clave={clavesApi.simControl(h, c.id, 'etiqueta')} />
+  const ayuda = c.ayuda ? <TextoApi texto={c.ayuda} clave={clavesApi.simControl(h, c.id, 'ayuda')} /> : undefined
   if (c.tipo === 'numero' && c.minimo !== null && c.maximo !== null && c.paso !== null) {
     const num = Number(valor)
     const texto = `${formatoNumero(num * c.escala, { maximumFractionDigits: 2 })}${c.unidad ? ` ${c.unidad}` : ''}`
@@ -33,7 +34,7 @@ function Control({ c, valor, onCambio }: { c: Control; valor: ValorParametro; on
   if (c.tipo === 'seleccion') {
     return (
       <Selector etiqueta={etiqueta} value={String(valor)} limite={ayuda}
-        opciones={(c.opciones ?? []).map((o) => { const r = textoApi(o); return { valor: o, texto: r.texto, lang: r.traducido ? undefined : 'es' } })} onChange={(e) => onCambio(c.id, e.target.value)} />
+        opciones={(c.opciones ?? []).map((o) => { const r = textoApi(o, clavesApi.simOpcion(h, c.id, o)); return { valor: o, texto: r.texto, lang: r.traducido ? undefined : 'es' } })} onChange={(e) => onCambio(c.id, e.target.value)} />
     )
   }
   if (c.tipo === 'interruptor') return <Interruptor etiqueta={etiqueta} activo={valor === true} onCambiar={(a) => onCambio(c.id, a)} />
@@ -45,7 +46,7 @@ export function PanelHerramienta({ herramienta, valores, onCambio }: Props) {
   return (
     <div className="panel-herramienta">
       {herramienta.controles.map((c) => (
-        <Control key={c.id} c={c} valor={valores[c.id] ?? (c.defecto as ValorParametro)} onCambio={onCambio} />
+        <Control key={c.id} h={herramienta.id} c={c} valor={valores[c.id] ?? (c.defecto as ValorParametro)} onCambio={onCambio} />
       ))}
     </div>
   )

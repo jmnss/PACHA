@@ -6,6 +6,7 @@ import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
 import { Barras } from '../../graficos/Barras'
+import { clavesApi } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import { useT } from '../../idioma/useT'
 import { temporadaDelMes } from './derivados'
@@ -35,19 +36,19 @@ export function PanelContexto({ consulta, ms }: Props) {
 
   // «Lluviosa» y «Seca» son las dos temporadas que da la API; cualquier otra se muestra tal cual, marcada como español.
   const nombreTemporada = (s: string): ReactNode =>
-    /^lluv/i.test(s) ? t('obs.contexto.temporada_lluviosa') : /^seca/i.test(s) ? t('obs.contexto.temporada_seca') : <TextoApi texto={s} />
+    /^lluv/i.test(s) ? t('obs.contexto.temporada_lluviosa') : /^seca/i.test(s) ? t('obs.contexto.temporada_seca') : <TextoApi texto={s} clave={clavesApi.contexto('temporada', s)} />
   const temporada = temporadaDelMes(c, ms) ?? c.temporada.temporada
   const filas: [string, ReactNode][] = [
     [t('obs.contexto.region'), c.region],
     [t('obs.contexto.provincia'), c.provincia],
     [
       t('obs.contexto.temporada'),
-      <>{nombreTemporada(temporada)}{c.temporada.nombre_local ? <> · <TextoApi texto={c.temporada.nombre_local} /></> : null}</>,
+      <>{nombreTemporada(temporada)}{c.temporada.nombre_local ? <> · <TextoApi texto={c.temporada.nombre_local} clave={clavesApi.contexto('nombre_local', c.temporada.nombre_local)} /></> : null}</>,
     ],
-    [t('obs.contexto.estacion'), <TextoApi texto={c.estacion_astronomica.estacion} />],
+    [t('obs.contexto.estacion'), <TextoApi texto={c.estacion_astronomica.estacion} clave={clavesApi.contexto('estacion', c.estacion_astronomica.estacion)} />],
     [
       t('obs.contexto.proximo_hito'),
-      <><TextoApi texto={c.estacion_astronomica.proximo_hito} />, {formatoFecha(c.estacion_astronomica.fecha_proximo_hito, 'larga')}</>,
+      <><TextoApi texto={c.estacion_astronomica.proximo_hito} clave={clavesApi.contexto('proximo_hito', c.estacion_astronomica.proximo_hito)} />, {formatoFecha(c.estacion_astronomica.fecha_proximo_hito, 'larga')}</>,
     ],
     [t('obs.contexto.humedad'), `${formatoNumero(c.humedad_suelo * 100, { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %`],
   ]

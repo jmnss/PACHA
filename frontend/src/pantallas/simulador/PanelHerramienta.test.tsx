@@ -7,7 +7,7 @@ import { valoresIniciales } from './valores'
 const H = {
   id: 'incendio', icono: '', nombre: 'Incendio', controles: [
     { id: 'viento_ms', etiqueta: 'Viento', tipo: 'numero', minimo: 0, maximo: 20, paso: 0.5, defecto: 6, opciones: null, ayuda: '', unidad: 'm/s', escala: 1 },
-    { id: 'humedad_comb', etiqueta: 'Humedad del combustible', tipo: 'numero', minimo: 0.03, maximo: 0.35, paso: 0.01, defecto: 0.15, opciones: null, ayuda: 'Se deriva del suelo.', unidad: '%', escala: 100 },
+    { id: 'humedad_comb', etiqueta: 'Humedad del combustible muerto', tipo: 'numero', minimo: 0.03, maximo: 0.35, paso: 0.01, defecto: 0.15, opciones: null, ayuda: 'Se deriva del suelo.', unidad: '%', escala: 100 },
     { id: 'mecanismo', etiqueta: 'Mecanismo', tipo: 'seleccion', minimo: null, maximo: null, paso: null, defecto: 'Normal', opciones: ['Normal', 'Inversa'], ayuda: '', unidad: '', escala: 1 },
     { id: 'tsunami', etiqueta: 'Tsunami', tipo: 'interruptor', minimo: null, maximo: null, paso: null, defecto: true, opciones: null, ayuda: '', unidad: '', escala: 1 },
   ],
@@ -25,7 +25,7 @@ describe('PanelHerramienta', () => {
   it('cambiar un control avisa con el valor en unidades del modelo', () => {
     const onCambio = vi.fn()
     render(<PanelHerramienta herramienta={H} valores={valoresIniciales(H, {})} onCambio={onCambio} />)
-    fireEvent.change(screen.getByLabelText('Humedad del combustible'), { target: { value: '0.2' } })
+    fireEvent.change(screen.getByLabelText('Humedad del combustible muerto'), { target: { value: '0.2' } })
     expect(onCambio).toHaveBeenCalledWith('humedad_comb', 0.2)
     fireEvent.click(screen.getByRole('switch', { name: 'Tsunami' }))
     expect(onCambio).toHaveBeenCalledWith('tsunami', false)

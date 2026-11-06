@@ -2,7 +2,7 @@ import type { EventoDto } from '../../api/simulador'
 import { Comparador } from '../../comparador/Comparador'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { estiloDeCapa } from '../observatorio/derivados'
-import { TextoApi } from '../../idioma/TextoApi'
+import { EtiquetaMetrica, ValorMetrica } from '../../idioma/MetricaApi'
 import { useT } from '../../idioma/useT'
 import type { Clave } from '../../idioma/traductor'
 import { PanelRadar } from './PanelRadar'
@@ -36,7 +36,7 @@ export function GemeloRadar({ evento }: { evento: EventoDto }) {
       </div>
       {evento.metricas_radar.length > 0 && (
         <ul className="simulador__chips" aria-label={t('sim.gemelo.deteccion_aria')}>
-          {evento.metricas_radar.map((m) => <li key={m.etiqueta}><TextoApi texto={m.etiqueta} />: <span className="num"><TextoApi texto={m.valor} /></span></li>)}
+          {evento.metricas_radar.map((m) => <li key={m.etiqueta}><EtiquetaMetrica m={m} />: <span className="num"><ValorMetrica m={m} /></span></li>)}
         </ul>
       )}
     </Tarjeta>

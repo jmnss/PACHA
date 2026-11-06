@@ -69,13 +69,13 @@ describe('Laboratorio', () => {
 
   it('renderPseudo no deja texto de interfaz sin traducir en la vista de polarización', async () => {
     const { container } = renderPseudo(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><MemoryRouter initialEntries={['/laboratorio?vista=polarizacion&banda=S']}><Laboratorio /></MemoryRouter></QueryClientProvider>)
-    await screen.findByText('Quema del bosque')
+    await screen.findByText('⟦Quema del bosque⟧')
     expect(textosSinTraducir(container)).toEqual([])
   })
 
-  it.each([['es', /pendiente de confirmar/], ['en', /pending confirmation/], ['qu', /shuyan/]] as const)('la banda S queda marcada como pendiente en %s', async (idioma, patron) => {
+  it.each([['es', /pendiente de confirmar/, 'Quema del bosque'], ['en', /pending confirmation/, 'Forest burning'], ['qu', /shuyan/, 'Sachapa rupay']] as const)('la banda S queda marcada como pendiente en %s', async (idioma, patron, cambio) => {
     renderConIdioma(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><MemoryRouter initialEntries={['/laboratorio?vista=polarizacion&banda=S']}><Laboratorio /></MemoryRouter></QueryClientProvider>, idioma)
-    await screen.findByText('Quema del bosque')
+    await screen.findByText(cambio)
     expect(screen.getByText(patron)).toBeInTheDocument()
   })
 })

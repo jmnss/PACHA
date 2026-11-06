@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react'
 import { es } from './catalogos/es'
+import { valoresApi } from './clavesApi'
 import { formatoFecha, formatoNumero } from './formato'
 import type { CodigoIdioma } from './idiomas'
 import type { Valores } from './interpolar'
@@ -36,7 +37,7 @@ export function crearContexto(
     formatoFecha: (f, estilo) => formatoFecha(idioma, f, estilo, t),
     textoApi: (texto, clave, valores) => {
       if (clave && (cat ? clave in cat : claveConocida(clave))) {
-        return { texto: t(clave as Parameters<T>[0], valores ?? undefined), traducido: true }
+        return { texto: t(clave as Parameters<T>[0], valoresApi(valores, (n, op) => formatoNumero(idioma, n, op))), traducido: true }
       }
       return { texto, traducido: false }
     },

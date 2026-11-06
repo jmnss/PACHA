@@ -7,6 +7,7 @@ import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { TextoApi } from '../../idioma/TextoApi'
+import { AyudaMetrica, EtiquetaMetrica, ValorMetrica, type MetricaApi } from '../../idioma/MetricaApi'
 import { langDe } from '../../idioma/idiomas'
 import { useT } from '../../idioma/useT'
 import { formatearFecha } from '../../tiempo/fechas'
@@ -54,10 +55,10 @@ export function PanelMetricas({ esc, resultado, indice, antesId, despuesId }: Pr
             porPagina={50}
             columnas={[
               { clave: 'etiqueta', etiqueta: t('obs.metricas.col_metrica'), identidad: true, formato: (_v, f) => (
-                <span className="metrica__nombre"><TextoApi texto={String(f.etiqueta)} />{f.ayuda ? <span className="metrica__ayuda"><TextoApi texto={String(f.ayuda)} /></span> : null}</span>
+                <span className="metrica__nombre"><EtiquetaMetrica m={f as unknown as MetricaApi} />{f.ayuda ? <span className="metrica__ayuda"><AyudaMetrica m={f as unknown as MetricaApi} /></span> : null}</span>
               ) },
-              { clave: 'valor', etiqueta: t('obs.metricas.col_valor'), numerica: true, formato: (v, f) => (
-                <>{String(v)}{f.unidad ? <span className="metrica__unidad"> {String(f.unidad)}</span> : null}</>
+              { clave: 'valor', etiqueta: t('obs.metricas.col_valor'), numerica: true, formato: (_v, f) => (
+                <><ValorMetrica m={f as unknown as MetricaApi} />{f.unidad ? <span className="metrica__unidad"> {String(f.unidad)}</span> : null}</>
               ) },
             ]}
             filas={r.metricas.map((m) => ({ ...m }))}

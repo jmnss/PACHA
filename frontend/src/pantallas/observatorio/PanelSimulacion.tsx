@@ -7,6 +7,8 @@ import { Interruptor } from '../../diseno/Interruptor'
 import { Selector } from '../../diseno/Selector'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
+import { clavesApi } from '../../idioma/clavesApi'
+import { TextoApi } from '../../idioma/TextoApi'
 import { useT } from '../../idioma/useT'
 import { defectoDe, GENERICOS, horaATexto, ORBITAS, SEMILLA_MAX, textoAHora, type Control } from './parametros'
 import type { Simulacion } from './useSimulacion'
@@ -50,18 +52,19 @@ function CampoSemilla({ valor, onCambiar }: { valor: number; onCambiar: (n: numb
   )
 }
 
-function ControlDelTipo({ c, sim }: { c: Control; sim: Simulacion }) {
-  const { t } = useT()
+function ControlDelTipo({ tipo, c, sim }: { tipo: string; c: Control; sim: Simulacion }) {
+  const { t, textoApi } = useT()
+  const etiqueta = textoApi(c.etiqueta, clavesApi.control(tipo, c.id, 'etiqueta')).texto
   const num = useNum()
   const defecto = defectoDe(c)
   const actual = typeof sim.valores[c.id] === 'number' ? (sim.valores[c.id] as number) : defecto
-  const ayuda = c.ayuda ? <Ayuda>{c.ayuda}</Ayuda> : null
+  const ayuda = c.ayuda ? <Ayuda><TextoApi texto={c.ayuda} clave={clavesApi.control(tipo, c.id, 'ayuda')} /></Ayuda> : null
   if (c.tipo === 'selector') {
     return (
       <div className="panel-sim__campo">
         <Selector
-          etiqueta={c.etiqueta} value={String(actual)} limite={t('obs.parametros.opciones_limite')}
-          opciones={(c.opciones ?? []).map((o) => ({ valor: String(o.valor), texto: o.etiqueta }))}
+          etiqueta={etiqueta} value={String(actual)} limite={t('obs.parametros.opciones_limite')}
+          opciones={(c.opciones ?? []).map((o) => ({ valor: String(o.valor), texto: textoApi(o.etiqueta, clavesApi.opcion(tipo, c.id, o.etiqueta)).texto }))}
           onChange={(e) => sim.cambiar(c.id, Number(e.target.value))}
         />
         {ayuda}
@@ -72,7 +75,7 @@ function ControlDelTipo({ c, sim }: { c: Control; sim: Simulacion }) {
     return (
       <div className="panel-sim__campo">
         <Campo
-          etiqueta={c.etiqueta} type="time" step={900} value={horaATexto(actual)}
+          etiqueta={etiqueta} type="time" step={900} value={horaATexto(actual)}
           limite={t('obs.parametros.hora_limite')}
           onChange={(e) => { const h = textoAHora(e.target.value); if (h !== null) sim.cambiar(c.id, h) }}
         />
@@ -83,7 +86,7 @@ function ControlDelTipo({ c, sim }: { c: Control; sim: Simulacion }) {
   if (c.tipo === 'interruptor') {
     return (
       <div className="panel-sim__campo">
-        <Interruptor etiqueta={c.etiqueta} activo={actual === 1} onCambiar={(a) => sim.cambiar(c.id, a ? 1 : 0)} />
+        <Interruptor etiqueta={etiqueta} activo={actual === 1} onCambiar={(a) => sim.cambiar(c.id, a ? 1 : 0)} />
         {ayuda}
       </div>
     )
@@ -92,7 +95,7 @@ function ControlDelTipo({ c, sim }: { c: Control; sim: Simulacion }) {
   return (
     <div className="panel-sim__campo">
       <Deslizador
-        etiqueta={c.etiqueta} valorTexto={`${num(actual)}${unidad}`}
+        etiqueta={etiqueta} valorTexto={`${num(actual)}${unidad}`}
         limite={t('obs.parametros.rango_limite', { min: num(c.minimo ?? 0), max: num(c.maximo ?? 0), unidad })}
         min={c.minimo ?? 0} max={c.maximo ?? 1} step={c.paso ?? 1} value={actual}
         onChange={(e) => sim.cambiar(c.id, Number(e.target.value))}
@@ -154,7 +157,7 @@ export function PanelSimulacion({ esc, controles, sim, enHoja }: Props) {
       </div>
 
       {controles.length > 0 && <h3 className="panel-sim__subtitulo">{t('obs.parametros.controles_titulo')}</h3>}
-      {controles.map((c) => <ControlDelTipo key={c.id} c={c} sim={sim} />)}
+      {controles.map((c) => <ControlDelTipo key={c.id} tipo={esc.tipo_cambio} c={c} sim={sim} />)}
 
       <div className="panel-sim__pie">
         <Boton variante="secundario" onClick={sim.restablecer}>{t('obs.parametros.restablecer')}</Boton>
