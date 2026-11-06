@@ -68,3 +68,22 @@ Criterios del borrador:
   `catalogos/qu/origen.ts` (`origen.sello.real`), en `catalogos/qu/estructura.ts`
   (`estructura.banda.largo`, `estructura.banda.corto`) y en la derivada «chiqanyachishka» (verificado) de
   `origen.sello.sintetico_no_verificado`, `origen.notas.aviso` y `origen.notas.sin_verificar`.
+
+## Tarea 6 · Piezas (gráficos, tiempo, comparador y mapa)
+
+Términos que se dejaron en español por no tener equivalente asentado (`catalogos/qu/piezas.ts`):
+
+- **«rango»** (rango de fechas o de valores, `piezas.grafico.*`, `piezas.comparador.aviso_rangos`): se usa
+  «rango» con sufijos kichwa («rangopi», «rangomanta»).
+- **«marca»** (marcas del gráfico), **«paso»** (paso del reproductor), **«evento»**, **«pasada»** (adquisición
+  del satélite), **«banda»** (franja tenue de la cinta), **«Barras»**, **«Gráfico»**, **«Satélite»**,
+  **«Relieve»**, **«Mapa base»**, **«Normal»** (velocidad), **«min»/«h»**: préstamos del español.
+- **Leyenda del mapa y de los gráficos**: las palabras «alejándose», «hacia el satélite» y «señal» en
+  `origen.leyenda.*` siguen en español (ver las notas de la Tarea 3).
+- **«Utkay» (velocidad)**, **«utka» / «mana utka» (rápida / lenta)**: propuesta del equipo; confirmar.
+- **«Yana» (oscuro)**, **«Panka mana rikuy» (opacidad de la capa)**: propuestas sin validar; «opacidad» no
+  tiene término asentado.
+- **«Rurashka chiqan» (verdad sintética)**: calco que mezcla «sintético» con «chiqan»; revisar con un
+  hablante (véase también la duda sobre «chiqan»).
+- **Meses y fechas**: los gráficos y la cinta muestran los meses abreviados en español en kichwa, hasta decidir
+  los nombres de los meses.

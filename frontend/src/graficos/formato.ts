@@ -1,11 +1,7 @@
-const cache = new Map<number, Intl.NumberFormat>()
+import { formatoNumero as formatoIdioma } from '../idioma/formato'
+import type { CodigoIdioma } from '../idioma/idiomas'
 
 /** Formatea con un número fijo de decimales (el de la escala), para que los ticks no se repitan. */
-export function formatoNumero(v: number, decimales = 2): string {
-  let f = cache.get(decimales)
-  if (!f) {
-    f = new Intl.NumberFormat('es-EC', { minimumFractionDigits: decimales, maximumFractionDigits: decimales })
-    cache.set(decimales, f)
-  }
-  return f.format(v)
+export function formatoNumero(v: number, decimales = 2, idioma: CodigoIdioma = 'es'): string {
+  return formatoIdioma(idioma, v, { minimumFractionDigits: decimales, maximumFractionDigits: decimales })
 }

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from 'react'
 import type { ReactNode } from 'react'
 import type { Rejilla } from '../api/rejilla'
+import { useT } from '../idioma/useT'
 import { Leyenda } from '../diseno/Leyenda'
 import { SelloOrigen } from '../diseno/SelloOrigen'
 import { textoSello, type Origen } from '../diseno/origen'
@@ -56,8 +57,10 @@ function capturar(el: Element, id: number) {
 /** Dos imágenes de la misma extensión con un divisor deslizante; clic = punto, arrastre = cuadrante. */
 export function Comparador({
   antes, despues, rampa, etiquetaAntes, etiquetaDespues, titulo, categorias, onPunto, onCuadrante,
-  punto, cuadrante, origen, origenDespues, unidad = 'valor', variable, leyenda,
+  punto, cuadrante, origen, origenDespues, unidad, variable, leyenda,
 }: Props) {
+  const { t } = useT()
+  const unidadVista = unidad ?? t('piezas.comparador.unidad_valor')
   const [pos, setPos] = useState(50)
   const escenario = useRef<HTMLDivElement>(null)
   const lienzoAntes = useRef<HTMLCanvasElement>(null)
@@ -71,10 +74,10 @@ export function Comparador({
 
   const par = useMemo(() => {
     if (!mismaExtension) return null
-    try { return { ...pintarPar(antes, despues, rampa, categorias), error: null as string | null } } catch (e) {
-      return { error: e instanceof Error ? e.message : 'No se pudo dibujar la comparación.' }
+    try { return { ...pintarPar(antes, despues, rampa, categorias, t), error: null as string | null } } catch (e) {
+      return { error: e instanceof Error ? e.message : t('piezas.comparador.error_dibujo') }
     }
-  }, [antes, despues, rampa, categorias, mismaExtension])
+  }, [antes, despues, rampa, categorias, mismaExtension, t])
 
   useEffect(() => {
     if (par && 'antes' in par) { pintarEn(lienzoAntes.current, par.antes); pintarEn(lienzoDespues.current, par.despues) }
@@ -143,7 +146,7 @@ export function Comparador({
     <figure className="comparador">
       {titulo && <figcaption className="comparador__titulo">{titulo}</figcaption>}
       {!mismaExtension ? (
-        <p className="comparador__aviso" role="alert">Las dos imágenes no cubren la misma zona, así que no se pueden comparar.</p>
+        <p className="comparador__aviso" role="alert">{t('piezas.comparador.sin_misma_zona')}</p>
       ) : par && par.error ? (
         <p className="comparador__aviso" role="alert">{par.error}</p>
       ) : (
@@ -161,8 +164,8 @@ export function Comparador({
           <span className="comparador__fecha comparador__fecha--antes">{etiquetaAntes}</span>
           <span className="comparador__fecha comparador__fecha--despues">{etiquetaDespues}</span>
           <div className="comparador__divisor" style={{ left: `${pos}%` }} role="slider" tabIndex={0}
-            aria-label="Divisor entre antes y después" aria-orientation="horizontal"
-            aria-valuemin={0} aria-valuemax={100} aria-valuenow={pos} aria-valuetext={`${Math.round(pos)} % de la imagen es «antes»`}
+            aria-label={t('piezas.comparador.divisor')} aria-orientation="horizontal"
+            aria-valuemin={0} aria-valuemax={100} aria-valuenow={pos} aria-valuetext={t('piezas.comparador.divisor_valor', { n: Math.round(pos) })}
             onKeyDown={alTeclear} onPointerDown={alBajarDivisor} onPointerMove={alMoverDivisor}
             onPointerUp={alSoltarDivisor} onPointerCancel={alSoltarDivisor}>
             <span className="comparador__linea" aria-hidden="true" />
@@ -171,10 +174,10 @@ export function Comparador({
         </div>
       )}
       {rangoOk?.aviso && <p className="comparador__nota">{rangoOk.aviso}</p>}
-      <Leyenda paleta={paletaDeRampa(rampa, !!categorias)} vmin={vmin} vmax={vmax} unidad={unidad}
+      <Leyenda paleta={paletaDeRampa(rampa, !!categorias)} vmin={vmin} vmax={vmax} unidad={unidadVista}
         variable={variable ?? VARIABLE_DE_RAMPA[rampa]} leyenda={leyenda} />
       <SelloOrigen origen={origen} />
-      {origenDespues && textoSello(origenDespues) !== textoSello(origen) && (
+      {origenDespues && textoSello(origenDespues, t) !== textoSello(origen, t) && (
         <SelloOrigen origen={origenDespues} />
       )}
     </figure>

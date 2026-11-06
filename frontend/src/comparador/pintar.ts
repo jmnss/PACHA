@@ -1,4 +1,5 @@
 import { decodificarRejilla, type Rejilla } from '../api/rejilla'
+import { traductor, type T } from '../idioma/traductor'
 import { colorear, type ColorCategoria, type NombreRampa } from '../diseno/rampas'
 
 export interface ParPintado {
@@ -38,6 +39,7 @@ export function pintarPar(
   despues: Rejilla,
   rampa: NombreRampa,
   categorias?: readonly ColorCategoria[],
+  t: T = traductor('es').t,
 ): ParPintado {
   const a = decodificarRejilla(antes)
   const d = decodificarRejilla(despues)
@@ -58,7 +60,7 @@ export function pintarPar(
     despues: colorear(reescalar(d, despues.vmin, despues.vmax, vmin, vmax), rampa, undefined, despues.columnas),
     vmin,
     vmax,
-    aviso: 'Las dos imágenes venían con rangos distintos; se muestran con el rango común para que los colores sean comparables.',
+    aviso: t('piezas.comparador.aviso_rangos'),
   }
 }
 

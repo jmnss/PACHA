@@ -1,3 +1,5 @@
+import type { Clave } from '../idioma/traductor'
+import { useT } from '../idioma/useT'
 import { Deslizador } from '../diseno/Deslizador'
 import { Pestanas } from '../diseno/Pestanas'
 import { MAPAS_BASE, type MapaBaseId } from './estilo'
@@ -13,14 +15,21 @@ interface Props {
 }
 
 /** Selector de mapa base y opacidad de la capa de datos: placa flotante sobre el mapa. */
+const CLAVE_BASE: Record<MapaBaseId, Clave> = {
+  oscuro: 'piezas.mapa.base_oscuro',
+  satelite: 'piezas.mapa.base_satelite',
+  relieve: 'piezas.mapa.base_relieve',
+}
+
 export function ControlesMapa({ base, onBase, opacidad, onOpacidad, conBases }: Props) {
+  const { t } = useT()
   return (
     <div className="controles-mapa">
       {conBases && (
-        <Pestanas etiqueta="Mapa base" pestanas={MAPAS_BASE.map((b) => ({ id: b.id, etiqueta: b.nombre }))}
+        <Pestanas etiqueta={t('piezas.mapa.base')} pestanas={MAPAS_BASE.map((b) => ({ id: b.id, etiqueta: t(CLAVE_BASE[b.id]) }))}
           activa={base} onCambiar={(id) => onBase(id as MapaBaseId)} />
       )}
-      <Deslizador etiqueta="Opacidad de la capa" valorTexto={`${Math.round(opacidad * 100)} %`}
+      <Deslizador etiqueta={t('piezas.mapa.opacidad')} valorTexto={`${Math.round(opacidad * 100)} %`}
         min={10} max={100} step={5} value={Math.round(opacidad * 100)}
         onChange={(e) => onOpacidad(Number(e.target.value) / 100)} />
     </div>

@@ -1,3 +1,6 @@
+import { formatoNumero } from '../idioma/formato'
+import type { CodigoIdioma } from '../idioma/idiomas'
+
 /**
  * Rampas de color de los datos (docs/diseno.md §4). Los valores hex de las rampas viven SOLO aquí y en
  * tokens.css. Se usan tal cual, por paradas interpoladas linealmente; no se inventan otras.
@@ -151,13 +154,13 @@ export function colorEnRampa(rampa: NombreRampa, t: number): string {
 export const MARCAS = 5
 
 /** Redondea a pasos «bonitos» con los decimales justos para que las 5 marcas se distingan. */
-export function formatoMarcas(vmin: number, vmax: number): string[] {
+export function formatoMarcas(vmin: number, vmax: number, idioma: CodigoIdioma = 'es'): string[] {
   const paso = (vmax - vmin) / (MARCAS - 1)
   // Menos decimales posibles que representen el paso exacto (máx. 3).
   let decimales = 0
   while (decimales < 3 && Math.abs(paso * 10 ** decimales - Math.round(paso * 10 ** decimales)) > 1e-6) decimales++
   return Array.from({ length: MARCAS }, (_, i) =>
-    (vmin + paso * i).toLocaleString('es', { minimumFractionDigits: decimales, maximumFractionDigits: decimales }),
+    formatoNumero(idioma, vmin + paso * i, { minimumFractionDigits: decimales, maximumFractionDigits: decimales }),
   )
 }
 

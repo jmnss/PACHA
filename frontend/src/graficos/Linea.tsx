@@ -1,3 +1,4 @@
+import { useT } from '../idioma/useT'
 import { SelloOrigen } from '../diseno/SelloOrigen'
 import type { Origen } from '../diseno/origen'
 import { esReal, textoSello } from '../diseno/origen'
@@ -30,6 +31,7 @@ const DIA = 86_400_000
 
 /** Gráfico de líneas rectas de 2 px (docs/diseno.md §8). Siempre lleva el sello de origen. */
 export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 }: Props) {
+  const { t: tr, idioma, tn } = useT()
   const { ref, ancho } = useAncho()
   const sint = !esReal(origen)
   const datos = series.map((s, i) => ({
@@ -52,10 +54,11 @@ export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 
   const t1 = tiempos.length ? Math.max(...tiempos) : 1
   const escala = vacio ? escalaRedonda(0, 1, 3) : escalaRedonda(Math.min(...valores), Math.max(...valores), 5)
   const dec = escala.decimales
+  const fmt = (v: number, d: number) => formatoNumero(v, d, idioma)
   const vmin = escala.ticks[0]
   const vmax = escala.tope
 
-  const anchoEtq = Math.max(...escala.ticks.map((v) => formatoNumero(v, dec).length)) * ANCHO_CARACTER
+  const anchoEtq = Math.max(...escala.ticks.map((v) => fmt(v, dec).length)) * ANCHO_CARACTER
   const mIzq = Math.ceil(anchoEtq) + GUARDA_EJE
   const x0 = mIzq
   const x1 = Math.max(x0 + ANCHO_MIN_PLANO, ancho - M_DER)
@@ -76,7 +79,7 @@ export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 
 
   const conAnio = t1 - t0 > 330 * DIA
   const conHora = t1 - t0 < 2 * DIA
-  const fmt = (t: number) => fechaEje(t, { conAnio, conHora })
+  const fmtX = (t: number) => fechaEje(t, { conAnio, conHora }, idioma)
   const nEtq = ancho < 420 ? 3 : 4
   const ticksX = t1 === t0 ? [t0] : Array.from({ length: nEtq }, (_, i) => t0 + ((t1 - t0) * i) / (nEtq - 1))
 
@@ -98,15 +101,30 @@ export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 
     return partes.join('')
   }
 
-  const textoMarcas = marcasVis.length
-    ? ` Marcas: ${marcasVis.map((m) => `${m.etiqueta} (${fechaEje(m.t, { conAnio: true, conHora })})`).join(', ')}.`
+  const marcasTexto = marcasVis.length
+    ? tr('piezas.grafico.resumen_marcas', {
+        lista: marcasVis.map((m) => `${m.etiqueta} (${fechaEje(m.t, { conAnio: true, conHora }, idioma)})`).join(', '),
+      })
     : ''
-  const textoFuera = marcasFuera.length
-    ? ` Fuera del rango temporal: ${marcasFuera.map((m) => m.etiqueta).join(', ')}.`
+  const fueraTexto = marcasFuera.length
+    ? tr('piezas.grafico.resumen_fuera', { lista: marcasFuera.map((m) => m.etiqueta).join(', ') })
     : ''
+  const sello = textoSello(origen, tr)
+  const nombre = titulo ?? tr('piezas.grafico.titulo_linea')
   const resumen = vacio
-    ? `${titulo ?? 'Gráfico'}: sin datos en este rango.${textoMarcas}${textoFuera} ${textoSello(origen)}`
-    : `${titulo ?? 'Gráfico'}: ${datos.map((s) => rotulo(s.nombre, sint)).join(', ')}; de ${formatoNumero(Math.min(...valores), dec)} a ${formatoNumero(Math.max(...valores), dec)} ${unidad}, del ${fechaEje(t0, { conAnio: true, conHora })} al ${fechaEje(t1, { conAnio: true, conHora })}.${textoMarcas}${textoFuera} ${textoSello(origen)}`
+    ? tr('piezas.grafico.resumen_linea_vacio', { titulo: nombre, marcas: marcasTexto, fuera: fueraTexto, sello })
+    : tr('piezas.grafico.resumen_linea', {
+        titulo: nombre,
+        series: datos.map((s) => rotulo(s.nombre, sint, tr)).join(', '),
+        minimo: fmt(Math.min(...valores), dec),
+        maximo: fmt(Math.max(...valores), dec),
+        unidad,
+        desde: fechaEje(t0, { conAnio: true, conHora }, idioma),
+        hasta: fechaEje(t1, { conAnio: true, conHora }, idioma),
+        marcas: marcasTexto,
+        fuera: fueraTexto,
+        sello,
+      })
 
   return (
     <figure className="grafico">
@@ -117,7 +135,7 @@ export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 
             {datos.map((s) => (
               <li key={s.indice}>
                 <span className="grafico__punto" style={{ background: color(s) }} aria-hidden="true" />
-                {rotulo(s.nombre, sint)}
+                {rotulo(s.nombre, sint, tr)}
               </li>
             ))}
           </ul>
@@ -129,7 +147,7 @@ export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 
             <g key={v}>
               <line className="grafico__rejilla" x1={x0} x2={x1} y1={py(v)} y2={py(v)} />
               <text className="grafico__eje" x={x0 - 8} y={py(v)} textAnchor="end" dominantBaseline="middle">
-                {formatoNumero(v, dec)}
+                {fmt(v, dec)}
               </text>
             </g>
           ))}
@@ -141,7 +159,7 @@ export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 
               y={y1 + 18}
               textAnchor={i === 0 && ticksX.length > 1 ? 'start' : i === ticksX.length - 1 && ticksX.length > 1 ? 'end' : 'middle'}
             >
-              {fmt(t)}
+              {fmtX(t)}
             </text>
           ))}
           {marcasVis.map((m, i) => {
@@ -162,7 +180,7 @@ export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 
             <>
               <line className="grafico__cero" x1={x0} x2={x1} y1={py(0)} y2={py(0)} />
               <text className="grafico__vacio" x={(x0 + x1) / 2} y={(y0 + y1) / 2} textAnchor="middle">
-                Sin datos en este rango
+                {tr('piezas.grafico.sin_datos')}
               </text>
             </>
           ) : (
@@ -170,7 +188,7 @@ export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 
               <path
                 key={s.indice}
                 className={`grafico__linea${s.verdad ? ' grafico__linea--verdad' : ''}`}
-                data-serie={rotulo(s.nombre, sint)}
+                data-serie={rotulo(s.nombre, sint, tr)}
                 d={segmentos(s.pts)}
                 stroke={color(s)}
                 strokeDasharray={s.verdad ? '4 4' : undefined}
@@ -182,8 +200,7 @@ export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 
       </div>
       {marcasFuera.length > 0 && (
         <p className="grafico__nota">
-          {marcasFuera.length === 1 ? 'Una marca queda' : `${marcasFuera.length} marcas quedan`} fuera del rango de fechas:{' '}
-          {marcasFuera.map((m) => m.etiqueta).join(', ')}.
+          {tn('piezas.grafico.marca_fuera', marcasFuera.length, { lista: marcasFuera.map((m) => m.etiqueta).join(', ') })}
         </p>
       )}
       <figcaption className="grafico__pie">

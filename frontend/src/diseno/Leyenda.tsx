@@ -28,7 +28,7 @@ const PASOS = 9
 
 /** Leyenda junto a su capa: rampa en 9 casillas (sin degradado), 5 marcas, unidad y extremos en palabras. */
 export function Leyenda({ paleta, vmin, vmax, unidad, leyenda, variable, extremos }: Props) {
-  const { t } = useT()
+  const { t, idioma } = useT()
   if (paleta === 'categorias') {
     const items = leyenda ?? []
     const colores = coloresDeCategorias(variable ?? '', items.length)
@@ -54,7 +54,7 @@ export function Leyenda({ paleta, vmin, vmax, unidad, leyenda, variable, extremo
   const clavesExtremos = EXTREMOS[paleta]
   const claves = extremos ?? clavesExtremos
   const palabras = claves && [t(claves[0]), t(claves[1])]
-  const marcas = formatoMarcas(vmin, vmax)
+  const marcas = formatoMarcas(vmin, vmax, idioma)
   return (
     <div className="leyenda" role="group" aria-label={t('origen.leyenda.titulo_rango', { unidad, desde: marcas[0], hasta: marcas[MARCAS - 1] })}>
       <div className="leyenda__pasos" aria-hidden="true">

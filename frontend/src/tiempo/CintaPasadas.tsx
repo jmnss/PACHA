@@ -1,5 +1,7 @@
 import { useRef, type KeyboardEvent, type PointerEvent } from 'react'
 import type { components } from '../api/tipos'
+import { useT } from '../idioma/useT'
+import { formatearFecha, formatearInstante } from './fechas'
 
 type Adquisicion = components['schemas']['Adquisicion']
 
@@ -21,8 +23,6 @@ interface Props {
 }
 
 const MIN = 60_000
-const fmt = new Intl.DateTimeFormat('es-EC', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
-const fmtHora = new Intl.DateTimeFormat('es-EC', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC' })
 
 /** Índice de la pasada más cercana a t (ms). */
 function masCercano(ts: number[], t: number): number {
@@ -37,10 +37,12 @@ function masCercano(ts: number[], t: number): number {
  * Clic o arrastre = instante al minuto más cercano (no solo a la muesca).
  */
 export function CintaPasadas({ adquisiciones, evento, instante, temporadas = [], onCambio }: Props) {
+  const { t, idioma } = useT()
+  const fecha = (ms: number) => formatearFecha(new Date(ms).toISOString(), idioma) ?? '—'
   const pista = useRef<HTMLDivElement>(null)
   const arrastrando = useRef(false)
   const ts = adquisiciones.map((a) => Date.parse(a.instante))
-  if (ts.length === 0) return <div className="cinta cinta--vacia">Sin pasadas disponibles.</div>
+  if (ts.length === 0) return <div className="cinta cinta--vacia">{t('piezas.tiempo.cinta.sin_pasadas')}</div>
 
   const t0 = Math.min(...ts)
   const t1 = Math.max(...ts)
@@ -84,7 +86,7 @@ export function CintaPasadas({ adquisiciones, evento, instante, temporadas = [],
     if (e.key in mapa) { e.preventDefault(); irAPasada(mapa[e.key]) }
   }
 
-  const textoValor = `Pasada ${iActivo + 1} de ${ts.length}, ${fmtHora.format(actual)} UTC`
+  const textoValor = t('piezas.tiempo.cinta.valor', { i: iActivo + 1, n: ts.length, fecha: formatearInstante(actual, idioma) ?? '—' })
 
   return (
     <div className="cinta">
@@ -93,7 +95,7 @@ export function CintaPasadas({ adquisiciones, evento, instante, temporadas = [],
         className="cinta__pista"
         role="slider"
         tabIndex={0}
-        aria-label="Instante de la cinta de pasadas"
+        aria-label={t('piezas.tiempo.cinta.etiqueta')}
         aria-orientation="horizontal"
         aria-valuemin={0}
         aria-valuemax={ts.length - 1}
@@ -110,7 +112,7 @@ export function CintaPasadas({ adquisiciones, evento, instante, temporadas = [],
           const a = Date.parse(s.inicio), b = Date.parse(s.fin)
           if (!(b > t0 && a < t1)) return null
           return (
-            <span key={i} className="cinta__temporada" title="Temporada lluviosa"
+            <span key={i} className="cinta__temporada" title={t('piezas.tiempo.cinta.temporada_lluviosa')}
               style={{ left: `${pct(a)}%`, width: `${pct(b) - pct(a)}%` }} />
           )
         })}
@@ -122,13 +124,13 @@ export function CintaPasadas({ adquisiciones, evento, instante, temporadas = [],
         <span className="cinta__cursor" style={{ left: `${pct(actual)}%` }} data-testid="cinta-cursor" />
       </div>
       <div className="cinta__fechas">
-        <span>{fmt.format(t0)}</span>
-        <span>{fmt.format(t1)}</span>
+        <span>{fecha(t0)}</span>
+        <span>{fecha(t1)}</span>
       </div>
       {hayEvento && (
         <div className="cinta__fechas cinta__fechas--evento">
-          <span>Evento: {fmt.format(tEvento)}</span>
-          {temporadas.some((s) => s.tipo === 'lluviosa') && <span className="cinta__leyenda-banda">Franja tenue: temporada lluviosa</span>}
+          <span>{t('piezas.tiempo.cinta.evento', { fecha: fecha(tEvento) })}</span>
+          {temporadas.some((s) => s.tipo === 'lluviosa') && <span className="cinta__leyenda-banda">{t('piezas.tiempo.cinta.franja')}</span>}
         </div>
       )}
     </div>
