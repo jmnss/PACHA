@@ -7,7 +7,7 @@ import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
 import { Barras } from '../../graficos/Barras'
 import { PanelRadar } from '../simulador/PanelRadar'
-import { mensajeError } from './mensajeError'
+import { mensajeDeError } from '../../api/cliente'
 
 interface Props { banda: string; pol: string; onBanda: (b: string) => void; onPol: (p: string) => void }
 
@@ -22,7 +22,7 @@ const COLUMNAS: ColumnaTabla<Fila>[] = [
 export function VistaPolarizacion({ banda, pol, onBanda, onPol }: Props) {
   const q = useRespuestaRadar(banda, pol)
   if (q.isPending) return <Cargando texto="Preparando el experimento…" filas={4} />
-  if (q.isError) return <ErrorBloque mensaje={mensajeError(q.error)} onReintentar={() => void q.refetch()} />
+  if (q.isError) return <ErrorBloque mensaje={mensajeDeError(q.error)} onReintentar={() => void q.refetch()} />
   const d = q.data
   const barras = d.respuestas.filter((r) => r.pol === pol).map((r) => ({ etiqueta: r.superficie, corta: r.superficie === 'Bosque inundado' ? 'Inundado' : r.superficie, valor: r.db }))
   const filas: Fila[] = d.cambios.map((c) => ({ cambio: c.cambio, mejor: c.mejor_pol, contraste: c.contraste_db }))

@@ -46,3 +46,26 @@ def test_otros_escenarios_no_aplican(prov, id):
     a, b = prov.intervalo_por_defecto(id)
     with pytest.raises(EntradaNoValida):
         impacto.resumen(prov, id, a, b, None)
+
+
+def test_la_evolucion_llega_hasta_despues_y_no_mas_alla(prov):
+    esc = prov.escenario("ec_la_segua")
+    ids = [a.id for a in esc.adquisiciones]
+    r = impacto.resumen(prov, "ec_la_segua", ids[2], ids[9], None)
+    assert max(p["instante"] for p in r["evolucion"]) == esc.adquisiciones[9].instante
+    assert min(p["instante"] for p in r["evolucion"]) > esc.adquisiciones[2].instante
+
+
+def test_despues_anterior_a_antes_es_error(prov):
+    ids = [a.id for a in prov.escenario("ec_la_segua").adquisiciones]
+    with pytest.raises(EntradaNoValida):
+        impacto.resumen(prov, "ec_la_segua", ids[9], ids[2], None)
+
+
+def test_categorias_inesperadas_fallan_en_vez_de_rotular_mal():
+    from datos.contrato import CapaRaster
+    from datos.laboratorio import origen
+    capa = CapaRaster("x", None, "v", None, "", "categorias", 0, 2, [("Otra cosa", "#000"), ("Algo más", "#000")],
+                      np.ones((4, 4), np.float32), (-80, -2, -79, -1), origen("prueba"))
+    with pytest.raises(EntradaNoValida):
+        impacto._codigos(capa, impacto.AFECTADO["incendio"])

@@ -207,6 +207,10 @@ Spec: `docs/superpowers/specs/2026-11-05-laboratorio-recorrido-design.md`.
 - Localizador de Ecuador en el mapa del Observatorio (`mapa/Localizador.tsx`): silueta continental con el punto del escenario; resuelve el fondo gris a escala de escenario sin mapa base. Se oculta con «Ver todo Ecuador».
 - Pendiente: hoja inferior de parámetros del Observatorio en móvil.
 
+## Revisión de código (`/code-review high`, 2026-11-05)
+
+Corregido: el recorrido se saltaba pasos al avanzar solo (ahora un temporizador por paso, con prueba de avance de uno en uno); la evolución del impacto cubría pasadas posteriores a «después» (ahora solo el intervalo, con «después» incluida y error 422 si el orden es inverso); las categorías de impacto se resuelven por etiqueta y fallan si no coinciden; el impacto tiene caché acotada (la evolución llama hasta 13 veces a `cambio`; con el proveedor real sería lo más caro de medir); etiquetas distintas en las barras de severidad; el modo incrustado también se activa dentro de un iframe; el laboratorio muestra y cuenta las **falsas alarmas** del radar por moteado (antes exageraba su ventaja sobre el óptico); localizador sin spread gigante y sin punto engañoso fuera de la silueta; `mensajeDeError` compartido y franja de métricas sin orden posicional.
+
 ## Cumplimiento de `docs/challenge.md` (con evidencia)
 
 | Requisito | Estado | Evidencia |

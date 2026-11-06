@@ -6,7 +6,7 @@ import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
 import { PanelRadar } from '../simulador/PanelRadar'
-import { mensajeError } from './mensajeError'
+import { mensajeDeError } from '../../api/cliente'
 
 interface Props { cobertura: number; onCobertura: (n: number) => void }
 
@@ -14,9 +14,8 @@ interface Props { cobertura: number; onCobertura: (n: number) => void }
 export function VistaNubes({ cobertura, onCobertura }: Props) {
   const q = useNubes(cobertura)
   if (q.isPending) return <Cargando texto="Preparando el experimento…" filas={4} />
-  if (q.isError) return <ErrorBloque mensaje={mensajeError(q.error)} onReintentar={() => void q.refetch()} />
+  if (q.isError) return <ErrorBloque mensaje={mensajeDeError(q.error)} onReintentar={() => void q.refetch()} />
   const d = q.data
-  const [radar, optico, tapado] = d.metricas
   return (
     <div className="laboratorio">
       <Tarjeta titulo="Ajusta las nubes" pie={<SelloOrigen origen={d.origen} />}>
@@ -27,11 +26,7 @@ export function VistaNubes({ cobertura, onCobertura }: Props) {
           onChange={(e) => onCobertura(Number(e.target.value))}
           limite="Las nubes tapan la imagen óptica posterior a la inundación. Al radar no le afectan."
         />
-        <FranjaKpi items={[
-          { ...radar, etiqueta: radar.etiqueta, principal: true },
-          { ...optico, etiqueta: optico.etiqueta },
-          { ...tapado, etiqueta: tapado.etiqueta },
-        ]} />
+        <FranjaKpi items={d.metricas.map((m, k) => ({ ...m, principal: k === 0 }))} />
       </Tarjeta>
       <div className="laboratorio__rejilla">
         <PanelRadar capa={d.optico} titulo="Imagen óptica después de la inundación" />

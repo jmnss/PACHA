@@ -15,8 +15,9 @@ from datos.contrato import CapaRaster, EntradaNoValida, Metrica, ProveedorDatos
 
 MAX_PUNTOS_EVOLUCION = 12
 
-# Categorías que cuentan como «afectado» por tipo de historia (código = posición + 1 en la leyenda)
-AFECTADO = {"inundacion": {1, 3}, "incendio": {1, 2}}
+# Qué etiquetas de la leyenda cuentan como «afectado» por tipo de historia. Los códigos se resuelven por
+# etiqueta (no por posición): si el proveedor cambia el orden o el texto, falla en vez de rotular mal.
+AFECTADO = {"inundacion": ("Nueva inundación", "Inundación persistente"), "incendio": ("Severidad",)}
 ACCIONES = {
     "inundacion": [
         "Contrastar los bordes de la mancha con el aviso de la autoridad local antes de decidir cierres de vías.",
@@ -56,6 +57,14 @@ def _capa_de_impacto(r) -> CapaRaster:
     return capa
 
 
+def _codigos(capa: CapaRaster, prefijos: tuple[str, ...]) -> set[int]:
+    """Códigos (posición + 1) de las categorías cuya etiqueta empieza por alguno de los prefijos."""
+    cods = {k for k, (etiqueta, _c) in enumerate(capa.leyenda or [], start=1) if etiqueta.startswith(prefijos)}
+    if not cods:
+        raise EntradaNoValida("La clasificación del escenario no trae las categorías esperadas para resumir el impacto.")
+    return cods
+
+
 def _km2(capa: CapaRaster, codigos: set[int]) -> float:
     d = capa.datos
     return float(np.isin(d[~np.isnan(d)], list(codigos)).sum() * _area_pixel_km2(capa))
@@ -68,7 +77,21 @@ def _espaciados(ids: list[str], maximo: int) -> list[str]:
     return [ids[i] for i in idx]
 
 
+_CACHE: dict[tuple, dict] = {}
+_CACHE_MAX = 32
+
+
 def resumen(prov: ProveedorDatos, escenario_id: str, antes: str, despues: str, pol: str | None) -> dict:
+    """Con caché acotada: la evolución llama hasta 13 veces a `prov.cambio`, que con el proveedor real sería caro."""
+    clave = (id(prov), escenario_id, antes, despues, pol)
+    if clave not in _CACHE:
+        if len(_CACHE) >= _CACHE_MAX:
+            _CACHE.pop(next(iter(_CACHE)))
+        _CACHE[clave] = _calcular(prov, escenario_id, antes, despues, pol)
+    return _CACHE[clave]
+
+
+def _calcular(prov: ProveedorDatos, escenario_id: str, antes: str, despues: str, pol: str | None) -> dict:
     esc = prov.escenario(escenario_id)
     historia = esc.historia
     if historia not in AFECTADO:
@@ -82,15 +105,24 @@ def resumen(prov: ProveedorDatos, escenario_id: str, antes: str, despues: str, p
     for k, (etiqueta, _color) in enumerate(capa.leyenda, start=1):
         km2 = _km2(capa, {k})
         categorias.append({"etiqueta": etiqueta, "km2": km2, "ha": km2 * 100, "pct_escena": 100 * km2 / escena_km2 if escena_km2 else 0.0})
-    afectada_km2 = _km2(capa, AFECTADO[historia])
+    afectadas = _codigos(capa, AFECTADO[historia])
+    afectada_km2 = _km2(capa, afectadas)
 
     # Evolución: superficie afectada en cada pasada frente a la pasada «antes».
-    t_antes = next(a.instante for a in esc.adquisiciones if a.id == antes)
-    posteriores = [a for a in esc.adquisiciones if a.instante > t_antes]
-    por_id = {a.id: a for a in posteriores}
+    por_id_todas = {a.id: a for a in esc.adquisiciones}
+    t_antes, t_despues = por_id_todas[antes].instante, por_id_todas[despues].instante
+    if t_despues <= t_antes:
+        raise EntradaNoValida("La pasada «después» debe ser posterior a la pasada «antes».")
+    # Solo el intervalo analizado (hasta «después» incluida), y «después» siempre está en la serie.
+    en_rango = sorted((a for a in esc.adquisiciones if t_antes < a.instante <= t_despues), key=lambda a: a.instante)
+    por_id = {a.id: a for a in en_rango}
+    ids = _espaciados([a.id for a in en_rango], MAX_PUNTOS_EVOLUCION)
+    if despues not in ids:
+        ids = [*ids[:-1], despues] if ids else [despues]
     evolucion = []
-    for aid in _espaciados([a.id for a in posteriores], MAX_PUNTOS_EVOLUCION):
-        km2 = _km2(_capa_de_impacto(prov.cambio(escenario_id, antes, aid, pol)), AFECTADO[historia])
+    for aid in ids:
+        c = _capa_de_impacto(prov.cambio(escenario_id, antes, aid, pol))
+        km2 = _km2(c, _codigos(c, AFECTADO[historia]))
         evolucion.append({"instante": por_id[aid].instante, "ha": km2 * 100})
     pico = max(evolucion, key=lambda p: p["ha"]) if evolucion else None
 
@@ -98,14 +130,14 @@ def resumen(prov: ProveedorDatos, escenario_id: str, antes: str, despues: str, p
     pct_afectada = 100 * afectada_km2 / escena_km2 if escena_km2 else 0.0
     if historia == "inundacion":
         titulo = "Superficie inundada"
-        nueva = categorias[0]["ha"]
+        nueva = sum(c["ha"] for c in categorias if c["etiqueta"].startswith("Nueva inundación"))
         cifras = [Metrica(etiqueta="Superficie inundada al final", valor=_n(ha), unidad="ha", ayuda="Hectáreas con agua en la pasada «después» (nueva inundación más la que ya estaba)."),
                   Metrica(etiqueta="Inundación nueva", valor=_n(nueva), unidad="ha", ayuda="Hectáreas que no tenían agua en la pasada «antes» y sí en la «después»."),
                   Metrica(etiqueta="Parte de la escena", valor=_pct(pct_afectada), unidad="%", ayuda="Fracción del área analizada que está inundada al final.")]
         lectura = [f"En este escenario de demostración, el radar marca unas {_n(ha)} ha con agua al final del intervalo, el {_pct(pct_afectada)} % del área analizada."]
     else:
         titulo = "Superficie quemada"
-        alta = categorias[-1]["ha"]
+        alta = sum(c["ha"] for c in categorias if c["etiqueta"].startswith("Severidad alta"))
         cifras = [Metrica(etiqueta="Superficie quemada detectada", valor=_n(ha), unidad="ha", ayuda="Hectáreas donde la señal cruzada (HV) cayó lo bastante para marcar daño."),
                   Metrica(etiqueta="Severidad alta", valor=_n(alta), unidad="ha", ayuda="Hectáreas con la mayor caída de señal: la mayor pérdida de estructura del bosque."),
                   Metrica(etiqueta="Parte de la escena", valor=_pct(pct_afectada), unidad="%", ayuda="Fracción del área analizada que aparece quemada.")]

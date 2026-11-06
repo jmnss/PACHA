@@ -22,10 +22,15 @@ const DESTINOS: Destino[] = [
   { ruta: '/fundamentos', etiqueta: 'Fundamentos', etiquetaCorta: 'Base', Icono: IconoLibro },
 ]
 
+/** ¿La app corre dentro de un iframe (el recorrido)? Así el modo incrustado sobrevive a la navegación interna. */
+function dentroDeMarco(): boolean {
+  try { return window.self !== window.top } catch { return true }
+}
+
 /** Riel de 50 px (escritorio, tablet) o barra inferior (< 700 px) más el lienzo con la banda arriba. */
 export function Estructura() {
   // `?incrustado=1`: pantalla dentro del recorrido; sin riel (la banda de demostración se queda).
-  const incrustado = useSearchParams()[0].get('incrustado') === '1'
+  const incrustado = useSearchParams()[0].get('incrustado') === '1' || dentroDeMarco()
   return (
     <div className="estructura">
       {!incrustado && <nav className="riel" aria-label="Principal">

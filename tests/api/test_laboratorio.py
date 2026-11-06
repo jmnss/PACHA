@@ -3,7 +3,7 @@ def test_nubes(cliente_demo):
     assert r.status_code == 200
     d = r.json()
     assert d["origen"]["tipo"] == "sintetico" and d["optico"]["rejilla"]["filas"] == 64
-    assert len(d["metricas"]) == 3 and d["porcentaje_radar"] > d["porcentaje_optico"]
+    assert len(d["metricas"]) == 4 and d["porcentaje_radar"] > d["porcentaje_optico"]
 
 
 def test_nubes_fuera_de_rango_422(cliente_demo):

@@ -34,9 +34,9 @@ export const COLORES_CATEGORIA: Record<string, ColorCategoria[]> = {
   cambio_por_parcela: [null, '#5fc39c', '#e0773a', '#4f8fc4'],
   // Hielo nuevo (avance), Hielo perdido (retroceso del frente)
   cambio_del_frente: ['#4f8fc4', '#e0773a'],
-  // Laboratorio: Sin cambio (transparente), Cambio detectado, Cambio sin detectar, Tapado por nube
-  clasificacion_optico: [null, '#4f8fc4', '#e0773a', '#cfcfd2'],
-  clasificacion_radar: [null, '#4f8fc4', '#e0773a', '#cfcfd2'],
+  // Laboratorio: Sin cambio (transparente), Cambio detectado, Cambio sin detectar, Tapado por nube, Falsa alarma
+  clasificacion_optico: [null, '#4f8fc4', '#e0773a', '#cfcfd2', '#f8d98a'],
+  clasificacion_radar: [null, '#4f8fc4', '#e0773a', '#cfcfd2', '#f8d98a'],
   // Laboratorio: Bosque, Agua, Bosque inundado, Cultivo, Quemado
   superficies: ['#5fc39c', '#2a6496', '#8fc0e6', '#efa04a', '#9a3412'],
 }

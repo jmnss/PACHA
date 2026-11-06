@@ -16,22 +16,19 @@ export default function Recorrido() {
   const indice = Number.isInteger(n) && n >= 1 && n <= GUION.length ? n - 1 : 0
   const paso = GUION[indice]
   const [auto, setAuto] = useState(() => !prefiereMenosMovimiento())
-  const [restante, setRestante] = useState(paso.segundos)
   const raiz = useRef<HTMLDivElement>(null)
 
   const ir = (i: number) => setParams(i === 0 ? {} : { paso: String(i + 1) }, { replace: true })
 
-  useEffect(() => { setRestante(paso.segundos) }, [paso])
+  // Un temporizador por paso: se rearma al cambiar de paso o al reanudar, y nunca lee estado de un render anterior.
   useEffect(() => {
     if (!auto) return
-    const t = setInterval(() => setRestante((r) => r - 1), 1000)
-    return () => clearInterval(t)
-  }, [auto, indice])
-  useEffect(() => {
-    if (restante > 0) return
-    if (indice < GUION.length - 1) ir(indice + 1)
-    else setAuto(false)
-  }) // eslint-disable-line react-hooks/exhaustive-deps
+    const t = setTimeout(() => {
+      if (indice < GUION.length - 1) ir(indice + 1)
+      else setAuto(false)
+    }, paso.segundos * 1000)
+    return () => clearTimeout(t)
+  }, [auto, indice]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const alTeclear = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowRight' && indice < GUION.length - 1) ir(indice + 1)

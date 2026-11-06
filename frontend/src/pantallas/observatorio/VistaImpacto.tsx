@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
+import { mensajeDeError } from '../../api/cliente'
 import { useImpacto, type Escenario } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
 import { Cargando, ErrorBloque } from '../../diseno/Estados'
@@ -23,7 +23,7 @@ export function VistaImpacto({ esc, antesId, despuesId, polarizacion }: Props) {
   const [aviso, setAviso] = useState<string | null>(null)
   if (antesId === despuesId) return <p className="observatorio__aviso">Elige dos pasadas distintas para resumir el impacto.</p>
   if (q.isPending) return <Cargando texto="Calculando el impacto…" filas={4} />
-  if (q.isError) return <ErrorBloque mensaje={q.error instanceof ErrorApi ? q.error.mensaje : MENSAJE_RED} onReintentar={() => void q.refetch()} />
+  if (q.isError) return <ErrorBloque mensaje={mensajeDeError(q.error)} onReintentar={() => void q.refetch()} />
   const d = q.data
 
   const descargar = async () => {
@@ -48,7 +48,7 @@ export function VistaImpacto({ esc, antesId, despuesId, polarizacion }: Props) {
       <div className="impacto__rejilla">
         <PanelRadar capa={d.capa} titulo={`Dónde: ${d.antes} → ${d.despues}`} />
         <Tarjeta titulo="Hectáreas por categoría">
-          <Barras datos={d.categorias.map((c) => ({ etiqueta: c.etiqueta, corta: c.etiqueta.split(' ')[0], valor: Math.round(c.ha) }))} unidad="ha" origen={d.origen} />
+          <Barras datos={d.categorias.map((c) => ({ etiqueta: c.etiqueta, corta: c.etiqueta.replace(/\s*\(.*\)/, ''), valor: Math.round(c.ha) }))} unidad="ha" origen={d.origen} />
         </Tarjeta>
       </div>
       {d.evolucion.length > 1 && (

@@ -52,3 +52,11 @@ def test_entradas_invalidas(args):
 def test_cobertura_fuera_de_rango():
     with pytest.raises(EntradaNoValida):
         lab.nubes(120)
+
+
+def test_las_falsas_alarmas_del_radar_se_muestran_y_se_cuentan():
+    r = lab.nubes(0)
+    cambio = r["capas"]["cambio_radar"].datos
+    assert (cambio == 5).any()  # el moteado produce píxeles sin cambio marcados como cambio
+    m = {x.etiqueta: x for x in r["metricas"]}["Falsas alarmas del radar"]
+    assert 0 < float(m.valor.replace(",", ".")) < 20

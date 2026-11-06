@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { GUION } from './guion'
 import Recorrido from './Recorrido'
 
@@ -34,5 +34,21 @@ describe('Recorrido', () => {
   it('un paso fuera de rango cae al primero', () => {
     montar('/recorrido?paso=99')
     expect(screen.getByText(GUION[0].titulo)).toBeInTheDocument()
+  })
+})
+
+describe('Recorrido · avance automático', () => {
+  afterEach(() => vi.useRealTimers())
+  it('avanza de uno en uno (no se salta pasos) y se detiene en el último', () => {
+    vi.useFakeTimers()
+    vi.stubGlobal('matchMedia', () => ({ matches: false, addEventListener() {}, removeEventListener() {} }))
+    montar()
+    for (let i = 1; i < GUION.length; i++) {
+      act(() => { vi.advanceTimersByTime(GUION[i - 1].segundos * 1000) })
+      expect(screen.getByText(GUION[i].titulo)).toBeInTheDocument()
+    }
+    act(() => { vi.advanceTimersByTime(GUION[GUION.length - 1].segundos * 1000) })
+    expect(screen.getByRole('button', { name: 'Reanudar' })).toBeInTheDocument()
+    vi.unstubAllGlobals()
   })
 })

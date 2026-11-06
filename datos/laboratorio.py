@@ -35,7 +35,8 @@ OPTICO = {BOSQUE: 0.25, AGUA: 0.08, BOSQUE_INUNDADO: 0.22, CULTIVO: 0.32, QUEMAD
 UMBRAL_RADAR_DB = 4.0
 UMBRAL_OPTICO = 0.08
 LEYENDA_CAMBIO = [("Sin cambio", "#4a5568"), ("Cambio detectado", "#e5b93c"),
-                  ("Cambio sin detectar", "#d9534f"), ("Tapado por nube", "#c8ccd4")]
+                  ("Cambio sin detectar", "#d9534f"), ("Tapado por nube", "#c8ccd4"),
+                  ("Falsa alarma", "#c96b8c")]
 LEYENDA_SUPERFICIES = list(zip(SUPERFICIES, ("#2f7d4f", "#2a6fb0", "#7fb8a0", "#b9a45a", "#6b4a3a")))
 
 
@@ -123,6 +124,7 @@ def nubes(cobertura_pct: float, semilla: int = 1) -> dict:
         c = np.ones((N, N), np.float32)                     # 1 sin cambio
         c[real & det] = 2                                   # 2 detectado
         c[real & ~det] = 3                                  # 3 sin detectar
+        c[~real & det] = 5                                  # 5 falsa alarma (moteado o ruido)
         if con_nube:
             c[nube] = 4                                     # 4 tapado por nube
         return c
@@ -131,8 +133,8 @@ def nubes(cobertura_pct: float, semilla: int = 1) -> dict:
     capas = {
         "optico": _capa("reflectancia", None, "reflectancia", "gris", 0.0, 1.0, None, od, nota),
         "radar": _capa("sigma0", "HH", "dB", "gris", -30.0, 0.0, None, rd, nota + " Banda L, HH."),
-        "cambio_optico": _capa("clasificacion_optico", None, "", "categorias", 0, 4, LEYENDA_CAMBIO, cambio(det_opt, True), nota),
-        "cambio_radar": _capa("clasificacion_radar", "HH", "", "categorias", 0, 4, LEYENDA_CAMBIO, cambio(det_radar, False), nota),
+        "cambio_optico": _capa("clasificacion_optico", None, "", "categorias", 0, 5, LEYENDA_CAMBIO, cambio(det_opt, True), nota),
+        "cambio_radar": _capa("clasificacion_radar", "HH", "", "categorias", 0, 5, LEYENDA_CAMBIO, cambio(det_radar, False), nota),
     }
     total = int(real.sum())
     pct = lambda x: 100.0 * x / total  # noqa: E731
@@ -142,6 +144,8 @@ def nubes(cobertura_pct: float, semilla: int = 1) -> dict:
                 ayuda="Parte de los píxeles que realmente cambiaron y que el radar marca como cambio. Las nubes no lo afectan."),
         Metrica(etiqueta="Cambio visto por el óptico", valor=f"{p_opt:.0f}", unidad="%",
                 ayuda="Lo mismo para una imagen óptica. Las nubes la tapan y, bajo el dosel, no ve el agua."),
+        Metrica(etiqueta="Falsas alarmas del radar", valor=f"{100.0 * int((~real & det_radar).sum()) / int((~real).sum()):.1f}".replace(".", ","), unidad="%",
+                ayuda="Píxeles sin cambio que el radar marca como cambio por el moteado (speckle). El radar no es perfecto."),
         Metrica(etiqueta="Tapado por nubes", valor=f"{100.0 * nube.mean():.0f}", unidad="%",
                 ayuda="Fracción de la escena que las nubes ocultan en la imagen óptica."),
     ]

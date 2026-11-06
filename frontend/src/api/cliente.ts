@@ -59,3 +59,6 @@ export async function llamar<T>(ruta: string, cuerpo?: unknown): Promise<T> {
     throw new ErrorApi(r.status, 'La respuesta del servidor no es válida.', false)
   }
 }
+
+/** Mensaje de un error de la API o, si no es de la API, el de red caída. */
+export const mensajeDeError = (e: unknown): string => (e instanceof ErrorApi ? e.mensaje : MENSAJE_RED)
