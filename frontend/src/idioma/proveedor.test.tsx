@@ -80,6 +80,36 @@ describe('ProveedorIdioma', () => {
     expect(screen.getByTestId('ayuda').textContent).not.toBe('Idioma')
   })
 
+  it('con un localStorage que lanza arranca en el idioma del navegador (Review Focus 1)', () => {
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('bloqueado')
+    })
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('bloqueado')
+    })
+    idiomas(['en-US'])
+    montar()
+    expect(screen.getByTestId('idioma').textContent).toBe('en')
+    expect(document.documentElement.lang).toBe('en')
+  })
+
+  it('un ?idioma= no válido se borra de la URL y cae al siguiente criterio', () => {
+    window.localStorage.setItem('nisar.idioma', 'en')
+    window.history.replaceState(null, '', '/?idioma=zz&escenario=x')
+    montar()
+    expect(screen.getByTestId('idioma').textContent).toBe('en')
+    expect(window.location.search).toBe('?escenario=x')
+    expect(window.localStorage.getItem('nisar.idioma')).toBe('en')
+  })
+
+  it('un ?idioma= no válido sin nada guardado cae al navegador', () => {
+    idiomas(['qu-EC'])
+    window.history.replaceState(null, '', '/?idioma=zz')
+    montar()
+    expect(screen.getByTestId('idioma').textContent).toBe('qu')
+    expect(window.location.search).toBe('')
+  })
+
   it('aplica ?idioma=, lo guarda y lo borra de la URL', () => {
     window.history.replaceState(null, '', '/?idioma=qu&escenario=x')
     montar()

@@ -66,4 +66,35 @@ test.describe('idioma', () => {
     await page.waitForLoadState('networkidle')
     expect(peticiones).toEqual([])
   })
+
+  test('cambiar de idioma con un evento del simulador reproduciéndose no repite peticiones ni pierde el estado (criterio 2)', async ({ page }) => {
+    test.setTimeout(150_000)
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.goto('/simulador?lat=-4.05&lon=-79.25&dem=0&ext=60&idioma=es')
+    const tablero = page.getByRole('group', { name: /Tablero del simulador/ })
+    await expect(tablero).toBeVisible({ timeout: 60_000 })
+    await tablero.focus()
+    await page.keyboard.press('ArrowDown')
+    await page.keyboard.press('Enter')
+    await expect(page).toHaveURL(/i=64&j=64/)
+    await expect(page.getByRole('heading', { name: /Incendio forestal/ }).first()).toBeVisible({ timeout: 90_000 })
+    await page.waitForLoadState('networkidle')
+    // Reproducción en curso.
+    const reproducir = page.getByRole('button', { name: 'Reproducir' })
+    if (await reproducir.isVisible()) await reproducir.click()
+    await expect(page.getByRole('button', { name: 'Pausa' })).toBeVisible()
+    const url = page.url()
+
+    const peticiones: string[] = []
+    page.on('request', (r) => { if (r.url().includes('/api/')) peticiones.push(r.url()) })
+    await page.getByRole('button', { name: /Idioma/ }).click()
+    await page.locator('.selector-idioma__nombre', { hasText: 'English' }).click()
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+    await expect(page.getByRole('heading', { name: /Forest fire/ }).first()).toBeVisible()
+    // La reproducción sigue (el botón ofrece pausar) y la URL del evento no cambia.
+    await expect(page.getByRole('button', { name: 'Pause' })).toBeVisible()
+    expect(page.url()).toBe(url)
+    await page.waitForTimeout(1500)
+    expect(peticiones).toEqual([])
+  })
 })
