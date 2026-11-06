@@ -6,6 +6,7 @@ import { IconoPausa, IconoPlay } from '../../diseno/iconos'
 import { useMenosMovimiento } from '../../estado/useMenosMovimiento'
 import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
+import { conBase } from '../../rutaBase'
 import { guionDe } from './guion'
 import './recorrido.css'
 
@@ -67,7 +68,7 @@ export default function Recorrido() {
           ))}
         </ol>
       </section>
-      <iframe key={paso.id} className="recorrido__marco" title={t('recorrido.marco', { titulo: paso.titulo })} src={conIncrustado(paso.ruta)} />
+      <iframe key={paso.id} className="recorrido__marco" title={t('recorrido.marco', { titulo: paso.titulo })} src={conBase(conIncrustado(paso.ruta))} />
       </div>
     </div>
   )

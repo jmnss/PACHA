@@ -17,6 +17,7 @@ import { EsperaRadar } from './EsperaRadar'
 import { escribirEstado, type EstadoSimulador } from './estadoSimulador'
 import { GemeloRadar } from './GemeloRadar'
 import { generarInforme } from './informe'
+import { conBase } from '../../rutaBase'
 
 interface Props { evento: EventoDto; mundo: MundoDto; estado: EstadoSimulador }
 
@@ -51,7 +52,7 @@ export function ResultadosEvento({ evento, mundo, estado }: Props) {
 
   const copiar = async () => {
     try {
-      await navigator.clipboard.writeText(`${window.location.origin}/simulador${consulta}`)
+      await navigator.clipboard.writeText(`${window.location.origin}${conBase('/simulador')}${consulta}`)
       setAviso('sim.res.enlace_copiado')
     } catch { setAviso('sim.res.enlace_error') }
   }

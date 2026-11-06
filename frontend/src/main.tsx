@@ -22,7 +22,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ProveedorIdioma>
       <QueryClientProvider client={cliente}>
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL.replace(/\/$/, '')}>
           <App />
         </BrowserRouter>
       </QueryClientProvider>
