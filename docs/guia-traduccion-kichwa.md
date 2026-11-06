@@ -37,6 +37,8 @@ Criterios del borrador:
 | Laboratorio, Simulador de eventos | Riel (`estructura.riel.laboratorio`, `.simulador`) | Préstamos del español sin término asentado; «Laboratorio radarpa» solo añade el genitivo. |
 | Lab., Simul. (etiquetas cortas) | Riel móvil | Abreviaturas en español para no pasar de 7 caracteres. |
 | Observatorio, radar, app | Banda y pantallas | Préstamos del español sin equivalente asentado. |
+| señal, productos, geometría, bandas | Leyendas y aviso de notas (`catalogos/qu/origen.ts`) | Términos de teledetección sin equivalente asentado; se dejan en español. |
+| Rurashka (sintético), Chiqan (real), rurachik (generador), muju (semilla) | Sellos de origen | Vocabulario ya usado en la banda; a confirmar con hablantes. |
 
 ## Dudas abiertas
 

@@ -1,0 +1,23 @@
+export const origen = {
+  'origen.sello.sintetico': 'Sintético',
+  'origen.sello.sintetico_no_verificado': 'Sintético (no verificado)',
+  'origen.sello.real': 'Real',
+  'origen.sello.desconocida': 'desconocida',
+  'origen.sello.generador': 'generador',
+  'origen.sello.generador_version': 'generador v{version}',
+  'origen.sello.semilla': 'semilla {semilla}',
+  'origen.sello.generado': 'generado {fecha}',
+  'origen.notas.aviso':
+    'Notas del modelo de demostración · los detalles sobre NISAR (productos, geometría, bandas) están pendientes de confirmar con la documentación oficial.',
+  'origen.notas.sin_verificar': '(sin verificar)',
+  'origen.leyenda.titulo': 'Leyenda',
+  'origen.leyenda.titulo_unidad': 'Leyenda, {unidad}',
+  'origen.leyenda.titulo_rango': 'Leyenda, {unidad}, de {desde} a {hasta}',
+  'origen.leyenda.transparente': '(transparente)',
+  'origen.leyenda.gris_menos': 'más oscuro',
+  'origen.leyenda.gris_mas': 'más claro',
+  'origen.leyenda.secuencial_menos': 'menos',
+  'origen.leyenda.secuencial_mas': 'más',
+  'origen.leyenda.divergente_menos': 'menos señal',
+  'origen.leyenda.divergente_mas': 'más señal',
+}

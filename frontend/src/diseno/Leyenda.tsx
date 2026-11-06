@@ -1,4 +1,7 @@
-import type { CSSProperties } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
+import { TextoApi } from '../idioma/TextoApi'
+import { useT } from '../idioma/useT'
+import type { Clave } from '../idioma/traductor'
 import { coloresDeCategorias, formatoMarcas, MARCAS, colorEnRampa, rampaDePaleta, type PaletaContrato } from './rampas'
 
 interface Props {
@@ -15,21 +18,22 @@ interface Props {
 }
 
 /** Extremos en palabras por defecto (§8); la cíclica no tiene extremos. */
-const EXTREMOS: Partial<Record<PaletaContrato, [string, string]>> = {
-  gris: ['más oscuro', 'más claro'],
-  secuencial: ['menos', 'más'],
-  divergente: ['menos señal', 'más señal'],
+const EXTREMOS: Partial<Record<PaletaContrato, [Clave, Clave]>> = {
+  gris: ['origen.leyenda.gris_menos', 'origen.leyenda.gris_mas'],
+  secuencial: ['origen.leyenda.secuencial_menos', 'origen.leyenda.secuencial_mas'],
+  divergente: ['origen.leyenda.divergente_menos', 'origen.leyenda.divergente_mas'],
 }
 
 const PASOS = 9
 
 /** Leyenda junto a su capa: rampa en 9 casillas (sin degradado), 5 marcas, unidad y extremos en palabras. */
 export function Leyenda({ paleta, vmin, vmax, unidad, leyenda, variable, extremos }: Props) {
+  const { t } = useT()
   if (paleta === 'categorias') {
     const items = leyenda ?? []
     const colores = coloresDeCategorias(variable ?? '', items.length)
     return (
-      <div className="leyenda" role="group" aria-label={unidad ? `Leyenda, ${unidad}` : 'Leyenda'}>
+      <div className="leyenda" role="group" aria-label={unidad ? t('origen.leyenda.titulo_unidad', { unidad }) : t('origen.leyenda.titulo')}>
         <ul className="leyenda__categorias">
           {items.map(([etiqueta], i) => {
             const color = colores[i]
@@ -37,20 +41,23 @@ export function Leyenda({ paleta, vmin, vmax, unidad, leyenda, variable, extremo
               <li key={etiqueta} className="leyenda__categoria">
                 <span className={color ? 'leyenda__muestra' : 'leyenda__muestra leyenda__muestra--sin'}
                   style={color ? ({ background: color } as CSSProperties) : undefined} aria-hidden="true" />
-                {etiqueta}{color ? '' : ' (transparente)'}
+                <TextoApi texto={etiqueta} />{color ? '' : ` ${t('origen.leyenda.transparente')}`}
               </li>
             )
           })}
         </ul>
-        {unidad && <div className="leyenda__unidad">{unidad}</div>}
+        {unidad && <div className="leyenda__unidad"><TextoApi texto={unidad} /></div>}
       </div>
     )
   }
   const rampa = rampaDePaleta(paleta, variable) ?? 'gris'
-  const palabras = extremos ?? EXTREMOS[paleta]
+  const clavesExtremos = EXTREMOS[paleta]
+  const palabras: [ReactNode, ReactNode] | undefined = extremos
+    ? [<TextoApi texto={extremos[0]} />, <TextoApi texto={extremos[1]} />]
+    : clavesExtremos && [t(clavesExtremos[0]), t(clavesExtremos[1])]
   const marcas = formatoMarcas(vmin, vmax)
   return (
-    <div className="leyenda" role="group" aria-label={`Leyenda, ${unidad}, de ${marcas[0]} a ${marcas[MARCAS - 1]}`}>
+    <div className="leyenda" role="group" aria-label={t('origen.leyenda.titulo_rango', { unidad, desde: marcas[0], hasta: marcas[MARCAS - 1] })}>
       <div className="leyenda__pasos" aria-hidden="true">
         {Array.from({ length: PASOS }, (_, i) => (
           <span key={i} className="leyenda__paso" style={{ background: colorEnRampa(rampa, i / (PASOS - 1)) }} />
@@ -61,7 +68,7 @@ export function Leyenda({ paleta, vmin, vmax, unidad, leyenda, variable, extremo
       </div>
       <div className="leyenda__pie">
         {palabras && <span>{palabras[0]}</span>}
-        <span className="leyenda__unidad">{unidad}</span>
+        <span className="leyenda__unidad"><TextoApi texto={unidad} /></span>
         {palabras && <span>{palabras[1]}</span>}
       </div>
     </div>
