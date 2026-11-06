@@ -389,3 +389,9 @@ Auditoría axe (`frontend/e2e/accesibilidad.spec.ts`, etiquetas wcag2a/2aa/21a/2
 | `label-content-name-mismatch` | serious | las 6 (`/`, `/observatorio`, `/simulador`, `/laboratorio`, `/recorrido`, `/fundamentos`), solo a 390 px, en `es`, `en` y `qu` | 6 en `es`, 4 en `en` y `qu` (enlaces del riel/barra inferior: `aria-label` largo distinto del texto corto visible) |
 
 `PENDIENTES = ['label-content-name-mismatch']`. Nota: `bypass`, `document-title`, `page-has-heading-one`, etc. no aparecen como serious/critical (son moderate); se resuelven igualmente en la Tarea 21.
+
+## Tarea 26: e2e de idioma y revisión visual en tres idiomas
+
+- `frontend/e2e/idioma.spec.ts`: cambio de idioma con el escenario cargado sin peticiones nuevas a `/api/` (Review Focus 2), persistencia tras recargar, clic de ratón sobre la etiqueta del selector, aviso «en revisión» y banda en `qu`, y el recorrido incrustado siguiendo al idioma de la página (evento `storage`) sin peticiones.
+- `scripts/revision_visual.sh` acepta un tercer argumento `es|en|qu`.
+- Revisión visual en `en` y `qu` de las seis rutas: en `qu` a 390 px había un FAIL `edge-text` común a todas («Kallari» a 10 px del borde izquierdo y «Ima niyta munan» a 5 px del derecho). Corregido en la primera ronda: padding izquierdo del riel móvil (`--space-2`) y el enlace de la banda puede partirse en dos líneas. Quedan WARN preexistentes (`below-fold` en observatorio; «Start» a 14 px en `en`, defendido arriba). Sin pendientes.

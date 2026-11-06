@@ -55,7 +55,7 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
     padding: 0; gap: 0; border-right: 0; border-top: 1px solid var(--border);
   }
   .riel__marca { display: none; }
-  .riel__lista { flex-direction: row; flex: 1; gap: 0; padding: 0; }
+  .riel__lista { flex-direction: row; flex: 1; gap: 0; padding: 0 0 0 var(--space-2); } /* etiquetas largas (kichwa) no tocan el borde */
   .riel__idioma { margin-top: 0; }
   .riel__lista li { flex: 1; }
   .riel__destino { width: 100%; height: var(--h-barra-inferior); min-height: var(--h-touch); gap: var(--space-1); }
@@ -95,7 +95,8 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
 @media (max-width: 699px) {
   .banda-demo { position: sticky; top: 0; }
   .banda-demo__fila { min-height: var(--h-banda-movil); padding: 0 var(--space-4); gap: var(--space-2); font-size: var(--fs-12); }
-  .banda-demo__enlace { font-weight: 500; }
+  .banda-demo__texto { min-width: 0; }
+  .banda-demo__enlace { font-weight: 500; flex-shrink: 1; white-space: normal; text-align: right; min-width: 0; }
   .banda-demo__largo { display: none; }
   .banda-demo__corto { display: inline; }
   .banda-demo__panel { right: var(--space-4); top: 100%; }
