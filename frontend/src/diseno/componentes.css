@@ -18,7 +18,11 @@ button { font: inherit; color: inherit; }
   background: var(--surface); border-right: 1px solid var(--border); z-index: var(--z-flotante);
 }
 .riel__marca { display: flex; color: var(--text); }
-.riel__lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.riel__lista {
+  list-style: none; margin: 0; padding: 0 0 var(--space-4); flex: 1;
+  display: flex; flex-direction: column; gap: var(--space-2);
+}
+.riel__idioma { margin-top: auto; } /* el selector de idioma, al pie del riel */
 .riel__destino {
   position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
   width: calc(var(--w-rail) - 1px); height: var(--h-control); color: var(--muted); text-decoration: none;
@@ -41,7 +45,8 @@ button { font: inherit; color: inherit; }
     padding: 0; gap: 0; border-right: 0; border-top: 1px solid var(--border);
   }
   .riel__marca { display: none; }
-  .riel__lista { flex-direction: row; flex: 1; gap: 0; }
+  .riel__lista { flex-direction: row; flex: 1; gap: 0; padding: 0; }
+  .riel__idioma { margin-top: 0; }
   .riel__lista li { flex: 1; }
   .riel__destino { width: 100%; height: var(--h-barra-inferior); min-height: var(--h-touch); gap: var(--space-1); }
   .riel__etiqueta { display: block; font-size: var(--fs-12); line-height: var(--lh-16); position: relative; }

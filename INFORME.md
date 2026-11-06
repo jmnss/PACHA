@@ -277,6 +277,7 @@ pendiente — conviene hacerla junto con la actualización de accesibilidad. Con
 | 2026-11-04 | Paso 0 | Node 12 y sin navegador | nvm + Playwright | Resuelto |
 | 2026-11-04 | Revisión | La app presentaba sintético como NISAR («Datos de radar NISAR…», «Producto: NISAR L2 GCOV», «Área quemada real») | — | Se corrige en Tareas 0.3, 3.4, 3.10 |
 | 2026-11-04 | Revisión | Código de lectura HDF5 y búsqueda ASF con detalles de NISAR no verificados | — | Marcado en `docs/challenge.md`; se revisa en la integración de datos reales |
+| 2026-11-06 | Idioma · Tarea 3 | `frontend/src/pantallas/historias/historias.css:24` tiene una `}` sobrante (ya en HEAD): el minificador avisa «Unexpected "}"» y el navegador descarta la regla siguiente (`.historia__cabecera`). | Se confirmó que es anterior a la tarea | Pendiente: fuera del alcance de la tarea de idioma; corregir con revisión visual de Historias |
 
 ## Pendientes visuales por pantalla
 
@@ -287,6 +288,7 @@ pendiente — conviene hacerla junto con la actualización de accesibilidad. Con
 | Observatorio · mapa | 3 de 3 (2 de implementación + 1 de revisor) | 0 FAIL | 0 FAIL | 0 FAIL | Con OpenFreeMap apagado el mapa a escala de escenario (~8 km) es un fondo gris con la capa: falta un localizador de Ecuador o escala gráfica; hoja inferior de parámetros en móvil y menú de tres puntos (§10) pendientes; sin prueba e2e propia |
 | Observatorio · comparar | 3 de 3 + 1 de revisor | 0 FAIL | 0 FAIL | 0 FAIL | Sin captura con punto/cuadrante seleccionado ni e2e propio; serie del punto pendiente (la API no expone `serie_seleccion`); medición y cambio usan las polarizaciones del análisis, no el selector (avisado en pantalla); notas del modelo heredado mostradas con aviso «pendiente de confirmar» |
 | Observatorio · serie | 1 de 3 | 0 FAIL | 0 FAIL | 0 FAIL (1 WARN `ragged-row` a 1440, defendido: distribución de dos columnas) | Sin marcas de evento ni cursor de instante (la API no trae fecha de evento; Linea no soporta cursor); tabla intercalada de 60 filas en La Segua; sin revisión independiente de esta tarea |
+| Selector de idioma y aviso del kichwa (riel, `/`, captura `historias-selector`) | 2 de 3 | 0 FAIL | 0 FAIL | 0 FAIL (1 WARN `edge-text`) | WARN `edge-text` a 390 px: con siete celdas iguales en la barra inferior, «Inicio» queda a 13 px del borde (defendido: celdas iguales, el texto centrado en su celda). Ronda 2 corrigió: las flechas en el grupo de radios cerraban el panel (ahora cambian el idioma sin cerrar; clic o Intro cierran) e Intro reabría el panel; aire entre el anillo de foco y el texto. El inspector no puede abrir el panel ni fijar `qu`: el panel y el aviso se revisaron con capturas de Playwright a 1440, 768 y 390 px |
 
 Para cada pantalla cerrada se pega aquí la crítica de las siete preguntas de `app-screens.md §2.7`.
 

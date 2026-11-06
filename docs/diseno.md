@@ -178,6 +178,14 @@ espejo de agua baja de 26,8 a 5,5 km² entre la primera y la última pasada». N
   Observatorio (y en la noche 2: Estación, Modo Dios, Fundamentos); iconos de contorno de 16 px con
   tooltip y nombre accesible; el destino activo se marca por brillo (gris → blanco) y una barra de 1 px
   amarilla en el borde del riel. Solo aparecen destinos que existen.
+- **Selector de idioma** al pie del riel: el icono de globo (16 px) y debajo el código del idioma activo
+  («ES», «EN», «QU») en 12/500 gris; nombre accesible «Idioma: ES». Abre un panel flotante (`--raised`,
+  borde `--control`, sombra de lo que flota) con un `fieldset` de tres radios nativos, cada nombre en su
+  propio idioma (Español, English, Kichwa) y con su `lang`; el activo en blanco con la línea de 1 px de
+  `--accent`. Las flechas cambian el idioma sin cerrar; un clic en una opción, Intro, Escape o un clic
+  fuera cierran el panel y el foco vuelve al botón. En móvil es el
+  séptimo elemento de la barra inferior y el panel se abre encima de ella. En modo incrustado (recorrido)
+  no aparece.
 - **Banda de demostración** (ver §8 «Origen de los datos»): la primera fila del lienzo en todas las
   pantallas, por encima del título, mientras haya datos sintéticos.
 - **Sin barra superior.** El título de la pantalla, el lugar y el tipo de cambio van en la cabecera del lienzo.
@@ -252,6 +260,10 @@ glyphs), frontera de Ecuador en blanco al 60 % de 1 px.
   generador, la semilla y la fecha. Es la única etiqueta en mayúsculas de la app (la regla de la skill
   permite una). No se puede cerrar ni ocultar. En móvil: 32 px, una línea, «DEMOSTRACIÓN · no son datos
   reales de NISAR», fija arriba al desplazar.
+- **Aviso del kichwa:** con el idioma Kichwa, y mientras queden textos sin validar por hablantes, una
+  fila justo bajo la banda con sus mismos colores (`--demo-bg`, texto `--demo-ink`, borde inferior de
+  1 px `--demo-edge`) y su mismo margen, en 12/500: «Traducción en revisión por hablantes · N de M textos
+  validados» (en kichwa). No se puede cerrar. No aparece en español ni en inglés.
 - **Sello de origen:** al pie de cada mapa, gráfico, comparador y tabla, una línea de 12 px `--muted`:
   «Sintético · generador v1 · semilla 7 · generado 2026-11-05» o «NASA POWER · climatología 2001–2025».
   Nunca se omite.

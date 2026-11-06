@@ -1,5 +1,7 @@
 import type { ComponentType } from 'react'
 import { NavLink, Outlet, useSearchParams } from 'react-router-dom'
+import { AvisoTraduccion } from '../idioma/AvisoTraduccion'
+import { SelectorIdioma } from '../idioma/SelectorIdioma'
 import { BandaDemostracion } from './BandaDemostracion'
 import { IconoHistorias, IconoLaboratorio, IconoLibro, IconoObservatorio, IconoRecorrido, IconoSimulador } from './iconos'
 import { Marca } from './marca'
@@ -54,10 +56,13 @@ export function Estructura() {
               </NavLink>
             </li>
           ))}
+          {/* Al pie del riel en escritorio; séptimo elemento de la barra inferior en móvil. */}
+          <li className="riel__idioma"><SelectorIdioma /></li>
         </ul>
       </nav>}
       <div className={incrustado ? 'lienzo lienzo--incrustado' : 'lienzo'}>
         <BandaDemostracion />
+        <AvisoTraduccion />
         <main className="lienzo__contenido">
           <Outlet />
         </main>

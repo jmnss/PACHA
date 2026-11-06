@@ -103,6 +103,7 @@ body {
   --offset-subrayado: 3px;
   --w-flotante: 420px;     /* panel flotante de la banda */
   --w-termino: 320px;      /* panel de un término */
+  --w-panel-idioma: 184px; /* panel del selector de idioma */
   --w-selector-min: 200px; /* selectores de la cabecera del Observatorio */
   --h-comparador: clamp(380px, 68vh, 660px); /* alto máximo de la imagen del comparador */
   --w-fecha-min: 140px;    /* selectores de fecha y polarización de «Antes y después» */

@@ -64,6 +64,13 @@ export const IconoLibro = (p: PropsIcono) => (
   </Base>
 )
 
+export const IconoGlobo = (p: PropsIcono) => (
+  <Base {...p}>
+    <circle cx="8" cy="8" r="6" />
+    <path d="M2 8h12M8 2c-2 1.7-2.8 3.7-2.8 6s.8 4.3 2.8 6M8 2c2 1.7 2.8 3.7 2.8 6s-.8 4.3-2.8 6" />
+  </Base>
+)
+
 export const IconoEstacion = (p: PropsIcono) => (
   <Base {...p}>
     <circle cx="8" cy="8" r="2.5" />
@@ -174,4 +181,5 @@ export const ICONOS = {
   Adelante: IconoAdelante,
   Final: IconoFinal,
   Evento: IconoEvento,
+  Globo: IconoGlobo,
 } as const

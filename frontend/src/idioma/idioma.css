@@ -1,0 +1,55 @@
+/* Selector de idioma y aviso del borrador en kichwa (docs/diseno.md §7, §8). Solo variables de tokens.css. */
+
+/* ---------- Selector, al pie del riel ---------- */
+.selector-idioma { position: relative; }
+.selector-idioma__boton {
+  height: auto; min-height: var(--h-touch); padding: var(--space-1) 0; gap: var(--size-2);
+  background: none; border: 0; cursor: pointer;
+}
+.selector-idioma__boton[aria-expanded='true'] { color: var(--text); }
+.selector-idioma__codigo { font-size: var(--fs-12); line-height: var(--lh-16); font-weight: 500; }
+
+.selector-idioma__panel {
+  position: absolute; left: calc(100% + var(--space-2)); bottom: 0; width: var(--w-panel-idioma);
+  background: var(--raised); border: 1px solid var(--control); border-radius: var(--radius-card);
+  box-shadow: var(--shadow-float); padding: var(--space-3) var(--space-2);
+}
+.selector-idioma__grupo { margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; min-width: 0; }
+.selector-idioma__leyenda {
+  padding: 0 var(--space-2); margin-bottom: var(--space-1);
+  font-size: var(--fs-12); line-height: var(--lh-16); color: var(--muted);
+}
+.selector-idioma__opcion {
+  position: relative; display: flex; align-items: center; min-height: var(--h-control); padding: 0 var(--space-2);
+  color: var(--secondary); cursor: pointer; border-radius: var(--radius-chip);
+  transition: color var(--t-respuesta) ease-out;
+}
+.selector-idioma__opcion:hover { color: var(--text); }
+.selector-idioma__opcion:has(.selector-idioma__radio:focus-visible) {
+  outline: var(--focus-ring); outline-offset: 0; /* dentro del panel, sin salirse del borde */
+}
+/* El radio nativo sigue en el árbol (teclado y lectores); la selección es la línea de 1 px (§8). */
+.selector-idioma__radio {
+  position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; pointer-events: none;
+}
+.selector-idioma__nombre { font-size: var(--fs-13); line-height: var(--lh-20); border-bottom: 1px solid transparent; }
+.selector-idioma__radio:checked + .selector-idioma__nombre { color: var(--text); border-bottom-color: var(--accent); }
+
+@media (max-width: 699px) {
+  .selector-idioma__boton { height: var(--h-barra-inferior); padding: 0; gap: var(--space-1); }
+  .selector-idioma__panel {
+    position: fixed; left: auto; right: var(--space-4);
+    bottom: calc(var(--h-barra-inferior) + var(--space-2));
+  }
+  .selector-idioma__opcion { min-height: var(--h-touch); }
+}
+
+/* ---------- Aviso del borrador en kichwa, justo bajo la banda ---------- */
+.aviso-traduccion {
+  margin: 0; padding: var(--space-1) var(--page-padding);
+  background: var(--demo-bg); border-bottom: 1px solid var(--demo-edge);
+  color: var(--demo-ink); font-size: var(--fs-12); line-height: var(--lh-16); font-weight: 500;
+}
+@media (max-width: 699px) {
+  .aviso-traduccion { padding: var(--space-1) var(--space-4); }
+}
