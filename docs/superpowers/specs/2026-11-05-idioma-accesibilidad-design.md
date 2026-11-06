@@ -202,3 +202,25 @@ El inglés y el kichwa se escriben dentro de cada tarea (nunca una clave en `es`
 - Términos técnicos en inglés: uso estándar de teledetección (backscatter, polarization, speckle).
 - Las pruebas e2e existentes fijan `localStorage['nisar.idioma']='es'` para no depender del navegador.
 - Colores y tamaños del selector y del aviso salen de `tokens.css`; Taste Skill por el camino de apps.
+
+## 9. Ajustes al escribir el plan (2026-11-05)
+
+Precisiones técnicas que no cambian las decisiones del equipo:
+
+1. **Catálogos por área:** en lugar de un archivo por idioma, una carpeta por idioma con un archivo por área
+   (`catalogos/es/comun.ts`, `catalogos/en/comun.ts`, …) y un `index.ts` que los une. El tipo de cada área
+   inglesa y kichwa es `Record<keyof typeof <área es>, string>`: sigue fallando el build si falta una clave.
+2. **Sin caída en tiempo de ejecución para el catálogo:** las pruebas exigen que los tres catálogos estén
+   completos y sin valores vacíos, así que `t()` siempre encuentra su texto. La caída al español con
+   `lang="es"` queda solo para el texto de la API (componente `TextoApi`).
+3. **Nombres de campo:** `clave_texto` y `valores_texto` (en lugar de `clave` y `valores`), porque
+   `CapaEventoDto` ya tiene un campo `clave` con otro significado. Los errores responden
+   `{"mensaje", "clave_texto", "valores_texto"}`.
+4. **Parámetro de arranque `?idioma=xx`:** opcional; si es válido se aplica una vez, se guarda en
+   `localStorage` y se borra de la URL. Lo usa `revision_visual.sh` (el inspector no puede fijar el idioma
+   del navegador); el idioma sigue sin viajar en la URL como estado.
+5. **Simulador:** los títulos de evento se reconstruyen en `datos/simulador.py` con clave; las etiquetas de
+   métricas y los nombres de capas llevan clave derivada de su texto. Las **notas y celdas de tabla que
+   escribe `modelo/desastres.py` con cifras incrustadas** se quedan en español con `lang="es"` (excepción al
+   criterio de éxito 1, porque `modelo/` no se toca).
+6. **Playwright** fija `locale: 'es-EC'` en la configuración para que las e2e existentes sigan en español.
