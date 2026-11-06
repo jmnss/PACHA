@@ -8,7 +8,8 @@ heredada). Si hay conflicto, manda este archivo.
 Proyecto para el NASA Space Apps Challenge «Dancing with the SARs» (`docs/challenge.md`). Una app web
 abierta que muestra cómo el radar NISAR ve **inundaciones y humedales** (historia principal, Costa baja
 de Ecuador) e **incendios forestales** (segunda historia, Sierra), con un observatorio para los seis
-tipos de cambio. Se migra de Streamlit a React en la rama `migracion-react`. No se toca `main`.
+tipos de cambio. Se migra de Streamlit a React en la rama `migracion-react`. Se trabaja en ramas; se integra en `main` con permiso;
+**cada push a `main` publica la app en GitHub Pages**.
 
 **Situación de los datos:** aún no hay acceso a los recursos oficiales del challenge ni a datos de NISAR.
 La app funciona con **datos de demostración sintéticos**, generados por `scripts/generar_datos_demo.py`,
@@ -43,6 +44,12 @@ los problemas van a `INFORME.md`.
 - `api/` — FastAPI sin estado. **Solo habla con el contrato de `datos/`, nunca con `modelo/` directamente**
   (excepto `/api/contexto`, que usa los datos reales complementarios de `modelo/estaciones.py`).
 - `frontend/` — React 18 + Vite + TypeScript. Estado en la URL y en el navegador; sin cuentas.
+- `frontend/src/motor/` — en modo `navegador` (GitHub Pages, `VITE_MOTOR=navegador`) la API corre en el navegador con
+  Pyodide en un Web Worker; en local (`servidor`) sigue corriendo en el servidor. El motor solo transporta: la ciencia
+  sigue en Python (nada de lógica científica en el frontend).
+- **Dependencias Python:** toda dependencia nueva de `api/`, `datos/` o `modelo/` debe existir en la distribución de
+  Pyodide, y el código debe funcionar en Python 3.13 (local) y en el de la versión de Pyodide fijada (hoy 3.14).
+  `tests/motor/test_compatibilidad_pyodide.py` lo vigila.
 - `modelo/` — física y generador sintético. Solo se modifica en la Tarea 0.3 o para corregir un error
   con su prueba.
 - `app.py` e `interfaz/` — app Streamlit heredada; no se toca.
@@ -64,6 +71,8 @@ Siempre primero, en cada shell: `source scripts/entorno.sh` (Node 22 con nvm, `C
 | Pruebas de datos y API | `python -m pytest tests -q` |
 | Pruebas del frontend | `cd frontend && npm test` |
 | Lint del frontend | `cd frontend && npm run lint` |
+| Sitio de Pages (precálculo + motor + build) | `bash scripts/construir_pages.sh` |
+| E2e del modo Pages | `cd frontend && npx playwright test -c playwright.pages.config.ts` |
 | Tipos desde la API | `python scripts/exportar_openapi.py && cd frontend && npm run tipos` |
 | Extremo a extremo | `cd frontend && npx playwright test` |
 | Revisión visual de una pantalla | `bash scripts/revision_visual.sh <ruta> <nombre>` |

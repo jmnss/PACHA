@@ -3,12 +3,61 @@
 Estado: **migración completa (bloques 0 a 5) más Simulador, Laboratorio, Recorrido, Fundamentos e Impacto,
 e idioma (es/en/kichwa) y accesibilidad implementados** (ver «Idioma y accesibilidad (2026-11-05)»). Kichwa:
 borrador sin validar (0 de 923 claves). Prueba con lector de pantalla: pendiente.
-Verificación (corrida el 2026-11-06 tras la ronda de arreglos final): pytest 273 (+2 omitidas por diseño), unittest 13 OK,
-vitest 545 (52 archivos), lint OK, build OK, Playwright 83/83.
+Verificación (corrida el 2026-11-06 tras el despliegue en Pages): pytest 290 (+2 omitidas por diseño), unittest 13 OK,
+vitest 570 (57 archivos), lint OK, build OK, Playwright 83/83 (con una intermitencia conocida, ver «Despliegue en
+GitHub Pages»), Playwright de Pages 11/11.
 Última actualización: 2026-11-06
 
 Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea. Las secciones
 fechadas más abajo son históricas; **la lista vigente de pendientes es «Pendientes vigentes»**.
+
+## Despliegue en GitHub Pages (2026-11-06)
+
+La API corre en el navegador (Pyodide en un Web Worker, `frontend/src/motor/`) y la app se publica como sitio estático
+en `https://jmnss.github.io/NISAR-Ecuador/` con `.github/workflows/pages.yml` (verificar → construir → publicar en cada
+push a `main`). Diseño: `docs/superpowers/specs/2026-11-06-despliegue-design.md`; plan:
+`docs/superpowers/plans/2026-11-06-despliegue-pages-pyodide.md`.
+
+**Prueba mínima (Tarea 3, punto de control): superada.** El motor responde `salud` y `cambio` en Chromium real.
+
+**Cifras del spike (Node 22, Pyodide 314.0.7, Python 3.14.2, FastAPI 0.136.1; 18 rutas, todas 200):**
+
+| Medida | Valor |
+|---|---|
+| Arranque en frío (librerías en caché local) | ~14 s (Pyodide 3–4 s; numpy/pandas/Pillow/pydantic/shapely 3 s; FastAPI 2–3 s; import + lifespan 5–6 s) |
+| Descarga de la primera visita | ~25 MB (núcleo ~12 MB + librerías ~12 MB) |
+| `salud` (primera) / `cambio` La Segua / `impacto` | 2,6 s / 0,24 s / 3,0 s |
+| Simulador: mundo / incendio / terremoto / erupción | 1,3 / 0,1 / 1,0 / 1,9 s |
+| `tormenta` / `inundacion` | 18,9 s / 33,2 s (nativo: 11,4 s / 14,3 s) |
+| Memoria máxima | ~600 MB rss (incluye el motor JS) |
+
+**Cifras finales:** `frontend/dist-pages` pesa 39 MB; 51 respuestas precalculadas (52 archivos con el índice).
+**Relieve real (Tarea 5):** comprobado en Chromium con `/simulador?lat=-0.68&lon=-78.44&ext=40` (Cotopaxi): la ficha del
+mundo dice «Relieve: SRTM (teselas Terrarium, AWS Open Data)» y «Relieve real (SRTM)», no terreno sintético.
+
+**Decisiones de ejecución:**
+- Las claves `estructura.motor.*` (en vez de `api.error.*`), los scripts de Node en `frontend/scripts/` y la
+  configuración `playwright.pages.config.ts` siguen el plan.
+- `tsconfig.node.json` incluye `types: ["vite/client", "node"]` porque `e2e/exportar.spec.ts` importa código de `src/` que
+  usa `import.meta.env`.
+- Vite solo empaqueta el worker si `new URL('./motor.worker.ts', import.meta.url)` va escrito dentro de la llamada a
+  `new Worker`/`new SharedWorker`.
+- Playwright no intercepta las peticiones de un `SharedWorker`: las e2e que fuerzan fallos del motor usan el `Worker`
+  dedicado (quitan `SharedWorker`), el mismo camino que Chrome Android.
+- El precálculo incluye `/recorrido?paso=1..6` (el spec §2.3 lo pedía).
+
+**Pendientes:**
+- (Usuario) activar *Settings → Pages → Source: GitHub Actions*; sin eso, `publicar` falla y no se publica nada.
+- (Usuario) autorizar el push de `migracion-react` a `main`, que dispara la publicación (el sitio es público).
+- Memoria en móvil (~600 MB): los móviles de gama baja pueden no cargar el motor; lo precalculado sigue funcionando.
+- Chrome Android sin `SharedWorker`: un motor por documento; casi todo el Recorrido está precalculado.
+- Textos kichwa nuevos (`estructura.motor.*`) sin validar por hablantes.
+- Despertar y tiempos del motor no medidos en un navegador lento (solo Chromium de escritorio).
+- Intermitencia anterior a esta rama: `flujos.spec.ts` «Observatorio · mapa: un clic fuera de Ecuador avisa y no simula»
+  falla a veces en una corrida completa (el clic de reintento puede caer dentro de Ecuador mientras el mapa encuadra) y
+  pasa aislado y repetido; el código del mapa no se tocó.
+- A 390 px, las pestañas del Simulador se solapan mientras carga el esqueleto «Creando el mundo» (visto en la captura
+  del aviso; ya ocurría antes).
 
 ## Estado actual de un vistazo
 

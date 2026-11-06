@@ -25,6 +25,14 @@ Una app web abierta que muestra cómo el radar NISAR (NASA-ISRO) puede «ver» *
 
 En `/simulador` (antes «Modo Dios» de la app Streamlit) puedes provocar un incendio, una tormenta, una crecida, un terremoto o una erupción sobre el relieve de Ecuador y ver cómo lo vería un radar como NISAR, cuánto tardaría en volver a pasar (ciclo supuesto, pendiente de confirmar) y compartir el escenario por enlace. Todo es simulación y va marcado como datos de demostración.
 
+## Versión publicada
+
+La app está publicada en **https://jmnss.github.io/NISAR-Ecuador/** (GitHub Pages, sitio estático sin servidor). Todo se
+calcula en tu navegador: la API Python corre allí con Pyodide. La primera visita descarga unos 25 MB; lo precalculado
+(portada, historias y escenarios) se ve de inmediato. El Simulador puede tardar hasta un minuto en tormentas e
+inundaciones, y los móviles de gama baja pueden no cargar el motor. El aviso de datos de demostración no cambia: los
+datos son sintéticos.
+
 ## Instalación y arranque
 
 Requiere Python 3.13 y Node 22. En este repo, `source scripts/entorno.sh` prepara Node 22 (nvm), `CHROME_PATH` y el proveedor.
@@ -57,6 +65,7 @@ cd frontend && npx playwright test              # extremo a extremo (necesita CH
 - `api/`: FastAPI sin estado; solo habla con el contrato de `datos/` (salvo `/api/contexto`, que usa datos complementarios de `modelo/estaciones.py`).
 - `frontend/`: React 18 + Vite + TypeScript; el estado vive en la URL y en el navegador, sin cuentas.
 - `modelo/`: física y generador sintético.
+- `frontend/src/motor/`: en la versión publicada la API corre en el navegador (Pyodide en un Web Worker).
 - Docs: [challenge](docs/challenge.md), [diseño](docs/diseno.md), [guion de presentación](docs/historia-datos.md).
 
 ## App Streamlit heredada
