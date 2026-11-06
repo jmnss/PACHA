@@ -1,10 +1,11 @@
 # INFORME — Migración a React
 
-Estado: **migración completa (bloques 0 a 5) más Simulador, Laboratorio, Recorrido, Fundamentos e Impacto.
-Siguiente actualización: accesibilidad e idioma** (ver «Próxima actualización»).
-Verificación (corrida el 2026-11-05 sobre `abaea3d`): pytest 238 (+2 omitidas por diseño), unittest 13 OK,
-vitest 336 (32 archivos), lint OK, build OK, Playwright 40/40.
-Última actualización: 2026-11-05
+Estado: **migración completa (bloques 0 a 5) más Simulador, Laboratorio, Recorrido, Fundamentos e Impacto,
+e idioma (es/en/kichwa) y accesibilidad implementados** (ver «Idioma y accesibilidad (2026-11-05)»). Kichwa:
+borrador sin validar (0 de 816 claves). Prueba con lector de pantalla: pendiente.
+Verificación (corrida el 2026-11-06 sobre `2fee767`): pytest 262 (+2 omitidas por diseño), unittest 13 OK,
+vitest 523 (51 archivos), lint OK, build OK, Playwright 81/81.
+Última actualización: 2026-11-06
 
 Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea. Las secciones
 fechadas más abajo son históricas; **la lista vigente de pendientes es «Pendientes vigentes»**.
@@ -47,9 +48,16 @@ Estación y temporada (cubierta por `PanelContexto`), Fundamentos, Modo Dios.
 - Hoja inferior de parámetros y menú de tres puntos del Observatorio en móvil (§10).
 - Placas flotantes del mapa ocupan ~130 px en móvil; hueco bajo la cinta en escritorio.
 - En Relieve el radar puede tapar etiquetas (vienen dentro de la tesela).
-- Tabla móvil en tres líneas y sin semántica de tabla (`display:block`) — **afecta a accesibilidad**.
 - Margen de 12 px en la banda móvil (diseno.md pide 16).
 - Avisos del inspector en el simulador (`ragged-row`, `below-fold`); sin captura móvil con resultados.
+
+**Idioma y accesibilidad (nuevos)**
+- Kichwa: 0 de 816 claves validadas; hacen falta hablantes (`docs/guia-traduccion-kichwa.md`, `docs/traduccion-kichwa.csv`). Dudas abiertas de honestidad y ortografía («chiqan»/«chikan», etc.) en la guía.
+- Prueba con lector de pantalla (Orca/NVDA) en Historias y Observatorio en los tres idiomas: **pendiente, requiere persona con lector de pantalla**.
+- Prueba con zoom real del navegador y teclado físico en un dispositivo real: pendiente (aquí solo se emuló).
+- **Decisión del equipo:** la etiqueta del simulador «…detectado por NISAR» (`api.sim.metrica.*_detectado_por_nisar`) presenta un resultado sintético como detectado por NISAR y conserva «NISAR» sin pasar por `_sin_nisar` en `datos/simulador.py`. Es preexistente (no lo introdujo el trabajo de idioma); no se cambió el backend. Conviene reformularla (p. ej. «detectado por el radar simulado») para respetar la regla 7.
+- Notas y celdas de tabla que escribe `modelo/desastres.py` con cifras incrustadas quedan en español (`lang="es"`) en `en` y `qu`, porque `modelo/` no se toca.
+- Código de idioma `qu-EC`, plurales con cifra, nombres de meses y días en kichwa: dudas abiertas D1–D3 de la guía.
 
 **Técnicos**
 - Bundle ~1,17 MB sin `React.lazy` por ruta.
@@ -58,7 +66,7 @@ Estación y temporada (cubierta por `PanelContexto`), Fundamentos, Modo Dios.
 - `tormenta`/`inundacion` del simulador tardan ~10–30 s.
 - `revision_visual.sh` deja `frontend/dist` compilado con `VITE_MAPA_REMOTO=0`: recompilar con
   `npm run build` antes de una demo con mapa base.
-- Aviso «Unexpected }» de minificación de CSS; sin prueba automática del mapa con red.
+- Sin prueba automática del mapa con red. (El aviso «Unexpected }» de minificación de CSS ya no aparece: se quitó una llave sobrante en `historias.css`.)
 
 ## Próxima actualización: accesibilidad e idioma (preparación)
 
@@ -348,7 +356,7 @@ Corregido: el recorrido se saltaba pasos al avanzar solo (ahora un temporizador 
 | Animación de series temporales | Cumple | Reproductor por pasadas y, con paso menor de 12 días, fotogramas continuos del modelo (`observatorio/fotogramas.ts`, `useTiempoObservatorio.ts`, `VistaMapa.tsx`); e2e «anima los fotogramas» |
 | Comparador deslizante antes/después | Cumple | `comparador/Comparador.tsx`; Historias y Observatorio; e2e con teclado |
 | Dashboards y métricas | Cumple (más resumen de impacto accionable para gestores) | `PanelMetricas.tsx`, `Mediciones.tsx`, `TablaResultados.tsx`, vista Serie |
-| Público amplio | Cumple (mejora prevista: idioma y auditoría de accesibilidad) | Términos explicados (`Termino`), accesibilidad por teclado/ARIA, tres anchos revisados; solo español, sin auditoría automática |
+| Público amplio | Cumple (kichwa en revisión; prueba con lector de pantalla pendiente) | Términos explicados (`Termino`); español, English y kichwa con selector (`frontend/src/idioma/`); axe WCAG 2.2 AA sin infracciones graves en 36 combinaciones (`e2e/accesibilidad.spec.ts`); teclado y reflujo a 320 px comprobados (ver «Idioma y accesibilidad»). El kichwa es un borrador sin validar (0 de 816) y no se hizo prueba con lector de pantalla |
 | Qué polarización resalta el cambio | Cumple | Historias (conmutador) y Laboratorio (calculado por cambio y banda) |
 | Hipótesis de impulsores (físicos y humanos) | Cumple (ejemplos ilustrativos) | `pantallas/historias/contenido/*.ts` |
 | Aplicaciones futuras de NISAR | Cumple (condicionales, «pendiente de confirmar») | contenido de Historias, parte 5 |
@@ -395,3 +403,40 @@ Auditoría axe (`frontend/e2e/accesibilidad.spec.ts`, etiquetas wcag2a/2aa/21a/2
 - `frontend/e2e/idioma.spec.ts`: cambio de idioma con el escenario cargado sin peticiones nuevas a `/api/` (Review Focus 2), persistencia tras recargar, clic de ratón sobre la etiqueta del selector, aviso «en revisión» y banda en `qu`, y el recorrido incrustado siguiendo al idioma de la página (evento `storage`) sin peticiones.
 - `scripts/revision_visual.sh` acepta un tercer argumento `es|en|qu`.
 - Revisión visual en `en` y `qu` de las seis rutas: en `qu` a 390 px había un FAIL `edge-text` común a todas («Kallari» a 10 px del borde izquierdo y «Ima niyta munan» a 5 px del derecho). Corregido en la primera ronda: padding izquierdo del riel móvil (`--space-2`) y el enlace de la banda puede partirse en dos líneas. Quedan WARN preexistentes (`below-fold` en observatorio; «Start» a 14 px en `en`, defendido arriba). Sin pendientes.
+
+## Idioma y accesibilidad (2026-11-05)
+
+### Qué se hizo (Tareas 1 a 28)
+
+- **Idioma:** tres idiomas (`es` fuente de verdad, `en`, `qu` kichwa unificado, `lang="qu-EC"`) sin biblioteca de i18n: catálogos por área en `frontend/src/idioma/catalogos/`, `useT()`, selector en la cabecera, elección inicial (`?idioma=` → `localStorage` → `navigator.languages` → `es`), todo en `try/catch`. Las claves de TanStack Query no incluyen el idioma: cambiar de idioma no repite peticiones (e2e `idioma.spec.ts`).
+- **API:** los textos y errores de la API llevan `clave_texto` y `valores_texto` (310 claves en `api/claves.json`); lo que el catálogo no conoce se muestra en español con `lang="es"`, nunca la clave.
+- **Honestidad:** la banda «DATOS DE DEMOSTRACIÓN», los sellos de origen y «pendiente de confirmar con la documentación oficial» existen en los tres idiomas; el CSV exportado conserva `# origen: sintético` y añade `# idioma:`.
+- **Accesibilidad:** auditoría axe en CI de pruebas (6 rutas × 3 idiomas × 2 anchos), saltar al contenido, puntos de referencia y encabezados, foco visible sin tapar, trampa de foco en paneles, objetivos de al menos 24 px, contraste (`--control` oscurecido), tabla móvil con semántica, descripciones de mapa y lienzos, y menos movimiento (`prefers-reduced-motion`) en simulador, recorrido y laboratorio.
+- **Kichwa:** `docs/traduccion-kichwa.csv` (816 claves) y `docs/guia-traduccion-kichwa.md` para hablantes; `scripts/traducciones_csv.mjs exportar|importar`.
+
+### Cifras de pruebas (corridas el 2026-11-06 sobre `2fee767`)
+
+| Suite | Resultado |
+|---|---|
+| `python -m pytest tests -q` | 262 passed, 2 skipped (por diseño) |
+| `python -m unittest modelo.clima modelo.desastres` | 13 tests OK |
+| `npm test` (vitest) | 523 passed, 51 archivos |
+| `npm run lint` | sin errores |
+| `npm run build` | OK |
+| `VITE_MAPA_REMOTO=0 npm run build && npx playwright test` | 81 passed (incluye 36 de axe y 4 de idioma) |
+
+### Estado del kichwa
+
+**0 de 816 claves validadas.** Es un borrador redactado por Claude sin hablantes; la app lo avisa («Kichwa tikrayka manaraka chiqanyachishkachu…») y el aviso no desaparece hasta que todas las claves y el contenido largo estén validados. Dudas abiertas por prioridad en la guía (honestidad H1–H5, decisiones D1–D9, palabras con varios sentidos C1–C10).
+
+### Prueba manual (spec §4.7): qué se hizo y con qué herramienta
+
+**Importante:** este entorno no tiene lector de pantalla (Orca/NVDA) ni una persona usando un teclado físico. No se hicieron pasadas a mano ni con lector de pantalla. Lo que sigue se automatizó con Playwright (Chromium) contra `python servidor.py` con el build `VITE_MAPA_REMOTO=0`; el script era temporal y no se versiona.
+
+1. **Solo teclado (automatizado, `es`, ventana 1280×800).** En cada una de las seis pantallas se pulsó Tab hasta que el foco volvió al inicio (sin trampa de teclado) y se comprobó que cada parada tiene nombre accesible, está dentro de la ventana y se recorre hacia atrás con Mayús+Tab. Paradas por ciclo: Historias 24, Observatorio 39, Simulador 26, Laboratorio 12, Recorrido 34 (17 de ellas dentro de los marcos incrustados), Fundamentos 15. Además: Enter abre el selector de idioma, Escape lo cierra y el foco vuelve al botón; la flecha derecha mueve el comparador (50 → 51).
+   - Hallazgos de la heurística automática sin consecuencia, revisados a mano en el código: interruptores y campos del simulador sí tienen nombre (por `<label>`); el divisor del comparador dibuja su anillo de foco en el tirador hijo (`comparador.css:39`), no en el elemento. El lienzo del mapa (MapLibre) y los marcos del Recorrido no muestran anillo propio en esta comprobación: no se verificó con ojos humanos si el foco se percibe sobre el mapa. **Pendiente de revisar con una persona.**
+   - No se recorrieron con teclado los tres idiomas ni el ancho de 390 px, salvo la prueba existente de foco/objetivos a 390 px (`accesibilidad.spec.ts`).
+2. **Zoom/reflujo (emulado con ventana de ancho reducido, no con zoom del navegador).** 640 px CSS (equivale a 200 % sobre 1280 px) y 320 px CSS (400 %), seis rutas × tres idiomas = 36 combinaciones por ancho. Resultado: **0 casos con scroll horizontal** (`scrollWidth` = `clientWidth`), 0 elementos visibles fuera del ancho (salvo contenedores con scroll propio), 1 `h1` por pantalla y banda de demostración presente en todas (a 320 px usa la forma corta «DEMO · …» / «DEMOSTRACIÓN» según el idioma). La «pérdida de contenido» solo se comprobó por la presencia del `h1` y de la banda (no se comparó con la vista de 1280 px); no se comparó el texto completo ni se miró cada captura.
+3. **Lector de pantalla (Orca/NVDA), Historias y Observatorio en los tres idiomas: no realizada.** *Pendiente: requiere persona con lector de pantalla.* Hasta entonces no se afirma cumplimiento total de WCAG; solo que axe no encuentra infracciones graves o críticas en las etiquetas wcag2a/2aa/21a/21aa/22aa.
+
+Lo que falló en esta prueba: nada que bloquee. Lo que queda sin demostrar está en «Pendientes vigentes» (grupo «Idioma y accesibilidad»).

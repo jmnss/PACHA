@@ -11,6 +11,7 @@ Las cifras se leen en pantalla (las calcula la app); no las memorices ni las inv
 2. Comprobar que la banda naranja «DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR» está arriba.
 3. Tener a mano el Observatorio (`/observatorio`) por si preguntan por una medición o por los otros tipos de cambio.
 4. Si falla el internet, el mapa base de Esri no carga; la app sigue funcionando con las provincias locales (ver «Plan B» al final).
+5. Idioma: el selector «Idioma» está en la cabecera (español, English, Kichwa) y el cambio es inmediato, sin recargar. Si presentas en otro idioma, elígelo antes de empezar. El kichwa es un **borrador en revisión por hablantes** (0 de 816 claves validadas); la app lo avisa en pantalla. La banda de datos de demostración y los sellos de origen aparecen en los tres idiomas.
 
 ## Versión corta: el recorrido guiado (90 s)
 
@@ -103,6 +104,9 @@ Los seis tipos de cambio del challenge están en el selector. Sigue siendo demos
   no dependen de la red.
 
 ## Si preguntan
+
+- «¿Está en kichwa?» Hay un borrador en kichwa unificado, todavía sin validar con hablantes; la app lo dice. Hay un CSV y una guía (`docs/guia-traduccion-kichwa.md`) para que lo revisen.
+- «¿Es accesible?» Está medido con una auditoría automática (axe, WCAG 2.2 AA) y recorridos con teclado; la prueba con lector de pantalla está pendiente. No digas «cumple WCAG» sin más.
 
 - «¿Es real?» No: sintético, generado con un script reproducible con semilla fija.
 - «¿Qué satélite, qué banda, qué fecha?» No lo afirmamos: pendiente de confirmar con la documentación oficial.

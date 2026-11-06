@@ -67,6 +67,9 @@ Siempre primero, en cada shell: `source scripts/entorno.sh` (Node 22 con nvm, `C
 | Tipos desde la API | `python scripts/exportar_openapi.py && cd frontend && npm run tipos` |
 | Extremo a extremo | `cd frontend && npx playwright test` |
 | Revisión visual de una pantalla | `bash scripts/revision_visual.sh <ruta> <nombre>` |
+| Revisión visual en otro idioma | `bash scripts/revision_visual.sh <ruta> <nombre> <es\|en\|qu>` |
+| Claves de texto de la API (`api/claves.json`) | `python scripts/exportar_claves_api.py` |
+| Kichwa: exportar / importar el CSV de revisión | `node scripts/traducciones_csv.mjs exportar` · `node scripts/traducciones_csv.mjs importar docs/traduccion-kichwa.csv` |
 | App heredada | `python app.py` (Streamlit, http://localhost:8501) |
 
 ## Convenciones
