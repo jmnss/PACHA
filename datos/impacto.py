@@ -11,6 +11,7 @@ from datetime import datetime
 
 import numpy as np
 
+from datos.claves import slug, texto
 from datos.contrato import CapaRaster, EntradaNoValida, Metrica, ProveedorDatos
 
 MAX_PUNTOS_EVOLUCION = 12
@@ -30,6 +31,21 @@ ACCIONES = {
         "Repetir el análisis tras las lluvias para vigilar la erosión de laderas sin cobertura.",
     ],
 }
+
+
+def _frase(clave: str, **valores) -> tuple[str, dict]:
+    """(texto en español, {clave_texto, valores_texto}). Cada valor es `(formato, número)` o un texto.
+    El español sale de la plantilla registrada con las cifras ya formateadas; el cliente recibe los números
+    sin formato para escribirlos a la manera de su idioma."""
+    dar = {k: (v[0](v[1]) if isinstance(v, tuple) else v) for k, v in valores.items()}
+    crudo = {k: (v[1] if isinstance(v, tuple) else v) for k, v in valores.items()}
+    return texto(clave, **dar), {"clave_texto": clave, "valores_texto": crudo}
+
+
+def _cifra(historia: str, etiqueta: str, valor: str, numero: float, unidad: str) -> Metrica:
+    clave = f"api.impacto.cifra.{historia}.{slug(etiqueta)}"
+    return Metrica(etiqueta=texto(f"{clave}.etiqueta"), valor=valor, unidad=unidad, ayuda=texto(f"{clave}.ayuda"),
+                   clave_texto=clave, valores_texto={"valor": numero})
 
 
 def _n(x: float) -> str:
@@ -129,27 +145,31 @@ def _calcular(prov: ProveedorDatos, escenario_id: str, antes: str, despues: str,
     ha = afectada_km2 * 100
     pct_afectada = 100 * afectada_km2 / escena_km2 if escena_km2 else 0.0
     if historia == "inundacion":
-        titulo = "Superficie inundada"
+        titulo, titulo_frase = _frase("api.impacto.titulo.inundacion")
         nueva = sum(c["ha"] for c in categorias if c["etiqueta"].startswith("Nueva inundación"))
-        cifras = [Metrica(etiqueta="Superficie inundada al final", valor=_n(ha), unidad="ha", ayuda="Hectáreas con agua en la pasada «después» (nueva inundación más la que ya estaba)."),
-                  Metrica(etiqueta="Inundación nueva", valor=_n(nueva), unidad="ha", ayuda="Hectáreas que no tenían agua en la pasada «antes» y sí en la «después»."),
-                  Metrica(etiqueta="Parte de la escena", valor=_pct(pct_afectada), unidad="%", ayuda="Fracción del área analizada que está inundada al final.")]
-        lectura = [f"En este escenario de demostración, el radar marca unas {_n(ha)} ha con agua al final del intervalo, el {_pct(pct_afectada)} % del área analizada."]
+        cifras = [_cifra("inundacion", "Superficie inundada al final", _n(ha), ha, "ha"),
+                  _cifra("inundacion", "Inundación nueva", _n(nueva), nueva, "ha"),
+                  _cifra("inundacion", "Parte de la escena", _pct(pct_afectada), pct_afectada, "%")]
+        lectura = [_frase("api.impacto.lectura.inundacion", ha=(_n, ha), pct=(_pct, pct_afectada))]
     else:
-        titulo = "Superficie quemada"
+        titulo, titulo_frase = _frase("api.impacto.titulo.incendio")
         alta = sum(c["ha"] for c in categorias if c["etiqueta"].startswith("Severidad alta"))
-        cifras = [Metrica(etiqueta="Superficie quemada detectada", valor=_n(ha), unidad="ha", ayuda="Hectáreas donde la señal cruzada (HV) cayó lo bastante para marcar daño."),
-                  Metrica(etiqueta="Severidad alta", valor=_n(alta), unidad="ha", ayuda="Hectáreas con la mayor caída de señal: la mayor pérdida de estructura del bosque."),
-                  Metrica(etiqueta="Parte de la escena", valor=_pct(pct_afectada), unidad="%", ayuda="Fracción del área analizada que aparece quemada.")]
-        lectura = [f"En este escenario de demostración, el radar marca unas {_n(ha)} ha quemadas, el {_pct(pct_afectada)} % del área analizada."]
+        cifras = [_cifra("incendio", "Superficie quemada detectada", _n(ha), ha, "ha"),
+                  _cifra("incendio", "Severidad alta", _n(alta), alta, "ha"),
+                  _cifra("incendio", "Parte de la escena", _pct(pct_afectada), pct_afectada, "%")]
+        lectura = [_frase("api.impacto.lectura.incendio", ha=(_n, ha), pct=(_pct, pct_afectada))]
     if pico is not None:
-        lectura.append(f"El máximo de la serie llega el {pico['instante']:%d/%m/%Y} con unas {_n(pico['ha'])} ha.")
+        lectura.append(_frase("api.impacto.lectura.pico", fecha=f"{pico['instante']:%d/%m/%Y}", ha=(_n, pico["ha"])))
     sintetico = r.origen.tipo != "real"
-    acciones = [("Si esto fuera un evento real, " + a[0].lower() + a[1:]) if i == 0 and sintetico else a
-                for i, a in enumerate(ACCIONES[historia])]
+    acciones = [_frase(f"api.impacto.accion.{historia}.{i + 1}" + ("_hipotetica" if i == 0 and sintetico else ""))
+                for i in range(len(ACCIONES[historia]))]
+    metros = round(px ** 0.5 * 1000)
+    notas = [_frase("api.impacto.nota.celdas", metros=(lambda m: f"{m:.0f}", metros)),
+             _frase("api.impacto.nota.orientativas")]
     return {"titulo": titulo, "tipo": historia, "escenario": esc.nombre, "antes": antes, "despues": despues,
-            "cifras": cifras, "categorias": categorias, "evolucion": evolucion, "lectura": lectura, "acciones": acciones,
+            "cifras": cifras, "categorias": categorias, "evolucion": evolucion, "lectura": [t for t, _ in lectura], "acciones": [t for t, _ in acciones],
+            "titulo_frase": titulo_frase, "lectura_frases": [f for _, f in lectura],
+            "acciones_frases": [f for _, f in acciones],
             "capa": capa, "area_escena_km2": escena_km2, "resolucion_celda_m": px ** 0.5 * 1000,
-            "notas": [f"Superficies medidas sobre la malla de análisis (celdas de unos {px ** 0.5 * 1000:.0f} m).",
-                      "Las acciones son orientativas y condicionales; no sustituyen a la autoridad competente."],
+            "notas": [t for t, _ in notas], "notas_frases": [f for _, f in notas],
             "origen": r.origen}

@@ -72,6 +72,71 @@ REGISTRO: dict[str, str] = {
     "api.error.cuadrante_sin_area": "El cuadrante no tiene área.",
 }
 
+# --- laboratorio del radar (prefijo api.lab.) ------------------------------------------------------
+REGISTRO.update({
+    "api.lab.metrica.cambio_visto_por_el_radar.etiqueta": "Cambio visto por el radar",
+    "api.lab.metrica.cambio_visto_por_el_radar.ayuda": "Parte de los píxeles que realmente cambiaron y que el radar marca como cambio. Las nubes no lo afectan.",
+    "api.lab.metrica.cambio_visto_por_el_optico.etiqueta": "Cambio visto por el óptico",
+    "api.lab.metrica.cambio_visto_por_el_optico.ayuda": "Lo mismo para una imagen óptica. Las nubes la tapan y, bajo el dosel, no ve el agua.",
+    "api.lab.metrica.falsas_alarmas_del_radar.etiqueta": "Falsas alarmas del radar",
+    "api.lab.metrica.falsas_alarmas_del_radar.ayuda": "Píxeles sin cambio que el radar marca como cambio por el moteado (speckle). El radar no es perfecto.",
+    "api.lab.metrica.tapado_por_nubes.etiqueta": "Tapado por nubes",
+    "api.lab.metrica.tapado_por_nubes.ayuda": "Fracción de la escena que las nubes ocultan en la imagen óptica.",
+    # Leyendas de las capas de categorías (cambio radar/óptico y superficies) y nombres de superficie.
+    "api.lab.leyenda.sin_cambio": "Sin cambio",
+    "api.lab.leyenda.cambio_detectado": "Cambio detectado",
+    "api.lab.leyenda.cambio_sin_detectar": "Cambio sin detectar",
+    "api.lab.leyenda.tapado_por_nube": "Tapado por nube",
+    "api.lab.leyenda.falsa_alarma": "Falsa alarma",
+    "api.lab.leyenda.bosque": "Bosque",
+    "api.lab.leyenda.agua": "Agua",
+    "api.lab.leyenda.bosque_inundado": "Bosque inundado",
+    "api.lab.leyenda.cultivo": "Cultivo",
+    "api.lab.leyenda.quemado": "Quemado",
+    # Cambios cuya mejor polarización se resalta.
+    "api.lab.cambio.inundacion_a_cielo_abierto": "Inundación a cielo abierto",
+    "api.lab.cambio.inundacion_bajo_dosel": "Inundación bajo dosel",
+    "api.lab.cambio.quema_del_bosque": "Quema del bosque",
+    "api.lab.aviso_banda": "Banda S: ejemplo ilustrativo de otra frecuencia; pendiente de confirmar con la documentación oficial qué bandas entrega NISAR.",
+})
+
+# --- medición (prefijo api.medicion.) --------------------------------------------------------------
+REGISTRO.update({
+    "api.medicion.posicion.etiqueta": "Posición",
+    "api.medicion.posicion.ayuda": "Centro del píxel (fila {fila}, columna {columna})",
+})
+
+# --- resumen de impacto (prefijo api.impacto.) -----------------------------------------------------
+REGISTRO.update({
+    "api.impacto.titulo.inundacion": "Superficie inundada",
+    "api.impacto.titulo.incendio": "Superficie quemada",
+    "api.impacto.cifra.inundacion.superficie_inundada_al_final.etiqueta": "Superficie inundada al final",
+    "api.impacto.cifra.inundacion.superficie_inundada_al_final.ayuda": "Hectáreas con agua en la pasada «después» (nueva inundación más la que ya estaba).",
+    "api.impacto.cifra.inundacion.inundacion_nueva.etiqueta": "Inundación nueva",
+    "api.impacto.cifra.inundacion.inundacion_nueva.ayuda": "Hectáreas que no tenían agua en la pasada «antes» y sí en la «después».",
+    "api.impacto.cifra.inundacion.parte_de_la_escena.etiqueta": "Parte de la escena",
+    "api.impacto.cifra.inundacion.parte_de_la_escena.ayuda": "Fracción del área analizada que está inundada al final.",
+    "api.impacto.cifra.incendio.superficie_quemada_detectada.etiqueta": "Superficie quemada detectada",
+    "api.impacto.cifra.incendio.superficie_quemada_detectada.ayuda": "Hectáreas donde la señal cruzada (HV) cayó lo bastante para marcar daño.",
+    "api.impacto.cifra.incendio.severidad_alta.etiqueta": "Severidad alta",
+    "api.impacto.cifra.incendio.severidad_alta.ayuda": "Hectáreas con la mayor caída de señal: la mayor pérdida de estructura del bosque.",
+    "api.impacto.cifra.incendio.parte_de_la_escena.etiqueta": "Parte de la escena",
+    "api.impacto.cifra.incendio.parte_de_la_escena.ayuda": "Fracción del área analizada que aparece quemada.",
+    "api.impacto.lectura.inundacion": "En este escenario de demostración, el radar marca unas {ha} ha con agua al final del intervalo, el {pct} % del área analizada.",
+    "api.impacto.lectura.incendio": "En este escenario de demostración, el radar marca unas {ha} ha quemadas, el {pct} % del área analizada.",
+    "api.impacto.lectura.pico": "El máximo de la serie llega el {fecha} con unas {ha} ha.",
+    "api.impacto.accion.inundacion.1": "Contrastar los bordes de la mancha con el aviso de la autoridad local antes de decidir cierres de vías.",
+    "api.impacto.accion.inundacion.1_hipotetica": "Si esto fuera un evento real, contrastar los bordes de la mancha con el aviso de la autoridad local antes de decidir cierres de vías.",
+    "api.impacto.accion.inundacion.2": "Priorizar la verificación en campo donde la superficie inundada crece más entre pasadas.",
+    "api.impacto.accion.inundacion.3": "Repetir el análisis con la siguiente pasada para saber si el agua se retira o se extiende.",
+    "api.impacto.accion.incendio.1": "Contrastar la cicatriz con los reportes de bomberos y con focos de calor ópticos antes de actuar.",
+    "api.impacto.accion.incendio.1_hipotetica": "Si esto fuera un evento real, contrastar la cicatriz con los reportes de bomberos y con focos de calor ópticos antes de actuar.",
+    "api.impacto.accion.incendio.2": "Priorizar la revisión de las zonas de severidad alta, donde la pérdida de estructura es mayor.",
+    "api.impacto.accion.incendio.3": "Repetir el análisis tras las lluvias para vigilar la erosión de laderas sin cobertura.",
+    "api.impacto.nota.celdas": "Superficies medidas sobre la malla de análisis (celdas de unos {metros} m).",
+    "api.impacto.nota.orientativas": "Las acciones son orientativas y condicionales; no sustituyen a la autoridad competente.",
+})
+
 
 def texto(clave: str, **valores) -> str:
     """Formatea la plantilla de `clave` con `valores`. `KeyError` si la clave no está registrada."""

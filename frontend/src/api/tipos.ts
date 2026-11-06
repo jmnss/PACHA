@@ -647,6 +647,21 @@ export interface components {
             /** Titulos Paneles */
             titulos_paneles: string[];
         };
+        /**
+         * Frase
+         * @description Texto de la API con su clave: el cliente traduce `clave_texto` y rellena `{x}` con `valores_texto`.
+         */
+        Frase: {
+            /** Clave Texto */
+            clave_texto: string;
+            /**
+             * Valores Texto
+             * @default {}
+             */
+            valores_texto: {
+                [key: string]: number | string;
+            };
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -667,6 +682,8 @@ export interface components {
         ImpactoDto: {
             /** Acciones */
             acciones: string[];
+            /** Acciones Frases */
+            acciones_frases?: components["schemas"]["Frase"][] | null;
             /** Antes */
             antes: string;
             /** Area Escena Km2 */
@@ -684,8 +701,12 @@ export interface components {
             evolucion: components["schemas"]["PuntoEvolucionDto"][];
             /** Lectura */
             lectura: string[];
+            /** Lectura Frases */
+            lectura_frases?: components["schemas"]["Frase"][] | null;
             /** Notas */
             notas: string[];
+            /** Notas Frases */
+            notas_frases?: components["schemas"]["Frase"][] | null;
             origen: components["schemas"]["Origen"];
             /** Resolucion Celda M */
             resolucion_celda_m: number;
@@ -693,6 +714,7 @@ export interface components {
             tipo: string;
             /** Titulo */
             titulo: string;
+            titulo_frase?: components["schemas"]["Frase"] | null;
         };
         /** MarcaDto */
         MarcaDto: {
@@ -746,12 +768,18 @@ export interface components {
         Metrica: {
             /** Ayuda */
             ayuda: string;
+            /** Clave Texto */
+            clave_texto?: string | null;
             /** Etiqueta */
             etiqueta: string;
             /** Unidad */
             unidad: string;
             /** Valor */
             valor: string;
+            /** Valores Texto */
+            valores_texto?: {
+                [key: string]: number | string;
+            } | null;
         };
         /** MetricaEventoDto */
         MetricaEventoDto: {

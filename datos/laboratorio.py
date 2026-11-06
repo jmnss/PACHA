@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 
 import numpy as np
 
+from datos.claves import REGISTRO, slug
 from datos.contrato import CapaRaster, EntradaNoValida, Metrica, Origen
 
 N = 64
@@ -86,6 +87,14 @@ def _capa(variable: str, pol: str | None, unidad: str, paleta: str, vmin: float,
     return CapaRaster("laboratorio", None, variable, pol, unidad, paleta, vmin, vmax, leyenda, datos, BBOX, origen(nota), instante)
 
 
+def _metrica(etiqueta: str, valor: str, ayuda: str) -> Metrica:
+    """Métrica en % con su clave (`api.lab.metrica.<slug>`) y la cifra sin formato para traducirla."""
+    clave = f"api.lab.metrica.{slug(etiqueta)}"
+    assert f"{clave}.etiqueta" in REGISTRO, clave
+    return Metrica(etiqueta=etiqueta, valor=valor, unidad="%", ayuda=ayuda, clave_texto=clave,
+                   valores_texto={"valor": float(valor.replace(",", "."))})
+
+
 def _validar(valor: str, validos: tuple[str, ...], nombre: str) -> str:
     if valor not in validos:
         raise EntradaNoValida.con("api.error.lab_no_valida", nombre=nombre, opciones=", ".join(validos))
@@ -139,15 +148,13 @@ def nubes(cobertura_pct: float, semilla: int = 1) -> dict:
     total = int(real.sum())
     pct = lambda x: 100.0 * x / total  # noqa: E731
     p_opt, p_rad = pct(int((real & det_opt).sum())), pct(int((real & det_radar).sum()))
+    falsas = 100.0 * int((~real & det_radar).sum()) / int((~real).sum())
+    tapado = 100.0 * float(nube.mean())
     metricas = [
-        Metrica(etiqueta="Cambio visto por el radar", valor=f"{p_rad:.0f}", unidad="%",
-                ayuda="Parte de los píxeles que realmente cambiaron y que el radar marca como cambio. Las nubes no lo afectan."),
-        Metrica(etiqueta="Cambio visto por el óptico", valor=f"{p_opt:.0f}", unidad="%",
-                ayuda="Lo mismo para una imagen óptica. Las nubes la tapan y, bajo el dosel, no ve el agua."),
-        Metrica(etiqueta="Falsas alarmas del radar", valor=f"{100.0 * int((~real & det_radar).sum()) / int((~real).sum()):.1f}".replace(".", ","), unidad="%",
-                ayuda="Píxeles sin cambio que el radar marca como cambio por el moteado (speckle). El radar no es perfecto."),
-        Metrica(etiqueta="Tapado por nubes", valor=f"{100.0 * nube.mean():.0f}", unidad="%",
-                ayuda="Fracción de la escena que las nubes ocultan en la imagen óptica."),
+        _metrica("Cambio visto por el radar", f"{p_rad:.0f}", "Parte de los píxeles que realmente cambiaron y que el radar marca como cambio. Las nubes no lo afectan."),
+        _metrica("Cambio visto por el óptico", f"{p_opt:.0f}", "Lo mismo para una imagen óptica. Las nubes la tapan y, bajo el dosel, no ve el agua."),
+        _metrica("Falsas alarmas del radar", f"{falsas:.1f}".replace(".", ","), "Píxeles sin cambio que el radar marca como cambio por el moteado (speckle). El radar no es perfecto."),
+        _metrica("Tapado por nubes", f"{tapado:.0f}", "Fracción de la escena que las nubes ocultan en la imagen óptica."),
     ]
     return {"capas": capas, "metricas": metricas, "porcentaje_radar": p_rad, "porcentaje_optico": p_opt,
             "cobertura_real": float(nube.mean()), "origen": origen(nota)}

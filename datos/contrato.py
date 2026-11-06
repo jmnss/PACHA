@@ -162,6 +162,10 @@ class Metrica(BaseModel):
     valor: str
     unidad: str
     ayuda: str
+    # Clave base para traducir: el cliente añade `.etiqueta` / `.ayuda`. `valores_texto` lleva las cifras
+    # (`valor` incluido) sin dar formato, para que cada idioma las escriba a su manera.
+    clave_texto: str | None = None
+    valores_texto: dict[str, float | int | str] | None = None
 
 
 class TablaResultado(BaseModel):

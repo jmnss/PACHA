@@ -18,6 +18,7 @@ from datetime import date, datetime, timezone
 import numpy as np
 import pandas as pd
 
+from datos.claves import texto
 from datos.contrato import (
     EntradaNoValida,
     NoEncontrado,
@@ -494,8 +495,9 @@ class ProveedorDemostracion:
                 raise EntradaNoValida.con("api.error.punto_fuera", punto=punto, ny=ny, nx=nx)
             tabla = nisar.valores_en_punto(a, punto)
             lat, lon = nisar.coordenadas_punto(a.limites, ((c + 0.5) / nx, (f + 0.5) / ny))
-            ms = [Metrica(etiqueta="Posición", valor=_coordenadas(lat, lon), unidad="",
-                          ayuda=f"Centro del píxel (fila {f}, columna {c})")]
+            ms = [Metrica(etiqueta=texto("api.medicion.posicion.etiqueta"), valor=_coordenadas(lat, lon), unidad="",
+                          ayuda=texto("api.medicion.posicion.ayuda", fila=f, columna=c),
+                          clave_texto="api.medicion.posicion", valores_texto={"fila": f, "columna": c})]
         filas = [{k: (None if (isinstance(v, float) and not math.isfinite(v)) or v is None else
                       (float(v) if isinstance(v, (int, float, np.floating, np.integer)) else str(v)))
                   for k, v in fila.items()} for fila in tabla.to_dict("records")]
