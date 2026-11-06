@@ -12,6 +12,7 @@ import { Pestanas } from '../../diseno/Pestanas'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { TextoApi } from '../../idioma/TextoApi'
+import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
 import { prefiereMenosMovimiento, usePlayback } from '../../tiempo/usePlayback'
 import { escribirEstado, leerEstado, sanearParametros, type EstadoSimulador, type ValorParametro } from './estadoSimulador'
@@ -26,6 +27,7 @@ import './simulador.css'
 /** Simulador de eventos (antes «Modo Dios»): un evento físico sobre el relieve de Ecuador y lo que vería un radar. */
 export default function Simulador() {
   const { t, formatoNumero, textoApi } = useT()
+  useTituloPagina('titulos.simulador')
   const mensaje = (e: unknown) => mensajeDeError(e, t)
   const [params, setParams] = useSearchParams()
   const estado = useMemo(() => leerEstado(params), [params])

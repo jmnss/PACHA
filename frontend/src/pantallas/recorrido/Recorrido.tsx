@@ -4,6 +4,7 @@ import { Boton } from '../../diseno/Boton'
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { IconoPausa, IconoPlay } from '../../diseno/iconos'
 import { prefiereMenosMovimiento } from '../../tiempo/usePlayback'
+import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
 import { guionDe } from './guion'
 import './recorrido.css'
@@ -13,6 +14,7 @@ const conIncrustado = (ruta: string) => ruta + (ruta.includes('?') ? '&' : '?') 
 /** Recorrido guiado: un paso a la vez, con una pantalla real incrustada. Avanza solo, salvo con «menos movimiento». */
 export default function Recorrido() {
   const { t, idioma } = useT()
+  useTituloPagina('titulos.recorrido')
   const GUION = guionDe(idioma)
   const [params, setParams] = useSearchParams()
   const n = Number(params.get('paso'))

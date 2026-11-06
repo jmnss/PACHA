@@ -1,5 +1,6 @@
-import type { ComponentType } from 'react'
-import { NavLink, Outlet, useSearchParams } from 'react-router-dom'
+import { useEffect, useRef, type ComponentType } from 'react'
+import { NavLink, Outlet, useLocation, useSearchParams } from 'react-router-dom'
+import { marcarNavegacion } from '../estado/navegacion'
 import { AvisoTraduccion } from '../idioma/AvisoTraduccion'
 import { SelectorIdioma } from '../idioma/SelectorIdioma'
 import type { Clave } from '../idioma/traductor'
@@ -36,8 +37,21 @@ export function Estructura() {
   const { t } = useT()
   // `?incrustado=1`: pantalla dentro del recorrido; sin riel (la banda de demostración se queda).
   const incrustado = useSearchParams()[0].get('incrustado') === '1' || dentroDeMarco()
+  // Al cambiar de ruta (no en la carga inicial) la cabecera de la nueva pantalla recibe el foco.
+  const { pathname } = useLocation()
+  const rutaPrevia = useRef(pathname)
+  useEffect(() => {
+    if (rutaPrevia.current === pathname) return
+    rutaPrevia.current = pathname
+    if (!incrustado) marcarNavegacion()
+  }, [pathname, incrustado])
+  const saltar = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    document.getElementById('contenido')?.focus()
+  }
   return (
     <div className="estructura">
+      <a href="#contenido" className="saltar" onClick={saltar}>{t('a11y.saltar')}</a>
       {!incrustado && <nav className="riel" aria-label={t('estructura.riel.principal')}>
         <span className="riel__marca" role="img" aria-label="NISAR · Ecuador">
           <Marca />
@@ -66,7 +80,7 @@ export function Estructura() {
       <div className={incrustado ? 'lienzo lienzo--incrustado' : 'lienzo'}>
         <BandaDemostracion />
         <AvisoTraduccion />
-        <main className="lienzo__contenido">
+        <main id="contenido" tabIndex={-1} className="lienzo__contenido">
           <Outlet />
         </main>
       </div>

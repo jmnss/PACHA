@@ -1,6 +1,7 @@
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { Pestanas } from '../../diseno/Pestanas'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
+import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
 import { VistaNubes } from './VistaNubes'
 import { VistaPolarizacion } from './VistaPolarizacion'
@@ -18,6 +19,7 @@ const ESQUEMA = {
 /** Laboratorio del radar: por qué un radar ve lo que un satélite óptico no, y qué polarización resalta cada cambio. */
 export default function Laboratorio() {
   const { t } = useT()
+  useTituloPagina('titulos.laboratorio')
   const [url, cambiar] = useEstadoUrl(ESQUEMA)
   return (
     <>

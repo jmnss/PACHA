@@ -11,6 +11,8 @@ import { observatorio } from './observatorio'
 import { origen } from './origen'
 import { piezas } from './piezas'
 import { api } from './api'
+import { titulos } from './titulos'
+import { a11y } from './a11y'
 import { simulador } from './simulador'
 
-export const es = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador, ...laboratorio, ...recorrido, ...fundamentos, ...api }
+export const es = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador, ...laboratorio, ...recorrido, ...fundamentos, ...api, ...titulos, ...a11y }

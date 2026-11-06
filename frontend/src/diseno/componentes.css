@@ -297,3 +297,14 @@ button { font: inherit; color: inherit; }
 .hoja__cabecera { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border); }
 .hoja__titulo { margin: 0; font-size: var(--fs-16); line-height: var(--lh-24); font-weight: 600; }
 .hoja__cuerpo { overflow-y: auto; padding: var(--space-4); }
+
+/* ---------- Saltar al contenido (visible solo con foco) ---------- */
+.saltar {
+  position: fixed; top: var(--space-2); left: var(--space-2); z-index: calc(var(--z-banda) + 1);
+  transform: translateY(-200%);
+  padding: var(--space-2) var(--space-4); border-radius: var(--radius-pill);
+  background: var(--surface); color: var(--text); border: 1px solid var(--accent);
+  font-size: var(--fs-14); line-height: var(--lh-20); text-decoration: none;
+}
+.saltar:focus-visible { transform: none; }
+.lienzo__contenido:focus { outline: none; }

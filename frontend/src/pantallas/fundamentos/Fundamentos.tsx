@@ -3,6 +3,7 @@ import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { Tabla, type ColumnaTabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
+import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
 import { contenidoDe, type Banda, type Fenomeno, type Parrafo } from './contenido'
 import './fundamentos.css'
@@ -13,6 +14,7 @@ const parrafo = (p: Parrafo) =>
 /** Fundamentos: la física del radar en lenguaje llano y lo que de NISAR queda por confirmar. */
 export default function Fundamentos() {
   const { t, idioma } = useT()
+  useTituloPagina('titulos.fundamentos')
   const c = contenidoDe(idioma)
   const COL_FEN: ColumnaTabla<Fenomeno & Record<string, unknown>>[] = [
     { clave: 'cambio', etiqueta: t('fundamentos.col.cambio'), identidad: true },

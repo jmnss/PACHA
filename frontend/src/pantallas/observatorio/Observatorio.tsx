@@ -12,6 +12,7 @@ import { Selector } from '../../diseno/Selector'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
 import { useMovil } from '../../estado/useMovil'
 import { clavesApi } from '../../idioma/clavesApi'
+import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
 import { codificar, decodificar, type Control, type Valores } from './parametros'
 import { PanelSimulacion } from './PanelSimulacion'
@@ -54,6 +55,7 @@ const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', 
 /** Ruta /observatorio: mapa y tiempo (esta tarea); «Antes y después» y «Serie» son las otras dos vistas. */
 export default function Observatorio() {
   const { t } = useT()
+  useTituloPagina('titulos.observatorio')
   const [url, cambiar] = useEstadoUrl(ESQUEMA)
   const escenario = useEscenario(url.escenario)
   const escenarios = useEscenarios()

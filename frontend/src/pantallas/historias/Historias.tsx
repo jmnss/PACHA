@@ -4,6 +4,7 @@ import { useEscenarios } from '../../api/consultas'
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
+import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
 import { HISTORIAS, historiasDe } from './contenido'
 import { Historia } from './Historia'
@@ -16,6 +17,7 @@ const ESQUEMA = {
 /** Ruta `/`: índice de las dos historias y la elegida en pantalla. Los escenarios se descubren por su campo `historia`. */
 export default function Historias() {
   const { t, idioma } = useT()
+  useTituloPagina('titulos.historias')
   const [url] = useEstadoUrl(ESQUEMA)
   const escenarios = useEscenarios()
   const historias = historiasDe(idioma)

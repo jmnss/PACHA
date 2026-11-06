@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
+import { consumirNavegacion } from '../estado/navegacion'
 
 interface Props {
   titulo: string
@@ -9,10 +10,12 @@ interface Props {
 
 /** Título 26/700, línea gris con el hallazgo, a la derecha solo acciones reales y la frescura. */
 export function CabeceraPantalla({ titulo, hallazgo, acciones, frescura }: Props) {
+  const h1 = useRef<HTMLHeadingElement>(null)
+  useEffect(() => { if (consumirNavegacion()) h1.current?.focus() }, [])
   return (
     <header className="cabecera">
       <div className="cabecera__texto">
-        <h1 className="cabecera__titulo">{titulo}</h1>
+        <h1 ref={h1} tabIndex={-1} className="cabecera__titulo">{titulo}</h1>
         {hallazgo && <p className="cabecera__hallazgo">{hallazgo}</p>}
       </div>
       {(acciones || frescura) && (

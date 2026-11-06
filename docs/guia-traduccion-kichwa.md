@@ -191,3 +191,12 @@ que traducen esas palabras dentro de los valores de métricas); todo sin validar
   (semilla del azar). Todas son propuestas del equipo.
 - Los textos de los 404/405 genéricos, las ayudas de métricas del simulador, las notas y celdas de tabla de `modelo/desastres.py`,
   los títulos de la bitácora guardada y el informe PNG siguen en español con `lang="es"` (spec §9.5).
+
+## Tarea 21 · Orientación (`catalogos/qu/titulos.ts`, `catalogos/qu/a11y.ts`)
+
+Borrador sin validar por hablantes:
+
+- **Títulos de pantalla** (pestaña del navegador): reutilizan los nombres del riel (`Willakuykuna`, `Observatorio`,
+  `Simulador de eventos`, `Laboratorio radarpa`, `Pushashka purina`, `Sapi yachay`); el sufijo « · NISAR Ecuador» no se traduce.
+- **Dudas**: «Willaykunaman pasay» (saltar al contenido; «willaykuna» = noticias/mensajes, «pasay» = pasar), propuesta del equipo;
+  confirmar si hay una fórmula más natural para un enlace de «ir directo a».

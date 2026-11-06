@@ -27,6 +27,9 @@ for (const ruta of RUTAS) {
         const graves = violations.filter(
           (v) => (v.impact === 'serious' || v.impact === 'critical') && !PENDIENTES.includes(v.id),
         )
+        // Orientación (Tarea 21): estas reglas son moderate, pero aquí no se toleran en ningún caso.
+        const orientacion = violations.filter((v) => ['bypass', 'document-title', 'page-has-heading-one', 'heading-order', 'landmark-one-main'].includes(v.id))
+        expect(orientacion.map((v) => v.id)).toEqual([])
         if (process.env.AXE_VOLCAR) {
           for (const v of graves) console.log(`AXE|${v.id}|${v.impact}|${ruta}|${idioma}|${ancho}|${v.nodes.length}`)
         }
