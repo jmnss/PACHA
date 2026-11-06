@@ -42,6 +42,8 @@ import os, sys
 sys.path.insert(0, '/app')
 os.chdir('/app')
 os.environ['NISAR_PROVEEDOR'] = 'demo'
+import requests_navegador
+requests_navegador.registrar('${motorUrl}')
 import arranque
 await arranque.iniciar()
 `)
