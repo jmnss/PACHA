@@ -1,6 +1,7 @@
 /** Cliente mínimo de la API: fetch a /api con errores tipados en español. */
 import { es } from '../idioma/catalogos/es'
 import type { Valores } from '../idioma/interpolar'
+import { transporteNavegador, type Transporte } from '../motor/transporte'
 import { traductor, type Clave, type T } from '../idioma/traductor'
 
 export class ErrorApi extends Error {
@@ -54,12 +55,14 @@ async function cuerpoDelServidor(r: Response): Promise<CuerpoError> {
   return vacio
 }
 
+const transporte: Transporte = import.meta.env.VITE_MOTOR === 'navegador' ? transporteNavegador : (url, init) => fetch(url, init)
+
 /** GET sin cuerpo; POST con JSON si se pasa `cuerpo`. */
 export async function llamar<T>(ruta: string, cuerpo?: unknown): Promise<T> {
   const url = ruta.startsWith('/api') ? ruta : `/api${ruta.startsWith('/') ? '' : '/'}${ruta}`
   let r: Response
   try {
-    r = await fetch(
+    r = await transporte(
       url,
       cuerpo === undefined
         ? { method: 'GET' }

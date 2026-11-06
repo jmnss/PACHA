@@ -36,4 +36,7 @@ export const estructura: Record<keyof typeof esEstructura, string> = {
   'estructura.tabla.rango': '{desde}–{hasta}, {total}-manta',
   'estructura.no_encontrada.titulo': 'Kay panka mana tiyanchu',
   'estructura.no_encontrada.hallazgo': 'Kay ñan kay app-pi mana tiyanchu.',
+  'estructura.motor.cargando': 'Yupana motorta allichikun… (punta kutin: 25 MB shina)',
+  'estructura.motor.error': 'Yupana motorka kay navegadorpi mana chaskiyta ushashkachu; ñawpa yupashkaka tiyakunllami.',
+  'estructura.motor.no_disponible': 'Kay ruranaka yupana motorta minishtin, shinapash kay navegadorpi mana chaskiyta ushashkachu.',
 }

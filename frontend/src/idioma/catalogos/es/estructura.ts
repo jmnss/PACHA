@@ -33,4 +33,7 @@ export const estructura = {
   'estructura.tabla.rango': '{desde}–{hasta} de {total}',
   'estructura.no_encontrada.titulo': 'Página no encontrada',
   'estructura.no_encontrada.hallazgo': 'Esta dirección no existe en la app.',
+  'estructura.motor.cargando': 'Preparando el motor de cálculo… (primera visita: unos 25 MB)',
+  'estructura.motor.error': 'El motor de cálculo no pudo cargarse en este navegador; lo precalculado sigue disponible.',
+  'estructura.motor.no_disponible': 'Esta función necesita el motor de cálculo, que no pudo cargarse en este navegador.',
 }

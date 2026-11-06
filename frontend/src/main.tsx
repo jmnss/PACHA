@@ -15,8 +15,11 @@ import './idioma/idioma.css'
 import App from './App.tsx'
 import { crearQueryClient } from './api/consultas'
 import { ProveedorIdioma } from './idioma/ProveedorIdioma'
+import { motor } from './motor/clienteMotor'
 
 const cliente = crearQueryClient()
+
+if (import.meta.env.VITE_MOTOR === 'navegador') motor.iniciar()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

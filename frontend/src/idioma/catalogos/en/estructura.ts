@@ -35,4 +35,7 @@ export const estructura: Record<keyof typeof esEstructura, string> = {
   'estructura.tabla.rango': '{desde}–{hasta} of {total}',
   'estructura.no_encontrada.titulo': 'Page not found',
   'estructura.no_encontrada.hallazgo': 'This address does not exist in the app.',
+  'estructura.motor.cargando': 'Preparing the computation engine… (first visit: about 25 MB)',
+  'estructura.motor.error': 'The computation engine could not load in this browser; precomputed content is still available.',
+  'estructura.motor.no_disponible': 'This feature needs the computation engine, which could not load in this browser.',
 }

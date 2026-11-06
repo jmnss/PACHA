@@ -10,3 +10,6 @@ data/demo/
 test-results/
 playwright-report/
 .superpowers/
+frontend/dist-pages/
+frontend/.precalculado/
+frontend/.cache-pyodide/
