@@ -3,6 +3,7 @@ import { Tabla, type ColumnaTabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import type { Origen } from '../../diseno/origen'
 import { descargarCsv } from '../../exportar/csv'
+import { clavesApi } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import { useT } from '../../idioma/useT'
 import { COLUMNAS_BITACORA, coordenadas, csvBitacora, etiquetaColumna, filasBitacora, type EntradaBitacora } from './bitacora'
@@ -25,7 +26,11 @@ export function Bitacora({ entradas, origen, onVaciar }: Props) {
             ? <>{coordenadas(e.lat, e.lon, t)} · <TextoApi texto={e.region} /></>
             : texto(e.lugar)
         }
-      : ['Evento', 'Temporada', 'Detección del radar'].includes(c) ? texto : undefined,
+      : c === 'Evento'
+        ? (_v, f) => { const e = f._entrada as EntradaBitacora; return <TextoApi texto={e.titulo} clave={e.titulo_clave} valores={e.titulo_valores} /> }
+        : c === 'Temporada'
+          ? (_v, f) => { const e = f._entrada as EntradaBitacora; return <TextoApi texto={e.temporada} clave={clavesApi.contexto('temporada', e.temporada)} /> }
+          : c === 'Detección del radar' ? texto : undefined,
   }))
   const filas = filasBitacora(entradas, t).map((f, k) => ({ ...f, _entrada: entradas[k] }))
   return (

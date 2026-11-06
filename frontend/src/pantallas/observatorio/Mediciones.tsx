@@ -12,6 +12,7 @@ import { descargarCsv } from '../../exportar/csv'
 import { formatoNumero } from '../../graficos/formato'
 import { langDe } from '../../idioma/idiomas'
 import { TextoApi } from '../../idioma/TextoApi'
+import { clavesApi } from '../../idioma/clavesApi'
 import { AyudaMetrica, EtiquetaMetrica, ValorMetrica } from '../../idioma/MetricaApi'
 import type { T } from '../../idioma/traductor'
 import type { CodigoIdioma } from '../../idioma/idiomas'
@@ -52,7 +53,7 @@ const hora = (ms: number, lang: string) => (ms > 0 ? new Date(ms).toLocaleTimeSt
 
 /** Medición sobre la imagen: un punto (valores en las dos pasadas) o un cuadrante (resumen, tabla y CSV). */
 export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, polarizacion, onBorrar }: Props) {
-  const { t, idioma } = useT()
+  const { t, idioma, textoApi } = useT()
   const [params] = useSearchParams()
   const hay = !!(punto || cuadrante)
   // Un solo gesto a la vez: el cuadrante manda si hubiera los dos.
@@ -91,7 +92,7 @@ export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, po
           ultimoDato={hora(consulta.dataUpdatedAt, langDe(idioma))} onReintentar={() => void consulta.refetch()} />
       )}
       {m && enCuadrante && (
-        <FranjaKpi items={m.metricas.map((x, i) => ({ etiqueta: <EtiquetaMetrica m={x} />, valor: <ValorMetrica m={x} />, unidad: x.unidad || undefined, principal: i === 0 }))} />
+        <FranjaKpi items={m.metricas.map((x, i) => ({ etiqueta: <EtiquetaMetrica m={x} />, valor: <ValorMetrica m={x} />, unidad: x.unidad ? textoApi(x.unidad, clavesApi.unidad(x.unidad)).texto : undefined, principal: i === 0 }))} />
       )}
       {m && !enCuadrante && m.metricas.length > 0 && (
         <p className="medicion__nota">{m.metricas[0].ayuda ? <><AyudaMetrica m={m.metricas[0]} />. </> : null}{t('obs.medicion.valor_pixel')}.</p>

@@ -2,17 +2,22 @@ import type { EventoDto, MundoDto } from '../../api/simulador'
 import type { Origen } from '../../diseno/origen'
 import { aCsv, type Celda } from '../../exportar/csv'
 import type { CodigoIdioma } from '../../idioma/idiomas'
+import type { Valores } from '../../idioma/interpolar'
 import { traductor, type Clave, type T } from '../../idioma/traductor'
 
 const ES = traductor('es').t
 
 export interface EntradaBitacora {
+  /** Título en español; las entradas nuevas guardan además su clave y valores para mostrarlo en cada idioma. */
   titulo: string
+  titulo_clave?: string | null
+  titulo_valores?: Valores | null
   /** Frase en español de las entradas antiguas; las nuevas guardan `lat`, `lon` y `region` y la arman al mostrar. */
   lugar: string
   lat?: number
   lon?: number
   region?: string
+  /** Temporada en español (`api.contexto.temporada.*`): se traduce al mostrarla por su clave derivada. */
   temporada: string
   area_km2: number | null
   expuestos: number | null
@@ -39,6 +44,8 @@ export function entradaDeEvento(e: EventoDto, m: MundoDto, enlace: string): Entr
   const r = e.resumen
   return {
     titulo: e.titulo,
+    titulo_clave: e.clave_texto ?? null,
+    titulo_valores: e.valores_texto ?? null,
     lugar: `${coordenadas(e.lat, e.lon, ES)} · ${m.region}`,
     lat: e.lat,
     lon: e.lon,

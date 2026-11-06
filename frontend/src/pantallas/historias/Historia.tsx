@@ -175,7 +175,7 @@ export function Historia({ contenido: c, esc, indice }: Props) {
         </div>
         {r && r.notas.length > 0 && (
           <div className="historia__notas">
-            <NotasModelo notas={r.notas} />
+            <NotasModelo notas={r.notas} escenarioId={esc.id} />
           </div>
         )}
         <div>

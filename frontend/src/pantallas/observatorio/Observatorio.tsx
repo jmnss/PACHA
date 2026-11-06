@@ -262,7 +262,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
             />
           )}
           <PanelMetricas esc={esc} resultado={resultado} indice={tiempo.pasadaActiva} antesId={antesId} despuesId={despuesId} />
-          {vista === 'comparar' && <NotasResultado resultado={resultado} />}
+          {vista === 'comparar' && <NotasResultado resultado={resultado} escenarioId={esc.id} />}
           {vista !== 'comparar' && <PanelContexto consulta={contexto} ms={tiempo.ms} />}
         </aside>
       </div>

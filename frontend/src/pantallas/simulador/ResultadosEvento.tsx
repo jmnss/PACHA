@@ -7,6 +7,7 @@ import { Tabla, type ColumnaTabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { descargarPng } from '../../exportar/png'
 import { EtiquetaMetrica, ValorMetrica } from '../../idioma/MetricaApi'
+import { clavesApi } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import type { Clave } from '../../idioma/traductor'
 import { useT } from '../../idioma/useT'
@@ -36,10 +37,16 @@ export function ResultadosEvento({ evento, mundo, estado }: Props) {
     })
   }, [evento, mundo, consulta])
 
-  const columnas: ColumnaTabla<Record<string, unknown>>[] = useMemo(() => (evento.tabla?.columnas ?? []).map((c, k) => ({
-    clave: c, etiqueta: c, identidad: k === 0, lang: 'es', // columnas y celdas las escribe modelo/desastres.py en español
-    numerica: (evento.tabla?.filas ?? []).every((f) => typeof f[k] === 'number' || f[k] === null),
-  })), [evento])
+  // Columnas y celdas las escribe modelo/desastres.py en español: el encabezado se traduce por su clave derivada
+  // (si el español coincide); las celdas de texto se quedan en español con lang="es" (spec §9.5).
+  const columnas: ColumnaTabla<Record<string, unknown>>[] = useMemo(() => (evento.tabla?.columnas ?? []).map((c, k) => {
+    const encabezado = textoApi(c, clavesApi.simColumna(c))
+    const numerica = (evento.tabla?.filas ?? []).every((f) => typeof f[k] === 'number' || f[k] === null)
+    return {
+      clave: c, etiqueta: encabezado.texto, identidad: k === 0, numerica,
+      lang: numerica ? undefined : 'es', langEncabezado: encabezado.traducido ? undefined : 'es',
+    }
+  }), [evento, textoApi])
   const filas = useMemo(() => (evento.tabla?.filas ?? []).map((f) => Object.fromEntries((evento.tabla?.columnas ?? []).map((c, k) => [c, f[k]]))), [evento])
 
   const copiar = async () => {

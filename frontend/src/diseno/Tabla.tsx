@@ -5,8 +5,10 @@ import { useT } from '../idioma/useT'
 export interface ColumnaTabla<F> {
   clave: string
   etiqueta: string
-  /** Idioma del contenido de la columna si no es el de la interfaz (texto escrito por el modelo en español). */
+  /** Idioma de las celdas de la columna si no es el de la interfaz (texto escrito por el modelo en español). */
   lang?: string
+  /** Idioma del encabezado si no es el de la interfaz. */
+  langEncabezado?: string
   numerica?: boolean
   /** Primera columna: identidad, en blanco. */
   identidad?: boolean
@@ -44,7 +46,7 @@ export function Tabla<F extends Record<string, unknown>>({ columnas, filas, titu
           <thead role={r('rowgroup')}>
             <tr role={r('row')}>
               {columnas.map((c) => (
-                <th key={c.clave} scope="col" role={r('columnheader')} lang={c.lang} className={c.numerica ? 'tabla__num' : undefined}>
+                <th key={c.clave} scope="col" role={r('columnheader')} lang={c.langEncabezado} className={c.numerica ? 'tabla__num' : undefined}>
                   {c.etiqueta}
                 </th>
               ))}

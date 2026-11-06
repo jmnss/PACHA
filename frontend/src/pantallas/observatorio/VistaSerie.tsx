@@ -73,7 +73,7 @@ export function VistaSerie({ esc, resultado, antesId, despuesId }: Props) {
       ))}
       {r.notas.length > 0 && (
         <Tarjeta titulo={t('obs.comparar.como_leer')} pie={<SelloOrigen origen={r.origen} />}>
-          <NotasModelo notas={r.notas} />
+          <NotasModelo notas={r.notas} escenarioId={esc.id} />
         </Tarjeta>
       )}
     </div>

@@ -28,3 +28,9 @@ export function ValorMetrica({ m }: { m: MetricaApi }) {
   if (!m.clave_texto) return /\p{L}{4,}/u.test(m.valor) ? <TextoApi texto={m.valor} /> : <>{m.valor}</>
   return <>{valorMetrica(m.valor, m.valores_texto, formatoNumero, { mil: t('api.valor.mil'), personas: t('api.valor.personas') })}</>
 }
+
+/** Unidad de una métrica: las que llevan palabras («días», «m/día») se traducen por `api.unidad.<slug>` si el
+ * español coincide; los símbolos (km², dB, %) quedan tal cual. */
+export function UnidadMetrica({ unidad }: { unidad: string }) {
+  return /\p{L}{3,}/u.test(unidad) ? <TextoApi texto={unidad} clave={clavesApi.unidad(unidad)} /> : <>{unidad}</>
+}

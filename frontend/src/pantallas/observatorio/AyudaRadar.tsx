@@ -25,7 +25,7 @@ export function AyudaRadar({ descripcion, nombreTipo, tipoId }: Props) {
           <Termino nombre={t('obs.ayuda.interferometria')} explicacion={t('obs.ayuda.interferometria_explicacion')} />
           .
         </p>
-        <NotasModelo notas={[t('obs.ayuda.aviso')]} />
+        <NotasModelo notas={[t('obs.ayuda.aviso')]} traducidas />
       </div>
     </details>
   )

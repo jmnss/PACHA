@@ -1,13 +1,15 @@
 import type { UseQueryResult } from '@tanstack/react-query'
 import { mensajeDeError } from '../../api/cliente'
 import type { Escenario, ResultadoCambio } from '../../api/consultas'
+import type { components } from '../../api/tipos'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
 import { FranjaKpi } from '../../diseno/FranjaKpi'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { TextoApi } from '../../idioma/TextoApi'
-import { AyudaMetrica, EtiquetaMetrica, ValorMetrica, type MetricaApi } from '../../idioma/MetricaApi'
+import { AyudaMetrica, EtiquetaMetrica, UnidadMetrica, ValorMetrica } from '../../idioma/MetricaApi'
+import { clavesApi } from '../../idioma/clavesApi'
 import { langDe } from '../../idioma/idiomas'
 import { useT } from '../../idioma/useT'
 import { formatearFecha } from '../../tiempo/fechas'
@@ -19,6 +21,8 @@ interface Props {
   antesId: string
   despuesId: string
 }
+
+type Metrica = components['schemas']['Metrica']
 
 const hora = (ms: number, lang: string) => (ms > 0 ? new Date(ms).toLocaleTimeString(lang === 'es' ? 'es-EC' : lang, { hour: '2-digit', minute: '2-digit' }) : undefined)
 
@@ -36,7 +40,7 @@ export function PanelMetricas({ esc, resultado, indice, antesId, despuesId }: Pr
     <>
       <FranjaKpi items={[
         { etiqueta: t('obs.metricas.pasada_activa'), valor: fecha(pasada?.instante), base: t('obs.metricas.pasada_base', { n: indice + 1, total: esc.adquisiciones.length }) },
-        { etiqueta: t('obs.metricas.direccion'), valor: pasada?.direccion_orbital ? <TextoApi texto={pasada.direccion_orbital} /> : '—' },
+        { etiqueta: t('obs.metricas.direccion'), valor: pasada?.direccion_orbital ? <TextoApi texto={pasada.direccion_orbital} clave={clavesApi.orbita(pasada.direccion_orbital)} /> : '—' },
       ]} />
       <Tarjeta
         titulo={t('obs.metricas.cambio_titulo')}
@@ -50,18 +54,18 @@ export function PanelMetricas({ esc, resultado, indice, antesId, despuesId }: Pr
             ultimoDato={hora(resultado.dataUpdatedAt, langDe(idioma))} onReintentar={() => void resultado.refetch()} />
         )}
         {r && (
-          <Tabla
+          <Tabla<Metrica>
             titulo={t('obs.metricas.tabla_titulo')}
             porPagina={50}
             columnas={[
               { clave: 'etiqueta', etiqueta: t('obs.metricas.col_metrica'), identidad: true, formato: (_v, f) => (
-                <span className="metrica__nombre"><EtiquetaMetrica m={f as unknown as MetricaApi} />{f.ayuda ? <span className="metrica__ayuda"><AyudaMetrica m={f as unknown as MetricaApi} /></span> : null}</span>
+                <span className="metrica__nombre"><EtiquetaMetrica m={f} />{f.ayuda ? <span className="metrica__ayuda"><AyudaMetrica m={f} /></span> : null}</span>
               ) },
               { clave: 'valor', etiqueta: t('obs.metricas.col_valor'), numerica: true, formato: (_v, f) => (
-                <><ValorMetrica m={f as unknown as MetricaApi} />{f.unidad ? <span className="metrica__unidad"> {String(f.unidad)}</span> : null}</>
+                <><ValorMetrica m={f} />{f.unidad ? <span className="metrica__unidad"> <UnidadMetrica unidad={f.unidad} /></span> : null}</>
               ) },
             ]}
-            filas={r.metricas.map((m) => ({ ...m }))}
+            filas={r.metricas}
           />
         )}
       </Tarjeta>

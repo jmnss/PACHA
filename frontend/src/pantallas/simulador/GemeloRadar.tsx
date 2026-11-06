@@ -2,6 +2,7 @@ import type { EventoDto } from '../../api/simulador'
 import { Comparador } from '../../comparador/Comparador'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { estiloDeCapa } from '../observatorio/derivados'
+import { clavesApi } from '../../idioma/clavesApi'
 import { EtiquetaMetrica, ValorMetrica } from '../../idioma/MetricaApi'
 import { useT } from '../../idioma/useT'
 import type { Clave } from '../../idioma/traductor'
@@ -14,11 +15,14 @@ const POR_QUE: Record<string, Clave> = { HV: 'sim.gemelo.por_que_hv', HH: 'sim.g
  * Si los dos primeros paneles comparten escala se comparan con el deslizante; si no, van en rejilla.
  */
 export function GemeloRadar({ evento }: { evento: EventoDto }) {
-  const { t } = useT()
+  const { t, textoApi } = useT()
   const [a, d, ...resto] = evento.paneles
-  const tit = evento.titulos_paneles
+  // Títulos que escribe modelo/desastres.py: traducidos por su clave derivada si el español coincide.
+  const trad = evento.titulos_paneles.map((x) => textoApi(x, clavesApi.simPanel(x)))
+  const tit = trad.map((r) => r.texto)
+  const propio = (k: number) => trad[k]?.traducido ?? false
   const comparar = evento.comparable && a && d
-  const restantes = comparar ? resto.map((p, k) => [p, tit[k + 2]] as const) : evento.paneles.map((p, k) => [p, tit[k]] as const)
+  const restantes = comparar ? resto.map((p, k) => [p, tit[k + 2], propio(k + 2)] as const) : evento.paneles.map((p, k) => [p, tit[k], propio(k)] as const)
   const estilo = a ? estiloDeCapa(a) : null
   return (
     <Tarjeta titulo={t('sim.gemelo.titulo')}>
@@ -32,7 +36,7 @@ export function GemeloRadar({ evento }: { evento: EventoDto }) {
         </>
       )}
       <div className="rejilla-paneles">
-        {restantes.map(([p, titulo]) => <PanelRadar key={p.variable} capa={p} titulo={titulo ?? p.variable} />)}
+        {restantes.map(([p, titulo, yaTraducido]) => <PanelRadar key={p.variable} capa={p} titulo={titulo ?? p.variable} propio={yaTraducido} />)}
       </div>
       {evento.metricas_radar.length > 0 && (
         <ul className="simulador__chips" aria-label={t('sim.gemelo.deteccion_aria')}>

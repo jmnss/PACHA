@@ -13,6 +13,7 @@ import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
 import { descargarPng } from '../../exportar/png'
 import { langDe } from '../../idioma/idiomas'
+import { clavesApi } from '../../idioma/clavesApi'
 import { useT } from '../../idioma/useT'
 import { formatearFecha } from '../../tiempo/fechas'
 import { CampoFlujo } from './CampoFlujo'
@@ -81,7 +82,7 @@ export function VistaAntesDespues({ esc, resultado, antesId, despuesId, polariza
   const opciones = (desde: number, hasta: number) =>
     pasadas.slice(desde, hasta).map((p) => {
       const repetida = pasadas.some((q) => q.id !== p.id && fecha(q.instante) === fecha(p.instante))
-      return { valor: p.id, texto: repetida ? `${fecha(p.instante)} · ${textoApi(p.direccion_orbital ?? '').texto}` : fecha(p.instante) }
+      return { valor: p.id, texto: repetida ? `${fecha(p.instante)} · ${textoApi(p.direccion_orbital ?? '', clavesApi.orbita(p.direccion_orbital ?? '')).texto}` : fecha(p.instante) }
     })
   const selectores = (
     <div className="vista-comparar__selectores">
@@ -175,13 +176,13 @@ export function VistaAntesDespues({ esc, resultado, antesId, despuesId, polariza
 }
 
 /** Notas del resultado (qué significa lo que se ve), con el aviso de que lo dicho sobre NISAR no está verificado. */
-export function NotasResultado({ resultado }: { resultado: UseQueryResult<ResultadoCambio> }) {
+export function NotasResultado({ resultado, escenarioId }: { resultado: UseQueryResult<ResultadoCambio>; escenarioId?: string }) {
   const { t } = useT()
   const notas = resultado.data?.notas ?? []
   if (notas.length === 0) return null
   return (
     <Tarjeta titulo={t('obs.comparar.como_leer')} pie={<SelloOrigen origen={resultado.data!.origen} />}>
-      <NotasModelo notas={notas} />
+      <NotasModelo notas={notas} escenarioId={escenarioId} />
     </Tarjeta>
   )
 }
