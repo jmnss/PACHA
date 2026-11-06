@@ -1,9 +1,119 @@
 # INFORME — Migración a React
 
-Estado: **Fase 2 terminada: alcance de la primera noche completo (bloques 0 a 5).** Verificación final: build OK, vitest 282, lint OK, Playwright 22/22, pytest 175 (+2 omitidas por diseño), unittest 13 OK.
+Estado: **migración completa (bloques 0 a 5) más Simulador, Laboratorio, Recorrido, Fundamentos e Impacto.
+Siguiente actualización: accesibilidad e idioma** (ver «Próxima actualización»).
+Verificación (corrida el 2026-11-05 sobre `abaea3d`): pytest 238 (+2 omitidas por diseño), unittest 13 OK,
+vitest 336 (32 archivos), lint OK, build OK, Playwright 40/40.
 Última actualización: 2026-11-05
 
-Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea.
+Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea. Las secciones
+fechadas más abajo son históricas; **la lista vigente de pendientes es «Pendientes vigentes»**.
+
+## Estado actual de un vistazo
+
+| Pantalla | Ruta | Qué hace |
+|---|---|---|
+| Historias | `/` | Inundación (Costa baja) e incendio (Sierra) en cinco partes, con comparador y conmutador de polarización |
+| Observatorio | `/observatorio` | Mapa, comparar, serie, simulación e impacto (solo inundación e incendio) para los seis tipos de cambio |
+| Simulador de Eventos | `/simulador` | Antes «Modo Dios»: tablero, animación, gemelo del radar, espera del radar, bitácora y PNG |
+| Laboratorio | `/laboratorio` | «La nube no lo detiene» y «Polarización y banda» |
+| Recorrido | `/recorrido` | Guion de 6 pasos (≤ 2 min) con pantallas reales incrustadas |
+| Fundamentos | `/fundamentos` | Física general; lo específico de NISAR, «pendiente de confirmar» |
+| Sistema de diseño | `/_sistema` | Galería interna (decisión pendiente: ¿se publica?) |
+
+Datos: todo es sintético (proveedor `demo`); el proveedor `real` es un esqueleto. La banda «DATOS DE
+DEMOSTRACIÓN» es permanente.
+
+## Pendientes vigentes (lista única, 2026-11-05)
+
+Sustituye a «Pendientes tras la primera noche» y a los pendientes sueltos de cada sección fechada. Ya
+resueltos y retirados de la lista: localizador de Ecuador, fotogramas continuos, solape de `Barras`,
+Estación y temporada (cubierta por `PanelContexto`), Fundamentos, Modo Dios.
+
+**Equipo / externos**
+- Recursos oficiales de datos y requisitos de entrega del challenge (formato, plazo, vídeo, licencia).
+- Confirmar la licencia (MIT provisional).
+- Decidir si se conserva Validación (N2.5) y qué hacer con `/_sistema` en producción.
+- Integración de datos reales (lista de `docs/plan-migracion.md`, sección final).
+
+**Funcionales**
+- Serie temporal del punto/cuadrante (la API no expone `serie_seleccion`).
+- Fecha del evento (el servidor no la acepta) → sin marcas de evento ni cursor en la vista Serie.
+- Tooltip de provincia y marcadores del catálogo en el mapa; «observable» del tipo en la cabecera.
+- Impacto: no cubre cultivos, glaciares, terremotos ni subsidencia; la evolución usa hasta 12 pasadas.
+- Simulador fase 2: decisión A/B (cortafuegos, dique, evacuación), cascadas, retos educativos.
+
+**Visuales / móvil**
+- Hoja inferior de parámetros y menú de tres puntos del Observatorio en móvil (§10).
+- Placas flotantes del mapa ocupan ~130 px en móvil; hueco bajo la cinta en escritorio.
+- En Relieve el radar puede tapar etiquetas (vienen dentro de la tesela).
+- Tabla móvil en tres líneas y sin semántica de tabla (`display:block`) — **afecta a accesibilidad**.
+- Margen de 12 px en la banda móvil (diseno.md pide 16).
+- Avisos del inspector en el simulador (`ragged-row`, `below-fold`); sin captura móvil con resultados.
+
+**Técnicos**
+- Bundle ~1,17 MB sin `React.lazy` por ruta.
+- `/api/tipos` mezcla unidades (el panel multiplica por `escala`).
+- `/cambio` pesado y `/medicion` recalcula el cambio con datos reales; `RLock` global del proveedor demo.
+- `tormenta`/`inundacion` del simulador tardan ~10–30 s.
+- `revision_visual.sh` deja `frontend/dist` compilado con `VITE_MAPA_REMOTO=0`: recompilar con
+  `npm run build` antes de una demo con mapa base.
+- Aviso «Unexpected }» de minificación de CSS; sin prueba automática del mapa con red.
+
+## Próxima actualización: accesibilidad e idioma (preparación)
+
+Objetivo frente a `docs/challenge.md`: «que los datos de NISAR sean accesibles a un público amplio».
+Esta sección es el punto de partida; el diseño detallado (spec y plan) se escribe antes de tocar código.
+
+### Línea base comprobada (2026-11-05)
+
+**Idioma**
+- La interfaz está solo en español; `frontend/index.html` declara `lang="es"`.
+- No hay biblioteca de internacionalización (dependencias: React, React Router, TanStack Query,
+  MapLibre, Public Sans).
+- El texto vive en tres sitios:
+  1. componentes `.tsx` (cadenas en línea);
+  2. contenido largo en `pantallas/historias/contenido/*.ts` y `pantallas/fundamentos/contenido.ts`
+     (el guion del recorrido y las ayudas están en sus pantallas);
+  3. **la API**: etiquetas, títulos, descripciones y errores 422/404 salen en español de `datos/`
+     (`contrato.py`, `proveedores/demo.py`, `laboratorio.py`, `simulador.py`, `impacto.py`) y de
+     `api/schemas_*.py`. Traducir solo el frontend dejaría textos mezclados.
+- 23 usos de `toLocale*`/`Intl` en el frontend (fechas y números): revisar que tomen el idioma activo.
+- Exportaciones (CSV con `# origen: sintético`, PNG con franja): sus marcas son texto y deben traducirse
+  sin perder la marca de origen (regla de honestidad 2).
+- README ya existe en español e inglés; `docs/historia-datos.md` solo en español.
+
+**Accesibilidad**
+- 126 atributos `aria-*` en los `.tsx`; navegación por teclado en comparador, cinta, tablero del
+  simulador y recorrido; nombres accesibles en el riel (diseno.md).
+- «Menos movimiento» se respeta en `tiempo/usePlayback.ts`, `pantallas/observatorio/VistaMapa.tsx`,
+  `estado/useMovil.ts` y `diseno/componentes.css`; **falta comprobarlo** en el resto de animaciones
+  (simulador, recorrido, laboratorio).
+- Rampas de color elegidas para ser distinguibles con daltonismo (diseno.md §4; Severidad alta `#9a3412`).
+- `Termino` explica cada término técnico en el sitio.
+- **Sin auditoría automática** (no hay axe ni equivalente en `package.json`) y sin revisión con lector
+  de pantalla.
+- Huecos conocidos: tabla móvil sin semántica de tabla; mapa y lienzos sin alternativa textual
+  comprobada; banda móvil con margen de 12 px.
+
+### Preguntas para decidir antes del spec
+
+1. Idiomas: ¿solo español + inglés? ¿Algún idioma originario de Ecuador (kichwa)? Si se añade, ¿quién
+   revisa la traducción?
+2. ¿La API devuelve el texto según el idioma (`Accept-Language` o `?idioma=`) o devuelve claves y el
+   frontend traduce? Afecta al contrato de datos y a la conformidad del proveedor real.
+3. ¿El idioma viaja en la URL (como el resto del estado) para compartir enlaces?
+4. Nivel objetivo de accesibilidad (p. ej. WCAG 2.2 AA) y cómo se prueba (axe en Playwright, teclado,
+   lector de pantalla).
+5. ¿Opciones de lectura (tamaño de letra, alto contraste) o solo cumplir lo que ya define diseno.md?
+
+### Reglas que se mantienen
+
+- La banda «DATOS DE DEMOSTRACIÓN» y los sellos de origen existen en todos los idiomas y no se pueden
+  ocultar; lo «pendiente de confirmar» sigue marcado igual en cada idioma.
+- Toda pantalla tocada pasa `revision_visual.sh` a 1440/768/390 (los textos en inglés suelen ser más
+  cortos; otros idiomas pueden ser más largos y desbordar).
+- Un commit por tarea; pruebas y build en verde antes de seguir.
 
 ## Tareas completadas
 
@@ -69,6 +179,19 @@ Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar ca
 | feat(frontend): ayuda «Cómo ve el radar» y origen del escenario simulado en la banda | `155d693` | pruebas de su bloque en verde; revisión por subagente (ver ledger) |
 | refactor(api): EntradaNoValida (422) y NoEncontrado (404); lo inesperado es 500 genérico | `dd7a779` | pruebas de su bloque en verde; revisión por subagente (ver ledger) |
 
+### Trabajo posterior a la primera noche (2026-11-05)
+
+| Bloque | Commits | Detalle |
+|---|---|---|
+| Cierre de la primera noche | `3c97a55`, `c2b1e27`, `200229e`, `f30a0d7` | Informe; fechas invertidas → 422 |
+| Mapa tipo carta | `6bab738`, `f0d0335`, `7e8018a` | Esri (oscuro, satélite, relieve), respaldo sin red |
+| Fotogramas continuos | `809daa0` | Modelo en el tiempo |
+| Simulador de Eventos | `8dd91dc` … `087c117` (10 commits) | Ver sección «Segunda noche» |
+| Laboratorio, Recorrido, Fundamentos | `8abd1cb` … `45627d7` (7 commits) | Ver su sección |
+| Impacto | `297f544`, `7e5d056` | API y pestaña con PNG |
+| Preparación de la demo | `c842c1c` | README/guion, barras negativas, localizador |
+| Revisión de código `high` | `abaea3d` | Hallazgos corregidos |
+
 ## Decisiones tomadas sin supervisión
 
 - `__pycache__` dejó de versionarse (`git rm --cached`) para tener árbol limpio.
@@ -113,7 +236,7 @@ A petición del equipo se conserva el Modo Dios de la app heredada, renombrado *
 - **Verificación:** pytest 206 (+2 omitidas), unittest 13, vitest 321, lint OK, Playwright 28/28, revisión visual `/simulador` 0 FAIL.
 - **Pendientes del simulador:** `tormenta`/`inundacion` tardan ~10–30 s (ver «Simulando…»); en el demo sintético un incendio en una celda aislada puede quemar ~1 celda; avisos visuales `ragged-row` y `below-fold`; sin captura en móvil con resultados completos; **fase 2:** decisión A/B (cortafuegos, dique, evacuación), cascadas, retos educativos; falta Estación y temporada, Fundamentos y Validación (noche 2).
 
-## Pendientes tras la primera noche
+## Pendientes tras la primera noche (histórico; ver «Pendientes vigentes»)
 
 - **Funcionales (paridad N1 incompleta):** serie temporal del punto/cuadrante (la API no expone `serie_seleccion`), fecha del evento (el servidor no la acepta), tooltip de provincia y marcadores del catálogo en el mapa, marcas de evento y cursor en la vista Serie, observable del tipo en la cabecera.
 - **Visuales:** mapa gris sin contexto a escala de escenario (falta localizador/escala), menú de tres puntos en móvil, tabla móvil en tres líneas y sin semántica de tabla, margen de la banda móvil (12 px), sin captura con punto/cuadrante seleccionado.
@@ -121,10 +244,12 @@ A petición del equipo se conserva el Modo Dios de la app heredada, renombrado *
 - **Equipo:** confirmar licencia (MIT provisional), requisitos de entrega, si Validación se conserva, y qué hacer con `/_sistema` (galería publicada en producción).
 - **Noche 2:** Estación y temporada, Fundamentos, Validación (N2.1, N2.4, N2.5); el Modo Dios ya está hecho como Simulador de Eventos.
 
-## Pendientes (plan completo)
+## Avance del plan
 
-Primera noche, en orden (`docs/plan-migracion.md`): 0.1–0.3, 1.1–1.5, 2.1–2.7, 3.1–3.10, 4.1–4.5,
-5.1–5.3. Noche 2: N2.1–N2.6. Con datos reales: sección «Integración de datos reales».
+Primera noche (0.1–5.3): **hecha**. Noche 2: N2.1 cubierta por `PanelContexto`, N2.2–N2.3 hechas como
+Simulador de Eventos, N2.4 hecha; **N2.5 (Validación) pendiente de decisión**; N2.6 (auditoría final)
+pendiente — conviene hacerla junto con la actualización de accesibilidad. Con datos reales: sección
+«Integración de datos reales», sin empezar.
 
 ## Decisiones tomadas
 
@@ -142,6 +267,8 @@ Primera noche, en orden (`docs/plan-migracion.md`): 0.1–0.3, 1.1–1.5, 2.1–
 - Confirmar la licencia (MIT provisional).
 - Requisitos oficiales de entrega del hackathon.
 - Si la pestaña Validación (partición espacial) se conserva.
+- Qué hacer con `/_sistema` en producción.
+- Idiomas y nivel de accesibilidad de la próxima actualización (ver sus «Preguntas para decidir»).
 
 ## Problemas encontrados
 
@@ -219,7 +346,7 @@ Corregido: el recorrido se saltaba pasos al avanzar solo (ahora un temporizador 
 | Animación de series temporales | Cumple | Reproductor por pasadas y, con paso menor de 12 días, fotogramas continuos del modelo (`observatorio/fotogramas.ts`, `useTiempoObservatorio.ts`, `VistaMapa.tsx`); e2e «anima los fotogramas» |
 | Comparador deslizante antes/después | Cumple | `comparador/Comparador.tsx`; Historias y Observatorio; e2e con teclado |
 | Dashboards y métricas | Cumple (más resumen de impacto accionable para gestores) | `PanelMetricas.tsx`, `Mediciones.tsx`, `TablaResultados.tsx`, vista Serie |
-| Público amplio | Cumple | Términos explicados (`Termino`), accesibilidad por teclado/ARIA, tres anchos revisados |
+| Público amplio | Cumple (mejora prevista: idioma y auditoría de accesibilidad) | Términos explicados (`Termino`), accesibilidad por teclado/ARIA, tres anchos revisados; solo español, sin auditoría automática |
 | Qué polarización resalta el cambio | Cumple | Historias (conmutador) y Laboratorio (calculado por cambio y banda) |
 | Hipótesis de impulsores (físicos y humanos) | Cumple (ejemplos ilustrativos) | `pantallas/historias/contenido/*.ts` |
 | Aplicaciones futuras de NISAR | Cumple (condicionales, «pendiente de confirmar») | contenido de Historias, parte 5 |
