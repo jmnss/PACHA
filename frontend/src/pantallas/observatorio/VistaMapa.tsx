@@ -13,6 +13,7 @@ import { dentroDeEcuador } from '../../mapa/dentroDeEcuador'
 import { CapaLienzo } from '../../mapa/CapaLienzo'
 import { ControlesMapa } from '../../mapa/ControlesMapa'
 import { MAPA_BASE_INICIAL, mapaRemotoActivo, type MapaBaseId } from '../../mapa/estilo'
+import { Localizador } from '../../mapa/Localizador'
 import { MapaBase } from '../../mapa/MapaBase'
 import type { Valores } from './parametros'
 import { BloqueTiempo } from './BloqueTiempo'
@@ -178,6 +179,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
               </div>
             )}
           </div>
+          {!pais && <div className="vista-mapa__localizador"><Localizador bbox={esc.bbox} /></div>}
           {cargando && <div className="vista-mapa__estado"><Cargando texto="Calculando la capa…" filas={2} /></div>}
           {sinPareja && (
             <div className="vista-mapa__estado"><Vacio titulo="Sin cambio que mostrar" texto={SIN_PAREJA} /></div>

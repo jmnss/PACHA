@@ -64,7 +64,7 @@ export function Barras({ datos: entrada, unidad, origen, titulo, alto = 220, val
               <g key={`${d.etiqueta}-${i}`}>
                 <rect className="grafico__barra" x={cx - grosor / 2} y={y} width={grosor} height={Math.max(1, Math.abs(py(0) - yv))} />
                 {rotular && (
-                  <text className="grafico__eje grafico__eje--valor" x={cx} y={(d.valor >= 0 ? y : Math.max(yv, py(0))) + (d.valor >= 0 ? -6 : 14)} textAnchor="middle">
+                  <text className="grafico__eje grafico__eje--valor" x={cx} y={(d.valor >= 0 ? y : py(0)) - 6} textAnchor="middle">
                     {formatoNumero(d.valor, dec)}
                   </text>
                 )}

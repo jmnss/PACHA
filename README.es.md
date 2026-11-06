@@ -11,6 +11,11 @@ Una app web abierta que muestra cómo el radar NISAR (NASA-ISRO) puede «ver» *
 - **Historias** (`/`): lectura guiada de cada caso, con comparador antes/después, polarizaciones, cinta de pasadas e hipótesis ilustrativas.
 - **Observatorio** (`/observatorio`): vistas Mapa, Antes y después y Serie, mediciones y un panel de simulación. El mapa es una carta geográfica con mapas base Oscuro, Satélite y Relieve de **Esri**, que se piden por internet (sin clave ni cuenta); sin conexión sigue funcionando con las provincias locales y las ciudades principales, sin las etiquetas ni el terreno de Esri.
 
+- **Laboratorio del radar** (`/laboratorio`): «La nube no lo detiene» (el óptico se pierde con nubes y el radar sigue viendo) y «Polarización y banda» (qué polarización resalta cada cambio). Escena genérica con coeficientes ilustrativos; la banda S es solo un ejemplo, pendiente de confirmar.
+- **Impacto** (pestaña del Observatorio, inundación e incendio): hectáreas afectadas, evolución, lectura en lenguaje llano e informe de una página en PNG, con acciones condicionales («si esto fuera un evento real…»).
+- **Recorrido** (`/recorrido`): la historia completa en 90 segundos, con pantallas reales incrustadas.
+- **Fundamentos** (`/fundamentos`): la física del radar; lo específico de NISAR queda pendiente de confirmar.
+
 ## Simulador de eventos
 
 En `/simulador` (antes «Modo Dios» de la app Streamlit) puedes provocar un incendio, una tormenta, una crecida, un terremoto o una erupción sobre el relieve de Ecuador y ver cómo lo vería un radar como NISAR, cuánto tardaría en volver a pasar (ciclo supuesto, pendiente de confirmar) y compartir el escenario por enlace. Todo es simulación y va marcado como datos de demostración.

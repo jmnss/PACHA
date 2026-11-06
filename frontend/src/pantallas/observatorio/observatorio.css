@@ -115,3 +115,9 @@
 .impacto__acciones { margin-top: var(--space-4); display: flex; gap: var(--space-2); flex-wrap: wrap; }
 .impacto__lista { margin: 0; padding-left: var(--space-4); color: var(--secondary); line-height: var(--lh-24); max-width: var(--w-lectura); }
 .impacto__nota { margin: var(--space-3) 0 0; color: var(--muted); font-size: var(--fs-13); line-height: var(--lh-16); }
+
+/* Localizador de Ecuador: esquina inferior derecha del mapa. */
+.vista-mapa__localizador { position: absolute; right: var(--space-3); bottom: var(--space-7); padding: var(--space-2); border-radius: var(--radius-card); background: color-mix(in srgb, var(--surface) 80%, transparent); pointer-events: none; }
+.localizador { display: block; }
+.localizador__pais { fill: var(--raised); stroke: var(--secondary); stroke-width: 1; }
+.localizador__punto { fill: var(--accent); stroke: var(--text); stroke-width: 1; }

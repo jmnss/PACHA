@@ -1,4 +1,4 @@
-# Guion de presentación: historias de datos (3 minutos)
+# Guion de presentación: historias de datos (3 minutos; 90 s con el recorrido)
 
 Para quien presente la app NISAR · Ecuador. Ruta de partida: `/` (Historias). Todo lo que se ve hoy son
 **datos de demostración sintéticos**: dilo en los primeros diez segundos y no lo sueltes. No se afirma nada
@@ -10,6 +10,14 @@ Las cifras se leen en pantalla (las calcula la app); no las memorices ni las inv
 1. `cd frontend && npm run build && cd .. && python servidor.py` y abrir `http://localhost:8000/` (o la versión de desarrollo).
 2. Comprobar que la banda naranja «DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR» está arriba.
 3. Tener a mano el Observatorio (`/observatorio`) por si preguntan por una medición o por los otros tipos de cambio.
+4. Si falla el internet, el mapa base de Esri no carga; la app sigue funcionando con las provincias locales (ver «Plan B» al final).
+
+## Versión corta: el recorrido guiado (90 s)
+
+`/recorrido` cuenta la historia sola, en seis pasos con la pantalla real incrustada: problema, la nube no lo
+detiene, polarizaciones, mapa de cambio, incendio y simulador. Tiene pausa, flechas del teclado y «Anterior» y
+«Siguiente». Úsalo cuando haya menos de dos minutos o como fondo mientras explicas; los textos ya dicen que son
+datos de demostración.
 
 ## Minuto 0:00 a 0:30 · Qué es y qué NO es
 
@@ -28,6 +36,9 @@ Las cifras se leen en pantalla (las calcula la app); no las memorices ni las inv
   el agua en calma es un espejo y se ve oscura; bajo árboles inundados, el doble rebote se ve brillante.
 - Pulsar un término subrayado (por ejemplo «constante dieléctrica») para enseñar que cada término se explica en
   el sitio.
+- Abrir `/laboratorio` («La nube no lo detiene»): subir las nubes al 70-100 %. Decir: «La imagen óptica se pierde;
+  el radar sigue viendo la inundación.» Leer las dos cifras de la franja (las calcula la app) y añadir la
+  advertencia honesta: aun sin nubes, el óptico no ve el agua bajo los árboles. La escena es inventada.
 - No decir qué bandas, productos o fechas tendrá NISAR: «eso está pendiente de confirmar con la documentación
   oficial».
 
@@ -56,6 +67,17 @@ Las cifras se leen en pantalla (las calcula la app); no las memorices ni las inv
   cada pasada, y validación en campo. Qué cobertura habrá sobre Ecuador está pendiente de confirmar.
 - Frase final: «Hoy es una demostración honesta. Con datos reales cambiará la fuente y hará falta calibrar y validar antes de sacar conclusiones; la forma de leerlo, en cambio, se mantiene.»
 
+## Extra (si sobra tiempo): polarización y banda, impacto y simulador
+
+- **Laboratorio · Polarización y banda** (`/laboratorio?vista=polarizacion`): cambiar HH, HV y VV y la tabla dice cuál
+  resalta cada cambio (la calcula la API). La banda S es solo un ejemplo marcado «pendiente de confirmar con la
+  documentación oficial»: no afirmar que NISAR la entregue.
+- **Impacto** (`/observatorio?escenario=ec_la_segua&vista=impacto`, o `ec_loja` para el incendio): hectáreas
+  afectadas, evolución y una lectura en lenguaje llano para gestores. Pulsar «Descargar informe (PNG)». Las acciones
+  son condicionales («si esto fuera un evento real…») y no sustituyen a la autoridad competente.
+- **Simulador de eventos** (`/simulador`): un incendio, una erupción o un terremoto sobre el relieve real de Ecuador.
+- **Fundamentos** (`/fundamentos`): la física del radar y lo que de NISAR sigue pendiente de confirmar.
+
 ## Extra (si sobra tiempo): el Observatorio
 
 Ruta `/observatorio`. Mismo escenario, tres vistas: **Mapa** (capas sobre el mapa; los mapas base de Esri (Oscuro, Satélite, Relieve) son
@@ -73,6 +95,12 @@ Los seis tipos de cambio del challenge están en el selector. Sigue siendo demos
 | Hallazgo | «En este escenario de demostración, …» | Redacción de hecho, con fechas de las pasadas |
 | Hipótesis | Ejemplos ilustrativos | Hipótesis a contrastar con campo y otras fuentes |
 | Pareja antes/después | La pareja de pasadas que más cambia en la serie del escenario (ver abajo) | Las fechas que existan y elija quien analiza |
+
+## Plan B si no hay internet
+
+- El mapa base de Esri y las etiquetas no cargan; el Observatorio sigue mostrando las capas sobre las provincias
+  locales y las ciudades principales. Dilo en una frase y sigue con Historias, Laboratorio, Impacto y Recorrido, que
+  no dependen de la red.
 
 ## Si preguntan
 

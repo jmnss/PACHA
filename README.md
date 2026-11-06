@@ -11,6 +11,11 @@ An open web app that shows how the NISAR radar (NASA-ISRO) can "see" **floods an
 - **Stories** (`/`): a guided read of each case, with a before/after slider, polarizations, a pass timeline and illustrative hypotheses.
 - **Observatory** (`/observatorio`): Map, Before/after and Time series views, measurements, and a simulation panel. The map is a geographic chart with Dark, Satellite and Relief base maps from **Esri**, fetched over the internet (no key or account); offline it still works with local provinces and main cities, without the Esri labels and terrain.
 
+- **Radar lab** (`/laboratorio`): "Clouds don't stop it" (optical imagery is lost under cloud while radar keeps seeing) and "Polarization and band" (which polarization highlights each change). Generic scene with illustrative coefficients; S band is only an example, pending confirmation.
+- **Impact** (Observatory tab, floods and wildfires): affected hectares, evolution, a plain-language reading and a one-page PNG report, with conditional actions ("if this were a real event…").
+- **Tour** (`/recorrido`): the whole story in 90 seconds, with real screens embedded.
+- **Fundamentals** (`/fundamentos`): radar physics; anything NISAR-specific stays pending confirmation.
+
 ## Event simulator
 
 `/simulador` (formerly the Streamlit app's «God mode») lets you trigger a wildfire, storm, flood, earthquake or eruption on Ecuador's terrain, shows how a NISAR-like radar would see it and how long until its next pass (assumed 12-day cycle, pending confirmation), and shares the scenario by link. Everything is simulated and labelled as demonstration data.

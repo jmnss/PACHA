@@ -190,7 +190,7 @@ Spec: `docs/superpowers/specs/2026-11-05-laboratorio-recorrido-design.md`.
 - **Fundamentos** (`/fundamentos`): física general; todo lo específico de NISAR queda «pendiente de confirmar».
 - Riel con seis destinos; etiqueta móvil de Historias acortada a «Inicio» (el inspector marcaba `edge-text`).
 - Revisión visual: 0 FAIL a 1440/768/390 en laboratorio (ambas vistas), recorrido y fundamentos. Capturas en `docs/capturas-nuevas/{laboratorio-nubes,laboratorio-pol,recorrido,fundamentos}/`.
-- Pendiente: el rótulo del valor de la barra «Agua» (−20 dB) se solapa con el rótulo del eje en `Barras`; localizador de Ecuador y hoja de parámetros móvil del Observatorio siguen pendientes; Validación sigue sin decidir.
+- Pendiente: Validación sigue sin decidir (el solape de `Barras` y el localizador se resolvieron en «Preparación de la demo»).
 - Nota de proceso: se detuvo un `servidor.py` obsoleto en el puerto 8000 que hacía que `revision_visual.sh` revisara el build viejo (el script reutiliza el servidor que encuentre).
 
 ## Resumen de impacto (2026-11-05)
@@ -199,6 +199,13 @@ Spec: `docs/superpowers/specs/2026-11-05-laboratorio-recorrido-design.md`.
 - API `GET /api/escenarios/{id}/impacto` (`datos/impacto.py`): solo usa `ProveedorDatos.cambio`, así que sirve igual con el proveedor real. 422 en español para escenarios sin historia o fechas iguales.
 - Las acciones son orientativas, no operativas. Superficies medidas sobre la malla de análisis (celda ~50–100 m según el escenario).
 - Pendiente: el resumen no cubre cultivos, glaciares, terremotos ni subsidencia (sus cambios no son categorías de superficie afectada); la evolución usa hasta 12 pasadas espaciadas, no las 30.
+
+## Preparación de la demo (2026-11-05)
+
+- README (es/en) y guion (`docs/historia-datos.md`) actualizados con Laboratorio, Impacto, Recorrido y Fundamentos; el guion gana una versión corta (el recorrido de 90 s) y un «Plan B si no hay internet».
+- Barras con valores negativos: el rótulo del valor va sobre la línea de cero (antes chocaba con el eje).
+- Localizador de Ecuador en el mapa del Observatorio (`mapa/Localizador.tsx`): silueta continental con el punto del escenario; resuelve el fondo gris a escala de escenario sin mapa base. Se oculta con «Ver todo Ecuador».
+- Pendiente: hoja inferior de parámetros del Observatorio en móvil.
 
 ## Cumplimiento de `docs/challenge.md` (con evidencia)
 
