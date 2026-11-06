@@ -3,7 +3,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEscenarios, type Escenario } from '../api/consultas'
 import { useHayDatosSinteticos } from '../estado/useHayDatosSinteticos'
-import { fechaCorta } from './origen'
+import { useT } from '../idioma/useT'
 
 /**
  * Banda de demostración (docs/diseno.md §8). Visible mientras haya datos sintéticos;
@@ -11,6 +11,7 @@ import { fechaCorta } from './origen'
  * El panel recibe el foco al abrir; Escape o un clic fuera lo cierran y el foco vuelve al botón.
  */
 export function BandaDemostracion() {
+  const { t, formatoFecha } = useT()
   const hay = useHayDatosSinteticos()
   const escenarios = useEscenarios()
   const cliente = useQueryClient()
@@ -52,10 +53,10 @@ export function BandaDemostracion() {
   const origen = simulado?.origen ?? escenarios.data?.[0]?.origen
   return (
     <div className="banda-demo" ref={raiz}>
-      <div className="banda-demo__fila" role="region" aria-label="Aviso de datos de demostración">
+      <div className="banda-demo__fila" role="region" aria-label={t('estructura.banda.aviso')}>
         <p className="banda-demo__texto">
-          <span className="banda-demo__largo">DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR</span>
-          <span className="banda-demo__corto">DEMOSTRACIÓN · no son datos reales de NISAR</span>
+          <span className="banda-demo__largo">{t('estructura.banda.largo')}</span>
+          <span className="banda-demo__corto">{t('estructura.banda.corto')}</span>
         </p>
         <button
           ref={boton}
@@ -65,7 +66,7 @@ export function BandaDemostracion() {
           aria-controls={idPanel}
           onClick={() => setAbierto((a) => !a)}
         >
-          Qué significa
+          {t('estructura.banda.que_significa')}
         </button>
       </div>
       {abierto && (
@@ -75,32 +76,29 @@ export function BandaDemostracion() {
           tabIndex={-1}
           className="banda-demo__panel"
           role="dialog"
-          aria-label="Qué significa «datos de demostración»"
+          aria-label={t('estructura.banda.panel_titulo')}
         >
-          <p>
-            Los mapas, series y cifras que ves los fabrica un generador para enseñar cómo se vería el
-            radar. No son mediciones de NISAR ni describen un hecho real. Cada dato lleva su origen.
-          </p>
+          <p>{t('estructura.banda.panel_texto')}</p>
           {origen ? (
             <dl className="banda-demo__datos">
               <div>
-                <dt>Generador</dt>
-                <dd>{origen.generador ?? origen.fuente}{origen.version ? ` v${origen.version}` : ''}</dd>
+                <dt>{t('estructura.banda.generador')}</dt>
+                <dd data-no-traducir>{origen.generador ?? origen.fuente}{origen.version ? ` v${origen.version}` : ''}</dd>
               </div>
               <div>
-                <dt>Semilla</dt>
+                <dt>{t('estructura.banda.semilla')}</dt>
                 <dd className="num">{origen.semilla ?? '—'}</dd>
               </div>
               <div>
-                <dt>Fecha</dt>
-                <dd className="num">{fechaCorta(origen.fecha_generacion)}</dd>
+                <dt>{t('estructura.banda.fecha')}</dt>
+                <dd className="num">{formatoFecha(origen.fecha_generacion, 'corta')}</dd>
               </div>
             </dl>
           ) : (
-            <p className="texto-muted">Los datos de origen aún no se han cargado.</p>
+            <p className="texto-muted">{t('estructura.banda.sin_origen')}</p>
           )}
           <button type="button" className="boton boton--terciario" onClick={() => { setAbierto(false); boton.current?.focus() }}>
-            Cerrar este panel
+            {t('estructura.banda.cerrar_panel')}
           </button>
         </div>
       )}

@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, type KeyboardEvent, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { useT } from '../idioma/useT'
 import { Boton } from './Boton'
 import { IconoCerrar } from './iconos'
 
@@ -16,6 +17,7 @@ const ENFOCABLES = 'a[href], button:not([disabled]), input:not([disabled]), sele
  * o tocando el fondo; atrapa el foco y lo devuelve a quien la abrió. Se monta solo cuando está abierta.
  */
 export function HojaInferior({ titulo, onCerrar, children }: Props) {
+  const { t } = useT()
   const idTitulo = useId()
   const hoja = useRef<HTMLDivElement>(null)
 
@@ -42,7 +44,7 @@ export function HojaInferior({ titulo, onCerrar, children }: Props) {
       <div className="hoja__panel" role="dialog" aria-modal="true" aria-labelledby={idTitulo} ref={hoja} tabIndex={-1}>
         <div className="hoja__cabecera">
           <h2 className="hoja__titulo" id={idTitulo}>{titulo}</h2>
-          <Boton variante="terciario" aria-label="Cerrar" icono={<IconoCerrar tamano={14} />} onClick={onCerrar} />
+          <Boton variante="terciario" aria-label={t('comun.cerrar')} icono={<IconoCerrar tamano={14} />} onClick={onCerrar} />
         </div>
         <div className="hoja__cuerpo">{children}</div>
       </div>

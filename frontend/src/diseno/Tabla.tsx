@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import { useT } from '../idioma/useT'
 
 export interface ColumnaTabla<F> {
   clave: string
@@ -18,10 +19,10 @@ interface Props<F extends Record<string, unknown>> {
   porPagina?: number
 }
 
-const AUSENTE = <span className="tabla__ausente" aria-label="sin dato">—</span>
-
 /** Tabla de docs/diseno.md §8: números a la derecha y tabulares, valor ausente = guion gris. */
 export function Tabla<F extends Record<string, unknown>>({ columnas, filas, titulo, porPagina = 50 }: Props<F>) {
+  const { t, formatoNumero } = useT()
+  const AUSENTE = <span className="tabla__ausente" aria-label={t('estructura.tabla.sin_dato')}>—</span>
   const [pagina, setPagina] = useState(0)
   const paginada = filas.length > porPagina
   const total = filas.length
@@ -66,14 +67,14 @@ export function Tabla<F extends Record<string, unknown>>({ columnas, filas, titu
       {paginada && (
         <div className="tabla__pie">
           <span className="num" aria-live="polite">
-            {desde + 1}–{hasta} de {total}
+            {t('estructura.tabla.rango', { desde: formatoNumero(desde + 1), hasta: formatoNumero(hasta), total: formatoNumero(total) })}
           </span>
           <div className="tabla__paginas">
             <button type="button" className="boton boton--secundario" disabled={pagina === 0} onClick={() => setPagina((p) => p - 1)}>
-              Anterior
+              {t('estructura.tabla.anterior')}
             </button>
             <button type="button" className="boton boton--secundario" disabled={hasta >= total} onClick={() => setPagina((p) => p + 1)}>
-              Siguiente
+              {t('estructura.tabla.siguiente')}
             </button>
           </div>
         </div>

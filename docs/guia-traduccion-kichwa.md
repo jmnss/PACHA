@@ -33,8 +33,13 @@ Criterios del borrador:
 | Término | Dónde aparece | Motivo |
 |---|---|---|
 | Nombres de los meses (Enero…Diciembre) y de los días | `catalogos/qu/fecha.ts` | Sin forma asentada confirmada por hablantes; ver «Dudas abiertas». |
+| Observatorio | Riel (`estructura.riel.observatorio`) | Sin equivalente asentado; la etiqueta corta usa «Rikuy» (mirar), a confirmar. |
+| Laboratorio, Simulador de eventos | Riel (`estructura.riel.laboratorio`, `.simulador`) | Préstamos del español sin término asentado; «Laboratorio radarpa» solo añade el genitivo. |
+| Lab., Simul. (etiquetas cortas) | Riel móvil | Abreviaturas en español para no pasar de 7 caracteres. |
+| Observatorio, radar, app | Banda y pantallas | Préstamos del español sin equivalente asentado. |
 
 ## Dudas abiertas
+
 
 - **Código de idioma:** se usa `qu-EC` (quechua de Ecuador) para el atributo `lang`. Pendiente de
   confirmar con hablantes y con el uso en lectores de pantalla si conviene `qu-EC`, `qug` (kichwa de la
@@ -45,3 +50,9 @@ Criterios del borrador:
   tradicionales (por ejemplo, de calendario agrícola) o los préstamos del español.
 - **«Capa» (capa de mapa):** se dejó «capa», préstamo del español; pendiente de un término asentado.
 - **«Cargando…»:** el borrador dice «Chaskishka…», que significa más bien «recibido»; necesita revisión.
+- **«Real / verdadero» en la banda:** el borrador usa «chiqan» (cierto, verdadero) en «mana NISAR-pa chiqan
+  rikuykuna kanchu»; confirmar que comunica «observaciones reales» y no solo «correctas».
+- **«Datos» como «willaykuna»:** se usa «willay» (aviso, noticia) para «dato»; confirmar si hay un término
+  mejor para datos de medición.
+- **Riel:** «Hatun» (principal), «Sapi yachay» (fundamentos), «Pushashka purina» (recorrido guiado) y
+  «Kallari» (inicio) son propuestas del equipo sin validar.

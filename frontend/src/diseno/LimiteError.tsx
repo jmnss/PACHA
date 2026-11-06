@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
+import { ContextoIdiomaReact } from '../idioma/useT'
 import { ErrorBloque } from './Estados'
 
 interface Props {
@@ -9,6 +10,8 @@ interface Props {
 
 /** Límite de error sencillo para las pantallas de carga perezosa. */
 export class LimiteError extends Component<Props, { fallo: boolean }> {
+  static contextType = ContextoIdiomaReact
+  declare context: React.ContextType<typeof ContextoIdiomaReact>
   state = { fallo: false }
   static getDerivedStateFromError() { return { fallo: true } }
   componentDidCatch(error: Error, info: ErrorInfo) { console.error(error, info.componentStack) }
@@ -16,7 +19,7 @@ export class LimiteError extends Component<Props, { fallo: boolean }> {
     if (!this.state.fallo) return this.props.children
     return (
       <ErrorBloque
-        mensaje="No se pudo cargar la pantalla."
+        mensaje={this.context.t('estructura.limite_error.mensaje')}
         onReintentar={() => (this.props.alReintentar ?? (() => window.location.reload()))()}
       />
     )

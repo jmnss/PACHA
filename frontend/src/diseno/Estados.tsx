@@ -1,8 +1,10 @@
 import { IconoAlerta, IconoReintentar } from './iconos'
+import { useT } from '../idioma/useT'
 import { Boton } from './Boton'
 
 /** Cargando: el diseño final con barras grises planas del tamaño real, sin brillo ni desplazamiento. */
-export function Cargando({ texto = 'Cargando…', filas = 3 }: { texto?: string; filas?: number }) {
+export function Cargando({ texto, filas = 3 }: { texto?: string; filas?: number }) {
+  const { t } = useT()
   return (
     <div className="estado" role="status" aria-busy="true">
       <div className="estado__barras" aria-hidden="true">
@@ -10,7 +12,7 @@ export function Cargando({ texto = 'Cargando…', filas = 3 }: { texto?: string;
           <span key={i} className="estado__barra" style={{ width: `${100 - i * 18}%` }} />
         ))}
       </div>
-      <p className="estado__texto">{texto}</p>
+      <p className="estado__texto">{texto ?? t('comun.cargando')}</p>
     </div>
   )
 }
@@ -24,17 +26,18 @@ interface PropsError {
 
 /** Error dentro del bloque: una frase y «Reintentar». */
 export function ErrorBloque({ mensaje, ultimoDato, onReintentar }: PropsError) {
+  const { t } = useT()
   return (
     <div className="estado estado--error" role="alert">
       <p className="estado__texto estado__texto--icono">
         <IconoAlerta />
         <span>
           {mensaje}
-          {ultimoDato ? ` Último dato bueno: ${ultimoDato}.` : ''}
+          {ultimoDato ? ` ${t('estructura.estado.ultimo_dato', { hora: ultimoDato })}` : ''}
         </span>
       </p>
       <Boton variante="secundario" icono={<IconoReintentar tamano={14} />} onClick={onReintentar}>
-        Reintentar
+        {t('estructura.estado.reintentar')}
       </Boton>
     </div>
   )

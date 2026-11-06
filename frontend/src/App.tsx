@@ -4,6 +4,7 @@ import { CabeceraPantalla } from './diseno/CabeceraPantalla'
 import { Estructura } from './diseno/Estructura'
 import { Cargando } from './diseno/Estados'
 import { LimiteError } from './diseno/LimiteError'
+import { useT } from './idioma/useT'
 
 // El Observatorio arrastra MapLibre (~1 MB): se carga solo al entrar en la ruta.
 const Galeria = lazy(() => import('./diseno/Galeria').then((m) => ({ default: m.Galeria })))
@@ -15,6 +16,7 @@ const Fundamentos = lazy(() => import('./pantallas/fundamentos/Fundamentos'))
 const Simulador = lazy(() => import('./pantallas/simulador/Simulador'))
 
 export default function App() {
+  const { t } = useT()
   return (
     <Routes>
       <Route element={<Estructura />}>
@@ -22,7 +24,7 @@ export default function App() {
           index
           element={
             <LimiteError>
-              <Suspense fallback={<Cargando texto="Cargando…" />}>
+              <Suspense fallback={<Cargando />}>
                 <Historias />
               </Suspense>
             </LimiteError>
@@ -32,7 +34,7 @@ export default function App() {
           path="observatorio"
           element={
             <LimiteError>
-              <Suspense fallback={<Cargando texto="Cargando…" />}>
+              <Suspense fallback={<Cargando />}>
                 <Observatorio />
               </Suspense>
             </LimiteError>
@@ -42,7 +44,7 @@ export default function App() {
           path="simulador"
           element={
             <LimiteError>
-              <Suspense fallback={<Cargando texto="Cargando…" />}>
+              <Suspense fallback={<Cargando />}>
                 <Simulador />
               </Suspense>
             </LimiteError>
@@ -52,7 +54,7 @@ export default function App() {
           path="laboratorio"
           element={
             <LimiteError>
-              <Suspense fallback={<Cargando texto="Cargando…" />}>
+              <Suspense fallback={<Cargando />}>
                 <Laboratorio />
               </Suspense>
             </LimiteError>
@@ -62,7 +64,7 @@ export default function App() {
           path="recorrido"
           element={
             <LimiteError>
-              <Suspense fallback={<Cargando texto="Cargando…" />}>
+              <Suspense fallback={<Cargando />}>
                 <Recorrido />
               </Suspense>
             </LimiteError>
@@ -72,7 +74,7 @@ export default function App() {
           path="fundamentos"
           element={
             <LimiteError>
-              <Suspense fallback={<Cargando texto="Cargando…" />}>
+              <Suspense fallback={<Cargando />}>
                 <Fundamentos />
               </Suspense>
             </LimiteError>
@@ -82,13 +84,13 @@ export default function App() {
           path="_sistema"
           element={
             <LimiteError>
-              <Suspense fallback={<Cargando texto="Cargando…" />}>
+              <Suspense fallback={<Cargando />}>
                 <Galeria />
               </Suspense>
             </LimiteError>
           }
         />
-        <Route path="*" element={<CabeceraPantalla titulo="Página no encontrada" hallazgo="Esta dirección no existe en la app." />} />
+        <Route path="*" element={<CabeceraPantalla titulo={t('estructura.no_encontrada.titulo')} hallazgo={t('estructura.no_encontrada.hallazgo')} />} />
       </Route>
     </Routes>
   )
