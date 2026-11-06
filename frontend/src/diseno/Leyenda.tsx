@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react'
+import type { CSSProperties } from 'react'
 import { TextoApi } from '../idioma/TextoApi'
 import { useT } from '../idioma/useT'
 import type { Clave } from '../idioma/traductor'
@@ -14,7 +14,7 @@ interface Props {
   /** Variable de la capa: elige la rampa secuencial (`rampaDePaleta`) y los colores de las categorías. */
   variable?: string
   /** Palabras de los extremos; por defecto, las de la divergente («menos señal» / «más señal»). */
-  extremos?: [string, string]
+  extremos?: [Clave, Clave]
 }
 
 /** Extremos en palabras por defecto (§8); la cíclica no tiene extremos. */
@@ -46,15 +46,14 @@ export function Leyenda({ paleta, vmin, vmax, unidad, leyenda, variable, extremo
             )
           })}
         </ul>
-        {unidad && <div className="leyenda__unidad"><TextoApi texto={unidad} /></div>}
+        {unidad && <div className="leyenda__unidad">{unidad}</div>}
       </div>
     )
   }
   const rampa = rampaDePaleta(paleta, variable) ?? 'gris'
   const clavesExtremos = EXTREMOS[paleta]
-  const palabras: [ReactNode, ReactNode] | undefined = extremos
-    ? [<TextoApi texto={extremos[0]} />, <TextoApi texto={extremos[1]} />]
-    : clavesExtremos && [t(clavesExtremos[0]), t(clavesExtremos[1])]
+  const claves = extremos ?? clavesExtremos
+  const palabras = claves && [t(claves[0]), t(claves[1])]
   const marcas = formatoMarcas(vmin, vmax)
   return (
     <div className="leyenda" role="group" aria-label={t('origen.leyenda.titulo_rango', { unidad, desde: marcas[0], hasta: marcas[MARCAS - 1] })}>
@@ -68,7 +67,7 @@ export function Leyenda({ paleta, vmin, vmax, unidad, leyenda, variable, extremo
       </div>
       <div className="leyenda__pie">
         {palabras && <span>{palabras[0]}</span>}
-        <span className="leyenda__unidad"><TextoApi texto={unidad} /></span>
+        <span className="leyenda__unidad">{unidad}</span>
         {palabras && <span>{palabras[1]}</span>}
       </div>
     </div>

@@ -22,5 +22,7 @@ export const origen: Record<keyof typeof esOrigen, string> = {
   'origen.leyenda.secuencial_menos': 'pishi',
   'origen.leyenda.secuencial_mas': 'achka',
   'origen.leyenda.divergente_menos': 'pishi señal',
+  'origen.leyenda.desplazamiento_menos': 'alejándose',
+  'origen.leyenda.desplazamiento_mas': 'hacia el satélite',
   'origen.leyenda.divergente_mas': 'achka señal',
 }

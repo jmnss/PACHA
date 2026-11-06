@@ -1,5 +1,6 @@
 import type { UseQueryResult } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import type { Clave } from '../../idioma/traductor'
 import { ErrorApi, MENSAJE_RED } from '../../api/cliente'
 import { useCapa, useFotogramas, useSimular, type CapaDto, type Contexto, type Escenario, type ResultadoCambio } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
@@ -71,8 +72,10 @@ const esMovil = () => typeof window !== 'undefined' && !!window.matchMedia?.('(m
 const hora = (ms: number) => (ms > 0 ? new Date(ms).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' }) : undefined)
 const mensaje = (e: unknown) => (e instanceof ErrorApi ? e.mensaje : MENSAJE_RED)
 
-function extremosDe(capa: CapaDto): [string, string] | undefined {
-  return capa.variable.includes('desplazamiento') ? ['alejándose', 'hacia el satélite'] : undefined
+function extremosDe(capa: CapaDto): [Clave, Clave] | undefined {
+  return capa.variable.includes('desplazamiento')
+    ? ['origen.leyenda.desplazamiento_menos', 'origen.leyenda.desplazamiento_mas']
+    : undefined
 }
 
 /** Mapa con la capa elegida, su leyenda y sello, y la cinta de pasadas con sus controles debajo. */

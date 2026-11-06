@@ -1,4 +1,6 @@
-export const AVISO_NOTAS = 'Notas del modelo de demostración · los detalles sobre NISAR (productos, geometría, bandas) están pendientes de confirmar con la documentación oficial.'
+import { es } from '../idioma/catalogos/es'
+
+export const AVISO_NOTAS = es['origen.notas.aviso']
 
 /** Siglas y términos de misión: las siglas se leen en mayúsculas exactas («los» no cuenta). */
 const SIN_VERIFICAR = /\b(?:GUNW|GOFF|GCOV|GSLC|NISAR|LOS)\b|\b[Bb]anda L\b/

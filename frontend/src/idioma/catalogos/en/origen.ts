@@ -21,5 +21,7 @@ export const origen: Record<keyof typeof esOrigen, string> = {
   'origen.leyenda.secuencial_menos': 'less',
   'origen.leyenda.secuencial_mas': 'more',
   'origen.leyenda.divergente_menos': 'weaker signal',
+  'origen.leyenda.desplazamiento_menos': 'moving away',
+  'origen.leyenda.desplazamiento_mas': 'toward the satellite',
   'origen.leyenda.divergente_mas': 'stronger signal',
 }

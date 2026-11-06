@@ -19,5 +19,7 @@ export const origen = {
   'origen.leyenda.secuencial_menos': 'menos',
   'origen.leyenda.secuencial_mas': 'más',
   'origen.leyenda.divergente_menos': 'menos señal',
+  'origen.leyenda.desplazamiento_menos': 'alejándose',
+  'origen.leyenda.desplazamiento_mas': 'hacia el satélite',
   'origen.leyenda.divergente_mas': 'más señal',
 }

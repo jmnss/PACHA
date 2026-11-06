@@ -37,6 +37,7 @@ Criterios del borrador:
 | Laboratorio, Simulador de eventos | Riel (`estructura.riel.laboratorio`, `.simulador`) | Préstamos del español sin término asentado; «Laboratorio radarpa» solo añade el genitivo. |
 | Lab., Simul. (etiquetas cortas) | Riel móvil | Abreviaturas en español para no pasar de 7 caracteres. |
 | Observatorio, radar, app | Banda y pantallas | Préstamos del español sin equivalente asentado. |
+| transparente | Leyendas (`origen.leyenda.transparente`) | Sin equivalente asentado; se deja en español. |
 | señal, productos, geometría, bandas | Leyendas y aviso de notas (`catalogos/qu/origen.ts`) | Términos de teledetección sin equivalente asentado; se dejan en español. |
 | Rurashka (sintético), Chiqan (real), rurachik (generador), muju (semilla) | Sellos de origen | Vocabulario ya usado en la banda; a confirmar con hablantes. |
 
@@ -58,3 +59,12 @@ Criterios del borrador:
   mejor para datos de medición.
 - **Riel:** «Hatun» (principal), «Sapi yachay» (fundamentos), «Pushashka purina» (recorrido guiado) y
   «Kallari» (inicio) son propuestas del equipo sin validar.
+- **«Rikuchik» (leyenda):** el borrador lo usa para «leyenda» (`origen.leyenda.titulo*`); es una propuesta
+  del equipo, sin validar.
+- **«Rurashka» con dos acepciones:** se usa para «sintético» (sellos) y para «generado» (`origen.sello.generado`,
+  «rurashka puncha»); confirmar que no se confunden y que «sintético» no se lee como «fabricado».
+- **«Chiqan» (= real):** duda de ortografía (¿«chiqan» o «chikan» en la ortografía unificada?) y de sentido
+  («chikan» puede significar «distinto»). No se cambia sin hablante. Aparece en
+  `catalogos/qu/origen.ts` (`origen.sello.real`), en `catalogos/qu/estructura.ts`
+  (`estructura.banda.largo`, `estructura.banda.corto`) y en la derivada «chiqanyachishka» (verificado) de
+  `origen.sello.sintetico_no_verificado`, `origen.notas.aviso` y `origen.notas.sin_verificar`.

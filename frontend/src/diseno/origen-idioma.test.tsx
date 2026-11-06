@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { en } from '../idioma/catalogos/en'
 import { qu } from '../idioma/catalogos/qu'
 import { renderConIdioma, renderPseudo, textosSinTraducir } from '../idioma/pruebas'
-import { traductor } from '../idioma/traductor'
+import { traductor, type Clave } from '../idioma/traductor'
 import { Leyenda } from './Leyenda'
 import { NotasModelo } from './NotasModelo'
 import { textoSello, type Origen } from './origen'
@@ -28,6 +28,7 @@ describe('textoSello por idioma', () => {
   })
   it('en kichwa no deja «Sintético»', () => {
     expect(textoSello(origenDemo, traductor('qu').t)).not.toContain('Sintético')
+    expect(textoSello(origenDemo, traductor('qu').t)).toMatch(/^Rurashka · /)
   })
   it('real en kichwa', () => {
     const real = { ...origenDemo, tipo: 'real', generador: null } as Origen
@@ -61,6 +62,20 @@ describe('sin textos sueltos', () => {
     </>)
     expect(container.querySelector('[aria-label^="⟦Leyenda"]')).not.toBeNull()
     expect(textosSinTraducir(container)).toEqual([])
+  })
+  it('Leyenda con extremos por clave, en tres idiomas', () => {
+    const ext: [Clave, Clave] = ['origen.leyenda.desplazamiento_menos', 'origen.leyenda.desplazamiento_mas']
+    for (const [id, cat] of [['en', en], ['qu', qu]] as const) {
+      const { unmount } = renderConIdioma(<Leyenda paleta="divergente" vmin={-1} vmax={1} unidad="dB" extremos={ext} />, id)
+      expect(screen.getByText(cat['origen.leyenda.desplazamiento_mas'])).toBeInTheDocument()
+      unmount()
+    }
+    const { container } = renderPseudo(<Leyenda paleta="divergente" vmin={-1} vmax={1} unidad="dB" extremos={ext} />)
+    expect(textosSinTraducir(container)).toEqual([])
+  })
+  it('la unidad es texto plano sin marca de sin traducir', () => {
+    const { container } = renderConIdioma(<Leyenda paleta="gris" vmin={-30} vmax={0} unidad="dB" />, 'en')
+    expect(container.querySelector('.leyenda__unidad [lang]')).toBeNull()
   })
   it('Termino abierto', () => {
     const { container } = renderPseudo(<Termino nombre="dB" explicacion="⟦Decibelios.⟧" />)
