@@ -440,6 +440,9 @@ estructura.banda.sin_origen,Los datos de origen aún no se han cargado.,The orig
 estructura.estado.reintentar,Reintentar,Retry,Kutin ruray,no
 estructura.estado.ultimo_dato,Último dato bueno: {hora}.,Last good data: {hora}.,Kipa alli willay: {hora}.,no
 estructura.limite_error.mensaje,No se pudo cargar la pantalla.,The screen could not be loaded.,Mana kay pantallata kichayta ushashkachu.,no
+estructura.motor.cargando,Preparando el motor de cálculo… (primera visita: unos 25 MB),Preparing the computation engine… (first visit: about 25 MB),Yupana motorta allichikun… (punta kutin: 25 MB shina),no
+estructura.motor.error,El motor de cálculo no pudo cargarse en este navegador; lo precalculado sigue disponible.,The computation engine could not load in this browser; precomputed content is still available.,Yupana motorka kay navegadorpi mana chaskiyta ushashkachu; ñawpa yupashkaka tiyakunllami.,no
+estructura.motor.no_disponible,"Esta función necesita el motor de cálculo, que no pudo cargarse en este navegador.","This feature needs the computation engine, which could not load in this browser.","Kay ruranaka yupana motorta minishtin, shinapash kay navegadorpi mana chaskiyta ushashkachu.",no
 estructura.no_encontrada.hallazgo,Esta dirección no existe en la app.,This address does not exist in the app.,Kay ñan kay app-pi mana tiyanchu.,no
 estructura.no_encontrada.titulo,Página no encontrada,Page not found,Kay panka mana tiyanchu,no
 estructura.riel.fundamentos,Fundamentos,Fundamentals,Sapi yachay,no

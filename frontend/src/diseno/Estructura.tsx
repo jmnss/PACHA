@@ -5,6 +5,7 @@ import { AvisoTraduccion } from '../idioma/AvisoTraduccion'
 import { SelectorIdioma } from '../idioma/SelectorIdioma'
 import type { Clave } from '../idioma/traductor'
 import { useT } from '../idioma/useT'
+import { AvisoMotor } from './AvisoMotor'
 import { BandaDemostracion } from './BandaDemostracion'
 import { IconoHistorias, IconoLaboratorio, IconoLibro, IconoObservatorio, IconoRecorrido, IconoSimulador } from './iconos'
 import { Marca } from './marca'
@@ -82,6 +83,7 @@ export function Estructura() {
       </nav>}
       <div className={incrustado ? 'lienzo lienzo--incrustado' : 'lienzo'}>
         <BandaDemostracion />
+        {!incrustado && <AvisoMotor />}
         <AvisoTraduccion />
         <main id="contenido" tabIndex={-1} className="lienzo__contenido">
           <Outlet />

@@ -320,3 +320,14 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
 }
 .saltar:focus-visible { transform: none; }
 .lienzo__contenido:focus { outline: none; }
+
+/* ---------- Aviso del motor de cálculo, bajo la banda de demostración ---------- */
+.aviso-motor {
+  margin: 0; padding: var(--space-1) var(--page-padding);
+  background: var(--raised); border-bottom: 1px solid var(--rule);
+  color: var(--secondary); font-size: var(--fs-12); line-height: var(--lh-16); font-weight: 500;
+}
+.aviso-motor--error { border-bottom-color: var(--warning); color: var(--text); }
+@media (max-width: 699px) {
+  .aviso-motor { padding: var(--space-1) var(--space-4); }
+}

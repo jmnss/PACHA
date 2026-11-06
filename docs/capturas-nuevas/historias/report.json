@@ -1,6 +1,6 @@
 {
  "url": "http://localhost:8000/",
- "at": "2026-11-06T05:54:08.895Z",
+ "at": "2026-11-06T23:23:05.005Z",
  "allow": [
   "palette-terracotta"
  ],
@@ -31,7 +31,7 @@
     "page": {
      "height": 2328,
      "screens": 2.6,
-     "words": 890,
+     "words": 964,
      "img": 0,
      "video": 0,
      "canvas": 2,
@@ -174,26 +174,28 @@
       }
      ],
      "button": {
-      "bg": "#ffffff",
+      "bg": "#131217",
       "hsl": {
-       "h": 0,
-       "s": 0,
-       "l": 1
+       "h": 252,
+       "s": 0.12,
+       "l": 0.08
       },
-      "fg": "#171719"
+      "fg": "#ffffff"
      },
      "lowContrast": []
     },
     "buttons": {
-     "count": 1,
-     "inHero": 0,
+     "count": 2,
+     "inHero": 1,
      "radius": "pill",
-     "height": 34,
+     "height": 38,
      "withShadow": 0,
      "withGradient": 0,
      "mono": 0,
      "upper": 0,
-     "heroLabels": []
+     "heroLabels": [
+      "Skip to content"
+     ]
     },
     "surfaces": {
      "shadowStatic": 0,
@@ -305,7 +307,7 @@
     },
     "canvas": {
      "left": 32,
-     "right": 32
+     "right": -611
     },
     "hero": {
      "text": "NISAR · Ecuador",
@@ -363,7 +365,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.11,
+     "under13": 0.1,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -390,9 +392,9 @@
    "load": "load",
    "screens": 4,
    "filled": [
-    0.59,
+    0.6,
     0.79,
-    0.59,
+    0.58,
     0.57
    ],
    "motion": {
@@ -411,7 +413,7 @@
     "page": {
      "height": 3653,
      "screens": 3.6,
-     "words": 890,
+     "words": 964,
      "img": 0,
      "video": 0,
      "canvas": 2,
@@ -597,26 +599,28 @@
       }
      ],
      "button": {
-      "bg": "#ffffff",
+      "bg": "#131217",
       "hsl": {
-       "h": 0,
-       "s": 0,
-       "l": 1
+       "h": 252,
+       "s": 0.12,
+       "l": 0.08
       },
-      "fg": "#171719"
+      "fg": "#ffffff"
      },
      "lowContrast": []
     },
     "buttons": {
-     "count": 1,
-     "inHero": 0,
+     "count": 2,
+     "inHero": 1,
      "radius": "pill",
-     "height": 34,
+     "height": 38,
      "withShadow": 0,
      "withGradient": 0,
      "mono": 0,
      "upper": 0,
-     "heroLabels": []
+     "heroLabels": [
+      "Skip to content"
+     ]
     },
     "surfaces": {
      "shadowStatic": 0,
@@ -719,7 +723,7 @@
       "tag": "section",
       "top": 1422,
       "height": 1309,
-      "words": 240,
+      "words": 239,
       "media": 2,
       "middle": 0,
       "heading": {
@@ -826,7 +830,7 @@
     },
     "canvas": {
      "left": 32,
-     "right": 32
+     "right": -666
     },
     "hero": {
      "text": "NISAR · Ecuador",
@@ -884,7 +888,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.11,
+     "under13": 0.1,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -914,7 +918,7 @@
     0.75,
     0.84,
     0.93,
-    0.62,
+    0.63,
     0.83,
     0.82
    ],
@@ -934,7 +938,7 @@
     "page": {
      "height": 4244,
      "screens": 5,
-     "words": 895,
+     "words": 969,
      "img": 0,
      "video": 0,
      "canvas": 2,
@@ -1130,26 +1134,28 @@
       }
      ],
      "button": {
-      "bg": "#ffffff",
+      "bg": "#131217",
       "hsl": {
-       "h": 0,
-       "s": 0,
-       "l": 1
+       "h": 252,
+       "s": 0.12,
+       "l": 0.08
       },
-      "fg": "#171719"
+      "fg": "#ffffff"
      },
      "lowContrast": []
     },
     "buttons": {
-     "count": 1,
-     "inHero": 0,
+     "count": 2,
+     "inHero": 1,
      "radius": "pill",
-     "height": 44,
+     "height": 38,
      "withShadow": 0,
      "withGradient": 0,
      "mono": 0,
      "upper": 0,
-     "heroLabels": []
+     "heroLabels": [
+      "Skip to content"
+     ]
     },
     "surfaces": {
      "shadowStatic": 0,
@@ -1198,7 +1204,7 @@
     "pageH": 4244,
     "margins": {
      "left": 16,
-     "right": 18
+     "right": 17
     },
     "sections": [
      {
@@ -1271,7 +1277,7 @@
       "tag": "div",
       "top": 2474,
       "height": 422,
-      "words": 108,
+      "words": 107,
       "media": 0,
       "middle": 0,
       "heading": null,
@@ -1295,9 +1301,9 @@
       "middle": 0,
       "heading": null,
       "left": 16,
-      "right": 23,
+      "right": 29,
       "textLeft": 16,
-      "textRight": 23,
+      "textRight": 29,
       "fullBleed": false,
       "footer": false,
       "hero": false,
@@ -1360,13 +1366,7 @@
       "firstScreen": true
      }
     ],
-    "edgeText": [
-     {
-      "text": "Home",
-      "side": "left",
-      "px": 11
-     }
-    ],
+    "edgeText": [],
     "edges": [
      {
       "x": 16,
@@ -1392,7 +1392,7 @@
     "topbar": null,
     "canvas": {
      "left": 16,
-     "right": 16
+     "right": -62
     },
     "hero": {
      "text": "NISAR · Ecuador",
@@ -1450,7 +1450,7 @@
     "chartHues": 0,
     "placeholders": [],
     "type": {
-     "under13": 0.12,
+     "under13": 0.11,
      "tiny": 0,
      "tinySamples": [],
      "sizes": [
@@ -1473,15 +1473,7 @@
    "consoleErrors": []
   }
  ],
- "findings": [
-  {
-   "level": "FAIL",
-   "id": "edge-text",
-   "width": 390,
-   "message": "1 text block(s) sit within 12px of the screen edge: \"Home\" (11px from the left)",
-   "fix": "Keep text inside the page margin (16–20px). Only display type deliberately bled past the edge may touch it."
-  }
- ],
+ "findings": [],
  "images": [
   {
    "viewport": "desktop",

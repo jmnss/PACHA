@@ -203,6 +203,10 @@ espejo de agua baja de 26,8 a 5,5 km² entre la primera y la última pasada». N
 **línea de 1 px de `--accent`, tan ancha como su etiqueta**, apoyada en el borde existente más cercano.
 Nada de píldoras rellenas, segmentados coloreados ni barras gruesas.
 
+**Aviso del motor (`AvisoMotor`).** Solo en el modo `navegador` (Pages): una fila bajo la banda de demostración,
+neutra (`--raised`, `--secondary`, sin animación), visible mientras una petición espera al motor que carga
+(`role="status"`) o con borde `--warning` si no pudo cargarse (`role="alert"`). No aparece en modo incrustado.
+
 **Botones.** Un solo primario por pantalla: píldora blanca de 34 px con texto negro. Secundario:
 contorno `--control` de 1 px, sin relleno. Terciario: texto. Los controles de una fila comparten altura.
 Foco visible: anillo de 2 px blanco con 2 px de separación.
