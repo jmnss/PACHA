@@ -6,6 +6,7 @@ import { Estructura } from '../diseno/Estructura'
 import { AvisoTraduccion } from './AvisoTraduccion'
 import { datosAvisoQu } from './aviso'
 import { qu } from './catalogos/qu'
+import { es } from './catalogos/es'
 import { VALIDADAS_QU } from './catalogos/validadas'
 import { IDIOMAS } from './idiomas'
 import { ProveedorIdioma } from './ProveedorIdioma'
@@ -90,6 +91,14 @@ describe('AvisoTraduccion', () => {
       .replace('{validadas}', String(VALIDADAS_QU.size))
       .replace('{total}', String(Object.keys(qu).length))
     expect(screen.getByRole('note')).toHaveTextContent(texto)
+  })
+
+  it('en kichwa lleva también el español, marcado con lang="es" (spec §2)', () => {
+    renderConIdioma(<AvisoTraduccion />, 'qu')
+    const enEspanol = es['idioma.aviso_qu']
+      .replace('{validadas}', String(VALIDADAS_QU.size))
+      .replace('{total}', String(Object.keys(qu).length))
+    expect(screen.getByRole('note').querySelector('[lang="es"]')).toHaveTextContent(enEspanol)
   })
 
   it('con un catálogo pequeño: se oculta solo si todo está validado y el contenido largo también', () => {
