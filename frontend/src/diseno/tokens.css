@@ -90,6 +90,7 @@ body {
   --h-banda-movil: 32px;
   --h-barra-inferior: 56px;
   --w-columna: 384px;      /* columna fija del Observatorio */
+  --size-objetivo: 24px;   /* objetivo mínimo de puntero (WCAG 2.5.8) */
   --h-touch: 44px;         /* objetivo táctil mínimo en móvil */
   --w-lectura: 48ch;       /* medida de lectura de Historias: 48ch de Public Sans 16 px dan unos 66 caracteres por línea, espacios incluidos (máx. 68; medido en navegador) */
   --focus-ring: 2px solid var(--text);

@@ -9,6 +9,16 @@
 button { font: inherit; color: inherit; }
 :focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
 
+/* El foco nunca queda tapado por la banda fija ni por la barra inferior móvil (WCAG 2.4.11). */
+html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4); }
+@media (max-width: 699px) {
+  html { scroll-padding-top: var(--h-banda-movil); scroll-padding-bottom: calc(var(--h-barra-inferior) + var(--space-4)); }
+}
+
+/* Objetivos de al menos 24 × 24 px (WCAG 2.5.8). */
+.boton, .riel__destino, .pestanas__pestana, .banda-demo__enlace, .vista-mapa__plegar { min-width: var(--size-objetivo); min-height: var(--size-objetivo); }
+.termino__nombre { display: inline-block; min-height: var(--size-objetivo); line-height: var(--lh-20); }
+
 /* ---------- Estructura ---------- */
 .estructura { display: flex; min-height: 100%; }
 .riel {
@@ -67,6 +77,7 @@ button { font: inherit; color: inherit; }
 .banda-demo__texto { margin: 0; padding: var(--space-1) 0; }
 .banda-demo__corto { display: none; }
 .banda-demo__enlace {
+  display: inline-flex; align-items: center;
   background: none; border: 0; padding: 0; color: var(--demo-ink); font-weight: 600;
   text-decoration: underline; cursor: pointer; white-space: nowrap;
 }

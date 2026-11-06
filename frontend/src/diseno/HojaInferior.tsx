@@ -34,7 +34,7 @@ export function HojaInferior({ titulo, onCerrar, children }: Props) {
     if (!lista.length) return
     const [primero, ultimo] = [lista[0], lista[lista.length - 1]]
     const activo = document.activeElement
-    if (e.shiftKey && (activo === primero || !hoja.current.contains(activo))) { e.preventDefault(); ultimo.focus() }
+    if (e.shiftKey && (activo === primero || activo === hoja.current || !hoja.current.contains(activo))) { e.preventDefault(); ultimo.focus() }
     else if (!e.shiftKey && (activo === ultimo || !hoja.current.contains(activo))) { e.preventDefault(); primero.focus() }
   }
 
