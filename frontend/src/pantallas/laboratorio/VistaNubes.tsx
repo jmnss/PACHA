@@ -7,14 +7,16 @@ import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
 import { PanelRadar } from '../simulador/PanelRadar'
 import { mensajeDeError } from '../../api/cliente'
+import { useT } from '../../idioma/useT'
 
 interface Props { cobertura: number; onCobertura: (n: number) => void }
 
 /** Misma inundación vista por un satélite óptico y por un radar, con nubes ajustables sobre la imagen óptica. */
 export function VistaNubes({ cobertura, onCobertura }: Props) {
+  const { t } = useT()
   const q = useNubes(cobertura)
   if (q.isPending) return <Cargando texto="Preparando el experimento…" filas={4} />
-  if (q.isError) return <ErrorBloque mensaje={mensajeDeError(q.error)} onReintentar={() => void q.refetch()} />
+  if (q.isError) return <ErrorBloque mensaje={mensajeDeError(q.error, t)} onReintentar={() => void q.refetch()} />
   const d = q.data
   return (
     <div className="laboratorio">

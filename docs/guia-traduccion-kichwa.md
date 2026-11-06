@@ -87,3 +87,12 @@ Términos que se dejaron en español por no tener equivalente asentado (`catalog
   hablante (véase también la duda sobre «chiqan»).
 - **Meses y fechas**: los gráficos y la cinta muestran los meses abreviados en español en kichwa, hasta decidir
   los nombres de los meses.
+
+## Tarea 7 · Exportaciones y errores del cliente
+
+Borrador de `catalogos/qu/exportar.ts`; todo sin validar por hablantes:
+
+- **Franja del PNG de demostración** (`exportar.franja.demo`): «Rikuchiy willaykuna» (datos de demostración) y
+  «chiqan rikuykuna mana kanchu» (no son observaciones reales). Sigue la duda sobre «chiqan» (véase la Tarea 3).
+- **«servidor», «lienzo», «PNG»**: préstamos del español / sigla, sin equivalente asentado.
+- Las líneas de máquina del CSV (`# origen: …`, `# idioma: …`) no se traducen: siguen en español.

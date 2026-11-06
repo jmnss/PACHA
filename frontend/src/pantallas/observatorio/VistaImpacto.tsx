@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { mensajeDeError } from '../../api/cliente'
+import { useT } from '../../idioma/useT'
 import { useImpacto, type Escenario } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
 import { Cargando, ErrorBloque } from '../../diseno/Estados'
@@ -21,9 +22,10 @@ export function VistaImpacto({ esc, antesId, despuesId, polarizacion }: Props) {
   const pol = esc.historia === 'incendio' && esc.polarizaciones.includes('HV') ? 'HV' : polarizacion
   const q = useImpacto(esc.id, antesId, despuesId, pol)
   const [aviso, setAviso] = useState<string | null>(null)
+  const { t } = useT()
   if (antesId === despuesId) return <p className="observatorio__aviso">Elige dos pasadas distintas para resumir el impacto.</p>
   if (q.isPending) return <Cargando texto="Calculando el impacto…" filas={4} />
-  if (q.isError) return <ErrorBloque mensaje={mensajeDeError(q.error)} onReintentar={() => void q.refetch()} />
+  if (q.isError) return <ErrorBloque mensaje={mensajeDeError(q.error, t)} onReintentar={() => void q.refetch()} />
   const d = q.data
 
   const descargar = async () => {

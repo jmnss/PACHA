@@ -1,4 +1,5 @@
 import { esReal, type Origen } from '../diseno/origen'
+import type { CodigoIdioma } from '../idioma/idiomas'
 
 export type Celda = string | number | boolean | null | undefined
 
@@ -7,8 +8,10 @@ const DESCONOCIDA = 'desconocida'
 /** Líneas de comentario de origen. Fail-safe: solo `tipo === 'real'` exacto omite la advertencia; con
  * cualquier otro valor (o sin origen) se marca «sintético (no verificado)» y se añade la advertencia.
  * No hay forma de omitirla para datos sintéticos (docs/diseno.md §8). Las seis primeras líneas son
- * origen, fuente, generador, semilla, fecha y advertencia; `producto` va después. */
-export function lineasOrigen(o: Origen | null | undefined): string[] {
+ * origen, fuente, generador, semilla, fecha y advertencia; `producto` va después y `# idioma` cierra cuando el llamador
+ * indica el idioma (sin él, las seis líneas históricas quedan idénticas).
+ * Las líneas de máquina se quedan siempre en español. */
+export function lineasOrigen(o: Origen | null | undefined, idioma?: CodigoIdioma): string[] {
   const real = esReal(o)
   const etiqueta = real ? 'real' : o?.tipo === 'sintetico' ? 'sintético' : 'sintético (no verificado)'
   const l = [`# origen: ${etiqueta}`, `# fuente: ${limpia(o?.fuente)}`]
@@ -17,6 +20,7 @@ export function lineasOrigen(o: Origen | null | undefined): string[] {
   l.push(`# fecha de generación: ${limpia(o?.fecha_generacion)}`)
   if (!real) l.push('# DATOS DE DEMOSTRACIÓN: no son observaciones reales de NISAR')
   if (o?.producto) l.push(`# producto: ${limpia(o.producto)}`)
+  if (idioma) l.push(`# idioma: ${idioma}`)
   return l
 }
 
@@ -39,9 +43,9 @@ export function celdaCsv(v: Celda): string {
 }
 
 /** CSV con las líneas de origen al principio, la cabecera de columnas y las filas. Saltos de línea \n. */
-export function aCsv(filas: Record<string, Celda>[], columnas: string[], origen: Origen | null | undefined): string {
+export function aCsv(filas: Record<string, Celda>[], columnas: string[], origen: Origen | null | undefined, idioma?: CodigoIdioma): string {
   const cuerpo = filas.map((f) => columnas.map((c) => celdaCsv(f[c])).join(','))
-  return [...lineasOrigen(origen), columnas.map(celdaCsv).join(','), ...cuerpo].join('\n') + '\n'
+  return [...lineasOrigen(origen, idioma), columnas.map(celdaCsv).join(','), ...cuerpo].join('\n') + '\n'
 }
 
 /** Descarga un CSV. Decisión: `aCsv` devuelve texto puro (sin BOM) para que las pruebas y otras
