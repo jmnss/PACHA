@@ -25,7 +25,7 @@ Criterios del borrador:
 
 | Qué | Dónde | Cuántos textos |
 |---|---|---|
-| Textos cortos de la interfaz (botones, títulos, avisos, errores, textos de la API) | `docs/traduccion-kichwa.csv` (generado desde `frontend/src/idioma/catalogos/qu/*.ts`) | 816 claves |
+| Textos cortos de la interfaz (botones, títulos, avisos, errores, textos de la API) | `docs/traduccion-kichwa.csv` (generado desde `frontend/src/idioma/catalogos/qu/*.ts`) | 916 claves |
 | Relatos de las Historias | `frontend/src/pantallas/historias/contenido/inundacion.qu.ts`, `incendio.qu.ts` | 2 relatos |
 | Explicaciones de términos de las Historias | `frontend/src/pantallas/historias/contenido/terminos.qu.ts` | 9 términos |
 | Guion del recorrido guiado | `frontend/src/pantallas/recorrido/guion.qu.ts` | 6 pasos |
@@ -93,6 +93,7 @@ Se dejaron en español porque el equipo no conoce un equivalente asentado. Lleva
 | clima, temporada (en algunas claves), región, provincia, hito, estaciones astronómicas (invierno/verano boreal y austral), equinoccio, solsticio, transición, bimodal/unimodal | `obs.contexto.*`, `api.contexto.*` | «Costa» y «Sierra» se conservan como regiones. |
 | validación, restauración, riesgo, cobertura, tipografía, límites, créditos de fuentes | Historias | Sin equivalente asentado. |
 | hectárea, a lo menos, ejemplo, óptico, contraste, coeficientes, cruzada, paralela | `obs.serie.*`, `obs.impacto.*`, `lab.*` | «a lo menos» queda en español hasta que un hablante proponga la forma natural. «Demostración» se dice «rikuchiy» (H1). |
+| Ascendente, Descendente (dirección orbital); Cobertura, Intensidad, Modelo (encabezados de tablas del simulador); «LOS positivo / negativo» | `api.obs.orbita.*`, `api.sim.columna.*`, `api.obs.metrica.max_*.ayuda` | Términos técnicos sin equivalente asentado (ronda de arreglos final). |
 | Nombres de los términos con explicación | `historias/contenido/terminos.qu.ts`, nombres en `fundamentos/contenido.qu.ts` | El nombre queda en español; solo la explicación está en kichwa. |
 
 ## Dudas abiertas
@@ -251,11 +252,24 @@ alarma), «tarpushka» (cultivo), «kuchuy» (cosecha), «chawpi» (moderada), �
 shina» (casi todos los inviernos; dudoso), «pampa hawa» (a cielo abierto, `api.lab.cambio.inundacion_a_cielo_abierto`;
 dudoso), «Pamba» y «palanda» (llanura, banano), «ashtawan hatunka» (el máximo).
 
+Extremos de la leyenda del desplazamiento (`origen.leyenda.desplazamiento_menos` / `_mas`): hasta la ronda
+de arreglos de la revisión final estaban en español sin marca de idioma («alejándose» / «hacia el
+satélite»); ahora llevan el borrador «karuyakun» / «satéliteman kuchuyakun» (dudoso: ¿«karuyakun» se entiende
+como «se aleja del satélite»?). Las métricas del Observatorio usan la misma raíz: «Ashtawan karuyay»
+(máx. alejándose) y «Satéliteman ashtawan kuchuyay» (máx. hacia el satélite).
+
+Textos del modelo con clave (ronda de arreglos final): métricas del cambio y de la medición (`api.obs.metrica.*`),
+notas del modelo por escenario (`api.nota.*`, largas y técnicas: muchos términos quedan en español, p. ej.
+«dispersión de volumen», «reflexión especular», «correlacionar»), títulos de paneles y encabezados del
+simulador (`api.sim.panel.*`, `api.sim.columna.*`), unidades (`api.unidad.*`: «punchakuna», «m/puncha»,
+«cm/wata») y «· modelopa rikushka (simulación)» para la detección del simulador.
+
 ### Textos que siguen en español a propósito
 
 Los textos que escribe la API sin clave (404/405 genéricos, ayudas de métricas del simulador, notas y celdas
-de la tabla de `modelo/desastres.py`, títulos de la bitácora guardada, informe PNG del simulador) se
-muestran en español con `lang="es"`. Las líneas de máquina del CSV (`# origen: …`, `# fuente: …`,
+de la tabla de `modelo/desastres.py`, títulos de las entradas antiguas de la bitácora, informe PNG del
+simulador, métricas de la medición con fecha en la etiqueta y notas del modelo con otros parámetros que los
+de por defecto) se muestran en español con `lang="es"`. Las líneas de máquina del CSV (`# origen: …`, `# fuente: …`,
 `# idioma: …`) siguen en español.
 
 ## Registro de la revisión del borrador (Tarea 27)

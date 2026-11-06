@@ -1,6 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { en } from '../idioma/catalogos/en'
+import { es } from '../idioma/catalogos/es'
 import { qu } from '../idioma/catalogos/qu'
 import { renderConIdioma, renderPseudo, textosSinTraducir } from '../idioma/pruebas'
 import { traductor, type Clave } from '../idioma/traductor'
@@ -68,6 +69,8 @@ describe('sin textos sueltos', () => {
     for (const [id, cat] of [['en', en], ['qu', qu]] as const) {
       const { unmount } = renderConIdioma(<Leyenda paleta="divergente" vmin={-1} vmax={1} unidad="dB" extremos={ext} />, id)
       expect(screen.getByText(cat['origen.leyenda.desplazamiento_mas'])).toBeInTheDocument()
+      // Distingue: el texto de cada idioma no es el español (si lo fuera, quedaría sin lang="es").
+      for (const k of ext) expect(cat[k], `${id}:${k}`).not.toBe(es[k])
       unmount()
     }
     const { container } = renderPseudo(<Leyenda paleta="divergente" vmin={-1} vmax={1} unidad="dB" extremos={ext} />)

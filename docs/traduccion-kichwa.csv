@@ -182,6 +182,83 @@ api.lab.metrica.tapado_por_nubes.ayuda,Fracción de la escena que las nubes ocul
 api.lab.metrica.tapado_por_nubes.etiqueta,Tapado por nubes,Hidden by clouds,Puyukunawan pakashka,no
 api.medicion.posicion.ayuda,"Centro del píxel (fila {fila}, columna {columna})","Centre of the pixel (row {fila}, column {columna})","Pixelpa chawpi (fila {fila}, columna {columna})",no
 api.medicion.posicion.etiqueta,Posición,Position,Maypi,no
+api.nota.ec_antisana.1,La velocidad sale de correlacionar parches de imagen entre dos fechas (12 días): desplazamiento / Δt. El perfil transversal sigue la ley de Glen (n = 3): u ∝ 1 − |y/W|⁴.,Velocity comes from correlating image patches between two dates (12 days): displacement / Δt. The cross profile follows Glen's law (n = 3): u ∝ 1 − |y/W|⁴.,Utkayka ishkay punchakunapura (12 punchakuna) imagenpa pedazokunata correlacionashpa llukshin: kuyuriy / Δt. Chimpa perfilka Glenpa kamachiyta katin (n = 3): u ∝ 1 − |y/W|⁴.,no
+api.nota.ec_daule.1,"Un cultivo en crecimiento aumenta la dispersión de volumen (HV sube hasta ~10 dB); la cosecha devuelve la parcela al nivel de suelo desnudo. La inundación para trasplantar arroz produce reflexión especular, con HV por debajo de −32 dB.","A growing crop increases volume scattering (HV rises to ~10 dB); harvest returns the plot to bare-soil level. Flooding to transplant rice produces specular reflection, with HV below −32 dB.","Wiñakuk tarpushkaka volumen dispersiónta yapachin (HV ~10 dB kama wichayan); pallayka parcelata lluchu allpa nivelman tikrachin. Arroz tarpunkapak yakuwan jundachiyka reflexión especularta rurachin, HV −32 dB uraypi.",no
+api.nota.ec_guayaquil.1,"Se ajusta, píxel a píxel, d(t) = a + v·t (+ término estacional si la serie supera ~10 meses). La atmósfera turbulenta es aleatoria entre fechas y se promedia al usar muchas adquisiciones.","A fit is made pixel by pixel, d(t) = a + v·t (+ a seasonal term if the series exceeds ~10 months). Turbulent atmosphere is random between dates and averages out when many acquisitions are used.","Píxel píxelmanta d(t) = a + v·t tupachin (serie ~10 killakunata yallikpika temporada términotapash). Muyuk wayra-pachaka punchakunapura mana rikushka shina kan, achka adquisicionkunawan promedio tukun.",no
+api.nota.ec_la_segua.1,"El agua abierta refleja la señal lejos del radar (HH muy bajo); bajo el dosel inundado, el doble rebote tronco-agua eleva HH y la razón HH/HV, algo que solo la banda L detecta porque atraviesa la copa de los árboles.","Open water reflects the signal away from the radar (very low HH); under flooded canopy, the trunk-water double bounce raises HH and the HH/HV ratio, something only L band detects because it passes through the tree crowns.","Paskashka yakuka señalta radarmanta karuman kutichin (HH ancha uray); yakuwan jundashka sacha panka ukupika, sachapa-yakupa doble reboteka HH-ta, HH/HV razóntapash wichachin; chaytaka banda L-lla rikun, yura umakunata pasashpa.",no
+api.nota.ec_loja.1,"En banda L, HV responde a la dispersión de volumen de ramas y troncos; al consumirse la biomasa cae entre 3 y 8 dB. La señal se satura cerca de 100–150 Mg/ha, por lo que la pérdida de biomasa en bosques densos es una cota inferior.","In L band, HV responds to volume scattering from branches and trunks; as biomass is consumed it drops by 3 to 8 dB. The signal saturates near 100–150 Mg/ha, so biomass loss in dense forests is a lower bound.","Banda L-pi HV-ka rama, kaspikunapa volumen dispersiónman kutichin; biomasa rupashpa 3 manta 8 dB kama urayan. Señalka 100–150 Mg/ha kuchupi saturan, chaymanta tupu sachakunapi biomasapa chinkayka uray límite kan.",no
+api.nota.ec_pedernales.1,"Vector LOS (este, norte, arriba) = (+0.64, +0.09, +0.77). NISAR mira a la izquierda: el movimiento norte-sur casi no se proyecta en la línea de vista, por eso las fallas de rumbo N-S se complementan con desplazamientos de píxel (GOFF).","LOS vector (east, north, up) = (+0.64, +0.09, +0.77). NISAR looks to the left: north-south motion barely projects onto the line of sight, which is why N-S strike faults are complemented with pixel offsets (GOFF).","LOS vector (inti llukshina, chinchay, hawa) = (+0.64, +0.09, +0.77). NISAR-ka lluki ladoman rikun: chinchay-urin kuyuriyka rikuy línea-pi ashallata rikurin, chaymanta N-S rumbo fallakunataka píxel kuyuriykunawan (GOFF) paktachin.",no
+api.nota.ec_pedernales.2,"Los píxeles con coherencia < 0,25 (ruptura superficial, decorrelación) se enmascaran, como hacen las componentes conexas del producto GUNW.","Pixels with coherence < 0.25 (surface rupture, decorrelation) are masked, as the connected components of the GUNW product do.","Coherencia < 0,25 píxelkunataka (hawa ruptura, decorrelación) pakan, GUNW productopa componentes conexas shina.",no
+api.obs.metrica.acierto_de_deteccion_verdad_sintetica.ayuda,Cosechada / no cosechada vs. verdad,Harvested / not harvested vs. truth,"Pallashka / mana pallashka, chiqan-wan chimpapurashka",no
+api.obs.metrica.acierto_de_deteccion_verdad_sintetica.etiqueta,Acierto de detección (verdad sintética),Detection accuracy (synthetic truth),Rikuypa alli tupay (sintético chiqan),no
+api.obs.metrica.acierto_del_detector_verdad_sintetica.ayuda,Clasificación píxel a píxel en la fecha final,Pixel-by-pixel classification on the final date,"Píxel píxelmanta clasificación, tukuri punchapi",no
+api.obs.metrica.acierto_del_detector_verdad_sintetica.etiqueta,Acierto del detector (verdad sintética),Detector accuracy (synthetic truth),Detectorpa alli tupay (sintético chiqan),no
+api.obs.metrica.adquisiciones_usadas.ayuda,Pila de interferogramas de 12 días,Stack of 12-day interferograms,12 punchakunapa interferogramakunapa pila,no
+api.obs.metrica.adquisiciones_usadas.etiqueta,Adquisiciones usadas,Acquisitions used,Mutkichishka adquisicionkuna,no
+api.obs.metrica.area_con_5_cm_ano.ayuda,Umbral de daño a infraestructura,Infrastructure damage threshold,Infraestructurapa wakllichiy umbral,no
+api.obs.metrica.area_con_5_cm_ano.etiqueta,Área con > 5 cm/año,Area with > 5 cm/yr,> 5 cm/wata allpa,no
+api.obs.metrica.area_deformada_5_cm.etiqueta,Área deformada > 5 cm,Deformed area > 5 cm,Kuyurishka allpa > 5 cm,no
+api.obs.metrica.area_del_cuadrante.ayuda,{filas} × {columnas} píxeles de {metros} m,{filas} × {columnas} pixels of {metros} m,"{filas} × {columnas} píxelkuna, {metros} m",no
+api.obs.metrica.area_del_cuadrante.etiqueta,Área del cuadrante,Quadrant area,Cuadrantepa allpa,no
+api.obs.metrica.area_inundada_final.etiqueta,Área inundada final,Final flooded area,Tukuripi yakuwan jundashka allpa,no
+api.obs.metrica.area_inundada_inicial.ayuda,Agua abierta + vegetación inundada,Open water + flooded vegetation,Paskashka yaku + yakuwan jundashka yuyukuna,no
+api.obs.metrica.area_inundada_inicial.etiqueta,Área inundada inicial,Initial flooded area,Kallaripi yakuwan jundashka allpa,no
+api.obs.metrica.area_quemada_detectada.etiqueta,Área quemada detectada,Detected burned area,Rikushka rupashka allpa,no
+api.obs.metrica.area_quemada_simulada_verdad_sintetica.ayuda,Verdad del modelo en el intervalo,Model truth over the interval,"Modelopa chiqan, intervalopi",no
+api.obs.metrica.area_quemada_simulada_verdad_sintetica.etiqueta,Área quemada simulada (verdad sintética),Simulated burned area (synthetic truth),Simulashka rupashka allpa (sintético chiqan),no
+api.obs.metrica.biomasa_perdida.ayuda,Inversión del modelo de nube de agua,Inversion of the water cloud model,Yaku pukyu modelopa inversión,no
+api.obs.metrica.biomasa_perdida.etiqueta,Biomasa perdida,Biomass lost,Chinkashka biomasa,no
+api.obs.metrica.cambio_neto.ayuda,Negativo = pérdida de humedal,Negative = wetland loss,Negativo = humedalpa chinkay,no
+api.obs.metrica.cambio_neto.etiqueta,Cambio neto,Net change,Chiqan tikray,no
+api.obs.metrica.co2_emitido_estimado.ayuda,47 % de carbono en la biomasa × 44/12,47 % carbon in biomass × 44/12,Biomasapi 47 % carbono × 44/12,no
+api.obs.metrica.co2_emitido_estimado.etiqueta,CO₂ emitido (estimado),CO₂ emitted (estimated),Llukchishka CO₂ (yuyashka),no
+api.obs.metrica.cosecha_labranza.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.cosecha_labranza.etiqueta,Cosecha / labranza,Harvest / tillage,Pallay / allpa yapuy,no
+api.obs.metrica.cosechas_detectadas.ayuda,Caída de HV > 3 dB hasta nivel de suelo,HV drop > 3 dB down to soil level,"HV > 3 dB urayan, allpa nivel kama",no
+api.obs.metrica.cosechas_detectadas.etiqueta,Cosechas detectadas,Harvests detected,Rikushka pallaykuna,no
+api.obs.metrica.crecimiento_del_cultivo.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.crecimiento_del_cultivo.etiqueta,Crecimiento del cultivo,Crop growth,Tarpushkapa wiñay,no
+api.obs.metrica.error_medio_de_fecha.ayuda,Limitado por la revisita de 12 días,Limited by the 12-day revisit,12 punchakunapi kutin rikuywan harkashka,no
+api.obs.metrica.error_medio_de_fecha.etiqueta,Error medio de fecha,Mean date error,Punchapa chawpi pantay,no
+api.obs.metrica.f1_del_detector_verdad_sintetica.ayuda,Coincidencia entre detección y verdad,Agreement between detection and truth,"Rikuy, chiqanpash tupay",no
+api.obs.metrica.f1_del_detector_verdad_sintetica.etiqueta,F1 del detector (verdad sintética),Detector F1 (synthetic truth),Detectorpa F1 (sintético chiqan),no
+api.obs.metrica.franjas_interferometricas.ayuda,"Una franja = λ/2 = 11,9 cm",One fringe = λ/2 = 11.9 cm,"Shuk franja = λ/2 = 11,9 cm",no
+api.obs.metrica.franjas_interferometricas.etiqueta,Franjas interferométricas,Interferometric fringes,Interferométrica franjakuna,no
+api.obs.metrica.hielo_perdido.etiqueta,Hielo perdido,Ice lost,Chinkashka chullunku,no
+api.obs.metrica.hundimiento_maximo.ayuda,Percentil 1 de la velocidad vertical,1st percentile of vertical velocity,Vertical utkaypa 1 percentil,no
+api.obs.metrica.hundimiento_maximo.etiqueta,Hundimiento máximo,Maximum subsidence,Ashtawan urayay,no
+api.obs.metrica.inundacion_persistente.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.inundacion_persistente.etiqueta,Inundación persistente,Persistent flooding,Mana tukuk yaku junday,no
+api.obs.metrica.inundacion_trasplante_de_arroz.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.inundacion_trasplante_de_arroz.etiqueta,Inundación (trasplante de arroz),Flooding (rice transplanting),Yaku junday (arroz tarpuy),no
+api.obs.metrica.magnitud_del_escenario.ayuda,Okada: M0 = μ·L·W·deslizamiento,Okada: M0 = μ·L·W·slip,Okada: M0 = μ·L·W·deslizamiento,no
+api.obs.metrica.magnitud_del_escenario.etiqueta,Magnitud del escenario,Scenario magnitude,Escenariopa magnitud,no
+api.obs.metrica.max_alejandose.ayuda,LOS negativo,Negative LOS,LOS negativo,no
+api.obs.metrica.max_alejandose.etiqueta,Máx. alejándose,Max. moving away,Ashtawan karuyay,no
+api.obs.metrica.max_hacia_el_satelite.ayuda,LOS positivo,Positive LOS,LOS positivo,no
+api.obs.metrica.max_hacia_el_satelite.etiqueta,Máx. hacia el satélite,Max. toward the satellite,Satéliteman ashtawan kuchuyay,no
+api.obs.metrica.maximo_velocidad_vertical.etiqueta,Máximo · Velocidad vertical,Maximum · Vertical velocity,Ashtawan hatun · Vertical utkay,no
+api.obs.metrica.media_velocidad_vertical.etiqueta,Media · Velocidad vertical,Mean · Vertical velocity,Chawpi · Vertical utkay,no
+api.obs.metrica.minimo_velocidad_vertical.etiqueta,Mínimo · Velocidad vertical,Minimum · Vertical velocity,Ashtawan uchilla · Vertical utkay,no
+api.obs.metrica.nueva_inundacion.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.nueva_inundacion.etiqueta,Nueva inundación,New flooding,Mushuk yaku junday,no
+api.obs.metrica.parcelas_analizadas.etiqueta,Parcelas analizadas,Plots analyzed,Rikushka parcelakuna,no
+api.obs.metrica.perdida_de_inundacion.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.perdida_de_inundacion.etiqueta,Pérdida de inundación,Flood loss,Yaku jundaypa pishiyay,no
+api.obs.metrica.retroceso_del_frente.ayuda,Sobre la línea de flujo central,Along the central flow line,Chawpi flujo línea-pi,no
+api.obs.metrica.retroceso_del_frente.etiqueta,Retroceso del frente,Front retreat,Frentepa washaman tikray,no
+api.obs.metrica.rmse_frente_a_la_verdad_sintetica.ayuda,Atmósfera y decorrelación residuales,Residual atmosphere and decorrelation,"Puchushka wayra-pacha, decorrelaciónpash",no
+api.obs.metrica.rmse_frente_a_la_verdad_sintetica.etiqueta,RMSE frente a la verdad sintética,RMSE against the synthetic truth,Sintético chiqanwan RMSE,no
+api.obs.metrica.severidad_alta_4_5_db.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.severidad_alta_4_5_db.etiqueta,"Severidad alta (< −4,5 dB)",High severity (< −4.5 dB),"Hatun severidad (< −4,5 dB)",no
+api.obs.metrica.severidad_moderada_2_5_a_4_5_db.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.severidad_moderada_2_5_a_4_5_db.etiqueta,"Severidad moderada (−2,5 a −4,5 dB)",Moderate severity (−2.5 to −4.5 dB),"Chawpi severidad (−2,5 manta −4,5 dB kama)",no
+api.obs.metrica.sin_cambio.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.sin_cambio.etiqueta,Sin cambio,No change,Mana tikrashka,no
+api.obs.metrica.velocidad_maxima_final.etiqueta,Velocidad máxima final,Final maximum velocity,Tukuripi ashtawan utkay,no
+api.obs.metrica.velocidad_maxima_inicial.etiqueta,Velocidad máxima inicial,Initial maximum velocity,Kallaripi ashtawan utkay,no
+api.obs.orbita.ascendente,Ascendente,Ascending,Ascendente,no
+api.obs.orbita.descendente,Descendente,Descending,Descendente,no
 api.opcion.terremotos.rake.inversa,Inversa,Reverse,Inversa,no
 api.opcion.terremotos.rake.normal,Normal,Normal,Normal,no
 api.opcion.terremotos.rake.rumbo_dextral,Rumbo dextral,Right-lateral strike-slip,Rumbo dextral,no
@@ -195,6 +272,14 @@ api.sim.capa.estado_del_fuego,Estado del fuego,Fire state,Ninapa kawsay,no
 api.sim.capa.frentes_de_onda,Frentes de onda,Wavefronts,Onda frentekuna,no
 api.sim.capa.intensidad_mmi,Intensidad (MMI),Intensity (MMI),Intensidad (MMI),no
 api.sim.capa.tsunami_calado_en_tierra_elevacion_del_mar,Tsunami: calado en tierra / elevación del mar,Tsunami: onshore flow depth / sea-level elevation,Tsunami: allpapi calado / mama kuchapa wichay,no
+api.sim.columna.area_km2,Área (km²),Area (km²),Allpa (km²),no
+api.sim.columna.area_quemada_km2,Área quemada (km²),Burned area (km²),Rupashka allpa (km²),no
+api.sim.columna.cobertura,Cobertura,Land cover,Cobertura,no
+api.sim.columna.intensidad,Intensidad,Intensity,Intensidad,no
+api.sim.columna.modelo,Modelo,Model,Modelo,no
+api.sim.columna.peligro,Peligro,Hazard,Llaki,no
+api.sim.columna.percepcion,Percepción,Perceived shaking,Imashina uyarin,no
+api.sim.columna.poblacion,Población,Population,Runakuna,no
 api.sim.control.ciudad.habitantes.etiqueta,Habitantes,Inhabitants,Kawsakkuna,no
 api.sim.control.ciudad.nombre.etiqueta,Nombre de la ciudad,City name,Markapa shuti,no
 api.sim.control.erupcion.duracion_h.etiqueta,Duración de la fase explosiva,Duration of the explosive phase,Fase explosivapa mashna pacha,no
@@ -245,9 +330,9 @@ api.sim.herramienta.terremoto.nombre,Terremoto,Earthquake,Allpa kuyuy,no
 api.sim.herramienta.tormenta.nombre,Tormenta,Storm,Tormenta,no
 api.sim.metrica.acierto_iou.etiqueta,Acierto (IoU),Accuracy (IoU),Alli tupay (IoU),no
 api.sim.metrica.area_inundada.etiqueta,Área inundada,Flooded area,Yakuwan jundashka allpa,no
-api.sim.metrica.area_inundada_detectado_por_nisar.etiqueta,Área inundada detectado por NISAR,Flooded area detected by NISAR,NISAR-pa rikushka yakuwan jundashka allpa,no
+api.sim.metrica.area_inundada_deteccion_del_modelo_simulacion.etiqueta,Área inundada · detección del modelo (simulación),Flooded area · model detection (simulation),Yakuwan jundashka allpa · modelopa rikushka (simulación),no
 api.sim.metrica.area_quemada.etiqueta,Área quemada,Burned area,Rupashka allpa,no
-api.sim.metrica.area_quemada_detectado_por_nisar.etiqueta,Área quemada detectado por NISAR,Burned area detected by NISAR,NISAR-pa rikushka rupashka allpa,no
+api.sim.metrica.area_quemada_deteccion_del_modelo_simulacion.etiqueta,Área quemada · detección del modelo (simulación),Burned area · model detection (simulation),Rupashka allpa · modelopa rikushka (simulación),no
 api.sim.metrica.biomasa_consumida.etiqueta,Biomasa consumida,Biomass consumed,Tukuchishka biomasa,no
 api.sim.metrica.ceniza_1_cm.etiqueta,Ceniza ≥ 1 cm,Ash ≥ 1 cm,Ceniza ≥ 1 cm,no
 api.sim.metrica.co2_emitido.etiqueta,CO₂ emitido,CO₂ emitted,Llukchishka CO₂,no
@@ -256,7 +341,7 @@ api.sim.metrica.deslizamientos.etiqueta,Deslizamientos,Landslides,Deslizamientos
 api.sim.metrica.deslizamientos_perdida_de_coherencia.etiqueta,Deslizamientos (pérdida de coherencia),Landslides (loss of coherence),Deslizamientos (coherencia illay),no
 api.sim.metrica.desplazamiento_los_maximo.etiqueta,Desplazamiento LOS máximo,Maximum LOS displacement,Ashtawan rikuy ñanpi kuyuy,no
 api.sim.metrica.flujos_piroclasticos.etiqueta,Flujos piroclásticos,Pyroclastic flows,Flujos piroclásticos,no
-api.sim.metrica.flujos_y_ceniza_10_cm_detectado_por_nisar.etiqueta,Flujos y ceniza > 10 cm detectado por NISAR,Flows and ash > 10 cm detected by NISAR,"NISAR-pa rikushka flujokuna, ceniza > 10 cm ima",no
+api.sim.metrica.flujos_y_ceniza_10_cm_deteccion_del_modelo_simulacion.etiqueta,Flujos y ceniza > 10 cm · detección del modelo (simulación),Flows and ash > 10 cm · model detection (simulation),"Flujokuna, ceniza > 10 cm · modelopa rikushka (simulación)",no
 api.sim.metrica.franjas_en_el_interferograma.etiqueta,Franjas en el interferograma,Fringes in the interferogram,Interferogramapi franjakuna,no
 api.sim.metrica.humedad_del_combustible.etiqueta,Humedad del combustible,Fuel moisture,Combustiblepa humedad,no
 api.sim.metrica.intensidad_maxima.etiqueta,Intensidad máxima,Maximum intensity,Ashtawan intensidad,no
@@ -294,6 +379,18 @@ api.sim.opcion.terremoto.mecanismo.rumbo_sinistral,Rumbo sinistral,Left-lateral 
 api.sim.opcion.terremoto.pais.colombia,Colombia,Colombia,Colombia,no
 api.sim.opcion.terremoto.pais.ecuador,Ecuador,Ecuador,Ecuador,no
 api.sim.opcion.terremoto.pais.peru,Perú,Peru,Perú,no
+api.sim.panel.0_hh_antes_db,σ⁰ HH antes (dB),σ⁰ HH before (dB),σ⁰ HH ñawpa (dB),no
+api.sim.panel.0_hh_en_el_pico_de_la_crecida_db,σ⁰ HH en el pico de la crecida (dB),σ⁰ HH at flood peak (dB),σ⁰ HH crecidapa hatun pachapi (dB),no
+api.sim.panel.0_hv_antes_db,σ⁰ HV antes (dB),σ⁰ HV before (dB),σ⁰ HV ñawpa (dB),no
+api.sim.panel.0_hv_despues_db,σ⁰ HV después (dB),σ⁰ HV after (dB),σ⁰ HV washa (dB),no
+api.sim.panel.coherencia_antes_de_la_erupcion,Coherencia antes de la erupción,Coherence before the eruption,Erupciónmanta ñawpa coherencia,no
+api.sim.panel.coherencia_con_la_erupcion,Coherencia con la erupción,Coherence with the eruption,Erupciónwan coherencia,no
+api.sim.panel.coherencia_interferometrica,Coherencia interferométrica,Interferometric coherence,Interferométrica coherencia,no
+api.sim.panel.desplazamiento_en_la_linea_de_vista,Desplazamiento en la línea de vista,Line-of-sight displacement,Rikuy línea-pi kuyuriy,no
+api.sim.panel.deteccion_de_inundacion,Detección de inundación,Flood detection,Yaku jundayta rikuy,no
+api.sim.panel.interferograma_envuelto_fase_los,Interferograma envuelto (fase LOS),Wrapped interferogram (LOS phase),Pillushka interferograma (LOS fase),no
+api.sim.panel.perdida_de_coherencia_antes_despues,Pérdida de coherencia (antes − después),Coherence loss (before − after),Coherenciapa chinkay (ñawpa − washa),no
+api.sim.panel.razon_logaritmica_hv_despues_antes,Razón logarítmica HV después/antes,HV log ratio after/before,HV logarítmica razón washa/ñawpa,no
 api.sim.titulo.erupcion,Erupción IEV {vei},Eruption VEI {vei},Erupción IEV {vei},no
 api.sim.titulo.erupcion_volcan,Erupción IEV {vei} del {volcan},VEI {vei} eruption of {volcan},{volcan}-pa IEV {vei} erupción,no
 api.sim.titulo.incendio,Incendio forestal,Forest fire,Sacha incendio,no
@@ -313,6 +410,9 @@ api.tipo.subsidencia.descripcion,Series temporales InSAR: ajuste por mínimos cu
 api.tipo.subsidencia.nombre,Subsidencia del terreno,Land subsidence,Allpa uraykay,no
 api.tipo.terremotos.descripcion,Interferometría diferencial de 12 días; el modelo de Okada genera la deformación cosísmica.,12-day differential interferometry; the Okada model generates the coseismic deformation.,12 punchapi diferencial interferometría; Okada modelo cosísmica deformaciónta rurachin.,no
 api.tipo.terremotos.nombre,Terremotos,Earthquakes,Allpa kuyuykuna,no
+api.unidad.cm_ano,cm/año,cm/yr,cm/wata,no
+api.unidad.dias,días,days,punchakuna,no
+api.unidad.m_dia,m/día,m/day,m/puncha,no
 api.valor.mil,mil,thousand,waranka,no
 api.valor.personas,personas,people,runakuna,no
 comun.capas.otros,{n} capas,{n} layers,{n} capakuna,no
@@ -654,8 +754,8 @@ obs.variable.desplazamiento_los_desenrollado,Desplazamiento en la línea de vist
 obs.variable.error_frente_a_la_verdad_sintetica,Error frente a la verdad sintética,Error against the synthetic truth,Sintético chiqanwan pantay,no
 obs.variable.fase_interferometrica,Fase interferométrica,Interferometric phase,Fase interferométrica,no
 obs.variable.velocidad_vertical,Velocidad vertical,Vertical velocity,Vertical utkay,no
-origen.leyenda.desplazamiento_mas,hacia el satélite,toward the satellite,hacia el satélite,no
-origen.leyenda.desplazamiento_menos,alejándose,moving away,alejándose,no
+origen.leyenda.desplazamiento_mas,hacia el satélite,toward the satellite,satéliteman kuchuyakun,no
+origen.leyenda.desplazamiento_menos,alejándose,moving away,karuyakun,no
 origen.leyenda.divergente_mas,más señal,stronger signal,achka señal,no
 origen.leyenda.divergente_menos,menos señal,weaker signal,pishi señal,no
 origen.leyenda.gris_mas,más claro,lighter,yurakyashka,no
