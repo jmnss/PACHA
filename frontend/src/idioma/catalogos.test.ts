@@ -24,6 +24,23 @@ describe('catálogos', () => {
   it('las validadas existen', () => {
     for (const k of VALIDADAS_QU) expect(k in qu, k).toBe(true)
   })
+  it('ninguna clave se repite entre áreas (index.ts las une con «...» y la última pisaría a la primera)', () => {
+    const modulos = import.meta.glob<Record<string, Record<string, string>>>('./catalogos/{es,en,qu}/*.ts', { eager: true })
+    for (const idioma of ['es', 'en', 'qu']) {
+      const dueno = new Map<string, string>()
+      const repetidas: string[] = []
+      for (const [ruta, mod] of Object.entries(modulos)) {
+        if (!ruta.startsWith(`./catalogos/${idioma}/`) || ruta.endsWith('/index.ts')) continue
+        for (const area of Object.values(mod))
+          for (const k of Object.keys(area)) {
+            if (dueno.has(k)) repetidas.push(`${idioma}:${k} (${dueno.get(k)} y ${ruta})`)
+            else dueno.set(k, ruta)
+          }
+      }
+      expect(repetidas).toEqual([])
+      expect(dueno.size).toBe(Object.keys(catalogos[idioma]).length)
+    }
+  })
   it('registra el borrador', () => {
     const total = Object.keys(qu).length
     console.info(`qu en borrador: ${total - VALIDADAS_QU.size} de ${total}`)
