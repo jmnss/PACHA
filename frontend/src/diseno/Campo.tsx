@@ -1,9 +1,9 @@
-import { useId, type InputHTMLAttributes } from 'react'
+import { useId, type InputHTMLAttributes, type ReactNode } from 'react'
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  etiqueta: string
+  etiqueta: ReactNode
   /** Límite visible bajo la etiqueta (queda enlazado con aria-describedby). */
-  limite?: string
+  limite?: ReactNode
 }
 
 export function Campo({ etiqueta, limite, id, ...resto }: Props) {

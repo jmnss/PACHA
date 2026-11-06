@@ -4,6 +4,8 @@ import { useT } from '../idioma/useT'
 export interface ColumnaTabla<F> {
   clave: string
   etiqueta: string
+  /** Idioma del contenido de la columna si no es el de la interfaz (texto escrito por el modelo en español). */
+  lang?: string
   numerica?: boolean
   /** Primera columna: identidad, en blanco. */
   identidad?: boolean
@@ -38,7 +40,7 @@ export function Tabla<F extends Record<string, unknown>>({ columnas, filas, titu
           <thead>
             <tr>
               {columnas.map((c) => (
-                <th key={c.clave} scope="col" className={c.numerica ? 'tabla__num' : undefined}>
+                <th key={c.clave} scope="col" lang={c.lang} className={c.numerica ? 'tabla__num' : undefined}>
                   {c.etiqueta}
                 </th>
               ))}
@@ -54,7 +56,7 @@ export function Tabla<F extends Record<string, unknown>>({ columnas, filas, titu
                     .filter(Boolean)
                     .join(' ')
                   return (
-                    <td key={c.clave} className={clases || undefined} data-etiqueta={c.etiqueta}>
+                    <td key={c.clave} lang={c.lang} className={clases || undefined} data-etiqueta={c.etiqueta}>
                       {vacio ? AUSENTE : c.formato ? c.formato(v, f) : String(v)}
                     </td>
                   )

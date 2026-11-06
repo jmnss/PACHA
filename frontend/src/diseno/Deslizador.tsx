@@ -1,10 +1,10 @@
-import { useId, type InputHTMLAttributes } from 'react'
+import { useId, type InputHTMLAttributes, type ReactNode } from 'react'
 
 interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
-  etiqueta: string
+  etiqueta: ReactNode
   /** Valor ya formateado, con su unidad, en cifras tabulares. */
   valorTexto: string
-  limite?: string
+  limite?: ReactNode
 }
 
 /** Pista de 2 px, tirador blanco de 14 px, valor en cifras tabulares. */

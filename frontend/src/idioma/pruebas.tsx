@@ -21,10 +21,10 @@ export function renderPseudo(ui: ReactElement): RenderResult {
 }
 
 export const SIGLAS = ['σ⁰', 'ENL', 'HH', 'HV', 'VV', 'VH', 'SAR', 'NISAR', 'NASA', 'ISRO', 'ASF', 'L', 'S', 'ES', 'EN', 'QU']
-export const NOMBRES_PROPIOS = ['Costa', 'NASA POWER', 'Ecuador', 'La Segua', 'Manabí', 'Loja', 'NISAR · Ecuador']
+export const NOMBRES_PROPIOS = ['Costa', 'NASA POWER', 'Ecuador', 'La Segua', 'Manabí', 'Loja', 'Cotopaxi', 'NISAR · Ecuador']
 
 const NUMERICO =
-  /^[\d\s.,:;%°+\-−–—·/()×≈<>=±…]*(km²|km|ha|dB|m|h|s|%|px)?[\d\s.,:;%°+\-−–—·/()]*$/
+  /^[\d\s.,:;%°+\-−–—·/()×≈<>=±…]*(km²|km|ha|dB|m\/s|m|h|s|%|px)?[\d\s.,:;%°+\-−–—·/()]*$/
 
 function ignorable(texto: string): boolean {
   const s = texto.trim()

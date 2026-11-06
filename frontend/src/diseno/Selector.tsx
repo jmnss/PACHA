@@ -1,10 +1,10 @@
-import { useId, type SelectHTMLAttributes } from 'react'
+import { useId, type ReactNode, type SelectHTMLAttributes } from 'react'
 import { IconoChevron } from './iconos'
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
-  etiqueta: string
-  opciones: { valor: string; texto: string; deshabilitada?: boolean }[]
-  limite?: string
+  etiqueta: ReactNode
+  opciones: { valor: string; texto: string; deshabilitada?: boolean; lang?: string }[]
+  limite?: ReactNode
 }
 
 /** El mismo campo con un chevron de 12 px. */
@@ -19,7 +19,7 @@ export function Selector({ etiqueta, opciones, limite, id, ...resto }: Props) {
       <div className="selector">
         <select id={idCampo} className="campo__control selector__control" aria-describedby={limite ? idLimite : undefined} {...resto}>
           {opciones.map((o) => (
-            <option key={o.valor} value={o.valor} disabled={o.deshabilitada}>{o.texto}</option>
+            <option key={o.valor} value={o.valor} disabled={o.deshabilitada} lang={o.lang}>{o.texto}</option>
           ))}
         </select>
         <span className="selector__chevron"><IconoChevron tamano={12} /></span>

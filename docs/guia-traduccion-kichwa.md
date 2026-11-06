@@ -147,3 +147,19 @@ Borrador de `obs.serie.*` y `obs.impacto.*`; todo sin validar por hablantes:
   (ejemplo ilustrativo; véase la Tarea 8), «tupachishpa wiñay» (evolución frente a), «chiqan» en «Sintético chiqanwan»
   y en «mana NISARpa chiqan rikuymi» (no es una observación real de NISAR), «uraykachay» (descargar).
 - El aviso «Ejemplo ilustrativo con datos de demostración…» del informe PNG existe en los tres idiomas.
+
+## Tarea 13 · Simulador de eventos
+
+Borrador de `sim.*`; todo sin validar por hablantes:
+
+- **Se dejaron en español**: simulador, simulación, tablero, herramienta, evento, incendio, tormenta, crecida,
+  erupción, volcán, celda, parámetros, cursor, coordenadas, latitud, longitud, polarización, reflexión
+  especular, doble rebote, biomasa, bitácora, modelos, ciclo, imagen, enlace, navegador, dirección, mundo.
+  Sin equivalente asentado; sin neologismos. «Allpa kuyuy» (terremoto) sí es término asentado.
+- **Dudas**: «yuyashka» (supuesto), «allpa pata» (relieve), «kinray» (lado), «maypi» (lugar), «pacha»
+  (temporada, también «tiempo»), «punchapacha» (fecha), «kawsay» (duración del evento), «shuyay» (espera),
+  «tarinakuy» (detección), «llakichishka» (expuestos), «chinkachishka» (pérdidas), «chullayachiy» (vaciar),
+  «paskashka yaku» (agua abierta), «sintético chiqanwan» (frente a la verdad sintética).
+- La letra de hemisferio oeste es «O» en español y kichwa, «W» en inglés.
+- Los textos que escribe la API (títulos de evento, etiquetas de métricas, controles, notas del modelo) y
+  las celdas de la tabla de efectos que escribe `modelo/desastres.py` se quedan en español con `lang="es"`.

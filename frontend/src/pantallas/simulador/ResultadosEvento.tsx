@@ -6,6 +6,9 @@ import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tabla, type ColumnaTabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { descargarPng } from '../../exportar/png'
+import { TextoApi } from '../../idioma/TextoApi'
+import type { Clave } from '../../idioma/traductor'
+import { useT } from '../../idioma/useT'
 import { Bitacora } from './Bitacora'
 import { entradaDeEvento, guardarBitacora, leerBitacora } from './bitacora'
 import { EsperaRadar } from './EsperaRadar'
@@ -17,9 +20,10 @@ interface Props { evento: EventoDto; mundo: MundoDto; estado: EstadoSimulador }
 
 /** KPI, radar simulado, espera, efectos, bitácora, enlace e informe de un evento. */
 export function ResultadosEvento({ evento, mundo, estado }: Props) {
+  const { t } = useT()
   const consulta = `?${escribirEstado(estado)}`
   const [bitacora, setBitacora] = useState(leerBitacora)
-  const [aviso, setAviso] = useState<string | null>(null)
+  const [aviso, setAviso] = useState<Clave | null>(null)
 
   // Cada evento nuevo se anota una vez en la bitácora (un mismo enlace no se repite).
   useEffect(() => {
@@ -32,7 +36,7 @@ export function ResultadosEvento({ evento, mundo, estado }: Props) {
   }, [evento, mundo, consulta])
 
   const columnas: ColumnaTabla<Record<string, unknown>>[] = useMemo(() => (evento.tabla?.columnas ?? []).map((c, k) => ({
-    clave: c, etiqueta: c, identidad: k === 0,
+    clave: c, etiqueta: c, identidad: k === 0, lang: 'es', // columnas y celdas las escribe modelo/desastres.py en español
     numerica: (evento.tabla?.filas ?? []).every((f) => typeof f[k] === 'number' || f[k] === null),
   })), [evento])
   const filas = useMemo(() => (evento.tabla?.filas ?? []).map((f) => Object.fromEntries((evento.tabla?.columnas ?? []).map((c, k) => [c, f[k]]))), [evento])
@@ -40,29 +44,29 @@ export function ResultadosEvento({ evento, mundo, estado }: Props) {
   const copiar = async () => {
     try {
       await navigator.clipboard.writeText(`${window.location.origin}/simulador${consulta}`)
-      setAviso('Enlace copiado.')
-    } catch { setAviso('No se pudo copiar: copia la dirección del navegador.') }
+      setAviso('sim.res.enlace_copiado')
+    } catch { setAviso('sim.res.enlace_error') }
   }
   const informe = async () => {
-    try { descargarPng(`informe-${evento.herramienta}.png`, await generarInforme(evento, mundo)) } catch { setAviso('No se pudo generar el informe.') }
+    try { descargarPng(`informe-${evento.herramienta}.png`, await generarInforme(evento, mundo, t)) } catch { setAviso('sim.res.informe_error') }
   }
 
   return (
     <>
-      <Tarjeta titulo={evento.titulo} pie={<SelloOrigen origen={evento.origen} />}>
-        <FranjaKpi items={evento.metricas.slice(0, 5).map((m, k) => ({ etiqueta: m.etiqueta, valor: m.valor, principal: k === 0 }))} />
-        {evento.metricas.length > 5 && <FranjaKpi items={evento.metricas.slice(5).map((m) => ({ etiqueta: m.etiqueta, valor: m.valor }))} />}
+      <Tarjeta titulo={<TextoApi texto={evento.titulo} />} pie={<SelloOrigen origen={evento.origen} />}>
+        <FranjaKpi items={evento.metricas.slice(0, 5).map((m, k) => ({ etiqueta: <TextoApi texto={m.etiqueta} />, valor: <TextoApi texto={m.valor} />, principal: k === 0 }))} />
+        {evento.metricas.length > 5 && <FranjaKpi items={evento.metricas.slice(5).map((m) => ({ etiqueta: <TextoApi texto={m.etiqueta} />, valor: <TextoApi texto={m.valor} /> }))} />}
         <div className="simulador__acciones">
-          <Boton variante="secundario" onClick={() => void copiar()}>Copiar enlace</Boton>
-          <Boton variante="secundario" onClick={() => void informe()}>Informe de una página (PNG)</Boton>
+          <Boton variante="secundario" onClick={() => void copiar()}>{t('sim.res.copiar')}</Boton>
+          <Boton variante="secundario" onClick={() => void informe()}>{t('sim.res.informe')}</Boton>
         </div>
-        {aviso && <p className="simulador__nota" role="status">{aviso}</p>}
-        {evento.tabla && filas.length > 0 && <Tabla columnas={columnas} filas={filas} titulo={`Detalle de los efectos: ${evento.titulo}`} porPagina={15} />}
-        {evento.notas.map((n) => <p key={n} className="simulador__nota">{n}</p>)}
+        {aviso && <p className="simulador__nota" role="status">{t(aviso)}</p>}
+        {evento.tabla && filas.length > 0 && <Tabla columnas={columnas} filas={filas} titulo={t('sim.res.detalle', { titulo: evento.titulo })} porPagina={15} />}
+        {evento.notas.map((n) => <p key={n} className="simulador__nota"><TextoApi texto={n} /></p>)}
         {evento.modelos.length > 0 && (
           <details className="simulador__modelos">
-            <summary>Modelos usados</summary>
-            <ul>{evento.modelos.map((m) => <li key={m}>{m}</li>)}</ul>
+            <summary>{t('sim.res.modelos')}</summary>
+            <ul>{evento.modelos.map((m) => <li key={m}><TextoApi texto={m} /></li>)}</ul>
           </details>
         )}
       </Tarjeta>

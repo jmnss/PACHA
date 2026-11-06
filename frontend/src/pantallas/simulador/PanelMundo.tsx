@@ -4,6 +4,8 @@ import { Boton } from '../../diseno/Boton'
 import { Campo } from '../../diseno/Campo'
 import { Interruptor } from '../../diseno/Interruptor'
 import { Selector } from '../../diseno/Selector'
+import { TextoApi } from '../../idioma/TextoApi'
+import { useT } from '../../idioma/useT'
 import type { EstadoSimulador } from './estadoSimulador'
 
 export type BorradorMundo = Pick<EstadoSimulador, 'lat' | 'lon' | 'ext' | 'fecha' | 'dem'>
@@ -19,6 +21,7 @@ interface Props {
 
 /** Elección del lugar y de la fecha (temporada); el mundo solo se crea al pulsar el botón. */
 export function PanelMundo({ catalogo, actual, cargando, onCrear }: Props) {
+  const { t } = useT()
   const [b, setB] = useState<BorradorMundo>(actual)
   const [preset, setPreset] = useState(() => catalogo.mundos.find((m) => m.lat === actual.lat && m.lon === actual.lon)?.nombre ?? PROPIO)
   useEffect(() => { setB(actual) }, [actual])
@@ -37,20 +40,20 @@ export function PanelMundo({ catalogo, actual, cargando, onCrear }: Props) {
 
   return (
     <form className="panel-herramienta" onSubmit={(e) => { e.preventDefault(); if (valido) onCrear(b, catalogo.mundos.find((m) => m.nombre === preset)?.herramienta) }}>
-      <Selector etiqueta="Lugar" value={preset} onChange={(e) => elegirPreset(e.target.value)}
-        opciones={[...catalogo.mundos.map((m) => ({ valor: m.nombre, texto: m.nombre })), { valor: PROPIO, texto: 'Coordenadas propias' }]} />
-      {descripcion && <p className="simulador__nota">{descripcion}</p>}
+      <Selector etiqueta={t('sim.mundo.lugar')} value={preset} onChange={(e) => elegirPreset(e.target.value)}
+        opciones={[...catalogo.mundos.map((m) => ({ valor: m.nombre, texto: m.nombre, lang: 'es' })), { valor: PROPIO, texto: t('sim.mundo.propio') }]} />
+      {descripcion && <p className="simulador__nota"><TextoApi texto={descripcion} /></p>}
       <div className="simulador__fila">
-        <Campo etiqueta="Latitud" type="number" step="0.01" value={Number.isFinite(b.lat) ? b.lat : ''} onChange={num('lat')} />
-        <Campo etiqueta="Longitud" type="number" step="0.01" value={Number.isFinite(b.lon) ? b.lon : ''} onChange={num('lon')} />
+        <Campo etiqueta={t('sim.mundo.latitud')} type="number" step="0.01" value={Number.isFinite(b.lat) ? b.lat : ''} onChange={num('lat')} />
+        <Campo etiqueta={t('sim.mundo.longitud')} type="number" step="0.01" value={Number.isFinite(b.lon) ? b.lon : ''} onChange={num('lon')} />
       </div>
       <div className="simulador__fila">
-        <Selector etiqueta="Lado del mundo" value={String(b.ext)} onChange={(e) => setB({ ...b, ext: Number(e.target.value) })}
-          opciones={catalogo.extensiones_km.map((k) => ({ valor: String(k), texto: `${k} km` }))} />
-        <Campo etiqueta="Fecha (fija la temporada)" type="date" value={b.fecha} onChange={(e) => setB({ ...b, fecha: e.target.value })} />
+        <Selector etiqueta={t('sim.mundo.lado')} value={String(b.ext)} onChange={(e) => setB({ ...b, ext: Number(e.target.value) })}
+          opciones={catalogo.extensiones_km.map((k) => ({ valor: String(k), texto: t('sim.mundo.km', { k }) }))} />
+        <Campo etiqueta={t('sim.mundo.fecha')} type="date" value={b.fecha} onChange={(e) => setB({ ...b, fecha: e.target.value })} />
       </div>
-      <Interruptor etiqueta="Relieve real (SRTM)" activo={b.dem} onCambiar={(dem) => setB({ ...b, dem })} />
-      <Boton variante="primario" type="submit" disabled={!valido || cargando}>{cargando ? 'Creando el mundo…' : 'Crear el mundo'}</Boton>
+      <Interruptor etiqueta={t('sim.mundo.relieve_real')} activo={b.dem} onCambiar={(dem) => setB({ ...b, dem })} />
+      <Boton variante="primario" type="submit" disabled={!valido || cargando}>{cargando ? t('sim.mundo.creando') : t('sim.mundo.crear')}</Boton>
     </form>
   )
 }

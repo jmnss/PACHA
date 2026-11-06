@@ -1,8 +1,8 @@
-import { useRef, type KeyboardEvent } from 'react'
+import { useRef, type KeyboardEvent, type ReactNode } from 'react'
 
 export interface Pestana {
   id: string
-  etiqueta: string
+  etiqueta: ReactNode
 }
 
 interface Props {

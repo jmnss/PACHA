@@ -1,7 +1,7 @@
-import { useId } from 'react'
+import { useId, type ReactNode } from 'react'
 
 interface Props {
-  etiqueta: string
+  etiqueta: ReactNode
   activo: boolean
   onCambiar: (activo: boolean) => void
   disabled?: boolean

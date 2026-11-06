@@ -1,5 +1,6 @@
 import type { KeyboardEvent, MouseEvent } from 'react'
 import type { EventoDto, MundoDto } from '../../api/simulador'
+import { useT } from '../../idioma/useT'
 import { celdaDesdePunto, type Celda } from './geometria'
 
 interface Props {
@@ -16,6 +17,7 @@ const FLECHAS: Record<string, Celda> = { ArrowUp: [-1, 0], ArrowDown: [1, 0], Ar
 
 /** Relieve + cuadro de la animación + marcas. Clic o teclado (flechas, Mayús ×10, Enter) para desatar el evento. */
 export function Tablero({ mundo, evento, indice, cursor, onCelda, onCursor }: Props) {
+  const { t } = useT()
   const n = mundo.n
   const cuadro = evento?.cuadros_png_b64[Math.min(indice, (evento?.cuadros_png_b64.length ?? 1) - 1)]
   const pct = (v: number) => `${(100 * v).toFixed(3)}%`
@@ -42,13 +44,13 @@ export function Tablero({ mundo, evento, indice, cursor, onCelda, onCursor }: Pr
   return (
     <div
       className="tablero" role="group" tabIndex={0} onClick={alClic} onKeyDown={alTeclado}
-      aria-label="Tablero del simulador. Pulsa una celda, o mueve el cursor con las flechas (Mayús avanza de diez en diez) y pulsa Enter, para desatar el evento."
+      aria-label={t('sim.tablero.aria')}
     >
       <img className="tablero__capa" alt="" src={`data:image/png;base64,${mundo.relieve_png_b64}`} draggable={false} />
       {cuadro && <img className="tablero__capa tablero__capa--evento" alt="" src={`data:image/png;base64,${cuadro}`} draggable={false} />}
       {mundo.marcas.map((m) => (
         <span key={`${m.tipo}-${m.texto}`} className={`tablero__marca tablero__marca--${m.tipo}`} style={{ left: pct(m.x), top: pct(m.y) }}>
-          {m.tipo === 'volcan' ? `▲ ${m.texto}` : m.texto}
+          {m.tipo === 'volcan' && <span aria-hidden="true">▲ </span>}{m.texto}
         </span>
       ))}
       {evento && (
