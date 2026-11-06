@@ -247,6 +247,13 @@ describe('Estados', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Reintentar' }))
     expect(f).toHaveBeenCalledOnce()
   })
+  it('Error con un mensaje de la API sin traducir lo marca con lang="es"', () => {
+    const { container } = render(<ErrorBloque mensaje={{ texto: 'Mensaje nuevo del proveedor.', traducido: false }} onReintentar={() => {}} />)
+    expect(screen.getByText('Mensaje nuevo del proveedor.')).toHaveAttribute('lang', 'es')
+    const { container: b } = render(<ErrorBloque mensaje={{ texto: 'Could not connect.', traducido: true }} onReintentar={() => {}} />)
+    expect(b.querySelector('[lang]')).toBeNull()
+    expect(container).toBeTruthy()
+  })
   it('Vacío muestra título y frase', () => {
     render(<Vacio titulo="Nada" texto="Elige otro rango." />)
     expect(screen.getByText('Nada')).toBeInTheDocument()

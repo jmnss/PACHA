@@ -31,13 +31,14 @@ describe('exportaciones con idioma', () => {
       expect(e).toBeInstanceOf(ErrorApi)
       expect((e as ErrorApi).clave).toBe('error.nubes_rango')
       expect((e as ErrorApi).valores).toEqual({ min: 0, max: 100 })
-      expect(mensajeDeError(e)).toBe('X')
+      // Clave desconocida: el español de la API, marcado como no traducido (lang="es" al mostrarlo).
+      expect(mensajeDeError(e)).toEqual({ texto: 'X', traducido: false })
     } finally {
       globalThis.fetch = f
     }
   })
   it('mensajeDeError traduce red y genérico', () => {
-    expect(mensajeDeError(new Error('x'), traductor('en').t)).toBe('Could not connect to the server.')
-    expect(mensajeDeError(new ErrorApi(500, 'a', true, 'exportar.error.generico'), traductor('en').t)).toBe('The server could not complete the request.')
+    expect(mensajeDeError(new Error('x'), traductor('en').t)).toEqual({ texto: 'Could not connect to the server.', traducido: true })
+    expect(mensajeDeError(new ErrorApi(500, 'a', true, 'exportar.error.generico'), traductor('en').t)).toEqual({ texto: 'The server could not complete the request.', traducido: true })
   })
 })

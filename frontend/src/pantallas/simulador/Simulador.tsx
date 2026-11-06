@@ -6,7 +6,7 @@ import { fundarCiudad, useCatalogo, useEvento, useMundo, type PeticionEvento, ty
 import { Boton } from '../../diseno/Boton'
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { Deslizador } from '../../diseno/Deslizador'
-import { Cargando, ErrorBloque } from '../../diseno/Estados'
+import { Cargando, ErrorBloque, TextoMensaje } from '../../diseno/Estados'
 import { IconoFinal, IconoInicio, IconoPausa, IconoPlay } from '../../diseno/iconos'
 import { Pestanas } from '../../diseno/Pestanas'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
@@ -118,7 +118,7 @@ export default function Simulador() {
                   <Tablero mundo={mundo.data} evento={datos} indice={pb.indice} cursor={cursor} onCursor={setCursor} onCelda={alCelda} />
                   {evento.isFetching && <Cargando texto={t('sim.pantalla.simulando', { herramienta: textoApi(nombreHerramienta, clavesApi.simHerramienta(estado.h, 'nombre')).texto.toLowerCase() })} filas={1} />}
                   {evento.isError && <ErrorBloque mensaje={mensaje(evento.error)} onReintentar={() => void evento.refetch()} />}
-                  {ciudad.isError && <p className="simulador__aviso" role="alert">{mensaje(ciudad.error)}</p>}
+                  {ciudad.isError && <p className="simulador__aviso" role="alert"><TextoMensaje mensaje={mensaje(ciudad.error)} /></p>}
                   {datos && (
                     <div className="reproductor-evento" role="group" aria-label={t('sim.pantalla.animacion')}>
                       <Boton variante="terciario" aria-label={t('piezas.tiempo.reproductor.ir_inicio')} icono={<IconoInicio />} onClick={() => { pausa(); ir(0) }} />

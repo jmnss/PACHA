@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { mensajeDeError } from '../../api/cliente'
+import { mensajeDeError, type MensajeError } from '../../api/cliente'
 import { useSimular, type Escenario } from '../../api/consultas'
 import { useT } from '../../idioma/useT'
 import { decodificar, normalizar, type Control, type Valor, type Valores } from './parametros'
@@ -15,7 +15,7 @@ export interface Simulacion {
   restablecer: () => void
   calculando: boolean
   segundos: number
-  error: string | null
+  error: MensajeError | null
 }
 
 /**

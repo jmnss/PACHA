@@ -84,10 +84,17 @@ export async function llamar<T>(ruta: string, cuerpo?: unknown): Promise<T> {
   }
 }
 
+/** Mensaje de un error y si quedó traducido: con `traducido: false` es el español de la API y quien lo
+ * muestra lo marca con lang="es" (Review Focus 3). */
+export interface MensajeError {
+  texto: string
+  traducido: boolean
+}
+
 /** Mensaje de un error de la API traducido si su clave es conocida (si no, el mensaje en español) o,
- * si no es de la API, el de red caída. Equivale a `textoApi(e.mensaje, e.clave, e.valores).texto`. */
-export function mensajeDeError(e: unknown, t: T = ES): string {
-  if (!(e instanceof ErrorApi)) return t('exportar.error.red')
-  if (e.clave && Object.prototype.hasOwnProperty.call(es, e.clave)) return t(e.clave as Clave, e.valores ?? undefined)
-  return e.mensaje
+ * si no es de la API, el de red caída. Equivale a `textoApi(e.mensaje, e.clave, e.valores)`. */
+export function mensajeDeError(e: unknown, t: T = ES): MensajeError {
+  if (!(e instanceof ErrorApi)) return { texto: t('exportar.error.red'), traducido: true }
+  if (e.clave && Object.prototype.hasOwnProperty.call(es, e.clave)) return { texto: t(e.clave as Clave, e.valores ?? undefined), traducido: true }
+  return { texto: e.mensaje, traducido: false }
 }

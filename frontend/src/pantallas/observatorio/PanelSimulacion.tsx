@@ -4,6 +4,7 @@ import { Boton } from '../../diseno/Boton'
 import { Campo } from '../../diseno/Campo'
 import { Deslizador } from '../../diseno/Deslizador'
 import { Interruptor } from '../../diseno/Interruptor'
+import { TextoMensaje } from '../../diseno/Estados'
 import { Selector } from '../../diseno/Selector'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
@@ -164,7 +165,7 @@ export function PanelSimulacion({ esc, controles, sim, enHoja }: Props) {
         <div id={idEstado} className="panel-sim__estado" role="status">
           {sim.calculando && <span className="num">{t('obs.parametros.calculando', { s: sim.segundos })}</span>}
         </div>
-        {sim.error && <p className="panel-sim__error" role="alert">{sim.error}</p>}
+        {sim.error && <p className="panel-sim__error" role="alert"><TextoMensaje mensaje={sim.error} /></p>}
       </div>
     </div>
   )

@@ -1,3 +1,4 @@
+import type { MensajeError } from '../api/cliente'
 import { IconoAlerta, IconoReintentar } from './iconos'
 import { useT } from '../idioma/useT'
 import { Boton } from './Boton'
@@ -17,8 +18,14 @@ export function Cargando({ texto, filas = 3 }: { texto?: string; filas?: number 
   )
 }
 
+/** Texto de un error: si no se tradujo (el español de la API), lleva lang="es". */
+export function TextoMensaje({ mensaje }: { mensaje: string | MensajeError }) {
+  if (typeof mensaje === 'string') return <>{mensaje}</>
+  return mensaje.traducido ? <>{mensaje.texto}</> : <span lang="es">{mensaje.texto}</span>
+}
+
 interface PropsError {
-  mensaje: string
+  mensaje: string | MensajeError
   /** Hora del último dato bueno, si se conoce. */
   ultimoDato?: string
   onReintentar: () => void
@@ -32,7 +39,7 @@ export function ErrorBloque({ mensaje, ultimoDato, onReintentar }: PropsError) {
       <p className="estado__texto estado__texto--icono">
         <IconoAlerta />
         <span>
-          {mensaje}
+          <TextoMensaje mensaje={mensaje} />
           {ultimoDato ? ` ${t('estructura.estado.ultimo_dato', { hora: ultimoDato })}` : ''}
         </span>
       </p>
