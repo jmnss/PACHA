@@ -1,10 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-
-/** ¿El usuario pidió menos movimiento? Se consulta en cada uso, no al montar. */
-export function prefiereMenosMovimiento(): boolean {
-  return typeof window !== 'undefined' && typeof window.matchMedia === 'function'
-    && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-}
+import { useMenosMovimiento } from '../estado/useMenosMovimiento'
 
 interface Opciones {
   total: number
@@ -25,6 +20,9 @@ interface Opciones {
 export function usePlayback({ total, intervaloMs, onIndice }: Opciones) {
   const [indice, setIndice] = useState(0)
   const [reproduciendo, setReproduciendo] = useState(false)
+  const menosMovimiento = useMenosMovimiento()
+  const menosRef = useRef(menosMovimiento)
+  menosRef.current = menosMovimiento
   const ultimo = Math.max(0, total - 1)
   const indiceRef = useRef(indice)
   indiceRef.current = indice
@@ -52,7 +50,7 @@ export function usePlayback({ total, intervaloMs, onIndice }: Opciones) {
 
   const play = useCallback(() => {
     if (total < 2) return
-    if (prefiereMenosMovimiento()) {
+    if (menosRef.current) {
       setReproduciendo(false)
       mover(indiceRef.current >= ultimo ? 0 : indiceRef.current + 1)
       return
@@ -69,6 +67,9 @@ export function usePlayback({ total, intervaloMs, onIndice }: Opciones) {
     }, intervaloMs)
     return () => clearTimeout(t)
   }, [reproduciendo, indice, intervaloMs, ultimo, mover])
+
+  // Si el usuario pide menos movimiento en pleno reproducir, se detiene.
+  useEffect(() => { if (menosMovimiento) setReproduciendo(false) }, [menosMovimiento])
 
   // Si el total se reduce, el índice se recorta.
   useEffect(() => {

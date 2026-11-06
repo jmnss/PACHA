@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { Boton } from '../../diseno/Boton'
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { IconoPausa, IconoPlay } from '../../diseno/iconos'
-import { prefiereMenosMovimiento } from '../../tiempo/usePlayback'
+import { useMenosMovimiento } from '../../estado/useMenosMovimiento'
 import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
 import { guionDe } from './guion'
@@ -16,11 +16,13 @@ export default function Recorrido() {
   const { t, idioma } = useT()
   useTituloPagina('titulos.recorrido')
   const GUION = guionDe(idioma)
+  const menosMovimiento = useMenosMovimiento()
   const [params, setParams] = useSearchParams()
   const n = Number(params.get('paso'))
   const indice = Number.isInteger(n) && n >= 1 && n <= GUION.length ? n - 1 : 0
   const paso = GUION[indice]
-  const [auto, setAuto] = useState(() => !prefiereMenosMovimiento())
+  const [auto, setAuto] = useState(() => !menosMovimiento)
+  useEffect(() => { if (menosMovimiento) setAuto(false) }, [menosMovimiento])
   const raiz = useRef<HTMLDivElement>(null)
 
   const ir = (i: number) => setParams(i === 0 ? {} : { paso: String(i + 1) }, { replace: true })

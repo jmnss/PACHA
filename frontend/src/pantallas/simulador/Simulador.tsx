@@ -14,7 +14,8 @@ import { Tarjeta } from '../../diseno/Tarjeta'
 import { TextoApi } from '../../idioma/TextoApi'
 import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
-import { prefiereMenosMovimiento, usePlayback } from '../../tiempo/usePlayback'
+import { useMenosMovimiento } from '../../estado/useMenosMovimiento'
+import { usePlayback } from '../../tiempo/usePlayback'
 import { escribirEstado, leerEstado, sanearParametros, type EstadoSimulador, type ValorParametro } from './estadoSimulador'
 import { PanelHerramienta } from './PanelHerramienta'
 import { valoresIniciales } from './valores'
@@ -70,15 +71,16 @@ export default function Simulador() {
 
   // Animación del evento: arranca sola al llegar el resultado (salvo «menos movimiento»: salta al final).
   const datos = evento.data
+  const menosMovimiento = useMenosMovimiento()
   const pb = usePlayback({ total: datos?.cuadros_png_b64.length ?? 0, intervaloMs: 170 })
   const { ir, play, pausa } = pb
   const ultimo = useRef<unknown>(null)
   useEffect(() => {
     if (!datos || ultimo.current === datos) return
     ultimo.current = datos
-    if (prefiereMenosMovimiento()) ir(datos.cuadros_png_b64.length - 1)
+    if (menosMovimiento) ir(datos.cuadros_png_b64.length - 1)
     else { ir(0); play() }
-  }, [datos, ir, play])
+  }, [datos, ir, play, menosMovimiento])
 
   const crear = (b: BorradorMundo, h?: string) => {
     const mismoLugar = b.lat === estado.lat && b.lon === estado.lon

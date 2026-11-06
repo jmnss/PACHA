@@ -4,6 +4,7 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import './mapa.css'
 import { ContextoMapa } from './contexto'
 import { dentroDeEcuador } from './dentroDeEcuador'
+import { prefiereMenosMovimiento } from '../estado/useMenosMovimiento'
 import { ciudadesVisibles } from './ciudades'
 import { capasVisibles, construirEstilo, definicionDeBase, esCapaRaster, MAPA_BASE_INICIAL, mapaRemotoActivo, type MapaBaseId } from './estilo'
 
@@ -46,6 +47,7 @@ export function MapaBase({ bbox, onClic, onFueraDeEcuador, interactivo = true, m
         interactive: interactivo,
         attributionControl: false,
         renderWorldCopies: false,
+        fadeDuration: prefiereMenosMovimiento() ? 0 : 300,
       })
     } catch {
       return // sin WebGL: el contenedor queda vacío, la pantalla sigue funcionando

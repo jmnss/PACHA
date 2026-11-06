@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { indiceAnterior } from './derivados'
 import { useInstante } from '../../tiempo/useInstante'
-import { prefiereMenosMovimiento, usePlayback } from '../../tiempo/usePlayback'
+import { prefiereMenosMovimiento } from '../../estado/useMenosMovimiento'
+import { usePlayback } from '../../tiempo/usePlayback'
 import { VELOCIDADES, type Velocidad } from '../../tiempo/ControlesReproductor'
 
 /** Paso «12 días» de los controles: una pasada de la demostración. */
