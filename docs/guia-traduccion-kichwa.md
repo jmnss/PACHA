@@ -200,3 +200,9 @@ Borrador sin validar por hablantes:
   `Simulador de eventos`, `Laboratorio radarpa`, `Pushashka purina`, `Sapi yachay`); el sufijo « · NISAR Ecuador» no se traduce.
 - **Dudas**: «Willaykunaman pasay» (saltar al contenido; «willaykuna» = noticias/mensajes, «pasay» = pasar), propuesta del equipo;
   confirmar si hay una fórmula más natural para un enlace de «ir directo a».
+
+## Tarea 25 · Alternativas textuales (`catalogos/qu/a11y.ts`)
+
+Borrador sin validar por hablantes: «Maypi llukshishka» (origen/fuente), «Allpapa chawpi chanin» (valor medio de la zona),
+«makiwan llamkachishka» (interactivo), «panka» (pantalla). Se reutiliza «shuyu» (mapa) del riel. Dudas: fórmula natural para
+«valor medio» (¿«chawpi chanin» o «tantachishka chanin»?) y para «interactivo».

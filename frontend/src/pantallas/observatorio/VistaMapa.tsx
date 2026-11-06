@@ -1,5 +1,5 @@
 import type { UseQueryResult } from '@tanstack/react-query'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { langDe } from '../../idioma/idiomas'
 import type { Clave } from '../../idioma/traductor'
 import { clavesApi } from '../../idioma/clavesApi'
@@ -82,6 +82,7 @@ function extremosDe(capa: CapaDto): [Clave, Clave] | undefined {
 export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId, polarizacion, onFijar, onEscenarioNuevo, parametros, onAbrirParametros, motivoReproductor }: Props) {
   const { t, idioma, textoApi } = useT()
   const lang = langDe(idioma)
+  const idNota = useId()
   const [modo, setModo] = useState<ModoCapa>('cambio')
   const [pais, setPais] = useState(false)
   const [aviso, setAviso] = useState<string | null>(null)
@@ -161,7 +162,8 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
             </Boton>
           </div>
         </div>
-        <div className="vista-mapa__mapa">
+        <div className="vista-mapa__mapa" role="group" aria-label={t('obs.estructura.vista_mapa')} aria-describedby={idNota}>
+          <p id={idNota} className="solo-lectores">{t('a11y.mapa.nota')}</p>
           <MapaBase base={base} bbox={pais ? undefined : esc.bbox} onClic={alClic} onFueraDeEcuador={alClic} marcadores={marcadores}>
             {capa && estilo && (
               <CapaLienzo rejilla={capa.rejilla} bbox={capa.rejilla.bbox} rampa={estilo.rampa} categorias={estilo.categorias} opacidad={opacidad} />

@@ -152,7 +152,7 @@ describe('Comparador', () => {
     const otro = { ...(origen as object), fuente: 'otra fuente' } as never
     montar({ origenDespues: otro })
     expect(screen.getAllByText(/^Sintético/)).toHaveLength(2)
-    expect(screen.getByText(/otra fuente/)).toBeInTheDocument()
+    expect(screen.getByText(/^Sintético · otra fuente/)).toBeInTheDocument()
   })
 
   it('marca el punto y el cuadrante recibidos', () => {

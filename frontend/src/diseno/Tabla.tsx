@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import { useMovil } from '../estado/useMovil'
 import { useT } from '../idioma/useT'
 
 export interface ColumnaTabla<F> {
@@ -25,6 +26,9 @@ interface Props<F extends Record<string, unknown>> {
 export function Tabla<F extends Record<string, unknown>>({ columnas, filas, titulo, porPagina = 50 }: Props<F>) {
   const { t, formatoNumero } = useT()
   const AUSENTE = <span className="tabla__ausente" aria-label={t('estructura.tabla.sin_dato')}>—</span>
+  // El CSS móvil pone las filas en bloque y los lectores de pantalla pierden la semántica de tabla: se restituye.
+  const movil = useMovil()
+  const r = (rol: string) => (movil ? rol : undefined)
   const [pagina, setPagina] = useState(0)
   const paginada = filas.length > porPagina
   const total = filas.length
@@ -35,20 +39,20 @@ export function Tabla<F extends Record<string, unknown>>({ columnas, filas, titu
   return (
     <div className="tabla">
       <div className={`tabla__marco${paginada ? ' tabla__marco--fijo' : ''}`} tabIndex={paginada ? 0 : undefined} role={paginada ? 'region' : undefined} aria-label={paginada ? titulo : undefined}>
-        <table>
+        <table role={r('table')}>
           <caption className="solo-lectores">{titulo}</caption>
-          <thead>
-            <tr>
+          <thead role={r('rowgroup')}>
+            <tr role={r('row')}>
               {columnas.map((c) => (
-                <th key={c.clave} scope="col" lang={c.lang} className={c.numerica ? 'tabla__num' : undefined}>
+                <th key={c.clave} scope="col" role={r('columnheader')} lang={c.lang} className={c.numerica ? 'tabla__num' : undefined}>
                   {c.etiqueta}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody role={r('rowgroup')}>
             {visibles.map((f, i) => (
-              <tr key={desde + i}>
+              <tr key={desde + i} role={r('row')}>
                 {columnas.map((c) => {
                   const v = f[c.clave]
                   const vacio = v === null || v === undefined || v === ''
@@ -56,7 +60,7 @@ export function Tabla<F extends Record<string, unknown>>({ columnas, filas, titu
                     .filter(Boolean)
                     .join(' ')
                   return (
-                    <td key={c.clave} lang={c.lang} className={clases || undefined} data-etiqueta={c.etiqueta}>
+                    <td key={c.clave} role={r('cell')} lang={c.lang} className={clases || undefined} data-etiqueta={c.etiqueta}>
                       {vacio ? AUSENTE : c.formato ? c.formato(v, f) : String(v)}
                     </td>
                   )

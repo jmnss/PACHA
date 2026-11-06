@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from 'react'
+import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from 'react'
 import type { ReactNode } from 'react'
 import type { Rejilla } from '../api/rejilla'
 import { useT } from '../idioma/useT'
 import { Leyenda } from '../diseno/Leyenda'
 import { SelloOrigen } from '../diseno/SelloOrigen'
+import { resumenLienzo } from '../diseno/resumenLienzo'
 import { textoSello, type Origen } from '../diseno/origen'
 import type { ColorCategoria, NombreRampa, PaletaContrato } from '../diseno/rampas'
 import { normalizar, ordenarCuadrante, pintarPar, UMBRAL_ARRASTRE } from './pintar'
@@ -59,7 +60,8 @@ export function Comparador({
   antes, despues, rampa, etiquetaAntes, etiquetaDespues, titulo, categorias, onPunto, onCuadrante,
   punto, cuadrante, origen, origenDespues, unidad, variable, leyenda,
 }: Props) {
-  const { t } = useT()
+  const { t, formatoNumero } = useT()
+  const idResumen = useId()
   const unidadVista = unidad ?? t('piezas.comparador.unidad_valor')
   const [pos, setPos] = useState(50)
   const escenario = useRef<HTMLDivElement>(null)
@@ -152,8 +154,14 @@ export function Comparador({
       ) : (
         <div className="comparador__escenario" ref={escenario}
           style={{ aspectRatio: `${antes.columnas} / ${antes.filas}`, '--razon': antes.columnas / antes.filas } as CSSProperties}>
-          <canvas ref={lienzoAntes} className="comparador__lienzo" role="img" aria-label={etiquetaAntes} />
-          <canvas ref={lienzoDespues} className="comparador__lienzo comparador__lienzo--despues" role="img" aria-label={etiquetaDespues}
+          <canvas ref={lienzoAntes} className="comparador__lienzo" role="img" aria-label={etiquetaAntes} aria-describedby={`${idResumen}-antes`} />
+          <p id={`${idResumen}-antes`} className="solo-lectores">
+            {resumenLienzo(etiquetaAntes, { rejilla: antes, origen, unidad: unidadVista, categorica: !!categorias }, t, formatoNumero)}
+          </p>
+          <p id={`${idResumen}-despues`} className="solo-lectores">
+            {resumenLienzo(etiquetaDespues, { rejilla: despues, origen: origenDespues ?? origen, unidad: unidadVista, categorica: !!categorias }, t, formatoNumero)}
+          </p>
+          <canvas ref={lienzoDespues} className="comparador__lienzo comparador__lienzo--despues" role="img" aria-label={etiquetaDespues} aria-describedby={`${idResumen}-despues`}
             style={{ clipPath: `inset(0 0 0 ${pos}%)` }} />
           <div className="comparador__gesto" data-testid="comparador-gesto"
             onPointerDown={alBajarImagen} onPointerMove={alMoverImagen} onPointerUp={alSoltarImagen} onPointerCancel={alCancelarImagen} />

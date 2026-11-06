@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
+import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
 import type { CapaDto } from '../../api/consultas'
 import { decodificarRejilla } from '../../api/rejilla'
 import { normalizar, ordenarCuadrante, UMBRAL_ARRASTRE } from '../../comparador/pintar'
@@ -7,6 +7,7 @@ import { Leyenda } from '../../diseno/Leyenda'
 import { colorear } from '../../diseno/rampas'
 import { useT } from '../../idioma/useT'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
+import { resumenLienzo } from '../../diseno/resumenLienzo'
 import { estiloDeCapa } from './derivados'
 
 interface Props {
@@ -20,7 +21,8 @@ interface Props {
 
 /** Una sola capa (cambio, clasificación…) con los mismos gestos que el comparador: clic = punto, arrastre = cuadrante. */
 export function LienzoCapa({ capa, titulo, onPunto, onCuadrante, punto, cuadrante }: Props) {
-  const { t } = useT()
+  const { t, formatoNumero } = useT()
+  const idResumen = useId()
   const lienzo = useRef<HTMLCanvasElement>(null)
   const escenario = useRef<HTMLDivElement>(null)
   const gesto = useRef<{ inicio: Punto; arrastre: boolean } | null>(null)
@@ -74,7 +76,10 @@ export function LienzoCapa({ capa, titulo, onPunto, onCuadrante, punto, cuadrant
         <p className="comparador__aviso" role="alert">{imagen.error}</p>
       ) : (
         <div className="comparador__escenario" ref={escenario} style={{ aspectRatio: `${rejilla.columnas} / ${rejilla.filas}`, '--razon': rejilla.columnas / rejilla.filas } as CSSProperties}>
-          <canvas ref={lienzo} className="comparador__lienzo" role="img" aria-label={titulo} />
+          <canvas ref={lienzo} className="comparador__lienzo" role="img" aria-label={titulo} aria-describedby={idResumen} />
+          <p id={idResumen} className="solo-lectores">
+            {resumenLienzo(titulo, { rejilla, origen: capa.origen, unidad: capa.unidad, categorica: capa.paleta === 'categorias' || !!estilo.categorias }, t, formatoNumero)}
+          </p>
           <div className="comparador__gesto" data-testid="lienzo-gesto"
             onPointerDown={bajar} onPointerMove={mover} onPointerUp={soltar} onPointerCancel={() => { gesto.current = null; setElastico(null) }} />
           {caja && <div className="comparador__cuadrante" style={marco(caja)} data-testid="comparador-cuadrante" />}
