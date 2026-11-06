@@ -90,7 +90,7 @@ espejo de agua baja de 26,8 a 5,5 km² entre la primera y la última pasada». N
   --raised:   #212023;   /* paneles anidados, campos */
   --border:   #222224;
   --rule:     #1b1a1f;   /* filas de tablas */
-  --control:  #67676b;   /* bordes de controles; 3,2:1 sobre --ground */
+  --control:  #6c6c70;   /* bordes de controles; ≥ 3:1 sobre --ground (3,4), --surface (3,6) y --raised (3,1) */
   --grid:     #2b2b2b;   /* rejilla de gráficos */
 
   /* texto: dos grises, y se ven distintos */

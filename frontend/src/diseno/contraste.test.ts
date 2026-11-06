@@ -38,4 +38,9 @@ describe('contraste', () => {
       it(`${nombre} sobre ${fondo} ≥ 3`, () => {
         expect(contraste(c(color), c(fondo))).toBeGreaterThanOrEqual(3)
       })
+
+  // Los campos viven sobre --raised (docs/diseno.md, «Formularios y controles»): su borde también cumple ahí.
+  it('--control sobre --raised ≥ 3', () => {
+    expect(contraste(c('--control'), c('--raised'))).toBeGreaterThanOrEqual(3)
+  })
 })
