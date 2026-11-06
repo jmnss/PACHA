@@ -13,15 +13,18 @@ import './tiempo/tiempo.css'
 import './comparador/comparador.css'
 import App from './App.tsx'
 import { crearQueryClient } from './api/consultas'
+import { ProveedorIdioma } from './idioma/ProveedorIdioma'
 
 const cliente = crearQueryClient()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={cliente}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </QueryClientProvider>
+    <ProveedorIdioma>
+      <QueryClientProvider client={cliente}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </QueryClientProvider>
+    </ProveedorIdioma>
   </StrictMode>,
 )

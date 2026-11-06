@@ -13,12 +13,12 @@ export default defineConfig({
     {
       name: 'componentes',
       testMatch: ['fuente.spec.ts', 'exportar.spec.ts', 'panel.spec.ts', 'sistema.spec.ts'],
-      use: { baseURL: 'http://localhost:4173', launchOptions: lanzamiento },
+      use: { locale: 'es-EC', baseURL: 'http://localhost:4173', launchOptions: lanzamiento },
     },
     {
       name: 'flujos',
       testMatch: ['flujos.spec.ts', 'simulador.spec.ts', 'laboratorio.spec.ts', 'impacto.spec.ts'],
-      use: { baseURL: 'http://127.0.0.1:8000', launchOptions: lanzamiento },
+      use: { locale: 'es-EC', baseURL: 'http://127.0.0.1:8000', launchOptions: lanzamiento },
     },
   ],
   webServer: [
