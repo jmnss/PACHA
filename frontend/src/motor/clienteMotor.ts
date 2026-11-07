@@ -90,9 +90,15 @@ export function crearClienteMotor(crearPuerto: () => PuertoMotor, motorUrl: stri
 export function elegirPuerto(): PuertoMotor {
   // Vite solo empaqueta el worker si `new URL(..., import.meta.url)` va escrito dentro de la llamada.
   if (typeof SharedWorker !== 'undefined') {
-    const puerto = new SharedWorker(new URL('./motor.worker.ts', import.meta.url), { type: 'module', name: 'nisar-motor' }).port
-    puerto.start()
-    return puerto as unknown as PuertoMotor
+    // El nombre lleva el hash de la app Python: una pestaña nueva tras un despliegue no se engancha al motor
+    // (con otra app cargada) de una pestaña vieja. Los errores de carga del worker llegan al objeto SharedWorker,
+    // no a su puerto: se reenvían a `onerror` del puerto.
+    const nombre = `nisar-motor-${import.meta.env.VITE_APP_HASH ?? ''}`
+    const compartido = new SharedWorker(new URL('./motor.worker.ts', import.meta.url), /* @vite-ignore */ { type: 'module', name: nombre })
+    const puerto = compartido.port as unknown as PuertoMotor
+    compartido.onerror = (e) => puerto.onerror?.(e)
+    compartido.port.start()
+    return puerto
   }
   return new Worker(new URL('./motor.worker.ts', import.meta.url), { type: 'module' }) as unknown as PuertoMotor
 }

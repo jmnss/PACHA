@@ -24,8 +24,11 @@ kill "$SERVIDOR" 2>/dev/null || true
 
 # --- 2 y 3. Motor y sitio de Pages ---
 npx tsc -b
-rm -rf dist-pages
-VITE_MOTOR=navegador VITE_BASE=/NISAR-Ecuador/ npx vite build --outDir dist-pages
+rm -rf dist-pages .tmp-app
+# El hash de la app Python entra en el nombre del SharedWorker (no mezclar motores de despliegues distintos).
+APP_HASH="$(python ../scripts/empaquetar_app.py --salida .tmp-app | sed -E 's/.*app-([0-9a-f]+)\.zip$/\1/')"
+rm -rf .tmp-app
+VITE_APP_HASH="$APP_HASH" VITE_MOTOR=navegador VITE_BASE=/NISAR-Ecuador/ npx vite build --outDir dist-pages
 python ../scripts/empaquetar_app.py --salida dist-pages/motor
 node scripts/empaquetar_motor.mjs --salida dist-pages/motor
 cp -r .precalculado dist-pages/precalculado

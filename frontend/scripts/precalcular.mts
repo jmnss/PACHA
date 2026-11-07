@@ -49,16 +49,24 @@ async function visitar(ruta: string, despues?: (p: Page) => Promise<void>): Prom
 }
 
 const escenarios: { id: string; historia: string | null }[] = await (await fetch(`${origen}/api/escenarios`)).json()
+const pasadas: Record<string, number> = {}
+for (const e of escenarios) {
+  pasadas[e.id] = ((await (await fetch(`${origen}/api/escenarios/${e.id}`)).json()) as { adquisiciones: unknown[] }).adquisiciones.length
+}
 
 await visitar('/')
 await visitar('/?historia=incendio')
 for (const e of escenarios) {
   for (const vista of ['mapa', 'comparar', 'serie']) {
     await visitar(`/observatorio?escenario=${e.id}&vista=${vista}`, vista !== 'mapa' ? undefined : async (p) => {
+      // Con `reducedMotion: 'reduce'` cada pulsación de «Reproducir» avanza una pasada: se pulsa una vez por pasada
+      // para que se pida (y se grabe) la capa de cada fotograma de la línea de tiempo.
       const boton = p.getByRole('button', { name: 'Reproducir' })
       if (await boton.count() === 0) return
-      await boton.click()
-      await p.getByRole('button', { name: 'Reproducir' }).waitFor({ timeout: 60_000 })
+      for (let k = 0; k <= pasadas[e.id]; k++) {
+        await boton.click()
+        await p.waitForLoadState('networkidle', { timeout: 60_000 })
+      }
     })
   }
   if (e.historia !== null) await visitar(`/observatorio?escenario=${e.id}&vista=impacto`)
@@ -75,8 +83,14 @@ await Promise.all(grabaciones)
 writeFileSync(join(salida, 'indice.json'), JSON.stringify(indice))
 await navegador.close()
 
+// Cada escenario debe tener la capa de todas sus pasadas (el reproductor del mapa no puede depender del motor).
+const capas = (id: string) => Object.values(indice).filter((c) => c.startsWith(`GET /api/escenarios/${id}/capa?`)).length
+const faltan = escenarios.filter((e) => capas(e.id) < pasadas[e.id])
+for (const e of faltan) console.error(`Faltan capas de ${e.id}: ${capas(e.id)} de ${pasadas[e.id]}`)
+
 const total = Object.keys(indice).length
 console.log(`Precálculo: ${total} respuestas en ${salida}`)
+if (faltan.length > 0) process.exit(1)
 if (total < MINIMO) {
   console.error(`Se esperaban al menos ${MINIMO} entradas`)
   process.exit(1)

@@ -88,6 +88,25 @@ describe('elegirPuerto', () => {
     expect(Dedicado).not.toHaveBeenCalled()
   })
 
+  it('el error de carga del SharedWorker llega al puerto (onerror)', () => {
+    const port = { postMessage: vi.fn(), start: vi.fn(), onmessage: null, onerror: vi.fn() }
+    const instancia: { port: typeof port; onerror: ((e: unknown) => void) | null } = { port, onerror: null }
+    vi.stubGlobal('SharedWorker', vi.fn(() => instancia))
+    vi.stubGlobal('Worker', vi.fn())
+    elegirPuerto()
+    instancia.onerror?.(new Error('404'))
+    expect(port.onerror).toHaveBeenCalledTimes(1)
+  })
+
+  it('el nombre del SharedWorker lleva el hash de la app (no se reutiliza un motor de otro despliegue)', () => {
+    vi.stubEnv('VITE_APP_HASH', 'abc123')
+    const Compartido = vi.fn(() => ({ port: { postMessage: vi.fn(), start: vi.fn(), onmessage: null } }))
+    vi.stubGlobal('SharedWorker', Compartido)
+    elegirPuerto()
+    expect((Compartido.mock.calls[0] as unknown[])[1]).toMatchObject({ name: 'nisar-motor-abc123' })
+    vi.unstubAllEnvs()
+  })
+
   it('elegirPuerto cae a Worker si no hay SharedWorker', () => {
     const w = { postMessage: vi.fn(), onmessage: null }
     const Dedicado = vi.fn(() => w)

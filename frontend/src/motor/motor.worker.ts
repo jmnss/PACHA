@@ -1,4 +1,5 @@
 /** Worker del motor: carga Pyodide, descomprime la app Python y atiende las peticiones en orden de llegada. */
+import { respuestaInesperada } from './errores'
 import type { EstadoMotor, MensajeAlMotor, MensajeDelMotor } from './protocolo'
 
 interface PyodideMinimo {
@@ -72,7 +73,9 @@ function manejar(m: MensajeAlMotor, responder: Responder) {
       const [codigo, cuerpo] = (r as { toJs(): [number, string] }).toJs()
       responder({ tipo: 'respuesta', id: m.id, estado: codigo, cuerpo })
     } catch (e) {
-      responder({ tipo: 'respuesta', id: m.id, estado: 500, cuerpo: JSON.stringify({ mensaje: String(e) }) })
+      console.error('motor:', e)
+      const r = respuestaInesperada(e)
+      responder({ tipo: 'respuesta', id: m.id, estado: r.estado, cuerpo: r.cuerpo })
     }
   })
 }

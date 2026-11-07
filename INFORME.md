@@ -3,8 +3,8 @@
 Estado: **migración completa (bloques 0 a 5) más Simulador, Laboratorio, Recorrido, Fundamentos e Impacto,
 e idioma (es/en/kichwa) y accesibilidad implementados** (ver «Idioma y accesibilidad (2026-11-05)»). Kichwa:
 borrador sin validar (0 de 923 claves). Prueba con lector de pantalla: pendiente.
-Verificación (corrida el 2026-11-06 tras el despliegue en Pages): pytest 290 (+2 omitidas por diseño), unittest 13 OK,
-vitest 570 (57 archivos), lint OK, build OK, Playwright 83/83 (con una intermitencia conocida, ver «Despliegue en
+Verificación (corrida el 2026-11-06 tras la revisión final del despliegue): pytest 291 (+2 omitidas por diseño), unittest 13 OK,
+vitest 573 (58 archivos), lint OK, build OK, Playwright 83/83 (con una intermitencia conocida, ver «Despliegue en
 GitHub Pages»), Playwright de Pages 11/11.
 Última actualización: 2026-11-06
 
@@ -31,7 +31,7 @@ push a `main`). Diseño: `docs/superpowers/specs/2026-11-06-despliegue-design.md
 | `tormenta` / `inundacion` | 18,9 s / 33,2 s (nativo: 11,4 s / 14,3 s) |
 | Memoria máxima | ~600 MB rss (incluye el motor JS) |
 
-**Cifras finales:** `frontend/dist-pages` pesa 39 MB; 51 respuestas precalculadas (52 archivos con el índice).
+**Cifras finales:** `frontend/dist-pages` pesa 45 MB; 225 respuestas precalculadas (226 archivos con el índice; incluye la capa de cada pasada del mapa).
 **Relieve real (Tarea 5):** comprobado en Chromium con `/simulador?lat=-0.68&lon=-78.44&ext=40` (Cotopaxi): la ficha del
 mundo dice «Relieve: SRTM (teselas Terrarium, AWS Open Data)» y «Relieve real (SRTM)», no terreno sintético.
 
