@@ -10,7 +10,7 @@ usan todavía: todo lo que muestra la app es sintético (ver `README.es.md`).
 | NASA POWER (power.larc.nasa.gov) | Climatología 2001–2025 (`data/clima_ecuador_power.csv`) | Datos abiertos de la NASA; cita al proyecto NASA POWER |
 | geoBoundaries | Límites provinciales (`data/ecuador_provincias.geojson`) | CC0 |
 | SRTM / Terrain Tiles (AWS Open Data) | Relieve del Modo Dios, **solo en la app Streamlit heredada** (`data/terreno/`) | AWS Open Data |
-| Esri (World Dark Gray Base y Reference, World Imagery, World Boundaries and Places, World Topo Map) | Mapas base y etiquetas del Observatorio cuando hay internet (servicios públicos de `server.arcgisonline.com`, sin clave); la atribución exacta de cada servicio se muestra en el mapa | Términos de uso de Esri; datos de Esri, HERE, Garmin, © colaboradores de OpenStreetMap, Vantor, Earthstar Geographics, USGS, NOAA y otros |
+| Esri (World Dark Gray Base y Reference, World Imagery, World Boundaries and Places, World Terrain Base) | Mapas base y etiquetas del Observatorio cuando hay internet (servicios públicos de `server.arcgisonline.com`, sin clave); la atribución exacta de cada servicio se muestra en el mapa | Términos de uso de Esri; datos de Esri, HERE, Garmin, © colaboradores de OpenStreetMap, Vantor, Earthstar Geographics, USGS, NOAA y otros (World Terrain Base: Esri, USGS, NOAA) |
 | Conocimiento geográfico general | Nombres y coordenadas aproximadas de las ciudades de respaldo del mapa sin red (`frontend/src/mapa/ciudades.ts`) | Pendiente de verificar contra una fuente oficial |
 | ASF DAAC y productos NISAR | — | Se acreditarán cuando se usen datos reales |
 

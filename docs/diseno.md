@@ -241,11 +241,11 @@ glyphs), frontera de Ecuador en blanco al 60 % de 1 px.
 
 - **Mapas base seleccionables** (control flotante «Mapa base», pestañas con línea de 1 px `--accent`):
   *Oscuro* (Esri Canvas World_Dark_Gray_Base + World_Dark_Gray_Reference), *Satélite* (Esri World_Imagery +
-  Reference/World_Boundaries_and_Places) y *Relieve* (Esri World_Topo_Map, que ya trae sus etiquetas). Son
+  Reference/World_Boundaries_and_Places) y *Relieve* (Esri World_Terrain_Base, sombreado de relieve sin etiquetas, más Reference/World_Boundaries_and_Places). Son
   fuentes raster de MapLibre de `server.arcgisonline.com` (sin clave ni cuenta; URLs en `frontend/src/mapa/estilo.ts`).
 - **Orden de capas:** fondo local → mapa base → **capa de datos** (lienzo `nearest`, el 0 transparente,
   opacidad regulable 10–100 %) → etiquetas de referencia → máscara de fuera de Ecuador → frontera y
-  límites provinciales. En *Relieve* las etiquetas van dentro de la tesela, bajo los datos.
+  límites provinciales. En *Relieve*, como en *Satélite*, las etiquetas son una capa aparte encima de los datos (World_Terrain_Base no las trae; antes se usaba World_Topo_Map, que las llevaba bajo los datos).
 - **Sin red** (`VITE_MAPA_REMOTO=0`, `navigator.onLine` falso o cuatro errores de tesela sin ninguna cargada)
   el mapa queda como el fondo local con provincias, y aparecen las **ciudades de respaldo**
   (`frontend/src/mapa/ciudades.ts`: capitales de provincia y ciudades grandes, marcadores HTML de 12 px;
@@ -341,7 +341,7 @@ Tres anchos de verificación: **1440 (escritorio), 768 (tablet), 390 (móvil)**.
 La app **no necesita fotografías**: los visuales son los mapas, las imágenes de radar y los gráficos que
 genera. Por eso no hay búsqueda de imágenes en colecciones abiertas. Los créditos van en `CREDITOS.md`,
 al pie de Historias y, en pequeño, sobre el mapa: NASA POWER, geoBoundaries (CC0), SRTM / Terrain Tiles
-(AWS Open Data, solo Modo Dios), los mapas base de Esri (Dark Gray, World Imagery, World Topo y sus etiquetas; OpenStreetMap, HERE, Garmin y otros según la atribución del servicio) cuando hay internet, Public Sans (SIL OFL).
+(AWS Open Data, solo Modo Dios), los mapas base de Esri (Dark Gray, World Imagery, World Terrain Base y sus etiquetas; OpenStreetMap, HERE, Garmin y otros según la atribución del servicio) cuando hay internet, Public Sans (SIL OFL).
 ASF DAAC y cualquier producto NISAR se acreditan solo cuando se usen datos reales, con la cita oficial.
 
 ## 12. Lista «anti-slop»: lo que NO debe aparecer

@@ -16,7 +16,7 @@ interface DefinicionBase {
   nombre: string
   base: FuenteRaster
   /** Capa de etiquetas de referencia que se dibuja ENCIMA de los datos. */
-  /** null: la propia tesela de la base ya trae sus etiquetas (World_Topo_Map), no hay capa aparte. */
+  /** null: la propia tesela de la base ya trae sus etiquetas, no hay capa aparte (hoy ninguna base lo usa). */
   etiquetas: 'oscuro' | 'lugares' | null
   /** Texto de atribución que exige el servicio (copyrightText del MapServer). */
   atribucion: string
@@ -32,9 +32,9 @@ export const MAPAS_BASE: readonly DefinicionBase[] = [
   { id: 'satelite', nombre: 'Satélite', etiquetas: 'lugares',
     atribucion: 'Source: Esri, Vantor, Earthstar Geographics, and the GIS User Community · Labels: ' + ATRIB_ESRI,
     base: { url: `${ESRI}/World_Imagery/MapServer/tile/{z}/{y}/{x}`, maxzoom: 19 } },
-  { id: 'relieve', nombre: 'Relieve', etiquetas: null,
-    atribucion: 'Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community',
-    base: { url: `${ESRI}/World_Topo_Map/MapServer/tile/{z}/{y}/{x}`, maxzoom: 17 } },
+  { id: 'relieve', nombre: 'Relieve', etiquetas: 'lugares',
+    atribucion: 'Sources: Esri, USGS, NOAA · Labels: ' + ATRIB_ESRI,
+    base: { url: `${ESRI}/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}`, maxzoom: 13 } },
 ]
 
 const ETIQUETAS: Record<'oscuro' | 'lugares', FuenteRaster> = {

@@ -79,7 +79,7 @@ describe('estilo', () => {
       construirEstilo({ remoto: true, base }).layers.filter((l) => l.layout?.visibility === 'visible').map((l) => l.id)
     expect(visibles('oscuro')).toEqual(['base-oscuro', 'etiquetas-oscuro'])
     expect(visibles('satelite')).toEqual(['base-satelite', 'etiquetas-lugares'])
-    expect(visibles('relieve')).toEqual(['base-relieve']) // World_Topo_Map ya trae sus etiquetas
+    expect(visibles('relieve')).toEqual(['base-relieve', 'etiquetas-lugares']) // World_Terrain_Base no trae etiquetas: van encima de los datos
   })
   it('las URLs de las teselas son las de Esri, sin claves', () => {
     const urls = Object.values(construirEstilo({ remoto: true }).sources).flatMap((s) => ('tiles' in s ? s.tiles ?? [] : []))
