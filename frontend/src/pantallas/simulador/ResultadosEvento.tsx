@@ -26,7 +26,8 @@ interface Props { evento: EventoDto; mundo: MundoDto; estado: EstadoSimulador }
 
 /** KPI, radar simulado, espera, efectos, bitácora, enlace e informe de un evento. */
 export function ResultadosEvento({ evento, mundo, estado }: Props) {
-  const { t, textoApi } = useT()
+  const ctx = useT()
+  const { t, textoApi } = ctx
   const consulta = `?${escribirEstado(estado)}`
   const [bitacora, setBitacora] = useState(leerBitacora)
   const [aviso, setAviso] = useState<Clave | null>(null)
@@ -68,7 +69,7 @@ export function ResultadosEvento({ evento, mundo, estado }: Props) {
     } catch { setAviso('sim.res.enlace_error') }
   }
   const informe = async () => {
-    try { descargarPng(`informe-${evento.herramienta}.png`, await generarInforme(evento, mundo, t)) } catch { setAviso('sim.res.informe_error') }
+    try { descargarPng(`informe-${evento.herramienta}.png`, await generarInforme(evento, mundo, ctx)) } catch { setAviso('sim.res.informe_error') }
   }
 
   return (

@@ -60,7 +60,8 @@ function columnasDe(filas: Fila[], t: T, idioma: CodigoIdioma) {
 
 /** Medición sobre la imagen: un punto (valores en las dos pasadas) o un cuadrante (resumen, tabla y CSV). */
 export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, polarizacion, onBorrar, onVerSerie }: Props) {
-  const { t, idioma, textoApi } = useT()
+  const ctx = useT()
+  const { t, idioma, textoApi } = ctx
   const [params] = useSearchParams()
   const hay = !!(punto || cuadrante)
   // Un solo gesto a la vez: el cuadrante manda si hubiera los dos.
@@ -115,7 +116,7 @@ export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, po
       )}
       <div className="medicion__acciones">
         {m && enCuadrante && (
-          <Boton variante="secundario" onClick={() => descargarCsv(nombreCsv(esc.id, antesId, despuesId), csvDeMedicion(m, t, idioma))}>{t('obs.medicion.descargar_csv')}</Boton>
+          <Boton variante="secundario" onClick={() => descargarCsv(nombreCsv(esc.id, antesId, despuesId), csvDeMedicion(m, ctx, idioma))}>{t('obs.medicion.descargar_csv')}</Boton>
         )}
         {borrar}
       </div>

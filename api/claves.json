@@ -124,6 +124,22 @@
     "es": "unimodal (una época de lluvia)"
   },
   {
+    "clave": "api.contexto.region.amazonia",
+    "es": "Amazonía"
+  },
+  {
+    "clave": "api.contexto.region.costa",
+    "es": "Costa"
+  },
+  {
+    "clave": "api.contexto.region.insular",
+    "es": "Insular"
+  },
+  {
+    "clave": "api.contexto.region.sierra",
+    "es": "Sierra"
+  },
+  {
     "clave": "api.contexto.temporada.lluviosa",
     "es": "Lluviosa"
   },

@@ -3,8 +3,12 @@ import type { Cuadrante, Punto } from '../../comparador/Comparador'
 import { aCsv, type Celda } from '../../exportar/csv'
 import { formatoNumero } from '../../graficos/formato'
 import type { CodigoIdioma } from '../../idioma/idiomas'
+import { textoClave, type TextoClaveApi } from '../../idioma/clavesApi'
+import { etiquetaMetricaTexto, unidadTexto, valorMetricaTexto } from '../../idioma/metricaTexto'
 import { traductor, type Clave, type T } from '../../idioma/traductor'
+import { crearContexto, type ContextoIdioma } from '../../idioma/useT'
 
+const CTX_ES = crearContexto('es', () => {})
 const DECIMALES_URL = 4
 const redondear = (n: number) => Number(n.toFixed(DECIMALES_URL))
 
@@ -44,20 +48,31 @@ export function columnasCsv(t: T = traductor('es').t): string[] {
   return [t('obs.medicion.csv_apartado'), t('obs.medicion.csv_concepto'), t('obs.medicion.col_medida'), t('obs.metricas.col_valor'), t('obs.medicion.col_pct')]
 }
 
-/** Filas del CSV de una medición: primero las métricas (resumen) y luego la tabla detallada. Las claves son las cabeceras de `columnasCsv`. */
-export function filasCsv(m: Medicion, t: T = traductor('es').t): Record<string, Celda>[] {
+/** Filas del CSV de una medición: primero las métricas (resumen) y luego la tabla detallada. Las claves son las cabeceras de `columnasCsv`.
+ * Etiquetas, capas, medidas y valores van en el idioma del contexto cuando la API trae su clave. */
+export function filasCsv(m: Medicion, ctx: ContextoIdioma = CTX_ES): Record<string, Celda>[] {
+  const { t, textoApi } = ctx
   const [apartado, concepto, medida, valor, pct] = columnasCsv(t)
-  const resumen = m.metricas.map((x) => ({
-    [apartado]: t('obs.medicion.csv_resumen'), [concepto]: x.etiqueta, [medida]: '', [valor]: x.unidad ? `${x.valor} ${x.unidad}` : x.valor, [pct]: null,
-  }))
-  // Las filas de la tabla llegan con claves en español de la API.
-  const detalle = m.tabla.map((f) => ({
-    [apartado]: t('obs.medicion.csv_detalle'), [concepto]: f['Capa'], [medida]: f['Medida'] ?? '', [valor]: f['Valor'], [pct]: f['% del cuadrante'],
+  const resumen = m.metricas.map((x) => {
+    const v = valorMetricaTexto(x, ctx)
+    return { [apartado]: t('obs.medicion.csv_resumen'), [concepto]: etiquetaMetricaTexto(x, ctx), [medida]: '', [valor]: x.unidad ? `${v} ${unidadTexto(x.unidad, ctx)}` : v, [pct]: null }
+  })
+  const celda = (texto: unknown, tc: TextoClaveApi | null | undefined) => {
+    if (typeof texto !== 'string') return texto as Celda
+    const x = textoClave(tc)
+    return textoApi(texto, x.clave, x.valores, x.decimales).texto
+  }
+  const detalle = m.tabla.map((f, r) => ({
+    [apartado]: t('obs.medicion.csv_detalle'),
+    [concepto]: celda(f['Capa'], m.textos?.[r]?.['Capa']),
+    [medida]: celda(f['Medida'] ?? '', m.textos?.[r]?.['Medida']),
+    [valor]: celda(f['Valor'], m.textos?.[r]?.['Valor']),
+    [pct]: f['% del cuadrante'],
   }))
   return [...resumen, ...detalle]
 }
 
-export const csvDeMedicion = (m: Medicion, t: T = traductor('es').t, idioma?: CodigoIdioma) => aCsv(filasCsv(m, t), columnasCsv(t), m.origen, idioma)
+export const csvDeMedicion = (m: Medicion, ctx: ContextoIdioma = CTX_ES, idioma?: CodigoIdioma) => aCsv(filasCsv(m, ctx), columnasCsv(ctx.t), m.origen, idioma)
 
 const limpio = (t: string) => t.replace(/[^A-Za-z0-9_-]+/g, '-').replace(/^-+|-+$/g, '')
 export function nombreCsv(escenario: string, antes: string, despues: string): string {

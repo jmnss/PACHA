@@ -14,6 +14,7 @@ ESTACIONES = ("invierno boreal", "primavera boreal", "verano boreal", "otoño bo
 HITOS = ("equinoccio de marzo", "solsticio de junio", "equinoccio de septiembre", "solsticio de diciembre")
 TEMPORADAS = ("Seca", "Lluviosa", "Transición")
 NOMBRES_LOCALES = (*estaciones.NOMBRE_LOCAL.values(), "época cálida", "época fría de garúa")
+REGIONES = ("Costa", "Sierra", "Amazonía", "Insular")   # regiones naturales de `data/ecuador_provincias.geojson`
 REGIMENES = ("sin estacionalidad marcada", "bimodal (dos épocas de lluvia)", "unimodal (una época de lluvia)")
 
 
@@ -83,7 +84,8 @@ def _simulador(salida: dict[str, str]) -> None:
 
 def _contexto(salida: dict[str, str]) -> None:
     for campo, valores in (("estacion", ESTACIONES), ("proximo_hito", HITOS), ("temporada", TEMPORADAS),
-                           ("nombre_local", NOMBRES_LOCALES), ("regimen", REGIMENES)):
+                           ("nombre_local", NOMBRES_LOCALES), ("regimen", REGIMENES),
+                           ("region", REGIONES)):
         for v in valores:
             salida[f"api.contexto.{campo}.{slug(v)}"] = v
 

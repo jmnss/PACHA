@@ -105,7 +105,8 @@ def test_contexto_valores_tienen_clave(cliente_demo):
                                  ("proximo_hito", c["estacion_astronomica"]["proximo_hito"]),
                                  ("temporada", c["temporada"]["temporada"]),
                                  ("nombre_local", c["temporada"]["nombre_local"]),
-                                 ("regimen", c["temporada"]["regimen"])):
+                                 ("regimen", c["temporada"]["regimen"]),
+                                 ("region", c["region"])):
                 clave = f"api.contexto.{campo}.{slug(valor)}"
                 assert CLAVES.get(clave) == valor, clave
                 vistos.add(clave)

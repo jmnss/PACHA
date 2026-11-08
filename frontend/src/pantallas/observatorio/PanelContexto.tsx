@@ -39,7 +39,7 @@ export function PanelContexto({ consulta, ms }: Props) {
     /^lluv/i.test(s) ? t('obs.contexto.temporada_lluviosa') : /^seca/i.test(s) ? t('obs.contexto.temporada_seca') : <TextoApi texto={s} clave={clavesApi.contexto('temporada', s)} />
   const temporada = temporadaDelMes(c, ms) ?? c.temporada.temporada
   const filas: [string, ReactNode][] = [
-    [t('obs.contexto.region'), c.region],
+    [t('obs.contexto.region'), <TextoApi texto={c.region} clave={clavesApi.contexto('region', c.region)} />],
     [t('obs.contexto.provincia'), c.provincia],
     [
       t('obs.contexto.temporada'),

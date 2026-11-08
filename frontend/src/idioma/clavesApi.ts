@@ -19,7 +19,7 @@ export const clavesApi = {
   opcion: (tipo: string, control: string, etiquetaEs: string) => `api.opcion.${tipo}.${control}.${slug(etiquetaEs)}`,
   categoria: (variable: string, codigo: number | string) => `api.categoria.${slug(variable)}.${codigo}`,
   escenario: (id: string, campo: 'sitio' | 'descripcion') => `api.escenario.${idBase(id)}.${campo}`,
-  contexto: (campo: 'estacion' | 'temporada' | 'nombre_local' | 'regimen' | 'proximo_hito', valorEs: string) =>
+  contexto: (campo: 'estacion' | 'temporada' | 'nombre_local' | 'regimen' | 'proximo_hito' | 'region', valorEs: string) =>
     `api.contexto.${campo}.${slug(valorEs)}`,
   simHerramienta: (id: string, campo: 'nombre') => `api.sim.herramienta.${id}.${campo}`,
   simControl: (h: string, id: string, campo: 'etiqueta' | 'ayuda') => `api.sim.control.${h}.${id}.${campo}`,

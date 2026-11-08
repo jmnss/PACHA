@@ -558,4 +558,8 @@ export const api = {
   'api.serie.desplazamiento_los_acumulado_en_la_seleccion': 'Desplazamiento LOS acumulado en la selección',
   'api.serie.desplazamiento_vertical_acumulado_en_la_seleccion': 'Desplazamiento vertical acumulado en la selección',
   'api.serie.velocidad_superficial_en_la_seleccion': 'Velocidad superficial en la selección',
+  'api.contexto.region.amazonia': 'Amazonía',
+  'api.contexto.region.costa': 'Costa',
+  'api.contexto.region.insular': 'Insular',
+  'api.contexto.region.sierra': 'Sierra',
 }

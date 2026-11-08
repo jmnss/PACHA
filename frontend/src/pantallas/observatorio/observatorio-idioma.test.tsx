@@ -127,7 +127,7 @@ describe('Observatorio · idioma', () => {
     const { container } = montar('/observatorio?escenario=ec_x')
     const titulo = await screen.findByRole('heading', { name: '⟦Contexto del lugar⟧' })
     const panel = titulo.closest('section') as HTMLElement
-    await within(panel).findByText('Costa')
+    await within(panel).findByText('⟦Costa⟧')
     expect(textosPropios(panel)).toEqual([])
     expect(textosPropios(container)).toEqual([])
     // «primavera austral» tiene clave: se traduce. Lo que el catálogo no conoce queda en español, marcado.

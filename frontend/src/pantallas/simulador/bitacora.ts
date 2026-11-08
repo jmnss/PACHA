@@ -3,9 +3,14 @@ import type { Origen } from '../../diseno/origen'
 import { aCsv, type Celda } from '../../exportar/csv'
 import type { CodigoIdioma } from '../../idioma/idiomas'
 import type { Valores } from '../../idioma/interpolar'
+import { es } from '../../idioma/catalogos/es'
+import { clavesApi } from '../../idioma/clavesApi'
+import { cifrasEnIdioma } from '../../idioma/metricaTexto'
 import { traductor, type Clave, type T } from '../../idioma/traductor'
+import { crearContexto, type ContextoIdioma } from '../../idioma/useT'
 
 const ES = traductor('es').t
+const CTX_ES = crearContexto('es', () => {})
 
 export interface EntradaBitacora {
   /** Título en español; las entradas nuevas guardan además su clave y valores para mostrarlo en cada idioma. */
@@ -73,6 +78,26 @@ export function guardarBitacora(entradas: EntradaBitacora[]): void {
   try { localStorage.setItem(CLAVE, JSON.stringify(entradas.slice(-MAX_BITACORA))) } catch { /* solo una comodidad */ }
 }
 
+/** Clave y cifras de un título en español de la bitácora (entradas antiguas, sin `titulo_clave`): se prueba contra
+ * las plantillas `api.sim.titulo.*` del catálogo `es`. Cada `{x}` casa un número con coma decimal, salvo `{volcan}`,
+ * que es texto. Si ninguna encaja, `null`: el título queda en español. */
+export function reconocerTitulo(tituloEs: string): { clave: string; valores: Record<string, number | string> } | null {
+  const escapar = (t: string) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  for (const [clave, plantilla] of Object.entries(es)) {
+    if (!clave.startsWith('api.sim.titulo.')) continue
+    const nombres: string[] = []
+    const patron = plantilla.split(/\{(\w+)\}/).map((p, k) => {
+      if (k % 2 === 0) return escapar(p)
+      nombres.push(p)
+      return p === 'volcan' ? '([^·]+?)' : '(\\d+(?:,\\d+)?)'
+    }).join('')
+    const m = new RegExp(`^${patron}$`).exec(tituloEs)
+    if (!m) continue
+    return { clave, valores: Object.fromEntries(nombres.map((n, k) => [n, n === 'volcan' ? m[k + 1] : Number(m[k + 1].replace(',', '.'))])) }
+  }
+  return null
+}
+
 export const COLUMNAS_BITACORA = ['Evento', 'Lugar', 'Temporada', 'Área (km²)', 'Expuestos', 'Víctimas', 'Pérdidas (M USD)', 'Detección del radar'] as const
 export type ColumnaBitacora = (typeof COLUMNAS_BITACORA)[number]
 
@@ -84,19 +109,36 @@ const ETIQUETAS: Record<ColumnaBitacora, Clave> = {
 /** Encabezado de una columna en el idioma del traductor (la clave de la columna sigue en español). */
 export const etiquetaColumna = (c: ColumnaBitacora, t: T = ES): string => t(ETIQUETAS[c])
 
-/** Lugar como texto plano: las entradas nuevas lo arman con `t`; las antiguas conservan su frase. */
-export const lugarTexto = (e: EntradaBitacora, t: T = ES): string =>
-  e.lat !== undefined && e.lon !== undefined && e.region !== undefined ? `${coordenadas(e.lat, e.lon, t)} · ${e.region}` : e.lugar
+/** Clave y cifras con que se traduce el título de una entrada: las que guardó o, si es antigua, las que reconoce. */
+export function claveDeTitulo(e: Pick<EntradaBitacora, 'titulo' | 'titulo_clave' | 'titulo_valores'>): { clave: string | null; valores: Valores | null } {
+  if (e.titulo_clave) return { clave: e.titulo_clave, valores: e.titulo_valores ?? null }
+  const r = reconocerTitulo(e.titulo)
+  return r ? { clave: r.clave, valores: r.valores } : { clave: null, valores: null }
+}
 
-export const filasBitacora = (es: EntradaBitacora[], t: T = ES): Record<ColumnaBitacora, Celda>[] => es.map((e) => ({
-  'Evento': e.titulo, 'Lugar': lugarTexto(e, t), 'Temporada': e.temporada, 'Área (km²)': e.area_km2, 'Expuestos': e.expuestos,
-  'Víctimas': e.victimas, 'Pérdidas (M USD)': e.perdidas_musd, 'Detección del radar': e.deteccion,
+/** Título de una entrada en el idioma del contexto; sin clave, el español guardado. */
+export const tituloTexto = (e: Pick<EntradaBitacora, 'titulo' | 'titulo_clave' | 'titulo_valores'>, ctx: ContextoIdioma = CTX_ES): string => {
+  const { clave, valores } = claveDeTitulo(e)
+  return ctx.textoApi(e.titulo, clave, valores).texto
+}
+
+/** Región («Costa») y temporada («Lluviosa») en el idioma del contexto; lo que no tiene traducción queda en español. */
+export const regionTexto = (region: string, ctx: ContextoIdioma = CTX_ES): string => ctx.textoApi(region, clavesApi.contexto('region', region)).texto
+export const temporadaTexto = (temporada: string, ctx: ContextoIdioma = CTX_ES): string => ctx.textoApi(temporada, clavesApi.contexto('temporada', temporada)).texto
+
+/** Lugar como texto plano: las entradas nuevas lo arman con el contexto; las antiguas conservan su frase. */
+export const lugarTexto = (e: EntradaBitacora, ctx: ContextoIdioma = CTX_ES): string =>
+  e.lat !== undefined && e.lon !== undefined && e.region !== undefined ? `${coordenadas(e.lat, e.lon, ctx.t)} · ${regionTexto(e.region, ctx)}` : e.lugar
+
+export const filasBitacora = (entradas: EntradaBitacora[], ctx: ContextoIdioma = CTX_ES): Record<ColumnaBitacora, Celda>[] => entradas.map((e) => ({
+  'Evento': tituloTexto(e, ctx), 'Lugar': lugarTexto(e, ctx), 'Temporada': temporadaTexto(e.temporada, ctx), 'Área (km²)': e.area_km2, 'Expuestos': e.expuestos,
+  'Víctimas': e.victimas, 'Pérdidas (M USD)': e.perdidas_musd, 'Detección del radar': cifrasEnIdioma(e.deteccion, ctx),
 }))
 
 /** CSV con las líneas de origen al principio (todo lo del simulador es sintético). Las líneas de máquina
- * siguen en español; las columnas van en el idioma de quien llama. */
-export function csvBitacora(es: EntradaBitacora[], origen: Origen, t: T = ES, idioma?: CodigoIdioma): string {
-  const columnas = COLUMNAS_BITACORA.map((c) => etiquetaColumna(c, t))
-  const filas = filasBitacora(es, t).map((f) => Object.fromEntries(COLUMNAS_BITACORA.map((c, k) => [columnas[k], f[c]])))
+ * siguen en español; las columnas y los textos van en el idioma del contexto. */
+export function csvBitacora(entradas: EntradaBitacora[], origen: Origen, ctx: ContextoIdioma = CTX_ES, idioma?: CodigoIdioma): string {
+  const columnas = COLUMNAS_BITACORA.map((c) => etiquetaColumna(c, ctx.t))
+  const filas = filasBitacora(entradas, ctx).map((f) => Object.fromEntries(COLUMNAS_BITACORA.map((c, k) => [columnas[k], f[c]])))
   return aCsv(filas, columnas, origen, idioma)
 }

@@ -3,7 +3,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Catalogo, Herramienta, MundoDto } from '../../api/simulador'
 import { renderConIdioma, renderPseudo, textosSinTraducir } from '../../idioma/pruebas'
 import { Bitacora } from './Bitacora'
-import { csvBitacora, entradaDeEvento, lugarTexto } from './bitacora'
+import { csvBitacora, entradaDeEvento, lugarTexto, reconocerTitulo } from './bitacora'
+import { crearContexto } from '../../idioma/useT'
+import type { EventoDto } from '../../api/simulador'
 import { ESTADO_INICIAL } from './estadoSimulador'
 import { EsperaRadar } from './EsperaRadar'
 import { INCENDIO, MUNDO, ORIGEN, TERREMOTO } from './fixtures'
@@ -15,7 +17,6 @@ import { ResultadosEvento } from './ResultadosEvento'
 import { Tablero } from './Tablero'
 import { useBorradorMundo } from './useBorradorMundo'
 import { valoresIniciales } from './valores'
-import { traductor } from '../../idioma/traductor'
 
 
 // Los rótulos del comparador los escribe la API como texto plano (sin clave hasta el Bloque 4).
@@ -44,6 +45,8 @@ function ConBorrador() {
   const borrador = useBorradorMundo(CATALOGO, ACTUAL_MUNDO)
   return <PanelMundo catalogo={CATALOGO} cargando={false} onCrear={() => {}} borrador={borrador} />
 }
+
+const CTX = { es: crearContexto('es', () => {}), en: crearContexto('en', () => {}), qu: crearContexto('qu', () => {}) }
 
 beforeEach(() => localStorage.clear())
 
@@ -94,26 +97,76 @@ describe('simulador · idioma', () => {
   })
 
   it('el CSV de la bitácora en inglés traduce las columnas, añade «# idioma» y mantiene «# origen» en español', () => {
-    const t = traductor('en').t
-    const csv = csvBitacora([entradaDeEvento(INCENDIO, MUNDO, '?a=1')], ORIGEN, t, 'en')
+    const csv = csvBitacora([entradaDeEvento(INCENDIO, MUNDO, '?a=1')], ORIGEN, CTX.en, 'en')
     const lineas = csv.split('\n')
     expect(lineas[0]).toBe('# origen: sintético')
     expect(csv).toContain('# DATOS DE DEMOSTRACIÓN')
     expect(csv).toContain('# idioma: en')
     expect(csv).toContain('Event,Place,Season,Area (km²)')
-    expect(csv).toContain('4.050° S, 79.250° W · Sierra')
+    expect(csv).toContain('4.050° S, 79.250° W · Highlands')
   })
 
   it('el lugar de una entrada nueva se arma con el idioma; el de una antigua conserva su frase', () => {
     const e = entradaDeEvento(INCENDIO, MUNDO, '?a=1')
-    expect(lugarTexto(e, traductor('es').t)).toBe('4.050° S, 79.250° O · Sierra')
-    expect(lugarTexto(e, traductor('en').t)).toBe('4.050° S, 79.250° W · Sierra')
-    expect(lugarTexto({ ...e, lat: undefined, lon: undefined, region: undefined, lugar: 'frase antigua' }, traductor('en').t)).toBe('frase antigua')
+    expect(lugarTexto(e, CTX.es)).toBe('4.050° S, 79.250° O · Sierra')
+    expect(lugarTexto(e, CTX.en)).toBe('4.050° S, 79.250° W · Highlands')
+    expect(lugarTexto({ ...e, lat: undefined, lon: undefined, region: undefined, lugar: 'frase antigua' }, CTX.en)).toBe('frase antigua')
   })
 
   it('el informe lleva el aviso de simulación en los tres idiomas', () => {
-    expect(lineasInforme(INCENDIO, MUNDO, traductor('es').t).join('\n')).toContain('no son observaciones reales de NISAR')
-    expect(lineasInforme(INCENDIO, MUNDO, traductor('en').t).join('\n')).toContain('not real NISAR observations')
-    expect(lineasInforme(INCENDIO, MUNDO, traductor('qu').t).join('\n')).toContain('mana NISAR-pa chiqan rikuychu')
+    expect(lineasInforme(INCENDIO, MUNDO, CTX.es).join('\n')).toContain('no son observaciones reales de NISAR')
+    expect(lineasInforme(INCENDIO, MUNDO, CTX.en).join('\n')).toContain('not real NISAR observations')
+    expect(lineasInforme(INCENDIO, MUNDO, CTX.qu).join('\n')).toContain('mana NISAR-pa chiqan rikuychu')
+  })
+})
+
+describe('exportaciones en el idioma elegido (bloque C)', () => {
+  const EVENTO = {
+    ...INCENDIO,
+    metricas: [
+      { etiqueta: 'Área quemada', valor: '12,3 km²', ayuda: '', clave_texto: 'api.sim.metrica.area_quemada', valores_texto: { valor: 12.3 } },
+      { etiqueta: 'Biomasa consumida', valor: '1,2 mil Mg', ayuda: '', clave_texto: 'api.sim.metrica.biomasa_consumida', valores_texto: { valor: 1.2 } },
+    ],
+    metricas_radar: [{ etiqueta: 'Acierto del detector (verdad sintética)', valor: '0,81', ayuda: '' }],
+  } as unknown as EventoDto
+  const MUNDO_COSTA = { ...MUNDO, region: 'Costa', temporada: 'Lluviosa' }
+
+  it('reconocerTitulo devuelve la clave y las cifras de un título antiguo, o null', () => {
+    expect(reconocerTitulo('Tormenta extrema')).toEqual({ clave: 'api.sim.titulo.tormenta', valores: {} })
+    expect(reconocerTitulo('Terremoto Mw 7,8')).toEqual({ clave: 'api.sim.titulo.terremoto', valores: { mw: 7.8 } })
+    expect(reconocerTitulo('Erupción IEV 3 del Cotopaxi')).toEqual({ clave: 'api.sim.titulo.erupcion_volcan', valores: { vei: 3, volcan: 'Cotopaxi' } })
+    expect(reconocerTitulo('Un título inventado')).toBeNull()
+  })
+
+  it('el informe en inglés no deja región, temporada ni cifras en español', () => {
+    const l = lineasInforme(EVENTO, MUNDO_COSTA, CTX.en).join('\n')
+    expect(l).toContain('Coast')
+    expect(l).not.toMatch(/Costa|Lluviosa|Incendio/)
+    expect(l).toContain('Burned area: 12.3 km²')
+    expect(l).toContain('Biomass consumed: 1.2 thousand Mg')
+    expect(l).toContain('Forest fire')
+  })
+
+  it('el CSV de la bitácora en inglés traduce título, región, temporada y la cifra de detección', () => {
+    const csv = csvBitacora([entradaDeEvento(EVENTO, MUNDO_COSTA, '?a=1')], ORIGEN, CTX.en, 'en')
+    const cuerpo = csv.split('\n').filter((l) => !l.startsWith('#')).join('\n')
+    expect(cuerpo).toContain('Forest fire')
+    expect(cuerpo).toContain('Coast')
+    expect(cuerpo).toContain('Rainy')
+    expect(cuerpo).not.toMatch(/Costa|Lluviosa|Incendio/)
+    expect(cuerpo).toContain('0.81')
+    expect(cuerpo).not.toContain('0,81')
+  })
+
+  it('una entrada antigua sin clave y con un título no reconocible se pinta con lang="es"', () => {
+    const e = { ...entradaDeEvento(INCENDIO, MUNDO, '?a=1'), titulo: 'Evento de otra versión', titulo_clave: null, titulo_valores: null }
+    renderConIdioma(<Bitacora entradas={[e]} origen={ORIGEN} onVaciar={() => {}} />, 'en')
+    expect(screen.getByText('Evento de otra versión')).toHaveAttribute('lang', 'es')
+  })
+
+  it('una entrada antigua con título reconocible se traduce aunque no tenga clave guardada', () => {
+    const e = { ...entradaDeEvento(INCENDIO, MUNDO, '?a=1'), titulo: 'Tormenta extrema', titulo_clave: null, titulo_valores: null }
+    renderConIdioma(<Bitacora entradas={[e]} origen={ORIGEN} onVaciar={() => {}} />, 'en')
+    expect(screen.getByText('Extreme storm')).not.toHaveAttribute('lang')
   })
 })

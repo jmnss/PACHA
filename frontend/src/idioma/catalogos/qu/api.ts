@@ -560,4 +560,8 @@ export const api: Record<keyof typeof esApi, string> = {
   'api.serie.desplazamiento_los_acumulado_en_la_seleccion': 'Cumulative LOS displacement in the selection',
   'api.serie.desplazamiento_vertical_acumulado_en_la_seleccion': 'Cumulative vertical displacement in the selection',
   'api.serie.velocidad_superficial_en_la_seleccion': 'Surface velocity in the selection',
+  'api.contexto.region.amazonia': 'Amazon',
+  'api.contexto.region.costa': 'Coast',
+  'api.contexto.region.insular': 'Insular (Galápagos)',
+  'api.contexto.region.sierra': 'Highlands',
 }
