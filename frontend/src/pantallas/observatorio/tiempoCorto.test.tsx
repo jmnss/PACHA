@@ -45,3 +45,13 @@ describe('useTiempoObservatorio · pasos cortos', () => {
     expect(result.current.reproduciendo).toBe(false)
   })
 })
+
+describe('useTiempoObservatorio · t fuera del rango', () => {
+  it('un t anterior a la primera pasada se acota a la primera y uno posterior a la última, a la última', () => {
+    const pasadas = ['2026-04-12T00:00:00Z', '2026-04-24T00:00:00Z']
+    const antes = renderHook(() => useTiempoObservatorio(pasadas, '2026-01-01T00:00:00Z', () => {}))
+    expect(antes.result.current.ms).toBe(Date.parse(pasadas[0]))
+    const despues = renderHook(() => useTiempoObservatorio(pasadas, '2027-01-01T00:00:00Z', () => {}))
+    expect(despues.result.current.ms).toBe(Date.parse(pasadas[1]))
+  })
+})

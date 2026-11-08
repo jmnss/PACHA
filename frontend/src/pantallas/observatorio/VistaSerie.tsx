@@ -27,6 +27,8 @@ interface Props {
   antesId: string
   despuesId: string
   /** Selección de la vista Comparar (de la URL): si hay, se muestra primero su evolución. */
+  /** Instante (ms) de la cinta: se dibuja como cursor en cada gráfica. */
+  ms?: number
   punto?: Punto | null
   cuadrante?: Cuadrante | null
 }
@@ -46,7 +48,7 @@ function lineas(s: Serie): SerieLinea[] {
 }
 
 /** Series temporales del resultado: un gráfico por serie con las pasadas «antes» y «después», su tabla y su CSV. */
-export function VistaSerie({ esc, resultado, antesId, despuesId, punto, cuadrante }: Props) {
+export function VistaSerie({ esc, resultado, antesId, despuesId, ms, punto, cuadrante }: Props) {
   const { t, idioma } = useT()
   const seleccion = useSerieSeleccion(esc.id, { punto, cuadrante })
   if (resultado.isError) {
@@ -68,14 +70,16 @@ export function VistaSerie({ esc, resultado, antesId, despuesId, punto, cuadrant
   }
   const instante = (id: string) => esc.adquisiciones.find((p) => p.id === id)?.instante ?? ''
   const marcas: MarcaLinea[] = [
+    ...(esc.instante_evento ? [{ instante: esc.instante_evento, etiqueta: t('obs.serie.marca_evento'), tipo: 'evento' as const }] : []),
     { instante: instante(antesId), etiqueta: t('obs.serie.marca_antes'), tipo: 'antes' as const },
     { instante: instante(despuesId), etiqueta: t('obs.serie.marca_despues'), tipo: 'despues' as const },
   ].filter((m) => m.instante)
+  const cursor = ms !== undefined && Number.isFinite(ms) ? new Date(ms).toISOString() : undefined
   return (
     <div className="serie">
-      {(punto || cuadrante) && <BloqueSeleccion consulta={seleccion} escenario={esc.id} marcas={marcas} />}
+      {(punto || cuadrante) && <BloqueSeleccion consulta={seleccion} escenario={esc.id} marcas={marcas} cursor={cursor} />}
       {r.series.map((s, i) => (
-        <BloqueSerie key={`${s.titulo}-${i}`} s={s} escenario={esc.id} marcas={marcas} />
+        <BloqueSerie key={`${s.titulo}-${i}`} s={s} escenario={esc.id} marcas={marcas} cursor={cursor} />
       ))}
       {r.notas.length > 0 && (
         <Tarjeta titulo={t('obs.comparar.como_leer')} pie={<SelloOrigen origen={r.origen} />}>
@@ -87,7 +91,7 @@ export function VistaSerie({ esc, resultado, antesId, despuesId, punto, cuadrant
 }
 
 /** La serie del punto o cuadrante elegidos: el mismo bloque que las del escenario, o su estado de carga, error o vacío. */
-function BloqueSeleccion({ consulta, escenario, marcas }: { consulta: UseQueryResult<SerieTemporal | null>; escenario: string; marcas: MarcaLinea[] }) {
+function BloqueSeleccion({ consulta, escenario, marcas, cursor }: { consulta: UseQueryResult<SerieTemporal | null>; escenario: string; marcas: MarcaLinea[]; cursor?: string }) {
   const { t, idioma } = useT()
   const titulo = t('obs.serie.seleccion_titulo')
   if (consulta.isError) {
@@ -102,10 +106,10 @@ function BloqueSeleccion({ consulta, escenario, marcas }: { consulta: UseQueryRe
   if (!s || s.puntos.length === 0) {
     return <Tarjeta titulo={titulo}><Vacio titulo={t('obs.serie.seleccion_vacia_titulo')} texto={t('obs.serie.seleccion_vacia_texto')} /></Tarjeta>
   }
-  return <BloqueSerie s={s} escenario={escenario} marcas={marcas} titulo={titulo} aviso={t('obs.serie.seleccion_aviso_pol')} archivo="seleccion" />
+  return <BloqueSerie s={s} escenario={escenario} marcas={marcas} cursor={cursor} titulo={titulo} aviso={t('obs.serie.seleccion_aviso_pol')} archivo="seleccion" />
 }
 
-function BloqueSerie({ s, escenario, marcas, titulo, aviso, archivo }: { s: Serie; escenario: string; marcas: MarcaLinea[]; titulo?: string; aviso?: string; archivo?: string }) {
+function BloqueSerie({ s, escenario, marcas, cursor, titulo, aviso, archivo }: { s: Serie; escenario: string; marcas: MarcaLinea[]; cursor?: string; titulo?: string; aviso?: string; archivo?: string }) {
   const { t, idioma } = useT()
   const sint = !esReal(s.origen)
   const series = lineas(s)
@@ -129,7 +133,7 @@ function BloqueSerie({ s, escenario, marcas, titulo, aviso, archivo }: { s: Seri
   return (
     <Tarjeta titulo={titulo ?? <TextoApi texto={s.titulo} clave={clavesApi.serie(s.titulo)} />}>
       {titulo && <p className="serie__nota"><TextoApi texto={s.titulo} clave={clavesApi.serie(s.titulo)} /></p>}
-      <Linea series={series} marcas={marcas} unidad={s.unidad} origen={s.origen} titulo={s.titulo} />
+      <Linea series={series} marcas={marcas} cursor={cursor} unidad={s.unidad} origen={s.origen} titulo={s.titulo} />
       {aviso && <p className="serie__nota">{aviso}</p>}
       {hayVerdad && <p className="serie__nota">{t('obs.serie.nota_verdad')}</p>}
       <Tabla titulo={t('obs.serie.valores_de', { titulo: s.titulo })} columnas={columnas} filas={filas} porPagina={50} />

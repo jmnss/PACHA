@@ -25,12 +25,14 @@ interface Props {
   origen: Origen
   titulo?: string
   alto?: number
+  /** Instante ISO que se sigue en la cinta: línea vertical fina, sin etiqueta ni entrada en el resumen. */
+  cursor?: string
 }
 
 const DIA = 86_400_000
 
 /** Gráfico de líneas rectas de 2 px (docs/diseno.md §8). Siempre lleva el sello de origen. */
-export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 }: Props) {
+export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220, cursor }: Props) {
   const { t: tr, idioma, tn } = useT()
   const { ref, ancho } = useAncho()
   const sint = !esReal(origen)
@@ -67,6 +69,8 @@ export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 
   const todasMarcas = marcas.map((m) => ({ ...m, t: parseInstante(m.instante) })).filter((m) => Number.isFinite(m.t))
   const marcasVis = todasMarcas.filter((m) => m.t >= t0 && m.t <= t1).sort((a, b) => a.t - b.t)
   const marcasFuera = todasMarcas.filter((m) => m.t < t0 || m.t > t1)
+  const tCursor = cursor ? parseInstante(cursor) : NaN
+  const cursorVisible = Number.isFinite(tCursor) && tiempos.length > 0 && tCursor >= t0 && tCursor <= t1
   const colocadas = colocarEtiquetas(
     marcasVis.map((m) => ({ x: px(m.t), texto: m.etiqueta })),
     ancho,
@@ -176,6 +180,7 @@ export function Linea({ series, marcas = [], unidad, origen, titulo, alto = 220 
               </g>
             )
           })}
+          {cursorVisible && <line className="grafico__cursor" x1={px(tCursor)} x2={px(tCursor)} y1={y0} y2={y1} aria-hidden="true" />}
           {vacio ? (
             <>
               <line className="grafico__cero" x1={x0} x2={x1} y1={py(0)} y2={py(0)} />

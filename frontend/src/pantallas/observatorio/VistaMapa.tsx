@@ -230,7 +230,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
       </Tarjeta>
       <Tarjeta titulo={t('obs.mapa.cinta_titulo')}>
         <BloqueTiempo
-          pasadas={esc.adquisiciones} tiempo={tiempo} contexto={contexto} temporadas={temporadas}
+          pasadas={esc.adquisiciones} evento={esc.instante_evento ?? undefined} tiempo={tiempo} contexto={contexto} temporadas={temporadas}
           alInteractuar={() => setModo('modelo')}
           onFijarAntes={() => pasada && onFijar('antes', pasada.id)}
           onFijarDespues={() => pasada && onFijar('despues', pasada.id)}

@@ -12,7 +12,7 @@ const origen = (tipo: string) => ({ tipo, fuente: tipo === 'real' ? 'Fuente ofic
 const BBOX = [-80.24, -0.74, -80.16, -0.66]
 const fechas = ['2026-04-12', '2026-04-24', '2026-05-06', '2026-05-18']
 const escenario = (id: string) => ({
-  id, nombre: `Escenario ${id}`, tipo_cambio: 'humedales', historia: 'inundacion', region: 'Costa', bbox: BBOX, resolucion_m: 100,
+  instante_evento: '2026-05-06T15:30:00Z', id, nombre: `Escenario ${id}`, tipo_cambio: 'humedales', historia: 'inundacion', region: 'Costa', bbox: BBOX, resolucion_m: 100,
   polarizaciones: ['HH'], variables: ['sigma0'], origen: origen('sintetico'),
   capacidades: { simulacion: true, modelo_continuo: true, verdad_terreno: true },
   adquisiciones: fechas.map((f) => ({ id: f, instante: `${f}T00:00:00Z`, direccion_orbital: 'Ascendente', polarizaciones: ['HH'] })),
@@ -63,10 +63,10 @@ describe('Observatorio · series', () => {
     const figuras = await screen.findAllByRole('figure')
     expect(figuras).toHaveLength(2)
     const etiquetas = (f: HTMLElement) => [...f.querySelectorAll('.grafico__marca text')].map((t) => t.textContent)
-    expect(etiquetas(figuras[0])).toEqual(['antes', 'después'])
+    expect(etiquetas(figuras[0])).toEqual(['antes', 'Evento', 'después'])
     expect(figuras[0].querySelector('.grafico__marca--antes')).not.toBeNull()
     expect(figuras[0].querySelector('.grafico__marca--despues')).not.toBeNull()
-    expect(within(figuras[0]).getByRole('img').getAttribute('aria-label')).toContain('Marcas: antes (24 abr 2026), después (18 may 2026)')
+    expect(within(figuras[0]).getByRole('img').getAttribute('aria-label')).toContain('Marcas: antes (24 abr 2026), Evento (6 may 2026), después (18 may 2026)')
     expect(screen.getByRole('heading', { name: 'Superficie inundada' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Humedad del suelo' })).toBeInTheDocument()
     expect(screen.getByText(/Bajo el dosel inundado/)).toBeInTheDocument()
@@ -186,5 +186,13 @@ describe('Observatorio · series · idioma', () => {
     const urls = (fetch as unknown as ReturnType<typeof vi.fn>).mock.calls.map((c) => c[0] as string)
     expect(urls.some((u) => u.includes('serie-seleccion'))).toBe(false)
     expect(screen.queryByText('En la selección')).not.toBeInTheDocument()
+  })
+
+  it('la serie marca el evento y el instante de la cinta', async () => {
+    montar()
+    const [fig] = await screen.findAllByRole('figure')
+    expect(within(fig).getByRole('img').getAttribute('aria-label')).toContain('Evento (6 may 2026)')
+    expect(fig.querySelector('.grafico__marca--evento')).not.toBeNull()
+    expect(fig.querySelector('line.grafico__cursor')).not.toBeNull()
   })
 })

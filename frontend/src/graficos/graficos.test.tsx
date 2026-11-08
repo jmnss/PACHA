@@ -144,6 +144,17 @@ describe('Linea', () => {
     const { container } = render(<Linea series={[{ nombre: 'A', puntos: pts([1, NaN, 3, 4]) }]} unidad="u" origen={origen} />)
     expect(container.querySelector('path[data-serie="A"]')!.getAttribute('d')!.match(/M/g)).toHaveLength(2)
   })
+  it('el cursor dentro del rango dibuja una línea y no entra en el resumen de marcas', () => {
+    const { container } = render(<Linea series={[{ nombre: 'A', puntos: pts([1, 2, 3, 4]) }]} cursor="2026-04-03" marcas={[{ instante: '2026-04-02', etiqueta: 'crecida' }]} unidad="u" origen={origen} />)
+    expect(container.querySelectorAll('line.grafico__cursor')).toHaveLength(1)
+    const aria = screen.getByRole('img').getAttribute('aria-label')!
+    expect(aria).toMatch(/Marcas: crecida \(/)
+    expect(aria).not.toMatch(/cursor/i)
+  })
+  it('el cursor fuera del rango no se dibuja', () => {
+    const { container } = render(<Linea series={[{ nombre: 'A', puntos: pts([1, 2]) }]} cursor="2030-01-01" unidad="u" origen={origen} />)
+    expect(container.querySelector('.grafico__cursor')).toBeNull()
+  })
   it('marcas fuera de rango no se dibujan', () => {
     const { container } = render(<Linea series={[{ nombre: 'A', puntos: pts([1, 2]) }]} marcas={[{ instante: '2030-01-01', etiqueta: 'lejana' }]} unidad="u" origen={origen} />)
     expect(container.querySelector('.grafico__marca')).toBeNull()

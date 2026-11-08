@@ -151,8 +151,11 @@ export function PanelSimulacion({ esc, controles, sim, enHoja }: Props) {
 
       <div className="panel-sim__campo">
         <Campo
-          etiqueta={t('obs.parametros.fecha_evento')} value={t('obs.parametros.fecha_fija')} readOnly disabled
+          etiqueta={t('obs.parametros.fecha_evento')} type="date"
+          min={GENERICOS.fecha_evento.min} max={GENERICOS.fecha_evento.max}
+          value={typeof v.fecha_evento === 'string' ? v.fecha_evento : esc.instante_evento?.slice(0, 10) ?? ''}
           limite={t('obs.parametros.fecha_limite')}
+          onChange={(e) => { if (e.target.value) sim.cambiar('fecha_evento', e.target.value) }}
         />
         <Ayuda>{t('obs.parametros.fecha_ayuda')}</Ayuda>
       </div>

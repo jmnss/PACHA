@@ -16,6 +16,7 @@
 .grafico__barra { fill: var(--chart-1); }
 .grafico__marca line { stroke-width: 1px; stroke: var(--muted); }
 .grafico__marca text { font-size: var(--fs-12); fill: var(--muted); }
+.grafico__cursor { stroke: var(--accent); stroke-width: 1px; }
 .grafico__marca--evento line { stroke: var(--text); }
 .grafico__marca--evento text { fill: var(--text); }
 .grafico__pie { margin: 0; }

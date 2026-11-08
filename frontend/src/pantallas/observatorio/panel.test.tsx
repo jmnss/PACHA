@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import Observatorio from './Observatorio'
-import { codificar, decodificar, horaATexto, textoAHora, type Control } from './parametros'
+import { codificar, decodificar, horaATexto, normalizar, textoAHora, type Control } from './parametros'
 
 vi.mock('../../mapa/MapaBase', () => ({
   MapaBase: ({ children }: { children?: ReactNode }) => <div data-testid="mapa-falso">{children}</div>,
@@ -96,11 +96,23 @@ describe('PanelSimulacion', () => {
     expect(screen.getByLabelText('Dirección de la órbita')).toHaveValue('Ascendente')
     expect(screen.getByRole('button', { name: 'Paso orbital' })).toBeInTheDocument()
     expect(screen.getByRole('switch', { name: 'Variación estacional' })).toHaveAttribute('aria-checked', 'true')
-    expect(screen.getByLabelText('Fecha del evento')).toBeDisabled()
+    const fecha = screen.getByLabelText('Fecha del evento')
+    expect(fecha).toBeEnabled()
+    expect(fecha).toHaveAttribute('type', 'date')
+    expect(fecha).toHaveAttribute('min', '2024-01-01')
+    expect(fecha).toHaveAttribute('max', '2030-12-31')
     // el control del tipo se muestra en las unidades de la interfaz (0,45 × 100 = 45 %)
     expect(screen.getByLabelText('Superficie inundada inicial (%)')).toHaveValue('45')
     expect(screen.getByText('De 10 a 80')).toBeInTheDocument()
     expect(screen.getByText(/mueven el simulador de demostración/)).toBeInTheDocument()
+  })
+
+  it('cambiar la fecha del evento pide el escenario con fecha_evento', async () => {
+    montar('/observatorio?escenario=ec_x')
+    await panel()
+    fireEvent.change(screen.getByLabelText('Fecha del evento'), { target: { value: '2026-06-01' } })
+    await waitFor(() => expect(posts()).toHaveLength(1), { timeout: 3000 })
+    expect(posts()[0].cuerpo).toEqual({ escenario_id: 'ec_x', parametros: { fecha_evento: '2026-06-01' } })
   })
 
   it('incluye el control de hora de los incendios', async () => {
@@ -254,6 +266,12 @@ describe('PanelSimulacion', () => {
 
 describe('parámetros en la URL', () => {
   const controles = TIPOS[0].controles as unknown as Control[]
+  it('valida la fecha del evento', () => {
+    expect(normalizar({ fecha_evento: '2026-06-01' }, [])).toEqual({ fecha_evento: '2026-06-01' })
+    for (const mala of ['2023-12-31', '2031-01-01', '2026-02-30', '01/06/2026', 20260601]) {
+      expect(normalizar({ fecha_evento: mala } as never, [])).toEqual({})
+    }
+  })
   it('ida y vuelta, y descarta lo desconocido o fuera de rango', () => {
     const v = { looks: 30, orbita: 'Descendente', estacional: false, semilla: 99, fraccion_inundada: 60 }
     expect(decodificar(codificar(v), controles)).toEqual(v)

@@ -17,6 +17,8 @@ export const GENERICOS = {
   looks: { defecto: 12, min: 1, max: 100 },
   orbita: { defecto: 'Ascendente' as string },
   estacional: { defecto: true },
+  /** Fecha del evento (AAAA-MM-DD): no tiene valor por defecto aquí; el servidor decide si coincide con el catálogo. */
+  fecha_evento: { min: '2024-01-01', max: '2030-12-31' },
 } as const
 
 const MAX_PAR = 600
@@ -31,6 +33,13 @@ export function redondear(n: number): number {
   return Number(n.toFixed(6))
 }
 
+/** `AAAA-MM-DD` real (no 2026-02-30) dentro del rango que acepta el servidor. */
+function fechaValida(v: unknown): v is string {
+  if (typeof v !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return false
+  const d = new Date(`${v}T00:00:00Z`)
+  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === v && v >= GENERICOS.fecha_evento.min && v <= GENERICOS.fecha_evento.max
+}
+
 const esNumero = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v)
 
 function valido(clave: string, v: unknown, controles: Control[]): v is Valor {
@@ -38,6 +47,7 @@ function valido(clave: string, v: unknown, controles: Control[]): v is Valor {
   if (clave === 'looks') return esNumero(v) && v >= GENERICOS.looks.min && v <= GENERICOS.looks.max
   if (clave === 'orbita') return typeof v === 'string' && (ORBITAS as readonly string[]).includes(v)
   if (clave === 'estacional') return typeof v === 'boolean'
+  if (clave === 'fecha_evento') return fechaValida(v)
   if (clave === 'lat') return esNumero(v) && v >= -90 && v <= 90
   if (clave === 'lon') return esNumero(v) && v >= -180 && v <= 180
   const c = controles.find((x) => x.id === clave)

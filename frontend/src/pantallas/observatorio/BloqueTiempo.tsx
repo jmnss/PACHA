@@ -10,6 +10,8 @@ import type { TiempoObservatorio } from './useTiempoObservatorio'
 
 interface Props {
   pasadas: Escenario['adquisiciones']
+  /** Instante ISO del evento: la cinta lo marca. */
+  evento?: string
   tiempo: TiempoObservatorio
   contexto?: Contexto | null
   temporadas: Temporada[]
@@ -27,7 +29,7 @@ interface Props {
 }
 
 /** Reloj, cinta de pasadas y controles de tiempo: la misma cinta bajo todas las vistas del Observatorio. */
-export function BloqueTiempo({ pasadas, tiempo, contexto, temporadas, alInteractuar, onFijarAntes, onFijarDespues, motivoAntes, motivoDespues, motivoReproductor, pasosCortos }: Props) {
+export function BloqueTiempo({ pasadas, evento, tiempo, contexto, temporadas, alInteractuar, onFijarAntes, onFijarDespues, motivoAntes, motivoDespues, motivoReproductor, pasosCortos }: Props) {
   const { t, idioma } = useT()
   const idMotivos = useId()
   const ts = pasadas.map((p) => Date.parse(p.instante))
@@ -45,6 +47,7 @@ export function BloqueTiempo({ pasadas, tiempo, contexto, temporadas, alInteract
       </p>
       <CintaPasadas
         adquisiciones={pasadas}
+        evento={evento}
         instante={tiempo.instante}
         temporadas={temporadas}
         onCambio={(iso) => { alInteractuar?.(); tiempo.desdeCinta(iso) }}

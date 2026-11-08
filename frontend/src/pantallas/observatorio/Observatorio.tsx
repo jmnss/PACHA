@@ -257,7 +257,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
           ) : vista === 'impacto' && esc.historia ? (
             <VistaImpacto esc={esc} antesId={antesId} despuesId={despuesId} polarizacion={polarizacion} />
           ) : (
-            <VistaSerie esc={esc} resultado={resultado} antesId={antesId} despuesId={despuesId} punto={punto} cuadrante={cuadrante} />
+            <VistaSerie esc={esc} resultado={resultado} antesId={antesId} despuesId={despuesId} ms={tiempo.ms} punto={punto} cuadrante={cuadrante} />
           )}
         </div>
         <aside className="observatorio__lado" aria-label={t('obs.estructura.lado_etiqueta')}>
