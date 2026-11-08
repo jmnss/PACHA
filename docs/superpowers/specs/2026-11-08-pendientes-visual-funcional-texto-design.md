@@ -50,7 +50,7 @@ todo dato sintético sigue marcado; tokens de `frontend/src/diseno/tokens.css`; 
   `.vista-mapa__plegar`). Plegada (estado inicial en móvil) muestra el rótulo y «Capa · NN %»; desplegada muestra
   además las pestañas de base y el deslizador. En escritorio no cambia nada.
 - Escritorio: `.observatorio { align-items: start; }` y el mapa deja de estirarse para igualar la columna lateral
-  (se quita `flex: 1` del mapa; queda entre `--h-mapa` y `--h-mapa-max`). No cambia el orden de §7.
+  (se quita solo `flex: 1` del mapa; se quedan `min-height: --h-mapa` y `max-height: --h-mapa-max`, sin fijar `height`, y la regla móvil no cambia). No cambia el orden de §7.
 
 ### A3. Relieve con etiquetas encima de los datos
 
@@ -107,8 +107,8 @@ Ya resuelto (`componentes.css:97`, 16 px medidos). Solo se corrige `INFORME.md`.
 ### B3. Orientación en el mapa y observable
 
 - `TipoCambio.observable: str | None = None` en el contrato; el demo lo rellena con `nisar.TIPOS[k].observable`;
-  la cabecera del Observatorio lo muestra («Qué mide el radar: σ⁰ HH y HV (dB)») con su clave
-  `api.tipo.<id>.observable` y `Termino` para σ⁰. `producto` **no** se expone (regla 6): una prueba lo vigila.
+  la cabecera del Observatorio lo muestra («Qué observa el radar en esta demostración: σ⁰ HH y HV (dB)»; el valor no está verificado, regla 6) con su clave
+  `api.tipo.<id>.observable` y `Termino` para σ⁰ con una definición nueva («Retrodispersión: fracción de la señal del radar que vuelve al satélite.»). `producto` **no** se expone (regla 6): una prueba lo vigila.
 - Provincia bajo el puntero: `MapaBase` consulta la capa `provincias` (existe en los dos modos, `estilo.ts`) con
   `queryRenderedFeatures`; con puntero fino al pasar (`mousemove`) y en táctil al tocar (el `click` que ya existe),
   muestra una placa «Provincia · Región» en una esquina del mapa. La región se traduce con claves nuevas

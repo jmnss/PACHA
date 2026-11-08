@@ -64,7 +64,7 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
   - `flecha abajo mueve el foco al siguiente elemento` (con dos acciones, foco en la segunda).
   - `clic fuera cierra`.
 - [ ] **Step 2:** `cd frontend && npx vitest run src/diseno/MenuAcciones.test.tsx` → FAIL (no existe).
-- [ ] **Step 3: Implementar.** Botón `Boton variante="terciario"` con `icono={<IconoMasAcciones />}` y `aria-label={etiqueta}`, alto `--h-touch`. Lista `role="menu"` posicionada bajo el botón, alineada a la derecha: fondo `--raised`, borde 1px `--control`, `--radius-card`, `--shadow-float`, elementos de alto `--h-touch` y `--fs-14`. Al abrir, foco en el primer `menuitem`. Clic fuera con el mismo patrón que `BandaDemostracion`.
+- [ ] **Step 3: Implementar.** Botón nativo `<button type="button" className="boton boton--terciario" ref={botonRef}>` (`Boton` no reenvía refs) con `<IconoMasAcciones />` y `aria-label={etiqueta}`, alto `--h-touch`. Al elegir, en este orden: `botonRef.current?.focus()`, `setAbierto(false)`, `accion.alElegir()` — `HojaInferior` guarda `document.activeElement` al montarse y así devuelve el foco al botón del menú. Lista `role="menu"` posicionada bajo el botón, alineada a la derecha: fondo `--raised`, borde 1px `--control`, `--radius-card`, `--shadow-float`, elementos de alto `--h-touch` y `--fs-14`. Al abrir, foco en el primer `menuitem`. Clic fuera con el mismo patrón que `BandaDemostracion`.
 - [ ] **Step 4:** la prueba pasa; suites del frontend en verde.
 - [ ] **Step 5: Commit** `feat(frontend): menú de acciones para móvil`
 
@@ -76,15 +76,16 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
 
 **Interfaces:**
 - Consumes: `MenuAcciones`, `AccionMenu` (A1).
-- Produces: `VistaMapa` recibe `pais: boolean` y `onPais: (p: boolean) => void` (ya no tiene estado propio de país).
+- Produces: `VistaMapa` recibe `pais: boolean` y `onPais: (p: boolean) => void` (ya no tiene estado propio de país) y pierde la prop `onAbrirParametros`.
 
 - [ ] **Step 1: Pruebas.**
+  - Reescribir `panel.test.tsx:197-215` y `e2e/panel.spec.ts:4-17` (hoy buscan «Parámetros del modelo» en la barra del mapa móvil): abren el menú «Más acciones» y eligen el elemento «Parámetros del modelo».
   - vitest con `matchMedia` móvil simulado (como las pruebas existentes de `HojaInferior` en `panel.test.tsx`): en `vista=comparar` existe el botón «Más acciones» y su elemento «Parámetros del modelo» abre el diálogo `HojaInferior`; al cerrarlo (Escape) el foco vuelve al botón del menú (Review Focus 5).
   - vitest: en `vista=mapa` móvil el menú contiene «Ver todo Ecuador» y al elegirlo el texto pasa a «Ver el escenario»; la barra del mapa ya no muestra esos dos botones.
   - vitest de escritorio (sin `matchMedia` móvil): no hay botón «Más acciones» y los dos botones siguen en la barra.
   - e2e a 390×844 con `VITE_MAPA_REMOTO=0`: en `/observatorio` el `boundingBox().y` de `.vista-mapa__mapa` es `< 844`.
 - [ ] **Step 2:** las pruebas fallan.
-- [ ] **Step 3: Implementar.** `const [pais, setPais] = useState(false)` en `Observatorio`; el menú se pinta solo si `movil`, a la derecha de la fila de `Pestanas` de vistas (envolver ambos en `div.observatorio__vistas` con `display:flex; justify-content:space-between; align-items:center`). Acciones: `parametros` (si `puedeSimular`, `alElegir: () => setHoja(true)`, en cualquier vista) y `pais` (solo `vista === 'mapa'`). En móvil `VistaMapa` no pinta `vista-mapa__acciones`. Para cumplir la meta, en móvil reducir el hueco vertical de la cabecera (`.cabecera` gap a `--space-2`) y del `hallazgo` si hace falta; medir con el e2e. Claves nuevas: `obs.estructura.mas_acciones` («Más acciones»).
+- [ ] **Step 3: Implementar.** `const [pais, setPais] = useState(false)` en `Observatorio`; el menú se pinta solo si `movil`, a la derecha de la fila de `Pestanas` de vistas (envolver ambos en `div.observatorio__vistas` con `display:flex; justify-content:space-between; align-items:center`). Acciones: `parametros` (si `puedeSimular`, `alElegir: () => setHoja(true)`, en cualquier vista) y `pais` (solo `vista === 'mapa'`). En móvil `VistaMapa` no pinta `vista-mapa__acciones`; se quita `onAbrirParametros` de `VistaMapa` y de `Observatorio.tsx:238`. Para cumplir la meta, en móvil reducir el hueco vertical de la cabecera (`.cabecera` gap a `--space-2`) y del `hallazgo` si hace falta; medir con el e2e. Claves nuevas: `obs.estructura.mas_acciones` («Más acciones»).
 - [ ] **Step 4:** pruebas en verde; medir también si `.cinta` empieza antes de 844 y anotar el valor en el mensaje del commit.
 - [ ] **Step 5: Commit** `feat(frontend): parámetros y vista país en el menú del Observatorio móvil`
 
@@ -96,7 +97,7 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
 
 - [ ] **Step 1: Pruebas.** vitest móvil: dentro de `.vista-mapa__arriba` hay una sola placa (`.vista-mapa__placa`) con un botón `aria-expanded="false"` cuyo texto incluye el rótulo y «Capa · 85 %»; no se ven las pestañas de base ni el deslizador; al pulsar, `aria-expanded="true"` y aparece el deslizador «Opacidad». vitest escritorio: rótulo y `ControlesMapa` siguen separados como hoy.
 - [ ] **Step 2:** FAIL.
-- [ ] **Step 3: Implementar.** Estado `placaAbierta` (inicial `false`) solo en móvil; reutilizar `.vista-mapa__plegar`. Clave nueva `obs.mapa.resumen_capa` = `«{rotulo} · Capa · {pct} %»` (en: «{rotulo} · Layer · {pct} %»). CSS escritorio: `.observatorio { align-items: start; }` y quitar `flex: 1` de `.vista-mapa__mapa` (borrar el comentario «El mapa absorbe…»; el mapa queda con `min-height: var(--h-mapa)` y `height: var(--h-mapa-max)` limitado por `max-height`).
+- [ ] **Step 3: Implementar.** Crear la clase `.vista-mapa__placa` (mismo fondo, radio, relleno y tipografía que `.vista-mapa__capa`, ancho 100 % en móvil) que envuelve el botón y, desplegada, `ControlesMapa`. Estado `placaAbierta` (inicial `false`) solo en móvil; el botón reutiliza `.vista-mapa__plegar`. Clave nueva `obs.mapa.resumen_capa` = `«{rotulo} · Capa · {pct} %»` (en: «{rotulo} · Layer · {pct} %»). CSS escritorio: `.observatorio { align-items: start; }` y quitar **solo** `flex: 1` de `.vista-mapa__mapa` (borrar el comentario «El mapa absorbe…»); se quedan `min-height: var(--h-mapa)` y `max-height: var(--h-mapa-max)`, sin fijar `height`, y la regla móvil `min-height: var(--h-mapa-movil)` no se toca.
 - [ ] **Step 4:** verde. `bash scripts/revision_visual.sh /observatorio obs-placa` → sin `ragged-row` a 1440 (si aparece, dejar el WARN y defenderlo en `INFORME.md`).
 - [ ] **Step 5: Commit** `fix(frontend): placa única del mapa en móvil y columnas sin hueco en escritorio`
 
@@ -107,10 +108,10 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
 - Test: `frontend/src/mapa/mapa.test.ts` (o el archivo de pruebas de `estilo.ts` que exista; buscar `capasVisibles`)
 
 - [ ] **Step 1: Verificar la URL (una sola petición permitida, no son datos de NISAR).**
-  `curl -s -o /tmp/t.jpg -w "%{http_code} %{content_type}\n" https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/6/32/18`
+  `curl -s -o "$SCRATCHPAD/tesela.jpg" -w "%{http_code} %{content_type}\n" https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/6/32/18`
   y `curl -s "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer?f=json" | python -c "import json,sys;d=json.load(sys.stdin);print(d['tileInfo']['lods'][-1]['level'], d.get('copyrightText'))"`.
-  Si el primero no da `200 image/…` → plan B (Step 3b).
-- [ ] **Step 2: Pruebas.** `capasVisibles('relieve')` es `['base-relieve', 'etiquetas-lugares']`; en `construirEstilo({ remoto: true, base: 'relieve' })` el índice de `etiquetas-lugares` es mayor que el de `base-relieve` y `ANCLA_DATOS_REMOTA` sigue antes de las capas de etiquetas.
+  (`$SCRATCHPAD` = el directorio temporal de la sesión, nunca `/tmp`.) Si el primero no da `200 image/…` → plan B (Step 3b).
+- [ ] **Step 2: Prueba.** `capasVisibles('relieve')` es `['base-relieve', 'etiquetas-lugares']`. Es la única que prueba el cambio: el orden base → datos → etiquetas ya se cumple en `construirEstilo` y no necesita prueba nueva.
 - [ ] **Step 3a:** `relieve`: `base.url = ${ESRI}/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}`, `maxzoom` = el nivel leído en Step 1, `etiquetas: 'lugares'`, `atribucion` = `copyrightText` leído + `' · Labels: ' + ATRIB_ESRI`.
 - [ ] **Step 3b (plan B):** dejar `World_Topo_Map` y poner `etiquetas: 'lugares'`.
 - [ ] **Step 4:** verde. Actualizar `docs/diseno.md §8` (frase de Relieve) y `CREDITOS.md` con el servicio usado. Anotar en `INFORME.md` qué plan se aplicó.
@@ -127,13 +128,13 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
   - vitest móvil: en el DOM la tarjeta con título «Mundo» aparece antes que la de «Tablero» (`compareDocumentPosition`); en escritorio, después.
   - vitest de `FranjaKpi` con 5 elementos a móvil: el quinto tiene la clase `franja-kpi__item--ancho` (o comprobar la regla CSS `:last-child:nth-child(odd)` con una prueba de `componentes.test.ts` que lea el CSS, como ya hacen otras).
 - [ ] **Step 2:** FAIL.
-- [ ] **Step 3: Implementar.** `flex: none` en `.pestanas__pestana`. En `Simulador`, con `const movil = useMovil()`, si `movil` la tarjeta «Mundo» se pinta dentro de `simulador__principal` antes del tablero y `simulador__lado` solo con los parámetros. CSS móvil: `.franja-kpi__item:last-child:nth-child(odd) { grid-column: 1 / -1; }` y `.franja-kpi__unidad { white-space: nowrap; }`.
+- [ ] **Step 3: Implementar.** `flex: none` en `.pestanas__pestana`. En `Simulador`, con `const movil = useMovil()`, si `movil` la tarjeta «Mundo» se pinta dentro de `simulador__principal` antes del tablero y `simulador__lado` solo con los parámetros. CSS móvil: `.franja-kpi__item:last-child:nth-child(odd) { grid-column: 1 / -1; border-right: 0; }` y `.franja-kpi__unidad { white-space: nowrap; }`.
 - [ ] **Step 4:** verde. `bash scripts/revision_visual.sh "/simulador?lat=-4.05&lon=-79.25&dem=0&ext=60&i=64&j=64" sim-movil` y revisar las pestañas de las seis rutas en las capturas de la Tarea A6.
 - [ ] **Step 5: Commit** `fix(frontend): pestañas sin solape, Mundo primero y KPIs enteros en el simulador móvil`
 
 ### Task A6: cierre del bloque A
 
-- [ ] **Step 1:** `cd frontend && VITE_MAPA_REMOTO=0 npm run build`, y `bash scripts/revision_visual.sh <ruta> bloque-a-<nombre>` para `/`, `/observatorio`, `/observatorio?vista=comparar`, `/simulador`, `/laboratorio`, `/recorrido`, `/fundamentos`. Corregir FAIL (máx. 3 rondas). Luego `npm run build` normal.
+- [ ] **Step 1:** `bash scripts/revision_visual.sh <ruta> bloque-a-<nombre>` (compila su propia copia) para `/`, `/observatorio`, `/observatorio?vista=comparar`, `/simulador`, `/laboratorio`, `/recorrido`, `/fundamentos`. Corregir FAIL (máx. 3 rondas).
 - [ ] **Step 2:** `cd frontend && npx playwright test` → todo en verde (la intermitencia conocida de `flujos.spec.ts` «clic fuera de Ecuador» se repite aislada antes de darla por buena).
 - [ ] **Step 3:** `INFORME.md`: quitar de «Pendientes vigentes / Visuales» los cinco puntos resueltos (incluido el margen de 12 px, ya resuelto en `ea3787d`); defender el `ragged-row` del simulador; anotar la distancia de la cinta a 390 px si no quedó a la vista; decisiones A1–A5 en «Decisiones tomadas sin supervisión».
 - [ ] **Step 4: Commit** `docs: informe del bloque visual y móvil`
@@ -197,7 +198,7 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
   - `test_fecha_evento_invalida`: `"2026-13-01"`, `"01/05/2026"`, `"2023-12-31"`, `"2031-01-01"`, `20260501` → `EntradaNoValida` (422 por la API).
   - `test_ids_existentes_no_cambian` (Review Focus 2): el id de `simular("ec_la_segua", {"lat": -0.7, "lon": -80.2})` es igual antes y después del cambio (fijar el valor actual como literal en la prueba antes de implementar).
 - [ ] **Step 2:** FAIL.
-- [ ] **Step 3: Implementar.** `GENERICOS` gana `"fecha_evento"`. En `_validar`: si viene, debe ser `str`, `date.fromisoformat`, entre `date(2024,1,1)` y `date(2030,12,31)`; devolver `v["fecha"]: date | None`. En `_contexto_sin_cerrojo`: si `v["fecha"]` es igual a la fecha del catálogo de `base`, tratarla como `None`; si no es `None`, añadir `canon["fecha"] = v["fecha"].isoformat()` (solo entonces, para no cambiar las huellas existentes). El sitio: `sitio_en_mapa(...)` si hay punto, si no la fila del catálogo (`nisar.cargar_sitios()`, `to_dict()`); en ambos casos `sitio["fecha_evento"] = v["fecha"].isoformat()` cuando hay fecha. Rellenar `instante_evento=escena.instante_evento().replace(tzinfo=timezone.utc)`. Errores: `api.error.fecha_evento_formato`, `api.error.fecha_evento_rango` («La fecha del evento debe estar entre 2024-01-01 y 2030-12-31.»).
+- [ ] **Step 3: Implementar.** `GENERICOS` gana `"fecha_evento"`. En `_validar`: si viene, debe ser `str`, `date.fromisoformat`, entre `date(2024,1,1)` y `date(2030,12,31)`; devolver `v["fecha"]: date | None`. En `_contexto_sin_cerrojo`: si `v["fecha"]` es igual a la fecha del catálogo de `base`, tratarla como `None`; si no es `None`, añadir `canon["fecha"] = v["fecha"].isoformat()` (solo entonces, para no cambiar las huellas existentes). El sitio: `sitio_en_mapa(...)` si hay punto, si no la fila del catálogo (`nisar.cargar_sitios()`, `to_dict()`); en ambos casos `sitio["fecha_evento"] = v["fecha"].isoformat()` cuando hay fecha. La fecha «del catálogo» con la que se compara es `sitio["fecha_evento"]` del sitio que se va a usar (con punto del mapa, el de `sitio_en_mapa`), no la de `base`; hay que construir el sitio antes de decidir la huella. Rellenar `instante_evento=escena.instante_evento().replace(tzinfo=timezone.utc)`. Errores: `api.error.fecha_evento_formato`, `api.error.fecha_evento_rango` («La fecha del evento debe estar entre 2024-01-01 y 2030-12-31.»).
 - [ ] **Step 4:** verde; `python scripts/exportar_claves_api.py`; tipos regenerados.
 - [ ] **Step 5: Commit** `feat(datos): fecha del evento en el escenario y simulable en la demostración`
 
@@ -216,9 +217,9 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
   - Panel: el campo «Fecha del evento» es `input[type=date]` habilitado con `min="2024-01-01"` y `max="2030-12-31"`; cambiarlo llama a `sim.cambiar('fecha_evento', '2026-06-01')`.
   - `Linea` con `cursor` dentro del rango dibuja un `line.grafico__cursor`; fuera del rango, no; el cursor no aparece en la lista del resumen accesible de marcas.
   - `VistaSerie` con `esc.instante_evento` → el resumen accesible del gráfico nombra la marca «Evento».
-  - Acotado (Review Focus 3): con `tUrl` anterior a la primera pasada, `useTiempoObservatorio` deja `ms` en la primera pasada; posterior a la última, en la última.
-- [ ] **Step 2:** FAIL.
-- [ ] **Step 3: Implementar.** `GENERICOS.fecha_evento = { min: '2024-01-01', max: '2030-12-31' }` y su `valido`; nunca es «por defecto» en el frontend (el servidor decide). Campo con `Campo` (`type="date"`); si `Campo` no acepta `type`, añadir la prop pasándola al `<input>`. Quitar la clave `obs.parametros.fecha_fija` y ajustar `fecha_ayuda` («Cambia la fecha y todas las pasadas se mueven con ella. Datos de demostración.»). `.grafico__cursor { stroke: var(--accent); stroke-width: 1px; }`. Clave `obs.serie.marca_evento` = «Evento».
+  - Acotado (Review Focus 3), **prueba de regresión**: con `tUrl` anterior a la primera pasada, `useTiempoObservatorio` deja `ms` en la primera pasada; posterior a la última, en la última. `useInstante.ts:23` ya acota y `parejaValida` ya rehace antes/después: esta prueba pasa desde el principio y no lleva implementación nueva.
+- [ ] **Step 2:** las demás fallan (la de acotado pasa).
+- [ ] **Step 3: Implementar.** `GENERICOS.fecha_evento = { min: '2024-01-01', max: '2030-12-31' }` y su `valido`; nunca es «por defecto» en el frontend (el servidor decide). Campo con `Campo` (`type="date"`, valor `sim.valores.fecha_evento ?? esc.instante_evento?.slice(0, 10) ?? ''`); si `Campo` no acepta `type`, añadir la prop pasándola al `<input>`. Quitar la clave `obs.parametros.fecha_fija` y ajustar `fecha_ayuda` («Cambia la fecha y todas las pasadas se mueven con ella. Datos de demostración.»). `.grafico__cursor { stroke: var(--accent); stroke-width: 1px; }`. Clave `obs.serie.marca_evento` = «Evento».
 - [ ] **Step 4:** verde; `bash scripts/revision_visual.sh "/observatorio?vista=serie" serie-evento`.
 - [ ] **Step 5: Commit** `feat(frontend): fecha del evento editable, marca del evento y cursor del instante`
 
@@ -230,9 +231,9 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
 
 - [ ] **Step 1: Pruebas.**
   - `GET /api/tipos` → los seis tienen `observable` no vacío; `humedales` es `"σ⁰ HH y HV (dB)"` (valor de `nisar.TIPOS`); ningún tipo tiene la clave `producto` ni los textos `GCOV`, `GUNW`, `GOFF` en el JSON completo.
-  - vitest: la cabecera del Observatorio muestra «Qué mide el radar: σ⁰ HH y HV (dB)» en es y la versión en en con la clave `api.tipo.humedales.observable`.
+  - vitest: la cabecera del Observatorio muestra «Qué observa el radar en esta demostración: σ⁰ HH y HV (dB)» en es y la versión en en con la clave `api.tipo.humedales.observable`.
 - [ ] **Step 2:** FAIL.
-- [ ] **Step 3: Implementar.** `observable: str | None = None` en `TipoCambio`; el demo pasa `observable=t.observable`; `_tipos` registra `api.tipo.<id>.observable`. Clave `obs.estructura.observable` = «Qué mide el radar: {observable}»; `Termino` envuelve «σ⁰» con la definición que ya exista en el catálogo de términos.
+- [ ] **Step 3: Implementar.** `observable: str | None = None` en `TipoCambio`; el demo pasa `observable=t.observable`; `_tipos` registra `api.tipo.<id>.observable`. Clave `obs.estructura.observable` = «Qué observa el radar en esta demostración: {observable}» (el valor de `nisar.TIPOS` no está verificado con documentación oficial: regla 6). No existe una definición de σ⁰: crear `obs.estructura.sigma0_termino` = «σ⁰» y `obs.estructura.sigma0_explicacion` = «Retrodispersión: fracción de la señal del radar que vuelve al satélite.» (es/en/qu) y usarlas con `Termino` alrededor de «σ⁰».
 - [ ] **Step 4:** verde; claves y tipos regenerados.
 - [ ] **Step 5: Commit** `feat: el observable del tipo de cambio en la cabecera del Observatorio`
 
@@ -273,7 +274,7 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
 
 **Interfaces:**
 - Produces (Python): `class TextoClave(BaseModel): clave_texto: str; valores_texto: dict[str, float | str] = {}; decimales_texto: dict[str, int] = {}`;
-  `reconocer(plantilla: str, texto_es: str) -> dict[str, float | str] | None` (sin cambio de firma);
+  `reconocer(plantilla: str, texto_es: str) -> dict[str, float | str] | None` (antes `dict[str, float]`; revisar sus usos);
   `reconocer_con_decimales(plantilla: str, texto_es: str) -> tuple[dict[str, float | str], dict[str, int]] | None`;
   `buscar_texto(prefijo: str, texto_es: str) -> TextoClave | None` (primero coincidencia literal entre las claves de
   `REGISTRO` que empiezan por `prefijo`, luego plantillas; si varias encajan, la de más texto literal).
@@ -283,7 +284,7 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
 - [ ] **Step 1: Pruebas Python.**
   - `reconocer_con_decimales("Lluvia de {mm} mm en {km} km", "Lluvia de 150,0 mm en 15 km") == ({"mm": 150.0, "km": 15.0}, {"mm": 1, "km": 0})`.
   - `reconocer("Media · Velocidad · {fecha}", "Media · Velocidad · 27/12/2026") == {"fecha": "2026-12-27"}`.
-  - `reconocer("Levantamiento de {le_punto} m", "Levantamiento de +0.42 m") == {"le_punto": 0.42}`.
+  - `reconocer("Levantamiento de {le_punto} m", "Levantamiento de +0.42 m") == {"le_punto": 0.42}`. En las plantillas reales el «+» se conserva en el literal (`… de +{le_punto} m` si el modelo siempre escribe signo) para que el texto traducido lo muestre.
   - `buscar_texto("api.prueba.", "texto que no encaja")` es `None` (Review Focus 4); con una plantilla registrada en la prueba (monkeypatch de `REGISTRO`) devuelve su `TextoClave`.
 - [ ] **Step 2: Pruebas TS.** `valoresApi({ mm: 150 }, f, undefined, { mm: 1 })` → `{ mm: '150.0' }` en en; `decimales` gana a `DECIMALES`; `textoApi` con clave desconocida devuelve el español y `traducido: false`.
 - [ ] **Step 3:** FAIL → implementar → verde.
@@ -300,7 +301,7 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
 - Produces: `EventoDto.notas_texto: list[TextoClave | None] | None = None` (misma longitud que `notas`); `TablaEventoDto.celdas_texto: list[list[TextoClave | None]] | None = None`.
 
 - [ ] **Step 1: Prueba de cobertura.** `test_notas_y_celdas_del_simulador_tienen_clave`: para cada herramienta de `simulador.catalogo()["herramientas"]` que sea evento (`desastres.DESASTRES`), con el mundo de `tests/datos/test_simulador.py` y la celda central, `all(nt is not None for nt in dto["notas_texto"])` y toda celda de texto de la tabla tiene su `TextoClave`. Las cifras de la nota de lluvia se recuperan con sus decimales.
-- [ ] **Step 2:** FAIL → escribir las plantillas copiando literalmente el texto de `modelo/desastres.py` con `{x}` en cada cifra. Para encontrarlas: `grep -n "notas\b\|notas.append\|notas = \[\|nota = \|tabla = pd.DataFrame\|\"Percepción\"\|\"Peligro\"" modelo/desastres.py` (unas 18 notas, 8 con cifras: paso del autómata, residentes, lluvia y radio, caudal y volumen, marejada, levantamiento del tsunami, hipocentro, cráter y tefra; celdas: 8 coberturas de `COBERTURAS`, 7 percepciones, 4 peligros, 4 modelos de erupción). Una clave por variante (tipo de suelo CN: 3; mecanismo del sismo: 4). Ejecutar la prueba de cobertura para descubrir las que falten. La nota «0.25 m/s» conserva el literal. Traducción en (Sonnet) y qu (borrador, ver Task C5).
+- [ ] **Step 2:** FAIL → escribir las plantillas copiando literalmente el texto de `modelo/desastres.py` con `{x}` en cada cifra. Para encontrarlas: `grep -n "notas\b\|notas.append\|notas = \[\|nota = \|tabla = pd.DataFrame\|\"Percepción\"\|\"Peligro\"" modelo/desastres.py` (unas 18 notas, 8 con cifras: paso del autómata, residentes, lluvia y radio, caudal y volumen, marejada, levantamiento del tsunami, hipocentro, cráter y tefra; celdas: 8 coberturas de `COBERTURAS`, 7 percepciones, 4 peligros, 4 modelos de erupción). Una clave por variante (tipo de suelo CN: 3; mecanismo del sismo: 4). Ejecutar la prueba de cobertura para descubrir las que falten. Ojo: la nota de la espera del radar la reescribe `datos/simulador.py` («en una pasada posterior (ver «Espera hasta la primera imagen»)»); su plantilla copia el texto **ya reescrito**, no el de `modelo/`. La nota «0.25 m/s» conserva el literal. Traducción en (Sonnet) y qu (borrador, ver Task C5).
 - [ ] **Step 3:** vitest: `ResultadosEvento` en en muestra la nota de lluvia traducida con «150.0 mm»; sin `notas_texto`, el español con `lang="es"`.
 - [ ] **Step 4:** verde; claves y tipos regenerados.
 - [ ] **Step 5: Commit** `feat(idioma): notas y tablas del simulador con clave`
@@ -308,11 +309,12 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
 ### Task C3: textos del Observatorio (tablas, medición, series, nota de Pedernales)
 
 **Files:**
-- Modify: `datos/claves_demo.py`, `datos/contrato.py` (`TablaResultado.columnas_texto`/`celdas_texto`, `SerieTemporal.nombres_texto: dict[str, TextoClave] | None = None`, `Medicion.textos: list[dict[str, TextoClave | None]] | None = None`, `ResultadoCambio.notas_texto`), `datos/proveedores/demo.py:182,455-470,480-510`, `api/schemas.py`, `frontend/src/pantallas/observatorio/TablaResultados.tsx:31`, `Mediciones.tsx`, `medicion.ts:50-56`, `VistaSerie.tsx:97`, `frontend/src/diseno/NotasModelo.tsx`, catálogos
+- Modify: `api/rutas/capas.py` (las rutas `cambio` y `medicion` construyen los DTO campo por campo: pasar los campos nuevos), `datos/claves_demo.py`, `datos/contrato.py` (`TablaResultado.titulo_texto`/`columnas_texto`/`celdas_texto`, `SerieTemporal.nombres_texto: dict[str, TextoClave] | None = None`, `Medicion.textos: list[dict[str, TextoClave | None]] | None = None`, `ResultadoCambio.notas_texto`), `datos/proveedores/demo.py:182,455-470,480-510`, `api/schemas.py`, `frontend/src/pantallas/observatorio/TablaResultados.tsx:31`, `Mediciones.tsx`, `medicion.ts:50-56`, `VistaSerie.tsx:97`, `frontend/src/diseno/NotasModelo.tsx`, catálogos
 - Test: `tests/datos/test_proveedor_demo.py`, `tests/api/test_claves_api.py`, `frontend/src/pantallas/observatorio/observatorio-idioma.test.tsx`
 
 - [ ] **Step 1: Pruebas.**
-  - Cobertura: para los seis escenarios con su intervalo por defecto, toda columna y toda celda de texto de `tablas`, todo nombre de `series[*].puntos[*][2]` y toda etiqueta/medida/capa de la tabla de `medir(..., punto=(80, 80))` tienen `TextoClave`.
+  - Cobertura: para los seis escenarios con su intervalo por defecto, el título, toda columna y toda celda de texto de `tablas`, todo nombre de `series[*].puntos[*][2]`, todo nombre de `serie_seleccion(id, punto=(80, 80))` (B1) y toda etiqueta/medida/capa de la tabla de `medir(..., punto=(80, 80))` tienen `TextoClave`.
+  - A nivel API (`tests/api/test_capas.py`): `POST /api/escenarios/ec_la_segua/cambio` trae `tablas[*].titulo_texto` y `notas_texto`; `POST …/medicion` trae `textos`.
   - El escenario de glaciar: la métrica «Media · Velocidad · dd/mm/aaaa» trae `clave_texto` y `valores_texto["fecha"]` en ISO.
   - `TablaResultados` en `es`: una columna sin clave lleva `lang="es"`.
   - vitest en `en`: la tabla de parcelas no contiene «Resultados por parcela» ni nombres de cultivo en español (usar `textosSinTraducir` de `idioma/pruebas.tsx`).
@@ -326,7 +328,7 @@ envía en campos paralelos opcionales (`TextoClave`); el frontend los traduce co
 - Test: `frontend/src/pantallas/simulador/simulador-idioma.test.tsx`, `frontend/e2e/exportar.spec.ts` (si ya prueba el CSV)
 
 **Interfaces:**
-- Produces: `reconocerTitulo(tituloEs: string): { clave: string; valores: Record<string, number> } | null` en `frontend/src/pantallas/simulador/bitacora.ts`, que prueba las plantillas `api.sim.titulo.*` del catálogo `es` (cada `{x}` casa un número con coma decimal).
+- Produces: `reconocerTitulo(tituloEs: string): { clave: string; valores: Record<string, number> } | null` en `frontend/src/pantallas/simulador/bitacora.ts`, que prueba las plantillas `api.sim.titulo.*` del catálogo `es` (cada `{x}` casa un número con coma decimal, salvo `{volcan}` de `api.sim.titulo.erupcion_volcan`, que es texto y casa `[^·]+?`).
 
 - [ ] **Step 1: Pruebas.**
   - `reconocerTitulo('Tormenta extrema')` → `{ clave: 'api.sim.titulo.tormenta', valores: {} }`; un título inventado → `null`.
@@ -344,7 +346,7 @@ Esta tarea la hace el modelo más capaz, no Sonnet: redactar kichwa unificado (`
 - Modify: `frontend/src/idioma/catalogos/qu/*.ts` (solo claves añadidas en A–C), `docs/guia-traduccion-kichwa.md` (términos nuevos a revisar), `docs/traduccion-kichwa.csv`
 - Test: `frontend/src/idioma/traducciones-csv.test.ts` (añadir)
 
-- [ ] **Step 1: Prueba.** `el CSV del repositorio está al día`: ejecutar `exportar` a un archivo temporal (el script acepta la salida como argumento) y comparar byte a byte con `docs/traduccion-kichwa.csv`.
+- [ ] **Step 1: Prueba.** Ampliar `traducciones-csv.test.ts` (ya exporta a un temporal), sin duplicarla: añadir el caso `el CSV del repositorio está al día`, que compara ese temporal byte a byte con `docs/traduccion-kichwa.csv`.
 - [ ] **Step 2:** redactar o revisar el kichwa de todas las claves nuevas (los textos que Sonnet dejó en `qu` como copia provisional del inglés o del español se sustituyen); ninguna entra en `VALIDADAS_QU`; añadir a la guía los términos nuevos dudosos.
 - [ ] **Step 3:** `node scripts/traducciones_csv.mjs exportar`; suites del frontend en verde.
 - [ ] **Step 4: Commit** `docs(idioma): borrador kichwa de las claves nuevas y CSV de revisión al día`
@@ -355,4 +357,4 @@ Esta tarea la hace el modelo más capaz, no Sonnet: redactar kichwa unificado (`
 - [ ] **Step 2:** suites completas, `npx playwright test`, `bash scripts/construir_pages.sh` y e2e de Pages en verde.
 - [ ] **Step 3:** `INFORME.md`: quitar el pendiente «Texto del demo que sigue en español» salvo lo que quede declarado (ayudas de métricas del simulador; textos que no encajen) y listarlo; actualizar las cifras de pruebas; decisiones C en «Decisiones tomadas sin supervisión»; claves kichwa nuevas sin validar en «Estado del kichwa».
 - [ ] **Step 4: Commit** `docs: informe del bloque de texto y cierre de los pendientes`
-- [ ] **Step 5:** `git push origin migracion-react` **solo** si el usuario lo autorizó para esta rama (sí, en la sesión del 2026-11-08: «Solo a la rama»). Nunca a `main`.
+- [ ] **Step 5:** `git push origin migracion-react` **solo** si el usuario lo autorizó para esta rama (sí, en la sesión del 2026-11-08: «Solo a la rama»; autorizado por el usuario el 2026-11-08). Nunca a `main`.
