@@ -1120,6 +1120,98 @@
     "es": "Tsunami: calado en tierra / elevación del mar"
   },
   {
+    "clave": "api.sim.celda.agua",
+    "es": "Agua"
+  },
+  {
+    "clave": "api.sim.celda.bosque_andino",
+    "es": "Bosque andino"
+  },
+  {
+    "clave": "api.sim.celda.bosque_seco_y_matorral",
+    "es": "Bosque seco y matorral"
+  },
+  {
+    "clave": "api.sim.celda.bosque_tropical_humedo",
+    "es": "Bosque tropical húmedo"
+  },
+  {
+    "clave": "api.sim.celda.ceniza_1_cm",
+    "es": "Ceniza ≥ 1 cm"
+  },
+  {
+    "clave": "api.sim.celda.cultivos_y_pastos",
+    "es": "Cultivos y pastos"
+  },
+  {
+    "clave": "api.sim.celda.extrema",
+    "es": "Extrema"
+  },
+  {
+    "clave": "api.sim.celda.flujo_piroclastico",
+    "es": "Flujo piroclástico"
+  },
+  {
+    "clave": "api.sim.celda.fuerte",
+    "es": "Fuerte"
+  },
+  {
+    "clave": "api.sim.celda.glaciar_y_nieve",
+    "es": "Glaciar y nieve"
+  },
+  {
+    "clave": "api.sim.celda.lahar",
+    "es": "Lahar"
+  },
+  {
+    "clave": "api.sim.celda.ligera",
+    "es": "Ligera"
+  },
+  {
+    "clave": "api.sim.celda.modelo_ceniza",
+    "es": "Advección–difusión (3 clases)"
+  },
+  {
+    "clave": "api.sim.celda.modelo_cono",
+    "es": "Cono de energía H/L = {hl_punto}, Hc = {hc} m"
+  },
+  {
+    "clave": "api.sim.celda.modelo_laharz",
+    "es": "LAHARZ, V = {v_punto} hm³ por cauce"
+  },
+  {
+    "clave": "api.sim.celda.modelo_techos",
+    "es": "Carga húmeda vs. techos débiles (Spence et al., 2005)"
+  },
+  {
+    "clave": "api.sim.celda.moderada",
+    "es": "Moderada"
+  },
+  {
+    "clave": "api.sim.celda.muy_fuerte",
+    "es": "Muy fuerte"
+  },
+  {
+    "clave": "api.sim.celda.paramo",
+    "es": "Páramo"
+  },
+  {
+    "clave": "api.sim.celda.severa",
+    "es": "Severa"
+  },
+  {
+    "clave": "api.sim.celda.techos_colapsados_viviendas",
+    "es": "Techos colapsados (viviendas)"
+  },
+  {
+    "clave": "api.sim.celda.violenta",
+    "es": "Violenta"
+  },
+  {
+    "clave": "api.sim.celda.zona_urbana",
+    "es": "Zona urbana"
+  },
+  {
     "clave": "api.sim.columna.area_km2",
     "es": "Área (km²)"
   },
@@ -1518,6 +1610,110 @@
   {
     "clave": "api.sim.mundo.tungurahua_y_banos.nombre",
     "es": "Tungurahua y Baños"
+  },
+  {
+    "clave": "api.sim.nota.agua.radar",
+    "es": "NISAR (GCOV): cambio de HH entre fechas (< −5 dB agua abierta, > +3 dB doble rebote) y clasificación de inundación de la app. Se compara la extensión máxima simulada; en la pasada real el agua puede haber bajado (en una pasada posterior (ver «Espera hasta la primera imagen»))."
+  },
+  {
+    "clave": "api.sim.nota.erupcion.alerta",
+    "es": "Ecuador cuenta con sistemas de alerta temprana de lahares (p. ej. Cotopaxi): sube la evacuación para ver su efecto."
+  },
+  {
+    "clave": "api.sim.nota.erupcion.radar",
+    "es": "NISAR: la banda L ve a través de la nube de ceniza; los depósitos de lahar y flujo piroclástico destruyen la coherencia interferométrica (en una pasada posterior (ver «Espera hasta la primera imagen»))."
+  },
+  {
+    "clave": "api.sim.nota.erupcion.supuestos",
+    "es": "Las velocidades del lahar (8 m/s) y del flujo piroclástico (40 m/s), la altura de colapso y las letalidades son supuestos del juego; las áreas sí provienen de los modelos publicados."
+  },
+  {
+    "clave": "api.sim.nota.erupcion.tefra",
+    "es": "Cráter a {zv} m. Volumen de tefra {v} hm³ en {h} h; queda dentro del mundo el {pct} % de la masa."
+  },
+  {
+    "clave": "api.sim.nota.incendio.cobertura",
+    "es": "El páramo y el bosque seco arden con facilidad; el bosque húmedo apenas propaga si el combustible supera su humedad de extinción."
+  },
+  {
+    "clave": "api.sim.nota.incendio.paso",
+    "es": "Cada paso del autómata equivale a {min} min: el fuego avanza como máximo una celda ({m} m) por paso (supuesto de 0.25 m/s ≈ 0,9 km/h)."
+  },
+  {
+    "clave": "api.sim.nota.incendio.radar",
+    "es": "NISAR: la próxima pasada llega en una pasada posterior (ver «Espera hasta la primera imagen»); quemado ⟺ LR < −2,5 dB en HV."
+  },
+  {
+    "clave": "api.sim.nota.incendio.residentes",
+    "es": "Residentes dentro del perímetro: {n}. No hay una función de mortalidad publicada para incendios forestales en Ecuador: se informa la exposición."
+  },
+  {
+    "clave": "api.sim.nota.incendio.residentes_menos_de_uno",
+    "es": "Residentes dentro del perímetro: < 1. No hay una función de mortalidad publicada para incendios forestales en Ecuador: se informa la exposición."
+  },
+  {
+    "clave": "api.sim.nota.inundacion.hidrograma",
+    "es": "Hidrograma triangular con pico de {q} m³/s a las {h} h; volumen total {v} hm³."
+  },
+  {
+    "clave": "api.sim.nota.inundacion.marejada",
+    "es": "Nivel del mar elevado hasta {m} m durante {h} h (pulso senoidal)."
+  },
+  {
+    "clave": "api.sim.nota.inundacion.mortalidad",
+    "es": "Mortalidad de la «zona restante» de Jonkman (sin rotura de diques ni subida rápida): es una cota inferior en crecidas súbitas."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.hipocentro_inversa_subduccion",
+    "es": "Hipocentro a {prof} km; mecanismo inversa (subducción) (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.hipocentro_normal",
+    "es": "Hipocentro a {prof} km; mecanismo normal (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.hipocentro_rumbo_dextral",
+    "es": "Hipocentro a {prof} km; mecanismo rumbo dextral (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.hipocentro_rumbo_sinistral",
+    "es": "Hipocentro a {prof} km; mecanismo rumbo sinistral (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.ipe",
+    "es": "La IPE de Allen et al. (2012) es de corteza activa; en sismos de subducción grandes puede infravalorar la intensidad lejana. No incluye amplificación por suelos blandos."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.pager",
+    "es": "Los parámetros PAGER de Ecuador se calibraron con sismos de 1973–2007 (antes de Pedernales 2016): prueba Perú o Colombia para ver la sensibilidad a la vulnerabilidad."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.radar",
+    "es": "NISAR (GUNW): interferograma de 12 días que abarca el sismo; la atmósfera añade ~1 cm de ruido turbulento. El mar no tiene coherencia."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.tsunami",
+    "es": "Tsunami: el levantamiento del fondo marino (hasta {m} m) se propaga con aguas someras; la batimetría se limita a 1 500 m para acelerar el cálculo. La mortalidad de Jonkman (zona restante) subestima la de un tsunami."
+  },
+  {
+    "clave": "api.sim.nota.tormenta.deslizamientos",
+    "es": "Los deslizamientos se muestran desde el final de la lluvia; no se estima su mortalidad."
+  },
+  {
+    "clave": "api.sim.nota.tormenta.drenaje",
+    "es": "La red de drenaje es la del DEM a la resolución del mundo: los cauces estrechos se ensanchan a una celda."
+  },
+  {
+    "clave": "api.sim.nota.tormenta.lluvia_humedo",
+    "es": "Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN húmedo (AMC III))."
+  },
+  {
+    "clave": "api.sim.nota.tormenta.lluvia_normal",
+    "es": "Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN normal (AMC II))."
+  },
+  {
+    "clave": "api.sim.nota.tormenta.lluvia_seco",
+    "es": "Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN seco (AMC I))."
   },
   {
     "clave": "api.sim.opcion.terremoto.mecanismo.inversa_subduccion",

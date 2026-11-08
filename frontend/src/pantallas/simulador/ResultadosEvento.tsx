@@ -7,7 +7,7 @@ import { Tabla, type ColumnaTabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { descargarPng } from '../../exportar/png'
 import { EtiquetaMetrica, ValorMetrica } from '../../idioma/MetricaApi'
-import { clavesApi } from '../../idioma/clavesApi'
+import { clavesApi, textoClave, type TextoClaveApi } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import type { Clave } from '../../idioma/traductor'
 import { useT } from '../../idioma/useT'
@@ -18,6 +18,9 @@ import { escribirEstado, type EstadoSimulador } from './estadoSimulador'
 import { GemeloRadar } from './GemeloRadar'
 import { generarInforme } from './informe'
 import { conBase } from '../../rutaBase'
+
+/** Clave de la fila donde viajan los `TextoClave` de sus celdas (no es una columna). */
+const CELDAS = '__celdas_texto'
 
 interface Props { evento: EventoDto; mundo: MundoDto; estado: EstadoSimulador }
 
@@ -39,16 +42,24 @@ export function ResultadosEvento({ evento, mundo, estado }: Props) {
   }, [evento, mundo, consulta])
 
   // Columnas y celdas las escribe modelo/desastres.py en español: el encabezado se traduce por su clave derivada
-  // (si el español coincide); las celdas de texto se quedan en español con lang="es" (spec §9.5).
+  // (si el español coincide); las celdas de texto se traducen por su `celdas_texto` y, sin clave, quedan en español
+  // con lang="es" (spec §9.5).
   const columnas: ColumnaTabla<Record<string, unknown>>[] = useMemo(() => (evento.tabla?.columnas ?? []).map((c, k) => {
     const encabezado = textoApi(c, clavesApi.simColumna(c))
     const numerica = (evento.tabla?.filas ?? []).every((f) => typeof f[k] === 'number' || f[k] === null)
     return {
       clave: c, etiqueta: encabezado.texto, identidad: k === 0, numerica,
-      lang: numerica ? undefined : 'es', langEncabezado: encabezado.traducido ? undefined : 'es',
+      langEncabezado: encabezado.traducido ? undefined : 'es',
+      formato: numerica ? undefined : (v: unknown, f: Record<string, unknown>) => {
+        const { clave, valores, decimales } = textoClave((f[CELDAS] as Record<string, TextoClaveApi | null>)[c])
+        return <TextoApi texto={String(v)} clave={clave} valores={valores} decimales={decimales} />
+      },
     }
   }), [evento, textoApi])
-  const filas = useMemo(() => (evento.tabla?.filas ?? []).map((f) => Object.fromEntries((evento.tabla?.columnas ?? []).map((c, k) => [c, f[k]]))), [evento])
+  const filas = useMemo(() => (evento.tabla?.filas ?? []).map((f, r) => ({
+    ...Object.fromEntries((evento.tabla?.columnas ?? []).map((c, k) => [c, f[k]])),
+    [CELDAS]: Object.fromEntries((evento.tabla?.columnas ?? []).map((c, k) => [c, evento.tabla?.celdas_texto?.[r]?.[k] ?? null])),
+  })), [evento])
 
   const copiar = async () => {
     try {
@@ -71,7 +82,10 @@ export function ResultadosEvento({ evento, mundo, estado }: Props) {
         </div>
         {aviso && <p className="simulador__nota" role="status">{t(aviso)}</p>}
         {evento.tabla && filas.length > 0 && <Tabla columnas={columnas} filas={filas} titulo={t('sim.res.detalle', { titulo: textoApi(evento.titulo, evento.clave_texto, evento.valores_texto).texto })} porPagina={15} />}
-        {evento.notas.map((n) => <p key={n} className="simulador__nota"><TextoApi texto={n} /></p>)}
+        {evento.notas.map((n, k) => {
+          const { clave, valores, decimales } = textoClave(evento.notas_texto?.[k])
+          return <p key={n} className="simulador__nota"><TextoApi texto={n} clave={clave} valores={valores} decimales={decimales} /></p>
+        })}
         {evento.modelos.length > 0 && (
           <details className="simulador__modelos">
             <summary>{t('sim.res.modelos')}</summary>

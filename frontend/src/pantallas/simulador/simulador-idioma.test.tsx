@@ -68,7 +68,7 @@ describe('simulador · idioma', () => {
   it('los resultados no dejan texto sin traducir (tabla y notas del modelo quedan con lang="es")', () => {
     const { container } = renderPseudo(<ResultadosEvento evento={INCENDIO} mundo={MUNDO} estado={{ ...ESTADO_INICIAL, i: 60, j: 60 }} />)
     expect(textosSinTraducir(container)).toEqual([])
-    expect(container.querySelector('td[lang="es"]')).not.toBeNull()
+    expect(container.querySelector('td [lang="es"], td[lang="es"]')).not.toBeNull()
     expect(screen.getByText('Nota del modelo.')).toHaveAttribute('lang', 'es')
   })
 

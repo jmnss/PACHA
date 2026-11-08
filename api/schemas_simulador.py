@@ -2,7 +2,7 @@
 from pydantic import BaseModel
 
 from api.schemas import CapaDto
-from datos.contrato import Origen
+from datos.contrato import Origen, TextoClave
 from datos.simulador import PeticionMundo
 
 
@@ -93,6 +93,7 @@ class MetricaEventoDto(BaseModel):
 class TablaEventoDto(BaseModel):
     columnas: list[str]
     filas: list[list[float | str | None]]
+    celdas_texto: list[list[TextoClave | None]] | None = None   # misma forma que `filas`; None donde no hay clave
 
 
 class EsperaRadarDto(BaseModel):
@@ -118,6 +119,7 @@ class EventoDto(BaseModel):
     metricas: list[MetricaEventoDto]
     tabla: TablaEventoDto | None
     notas: list[str]
+    notas_texto: list[TextoClave | None] | None = None   # misma longitud que `notas`
     modelos: list[str]
     paneles: list[CapaDto]
     titulos_paneles: list[str]

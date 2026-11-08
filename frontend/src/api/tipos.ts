@@ -656,6 +656,8 @@ export interface components {
             modelos: string[];
             /** Notas */
             notas: string[];
+            /** Notas Texto */
+            notas_texto?: (components["schemas"]["TextoClave"] | null)[] | null;
             origen: components["schemas"]["Origen"];
             /** Paneles */
             paneles: components["schemas"]["CapaDto"][];
@@ -1160,6 +1162,8 @@ export interface components {
         };
         /** TablaEventoDto */
         TablaEventoDto: {
+            /** Celdas Texto */
+            celdas_texto?: (components["schemas"]["TextoClave"] | null)[][] | null;
             /** Columnas */
             columnas: string[];
             /** Filas */
@@ -1198,6 +1202,29 @@ export interface components {
             t2m_c: number;
             /** Temporada */
             temporada: string;
+        };
+        /**
+         * TextoClave
+         * @description Texto del modelo reconocido contra una plantilla registrada: el cliente traduce `clave_texto`, rellena `{x}`
+         *     con `valores_texto` y respeta los `decimales_texto` de cada cifra.
+         */
+        TextoClave: {
+            /** Clave Texto */
+            clave_texto: string;
+            /**
+             * Decimales Texto
+             * @default {}
+             */
+            decimales_texto: {
+                [key: string]: number;
+            };
+            /**
+             * Valores Texto
+             * @default {}
+             */
+            valores_texto: {
+                [key: string]: number | string;
+            };
         };
         /** TipoCambio */
         TipoCambio: {

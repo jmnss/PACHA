@@ -9,6 +9,8 @@ import { EsperaRadar } from './EsperaRadar'
 import { GemeloRadar } from './GemeloRadar'
 import { lineasInforme } from './informe'
 import { ResultadosEvento } from './ResultadosEvento'
+import { ProveedorIdioma } from '../../idioma/ProveedorIdioma'
+import type { EventoDto } from '../../api/simulador'
 
 vi.mock('../../comparador/Comparador', () => ({
   Comparador: (p: { etiquetaAntes: string; etiquetaDespues: string }) => <div data-testid="comparador">{p.etiquetaAntes} | {p.etiquetaDespues}</div>,
@@ -102,5 +104,34 @@ describe('informe y enlace', () => {
     expect(screen.getByText('12,3 km²')).toBeInTheDocument()
     expect(screen.getByText('Bosque seco')).toBeInTheDocument()
     expect(screen.getByText('Rothermel (1972)')).toBeInTheDocument()
+  })
+})
+
+describe('ResultadosEvento · notas y celdas con clave', () => {
+  const CON_CLAVES = {
+    ...INCENDIO,
+    notas: ['Lluvia de 150 mm en 2 h con radio de 15 km. Humedad antecedente del suelo: 50 % del agua útil (CN normal (AMC II)).', 'Texto nuevo del modelo.'],
+    notas_texto: [
+      { clave_texto: 'api.sim.nota.tormenta.lluvia_normal', valores_texto: { mm: 150, h: 2, km: 15, pct: 50 }, decimales_texto: { mm: 1, h: 0, km: 0, pct: 0 } },
+      null,
+    ],
+    tabla: { columnas: ['Cobertura', 'Área (km²)'], filas: [['Zona urbana', 8.2]], celdas_texto: [[{ clave_texto: 'api.sim.celda.zona_urbana', valores_texto: {}, decimales_texto: {} }, null]] },
+  } as unknown as EventoDto
+  const enIdioma = (ev: EventoDto, idioma: 'es' | 'en') => render(
+    <ProveedorIdioma inicial={idioma}><QueryClientProvider client={new QueryClient()}><MemoryRouter>
+      <ResultadosEvento evento={ev} mundo={MUNDO} estado={{ ...ESTADO_INICIAL, i: 60, j: 60 }} />
+    </MemoryRouter></QueryClientProvider></ProveedorIdioma>,
+  )
+
+  it('en inglés traduce la nota con sus decimales y la celda; lo que no encaja queda en español con lang="es"', () => {
+    enIdioma(CON_CLAVES, 'en')
+    expect(screen.getByText(/Rainfall of 150\.0 mm in 2 h with a radius of 15 km/)).toBeInTheDocument()
+    expect(screen.getByText('Urban area')).toBeInTheDocument()
+    expect(screen.getByText('Texto nuevo del modelo.')).toHaveAttribute('lang', 'es')
+  })
+
+  it('sin notas_texto, el español con lang="es"', () => {
+    enIdioma(INCENDIO, 'en')
+    expect(screen.getByText('Nota del modelo.')).toHaveAttribute('lang', 'es')
   })
 })

@@ -1049,6 +1049,27 @@
             "title": "Notas",
             "type": "array"
           },
+          "notas_texto": {
+            "anyOf": [
+              {
+                "items": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/TextoClave"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notas Texto"
+          },
           "origen": {
             "$ref": "#/components/schemas/Origen"
           },
@@ -2606,6 +2627,30 @@
       },
       "TablaEventoDto": {
         "properties": {
+          "celdas_texto": {
+            "anyOf": [
+              {
+                "items": {
+                  "items": {
+                    "anyOf": [
+                      {
+                        "$ref": "#/components/schemas/TextoClave"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "type": "array"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Celdas Texto"
+          },
           "columnas": {
             "items": {
               "type": "string"
@@ -2745,6 +2790,43 @@
           "meses_secos"
         ],
         "title": "TemporadaDto",
+        "type": "object"
+      },
+      "TextoClave": {
+        "description": "Texto del modelo reconocido contra una plantilla registrada: el cliente traduce `clave_texto`, rellena `{x}`\ncon `valores_texto` y respeta los `decimales_texto` de cada cifra.",
+        "properties": {
+          "clave_texto": {
+            "title": "Clave Texto",
+            "type": "string"
+          },
+          "decimales_texto": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "default": {},
+            "title": "Decimales Texto",
+            "type": "object"
+          },
+          "valores_texto": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "default": {},
+            "title": "Valores Texto",
+            "type": "object"
+          }
+        },
+        "required": [
+          "clave_texto"
+        ],
+        "title": "TextoClave",
         "type": "object"
       },
       "TipoCambio": {

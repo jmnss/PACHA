@@ -210,3 +210,37 @@ def test_magnitud_e_intensidad_traen_su_numero():
     por = {m["etiqueta"]: m for m in ev["metricas"]}
     assert por["Magnitud"]["valores_texto"]["valor"] == pytest.approx(float(por["Magnitud"]["valor"].split()[1].replace(",", ".")))
     assert por["Intensidad máxima"]["valores_texto"] is not None
+
+
+@pytest.mark.parametrize("herramienta,params", [
+    ("incendio", {"horas": 6}), ("tormenta", {"duracion_h": 2}), ("inundacion", {"duracion_h": 2}),
+    ("terremoto", {}), ("terremoto", {"mecanismo": "Rumbo dextral"}), ("terremoto", {"mecanismo": "Rumbo sinistral"}),
+    ("terremoto", {"mecanismo": "Normal"}), ("erupcion", {"duracion_h": 2}),
+])
+def test_notas_y_celdas_del_simulador_tienen_clave(herramienta, params):
+    from tests.api.test_claves_api import CLAVES
+    ev = evento(herramienta, celda_en_tierra(), params)
+    assert len(ev["notas_texto"]) == len(ev["notas"])
+    for n, nt in zip(ev["notas"], ev["notas_texto"]):
+        assert nt is not None, n
+        assert nt["clave_texto"] in CLAVES
+        assert simulador_texto(nt) == n or nt["valores_texto"], n
+    if ev["tabla"]:
+        celdas = ev["tabla"]["celdas_texto"]
+        assert len(celdas) == len(ev["tabla"]["filas"])
+        for fila, cf in zip(ev["tabla"]["filas"], celdas):
+            assert len(fila) == len(cf)
+            for v, c in zip(fila, cf):
+                if isinstance(v, str) and not (herramienta == "terremoto" and v in ("IV", "V", "VI", "VII", "VIII", "IX", "X")):
+                    assert c is not None, v
+
+
+def simulador_texto(tc: dict) -> str:
+    from tests.api.test_claves_api import CLAVES
+    return CLAVES[tc["clave_texto"]]
+
+
+def test_nota_de_lluvia_recupera_sus_cifras_con_decimales():
+    ev = evento("tormenta", celda_en_tierra(), {"duracion_h": 2, "lluvia_mm": 150, "radio_km": 15})
+    nt = next(x for x in ev["notas_texto"] if x["clave_texto"].startswith("api.sim.nota.tormenta.lluvia"))
+    assert nt["valores_texto"]["mm"] == 150.0 and nt["decimales_texto"]["mm"] == 0 and nt["valores_texto"]["km"] == 15.0

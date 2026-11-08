@@ -305,7 +305,7 @@ def _a_numero(t: str) -> float:
 
 
 _FECHA_PLANTILLA = r"\d{2}/\d{2}/\d{4}"
-_PUNTO_PLANTILLA = r"[−+-]?\d+\.\d+"
+_PUNTO_PLANTILLA = r"[−+-]?\d+(?:\.\d+)?"
 
 
 def _patron_marcador(nombre: str) -> str:
@@ -335,7 +335,7 @@ def reconocer_con_decimales(plantilla: str, texto_es: str) -> tuple[dict[str, fl
             valores[k] = f"{a}-{mes}-{d}"
         elif k.endswith("_punto"):
             valores[k] = float(v.replace("−", "-"))
-            decimales[k] = len(v.split(".")[1])
+            decimales[k] = len(v.split(".")[1]) if "." in v else 0
         else:
             valores[k] = _a_numero(v)
             decimales[k] = len(v.split(",")[1]) if "," in v else 0

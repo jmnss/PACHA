@@ -14,7 +14,7 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 from datos import simulador_render as render
-from datos.claves import REGISTRO, numero_de, sin_nisar_simulador, slug
+from datos.claves import REGISTRO, buscar_texto, numero_de, sin_nisar_simulador, slug
 from datos.contrato import EntradaNoValida, Origen
 from datos.geografia import MENSAJE_FUERA_DE_ECUADOR, en_ecuador
 from modelo import desastres, estaciones
@@ -315,6 +315,12 @@ def _clave_titulo(herramienta: str, titulo: str, lat: float, lon: float) -> tupl
     return None, None
 
 
+def _texto_o_none(prefijo: str, texto_es: str) -> dict | None:
+    """`TextoClave` (como dict) del texto del modelo, o None si ninguna plantilla lo reconoce (queda en español)."""
+    tc = buscar_texto(prefijo, texto_es)
+    return tc.model_dump() if tc else None
+
+
 def desatar(p: PeticionEvento) -> dict:
     """Ejecuta el desastre y devuelve el `EventoDto` (con los paneles de radar como `CapaRaster`)."""
     if p.herramienta not in desastres.DESASTRES:
@@ -347,6 +353,10 @@ def desatar(p: PeticionEvento) -> dict:
         tabla = dict(columnas=[str(c) for c in t.columns],
                      filas=[[v if isinstance(v, (str, type(None))) else (_numero(v) if _numero(v) is not None else str(v)) for v in fila]
                             for fila in t.itertuples(index=False)])
+    notas_texto = [_texto_o_none("api.sim.nota.", n) for n in notas]
+    if tabla is not None:
+        tabla["celdas_texto"] = [[_texto_o_none("api.sim.celda.", v) if isinstance(v, str) else None for v in fila]
+                                 for fila in tabla["filas"]]
     la, lo = m.latlon(*ev.celda)
     clave_t, valores_t = _clave_titulo(p.herramienta, ev.titulo, la, lo)
     dto = dict(
@@ -357,7 +367,7 @@ def desatar(p: PeticionEvento) -> dict:
         capas=[dict(clave=c.clave, nombre=c.nombre, estilo=c.estilo, unidad=c.unidad, etiquetas=list(c.etiquetas),
                     clave_texto=_clave_capa(c.nombre)) for c in ev.capas],
         metricas=[_metrica_evento(e, v, a) for e, v, a in ev.metricas],
-        tabla=tabla, notas=notas, modelos=list(ev.modelos), paneles=paneles, titulos_paneles=[pn.titulo for pn in ev.nisar_paneles], comparable=comparable,
+        tabla=tabla, notas=notas, notas_texto=notas_texto, modelos=list(ev.modelos), paneles=paneles, titulos_paneles=[pn.titulo for pn in ev.nisar_paneles], comparable=comparable,
         polarizacion=paneles[0].polarizacion if comparable else None,
         metricas_radar=[_metrica_evento(e, v, a) for e, v, a in ev.nisar_metricas],
         espera_radar=dict(ciclo_dias=CICLO_DIAS_SUPUESTO, minimo_dias=0, maximo_dias=CICLO_DIAS_SUPUESTO,
