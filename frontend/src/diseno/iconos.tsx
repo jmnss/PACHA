@@ -116,6 +116,12 @@ export const IconoMas = (p: PropsIcono) => (
   </Base>
 )
 
+export const IconoMasAcciones = (p: PropsIcono) => (
+  <Base {...p}>
+    <path d="M8 3.5v.01M8 8v.01M8 12.5v.01" />
+  </Base>
+)
+
 export const IconoReintentar = (p: PropsIcono) => (
   <Base {...p}>
     <path d="M13 8a5 5 0 1 1-1.5-3.5M13 2.5v3h-3" />
