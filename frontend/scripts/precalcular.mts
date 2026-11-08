@@ -40,6 +40,7 @@ contexto.on('requestfinished', (peticion) => {
 })
 
 const page = await contexto.newPage()
+const capas = (id: string) => Object.values(indice).filter((c) => c.startsWith(`GET /api/escenarios/${id}/capa?`)).length
 async function visitar(ruta: string, despues?: (p: Page) => Promise<void>): Promise<void> {
   await page.goto(origen + ruta, { waitUntil: 'networkidle', timeout: 120_000 })
   if (despues) await despues(page)
@@ -58,16 +59,26 @@ await visitar('/')
 await visitar('/?historia=incendio')
 for (const e of escenarios) {
   for (const vista of ['mapa', 'comparar', 'serie']) {
-    await visitar(`/observatorio?escenario=${e.id}&vista=${vista}`, vista !== 'mapa' ? undefined : async (p) => {
-      // Con `reducedMotion: 'reduce'` cada pulsación de «Reproducir» avanza una pasada: se pulsa una vez por pasada
-      // para que se pida (y se grabe) la capa de cada fotograma de la línea de tiempo.
-      const boton = p.getByRole('button', { name: 'Reproducir' })
-      if (await boton.count() === 0) return
-      for (let k = 0; k <= pasadas[e.id]; k++) {
-        await boton.click()
-        await p.waitForLoadState('networkidle', { timeout: 60_000 })
-      }
-    })
+    // El reproductor se recorre otra vez (hasta dos) si falta alguna capa: en una máquina lenta un clic puede
+    // saltarse una pasada. Lo ya grabado no se repite.
+    const intentos = vista === 'mapa' ? 3 : 1
+    for (let intento = 0; intento < intentos && (intento === 0 || capas(e.id) < pasadas[e.id]); intento++) {
+      await visitar(`/observatorio?escenario=${e.id}&vista=${vista}`, vista !== 'mapa' ? undefined : async (p) => {
+        // Con `reducedMotion: 'reduce'` cada pulsación de «Reproducir» avanza una pasada: se pulsa una vez por pasada
+        // para que se pida (y se grabe) la capa de cada fotograma de la línea de tiempo.
+        const boton = p.getByRole('button', { name: 'Reproducir' })
+        if (await boton.count() === 0) return
+        for (let k = 0; k <= pasadas[e.id]; k++) {
+          // `networkidle` vuelve en el acto si la página ya estaba quieta: antes del siguiente clic se espera la
+          // respuesta de la capa (o 5 s, si esa pasada ya estaba en caché).
+          const capa = p.waitForResponse((r) => r.url().includes(`/api/escenarios/${e.id}/capa?`), { timeout: 5_000 }).catch(() => null)
+          await boton.click()
+          await capa
+          await p.waitForLoadState('networkidle', { timeout: 60_000 })
+        }
+      })
+      if (intento > 0) console.log(`reintento ${intento} de ${e.id}: ${capas(e.id)} de ${pasadas[e.id]} capas`)
+    }
   }
   if (e.historia !== null) await visitar(`/observatorio?escenario=${e.id}&vista=impacto`)
 }
@@ -84,7 +95,6 @@ writeFileSync(join(salida, 'indice.json'), JSON.stringify(indice))
 await navegador.close()
 
 // Cada escenario debe tener la capa de todas sus pasadas (el reproductor del mapa no puede depender del motor).
-const capas = (id: string) => Object.values(indice).filter((c) => c.startsWith(`GET /api/escenarios/${id}/capa?`)).length
 const faltan = escenarios.filter((e) => capas(e.id) < pasadas[e.id])
 for (const e of faltan) console.error(`Faltan capas de ${e.id}: ${capas(e.id)} de ${pasadas[e.id]}`)
 
