@@ -422,7 +422,8 @@ class ProveedorDemostracion:
                         id=c.clave, etiqueta=c.etiqueta, tipo="deslizador", minimo=c.minimo,
                         maximo=c.maximo, paso=c.paso, valor_defecto=defecto, escala=c.escala,
                         ayuda=c.ayuda or None))
-            salida.append(TipoCambio(id=clave, nombre=t.nombre, descripcion=t.metodo, controles=controles))
+            salida.append(TipoCambio(id=clave, nombre=t.nombre, descripcion=t.metodo, observable=t.observable,
+                                     controles=controles))
         return salida
 
     def intervalo_por_defecto(self, escenario_id: str) -> tuple[str, str]:

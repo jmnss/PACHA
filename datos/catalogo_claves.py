@@ -22,6 +22,8 @@ def _tipos(salida: dict[str, str], prov) -> None:
         salida[f"api.tipo.{t.id}.nombre"] = t.nombre
         if t.descripcion:
             salida[f"api.tipo.{t.id}.descripcion"] = t.descripcion
+        if t.observable:
+            salida[f"api.tipo.{t.id}.observable"] = t.observable
         for c in t.controles:
             base = f"api.control.{t.id}.{c.id}"
             salida[f"{base}.etiqueta"] = c.etiqueta

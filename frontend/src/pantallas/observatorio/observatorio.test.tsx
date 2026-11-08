@@ -73,7 +73,7 @@ function simularFetch() {
     llamadas.push({ url, metodo, cuerpo: init?.body ? JSON.parse(String(init.body)) : undefined })
     if (url === '/api/salud') return json({ estado: 'ok', hay_sinteticos: true, origen_tipo: 'sintetico', proveedor: 'demo', version: '1' })
     if (url === '/api/escenarios') return json([BASE])
-    if (url === '/api/tipos') return json([{ id: 'humedales', nombre: 'Pérdida de humedales', descripcion: 'El agua refleja el radar lejos del satélite y se ve oscura.' }, { id: 'incendios', nombre: 'Incendios forestales' }])
+    if (url === '/api/tipos') return json([{ id: 'humedales', nombre: 'Pérdida de humedales', descripcion: 'El agua refleja el radar lejos del satélite y se ve oscura.', observable: 'σ⁰ HH y HV (dB)' }, { id: 'incendios', nombre: 'Incendios forestales' }])
     if (url === '/api/escenarios/ec_x') return json(BASE)
     if (url === '/api/escenarios/ec_uno') return json({ ...BASE, id: 'ec_uno', nombre: 'Escena de una pasada', adquisiciones: BASE.adquisiciones.slice(0, 1) })
     if (url.startsWith('/api/escenarios/ec_x~caducado')) return json({ mensaje: 'El escenario no existe.' }, 404)
@@ -177,6 +177,14 @@ describe('Observatorio · mapa y tiempo', () => {
     await listo()
     const h = await screen.findByText(/^En este escenario de demostración,/)
     expect(h).toHaveTextContent('superficie inundada baja de 26,8 a 5,5 km² entre el 12 abr 2026 y el 18 may 2026.')
+  })
+
+  it('la cabecera dice qué observa el radar y explica σ⁰', async () => {
+    montar()
+    await listo()
+    const p = await screen.findByText(/Qué observa el radar en esta demostración:/)
+    expect(p).toHaveTextContent('Qué observa el radar en esta demostración: σ⁰ HH y HV (dB)')
+    expect(within(p).getByRole('button', { name: 'σ⁰' })).toBeInTheDocument()
   })
 
   it('lee la vista de la URL y las vistas pendientes avisan', async () => {

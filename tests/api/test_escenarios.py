@@ -33,3 +33,14 @@ def test_tipos_sin_controles_si_no_simula(cliente_ficticio):
 def test_escenario_inexistente_404(cliente):
     r = cliente.get("/api/escenarios/no-existe")
     assert r.status_code == 404 and "no-existe" in r.json()["mensaje"]
+
+
+def test_tipos_traen_observable_y_no_exponen_producto(cliente_demo):
+    r = cliente_demo.get("/api/tipos")
+    tipos = {t["id"]: t for t in r.json()}
+    assert all(t["observable"] for t in tipos.values())
+    assert tipos["humedales"]["observable"] == "σ⁰ HH y HV (dB)"
+    for t in tipos.values():
+        assert "producto" not in t
+    # El producto de NISAR (GCOV/GUNW/GOFF) no se verificó con la documentación oficial: no sale de la API.
+    assert not any(p in r.text for p in ("GCOV", "GUNW", "GOFF"))

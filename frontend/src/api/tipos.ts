@@ -1209,6 +1209,8 @@ export interface components {
             id: string;
             /** Nombre */
             nombre: string;
+            /** Observable */
+            observable?: string | null;
         };
         /** ValidationError */
         ValidationError: {

@@ -2774,6 +2774,17 @@
           "nombre": {
             "title": "Nombre",
             "type": "string"
+          },
+          "observable": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observable"
           }
         },
         "required": [

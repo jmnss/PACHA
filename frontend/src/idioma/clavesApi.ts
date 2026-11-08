@@ -14,7 +14,7 @@ export function slug(t: string): string {
 const idBase = (id: string) => id.split('~')[0]
 
 export const clavesApi = {
-  tipo: (id: string, campo: 'nombre' | 'descripcion') => `api.tipo.${id}.${campo}`,
+  tipo: (id: string, campo: 'nombre' | 'descripcion' | 'observable') => `api.tipo.${id}.${campo}`,
   control: (tipo: string, id: string, campo: 'etiqueta' | 'ayuda' | 'unidad') => `api.control.${tipo}.${id}.${campo}`,
   opcion: (tipo: string, control: string, etiquetaEs: string) => `api.opcion.${tipo}.${control}.${slug(etiquetaEs)}`,
   categoria: (variable: string, codigo: number | string) => `api.categoria.${slug(variable)}.${codigo}`,

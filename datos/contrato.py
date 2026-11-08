@@ -261,6 +261,8 @@ class TipoCambio(BaseModel):
     id: str
     nombre: str
     descripcion: str | None = None
+    # Qué magnitud observa el radar en este tipo (texto del modelo de demostración; sin verificar con la documentación oficial).
+    observable: str | None = None
     controles: list[Control] = Field(default_factory=list)
 
 

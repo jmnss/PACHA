@@ -12,6 +12,7 @@ import { Pestanas } from '../../diseno/Pestanas'
 import { Selector } from '../../diseno/Selector'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
 import { useMovil } from '../../estado/useMovil'
+import { Termino } from '../../diseno/Termino'
 import { clavesApi } from '../../idioma/clavesApi'
 import { useTituloPagina } from '../../estado/useTituloPagina'
 import { formatoHora } from '../../idioma/formato'
@@ -161,7 +162,7 @@ function Selectores({ tipos, lista, escenarioId, tipoId, actual, onEscenario, on
 }
 
 function ObservatorioCargado({ esc }: { esc: Escenario }) {
-  const { t, idioma } = useT()
+  const { t, idioma, textoApi } = useT()
   const [url, cambiar] = useEstadoUrl(ESQUEMA)
   const escenarios = useEscenarios()
   const tipos = useTipos()
@@ -202,6 +203,19 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
   }
   const puedeSimular = esc.capacidades.simulacion
   const tipoActual = tipos.data?.find((x) => x.id === esc.tipo_cambio)
+  const observable = tipoActual?.observable
+    ? textoApi(tipoActual.observable, clavesApi.tipo(tipoActual.id, 'observable'))
+    : null
+  // σ⁰ lleva su explicación; el resto del texto del observable viene de la API (con su clave).
+  const sigma = t('obs.estructura.sigma0_termino')
+  const detalleObservable = observable && (
+    <>
+      {t('obs.estructura.observable')}{' '}
+      {observable.texto.startsWith(sigma)
+        ? <><Termino nombre={sigma} explicacion={t('obs.estructura.sigma0_explicacion')} />{observable.traducido ? observable.texto.slice(sigma.length) : <span lang="es">{observable.texto.slice(sigma.length)}</span>}</>
+        : observable.traducido ? observable.texto : <span lang="es">{observable.texto}</span>}
+    </>
+  )
   const controles = useMemo<Control[]>(() => tipos.data?.find((x) => x.id === esc.tipo_cambio)?.controles ?? [], [tipos.data, esc.tipo_cambio])
   // Cambiar parámetros mantiene el lugar, la pareja y el instante: solo cambia la escena.
   const alNuevo = useCallback((id: string, v: Valores) => cambiar({ escenario: id, par: codificar(v) }, { reemplazar: true }), [cambiar])
@@ -230,7 +244,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
   if (vista === 'mapa') acciones.push({ id: 'pais', texto: pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo'), alElegir: () => setPais((p) => !p) })
   return (
     <>
-      <CabeceraPantalla titulo={t('obs.estructura.titulo')} hallazgo={texto} acciones={selectores} />
+      <CabeceraPantalla titulo={t('obs.estructura.titulo')} hallazgo={texto} detalle={detalleObservable} acciones={selectores} />
       <div className="observatorio__vistas">
         <Pestanas etiqueta={t('obs.estructura.vistas_etiqueta')} pestanas={(esc.historia ? VISTAS : VISTAS.filter((v) => v.id !== 'impacto')).map((v) => ({ id: v.id, etiqueta: t(v.clave) }))} activa={vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
         {movil && acciones.length > 0 && <MenuAcciones etiqueta={t('obs.estructura.mas_acciones')} acciones={acciones} />}

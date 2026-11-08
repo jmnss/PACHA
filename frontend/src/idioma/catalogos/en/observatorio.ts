@@ -2,6 +2,9 @@ import type { observatorio as esObservatorio } from '../es/observatorio'
 
 export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.estructura.titulo': 'Observatory',
+  'obs.estructura.observable': 'What the radar observes in this demonstration:',
+  'obs.estructura.sigma0_termino': 'σ⁰',
+  'obs.estructura.sigma0_explicacion': 'Backscatter: the fraction of the radar signal that returns to the satellite.',
   'obs.estructura.pregunta': 'What changed here between two passes, and by how much.',
   'obs.estructura.cargando_escenario': 'Loading the scenario…',
   'obs.estructura.volver_a': 'Back to {nombre}',

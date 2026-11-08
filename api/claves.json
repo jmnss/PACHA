@@ -1632,12 +1632,20 @@
     "es": "Actividad agrícola"
   },
   {
+    "clave": "api.tipo.agricultura.observable",
+    "es": "σ⁰ HV por parcela (dB)"
+  },
+  {
     "clave": "api.tipo.glaciares.descripcion",
     "es": "Seguimiento de desplazamientos (offset tracking) entre adquisiciones de 12 días."
   },
   {
     "clave": "api.tipo.glaciares.nombre",
     "es": "Movimiento de glaciares"
+  },
+  {
+    "clave": "api.tipo.glaciares.observable",
+    "es": "Velocidad superficial (m/día)"
   },
   {
     "clave": "api.tipo.humedales.descripcion",
@@ -1648,12 +1656,20 @@
     "es": "Pérdida de humedales"
   },
   {
+    "clave": "api.tipo.humedales.observable",
+    "es": "σ⁰ HH y HV (dB)"
+  },
+  {
     "clave": "api.tipo.incendios.descripcion",
     "es": "Razón logarítmica HV después/antes e inversión de biomasa con el modelo de nube de agua."
   },
   {
     "clave": "api.tipo.incendios.nombre",
     "es": "Incendios forestales"
+  },
+  {
+    "clave": "api.tipo.incendios.observable",
+    "es": "σ⁰ HV (dB)"
   },
   {
     "clave": "api.tipo.subsidencia.descripcion",
@@ -1664,12 +1680,20 @@
     "es": "Subsidencia del terreno"
   },
   {
+    "clave": "api.tipo.subsidencia.observable",
+    "es": "Velocidad vertical (cm/año)"
+  },
+  {
     "clave": "api.tipo.terremotos.descripcion",
     "es": "Interferometría diferencial de 12 días; el modelo de Okada genera la deformación cosísmica."
   },
   {
     "clave": "api.tipo.terremotos.nombre",
     "es": "Terremotos"
+  },
+  {
+    "clave": "api.tipo.terremotos.observable",
+    "es": "Desplazamiento LOS (cm)"
   },
   {
     "clave": "api.unidad.cm_ano",
