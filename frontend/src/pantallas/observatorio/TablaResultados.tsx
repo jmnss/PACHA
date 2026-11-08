@@ -51,7 +51,17 @@ export function TablaResultados({ tabla, escenario }: { tabla: Resultado; escena
     }
   })
   const tituloT = textoClave(tabla.titulo_texto)
-  const descargar = () => descargarCsv(`${limpio(tabla.titulo) || 'tabla'}_${limpio(escenario)}.csv`, aCsv(tabla.filas.map((f) => Object.fromEntries(nombres.map((c, i) => [c, f[i] ?? null]))), nombres, tabla.origen, idioma))
+  // El CSV lleva los mismos textos que la pantalla: encabezados y celdas pasan por `textoApi` (las fechas siguen en ISO).
+  const etiquetas = columnas.map((c) => c.etiqueta)
+  const descargar = () => {
+    const csv = tabla.filas.map((f, r) => Object.fromEntries(etiquetas.map((e, i) => {
+      const v = f[i] ?? null
+      if (typeof v !== 'string' || FECHA_ISO.test(v)) return [e, v]
+      const x = textoClave(tabla.celdas_texto?.[r]?.[i])
+      return [e, textoApi(v, x.clave, x.valores, x.decimales).texto]
+    })))
+    descargarCsv(`${limpio(tabla.titulo) || 'tabla'}_${limpio(escenario)}.csv`, aCsv(csv, etiquetas, tabla.origen, idioma))
+  }
   return (
     <Tarjeta titulo={<TextoApi texto={tabla.titulo} clave={tituloT.clave} valores={tituloT.valores} decimales={tituloT.decimales} />} pie={<SelloOrigen origen={tabla.origen} />}>
       <Tabla titulo={textoApi(tabla.titulo, tituloT.clave, tituloT.valores, tituloT.decimales).texto} columnas={columnas} filas={filas} porPagina={50} />

@@ -25,7 +25,7 @@ Criterios del borrador:
 
 | Qué | Dónde | Cuántos textos |
 |---|---|---|
-| Textos cortos de la interfaz (botones, títulos, avisos, errores, textos de la API) | `docs/traduccion-kichwa.csv` (generado desde `frontend/src/idioma/catalogos/qu/*.ts`) | 1083 claves |
+| Textos cortos de la interfaz (botones, títulos, avisos, errores, textos de la API) | `docs/traduccion-kichwa.csv` (generado desde `frontend/src/idioma/catalogos/qu/*.ts`) | 1090 claves |
 | Relatos de las Historias | `frontend/src/pantallas/historias/contenido/inundacion.qu.ts`, `incendio.qu.ts` | 2 relatos |
 | Explicaciones de términos de las Historias | `frontend/src/pantallas/historias/contenido/terminos.qu.ts` | 9 términos |
 | Guion del recorrido guiado | `frontend/src/pantallas/recorrido/guion.qu.ts` | 6 pasos |

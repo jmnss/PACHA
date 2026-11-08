@@ -496,3 +496,35 @@ def test_nota_de_pedernales_con_vector_los_lleva_cifras(prov):
     assert tc.clave_texto == "api.plantilla.nota.pedernales_los"
     assert set(tc.valores_texto) == {"le_signo_punto", "ln_signo_punto", "lu_signo_punto"}
     assert all(d == 2 for d in tc.decimales_texto.values())
+
+
+@pytest.mark.parametrize("esc_id", list(ESCENARIOS_DEMO))
+def test_textos_del_observatorio_ida_y_vuelta(prov, esc_id):
+    """Rellenada con sus valores y decimales, cada plantilla reproduce exactamente el texto que envió el modelo."""
+    from tests.datos.test_claves_demo import reconstruir
+    antes, despues = prov.intervalo_por_defecto(esc_id)
+    r = prov.cambio(esc_id, antes, despues, None)
+    for n, tc in zip(r.notas, r.notas_texto or [None] * len(r.notas)):
+        if tc is not None:
+            assert reconstruir(tc) == n
+    for t in r.tablas:
+        assert reconstruir(t.titulo_texto) == t.titulo
+        for c, tc in zip(t.columnas, t.columnas_texto):
+            assert reconstruir(tc) == c
+        for fila, cf in zip(t.filas, t.celdas_texto):
+            for v, tc in zip(fila, cf):
+                if tc is not None:
+                    assert reconstruir(tc) == v
+    for s in [*r.series, prov.serie_seleccion(esc_id, punto=(80, 80)), prov.serie_seleccion(esc_id, cuadrante=(60, 100, 60, 100))]:
+        for nombre, tc in s.nombres_texto.items():
+            assert reconstruir(tc) == nombre
+    for kw in ({"punto": (80, 80)}, {"cuadrante": (60, 100, 60, 100)}):
+        m = prov.medir(esc_id, antes, despues, **kw)
+        for fila, tx in zip(m.tabla, m.textos):
+            for col, tc in tx.items():
+                if tc is not None:
+                    assert reconstruir(tc) == fila[col]
+        for x in m.metricas:
+            if x.clave_texto and x.clave_texto != "api.medicion.posicion":
+                from datos.claves import REGISTRO
+                assert reconstruir({"clave_texto": x.clave_texto + ".etiqueta", "valores_texto": x.valores_texto, "decimales_texto": {}}) == x.etiqueta

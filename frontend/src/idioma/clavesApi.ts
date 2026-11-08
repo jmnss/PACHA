@@ -85,7 +85,7 @@ export function valoresApi(
   )
 }
 
-const NUMERO = /\d+(?:[\s\u2009\u00a0]\d{3})*(?:,\d+)?/g
+const NUMERO = /\d+(?:[ \u2009\u00a0]\d{3})*(?:,\d+)?/g
 
 /** Valor de una métrica de la API («1 113 viviendas», «0,22 km²»): reescribe las cifras con el formato del idioma,
  * conservando sus decimales, y traduce las palabras «mil» y «personas». Sin `valores_texto.valor`, el texto queda tal cual. */
@@ -99,7 +99,7 @@ export function valorMetrica(
   return valorEs
     .replace(NUMERO, (m) => {
       const dec = m.includes(',') ? m.split(',')[1].length : 0
-      const n = Number(m.replace(/[\s\u2009\u00a0]/g, '').replace(',', '.'))
+      const n = Number(m.replace(/[ \u2009\u00a0]/g, '').replace(',', '.'))
       return formato(n, { minimumFractionDigits: dec, maximumFractionDigits: dec })
     })
     .replace(/\bmil\b/g, palabras.mil)

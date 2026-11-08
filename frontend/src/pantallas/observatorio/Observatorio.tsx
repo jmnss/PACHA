@@ -244,7 +244,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
   if (vista === 'mapa') acciones.push({ id: 'pais', texto: pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo'), alElegir: () => setPais((p) => !p) })
   return (
     <>
-      <CabeceraPantalla titulo={t('obs.estructura.titulo')} hallazgo={texto} detalle={detalleObservable} acciones={selectores} />
+      <CabeceraPantalla titulo={t('obs.estructura.titulo')} hallazgo={texto} detalle={movil ? undefined : detalleObservable} acciones={selectores} />
       <div className="observatorio__vistas">
         <Pestanas etiqueta={t('obs.estructura.vistas_etiqueta')} pestanas={(esc.historia ? VISTAS : VISTAS.filter((v) => v.id !== 'impacto')).map((v) => ({ id: v.id, etiqueta: t(v.clave) }))} activa={vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
         {movil && acciones.length > 0 && <MenuAcciones etiqueta={t('obs.estructura.mas_acciones')} acciones={acciones} />}
@@ -276,7 +276,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
         </div>
         <aside className="observatorio__lado" aria-label={t('obs.estructura.lado_etiqueta')}>
           {!movil && panel}
-          <AyudaRadar descripcion={tipoActual?.descripcion} nombreTipo={tipoActual?.nombre} tipoId={tipoActual?.id} />
+          <AyudaRadar descripcion={tipoActual?.descripcion} nombreTipo={tipoActual?.nombre} tipoId={tipoActual?.id} observable={movil ? detalleObservable : undefined} />
           {vista === 'comparar' && peticion && (
             <Mediciones
               esc={esc} antesId={antesId} despuesId={despuesId} bbox={resultado.data?.antes.rejilla.bbox ?? esc.bbox}

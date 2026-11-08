@@ -22,7 +22,7 @@ PLANTILLAS.update({
     "api.sim.nota.incendio.residentes": "Residentes dentro del perímetro: {n}. No hay una función de mortalidad publicada para incendios forestales en Ecuador: se informa la exposición.",
     "api.sim.nota.incendio.residentes_menos_de_uno": "Residentes dentro del perímetro: < 1. No hay una función de mortalidad publicada para incendios forestales en Ecuador: se informa la exposición.",
     "api.sim.nota.incendio.cobertura": "El páramo y el bosque seco arden con facilidad; el bosque húmedo apenas propaga si el combustible supera su humedad de extinción.",
-    "api.sim.nota.incendio.radar": f"NISAR: la próxima pasada llega {_PASADA}; quemado ⟺ LR < −2,5 dB en HV.",
+    "api.sim.nota.incendio.radar": "NISAR: la próxima pasada llega días después del evento (ver «Espera hasta la primera imagen»); quemado ⟺ LR < −2,5 dB en HV.",
     "api.sim.nota.tormenta.lluvia_humedo": "Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN húmedo (AMC III)).",
     "api.sim.nota.tormenta.lluvia_normal": "Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN normal (AMC II)).",
     "api.sim.nota.tormenta.lluvia_seco": "Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN seco (AMC I)).",
@@ -52,7 +52,8 @@ COBERTURAS_ES = ("Agua", "Glaciar y nieve", "Páramo", "Bosque andino", "Bosque 
                  "Bosque seco y matorral", "Cultivos y pastos", "Zona urbana")
 PERCEPCIONES_ES = ("Ligera", "Moderada", "Fuerte", "Muy fuerte", "Severa", "Violenta", "Extrema")
 PELIGROS_ES = ("Flujo piroclástico", "Lahar", "Ceniza ≥ 1 cm", "Techos colapsados (viviendas)")
-for _t in (*COBERTURAS_ES, *PERCEPCIONES_ES, *PELIGROS_ES):
+ROMANOS_ES = ("IV", "V", "VI", "VII", "VIII", "IX", "X")   # grados de intensidad (MMI) de la tabla del terremoto
+for _t in (*COBERTURAS_ES, *PERCEPCIONES_ES, *PELIGROS_ES, *ROMANOS_ES):
     PLANTILLAS[f"api.sim.celda.{slug(_t)}"] = _t
 PLANTILLAS.update({
     "api.sim.celda.modelo_cono": "Cono de energía H/L = {hl_punto}, Hc = {hc} m",

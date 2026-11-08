@@ -81,6 +81,9 @@ export function guardarBitacora(entradas: EntradaBitacora[]): void {
 /** Clave y cifras de un título en español de la bitácora (entradas antiguas, sin `titulo_clave`): se prueba contra
  * las plantillas `api.sim.titulo.*` del catálogo `es`. Cada `{x}` casa un número con coma decimal, salvo `{volcan}`,
  * que es texto. Si ninguna encaja, `null`: el título queda en español. */
+/** Volcanes de `modelo/desastres.py` (VOLCANES): un título solo se reconoce con uno de ellos (lo prueba un test). */
+export const VOLCANES = ['Cotopaxi', 'Tungurahua', 'Sangay', 'Reventador', 'Guagua Pichincha', 'Cayambe', 'Chimborazo', 'Antisana', 'Sierra Negra (Galápagos)']
+
 export function reconocerTitulo(tituloEs: string): { clave: string; valores: Record<string, number | string> } | null {
   const escapar = (t: string) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   for (const [clave, plantilla] of Object.entries(es)) {
@@ -89,7 +92,7 @@ export function reconocerTitulo(tituloEs: string): { clave: string; valores: Rec
     const patron = plantilla.split(/\{(\w+)\}/).map((p, k) => {
       if (k % 2 === 0) return escapar(p)
       nombres.push(p)
-      return p === 'volcan' ? '([^·]+?)' : '(\\d+(?:,\\d+)?)'
+      return p === 'volcan' ? `(${VOLCANES.map(escapar).join('|')})` : '(\\d+(?:,\\d+)?)'
     }).join('')
     const m = new RegExp(`^${patron}$`).exec(tituloEs)
     if (!m) continue

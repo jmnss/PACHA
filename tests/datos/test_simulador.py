@@ -1,6 +1,8 @@
 """Simulador de eventos: mundos y eventos sintéticos, deterministas y sin red (usar_dem=False)."""
+import re
 from datetime import date
 
+import numpy as np
 import pytest
 from pydantic import ValidationError
 
@@ -103,7 +105,7 @@ def test_espera_radar_determinista_y_no_verificada():
     e = a["espera_radar"]
     assert e["verificado"] is False and e["ciclo_dias"] == 12 and e["medio_dias"] == 6.0
     assert (e["minimo_dias"], e["maximo_dias"], e["duracion_evento_h"]) == (0, 12, 12.0)
-    assert not any("días después del evento" in n for n in a["notas"])
+    assert not any(re.search(r"\d+ días después del evento|ciclo de", n) for n in a["notas"])
 
 
 def test_evento_determinista_por_semilla():
@@ -212,32 +214,77 @@ def test_magnitud_e_intensidad_traen_su_numero():
     assert por["Intensidad máxima"]["valores_texto"] is not None
 
 
-@pytest.mark.parametrize("herramienta,params", [
-    ("incendio", {"horas": 6}), ("tormenta", {"duracion_h": 2}), ("inundacion", {"duracion_h": 2}),
-    ("terremoto", {}), ("terremoto", {"mecanismo": "Rumbo dextral"}), ("terremoto", {"mecanismo": "Rumbo sinistral"}),
-    ("terremoto", {"mecanismo": "Normal"}), ("erupcion", {"duracion_h": 2}),
-])
-def test_notas_y_celdas_del_simulador_tienen_clave(herramienta, params):
-    from tests.api.test_claves_api import CLAVES
-    ev = evento(herramienta, celda_en_tierra(), params)
+def _mundo_con_mar(**cambios):
+    """Mundo del simulador con un tercio oeste hundido (el relieve sintético no trae mar), como en
+    `tests/modelo/test_aguas_someras_equivalencia.py`; `cambios` ajusta otros campos del mundo."""
+    from datos.simulador import crear
+    from modelo.desastres import Mundo
+    m, dto = crear(mundo())
+    z = m.z.astype(float).copy()
+    z[:, :m.n // 3] = np.linspace(-40.0, -0.5, m.n // 3)[None, :]
+    return Mundo(**{**m.__dict__, "z": z, "mar": z <= 0.0, **cambios}), dto
+
+
+def _evento_en(monkeypatch, m, dto, herramienta, celda, params):
+    from datos.simulador import _LRU
+    monkeypatch.setattr(simulador, "crear", lambda p: (m, dto))
+    monkeypatch.setattr(simulador, "_EVENTOS", _LRU(2))
+    return simulador.desatar(PeticionEvento(mundo=mundo(), herramienta=herramienta, celda=celda, parametros=params))
+
+
+def _ida_y_vuelta(ev):
+    """Cada nota y cada celda de texto tiene clave y su plantilla, rellena, reproduce el texto original."""
+    from tests.datos.test_claves_demo import reconstruir
     assert len(ev["notas_texto"]) == len(ev["notas"])
+    claves = []
     for n, nt in zip(ev["notas"], ev["notas_texto"]):
         assert nt is not None, n
-        assert nt["clave_texto"] in CLAVES
-        assert simulador_texto(nt) == n or nt["valores_texto"], n
+        assert reconstruir(nt) == n
+        claves.append(nt["clave_texto"])
     if ev["tabla"]:
         celdas = ev["tabla"]["celdas_texto"]
         assert len(celdas) == len(ev["tabla"]["filas"])
         for fila, cf in zip(ev["tabla"]["filas"], celdas):
             assert len(fila) == len(cf)
             for v, c in zip(fila, cf):
-                if isinstance(v, str) and not (herramienta == "terremoto" and v in ("IV", "V", "VI", "VII", "VIII", "IX", "X")):
+                if isinstance(v, str):
                     assert c is not None, v
+                    assert reconstruir(c) == v
+    return claves
 
 
-def simulador_texto(tc: dict) -> str:
-    from tests.api.test_claves_api import CLAVES
-    return CLAVES[tc["clave_texto"]]
+@pytest.mark.parametrize("herramienta,params", [
+    ("incendio", {"horas": 6}), ("tormenta", {"duracion_h": 2}), ("inundacion", {"duracion_h": 2}),
+    ("terremoto", {}), ("terremoto", {"mecanismo": "Rumbo dextral"}), ("terremoto", {"mecanismo": "Rumbo sinistral"}),
+    ("terremoto", {"mecanismo": "Normal"}), ("erupcion", {"duracion_h": 2}),
+])
+def test_notas_y_celdas_del_simulador_tienen_clave(herramienta, params):
+    _ida_y_vuelta(evento(herramienta, celda_en_tierra(), params))
+
+
+def test_ramas_del_modelo_con_mar_y_humedad_se_reconocen(monkeypatch):
+    """Tsunami, marejada, AMC I y III y menos de un residente: el texto lo genera `modelo/`, no se escribe a mano."""
+    visto: set[str] = set()
+    con_mar, dto = _mundo_con_mar()
+    i, j = next((i, j) for i in range(40, 80) for j in range(2, 20) if con_mar.mar[i, j])
+    visto |= set(_ida_y_vuelta(_evento_en(monkeypatch, con_mar, dto, "terremoto", (i, j), {"mw": 8.4, "profundidad_km": 10})))
+    visto |= set(_ida_y_vuelta(_evento_en(monkeypatch, con_mar, dto, "inundacion", (i, j), {"duracion_h": 2})))
+    tierra = celda_en_tierra()
+    for h in (0.9, 0.5, 0.1):
+        m, d = _mundo_con_mar(humedad_suelo=h)
+        visto |= set(_ida_y_vuelta(_evento_en(monkeypatch, m, d, "tormenta", tierra, {"duracion_h": 2})))
+    m, d = _mundo_con_mar(poblacion=np.full(con_mar.poblacion.shape, 1e-6))
+    visto |= set(_ida_y_vuelta(_evento_en(monkeypatch, m, d, "incendio", tierra, {"horas": 6})))
+    assert {"api.sim.nota.terremoto.tsunami", "api.sim.nota.inundacion.marejada", "api.sim.nota.tormenta.lluvia_humedo",
+            "api.sim.nota.tormenta.lluvia_normal", "api.sim.nota.tormenta.lluvia_seco",
+            "api.sim.nota.incendio.residentes_menos_de_uno"} <= visto
+
+
+def test_la_nota_del_radar_del_incendio_no_es_redundante():
+    ev = evento("incendio", celda_en_tierra(), {"horas": 6})
+    radar = next(n for n in ev["notas"] if n.startswith("NISAR:"))
+    assert "llega días después del evento (ver «Espera hasta la primera imagen»)" in radar
+    assert "pasada posterior" not in radar
 
 
 def test_nota_de_lluvia_recupera_sus_cifras_con_decimales():

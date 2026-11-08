@@ -9,8 +9,10 @@ las genera recorriendo el catálogo y las vuelca a `api/claves.json`.
 """
 from __future__ import annotations
 
+import functools
 import re
 import unicodedata
+from datetime import date
 
 from datos.geografia import MENSAJE_FUERA_DE_ECUADOR
 
@@ -297,11 +299,12 @@ REGISTRO.update({
 })
 
 
-_NUM_PLANTILLA = r"[−+-]?\d+(?:[\s\u2009\u00a0]\d{3})*(?:,\d+)?"
+_MILES = "[ \u2009\u00a0]"   # espacio, fino o duro: lo que escribe `_fmt` (no `\s`, que difiere entre Python y JS)
+_NUM_PLANTILLA = rf"[−+-]?\d+(?:{_MILES}\d{{3}})*(?:,\d+)?"
 
 
 def _a_numero(t: str) -> float:
-    return float(re.sub(r"[\s\u2009\u00a0]", "", t).replace("−", "-").replace(",", "."))
+    return float(re.sub(_MILES, "", t).replace("−", "-").replace(",", "."))
 
 
 _FECHA_PLANTILLA = r"\d{2}/\d{2}/\d{4}"
@@ -317,14 +320,29 @@ def _patron_marcador(nombre: str) -> str:
     return _NUM_PLANTILLA
 
 
+@functools.lru_cache(maxsize=None)
+def _compilar(plantilla: str) -> re.Pattern[str]:
+    """Patrón de una plantilla (ASCII: `\\d` solo casa 0-9). Un marcador repetido casa el mismo texto que la primera vez."""
+    vistos: set[str] = set()
+    trozos = []
+    for k, x in enumerate(re.split(r"\{(\w+)\}", plantilla)):
+        if k % 2 == 0:
+            trozos.append(re.escape(x))
+        elif x in vistos:
+            trozos.append(f"(?P={x})")
+        else:
+            vistos.add(x)
+            trozos.append(f"(?P<{x}>{_patron_marcador(x)})")
+    return re.compile("".join(trozos), re.ASCII)
+
+
 def reconocer_con_decimales(plantilla: str, texto_es: str) -> tuple[dict[str, float | str], dict[str, int]] | None:
     """Valores y decimales de `texto_es` si encaja con `plantilla`; si no, None.
 
-    Cada `{x}` es un número con coma decimal; `{fecha…}` es dd/mm/aaaa (valor: fecha ISO); `{…_punto}` es un número
-    con punto decimal y signo opcional. Los decimales son los que escribió el modelo en cada cifra."""
-    partes = re.split(r"\{(\w+)\}", plantilla)
-    patron = "".join(f"(?P<{x}>{_patron_marcador(x)})" if k % 2 else re.escape(x) for k, x in enumerate(partes))
-    m = re.fullmatch(patron, texto_es)
+    Cada `{x}` es un número con coma decimal; `{fecha…}` es dd/mm/aaaa (valor: fecha ISO; una fecha que no existe,
+    como 31/02/2024, no encaja); `{…_punto}` es un número con punto decimal y signo opcional. Un marcador repetido
+    debe repetir el mismo texto. Los decimales son los que escribió el modelo en cada cifra."""
+    m = _compilar(plantilla).fullmatch(texto_es)
     if not m:
         return None
     valores: dict[str, float | str] = {}
@@ -332,6 +350,10 @@ def reconocer_con_decimales(plantilla: str, texto_es: str) -> tuple[dict[str, fl
     for k, v in m.groupdict().items():
         if k.startswith("fecha"):
             d, mes, a = v.split("/")
+            try:
+                date.fromisoformat(f"{a}-{mes}-{d}")
+            except ValueError:
+                return None
             valores[k] = f"{a}-{mes}-{d}"
         elif k.endswith("_punto"):
             valores[k] = float(v.replace("−", "-"))

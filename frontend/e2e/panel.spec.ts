@@ -18,17 +18,23 @@ test('la hoja de parámetros abre y cierra en móvil (390 px)', async ({ page })
   await expect(abrir).toBeFocused()
 })
 
-test('en móvil el mapa del Observatorio empieza a la vista (390x844)', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/observatorio')
-  const mapa = page.locator('.vista-mapa__mapa')
-  await expect(mapa).toBeVisible()
-  const caja = await mapa.boundingBox()
-  // Medido a 390x844: el mapa empieza en y=526 (478 antes de la línea «Qué observa el radar…» del bloque B);
-  // el umbral deja ~20 px de margen contra regresiones del encabezado.
-  expect(caja!.y).toBeLessThan(550)
-  expect(caja!.y + caja!.height).toBeGreaterThan(844)
-})
+for (const [idioma, observa] of [['es', 'Qué observa el radar'], ['en', 'What the radar observes']] as const) {
+  test(`en móvil el mapa del Observatorio empieza a la vista y el observable va bajo el mapa (390x844, ${idioma})`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto(`/observatorio?idioma=${idioma}`)
+    const mapa = page.locator('.vista-mapa__mapa')
+    await expect(mapa).toBeVisible()
+    const caja = await mapa.boundingBox()
+    // Medido a 390x844: el mapa empieza en y=478; el umbral deja ~20 px de margen contra regresiones del encabezado.
+    expect(caja!.y).toBeLessThan(500)
+    expect(caja!.y + caja!.height).toBeGreaterThan(844)
+    // No se pierde información: la línea del observable pasa a la tarjeta de ayuda, bajo el mapa.
+    const observable = page.locator('.ayuda-radar__observable')
+    await expect(observable).toContainText(observa)
+    expect((await observable.boundingBox())!.y).toBeGreaterThan(caja!.y)
+    await expect(page.locator('header.cabecera').getByText(observa)).toHaveCount(0)
+  })
+}
 
 test('el mapa del Observatorio tiene alto propio en escritorio y en móvil', async ({ page }) => {
   for (const [ancho, alto] of [[1440, 900], [390, 844]]) {

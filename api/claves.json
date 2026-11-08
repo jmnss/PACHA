@@ -1500,6 +1500,14 @@
     "es": "Glaciar y nieve"
   },
   {
+    "clave": "api.sim.celda.iv",
+    "es": "IV"
+  },
+  {
+    "clave": "api.sim.celda.ix",
+    "es": "IX"
+  },
+  {
     "clave": "api.sim.celda.lahar",
     "es": "Lahar"
   },
@@ -1544,8 +1552,28 @@
     "es": "Techos colapsados (viviendas)"
   },
   {
+    "clave": "api.sim.celda.v",
+    "es": "V"
+  },
+  {
+    "clave": "api.sim.celda.vi",
+    "es": "VI"
+  },
+  {
+    "clave": "api.sim.celda.vii",
+    "es": "VII"
+  },
+  {
+    "clave": "api.sim.celda.viii",
+    "es": "VIII"
+  },
+  {
     "clave": "api.sim.celda.violenta",
     "es": "Violenta"
+  },
+  {
+    "clave": "api.sim.celda.x",
+    "es": "X"
   },
   {
     "clave": "api.sim.celda.zona_urbana",
@@ -1981,7 +2009,7 @@
   },
   {
     "clave": "api.sim.nota.incendio.radar",
-    "es": "NISAR: la próxima pasada llega en una pasada posterior (ver «Espera hasta la primera imagen»); quemado ⟺ LR < −2,5 dB en HV."
+    "es": "NISAR: la próxima pasada llega días después del evento (ver «Espera hasta la primera imagen»); quemado ⟺ LR < −2,5 dB en HV."
   },
   {
     "clave": "api.sim.nota.incendio.residentes",

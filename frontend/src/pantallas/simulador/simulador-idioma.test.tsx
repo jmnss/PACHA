@@ -3,7 +3,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Catalogo, Herramienta, MundoDto } from '../../api/simulador'
 import { renderConIdioma, renderPseudo, textosSinTraducir } from '../../idioma/pruebas'
 import { Bitacora } from './Bitacora'
-import { csvBitacora, entradaDeEvento, lugarTexto, reconocerTitulo } from './bitacora'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+import { csvBitacora, entradaDeEvento, lugarTexto, reconocerTitulo, VOLCANES } from './bitacora'
 import { crearContexto } from '../../idioma/useT'
 import type { EventoDto } from '../../api/simulador'
 import { ESTADO_INICIAL } from './estadoSimulador'
@@ -136,6 +138,13 @@ describe('exportaciones en el idioma elegido (bloque C)', () => {
     expect(reconocerTitulo('Terremoto Mw 7,8')).toEqual({ clave: 'api.sim.titulo.terremoto', valores: { mw: 7.8 } })
     expect(reconocerTitulo('Erupción IEV 3 del Cotopaxi')).toEqual({ clave: 'api.sim.titulo.erupcion_volcan', valores: { vei: 3, volcan: 'Cotopaxi' } })
     expect(reconocerTitulo('Un título inventado')).toBeNull()
+    expect(reconocerTitulo('Erupción IEV 3 del Volcán Inventado')).toBeNull()
+  })
+
+  it('VOLCANES coincide con los de modelo/desastres.py', () => {
+    const fuente = readFileSync(resolve(__dirname, '../../../../modelo/desastres.py'), 'utf8')
+    const bloque = /VOLCANES = \[([\s\S]*?)\n\]/.exec(fuente)![1]
+    expect([...bloque.matchAll(/\("([^"]+)", -?\d/g)].map((m) => m[1])).toEqual(VOLCANES)
   })
 
   it('el informe en inglés no deja región, temporada ni cifras en español', () => {

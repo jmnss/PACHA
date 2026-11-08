@@ -1,5 +1,5 @@
-import { render, screen, within } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 import type { ResultadoCambio } from '../../api/consultas'
 import { NotasModelo } from '../../diseno/NotasModelo'
 import { ProveedorIdioma } from '../../idioma/ProveedorIdioma'
@@ -53,5 +53,21 @@ describe('textos del Observatorio por clave', () => {
     const f = (n: number, op?: Intl.NumberFormatOptions) => formatoNumero('en', n, op)
     expect(valoresApi({ a_signo_punto: 0.4, b_signo_punto: -0.09, hl_punto: 0.3 }, f, undefined, { a_signo_punto: 2, b_signo_punto: 2, hl_punto: 2 }))
       .toEqual({ a_signo_punto: '+0.40', b_signo_punto: '-0.09', hl_punto: '0.30' })
+  })
+
+  it('el CSV de la tabla por parcela en inglés lleva los mismos textos que la pantalla', async () => {
+    let contenido: Blob | null = null
+    URL.createObjectURL = vi.fn((b: Blob) => { contenido = b; return 'blob:x' })
+    URL.revokeObjectURL = vi.fn()
+    vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {})
+    en(<TablaResultados tabla={TABLA} escenario="ec_daule" />)
+    fireEvent.click(screen.getByRole('button', { name: 'Download CSV' }))
+    await waitFor(() => expect(contenido).not.toBeNull())
+    const texto: string = await new Promise((ok) => { const f = new FileReader(); f.onload = () => ok(String(f.result)); f.readAsText(contenido!) })
+    const cuerpo = texto.replace(/^\uFEFF/, '').split('\n').filter((l) => !l.startsWith('#')).join('\n')
+    expect(cuerpo).toContain('Parcel,Rotation,Estimated harvest,Columna nueva')
+    expect(cuerpo).toContain('0,Rice → Rice,2026-05-26,Texto raro')
+    expect(cuerpo).toContain('1,Banana,,Otro')
+    expect(cuerpo).not.toMatch(/Parcela|Rotación|Arroz|Banano/)
   })
 })

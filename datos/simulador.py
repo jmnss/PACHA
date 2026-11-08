@@ -345,7 +345,9 @@ def desatar(p: PeticionEvento) -> dict:
     paneles = [_panel_a_capa(pn, m, dto_mundo["id"], k) for k, pn in enumerate(ev.nisar_paneles)]
     comparable = (len(paneles) >= 2 and paneles[0].paleta == paneles[1].paleta != "categorias"
                   and (paneles[0].vmin, paneles[0].vmax) == (paneles[1].vmin, paneles[1].vmax))
-    notas = [re.sub(r"\d+ días después del evento \(ciclo de \d+ días\)", "en una pasada posterior (ver «Espera hasta la primera imagen»)", n)
+    notas = [re.sub(r"\d+ días después del evento \(ciclo de \d+ días\)", "en una pasada posterior (ver «Espera hasta la primera imagen»)",
+                    re.sub(r"llega \d+ días después del evento \(ciclo de \d+ días\)",
+                           "llega días después del evento (ver «Espera hasta la primera imagen»)", n))
              for n in ev.notas]
     tabla = None
     if ev.tabla is not None and not ev.tabla.empty:

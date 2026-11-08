@@ -522,6 +522,7 @@ class ProveedorDemostracion:
                 x=f["x_km"].astype(float).tolist(), y=f["y_km"].astype(float).tolist(),
                 u=(vel * np.sin(ang)).tolist(), v=(vel * np.cos(ang)).tolist(),
                 unidad="m/día", origen=esc.origen)
+        notas_texto = [buscar_texto("api.plantilla.nota.", str(n)) for n in a.notas]
         return ResultadoCambio(
             antes=self._capa_cubo(escena, esc, i0, variable, polarizacion),
             despues=self._capa_cubo(escena, esc, i1, variable, polarizacion),
@@ -532,8 +533,7 @@ class ProveedorDemostracion:
             notas=[str(n) for n in a.notas],
             origen=esc.origen,
             tablas=tablas, vectores=vectores, capas_extra=extras,
-            notas_texto=[buscar_texto("api.plantilla.nota.", str(n)) for n in a.notas]
-            if any(buscar_texto("api.plantilla.nota.", str(n)) for n in a.notas) else None,
+            notas_texto=notas_texto if any(notas_texto) else None,
         )
 
     def medir(self, escenario_id: str, antes_id: str, despues_id: str,
