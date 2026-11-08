@@ -5,7 +5,6 @@ export interface AccionMenu {
   id: string
   texto: string
   alElegir: () => void
-  presionada?: boolean
 }
 
 interface Props {
@@ -27,11 +26,11 @@ export function MenuAcciones({ etiqueta, acciones }: Props) {
   useEffect(() => {
     if (!abierto) return
     lista.current?.querySelector<HTMLElement>('[role="menuitem"]')?.focus()
-    const fuera = (e: MouseEvent) => {
+    const fuera = (e: PointerEvent) => {
       if (raiz.current && !raiz.current.contains(e.target as Node)) setAbierto(false)
     }
-    document.addEventListener('mousedown', fuera)
-    return () => document.removeEventListener('mousedown', fuera)
+    document.addEventListener('pointerdown', fuera)
+    return () => document.removeEventListener('pointerdown', fuera)
   }, [abierto])
 
   const alTeclear = (e: KeyboardEvent) => {
@@ -78,7 +77,6 @@ export function MenuAcciones({ etiqueta, acciones }: Props) {
               type="button"
               role="menuitem"
               className="menu-acciones__item"
-              aria-pressed={a.presionada}
               onClick={() => elegir(a)}
             >
               {a.texto}

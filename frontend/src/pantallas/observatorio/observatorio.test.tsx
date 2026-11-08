@@ -364,11 +364,15 @@ describe('Observatorio · placa del mapa', () => {
     await screen.findByTestId('mapa-falso')
     const boton = await screen.findByRole('button', { name: /Cambio · antes .* · Capa · 85 %/ })
     expect(boton).toHaveAttribute('aria-expanded', 'false')
+    expect(boton).not.toHaveAttribute('aria-controls')
+    expect(boton.querySelector('svg')).not.toBeNull() // chevron: la placa parece pulsable
     expect(document.querySelectorAll('.vista-mapa__arriba .vista-mapa__placa')).toHaveLength(1)
     expect(screen.queryByRole('slider', { name: /Opacidad/ })).not.toBeInTheDocument()
     expect(screen.queryByRole('tab', { name: 'Satélite' })).not.toBeInTheDocument()
     fireEvent.click(boton)
     expect(boton).toHaveAttribute('aria-expanded', 'true')
+    expect(boton.getAttribute('aria-controls')).toBeTruthy()
+    expect(document.getElementById(boton.getAttribute('aria-controls')!)).not.toBeNull()
     expect(screen.getByRole('slider', { name: /Opacidad/ })).toBeInTheDocument()
   })
 

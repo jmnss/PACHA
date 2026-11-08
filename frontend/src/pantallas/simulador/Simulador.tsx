@@ -21,6 +21,7 @@ import { escribirEstado, leerEstado, sanearParametros, type EstadoSimulador, typ
 import { PanelHerramienta } from './PanelHerramienta'
 import { valoresIniciales } from './valores'
 import { PanelMundo, type BorradorMundo } from './PanelMundo'
+import { useBorradorMundo } from './useBorradorMundo'
 import { Tablero } from './Tablero'
 import { ResultadosEvento } from './ResultadosEvento'
 import { clavesApi } from '../../idioma/clavesApi'
@@ -40,6 +41,8 @@ export default function Simulador() {
     lat: estado.lat, lon: estado.lon, extension_km: estado.ext, fecha: estado.fecha, usar_dem: estado.dem, ciudades: estado.ciudades,
   }), [estado.lat, estado.lon, estado.ext, estado.fecha, estado.dem, estado.ciudades])
   const mundo = useMundo(mundoReq)
+  const actualMundo = useMemo(() => ({ lat: estado.lat, lon: estado.lon, ext: estado.ext, fecha: estado.fecha, dem: estado.dem }), [estado.lat, estado.lon, estado.ext, estado.fecha, estado.dem])
+  const borrador = useBorradorMundo(cat, actualMundo)
 
   const actualizar = (parcial: Partial<EstadoSimulador>, reemplazar = true) =>
     setParams(escribirEstado({ ...estado, ...parcial }), { replace: reemplazar })
@@ -96,7 +99,7 @@ export default function Simulador() {
   const tarjetaMundo = cat && (
     <Tarjeta titulo={t('sim.pantalla.mundo')}>
       <PanelMundo catalogo={cat} cargando={mundo.isFetching} onCrear={crear}
-        actual={{ lat: estado.lat, lon: estado.lon, ext: estado.ext, fecha: estado.fecha, dem: estado.dem }} />
+        borrador={borrador} />
     </Tarjeta>
   )
   return (

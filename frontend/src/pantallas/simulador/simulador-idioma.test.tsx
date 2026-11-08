@@ -13,6 +13,7 @@ import { PanelHerramienta } from './PanelHerramienta'
 import { PanelMundo } from './PanelMundo'
 import { ResultadosEvento } from './ResultadosEvento'
 import { Tablero } from './Tablero'
+import { useBorradorMundo } from './useBorradorMundo'
 import { valoresIniciales } from './valores'
 import { traductor } from '../../idioma/traductor'
 
@@ -38,6 +39,12 @@ const CATALOGO = {
 
 const MUNDO_MARCAS = { ...MUNDO, marcas: [{ x: 0.2, y: 0.5, texto: 'Loja', tipo: 'ciudad' }, { x: 0.8, y: 0.2, texto: 'Cotopaxi', tipo: 'volcan' }] } as unknown as MundoDto
 
+const ACTUAL_MUNDO = { lat: -4.05, lon: -79.25, ext: 30, fecha: '2026-08-15', dem: true }
+function ConBorrador() {
+  const borrador = useBorradorMundo(CATALOGO, ACTUAL_MUNDO)
+  return <PanelMundo catalogo={CATALOGO} cargando={false} onCrear={() => {}} borrador={borrador} />
+}
+
 beforeEach(() => localStorage.clear())
 
 describe('simulador · idioma', () => {
@@ -53,7 +60,7 @@ describe('simulador · idioma', () => {
 
   it('el panel del mundo no deja texto sin traducir', () => {
     const { container } = renderPseudo(
-      <PanelMundo catalogo={CATALOGO} cargando={false} onCrear={() => {}} actual={{ lat: -4.05, lon: -79.25, ext: 30, fecha: '2026-08-15', dem: true }} />,
+      <ConBorrador />,
     )
     expect(textosSinTraducir(container)).toEqual([])
   })

@@ -227,7 +227,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
   const vista = url.vista === 'impacto' && !esc.historia ? 'mapa' : url.vista
   const acciones: AccionMenu[] = []
   if (puedeSimular) acciones.push({ id: 'parametros', texto: t('obs.parametros.titulo'), alElegir: () => setHoja(true) })
-  if (vista === 'mapa') acciones.push({ id: 'pais', texto: pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo'), alElegir: () => setPais((p) => !p), presionada: pais })
+  if (vista === 'mapa') acciones.push({ id: 'pais', texto: pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo'), alElegir: () => setPais((p) => !p) })
   return (
     <>
       <CabeceraPantalla titulo={t('obs.estructura.titulo')} hallazgo={texto} acciones={selectores} />

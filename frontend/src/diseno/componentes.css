@@ -338,7 +338,7 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
 .menu-acciones__boton { min-height: var(--h-touch); min-width: var(--h-touch); }
 .menu-acciones__lista {
   position: absolute; right: 0; top: 100%; margin-top: var(--space-1); z-index: 20;
-  min-width: var(--w-panel-idioma); display: flex; flex-direction: column;
+  min-width: var(--w-menu-acciones); display: flex; flex-direction: column;
   background: var(--raised); border: 1px solid var(--control); border-radius: var(--radius-card);
   box-shadow: var(--shadow-float); padding: var(--space-1);
 }
@@ -347,4 +347,4 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
   font: inherit; font-size: var(--fs-14); color: var(--text); background: transparent; border: 0;
   border-radius: var(--radius-chip); cursor: pointer;
 }
-.menu-acciones__item:hover, .menu-acciones__item[aria-pressed="true"] { background: var(--control); }
+.menu-acciones__item:hover { background: var(--control); }

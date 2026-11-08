@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import type { Catalogo } from '../../api/simulador'
 import { Boton } from '../../diseno/Boton'
 import { Campo } from '../../diseno/Campo'
@@ -7,25 +6,23 @@ import { Selector } from '../../diseno/Selector'
 import { clavesApi } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import { useT } from '../../idioma/useT'
-import type { EstadoSimulador } from './estadoSimulador'
+import { PROPIO, type BorradorMundo, type BorradorMundoEstado } from './useBorradorMundo'
 
-export type BorradorMundo = Pick<EstadoSimulador, 'lat' | 'lon' | 'ext' | 'fecha' | 'dem'>
-const PROPIO = '__propio__'
+export type { BorradorMundo }
 
 interface Props {
   catalogo: Catalogo
-  actual: BorradorMundo
+  /** Borrador y preset, elevados a `Simulador`. */
+  borrador: BorradorMundoEstado
   cargando: boolean
   /** Crea el mundo con el borrador; `herramienta` viene de un mundo predefinido. */
   onCrear: (b: BorradorMundo, herramienta?: string) => void
 }
 
 /** Elección del lugar y de la fecha (temporada); el mundo solo se crea al pulsar el botón. */
-export function PanelMundo({ catalogo, actual, cargando, onCrear }: Props) {
+export function PanelMundo({ catalogo, borrador, cargando, onCrear }: Props) {
   const { t, textoApi } = useT()
-  const [b, setB] = useState<BorradorMundo>(actual)
-  const [preset, setPreset] = useState(() => catalogo.mundos.find((m) => m.lat === actual.lat && m.lon === actual.lon)?.nombre ?? PROPIO)
-  useEffect(() => { setB(actual) }, [actual])
+  const { b, setB, preset, setPreset } = borrador
 
   const elegirPreset = (nombre: string) => {
     setPreset(nombre)

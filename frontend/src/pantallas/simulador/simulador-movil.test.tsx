@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { Catalogo, Herramienta } from '../../api/simulador'
@@ -47,5 +47,21 @@ describe('Simulador · orden en móvil', () => {
     montar()
     const { mundo, tablero } = posicion()
     expect(tablero.compareDocumentPosition(mundo) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+})
+
+describe('Simulador · borrador del mundo', () => {
+  it('al cruzar 700 px (cambia el orden y se remonta PanelMundo) el borrador sobrevive', () => {
+    const oyentes = new Set<() => void>()
+    let movil = false
+    vi.stubGlobal('matchMedia', (q: string) => ({
+      get matches() { return movil }, media: q,
+      addEventListener: (_: string, f: () => void) => oyentes.add(f), removeEventListener: (_: string, f: () => void) => oyentes.delete(f),
+    }))
+    montar()
+    fireEvent.change(screen.getByLabelText('Latitud'), { target: { value: '-1.23' } })
+    expect(screen.getByLabelText('Latitud')).toHaveValue(-1.23)
+    act(() => { movil = true; oyentes.forEach((f) => f()) })
+    expect(screen.getByLabelText('Latitud')).toHaveValue(-1.23)
   })
 })

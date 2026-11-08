@@ -61,7 +61,9 @@
   .vista-mapa__arriba { flex-direction: column; align-items: stretch; }
   .vista-mapa__capa { max-width: 100%; }
   .vista-mapa__placa { padding: var(--space-2) var(--space-3); display: flex; flex-direction: column; gap: var(--space-2); color: var(--secondary); font-size: var(--fs-12); line-height: var(--lh-16); }
-  .vista-mapa__placa-boton { text-align: left; text-decoration: none; color: inherit; min-height: var(--h-touch); }
+  .vista-mapa__placa-boton { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); width: 100%; text-align: left; text-decoration: none; color: inherit; min-height: var(--h-touch); }
+  .vista-mapa__placa-chevron { flex: none; display: inline-flex; transition: transform var(--t-respuesta) ease-out; }
+  .vista-mapa__placa-boton[aria-expanded="true"] .vista-mapa__placa-chevron { transform: rotate(180deg); }
   .vista-mapa__placa .controles-mapa { width: 100%; padding: 0; background: none; }
   .vista-mapa__leyenda { margin-bottom: var(--space-8); }
 }

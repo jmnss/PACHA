@@ -57,7 +57,7 @@ describe('MenuAcciones', () => {
   it('clic fuera cierra', () => {
     const boton = montar()
     fireEvent.click(boton)
-    fireEvent.mouseDown(screen.getByRole('button', { name: 'Fuera' }))
+    fireEvent.pointerDown(screen.getByRole('button', { name: 'Fuera' }))
     expect(screen.queryByRole('menu')).toBeNull()
   })
 })

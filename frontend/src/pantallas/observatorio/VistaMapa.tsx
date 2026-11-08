@@ -8,6 +8,7 @@ import { useMovil } from '../../estado/useMovil'
 import { mensajeDeError } from '../../api/cliente'
 import { useCapa, useFotogramas, useSimular, type CapaDto, type Contexto, type Escenario, type ResultadoCambio } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
+import { IconoChevron } from '../../diseno/iconos'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
 import { Leyenda } from '../../diseno/Leyenda'
 import { Pestanas } from '../../diseno/Pestanas'
@@ -176,8 +177,9 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
             <div className="vista-mapa__arriba">
               {movil ? (
                 <div className="vista-mapa__placa">
-                  <button type="button" className="vista-mapa__plegar vista-mapa__placa-boton num" aria-expanded={placaAbierta} aria-controls={idPlaca} onClick={() => setPlacaAbierta((a) => !a)}>
-                    {capa && rotulo ? t('obs.mapa.resumen_capa', { rotulo, pct: Math.round(opacidad * 100) }) : t('obs.mapa.resumen_capa_sola', { pct: Math.round(opacidad * 100) })}
+                  <button type="button" className="vista-mapa__plegar vista-mapa__placa-boton num" aria-expanded={placaAbierta} aria-controls={placaAbierta ? idPlaca : undefined} onClick={() => setPlacaAbierta((a) => !a)}>
+                    <span>{capa && rotulo ? t('obs.mapa.resumen_capa', { rotulo, pct: Math.round(opacidad * 100) }) : t('obs.mapa.resumen_capa_sola', { pct: Math.round(opacidad * 100) })}</span>
+                    <span className="vista-mapa__placa-chevron"><IconoChevron /></span>
                   </button>
                   {placaAbierta && (
                     <div id={idPlaca}>

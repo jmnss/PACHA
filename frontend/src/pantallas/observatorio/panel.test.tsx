@@ -230,6 +230,20 @@ describe('PanelSimulacion', () => {
     expect(screen.getByRole('menuitem', { name: 'Ver el escenario' })).toBeInTheDocument()
   })
 
+  it('sin capacidad de simulación el menú no ofrece «Parámetros del modelo»', async () => {
+    movilSim()
+    montar('/observatorio?escenario=ec_x')
+    await screen.findByText(/Cinta de pasadas/)
+    fireEvent.click(await screen.findByRole('button', { name: 'Más acciones' }))
+    expect(screen.getByRole('menuitem', { name: 'Parámetros del modelo' })).toBeInTheDocument()
+    cleanup()
+    montar('/observatorio?escenario=ec_real')
+    await screen.findByText(/Cinta de pasadas/)
+    fireEvent.click(await screen.findByRole('button', { name: 'Más acciones' }))
+    expect(screen.queryByRole('menuitem', { name: 'Parámetros del modelo' })).not.toBeInTheDocument()
+    expect(screen.getByRole('menuitem', { name: 'Ver todo Ecuador' })).not.toHaveAttribute('aria-pressed')
+  })
+
   it('en escritorio no hay menú y los botones siguen en la barra del mapa', async () => {
     montar('/observatorio?escenario=ec_x')
     await screen.findByText(/Cinta de pasadas/)
