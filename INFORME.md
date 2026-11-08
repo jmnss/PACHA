@@ -11,6 +11,13 @@ GitHub Pages»), Playwright de Pages 11/11.
 Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea. Las secciones
 fechadas más abajo son históricas; **la lista vigente de pendientes es «Pendientes vigentes»**.
 
+## Publicación de los bloques A, B y C (2026-11-08)
+
+Publicado en Pages con `13e7c08` (corrida 42519336402, 225 respuestas precalculadas). La corrida anterior falló en el
+precálculo (`ec_loja`: 29 de 30 capas): `networkidle` vuelve en el acto si la página ya estaba quieta y en CI un clic de
+«Reproducir» se saltó una pasada. `frontend/scripts/precalcular.mts` ahora espera la capa de cada pasada y recorre otra
+vez el reproductor (hasta dos) si falta alguna.
+
 ## Rendimiento del simulador (2026-11-08)
 
 Con permiso del usuario para tocar `modelo/` (CLAUDE.md lo restringe a correcciones), se optimizó
