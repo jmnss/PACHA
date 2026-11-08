@@ -113,6 +113,7 @@ Rama `migracion-react`, plan `docs/superpowers/plans/2026-11-08-pendientes-visua
 - **B5** `TipoCambio.observable` en la cabecera («Qué observa el radar en esta demostración: σ⁰ …», con σ⁰ explicado). `producto` de NISAR no se expone (prueba). El valor sigue sin verificar con la documentación oficial.
 - **B6** Provincia y región bajo el puntero (`queryRenderedFeatures` sobre `provincias`) y marcadores del catálogo en la vista país (el mapa ignora clics sobre `.mapa__marcador`).
 - **Decisiones fuera del plan:** el aria-label de los marcadores se fija después de `addTo` (MapLibre lo sobrescribe con «Map marker»); claves de región `piezas.mapa.region.{costa,sierra,amazonia,insular}` (el GeoJSON dice «Insular», no «Galápagos»); `obs.estructura.observable` es solo la etiqueta y el valor viene de `api.tipo.<id>.observable`; el kichwa nuevo es borrador sin validar (CSV: 949 claves, 0 validadas).
+- **Revisión del bloque (2026-11-08):** en MapLibre 4.7.1 un clic en un marcador no llega al evento `click` del mapa (comprobado con un `console.log` temporal), así que la guarda `esClicEnMarcador` es defensa para otras versiones; el e2e cuenta los POST a `/api/simulacion/escenario` (0) pero no puede fallar al quitarla, y la guarda tiene su prueba unitaria.
 - **Pendientes:** la serie del punto en Pages la calcula el motor (no se precalcula); el texto de nombres de serie de la selección («Punto seleccionado (3×3 px)», «σ⁰ HH en la selección») sigue en español en en/qu, es del bloque C; la capa `provincias-hit` no hizo falta con el mapa local (no se verificó con el mapa remoto, sin red).
 
 ## Pendientes vigentes (lista única, 2026-11-05)
@@ -302,6 +303,8 @@ Esta sección es el punto de partida; el diseño detallado (spec y plan) se escr
 
 - `/cambio` puede ser pesado con rejillas reales (hasta 6 capas por respuesta): pedir capas extra a demanda.
 - `/medicion` recalcula el cambio solo para conocer la malla: añadir caché.
+- `instante_evento` es la hora nominal del escenario tratada como UTC (misma convención que los fotogramas). Con datos reales habrá que convertir desde la hora local del evento; la convención no se cambia ahora.
+- `serie-seleccion` calcula la forma de la malla con `prov.capa(...)`: trabajo extra en Pyodide, y el contrato no garantiza que esa malla sea la de análisis (pendiente técnico; hoy coinciden en el demo).
 
 ## Pendientes menores diferidos (de las revisiones)
 

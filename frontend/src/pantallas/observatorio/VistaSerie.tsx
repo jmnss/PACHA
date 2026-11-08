@@ -26,9 +26,9 @@ interface Props {
   resultado: UseQueryResult<ResultadoCambio>
   antesId: string
   despuesId: string
-  /** Selección de la vista Comparar (de la URL): si hay, se muestra primero su evolución. */
   /** Instante (ms) de la cinta: se dibuja como cursor en cada gráfica. */
   ms?: number
+  /** Selección de la vista Comparar (de la URL): si hay, se muestra primero su evolución. */
   punto?: Punto | null
   cuadrante?: Cuadrante | null
 }

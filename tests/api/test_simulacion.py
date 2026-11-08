@@ -1,4 +1,3 @@
-import pytest
 import gzip
 import pytest
 import time

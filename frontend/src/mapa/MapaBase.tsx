@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useT } from '../idioma/useT'
 import type { Clave } from '../idioma/traductor'
-import { provinciaEn, type ProvinciaBajoPuntero } from './provincia'
+import { esClicEnMarcador } from './marcador'
+import { provinciaEn, siguienteProvincia, type ProvinciaBajoPuntero } from './provincia'
 import maplibregl, { type Map as MapaMapLibre } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import './mapa.css'
@@ -78,12 +79,13 @@ export function MapaBase({ bbox, onClic, onFueraDeEcuador, interactivo = true, m
     })
     const leerProvincia = (e: { point: { x: number; y: number } }) => {
       if (!consultarProvincia.current) return
-      setProvincia(provinciaEn(m.queryRenderedFeatures([e.point.x, e.point.y], { layers: ['provincias'] })))
+      const nueva = provinciaEn(m.queryRenderedFeatures([e.point.x, e.point.y], { layers: ['provincias'] }))
+      setProvincia((previa) => siguienteProvincia(previa, nueva))
     }
     m.on('mousemove', leerProvincia)
     m.on('click', (e) => {
       // Un clic en un marcador del catálogo lo atiende el marcador: no crea un escenario derivado.
-      if ((e.originalEvent.target as HTMLElement | null)?.closest('.mapa__marcador')) return
+      if (esClicEnMarcador(e.originalEvent.target)) return
       leerProvincia(e)
       const { lat, lng } = e.lngLat
       if (dentroDeEcuador(lat, lng)) clics.current.onClic?.(lat, lng)

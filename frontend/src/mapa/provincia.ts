@@ -13,3 +13,8 @@ export function provinciaEn(elementos: readonly Elemento[]): ProvinciaBajoPunter
   }
   return null
 }
+
+/** Conserva la provincia anterior (misma referencia, sin repintar) si el nombre no cambió. */
+export function siguienteProvincia(previa: ProvinciaBajoPuntero | null, nueva: ProvinciaBajoPuntero | null): ProvinciaBajoPuntero | null {
+  return previa?.nombre === nueva?.nombre ? previa : nueva
+}

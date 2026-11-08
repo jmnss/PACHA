@@ -160,12 +160,22 @@ describe('Observatorio · series · idioma', () => {
   })
 
   it('con un punto muestra primero «En la selección» con gráfica, tabla, CSV y aviso de polarización', async () => {
+    let contenido: Blob | null = null
+    let nombre = ''
+    URL.createObjectURL = vi.fn((b: Blob) => { contenido = b; return 'blob:x' })
+    URL.revokeObjectURL = vi.fn()
+    vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (this: HTMLAnchorElement) { nombre = this.download })
     montar('/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18&p=0.5,0.5')
     await waitFor(() => expect(screen.getAllByRole('figure')).toHaveLength(3))
     const tarjeta = screen.getByRole('heading', { name: 'En la selección' }).closest('section') as HTMLElement
     expect(within(tarjeta).getByRole('figure')).toBeInTheDocument()
     expect(within(tarjeta).getByRole('table')).toBeInTheDocument()
-    expect(within(tarjeta).getByRole('button', { name: 'Descargar CSV' })).toBeInTheDocument()
+    fireEvent.click(within(tarjeta).getByRole('button', { name: 'Descargar CSV' }))
+    await waitFor(() => expect(contenido).not.toBeNull())
+    const csv = (await leer(contenido!)).replace(/^\uFEFF/, '')
+    expect(csv.startsWith('# origen: sintético')).toBe(true)
+    expect(csv).toContain('DATOS DE DEMOSTRACIÓN')
+    expect(nombre).toBe('serie_ec-x_seleccion.csv')
     expect(tarjeta).toHaveTextContent('La serie usa la polarización del observable del tipo, no la del selector.')
     const titulos = screen.getAllByRole('heading').map((h) => h.textContent)
     expect(titulos.indexOf('En la selección')).toBeLessThan(titulos.indexOf('Humedad del suelo'))

@@ -192,6 +192,43 @@ def test_serie_seleccion_punto_y_cuadrante(cliente_demo):
     assert len({p[2] for p in r.json()["puntos"]}) == 2
 
 
+def _valores(serie) -> list[float]:
+    return [round(float(p[1]), 6) for p in serie["puntos"]] if isinstance(serie, dict) else \
+        [round(float(p[1]), 6) for p in serie.puntos]
+
+
+def _malla(prov, id):
+    esc = prov.escenario(id)
+    pol = esc.polarizaciones[0] if esc.polarizaciones else None
+    return prov.capa(id, esc.adquisiciones[0].id, esc.variables[0], pol).datos.shape
+
+
+def test_serie_seleccion_punto_no_cruza_x_e_y(cliente_demo):
+    from datos.proveedores.demo import ProveedorDemostracion
+    prov = ProveedorDemostracion()
+    ny, nx = _malla(prov, "ec_la_segua")
+    x, y = 0.2, 0.8
+    esperado = prov.serie_seleccion("ec_la_segua", punto=(int(y * ny), int(x * nx)))   # fila = y, columna = x
+    cruzado = prov.serie_seleccion("ec_la_segua", punto=(int(x * ny), int(y * nx)))
+    assert _valores(esperado) != _valores(cruzado)   # la prueba distingue el cruce
+    r = cliente_demo.get(f"/api/escenarios/ec_la_segua/serie-seleccion?punto={x},{y}")
+    assert _valores(r.json()) == _valores(esperado)
+
+
+def test_serie_seleccion_cuadrante_asimetrico_no_cruza_x_e_y(cliente_demo):
+    import math
+    from datos.proveedores.demo import ProveedorDemostracion
+    prov = ProveedorDemostracion()
+    ny, nx = _malla(prov, "ec_la_segua")
+    x0, y0, x1, y1 = 0.1, 0.5, 0.3, 0.9
+    cuad = (int(math.floor(y0 * ny)), int(math.ceil(y1 * ny)), int(math.floor(x0 * nx)), int(math.ceil(x1 * nx)))
+    cruzado = (int(math.floor(x0 * ny)), int(math.ceil(x1 * ny)), int(math.floor(y0 * nx)), int(math.ceil(y1 * nx)))
+    esperado = prov.serie_seleccion("ec_la_segua", cuadrante=cuad)
+    assert _valores(esperado) != _valores(prov.serie_seleccion("ec_la_segua", cuadrante=cruzado))
+    r = cliente_demo.get(f"/api/escenarios/ec_la_segua/serie-seleccion?cuadrante={x0},{y0},{x1},{y1}")
+    assert _valores(r.json()) == _valores(esperado)
+
+
 @pytest.mark.parametrize("consulta", ["punto=1.2,0.5", "cuadrante=0.3,0.3,0.3,0.6", "", "punto=a,b",
                                       "punto=0.5", "cuadrante=0.1,0.2,0.3"])
 def test_serie_seleccion_valida(cliente_demo, consulta):

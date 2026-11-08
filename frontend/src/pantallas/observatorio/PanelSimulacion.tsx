@@ -11,7 +11,7 @@ import { Termino } from '../../diseno/Termino'
 import { clavesApi } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import { useT } from '../../idioma/useT'
-import { defectoDe, GENERICOS, horaATexto, ORBITAS, SEMILLA_MAX, textoAHora, type Control } from './parametros'
+import { defectoDe, fechaValida, GENERICOS, horaATexto, ORBITAS, SEMILLA_MAX, textoAHora, type Control } from './parametros'
 import type { Simulacion } from './useSimulacion'
 
 interface Props {
@@ -111,6 +111,7 @@ export function PanelSimulacion({ esc, controles, sim, enHoja }: Props) {
   const { t } = useT()
   const num = useNum()
   const idEstado = useId()
+  const [borradorFecha, setBorradorFecha] = useState<string | null>(null)
   const v = sim.valores
   const looks = typeof v.looks === 'number' ? v.looks : GENERICOS.looks.defecto
   const orbita = typeof v.orbita === 'string' ? v.orbita : GENERICOS.orbita.defecto
@@ -153,9 +154,14 @@ export function PanelSimulacion({ esc, controles, sim, enHoja }: Props) {
         <Campo
           etiqueta={t('obs.parametros.fecha_evento')} type="date"
           min={GENERICOS.fecha_evento.min} max={GENERICOS.fecha_evento.max}
-          value={typeof v.fecha_evento === 'string' ? v.fecha_evento : esc.instante_evento?.slice(0, 10) ?? ''}
+          value={borradorFecha ?? (typeof v.fecha_evento === 'string' ? v.fecha_evento : esc.instante_evento?.slice(0, 10) ?? '')}
           limite={t('obs.parametros.fecha_limite')}
-          onChange={(e) => { if (e.target.value) sim.cambiar('fecha_evento', e.target.value) }}
+          onChange={(e) => {
+            // Se teclea sobre un borrador: solo una fecha válida y en rango llega al simulador.
+            const valor = e.target.value
+            if (fechaValida(valor)) { setBorradorFecha(null); sim.cambiar('fecha_evento', valor) } else setBorradorFecha(valor)
+          }}
+          onBlur={() => setBorradorFecha(null)}
         />
         <Ayuda>{t('obs.parametros.fecha_ayuda')}</Ayuda>
       </div>

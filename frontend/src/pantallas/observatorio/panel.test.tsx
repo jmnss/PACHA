@@ -115,6 +115,21 @@ describe('PanelSimulacion', () => {
     expect(posts()[0].cuerpo).toEqual({ escenario_id: 'ec_x', parametros: { fecha_evento: '2026-06-01' } })
   })
 
+  it('la fecha del evento admite teclear el año: el borrador no se pisa hasta que es válido, y al salir vuelve la vigente', async () => {
+    montar('/observatorio?escenario=ec_x')
+    await panel()
+    const campo = screen.getByLabelText('Fecha del evento') as HTMLInputElement
+    fireEvent.change(campo, { target: { value: '0020-06-01' } })
+    expect(campo.value).toBe('0020-06-01')
+    await new Promise((r) => setTimeout(r, 400))
+    expect(posts()).toHaveLength(0)
+    fireEvent.blur(campo)
+    expect(campo.value).not.toBe('0020-06-01')
+    fireEvent.change(campo, { target: { value: '2026-06-01' } })
+    expect(campo.value).toBe('2026-06-01')
+    await waitFor(() => expect(posts()).toHaveLength(1), { timeout: 3000 })
+  })
+
   it('incluye el control de hora de los incendios', async () => {
     montar('/observatorio?escenario=ec_fuego')
     await panel()

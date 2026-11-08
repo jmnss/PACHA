@@ -34,7 +34,7 @@ export function redondear(n: number): number {
 }
 
 /** `AAAA-MM-DD` real (no 2026-02-30) dentro del rango que acepta el servidor. */
-function fechaValida(v: unknown): v is string {
+export function fechaValida(v: unknown): v is string {
   if (typeof v !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return false
   const d = new Date(`${v}T00:00:00Z`)
   return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === v && v >= GENERICOS.fecha_evento.min && v <= GENERICOS.fecha_evento.max

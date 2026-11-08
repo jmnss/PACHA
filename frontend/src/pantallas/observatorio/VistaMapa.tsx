@@ -124,6 +124,9 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
   const capa = capaNueva ?? (modo === 'modelo' ? ultimaModelo : ultimaCambio)
 
   const catalogo = useEscenarios().data
+  // El destino se lee de un ref: así los marcadores no se recrean cuando la pantalla pasa una función nueva.
+  const irAEscenario = useRef(onIrAEscenario)
+  irAEscenario.current = onIrAEscenario
   // Vista país: un marcador por escenario del catálogo (centro de su caja); el abierto, más grande.
   const marcadores = useMemo(() => {
     if (!pais) return []
@@ -133,9 +136,9 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
       lat: (e.bbox[1] + e.bbox[3]) / 2, lon: (e.bbox[0] + e.bbox[2]) / 2,
       etiqueta: textoApi(e.nombre, clavesApi.escenario(e.id, 'sitio')).texto,
       actual: e.id === base,
-      onClic: () => onIrAEscenario(e.id),
+      onClic: () => irAEscenario.current(e.id),
     }))
-  }, [pais, catalogo, esc, textoApi, onIrAEscenario])
+  }, [pais, catalogo, esc, textoApi])
   const estilo = useMemo(() => (capa ? estiloDeCapa(capa) : null), [capa])
   const tsPasadas = esc.adquisiciones.map((a) => Date.parse(a.instante))
   const temporadas = useMemo(

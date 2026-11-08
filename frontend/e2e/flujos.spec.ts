@@ -101,6 +101,8 @@ for (const { nombre, ancho, alto } of ANCHOS) {
     })
 
     test('Observatorio · mapa: un marcador del catálogo lleva a su escenario sin crear uno derivado', async ({ page }) => {
+      const posts: string[] = []
+      page.on('request', (r) => { if (r.method() === 'POST' && r.url().includes('/api/simulacion/escenario')) posts.push(r.url()) })
       await page.goto('/observatorio')
       const menu = page.getByRole('button', { name: 'Más acciones' })
       const todo = page.getByRole('button', { name: 'Ver todo Ecuador' }).or(menu)
@@ -115,7 +117,11 @@ for (const { nombre, ancho, alto } of ANCHOS) {
       await expect(marcador).toBeVisible({ timeout: 30_000 })
       await marcador.click()
       await expect(page).toHaveURL(/escenario=ec_loja(&|$)/)
+      // Si el clic llegara al mapa, crearía un escenario derivado (POST) y la URL pasaría a `ec_loja~…`.
+      await page.waitForLoadState('networkidle')
       await expect(page.getByText('Calculando la escena')).toHaveCount(0)
+      expect(posts).toHaveLength(0)
+      await expect(page).toHaveURL(/escenario=ec_loja(&|$)/)
     })
 
     test('Observatorio · mapa: la provincia aparece bajo el puntero', async ({ page }) => {

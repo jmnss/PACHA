@@ -143,6 +143,17 @@ describe('Observatorio · mapa y tiempo', () => {
     expect(posts()).toHaveLength(0)
   })
 
+  it('un render nuevo con el mismo catálogo no recrea los marcadores', async () => {
+    montar()
+    await listo()
+    fireEvent.click(await screen.findByRole('button', { name: 'Ver todo Ecuador' }))
+    await waitFor(() => expect(mapa.marcadores).toHaveLength(1))
+    const antes = mapa.marcadores
+    fireEvent.click(screen.getByRole('button', { name: 'Avanzar un paso' })) // cambia el tiempo: renderiza la pantalla
+    await waitFor(() => expect(screen.getByTestId('reloj')).toHaveTextContent('Pasada anterior · 24 abr 2026'))
+    expect(mapa.marcadores).toBe(antes)
+  })
+
   it('clic dentro crea un escenario en el punto y pasa a él', async () => {
     montar()
     await listo()
