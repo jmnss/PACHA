@@ -47,8 +47,12 @@ mundo dice «Relieve: SRTM (teselas Terrarium, AWS Open Data)» y «Relieve real
 - El precálculo incluye `/recorrido?paso=1..6` (el spec §2.3 lo pedía).
 
 **Pendientes:**
-- (Usuario) activar *Settings → Pages → Source: GitHub Actions*; sin eso, `publicar` falla y no se publica nada.
-- (Usuario) autorizar el push de `migracion-react` a `main`, que dispara la publicación (el sitio es público).
+- ~~Activar Pages con fuente GitHub Actions y autorizar el push a `main`~~: hecho. **Publicado el 2026-11-08**
+  (corrida 42464866619, verificar → construir → publicar en verde; el sitio responde 200). Antes fallaron dos corridas:
+  lint (`_e` sin usar en `motor/errores.ts`) y la prueba dorada `ec_loja` (redondeo de `nansum` distinto en CI, 3·10⁻⁷;
+  se añadió `rel=1e-6`).
+- Avisos de CI sin consecuencia hoy: las acciones `@v4/@v5` usan Node 20 (obsoleto, forzado a Node 24) y
+  `ubuntu-latest` pasará a Ubuntu 26; conviene subir versiones antes de que dejen de funcionar.
 - Memoria en móvil (~600 MB): los móviles de gama baja pueden no cargar el motor; lo precalculado sigue funcionando.
 - Chrome Android sin `SharedWorker`: un motor por documento; casi todo el Recorrido está precalculado.
 - Textos kichwa nuevos (`estructura.motor.*`) sin validar por hablantes.
