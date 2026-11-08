@@ -24,7 +24,8 @@ def test_metricas_coinciden_con_dorados(id_sitio):
     esperado = SITIOS[id_sitio]
     assert [[str(m[0]), str(m[1])] for m in a.metricas] == esperado["metricas"]
     sumas = {p.titulo: round(float(np.nansum(p.datos)), 3) for p in a.paneles}
-    assert sumas == pytest.approx(esperado["paneles"], abs=1e-3)
+    # rel: el redondeo de nansum sobre miles de píxeles varía con la CPU y la build de numpy (CI vs local)
+    assert sumas == pytest.approx(esperado["paneles"], rel=1e-6, abs=1e-3)
 
 
 def test_hay_seis_sitios_de_ecuador():
