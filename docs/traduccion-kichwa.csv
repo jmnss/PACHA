@@ -81,6 +81,8 @@ api.error.escenario_desconocido,No existe el recurso pedido: Escenario de demost
 api.error.escenario_simulado_caducado,No existe el recurso pedido: Escenario simulado desconocido o caducado: {id},The requested resource does not exist: unknown or expired simulated scenario: {id},Mañashka recurso mana tiyanchu: mana riksishka o tukurishka simulashka escenario: {id},no
 api.error.estacional_booleano,estacional debe ser verdadero o falso.,estacional must be true or false.,estacional ari o mana kana kan.,no
 api.error.fecha_despues_antes,La fecha 'después' debe ser posterior a la fecha 'antes'.,The “after” date must be later than the “before” date.,«Washa» punchaka «ñawpa» punchamanta washaman kana kan.,no
+api.error.fecha_evento_formato,"La fecha del evento debe ser un texto con el formato AAAA-MM-DD, por ejemplo 2026-06-01.","The event date must be text in the format YYYY-MM-DD, for example 2026-06-01.","Ruwaypa p'unchawka qillqa kachun, AAAA-MM-DD hinata, ahinataq 2026-06-01.",no
+api.error.fecha_evento_rango,La fecha del evento debe estar entre 2024-01-01 y 2030-12-31.,The event date must be between 2024-01-01 and 2030-12-31.,Ruwaypa p'unchawka 2024-01-01 wan 2030-12-31 chawpipi kachun.,no
 api.error.fecha_sin_zona,{nombre} debe llevar zona horaria.,{nombre} must include a time zone.,{nombre}-pi pacha zona kana kan.,no
 api.error.fechas_distintas,Elige dos fechas distintas.,Choose two different dates.,Ishkay mana kikin punchakunata akllay.,no
 api.error.fechas_fuera_rango,Las fechas quedan fuera del rango admitido.,The dates fall outside the allowed range.,Punchakuna ushashka rangomanta hawapi kan.,no
@@ -110,6 +112,8 @@ api.error.polarizacion_no_disponible,polarización no disponible: {polarizacion}
 api.error.punto_faltan_coordenadas,Para colocar un punto en el mapa hacen falta lat y lon.,"To place a point on the map, lat and lon are needed.","Shuyupi puntota churankapak lat, lon ima minishtin.",no
 api.error.punto_fuera,El punto {punto} queda fuera de la imagen ({ny}×{nx} píxeles).,The point {punto} falls outside the image ({ny}×{nx} pixels).,Punto {punto} rikchamanta hawapi kan ({ny}×{nx} pixel).,no
 api.error.semilla_rango,semilla debe ser un entero entre 0 y 2147483647.,semilla must be a whole number between 0 and 2147483647.,semilla 0-manta 2147483647-kama tukuy yupay kana kan.,no
+api.error.serie_sel_formato,«{nombre}» debe ser una lista de {n} números separados por comas.,“{nombre}” must be a list of {n} numbers separated by commas.,«{nombre}» {n} yupaykunata coma nisqawan rakisqa kachun.,no
+api.error.serie_sel_rango,"Indica un punto, un cuadrante o los dos, con valores entre 0 y 1.","Give a point, a quadrant or both, with values between 0 and 1.","Huk puntuta, huk cuadrantita utaq iskaynintapas rikuchiy, 0 wan 1 chawpipi.",no
 api.error.sim_interruptor,{parametro} debe ser verdadero o falso.,{parametro} must be true or false.,{parametro} ari o mana kana kan.,no
 api.error.sim_numero,{parametro} debe ser un número.,{parametro} must be a number.,{parametro} yupay kana kan.,no
 api.error.sim_opcion,{parametro} debe ser una de: {opciones}.,{parametro} must be one of: {opciones}.,{parametro} kay ukumanta shuk kana kan: {opciones}.,no
@@ -407,16 +411,22 @@ api.sim.titulo.terremoto,Terremoto Mw {mw},Earthquake Mw {mw},Allpa kuyuy Mw {mw
 api.sim.titulo.tormenta,Tormenta extrema,Extreme storm,Sinchi tormenta,no
 api.tipo.agricultura.descripcion,"Series temporales por parcela: siembra, crecimiento, inundación de arroz y cosecha.","Time series per plot: sowing, growth, rice flooding and harvest.","Sapa parcelapi pacha wiñachik: tarpuy, wiñay, arroz yaku junday, kuchuy ima.",no
 api.tipo.agricultura.nombre,Actividad agrícola,Agricultural activity,Chakra llankay,no
+api.tipo.agricultura.observable,σ⁰ HV por parcela (dB),σ⁰ HV per plot (dB),σ⁰ HV sapa chakrapi (dB),no
 api.tipo.glaciares.descripcion,Seguimiento de desplazamientos (offset tracking) entre adquisiciones de 12 días.,Displacement tracking (offset tracking) between 12-day acquisitions.,12 punchapi adquisicionkuna chawpipi kuyuykunata katiy (offset tracking).,no
 api.tipo.glaciares.nombre,Movimiento de glaciares,Glacier movement,Glaciarkunapa kuyuy,no
+api.tipo.glaciares.observable,Velocidad superficial (m/día),Surface velocity (m/day),Patapi usqhay (m/p'unchaw),no
 api.tipo.humedales.descripcion,"Clasificación de inundación: agua abierta (reflexión especular, HH muy bajo) y vegetación inundada (doble rebote tronco-agua, HH muy alto).","Flood classification: open water (specular reflection, very low HH) and flooded vegetation (trunk-water double bounce, very high HH).","Yaku junday clasificación: paskashka yaku (especular reflexión, HH ancha uray), yakuwan jundashka sacha yuyu (sachapa-yakupa ishkay kutichiy, sinchi HH).",no
 api.tipo.humedales.nombre,Pérdida de humedales,Wetland loss,Humedalkunapa illay,no
+api.tipo.humedales.observable,σ⁰ HH y HV (dB),σ⁰ HH and HV (dB),σ⁰ HH chaymanta HV (dB),no
 api.tipo.incendios.descripcion,Razón logarítmica HV después/antes e inversión de biomasa con el modelo de nube de agua.,Logarithmic HV after/before ratio and biomass inversion with the water-cloud model.,"HV washa/ñawpa razón logarítmica, biomasa inversión ima yaku-puyu modelowan.",no
 api.tipo.incendios.nombre,Incendios forestales,Forest fires,Sacha incendiokuna,no
+api.tipo.incendios.observable,σ⁰ HV (dB),σ⁰ HV (dB),σ⁰ HV (dB),no
 api.tipo.subsidencia.descripcion,Series temporales InSAR: ajuste por mínimos cuadrados de la pila de interferogramas.,InSAR time series: least-squares fit of the interferogram stack.,InSAR pacha wiñachik: interferograma pilapa mínimos cuadrados ajuste.,no
 api.tipo.subsidencia.nombre,Subsidencia del terreno,Land subsidence,Allpa uraykay,no
+api.tipo.subsidencia.observable,Velocidad vertical (cm/año),Vertical velocity (cm/year),Uraman uraykuy (cm/wata),no
 api.tipo.terremotos.descripcion,Interferometría diferencial de 12 días; el modelo de Okada genera la deformación cosísmica.,12-day differential interferometry; the Okada model generates the coseismic deformation.,12 punchapi diferencial interferometría; Okada modelo cosísmica deformaciónta rurachin.,no
 api.tipo.terremotos.nombre,Terremotos,Earthquakes,Allpa kuyuykuna,no
+api.tipo.terremotos.observable,Desplazamiento LOS (cm),LOS displacement (cm),LOS kuyuy (cm),no
 api.unidad.cm_ano,cm/año,cm/yr,cm/wata,no
 api.unidad.dias,días,days,punchakuna,no
 api.unidad.m_dia,m/día,m/day,m/puncha,no
@@ -616,8 +626,12 @@ obs.estructura.error_cambio,No se pudo calcular el cambio entre las dos pasadas 
 obs.estructura.escenario,Escenario,Scenario,Escenario,no
 obs.estructura.escenario_no_disponible,Escenario no disponible,Scenario not available,Escenario mana tiyanchu,no
 obs.estructura.lado_etiqueta,Métricas y contexto,Metrics and context,"Yupaykuna, tiyashka pacha",no
+obs.estructura.mas_acciones,Más acciones,More actions,Astawan rurakuna,no
 obs.estructura.motivo_reproductor,Se está calculando un escenario nuevo; el reproductor vuelve al terminar.,A new scenario is being computed; the player returns when it finishes.,Mushuk escenariota yupachishka; tukurikpi reproductor kutimunka.,no
+obs.estructura.observable,Qué observa el radar en esta demostración:,What the radar observes in this demonstration:,Kay rikuchiypi radar ima rikun:,no
 obs.estructura.pregunta,Qué cambió aquí entre dos pasadas y cuánto.,"What changed here between two passes, and by how much.","Kaypi ima tikrarka ishkay pasada chawpipi, imashina hatunta.",no
+obs.estructura.sigma0_explicacion,Retrodispersión: fracción de la señal del radar que vuelve al satélite.,Backscatter: the fraction of the radar signal that returns to the satellite.,Kutimuq ch'iqiy: radarpa willayninpa satelitiman kutimuq rakinmi.,no
+obs.estructura.sigma0_termino,σ⁰,σ⁰,σ⁰,no
 obs.estructura.sin_pareja,Elige dos pasadas distintas para ver el cambio.,Choose two different passes to see the change.,Ishkay mana kikin pasadakunata akllay tikrayta rikunkapak.,no
 obs.estructura.tipo_cambio,Tipo de cambio,Type of change,Tikray rikchay,no
 obs.estructura.titulo,Observatorio,Observatory,Observatorio,no
@@ -660,6 +674,8 @@ obs.mapa.mostrar_leyenda,Mostrar leyenda,Show legend,Leyendata rikuchiy,no
 obs.mapa.motivo_antes,La pasada «antes» debe ser anterior a la pasada «después».,The “before” pass must come earlier than the “after” pass.,«Ñawpa» pasadaka «washa» pasadamanta ñawpaklla kana kan.,no
 obs.mapa.motivo_despues,La pasada «después» debe ser posterior a la pasada «antes».,The “after” pass must come later than the “before” pass.,«Washa» pasadaka «ñawpa» pasadamanta washaklla kana kan.,no
 obs.mapa.ocultar_leyenda,Ocultar leyenda,Hide legend,Leyendata pakay,no
+obs.mapa.resumen_capa,{rotulo} · Capa · {pct} %,{rotulo} · Layer · {pct} %,{rotulo} · Capa · {pct} %,no
+obs.mapa.resumen_capa_sola,Capa · {pct} %,Layer · {pct} %,Capa · {pct} %,no
 obs.mapa.rotulo_cambio,"Cambio · antes {antes}, después {despues}","Change · before {antes}, after {despues}","Tikray · ñawpa {antes}, washa {despues}",no
 obs.mapa.rotulo_modelo,Modelo · {instante},Model · {instante},Modelo · {instante},no
 obs.mapa.rotulo_pasada,Pasada · {fecha},Pass · {fecha},Pasada · {fecha},no
@@ -686,13 +702,11 @@ obs.medicion.nada_texto,"Pulsa un punto de la imagen para ver sus valores, o arr
 obs.medicion.nada_titulo,Nada seleccionado,Nothing selected,Mana imapash akllashkachu,no
 obs.medicion.nota_polarizacion,"La medición y el cambio detectado usan las polarizaciones del análisis, no la elegida en el selector.","The measurement and the detected change use the analysis polarizations, not the one chosen in the selector.","Tupuy, tikray rikushkapash analysispa polarizaciónkunata llankan, mana akllashkata.",no
 obs.medicion.punto_titulo,Medición en un punto,Measurement at a point,Puntopi tupuy,no
-obs.medicion.serie_antes,Serie temporal del punto: pendiente (la API aún no la ofrece). La serie del escenario está en la ,Time series of the point: pending (the API does not offer it yet). The scenario series is in the ,Puntopa pachapi wiñachik: shuyashka (API manaraka kunchu). Escenariopa wiñachikka kaypi kan: ,no
-obs.medicion.serie_despues,.,.,.,no
-obs.medicion.serie_enlace,vista Serie,Series view,wiñachik rikuy,no
 obs.medicion.tabla_cuadrante,Medidas del cuadrante,Quadrant measurements,Cuadropa tupuykuna,no
 obs.medicion.tabla_punto,Valores en el punto,Values at the point,Puntopi chaninkuna,no
 obs.medicion.titulo,Medición,Measurement,Tupuy,no
 obs.medicion.valor_pixel,Valor medido en el píxel más cercano al punto,Value measured at the pixel closest to the point,Puntoman asha kaklla píxelpi tupushka chanin,no
+obs.medicion.ver_serie,Ver su evolución en Serie,See its evolution in Series,Wiñachikpi pay kay wiñayninta rikuy,no
 obs.metricas.antes_despues,Antes · {antes}  |  Después · {despues},Before · {antes}  |  After · {despues},Ñawpa · {antes}  |  Washa · {despues},no
 obs.metricas.calculando,Calculando el cambio…,Computing the change…,Tikrayta yupachishka…,no
 obs.metricas.cambio_titulo,Cambio entre dos pasadas,Change between two passes,Ishkay pasada chawpipi tikray,no
@@ -707,10 +721,9 @@ obs.parametros.calculando,Calculando… {s} s,Computing… {s} s,Yupachishka… 
 obs.parametros.controles_titulo,Controles de este tipo de cambio,Controls for this type of change,Kay tikray rikchaypa controlkuna,no
 obs.parametros.estacional,Variación estacional,Seasonal variation,Pachapa tikray,no
 obs.parametros.estacional_ayuda,"Si está activa, la escena sigue el ciclo de lluvias y sequía del lugar.","When on, the scene follows the place’s cycle of rainy and dry seasons.","Kallarishka kakpi, escenaka kay pachapa tamya, chaki pachapa muyuntami katin.",no
-obs.parametros.fecha_ayuda,El simulador de demostración fija la fecha del evento de cada escenario; moverla llegará más adelante.,The demonstration simulator fixes the event date of each scenario; moving it will come later.,Rikuchiy simuladorka sapa escenariopa evento punchata sayachin; kuyuchiyka kipamanmi shamunka.,no
+obs.parametros.fecha_ayuda,Cambia la fecha y todas las pasadas se mueven con ella. Datos de demostración.,Change the date and every pass moves with it. Demonstration data.,"P'unchawta tikray, llapa pasadakuna paywan rinka. Rikuchiy willaykuna.",no
 obs.parametros.fecha_evento,Fecha del evento,Event date,Evento puncha,no
-obs.parametros.fecha_fija,Fija en este escenario,Fixed in this scenario,Kay escenariopi sayashka,no
-obs.parametros.fecha_limite,Todavía no se puede mover en el simulador,It cannot be moved in the simulator yet,Simuladorpi manaraka kuyuchiyta ushanchu,no
+obs.parametros.fecha_limite,Entre 2024-01-01 y 2030-12-31 (ilustrativo),Between 2024-01-01 and 2030-12-31 (illustrative),2024-01-01 wan 2030-12-31 chawpipi (rikuchinapaq),no
 obs.parametros.hora_limite,"De 00:00 a 23:45 (hora local del escenario, en pasos de 15 minutos)","From 00:00 to 23:45 (scenario local time, in 15-minute steps)","00:00-manta 23:45-kama (escenariopa hora, 15 minutokunawan)",no
 obs.parametros.intro,"Estos parámetros mueven el simulador de demostración: generan una escena sintética nueva, no cambian ningún dato real ni de NISAR.",These parameters drive the demonstration simulator: they generate a new synthetic scene and do not change any real or NISAR data.,"Kay parámetroskunaka rikuchiy simuladorta kuyuchin: mushuk rurashka escenata rurachin, mana ima chiqan willaytapash, NISAR-pa willaytapash tikranchu.",no
 obs.parametros.miradas,Número de miradas (ENL),Number of looks (ENL),Rikuykunapa yupay (ENL),no
@@ -740,7 +753,13 @@ obs.serie.col_serie,Serie,Series,Wiñachik,no
 obs.serie.col_valor,Valor ({unidad}),Value ({unidad}),Chanin ({unidad}),no
 obs.serie.marca_antes,antes,before,ñawpa,no
 obs.serie.marca_despues,después,after,washa,no
+obs.serie.marca_evento,Evento,Event,Evento,no
 obs.serie.nota_verdad,"La línea punteada es la verdad sintética del modelo de demostración, no una medición.","The dotted line is the synthetic truth of the demonstration model, not a measurement.","Puntukuna siki rikuchiy modelopa sintético chiqanmi, mana tupushkachu.",no
+obs.serie.seleccion_aviso_pol,"La serie usa la polarización del observable del tipo, no la del selector.","The series uses the polarization of the type's observable, not the one in the selector.","Wiñachikka tipopa rikuna polarización-wan llamkan, akllanapa mana.",no
+obs.serie.seleccion_calculando,Calculando la serie de la selección…,Computing the series of the selection…,Akllasqapa wiñachikta yupachkan…,no
+obs.serie.seleccion_titulo,En la selección,In the selection,Akllasqapi,no
+obs.serie.seleccion_vacia_texto,El punto o el cuadrante cae en agua o en una zona sin dato del radar.,The point or quadrant falls on water or on an area with no radar data.,Punto utaq cuadrante yakupi utaq radarpa mana willayniyuq pachapi tarikun.,no
+obs.serie.seleccion_vacia_titulo,Sin dato en la selección,No data in the selection,Akllasqapi mana willay kanchu,no
 obs.serie.sin_pareja_texto,Este escenario necesita al menos dos pasadas distintas para calcular sus series.,This scenario needs at least two different passes to compute its series.,Kay escenariopika wiñachikkunata yupankapak a lo menos ishkay mana kikin pasadakuna minishtin.,no
 obs.serie.sin_series,Sin series,No series,Wiñachik mana kanchu,no
 obs.serie.sin_series_texto,Este escenario no devuelve series temporales. Prueba con la vista Mapa o con otro escenario.,This scenario returns no time series. Try the Map view or another scenario.,Kay escenariopika pachapi wiñachikkuna mana kanchu. Shuyu rikuypi o shuk escenariopi llankay.,no
@@ -809,6 +828,10 @@ piezas.mapa.base_oscuro,Oscuro,Dark,Yana,no
 piezas.mapa.base_relieve,Relieve,Terrain,Relieve,no
 piezas.mapa.base_satelite,Satélite,Satellite,Satélite,no
 piezas.mapa.opacidad,Opacidad de la capa,Layer opacity,Capapa opacidad,no
+piezas.mapa.region.amazonia,Amazonía,Amazon,Amazonía,no
+piezas.mapa.region.costa,Costa,Coast,Kucha kuchu,no
+piezas.mapa.region.insular,Insular (Galápagos),Insular (Galápagos),Insular (Galápagos),no
+piezas.mapa.region.sierra,Sierra,Highlands,Urku,no
 piezas.tiempo.cinta.etiqueta,Instante de la cinta de pasadas,Pass timeline instant,Pasadakunapa pacha,no
 piezas.tiempo.cinta.evento,Evento: {fecha},Event: {fecha},Evento: {fecha},no
 piezas.tiempo.cinta.franja,Franja tenue: temporada lluviosa,Faint band: rainy season,Pishi rikuy banda: tamya pacha,no

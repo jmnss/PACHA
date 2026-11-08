@@ -102,6 +102,19 @@ mundo dice «Relieve: SRTM (teselas Terrarium, AWS Open Data)» y «Relieve real
 Datos: todo es sintético (proveedor `demo`); el proveedor `real` es un esqueleto. La banda «DATOS DE
 DEMOSTRACIÓN» es permanente.
 
+## Bloque B · Funcionales (2026-11-08)
+
+Rama `migracion-react`, plan `docs/superpowers/plans/2026-11-08-pendientes-visual-funcional-texto.md` (B1 a B7).
+
+- **B1** `GET /api/escenarios/{id}/serie-seleccion?punto=x,y&cuadrante=x0,y0,x1,y1`: valida con `PeticionSerieSeleccion`; los errores de formato y rango usan claves nuevas `api.error.serie_sel_*` (en es/en/qu); sin `serie_seleccion` en el proveedor responde 409. Una selección en agua devuelve la serie con `puntos: []` (200).
+- **B2** La vista Serie muestra primero «En la selección» (gráfica, tabla, CSV `serie_<escenario>_seleccion.csv` y aviso de polarización). `Mediciones` enlaza «Ver su evolución en Serie» (conserva `p`/`c`).
+- **B3** `Escenario.instante_evento` y parámetro simulable `fecha_evento` (2024-01-01 a 2030-12-31, ilustrativo). Solo entra en la huella cuando difiere de la fecha del sitio (con punto del mapa se compara con la del sitio del mapa, que es la del sitio de referencia del tipo), así que los ids existentes no cambian (prueba con el id literal).
+- **B4** Campo de fecha activo en el panel; marca «Evento» y cursor del instante (`Linea cursor`) en Serie; la cinta del mapa dibuja el evento. El acotado de `t` ya existía en `useInstante`: se añadió la prueba de regresión.
+- **B5** `TipoCambio.observable` en la cabecera («Qué observa el radar en esta demostración: σ⁰ …», con σ⁰ explicado). `producto` de NISAR no se expone (prueba). El valor sigue sin verificar con la documentación oficial.
+- **B6** Provincia y región bajo el puntero (`queryRenderedFeatures` sobre `provincias`) y marcadores del catálogo en la vista país (el mapa ignora clics sobre `.mapa__marcador`).
+- **Decisiones fuera del plan:** el aria-label de los marcadores se fija después de `addTo` (MapLibre lo sobrescribe con «Map marker»); claves de región `piezas.mapa.region.{costa,sierra,amazonia,insular}` (el GeoJSON dice «Insular», no «Galápagos»); `obs.estructura.observable` es solo la etiqueta y el valor viene de `api.tipo.<id>.observable`; el kichwa nuevo es borrador sin validar (CSV: 949 claves, 0 validadas).
+- **Pendientes:** la serie del punto en Pages la calcula el motor (no se precalcula); el texto de nombres de serie de la selección («Punto seleccionado (3×3 px)», «σ⁰ HH en la selección») sigue en español en en/qu, es del bloque C; la capa `provincias-hit` no hizo falta con el mapa local (no se verificó con el mapa remoto, sin red).
+
 ## Pendientes vigentes (lista única, 2026-11-05)
 
 Sustituye a «Pendientes tras la primera noche» y a los pendientes sueltos de cada sección fechada. Ya
@@ -114,10 +127,7 @@ Estación y temporada (cubierta por `PanelContexto`), Fundamentos, Modo Dios.
 - Decidir si se conserva Validación (N2.5) y qué hacer con `/_sistema` en producción.
 - Integración de datos reales (lista de `docs/plan-migracion.md`, sección final).
 
-**Funcionales**
-- Serie temporal del punto/cuadrante (la API no expone `serie_seleccion`).
-- Fecha del evento (el servidor no la acepta) → sin marcas de evento ni cursor en la vista Serie.
-- Tooltip de provincia y marcadores del catálogo en el mapa; «observable» del tipo en la cabecera.
+**Funcionales** (serie del punto, fecha del evento, provincia y marcadores del catálogo y observable: hechos en el bloque B, 2026-11-08; ver «Bloque B · Funcionales»)
 - Impacto: no cubre cultivos, glaciares, terremotos ni subsidencia; la evolución usa hasta 12 pasadas.
 - Simulador fase 2: decisión A/B (cortafuegos, dique, evacuación), cascadas, retos educativos.
 
@@ -370,9 +380,9 @@ pendiente — conviene hacerla junto con la actualización de accesibilidad. Con
 |---|---|---|---|---|---|
 | Sistema de diseño (`/_sistema`) | 3 de 3 + 1 de corrección del revisor | 0 FAIL | 0 FAIL | 0 FAIL (1 WARN `edge-text`) | WARN `edge-text` a 390 px: la banda de demostración usa margen de 12 px (diseno.md §10 pide 16) para que su texto obligatorio quepa; tabla móvil en 3 líneas por fila y sin semántica de tabla (display:block); `--allow palette-terracotta` en `revision_visual.sh` por `--demo-ink` fijado en §4 (con guard de hex fuera de tokens) |
 | Historias (`/`) | 3 de 3 (2 de implementación + 1 de revisor) | 0 FAIL | 0 FAIL | 0 FAIL | En móvil el comparador queda tras el texto de las partes 1–2 (se respeta el orden de lectura); la tarjeta del comparador a 1440×900 termina a 10 px del borde inferior (depende del viewport); la pareja de pasadas se elige por el mayor cambio de la serie (criterio de la demo); sin e2e propio |
-| Observatorio · mapa | 3 de 3 (2 de implementación + 1 de revisor) | 0 FAIL | 0 FAIL | 0 FAIL | Con OpenFreeMap apagado el mapa a escala de escenario (~8 km) es un fondo gris con la capa: falta un localizador de Ecuador o escala gráfica; hoja inferior de parámetros en móvil y menú de tres puntos (§10) pendientes; sin prueba e2e propia |
-| Observatorio · comparar | 3 de 3 + 1 de revisor | 0 FAIL | 0 FAIL | 0 FAIL | Sin captura con punto/cuadrante seleccionado ni e2e propio; serie del punto pendiente (la API no expone `serie_seleccion`); medición y cambio usan las polarizaciones del análisis, no el selector (avisado en pantalla); notas del modelo heredado mostradas con aviso «pendiente de confirmar» |
-| Observatorio · serie | 1 de 3 | 0 FAIL | 0 FAIL | 0 FAIL (1 WARN `ragged-row` a 1440, defendido: distribución de dos columnas) | Sin marcas de evento ni cursor de instante (la API no trae fecha de evento; Linea no soporta cursor); tabla intercalada de 60 filas en La Segua; sin revisión independiente de esta tarea |
+| Observatorio · mapa | 3 de 3 + 1 (bloque B: provincia, marcadores) | 0 FAIL | 0 FAIL | 0 FAIL | Con OpenFreeMap apagado el mapa a escala de escenario (~8 km) es un fondo gris con la capa: falta un localizador de Ecuador o escala gráfica; hoja inferior de parámetros en móvil y menú de tres puntos (§10) pendientes; sin prueba e2e propia |
+| Observatorio · comparar | 3 de 3 + 1 de revisor | 0 FAIL | 0 FAIL | 0 FAIL | Enlace «Ver su evolución en Serie» con e2e propio; sin captura con punto/cuadrante seleccionado; medición y cambio usan las polarizaciones del análisis, no el selector (avisado en pantalla); notas del modelo heredado mostradas con aviso «pendiente de confirmar» |
+| Observatorio · serie | 2 de 3 (bloque B) | 0 FAIL | 0 FAIL | 0 FAIL (WARN `below-fold` por la columna lateral) | Con marca del evento, cursor del instante y bloque «En la selección» (captura `serie-evento`); tabla intercalada de 60 filas en La Segua; sin revisión independiente de esta tarea |
 | Selector de idioma y aviso del kichwa (riel, `/`, captura `historias-selector`) | 2 de 3 | 0 FAIL | 0 FAIL | 0 FAIL (1 WARN `edge-text`) | WARN `edge-text` a 390 px: con siete celdas iguales en la barra inferior, «Inicio» queda a 13 px del borde (defendido: celdas iguales, el texto centrado en su celda). Ronda 2 corrigió: las flechas en el grupo de radios cerraban el panel (ahora cambian el idioma sin cerrar; clic o Intro cierran) e Intro reabría el panel; aire entre el anillo de foco y el texto. El inspector no puede abrir el panel ni fijar `qu`: el panel y el aviso se revisaron con capturas de Playwright a 1440, 768 y 390 px |
 
 Para cada pantalla cerrada se pega aquí la crítica de las siete preguntas de `app-screens.md §2.7`.
@@ -383,11 +393,11 @@ Leyenda: `[~]` = parcial; `[ ]` = no hecho (noche 2 / datos reales).
 
 Copia de la lista de `docs/plan-migracion.md` (N1 primera noche, N2 segunda, R con datos reales).
 
-- [~] N1 · Parámetros (parcial: sin fecha del evento) (tipo, lugar, clic en mapa, estacionalidad, radar, intervalo, controles con hora, fecha, restablecer, resumen)
-- [~] N1 · Cabecera y contexto (parcial: sin «observable»)
-- [~] N1 · Mapa (parcial: sin tooltip de provincia ni marcadores del catálogo; fotogramas continuos hechos 2026-11-05) (capas, reproductor completo, deslizador, reloj, métricas, provincias, catálogo, aviso fuera de Ecuador)
-- [~] N1 · Antes / después (parcial: sin serie del punto) (paneles, punto y cuadrante, medición y CSV, punto y serie, borrar, flujo, notas, PNG, parcelas) + comparador
-- [~] N1 · Serie temporal (parcial: sin marcas de evento) (gráficos, tabla y CSV)
+- [x] N1 · Parámetros (con fecha del evento editable, 2026-11-08) (tipo, lugar, clic en mapa, estacionalidad, radar, intervalo, controles con hora, fecha, restablecer, resumen)
+- [x] N1 · Cabecera y contexto (con «observable», 2026-11-08)
+- [x] N1 · Mapa (con provincia bajo el puntero y marcadores del catálogo, 2026-11-08; fotogramas continuos 2026-11-05) (capas, reproductor completo, deslizador, reloj, métricas, provincias, catálogo, aviso fuera de Ecuador)
+- [x] N1 · Antes / después (con serie del punto en Serie, 2026-11-08) (paneles, punto y cuadrante, medición y CSV, punto y serie, borrar, flujo, notas, PNG, parcelas) + comparador
+- [x] N1 · Serie temporal (con marca del evento y cursor, 2026-11-08) (gráficos, tabla y CSV)
 - [~] N1 · Física por tipo (inundación e incendio en Historias; los otros cuatro con la ayuda «Cómo ve el radar»)
 - [x] N2 · Estación y temporada (cubierta por `PanelContexto` del Observatorio: estación astronómica, próximo hito, temporada y clima mensual; no se duplica en pantalla propia)
 - [x] N2 · Modo Dios → Simulador de Eventos (herramientas, parámetros, animación, efectos, vista radar, bitácora, PNG; fase 2 pendiente)

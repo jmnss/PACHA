@@ -17,7 +17,7 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
 
 /* Objetivos de al menos 24 × 24 px (WCAG 2.5.8). */
 .boton, .riel__destino, .pestanas__pestana, .banda-demo__enlace, .vista-mapa__plegar { min-width: var(--size-objetivo); min-height: var(--size-objetivo); }
-.termino__nombre { display: inline-block; min-height: var(--size-objetivo); line-height: var(--lh-20); }
+.termino__nombre { display: inline-block; min-height: var(--size-objetivo); min-width: var(--size-objetivo); text-align: center; line-height: var(--lh-20); }
 
 /* ---------- Estructura ---------- */
 .estructura { display: flex; min-height: 100%; }
