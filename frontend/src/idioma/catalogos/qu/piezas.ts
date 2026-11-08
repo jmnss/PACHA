@@ -51,5 +51,9 @@ export const piezas: Record<keyof typeof esPiezas, string> = {
   'piezas.mapa.base_oscuro': 'Yana',
   'piezas.mapa.base_satelite': 'Satélite',
   'piezas.mapa.base_relieve': 'Relieve',
+  'piezas.mapa.region.amazonia': 'Amazonía',
+  'piezas.mapa.region.costa': 'Kucha kuchu',
+  'piezas.mapa.region.insular': 'Insular (Galápagos)',
+  'piezas.mapa.region.sierra': 'Urku',
   'piezas.mapa.opacidad': 'Capapa opacidad',
 }

@@ -6,7 +6,7 @@ import { formatoHora } from '../../idioma/formato'
 import { useT } from '../../idioma/useT'
 import { useMovil } from '../../estado/useMovil'
 import { mensajeDeError } from '../../api/cliente'
-import { useCapa, useFotogramas, useSimular, type CapaDto, type Contexto, type Escenario, type ResultadoCambio } from '../../api/consultas'
+import { useCapa, useEscenarios, useFotogramas, useSimular, type CapaDto, type Contexto, type Escenario, type ResultadoCambio } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
 import { IconoChevron } from '../../diseno/iconos'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
@@ -46,6 +46,8 @@ interface Props {
   onFijar: (cual: 'antes' | 'despues', id: string) => void
   /** Id del escenario derivado creado al pulsar un punto del mapa, con los parámetros que lo crearon. */
   onEscenarioNuevo: (id: string, parametros: Valores) => void
+  /** Lleva a un escenario del catálogo (clic en su marcador de la vista país). */
+  onIrAEscenario: (id: string) => void
   /** Parámetros vigentes: el punto nuevo los conserva. */
   parametros?: Valores
   /** Vista de todo Ecuador (estado en la pantalla: en móvil lo cambia el menú de acciones). */
@@ -81,7 +83,7 @@ function extremosDe(capa: CapaDto): [Clave, Clave] | undefined {
 }
 
 /** Mapa con la capa elegida, su leyenda y sello, y la cinta de pasadas con sus controles debajo. */
-export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId, polarizacion, onFijar, onEscenarioNuevo, parametros, pais, onPais, motivoReproductor }: Props) {
+export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId, polarizacion, onFijar, onEscenarioNuevo, onIrAEscenario, parametros, pais, onPais, motivoReproductor }: Props) {
   const { t, idioma, textoApi } = useT()
   const idNota = useId()
   const idPlaca = useId()
@@ -121,8 +123,19 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
   const ultimaCambio = useUltimo(resultado.data?.cambio)
   const capa = capaNueva ?? (modo === 'modelo' ? ultimaModelo : ultimaCambio)
 
-  const [lat0, lon0] = [(esc.bbox[1] + esc.bbox[3]) / 2, (esc.bbox[0] + esc.bbox[2]) / 2]
-  const marcadores = useMemo(() => (pais ? [{ lat: lat0, lon: lon0, etiqueta: textoApi(esc.nombre, clavesApi.escenario(esc.id, 'sitio')).texto }] : []), [pais, lat0, lon0, esc.nombre, esc.id, textoApi])
+  const catalogo = useEscenarios().data
+  // Vista país: un marcador por escenario del catálogo (centro de su caja); el abierto, más grande.
+  const marcadores = useMemo(() => {
+    if (!pais) return []
+    const base = esc.id.split('~')[0]
+    const lista = catalogo?.length ? catalogo : [esc]
+    return lista.map((e) => ({
+      lat: (e.bbox[1] + e.bbox[3]) / 2, lon: (e.bbox[0] + e.bbox[2]) / 2,
+      etiqueta: textoApi(e.nombre, clavesApi.escenario(e.id, 'sitio')).texto,
+      actual: e.id === base,
+      onClic: () => onIrAEscenario(e.id),
+    }))
+  }, [pais, catalogo, esc, textoApi, onIrAEscenario])
   const estilo = useMemo(() => (capa ? estiloDeCapa(capa) : null), [capa])
   const tsPasadas = esc.adquisiciones.map((a) => Date.parse(a.instante))
   const temporadas = useMemo(
@@ -168,7 +181,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
         </div>
         <div className="vista-mapa__mapa" role="group" aria-label={t('obs.estructura.vista_mapa')} aria-describedby={idNota}>
           <p id={idNota} className="solo-lectores">{t('a11y.mapa.nota')}</p>
-          <MapaBase base={base} bbox={pais ? undefined : esc.bbox} onClic={alClic} onFueraDeEcuador={alClic} marcadores={marcadores}>
+          <MapaBase base={base} bbox={pais ? undefined : esc.bbox} onClic={alClic} onFueraDeEcuador={alClic} marcadores={marcadores} conProvincia>
             {capa && estilo && (
               <CapaLienzo rejilla={capa.rejilla} bbox={capa.rejilla.bbox} rampa={estilo.rampa} categorias={estilo.categorias} opacidad={opacidad} />
             )}

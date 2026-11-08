@@ -109,7 +109,7 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
 .cabecera { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--gap); flex-wrap: wrap; }
 .cabecera__titulo { margin: 0; font-size: var(--fs-26); line-height: var(--lh-32); font-weight: 700; }
 .cabecera__hallazgo { margin: var(--space-1) 0 0; color: var(--muted); font-size: var(--fs-16); line-height: var(--lh-24); max-width: var(--w-lectura); }
-.cabecera__detalle { margin: var(--space-1) 0 0; color: var(--muted); font-size: var(--fs-13); line-height: var(--lh-20); max-width: var(--w-lectura); }
+.cabecera__detalle { text-wrap: balance; margin: var(--space-1) 0 0; color: var(--muted); font-size: var(--fs-13); line-height: var(--lh-20); max-width: var(--w-lectura); }
 .cabecera__lado { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
 .cabecera__frescura { font-size: var(--fs-12); color: var(--muted); }
 @media (max-width: 699px) { .cabecera__titulo { font-size: var(--fs-22); line-height: var(--lh-28); } }

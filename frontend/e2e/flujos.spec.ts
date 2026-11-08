@@ -100,6 +100,36 @@ for (const { nombre, ancho, alto } of ANCHOS) {
       await expect(tarjeta.getByRole('figure')).toBeVisible({ timeout: 60_000 })
     })
 
+    test('Observatorio · mapa: un marcador del catálogo lleva a su escenario sin crear uno derivado', async ({ page }) => {
+      await page.goto('/observatorio')
+      const menu = page.getByRole('button', { name: 'Más acciones' })
+      const todo = page.getByRole('button', { name: 'Ver todo Ecuador' }).or(menu)
+      await expect(todo).toBeVisible({ timeout: 30_000 })
+      if (await menu.isVisible()) {
+        await menu.click()
+        await page.getByRole('menuitem', { name: 'Ver todo Ecuador' }).click()
+      } else {
+        await todo.click()
+      }
+      const marcador = page.getByRole('button', { name: 'Bosques andinos de Loja' })
+      await expect(marcador).toBeVisible({ timeout: 30_000 })
+      await marcador.click()
+      await expect(page).toHaveURL(/escenario=ec_loja(&|$)/)
+      await expect(page.getByText('Calculando la escena')).toHaveCount(0)
+    })
+
+    test('Observatorio · mapa: la provincia aparece bajo el puntero', async ({ page }) => {
+      await page.goto('/observatorio?escenario=ec_la_segua')
+      const lienzo = page.getByTestId('mapa')
+      await expect(lienzo.locator('canvas.maplibregl-canvas')).toBeVisible({ timeout: 30_000 })
+      const caja = (await lienzo.boundingBox())!
+      await expect(async () => {
+        await page.mouse.move(caja.x + caja.width * 0.5, caja.y + caja.height * 0.4)
+        await page.mouse.move(caja.x + caja.width * 0.5 + 3, caja.y + caja.height * 0.4 + 3)
+        await expect(page.locator('.mapa__provincia')).toContainText('Manabí', { timeout: 1000 })
+      }).toPass({ timeout: 20_000 })
+    })
+
     test('Observatorio · mapa: un clic fuera de Ecuador avisa y no simula', async ({ page }) => {
       const posts: string[] = []
       page.on('request', (r) => { if (r.method() === 'POST' && r.url().includes('/api/simulacion/escenario')) posts.push(r.url()) })

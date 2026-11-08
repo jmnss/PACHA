@@ -256,7 +256,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
               esc={esc} resultado={resultado} tiempo={tiempo} contexto={contexto.data}
               antesId={antesId} despuesId={despuesId} polarizacion={polarizacion}
               onFijar={(cual, id) => cambiar({ [cual === 'antes' ? 'antes' : 'despues']: id })}
-              onEscenarioNuevo={irAPunto} parametros={sim.valores} motivoReproductor={motivoReproductor}
+              onEscenarioNuevo={irAPunto} onIrAEscenario={irA} parametros={sim.valores} motivoReproductor={motivoReproductor}
               pais={pais} onPais={setPais}
             />
           ) : vista === 'comparar' ? (

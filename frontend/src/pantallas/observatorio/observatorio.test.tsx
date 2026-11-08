@@ -8,13 +8,16 @@ import { codificar } from './parametros'
 import { hallazgo, indiceAnterior, parejaValida, temporadasLluviosas, vecinas } from './derivados'
 
 // MapLibre no corre en jsdom: el mapa falso ofrece dos «clics» y deja pasar a sus hijos.
+const mapa = vi.hoisted(() => ({ marcadores: [] as { lat: number; lon: number; etiqueta?: string; actual?: boolean; onClic?: () => void }[], conProvincia: false }))
 vi.mock('../../mapa/MapaBase', () => ({
-  MapaBase: ({ onClic, onFueraDeEcuador, children }: {
+  MapaBase: ({ onClic, onFueraDeEcuador, marcadores = [], conProvincia = false, children }: {
     onClic?: (lat: number, lon: number) => void
     onFueraDeEcuador?: (lat: number, lon: number) => void
+    marcadores?: typeof mapa.marcadores
+    conProvincia?: boolean
     children?: ReactNode
   }) => (
-    <div data-testid="mapa-falso">
+    <div data-testid="mapa-falso" ref={() => { mapa.marcadores = marcadores; mapa.conProvincia = conProvincia }}>
       <button onClick={() => onClic?.(-1.0, -80.0)}>Clic dentro de Ecuador</button>
       <button onClick={() => onFueraDeEcuador?.(-12.05, -77.04)}>Clic fuera de Ecuador</button>
       <button onClick={() => onClic?.(-12.05, -77.04)}>Clic en el Pacífico por onClic</button>
@@ -120,6 +123,23 @@ describe('Observatorio · mapa y tiempo', () => {
     fireEvent.click(screen.getByText('Clic fuera de Ecuador'))
     expect(screen.getByRole('alert')).toHaveTextContent('Ese punto está fuera de Ecuador. Elige un punto dentro del país.')
     expect(llamadas.length).toBe(antes)
+    expect(posts()).toHaveLength(0)
+  })
+
+  it('en la vista país hay un marcador por escenario del catálogo, el actual distinto, y un clic lleva a ese escenario', async () => {
+    const OTRO = escenario('ec_otro', 'Bosque de prueba')
+    const base = (globalThis.fetch as unknown as (u: string, i?: RequestInit) => Promise<Response>)
+    vi.stubGlobal('fetch', vi.fn((url: string, init?: RequestInit) => (url === '/api/escenarios' ? json([BASE, { ...OTRO, bbox: [-79.3, -4.1, -79.2, -4.0] }]) : base(url, init))))
+    montar()
+    await listo()
+    fireEvent.click(await screen.findByRole('button', { name: 'Ver todo Ecuador' }))
+    await waitFor(() => expect(mapa.marcadores).toHaveLength(2))
+    expect(mapa.conProvincia).toBe(true)
+    expect(mapa.marcadores.filter((m) => m.actual)).toHaveLength(1)
+    expect(mapa.marcadores.find((m) => m.actual)?.etiqueta).toBe('Humedal de prueba')
+    expect(mapa.marcadores.find((m) => !m.actual)?.etiqueta).toBe('Bosque de prueba')
+    mapa.marcadores.find((m) => !m.actual)!.onClic!()
+    await waitFor(() => expect(screen.getByTestId('ubicacion').textContent).toContain('escenario=ec_otro'))
     expect(posts()).toHaveLength(0)
   })
 

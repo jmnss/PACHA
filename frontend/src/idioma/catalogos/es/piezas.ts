@@ -48,5 +48,9 @@ export const piezas = {
   'piezas.mapa.base_oscuro': 'Oscuro',
   'piezas.mapa.base_satelite': 'Satélite',
   'piezas.mapa.base_relieve': 'Relieve',
+  'piezas.mapa.region.amazonia': 'Amazonía',
+  'piezas.mapa.region.costa': 'Costa',
+  'piezas.mapa.region.insular': 'Insular (Galápagos)',
+  'piezas.mapa.region.sierra': 'Sierra',
   'piezas.mapa.opacidad': 'Opacidad de la capa',
 }
