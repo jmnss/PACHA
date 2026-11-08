@@ -122,11 +122,8 @@ Estación y temporada (cubierta por `PanelContexto`), Fundamentos, Modo Dios.
 - Simulador fase 2: decisión A/B (cortafuegos, dique, evacuación), cascadas, retos educativos.
 
 **Visuales / móvil**
-- Hoja inferior de parámetros y menú de tres puntos del Observatorio en móvil (§10).
-- Placas flotantes del mapa ocupan ~130 px en móvil; hueco bajo la cinta en escritorio.
-- En Relieve el radar puede tapar etiquetas (vienen dentro de la tesela).
-- Margen de 12 px en la banda móvil (diseno.md pide 16).
-- Avisos del inspector en el simulador (`ragged-row`, `below-fold`); sin captura móvil con resultados.
+- Avisos del inspector que se defienden (bloque A, 2026-11-08): `ragged-row` del simulador a 1440 px y de «Antes y después» (columna principal y lateral con contenido de distinta altura; el hueco ya no se estira con `flex: 1`, así que no hay tarjetas con vacío artificial), y `panel-void` de 199 px en el Observatorio a 1440 px (zona del mapa sin teselas porque `revision_visual.sh` compila con `VITE_MAPA_REMOTO=0`; con red el mapa la rellena). `below-fold` en las pantallas con columna lateral es esperable.
+- A 390 px la cinta de pasadas sigue por debajo del primer viewport en el Observatorio (la medición previa a A3 daba y=1300 con la placa desplegada; la placa plegada la acerca, no se midió de nuevo por separado). El mapa sí empieza a la vista (y=478).
 
 **Idioma y accesibilidad (nuevos)**
 - Kichwa: 0 de 923 claves validadas; hacen falta hablantes (`docs/guia-traduccion-kichwa.md`, `docs/traduccion-kichwa.csv`). Dudas abiertas de honestidad y ortografía («chiqan»/«chikan», etc.) en la guía.
@@ -280,6 +277,7 @@ Esta sección es el punto de partida; el diseño detallado (spec y plan) se escr
 
 ## Decisiones tomadas sin supervisión
 
+- Bloque A (2026-11-08): `MenuAcciones` (tres puntos) en la fila de vistas del Observatorio móvil con «Parámetros del modelo» y, en la vista mapa, «Ver todo Ecuador»; el estado `pais` vive en `Observatorio`. En móvil la placa del mapa es una sola, plegada, con «rótulo · Capa · 85 %». En escritorio las dos columnas se alinean arriba (`align-items: start`) y el mapa mide `--h-mapa`. En Relieve se aplicó el plan A: Esri `World_Terrain_Base` (tesela verificada con HTTP 200 `image/jpeg`, `maxzoom` 13, atribución «Sources: Esri, USGS, NOAA») con las etiquetas de lugares encima de los datos. En el simulador móvil «Mundo» va antes que el tablero, las pestañas no se encogen (`flex: none`, se desplazan en horizontal) y el último KPI impar ocupa la fila entera.
 - `__pycache__` dejó de versionarse (`git rm --cached`) para tener árbol limpio.
 - No se tocó `fecha_evento` de `ec_pedernales` en `data/nisar_sample.csv` (2026-04-16 coincide con el aniversario de un sismo real); **pendiente del equipo** decidir si se cambia.
 - El contrato de datos creció de forma aditiva: `ResultadoCambio.tablas/vectores/capas_extra`, `CapaRaster.instante`, `Control/TipoCambio` (necesarios para campo de flujo, tabla por parcela y controles de simulación).
