@@ -114,7 +114,22 @@ Rama `migracion-react`, plan `docs/superpowers/plans/2026-11-08-pendientes-visua
 - **B6** Provincia y región bajo el puntero (`queryRenderedFeatures` sobre `provincias`) y marcadores del catálogo en la vista país (el mapa ignora clics sobre `.mapa__marcador`).
 - **Decisiones fuera del plan:** el aria-label de los marcadores se fija después de `addTo` (MapLibre lo sobrescribe con «Map marker»); claves de región `piezas.mapa.region.{costa,sierra,amazonia,insular}` (el GeoJSON dice «Insular», no «Galápagos»); `obs.estructura.observable` es solo la etiqueta y el valor viene de `api.tipo.<id>.observable`; el kichwa nuevo es borrador sin validar (CSV: 949 claves, 0 validadas).
 - **Revisión del bloque (2026-11-08):** en MapLibre 4.7.1 un clic en un marcador no llega al evento `click` del mapa (comprobado con un `console.log` temporal), así que la guarda `esClicEnMarcador` es defensa para otras versiones; el e2e cuenta los POST a `/api/simulacion/escenario` (0) pero no puede fallar al quitarla, y la guarda tiene su prueba unitaria.
-- **Pendientes:** la serie del punto en Pages la calcula el motor (no se precalcula); el texto de nombres de serie de la selección («Punto seleccionado (3×3 px)», «σ⁰ HH en la selección») sigue en español en en/qu, es del bloque C; la capa `provincias-hit` no hizo falta con el mapa local (no se verificó con el mapa remoto, sin red).
+- **Pendientes:** la serie del punto en Pages la calcula el motor (no se precalcula); (los nombres de serie de la selección ya se traducen: bloque C); la capa `provincias-hit` no hizo falta con el mapa local (no se verificó con el mapa remoto, sin red).
+
+## Bloque C · Texto que sigue en español (2026-11-08)
+
+Rama `migracion-react`, plan `docs/superpowers/plans/2026-11-08-pendientes-visual-funcional-texto.md` (C1 a C6). Estrategia: el texto que escribe `modelo/` se reconoce en `datos/` contra plantillas registradas (`datos/claves_demo.py`) y viaja en campos paralelos opcionales (`TextoClave`: `clave_texto`, `valores_texto`, `decimales_texto`); lo que no encaja queda en español con `lang="es"`.
+
+- **C1** `reconocer_con_decimales`, `buscar_texto` y `TextoClave`. Marcadores: `{x}` número con coma, `{fecha…}` dd/mm/aaaa (valor ISO), `{…_punto}` número con punto; `{…_signo_punto}` además se escribe siempre con signo. En el frontend `textoApi(texto, clave, valores, decimales)` y `textoClave()`; los decimales de la API ganan a la tabla fija `DECIMALES`.
+- **C2** Notas (`notas_texto`) y celdas (`tabla.celdas_texto`) del simulador: 26 plantillas de nota (una por variante de CN y de mecanismo) y 23 de celdas.
+- **C3** Observatorio: título, columnas y celdas de la tabla por parcela, nombres de las líneas de las series (`nombres_texto`), medición (`textos` por fila; etiquetas con fecha como `Media · Velocidad · {fecha}`), nota 1 de Pedernales con el vector LOS y títulos «… en la selección».
+- **C4** Bitácora (título con `reconocerTitulo` para entradas antiguas, región, temporada y cifra de detección), informe PNG y CSV de la bitácora y de la medición en el idioma elegido. Regiones `api.contexto.region.*` (también en el panel de contexto).
+- **C5** Borrador kichwa (Opus) de las 134 claves nuevas, sin validar; dudas C11–C15 y términos nuevos en `docs/guia-traduccion-kichwa.md`; CSV al día (prueba nueva).
+- **Decisiones fuera del plan:** la región «Insular» (no «Galápagos») es el valor real del GeoJSON; la clave de la nota con cifras es `api.plantilla.nota.pedernales_los` (el prefijo `api.nota.` está reservado a las claves derivadas, que exigen español idéntico); `_punto` acepta también enteros (`{v:g}` de Python); las plantillas copian los nombres de `modelo/` (coberturas, cultivos, rotaciones) y una prueba comprueba que siguen coincidiendo; el test de `selector.test.tsx` usaba el total de claves sin separador de miles (con más de 1 000 claves fallaba); el umbral del e2e `panel.spec.ts` «el mapa empieza a la vista» pasó de 500 a 550 px: ya fallaba en `ea651d9` (526 px por la línea del observable del bloque B), no por el bloque C.
+- **Texto que sigue en español (declarado):** ayudas (`ayuda`) de las métricas del simulador con cifras; referencias bibliográficas (`modelos`); rótulos de los paneles del radar simulado; el CSV de la tabla por parcela del Observatorio (columnas y celdas en español); textos del modelo que no encajen con ninguna plantilla (p. ej. con parámetros no previstos), que se ven en español con `lang="es"`; en las claves del simulador no se probó el caso marejada/tsunami con un mundo con mar (no se logró un mundo de prueba con mar; las plantillas se prueban con el texto que arma `modelo/`).
+- **Aviso de la regla 6 de CLAUDE.md:** las notas y nombres de serie ya existentes mencionan los productos GCOV, GUNW y GOFF; no están verificados con la documentación oficial. Se tradujeron tal cual, sin darlos por buenos; **pendiente de confirmar con la documentación oficial**.
+- **Cifras (2026-11-08):** `python -m pytest tests -q` 361 passed, 2 skipped; `python -m unittest modelo.clima modelo.desastres` 13 OK; vitest 622 passed (63 archivos); `npm run lint` y `npm run build` sin errores; `npx playwright test` 91 passed (tras ajustar el umbral); e2e de Pages 11 passed; revisión visual en `en` y `qu` de `/observatorio`, `?vista=comparar`, `?vista=serie` y `/simulador`: 0 FAIL (capturas en `docs/capturas-nuevas/bloque-c-*`, sin versionar).
+- **Claves nuevas:** 134 (kichwa: 0 de 1 083 validadas).
 
 ## Pendientes vigentes (lista única, 2026-11-05)
 
@@ -140,7 +155,7 @@ Estación y temporada (cubierta por `PanelContexto`), Fundamentos, Modo Dios.
 - Kichwa: 0 de 923 claves validadas; hacen falta hablantes (`docs/guia-traduccion-kichwa.md`, `docs/traduccion-kichwa.csv`). Dudas abiertas de honestidad y ortografía («chiqan»/«chikan», etc.) en la guía.
 - Prueba con lector de pantalla (Orca/NVDA) en Historias y Observatorio en los tres idiomas: **pendiente, requiere persona con lector de pantalla**.
 - Prueba con zoom real del navegador y teclado físico en un dispositivo real: pendiente (aquí solo se emuló).
-- **Texto del demo que sigue en español (`lang="es"`) con `en` y `qu`** (pendiente declarado; `modelo/` no se toca): notas, ayudas de métricas y celdas de tabla que escribe `modelo/desastres.py` con cifras incrustadas; métricas de la medición con fecha en la etiqueta («Media · Velocidad · 27/12/2026»); notas del modelo y métricas cuando los parámetros no son los de por defecto (su español ya no coincide con el registrado y no se traducen); etiquetas de los puntos de las series; columnas de las tablas del Observatorio; títulos de entradas antiguas de la bitácora; líneas del informe PNG y celdas del CSV de la bitácora del simulador.
+- **Texto del demo que sigue en español (`lang="es"`) con `en` y `qu`** (resuelto casi todo en el bloque C; ver su sección): quedan las ayudas de las métricas del simulador, las referencias bibliográficas, los rótulos de los paneles del radar simulado, el CSV de la tabla por parcela y cualquier texto del modelo que no encaje en una plantilla.
 - Código de idioma `qu-EC`, plurales con cifra, nombres de meses y días en kichwa: dudas abiertas D1–D3 de la guía.
 
 **Técnicos**
@@ -528,7 +543,7 @@ Hallazgos de la revisión general del plan de idioma y accesibilidad, verificado
 
 ### Estado del kichwa
 
-**0 de 923 claves validadas.** Es un borrador redactado por Claude sin hablantes; la app lo avisa («Kichwa tikrayka manaraka chiqanyachishkachu…») y el aviso no desaparece hasta que todas las claves y el contenido largo estén validados. Dudas abiertas por prioridad en la guía (honestidad H1–H5, decisiones D1–D9, palabras con varios sentidos C1–C10).
+**0 de 1 083 claves validadas** (923 al cierre de la primera ronda; 949 tras el bloque B; 1 083 tras el C). Es un borrador redactado por Claude sin hablantes; la app lo avisa («Kichwa tikrayka manaraka chiqanyachishkachu…») y el aviso no desaparece hasta que todas las claves y el contenido largo estén validados. Dudas abiertas por prioridad en la guía (honestidad H1–H5, decisiones D1–D9, palabras con varios sentidos C1–C10).
 
 ### Prueba manual (spec §4.7): qué se hizo y con qué herramienta
 

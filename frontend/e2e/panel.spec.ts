@@ -24,8 +24,9 @@ test('en móvil el mapa del Observatorio empieza a la vista (390x844)', async ({
   const mapa = page.locator('.vista-mapa__mapa')
   await expect(mapa).toBeVisible()
   const caja = await mapa.boundingBox()
-  // Medido a 390x844: el mapa empieza en y=478; el umbral deja ~20 px de margen contra regresiones del encabezado.
-  expect(caja!.y).toBeLessThan(500)
+  // Medido a 390x844: el mapa empieza en y=526 (478 antes de la línea «Qué observa el radar…» del bloque B);
+  // el umbral deja ~20 px de margen contra regresiones del encabezado.
+  expect(caja!.y).toBeLessThan(550)
   expect(caja!.y + caja!.height).toBeGreaterThan(844)
 })
 
