@@ -39,8 +39,9 @@ def _rgb(hex_color: str) -> np.ndarray:
 
 
 def png_b64(rgba: np.ndarray) -> str:
+    # Sin optimize=True: mismo tamaño en estos cuadros y unas 6 veces más rápido (medido el 2026-11-08).
     buf = io.BytesIO()
-    Image.fromarray(np.clip(rgba, 0, 255).astype(np.uint8), "RGBA").save(buf, format="PNG", optimize=True)
+    Image.fromarray(np.clip(rgba, 0, 255).astype(np.uint8), "RGBA").save(buf, format="PNG")
     return base64.b64encode(buf.getvalue()).decode("ascii")
 
 

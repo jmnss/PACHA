@@ -11,6 +11,29 @@ GitHub Pages»), Playwright de Pages 11/11.
 Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea. Las secciones
 fechadas más abajo son históricas; **la lista vigente de pendientes es «Pendientes vigentes»**.
 
+## Rendimiento del simulador (2026-11-08)
+
+Con permiso del usuario para tocar `modelo/` (CLAUDE.md lo restringe a correcciones), se optimizó
+`modelo.desastres.aguas_someras` sin cambiar la física ni el orden de las operaciones:
+- la fricción (con la potencia 7/3, ~75 % del paso) solo se evalúa en las caras mojadas y activas, que son las únicas
+  que la usan; lo que no cambia entre pasos se calcula antes del bucle; `np.pad` y varios `np.where` se reemplazan
+  por búferes y máscaras equivalentes; `hypot` solo donde hay caudal;
+- `tormenta` reutiliza la escorrentía SCS del final del paso anterior (es la del inicio del siguiente);
+- `datos/simulador_render.png_b64` sin `optimize=True` (mismo tamaño en los cuadros, ~6× más rápido).
+
+**Resultados idénticos:** `tests/modelo/test_aguas_someras_equivalencia.py` compara con una copia congelada de la versión
+original (`tests/modelo/_referencia_aguas_someras.py`) en lluvia, marejada, océano activo y cuenca cerrada; además,
+tormenta (dos celdas), inundación y terremoto completos dieron diferencia 0 en cuadros, paneles, métricas y resumen
+contra el commit anterior.
+
+| Pyodide 314.0.7 (Python 3.14.2, Node 22), escenario por defecto 128×128 | Antes | Ahora |
+|---|---|---|
+| Tormenta | 15,6 s | 9,1 s |
+| Inundación | 49,6 s | 22,3 s |
+
+(Sin contar los PNG. En Python nativo: tormenta 9,2 → 5,1 s; inundación 26,5 → 8,8 s; los tiempos de esta máquina
+varían ±30 % entre corridas.)
+
 ## Despliegue en GitHub Pages (2026-11-06)
 
 La API corre en el navegador (Pyodide en un Web Worker, `frontend/src/motor/`) y la app se publica como sitio estático
@@ -113,10 +136,12 @@ Estación y temporada (cubierta por `PanelContexto`), Fundamentos, Modo Dios.
 - Código de idioma `qu-EC`, plurales con cifra, nombres de meses y días en kichwa: dudas abiertas D1–D3 de la guía.
 
 **Técnicos**
-- Bundle ~1,17 MB sin `React.lazy` por ruta.
+- ~~Bundle ~1,17 MB sin `React.lazy` por ruta~~: ya resuelto (cada pantalla es un `lazy`); la portada baja ~140 KB
+  comprimidos y MapLibre (~260 KB comprimidos) solo se carga en pantallas con mapa (medido el 2026-11-08).
 - `/api/tipos` mezcla unidades (el panel multiplica por `escala`).
 - `/cambio` pesado y `/medicion` recalcula el cambio con datos reales; `RLock` global del proveedor demo.
-- `tormenta`/`inundacion` del simulador tardan ~10–30 s.
+- `tormenta`/`inundacion` del simulador: optimizados el 2026-11-08 (ver «Rendimiento del simulador»); en Pyodide
+  siguen tardando ~9 s y ~22 s con los valores por defecto.
 - `revision_visual.sh` deja `frontend/dist` compilado con `VITE_MAPA_REMOTO=0`: recompilar con
   `npm run build` antes de una demo con mapa base.
 - Sin prueba automática del mapa con red. (El aviso «Unexpected }» de minificación de CSS ya no aparece: se quitó una llave sobrante en `historias.css`.)
