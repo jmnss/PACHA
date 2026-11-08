@@ -1,6 +1,7 @@
 import type { UseQueryResult } from '@tanstack/react-query'
 import { mensajeDeError } from '../../api/cliente'
-import type { Escenario, ResultadoCambio } from '../../api/consultas'
+import { useSerieSeleccion, type Escenario, type ResultadoCambio, type SerieTemporal } from '../../api/consultas'
+import type { Cuadrante, Punto } from '../../comparador/Comparador'
 import { Boton } from '../../diseno/Boton'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
 import { NotasModelo } from '../../diseno/NotasModelo'
@@ -18,13 +19,16 @@ import { esVerdad, parseInstante, rotulo } from '../../graficos/fechas'
 import { formatoNumero } from '../../graficos/formato'
 import { formatearFecha } from '../../tiempo/fechas'
 
-type Serie = ResultadoCambio['series'][number]
+type Serie = SerieTemporal
 
 interface Props {
   esc: Escenario
   resultado: UseQueryResult<ResultadoCambio>
   antesId: string
   despuesId: string
+  /** Selección de la vista Comparar (de la URL): si hay, se muestra primero su evolución. */
+  punto?: Punto | null
+  cuadrante?: Cuadrante | null
 }
 
 const limpio = (t: string) => t.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase()
@@ -42,8 +46,9 @@ function lineas(s: Serie): SerieLinea[] {
 }
 
 /** Series temporales del resultado: un gráfico por serie con las pasadas «antes» y «después», su tabla y su CSV. */
-export function VistaSerie({ esc, resultado, antesId, despuesId }: Props) {
+export function VistaSerie({ esc, resultado, antesId, despuesId, punto, cuadrante }: Props) {
   const { t, idioma } = useT()
+  const seleccion = useSerieSeleccion(esc.id, { punto, cuadrante })
   if (resultado.isError) {
     return (
       <ErrorBloque
@@ -68,6 +73,7 @@ export function VistaSerie({ esc, resultado, antesId, despuesId }: Props) {
   ].filter((m) => m.instante)
   return (
     <div className="serie">
+      {(punto || cuadrante) && <BloqueSeleccion consulta={seleccion} escenario={esc.id} marcas={marcas} />}
       {r.series.map((s, i) => (
         <BloqueSerie key={`${s.titulo}-${i}`} s={s} escenario={esc.id} marcas={marcas} />
       ))}
@@ -80,7 +86,26 @@ export function VistaSerie({ esc, resultado, antesId, despuesId }: Props) {
   )
 }
 
-function BloqueSerie({ s, escenario, marcas }: { s: Serie; escenario: string; marcas: MarcaLinea[] }) {
+/** La serie del punto o cuadrante elegidos: el mismo bloque que las del escenario, o su estado de carga, error o vacío. */
+function BloqueSeleccion({ consulta, escenario, marcas }: { consulta: UseQueryResult<SerieTemporal | null>; escenario: string; marcas: MarcaLinea[] }) {
+  const { t, idioma } = useT()
+  const titulo = t('obs.serie.seleccion_titulo')
+  if (consulta.isError) {
+    return (
+      <Tarjeta titulo={titulo}>
+        <ErrorBloque mensaje={mensajeDeError(consulta.error, t)} ultimoDato={formatoHora(idioma, consulta.dataUpdatedAt)} onReintentar={() => void consulta.refetch()} />
+      </Tarjeta>
+    )
+  }
+  if (consulta.isPending) return <Tarjeta titulo={titulo}><Cargando texto={t('obs.serie.seleccion_calculando')} filas={3} /></Tarjeta>
+  const s = consulta.data
+  if (!s || s.puntos.length === 0) {
+    return <Tarjeta titulo={titulo}><Vacio titulo={t('obs.serie.seleccion_vacia_titulo')} texto={t('obs.serie.seleccion_vacia_texto')} /></Tarjeta>
+  }
+  return <BloqueSerie s={s} escenario={escenario} marcas={marcas} titulo={titulo} aviso={t('obs.serie.seleccion_aviso_pol')} archivo="seleccion" />
+}
+
+function BloqueSerie({ s, escenario, marcas, titulo, aviso, archivo }: { s: Serie; escenario: string; marcas: MarcaLinea[]; titulo?: string; aviso?: string; archivo?: string }) {
   const { t, idioma } = useT()
   const sint = !esReal(s.origen)
   const series = lineas(s)
@@ -98,12 +123,14 @@ function BloqueSerie({ s, escenario, marcas }: { s: Serie; escenario: string; ma
   ]
   const descargar = () => {
     const csv = filas.map((f) => ({ [cFecha]: f.fecha, [cValor]: f.valor, [cSerie]: f.serie }))
-    descargarCsv(nombreCsvSerie(escenario, s.titulo), aCsv(csv, [cFecha, cValor, cSerie], s.origen, idioma))
+    descargarCsv(nombreCsvSerie(escenario, archivo ?? s.titulo), aCsv(csv, [cFecha, cValor, cSerie], s.origen, idioma))
   }
   const hayVerdad = series.some((x) => esVerdad(x.nombre, sint))
   return (
-    <Tarjeta titulo={<TextoApi texto={s.titulo} clave={clavesApi.serie(s.titulo)} />}>
+    <Tarjeta titulo={titulo ?? <TextoApi texto={s.titulo} clave={clavesApi.serie(s.titulo)} />}>
+      {titulo && <p className="serie__nota"><TextoApi texto={s.titulo} clave={clavesApi.serie(s.titulo)} /></p>}
       <Linea series={series} marcas={marcas} unidad={s.unidad} origen={s.origen} titulo={s.titulo} />
+      {aviso && <p className="serie__nota">{aviso}</p>}
       {hayVerdad && <p className="serie__nota">{t('obs.serie.nota_verdad')}</p>}
       <Tabla titulo={t('obs.serie.valores_de', { titulo: s.titulo })} columnas={columnas} filas={filas} porPagina={50} />
       <div><Boton variante="secundario" onClick={descargar}>{t('obs.medicion.descargar_csv')}</Boton></div>

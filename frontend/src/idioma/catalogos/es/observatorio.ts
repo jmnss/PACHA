@@ -165,9 +165,7 @@ export const observatorio = {
   'obs.medicion.coordenadas': 'Coordenadas aproximadas',
   'obs.medicion.midiendo': 'Midiendo…',
   'obs.medicion.valor_pixel': 'Valor medido en el píxel más cercano al punto',
-  'obs.medicion.serie_antes': 'Serie temporal del punto: pendiente (la API aún no la ofrece). La serie del escenario está en la ',
-  'obs.medicion.serie_enlace': 'vista Serie',
-  'obs.medicion.serie_despues': '.',
+  'obs.medicion.ver_serie': 'Ver su evolución en Serie',
   'obs.medicion.tabla_cuadrante': 'Medidas del cuadrante',
   'obs.medicion.tabla_punto': 'Valores en el punto',
   'obs.medicion.descargar_csv': 'Descargar CSV',
@@ -216,6 +214,11 @@ export const observatorio = {
   'obs.serie.col_fecha': 'Fecha',
   'obs.serie.col_valor': 'Valor ({unidad})',
   'obs.serie.col_serie': 'Serie',
+  'obs.serie.seleccion_titulo': 'En la selección',
+  'obs.serie.seleccion_aviso_pol': 'La serie usa la polarización del observable del tipo, no la del selector.',
+  'obs.serie.seleccion_vacia_titulo': 'Sin dato en la selección',
+  'obs.serie.seleccion_vacia_texto': 'El punto o el cuadrante cae en agua o en una zona sin dato del radar.',
+  'obs.serie.seleccion_calculando': 'Calculando la serie de la selección…',
 
   // — Impacto —
   'obs.impacto.elige_dos': 'Elige dos pasadas distintas para resumir el impacto.',

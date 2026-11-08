@@ -196,10 +196,14 @@ describe('Observatorio · antes y después', () => {
     // Centro del bbox [-80.24, -0.74, -80.16, -0.66]: 0,700° S, 80,200° O.
     expect(tarjeta).toHaveTextContent(/0,700° S, 80,200° O/)
     expect(medidas()[0].cuerpo).toEqual({ antes: '2026-04-12', despues: '2026-05-18', punto: [0.5, 0.5] })
-    expect(tarjeta).toHaveTextContent('Serie temporal del punto: pendiente (la API aún no la ofrece). La serie del escenario está en la vista Serie.')
-    expect(within(tarjeta).getByRole('link', { name: 'vista Serie' }).getAttribute('href')).toContain('vista=serie')
+    expect(tarjeta).not.toHaveTextContent('pendiente')
+    const enlace = within(tarjeta).getByRole('link', { name: 'Ver su evolución en Serie' })
+    expect(enlace.getAttribute('href')).toContain('vista=serie')
     expect(within(tarjeta).queryByRole('button', { name: 'Descargar CSV' })).not.toBeInTheDocument()
     expect(within(tarjeta).getByText(/Sintético|demostración/i)).toBeInTheDocument()
+    fireEvent.click(enlace)
+    await waitFor(() => expect(screen.getByTestId('ubicacion').textContent).toContain('vista=serie'))
+    expect(screen.getByTestId('ubicacion').textContent).toContain('p=0.5')
   })
 
   it('«Borrar selección» limpia punto, cuadrante y la URL', async () => {

@@ -162,9 +162,7 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.medicion.coordenadas': 'Yaklla coordenadakuna',
   'obs.medicion.midiendo': 'Tupushka…',
   'obs.medicion.valor_pixel': 'Puntoman asha kaklla píxelpi tupushka chanin',
-  'obs.medicion.serie_antes': 'Puntopa pachapi wiñachik: shuyashka (API manaraka kunchu). Escenariopa wiñachikka kaypi kan: ',
-  'obs.medicion.serie_enlace': 'wiñachik rikuy',
-  'obs.medicion.serie_despues': '.',
+  'obs.medicion.ver_serie': 'Wiñachikpi pay kay wiñayninta rikuy',
   'obs.medicion.tabla_cuadrante': 'Cuadropa tupuykuna',
   'obs.medicion.tabla_punto': 'Puntopi chaninkuna',
   'obs.medicion.descargar_csv': 'CSVta uraykachay',
@@ -213,6 +211,11 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.serie.col_fecha': 'Puncha',
   'obs.serie.col_valor': 'Chanin ({unidad})',
   'obs.serie.col_serie': 'Wiñachik',
+  'obs.serie.seleccion_titulo': 'Akllasqapi',
+  'obs.serie.seleccion_aviso_pol': 'Wiñachikka tipopa rikuna polarización-wan llamkan, akllanapa mana.',
+  'obs.serie.seleccion_vacia_titulo': 'Akllasqapi mana willay kanchu',
+  'obs.serie.seleccion_vacia_texto': 'Punto utaq cuadrante yakupi utaq radarpa mana willayniyuq pachapi tarikun.',
+  'obs.serie.seleccion_calculando': 'Akllasqapa wiñachikta yupachkan…',
 
   // — Impacto —
   'obs.impacto.elige_dos': 'Llakichiyta pishiyachinkapak ishkay mana kikin pasadakunata akllay.',

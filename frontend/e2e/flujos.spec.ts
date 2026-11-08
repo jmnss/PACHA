@@ -84,6 +84,21 @@ for (const { nombre, ancho, alto } of ANCHOS) {
       expect(contenido).toContain('DATOS DE DEMOSTRACIÓN: no son observaciones reales de NISAR')
     })
 
+    test('Observatorio · comparar: de un punto a su evolución en Serie', async ({ page }) => {
+      await page.goto('/observatorio?escenario=ec_la_segua&vista=comparar')
+      const gesto = page.getByTestId('comparador-gesto')
+      await expect(gesto).toBeVisible({ timeout: 30_000 })
+      await gesto.scrollIntoViewIfNeeded()
+      const caja = (await gesto.boundingBox())!
+      await page.mouse.click(caja.x + caja.width * 0.3, caja.y + caja.height * 0.5)
+      const enlace = page.getByRole('link', { name: 'Ver su evolución en Serie' })
+      await expect(enlace).toBeVisible({ timeout: 30_000 })
+      await enlace.click()
+      await expect(page).toHaveURL(/vista=serie/)
+      await expect(page).toHaveURL(/p=/)
+      await expect(page.getByRole('heading', { name: 'En la selección' })).toBeVisible({ timeout: 60_000 })
+    })
+
     test('Observatorio · mapa: un clic fuera de Ecuador avisa y no simula', async ({ page }) => {
       const posts: string[] = []
       page.on('request', (r) => { if (r.method() === 'POST' && r.url().includes('/api/simulacion/escenario')) posts.push(r.url()) })

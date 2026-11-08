@@ -161,9 +161,7 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.medicion.coordenadas': 'Approximate coordinates',
   'obs.medicion.midiendo': 'Measuring…',
   'obs.medicion.valor_pixel': 'Value measured at the pixel closest to the point',
-  'obs.medicion.serie_antes': 'Time series of the point: pending (the API does not offer it yet). The scenario series is in the ',
-  'obs.medicion.serie_enlace': 'Series view',
-  'obs.medicion.serie_despues': '.',
+  'obs.medicion.ver_serie': 'See its evolution in Series',
   'obs.medicion.tabla_cuadrante': 'Quadrant measurements',
   'obs.medicion.tabla_punto': 'Values at the point',
   'obs.medicion.descargar_csv': 'Download CSV',
@@ -212,6 +210,11 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.serie.col_fecha': 'Date',
   'obs.serie.col_valor': 'Value ({unidad})',
   'obs.serie.col_serie': 'Series',
+  'obs.serie.seleccion_titulo': 'In the selection',
+  'obs.serie.seleccion_aviso_pol': 'The series uses the polarization of the type\'s observable, not the one in the selector.',
+  'obs.serie.seleccion_vacia_titulo': 'No data in the selection',
+  'obs.serie.seleccion_vacia_texto': 'The point or quadrant falls on water or on an area with no radar data.',
+  'obs.serie.seleccion_calculando': 'Computing the series of the selection…',
 
   // — Impacto —
   'obs.impacto.elige_dos': 'Choose two different passes to summarize the impact.',

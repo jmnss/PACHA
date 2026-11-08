@@ -9,6 +9,7 @@ export type TipoCambio = S['TipoCambio']
 export type CapaDto = S['CapaDto']
 export type ResultadoCambio = S['ResultadoCambioDto']
 export type Medicion = S['MedicionDto']
+export type SerieTemporal = S['SerieTemporal']
 export type Contexto = S['ContextoDto']
 export type PeticionCambio = S['PeticionCambio']
 export type PeticionMedicion = S['PeticionMedicion']
@@ -85,6 +86,19 @@ export const useMedicion = (id: string | undefined, p: PeticionMedicion | undefi
     queryKey: ['medicion', id, p],
     queryFn: () => llamar<Medicion>(`/api/escenarios/${e(id!)}/medicion`, p),
     enabled: !!id && !!p,
+  })
+
+/** Evolución del observable en el punto o cuadrante elegidos (normalizados 0–1); sin selección no consulta. */
+export const useSerieSeleccion = (id: string | undefined, sel: { punto?: readonly number[] | null; cuadrante?: readonly number[] | null } | undefined) =>
+  useQuery({
+    queryKey: ['serie-seleccion', id, sel],
+    queryFn: () => {
+      const q = new URLSearchParams()
+      if (sel!.punto) q.set('punto', sel!.punto.join(','))
+      if (sel!.cuadrante) q.set('cuadrante', sel!.cuadrante.join(','))
+      return llamar<SerieTemporal | null>(`/api/escenarios/${e(id!)}/serie-seleccion?${q}`)
+    },
+    enabled: !!id && !!sel && (!!sel.punto || !!sel.cuadrante),
   })
 
 export const useContexto = (lat: number | undefined, lon: number | undefined, fecha?: string) =>

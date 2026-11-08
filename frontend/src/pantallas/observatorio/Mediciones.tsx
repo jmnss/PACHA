@@ -30,6 +30,8 @@ interface Props {
   /** Polarización elegida en el selector. */
   polarizacion?: string
   onBorrar: () => void
+  /** Lleva a la vista Serie conservando la selección. */
+  onVerSerie?: () => void
 }
 
 type Fila = Record<string, string | number | null>
@@ -51,7 +53,7 @@ function columnasDe(filas: Fila[], t: T, idioma: CodigoIdioma) {
 
 
 /** Medición sobre la imagen: un punto (valores en las dos pasadas) o un cuadrante (resumen, tabla y CSV). */
-export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, polarizacion, onBorrar }: Props) {
+export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, polarizacion, onBorrar, onVerSerie }: Props) {
   const { t, idioma, textoApi } = useT()
   const [params] = useSearchParams()
   const hay = !!(punto || cuadrante)
@@ -96,9 +98,9 @@ export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, po
       {m && !enCuadrante && m.metricas.length > 0 && (
         <p className="medicion__nota">{m.metricas[0].ayuda ? <><AyudaMetrica m={m.metricas[0]} />. </> : null}{t('obs.medicion.valor_pixel')}.</p>
       )}
-      {m && !enCuadrante && (
+      {m && (
         <p className="medicion__nota">
-          {t('obs.medicion.serie_antes')}<Link to={{ search: aSerie.toString() }}>{t('obs.medicion.serie_enlace')}</Link>{t('obs.medicion.serie_despues')}
+          <Link to={{ search: aSerie.toString() }} onClick={(ev) => { if (onVerSerie) { ev.preventDefault(); onVerSerie() } }}>{t('obs.medicion.ver_serie')}</Link>
         </p>
       )}
       {m && polarizacion && medida && medida !== polarizacion && <p className="medicion__nota">{t('obs.medicion.nota_polarizacion')}</p>}

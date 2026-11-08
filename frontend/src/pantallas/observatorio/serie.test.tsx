@@ -28,10 +28,12 @@ const cambio = (series: object[], tipo = 'sintetico') => ({
   notas: ['Bajo el dosel inundado, el doble rebote eleva HH.'], metricas: [], series,
 })
 let respuesta: object
+let seleccion: object | null
 const json = (x: unknown, status = 200) => Promise.resolve(new Response(JSON.stringify(x), { status }))
 
 beforeEach(() => {
   respuesta = cambio([serie('Superficie inundada', 'sintetico', ['Estimada', 'Verdad sintética']), serie('Humedad del suelo', 'sintetico', ['Estimada'])])
+  seleccion = serie('Superficie inundada', 'sintetico', ['Punto'])
   vi.stubGlobal('fetch', vi.fn((url: string) => {
     if (url === '/api/salud') return json({ estado: 'ok', hay_sinteticos: true, origen_tipo: 'sintetico', proveedor: 'demo', version: '1' })
     if (url === '/api/escenarios') return json([escenario('ec_x')])
@@ -39,6 +41,7 @@ beforeEach(() => {
     if (url.startsWith('/api/contexto')) return json(null)
     if (url === '/api/escenarios/ec_x') return json(escenario('ec_x'))
     if (url === '/api/escenarios/ec_x/cambio') return json(respuesta)
+    if (url.startsWith('/api/escenarios/ec_x/serie-seleccion')) return json(seleccion)
     return json({ mensaje: 'no previsto' }, 404)
   }))
 })
@@ -154,5 +157,34 @@ describe('Observatorio · series · idioma', () => {
     expect(texto).toContain('# idioma: en')
     expect(texto).toContain('Date,Value (km²),Series')
     expect(texto).toContain('12 Apr 2026,10,Estimada')
+  })
+
+  it('con un punto muestra primero «En la selección» con gráfica, tabla, CSV y aviso de polarización', async () => {
+    montar('/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18&p=0.5,0.5')
+    await waitFor(() => expect(screen.getAllByRole('figure')).toHaveLength(3))
+    const tarjeta = screen.getByRole('heading', { name: 'En la selección' }).closest('section') as HTMLElement
+    expect(within(tarjeta).getByRole('figure')).toBeInTheDocument()
+    expect(within(tarjeta).getByRole('table')).toBeInTheDocument()
+    expect(within(tarjeta).getByRole('button', { name: 'Descargar CSV' })).toBeInTheDocument()
+    expect(tarjeta).toHaveTextContent('La serie usa la polarización del observable del tipo, no la del selector.')
+    const titulos = screen.getAllByRole('heading').map((h) => h.textContent)
+    expect(titulos.indexOf('En la selección')).toBeLessThan(titulos.indexOf('Humedad del suelo'))
+    const llamada = (fetch as unknown as ReturnType<typeof vi.fn>).mock.calls.map((c) => c[0] as string).find((u) => u.includes('serie-seleccion'))
+    expect(llamada).toContain('punto=0.5')
+  })
+
+  it('una selección sin puntos dice «Sin dato en la selección»', async () => {
+    seleccion = { ...serie('Superficie inundada', 'sintetico', []), puntos: [] }
+    montar('/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18&c=0.1,0.1,0.5,0.5')
+    expect(await screen.findByText('Sin dato en la selección')).toBeInTheDocument()
+    expect(screen.getByText('El punto o el cuadrante cae en agua o en una zona sin dato del radar.')).toBeInTheDocument()
+  })
+
+  it('sin punto ni cuadrante no se llama a la API de selección', async () => {
+    montar()
+    await screen.findAllByRole('figure')
+    const urls = (fetch as unknown as ReturnType<typeof vi.fn>).mock.calls.map((c) => c[0] as string)
+    expect(urls.some((u) => u.includes('serie-seleccion'))).toBe(false)
+    expect(screen.queryByText('En la selección')).not.toBeInTheDocument()
   })
 })

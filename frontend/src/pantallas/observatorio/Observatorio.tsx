@@ -257,7 +257,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
           ) : vista === 'impacto' && esc.historia ? (
             <VistaImpacto esc={esc} antesId={antesId} despuesId={despuesId} polarizacion={polarizacion} />
           ) : (
-            <VistaSerie esc={esc} resultado={resultado} antesId={antesId} despuesId={despuesId} />
+            <VistaSerie esc={esc} resultado={resultado} antesId={antesId} despuesId={despuesId} punto={punto} cuadrante={cuadrante} />
           )}
         </div>
         <aside className="observatorio__lado" aria-label={t('obs.estructura.lado_etiqueta')}>
@@ -267,6 +267,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
             <Mediciones
               esc={esc} antesId={antesId} despuesId={despuesId} bbox={resultado.data?.antes.rejilla.bbox ?? esc.bbox}
               punto={punto} cuadrante={cuadrante} polarizacion={polarizacion} onBorrar={() => cambiar({ p: '', c: '' })}
+              onVerSerie={() => cambiar({ vista: 'serie' })}
             />
           )}
           <PanelMetricas esc={esc} resultado={resultado} indice={tiempo.pasadaActiva} antesId={antesId} despuesId={despuesId} />
