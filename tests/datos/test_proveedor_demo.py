@@ -393,3 +393,40 @@ def test_la_serie_detectada_se_llama_detectada_por_el_modelo(prov):
     r = prov.cambio("ec_la_segua", a, d, None)
     nombres = {p[2] for s in r.series for p in s.puntos}
     assert "Detectada por el modelo (simulación)" in nombres
+
+
+# --- fecha del evento -------------------------------------------------------------------------
+
+def test_instante_evento_en_utc(prov):
+    from datetime import date
+    e = prov.escenario("ec_loja")
+    assert e.instante_evento is not None and e.instante_evento.utcoffset() == timedelta(0)
+    assert e.instante_evento.date() == date(2026, 9, 10)
+    assert (e.instante_evento.hour, e.instante_evento.minute) == (15, 30)
+
+
+def test_fecha_evento_desplaza_pasadas(prov):
+    from datetime import date
+    base = prov.escenario("ec_la_segua")
+    e = prov.simular("ec_la_segua", {"fecha_evento": "2026-06-01"})
+    assert e.id != "ec_la_segua"
+    assert e.instante_evento.date() == date(2026, 6, 1)
+    assert len(e.adquisiciones) == len(base.adquisiciones)
+    for a, b in zip(base.adquisiciones, e.adquisiciones):
+        assert b.instante - a.instante == timedelta(days=31)
+
+
+def test_fecha_evento_igual_al_catalogo_es_la_base(prov):
+    assert prov.simular("ec_la_segua", {"fecha_evento": "2026-05-01"}).id == "ec_la_segua"
+
+
+@pytest.mark.parametrize("valor", ["2026-13-01", "01/05/2026", "2023-12-31", "2031-01-01", 20260501, "20260601", True])
+def test_fecha_evento_invalida(prov, valor):
+    from datos.contrato import EntradaNoValida
+    with pytest.raises(EntradaNoValida):
+        prov.simular("ec_la_segua", {"fecha_evento": valor})
+
+
+def test_ids_existentes_no_cambian(prov):
+    # El id depende solo de la huella de lat/lon: añadir `fecha_evento` no puede alterarlo.
+    assert prov.simular("ec_la_segua", {"lat": -0.7, "lon": -80.2}).id == "ec_la_segua~661837931320"

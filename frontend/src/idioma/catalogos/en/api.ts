@@ -74,6 +74,8 @@ export const api: Record<keyof typeof esApi, string> = {
   'api.error.control_rango': '“{nombre}” must be between {minimo} and {maximo}.',
   'api.error.cuadrante_fuera': 'The quadrant {cuadrante} falls outside the image ({ny}×{nx} pixels).',
   'api.error.cuadrante_sin_area': 'The quadrant has no area.',
+  'api.error.fecha_evento_formato': 'The event date must be text in the format YYYY-MM-DD, for example 2026-06-01.',
+  'api.error.fecha_evento_rango': 'The event date must be between 2024-01-01 and 2030-12-31.',
   'api.error.serie_sel_formato': '“{nombre}” must be a list of {n} numbers separated by commas.',
   'api.error.serie_sel_rango': 'Give a point, a quadrant or both, with values between 0 and 1.',
   'api.error.entrada_no_valida': 'Invalid input. {detalle}',

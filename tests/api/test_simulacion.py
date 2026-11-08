@@ -1,4 +1,6 @@
+import pytest
 import gzip
+import pytest
 import time
 
 from fastapi.testclient import TestClient
@@ -132,3 +134,18 @@ def test_peticion_acotada_422(cliente_demo):
     assert pedir({"radio_km": [1]}).status_code == 422
     r = pedir({"lat": -2.0})
     assert r.status_code == 422 and "lat y lon" in r.json()["mensaje"]
+
+
+def test_fecha_evento_simulable_y_expuesta(cliente_demo):
+    r = cliente_demo.post("/api/simulacion/escenario",
+                          json={"escenario_id": "ec_la_segua", "parametros": {"fecha_evento": "2026-06-01"}})
+    assert r.status_code == 200
+    assert r.json()["instante_evento"].startswith("2026-06-01T")
+
+
+@pytest.mark.parametrize("valor", ["2023-12-31", "01/05/2026", 20260501])
+def test_fecha_evento_invalida_422(cliente_demo, valor):
+    r = cliente_demo.post("/api/simulacion/escenario",
+                          json={"escenario_id": "ec_la_segua", "parametros": {"fecha_evento": valor}})
+    assert r.status_code == 422
+    assert r.json()["clave_texto"].startswith("api.error.fecha_evento")

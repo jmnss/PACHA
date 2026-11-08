@@ -21,7 +21,7 @@ son UTC. Las rejillas son 2D `float32`, con `NaN` = sin dato (la API las cuantiz
 | `Origen` | De dónde sale el dato. `tipo` es `"sintetico"` o `"real"`; `fuente`, `producto`, `generador`, `version`, `semilla`, `fecha_generacion` (con zona horaria obligatoria), `notas`. `tipo="sintetico"` obliga a mostrar la banda «DATOS DE DEMOSTRACIÓN». |
 | `Adquisicion` | Una pasada: `id`, `instante` (UTC, con zona horaria obligatoria), `direccion_orbital` (opcional), `polarizaciones`. |
 | `Capacidades` | `simulacion`, `modelo_continuo`, `verdad_terreno` (booleanos; el proveedor real los tendrá en `false`). |
-| `Escenario` | Un caso de estudio: `id`, `nombre`, `tipo_cambio`, `historia` (`inundacion`, `incendio` o nulo), `region`, `bbox`, `resolucion_m` (metros por píxel, > 0), `polarizaciones`, `variables`, `adquisiciones` (al menos una), `capacidades`, `origen`. |
+| `Escenario` | Un caso de estudio: `id`, `nombre`, `tipo_cambio`, `historia` (`inundacion`, `incendio` o nulo), `region`, `bbox`, `resolucion_m` (metros por píxel, > 0), `polarizaciones`, `variables`, `adquisiciones` (al menos una), `capacidades`, `origen`, `instante_evento` (opcional, UTC; el real puede dejarlo nulo). |
 | `CapaRaster` | Rejilla 2D con `variable`, `polarizacion`, `unidad`, `paleta` (`gris`, `secuencial`, `divergente`, `ciclico`, `categorias`), `vmin`/`vmax`, `leyenda` (lista de pares `(etiqueta, color)`; el código de categoría es la posición + 1), `datos` (solo lectura, copia propia), `bbox`, `origen`. Inmutable; valida 2D, paleta, `vmin <= vmax` finitos y `bbox`. Opcional `instante` (UTC con zona): lo llevan los fotogramas del modelo continuo; en capas de adquisición es nulo. |
 | `SerieTemporal` | `titulo`, `unidad`, `puntos` = lista de `(instante, valor, serie)`, `origen`. |
 | `Metrica` | `etiqueta`, `valor` (texto ya formateado), `unidad`, `ayuda` (explicación en español llano). |
@@ -33,6 +33,8 @@ son UTC. Las rejillas son 2D `float32`, con `NaN` = sin dato (la API las cuantiz
 
 `capas_extra` en el proveedor demo: terremotos (interferograma envuelto, coherencia) y subsidencia
 (desplazamiento LOS acumulado, error frente a la verdad sintética).
+
+Parámetro simulable `fecha_evento` (demo; texto `AAAA-MM-DD` entre 2024-01-01 y 2030-12-31, ilustrativo): desplaza todas las pasadas; si coincide con la del catálogo no cuenta y el id es el base.
 
 Escenarios simulados (proveedor demo): `simular(id, parametros)` devuelve un `Escenario` con id derivado
 `<base>~<huella>` (huella SHA-256 (12 hex) de los parámetros normalizados). `capa`, `cambio`, `medir`, `fotogramas` y

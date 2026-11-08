@@ -72,6 +72,8 @@ export const api = {
   'api.error.control_rango': '«{nombre}» debe estar entre {minimo} y {maximo}.',
   'api.error.cuadrante_fuera': 'El cuadrante {cuadrante} queda fuera de la imagen ({ny}×{nx} píxeles).',
   'api.error.cuadrante_sin_area': 'El cuadrante no tiene área.',
+  'api.error.fecha_evento_formato': 'La fecha del evento debe ser un texto con el formato AAAA-MM-DD, por ejemplo 2026-06-01.',
+  'api.error.fecha_evento_rango': 'La fecha del evento debe estar entre 2024-01-01 y 2030-12-31.',
   'api.error.serie_sel_formato': '«{nombre}» debe ser una lista de {n} números separados por comas.',
   'api.error.serie_sel_rango': 'Indica un punto, un cuadrante o los dos, con valores entre 0 y 1.',
   'api.error.entrada_no_valida': 'Entrada no válida. {detalle}',

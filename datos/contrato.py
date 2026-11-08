@@ -106,6 +106,8 @@ class Escenario(BaseModel):
     adquisiciones: list[Adquisicion] = Field(min_length=1)
     capacidades: Capacidades
     origen: Origen
+    # Instante del evento (UTC). Opcional: el proveedor real puede no conocerlo.
+    instante_evento: AwareDatetime | None = None
 
     @model_validator(mode="after")
     def _bbox_ordenado(self) -> "Escenario":

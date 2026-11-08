@@ -71,6 +71,8 @@ REGISTRO: dict[str, str] = {
     "api.error.pasada_despues_antes": "La pasada «después» debe ser posterior a la pasada «antes».",
     "api.error.fechas_distintas": "Elige dos fechas distintas.",
     "api.error.cuadrante_sin_area": "El cuadrante no tiene área.",
+    "api.error.fecha_evento_formato": "La fecha del evento debe ser un texto con el formato AAAA-MM-DD, por ejemplo 2026-06-01.",
+    "api.error.fecha_evento_rango": "La fecha del evento debe estar entre 2024-01-01 y 2030-12-31.",
     "api.error.serie_sel_formato": "«{nombre}» debe ser una lista de {n} números separados por comas.",
     "api.error.serie_sel_rango": "Indica un punto, un cuadrante o los dos, con valores entre 0 y 1.",
 }

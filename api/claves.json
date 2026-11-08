@@ -312,6 +312,14 @@
     "es": "La fecha 'después' debe ser posterior a la fecha 'antes'."
   },
   {
+    "clave": "api.error.fecha_evento_formato",
+    "es": "La fecha del evento debe ser un texto con el formato AAAA-MM-DD, por ejemplo 2026-06-01."
+  },
+  {
+    "clave": "api.error.fecha_evento_rango",
+    "es": "La fecha del evento debe estar entre 2024-01-01 y 2030-12-31."
+  },
+  {
     "clave": "api.error.fecha_sin_zona",
     "es": "{nombre} debe llevar zona horaria."
   },

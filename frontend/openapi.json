@@ -853,6 +853,18 @@
             "title": "Id",
             "type": "string"
           },
+          "instante_evento": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Instante Evento"
+          },
           "nombre": {
             "title": "Nombre",
             "type": "string"

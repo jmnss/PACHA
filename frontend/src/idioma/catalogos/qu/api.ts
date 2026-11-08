@@ -74,6 +74,8 @@ export const api: Record<keyof typeof esApi, string> = {
   'api.error.control_rango': '«{nombre}» {minimo}-manta {maximo}-kama kana kan.',
   'api.error.cuadrante_fuera': 'Cuadrante {cuadrante} rikchamanta hawapi kan ({ny}×{nx} pixel).',
   'api.error.cuadrante_sin_area': 'Cuadrante mana hatun kayta charinchu.',
+  'api.error.fecha_evento_formato': 'Ruwaypa p\'unchawka qillqa kachun, AAAA-MM-DD hinata, ahinataq 2026-06-01.',
+  'api.error.fecha_evento_rango': 'Ruwaypa p\'unchawka 2024-01-01 wan 2030-12-31 chawpipi kachun.',
   'api.error.serie_sel_formato': '«{nombre}» {n} yupaykunata coma nisqawan rakisqa kachun.',
   'api.error.serie_sel_rango': 'Huk puntuta, huk cuadrantita utaq iskaynintapas rikuchiy, 0 wan 1 chawpipi.',
   'api.error.entrada_no_valida': 'Mana alli churashka. {detalle}',

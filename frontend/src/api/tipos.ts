@@ -595,6 +595,8 @@ export interface components {
             historia?: ("inundacion" | "incendio") | null;
             /** Id */
             id: string;
+            /** Instante Evento */
+            instante_evento?: string | null;
             /** Nombre */
             nombre: string;
             origen: components["schemas"]["Origen"];

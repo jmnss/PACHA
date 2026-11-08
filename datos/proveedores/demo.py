@@ -26,14 +26,16 @@ from datos.contrato import (
     ResultadoCambio, SerieTemporal, TablaResultado,
 )
 from datos.geografia import MENSAJE_FUERA_DE_ECUADOR, en_ecuador
-from datos.generador import ESCENARIOS_DEMO, PARAMETROS_DEMO, generar_escena, origen_demo
+from datos.generador import ESCENARIOS_DEMO, PARAMETROS_DEMO, _sitio_catalogo, generar_escena, origen_demo
 from modelo import estaciones, nisar
 
 MAX_FOTOGRAMAS = 120
 MAX_CACHE = 32  # escenas, escenarios simulados registrados y análisis en memoria
 ORBITAS = ("Ascendente", "Descendente")
 # Parámetros de la simulación que no son controles físicos del tipo de cambio.
-GENERICOS = ("semilla", "looks", "orbita", "estacional", "lat", "lon")
+GENERICOS = ("semilla", "looks", "orbita", "estacional", "lat", "lon", "fecha_evento")
+# Rango ilustrativo de la fecha del evento simulable (datos sintéticos).
+FECHA_EVENTO_MIN, FECHA_EVENTO_MAX = date(2024, 1, 1), date(2030, 12, 31)
 
 # Cubo del modelo -> (variable del contrato, polarización). LOS/VEL no tienen polarización conocida.
 _VARIABLE_DE_CUBO = {
@@ -242,6 +244,17 @@ def _validar(tipo: str, parametros: dict | None) -> dict:
         if not isinstance(parametros["estacional"], bool):
             raise EntradaNoValida.con("api.error.estacional_booleano")
         sim["estacional"] = parametros["estacional"]
+    fecha = None
+    if "fecha_evento" in parametros:
+        crudo = parametros["fecha_evento"]
+        if not isinstance(crudo, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", crudo):
+            raise EntradaNoValida.con("api.error.fecha_evento_formato")
+        try:
+            fecha = date.fromisoformat(crudo)
+        except ValueError:
+            raise EntradaNoValida.con("api.error.fecha_evento_formato") from None
+        if not FECHA_EVENTO_MIN <= fecha <= FECHA_EVENTO_MAX:
+            raise EntradaNoValida.con("api.error.fecha_evento_rango")
     punto = None
     if "lat" in parametros or "lon" in parametros:
         if "lat" not in parametros or "lon" not in parametros:
@@ -276,7 +289,8 @@ def _validar(tipo: str, parametros: dict | None) -> dict:
     por_defecto = {k: PARAMETROS_DEMO[k] for k in sim if sim[k] == PARAMETROS_DEMO[k]}
     sim = {k: x for k, x in sim.items() if k not in por_defecto}  # igual a la demostración = no cambia nada
     canonico = {"sim": sim, "ajustes": ajustes, "punto": list(punto) if punto else None}
-    return {"sim": sim, "ajustes": ajustes, "mostrados": mostrados, "punto": punto, "canonico": canonico}
+    return {"sim": sim, "ajustes": ajustes, "mostrados": mostrados, "punto": punto, "fecha": fecha,
+            "canonico": canonico}
 
 
 class ProveedorDemostracion:
@@ -315,6 +329,18 @@ class ProveedorDemostracion:
         tipo = self._tipo(base)
         v = _validar(tipo, parametros)
         canon = v["canonico"]
+        # Sitio del escenario: el del mapa si hay punto; con `fecha_evento` distinta de la suya, el del catálogo.
+        sitio = None
+        if v["punto"] is not None:
+            sitio = sitio_en_mapa(tipo, *v["punto"], nisar.cargar_sitios())
+        if v["fecha"] is not None:
+            if sitio is None:
+                sitio = _sitio_catalogo(base)
+            if pd.Timestamp(sitio["fecha_evento"]).date() == v["fecha"]:
+                v["fecha"] = None   # igual a la del catálogo: no cuenta (id base)
+            else:
+                sitio = {**sitio, "fecha_evento": v["fecha"].isoformat()}
+                canon["fecha"] = v["fecha"].isoformat()   # solo si se usa: no altera las huellas existentes
         if canon == {"sim": {}, "ajustes": {}, "punto": None}:
             id_final = base
         else:
@@ -325,9 +351,8 @@ class ProveedorDemostracion:
         if hecho is not None:
             return hecho
         completos = {**PARAMETROS_DEMO, **v["sim"]}
-        sitio = None
-        if v["punto"] is not None:
-            sitio = sitio_en_mapa(tipo, *v["punto"], nisar.cargar_sitios())
+        if v["fecha"] is None and v["punto"] is None:
+            sitio = None
         escena = generar_escena(sitio["id"] if sitio else base, completos, sitio=sitio,
                                 ajustes=v["ajustes"] or None)
         origen = origen_demo(completos)
@@ -336,6 +361,8 @@ class ProveedorDemostracion:
             extra.append("Ajustes (unidades de la interfaz): " + ", ".join(f"{k}={x:g}" for k, x in v["mostrados"].items()))
         if v["punto"] is not None:
             extra.append(f"Punto del mapa: lat={v['punto'][0]:.4f}, lon={v['punto'][1]:.4f}")
+        if v["fecha"] is not None:
+            extra.append(f"Fecha del evento (ilustrativa): {v['fecha'].isoformat()}")
         if extra:
             origen = origen.model_copy(update={"notas": "; ".join(filter(None, [origen.notas, *extra]))})
         reg = estaciones.region_natural(float(escena.sitio["lat"]), float(escena.sitio["lon"]))
@@ -352,6 +379,7 @@ class ProveedorDemostracion:
             adquisiciones=[Adquisicion(id=f.isoformat(), instante=_utc(f), direccion_orbital=orbita,
                                        polarizaciones=pols) for f in escena.fechas],
             capacidades=self.capacidades, origen=origen,
+            instante_evento=escena.instante_evento().replace(tzinfo=timezone.utc),
         )
         return self._cache.poner(id_final, (escena, esc))
 
