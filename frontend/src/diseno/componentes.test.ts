@@ -36,3 +36,13 @@ describe('tokens.css: escala tipográfica de §5', () => {
     expect(tokens).toMatch(new RegExp(`--lh-${n}:\\s*${n}px`))
   })
 })
+
+describe('móvil: pestañas y KPI', () => {
+  it('las pestañas no se encogen (flex: none) para que no se solapen', () => {
+    expect(css).toMatch(/\.pestanas__pestana\s*\{[^}]*flex:\s*none/)
+  })
+  it('el último KPI impar ocupa la fila entera y la unidad no se parte', () => {
+    expect(css).toMatch(/\.franja-kpi__item:last-child:nth-child\(odd\)\s*\{[^}]*grid-column:\s*1\s*\/\s*-1/)
+    expect(css).toMatch(/\.franja-kpi__unidad\s*\{[^}]*white-space:\s*nowrap/)
+  })
+})

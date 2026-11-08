@@ -132,12 +132,13 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
 .franja-kpi__etiqueta { color: var(--muted); font-size: var(--fs-13); }
 .franja-kpi__valor { margin: 0; font-size: var(--fs-20); line-height: var(--lh-28); font-weight: 500; }
 .franja-kpi__item--principal .franja-kpi__valor { font-size: var(--fs-26); line-height: var(--lh-32); font-weight: 600; }
-.franja-kpi__unidad { font-size: var(--fs-13); color: var(--secondary); font-weight: 400; }
+.franja-kpi__unidad { font-size: var(--fs-13); color: var(--secondary); font-weight: 400; white-space: nowrap; }
 .franja-kpi__base { margin: 0; font-size: var(--fs-12); color: var(--muted); }
 @media (max-width: 699px) {
   .franja-kpi { grid-template-columns: repeat(2, 1fr); }
   .franja-kpi__item { border-left: 0; border-top: 1px solid var(--border); }
   .franja-kpi__item:nth-child(odd) { border-right: 1px solid var(--border); }
+  .franja-kpi__item:last-child:nth-child(odd) { grid-column: 1 / -1; border-right: 0; }
   .franja-kpi__item:nth-child(-n + 2) { border-top: 0; }
 }
 
@@ -212,7 +213,7 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
 
 /* ---------- Pestañas ---------- */
 .pestanas { display: flex; gap: var(--space-5); border-bottom: 1px solid var(--border); overflow-x: auto; }
-.pestanas__pestana { background: none; border: 0; padding: 0; cursor: pointer; color: var(--muted); font-size: var(--fs-13); font-weight: 500; white-space: nowrap; min-height: var(--h-control); }
+.pestanas__pestana { flex: none; background: none; border: 0; padding: 0; cursor: pointer; color: var(--muted); font-size: var(--fs-13); font-weight: 500; white-space: nowrap; min-height: var(--h-control); }
 .pestanas__pestana:hover { color: var(--secondary); }
 .pestanas__etiqueta { position: relative; display: inline-block; padding: var(--space-2) 0; }
 .pestanas__pestana--activa { color: var(--text); }

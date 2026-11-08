@@ -42,3 +42,17 @@ for (const { nombre, ancho, alto } of ANCHOS) {
     })
   })
 }
+
+test('en móvil las pestañas de herramienta no se solapan y no hay desbordamiento horizontal', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/simulador?lat=-4.05&lon=-79.25&dem=0&ext=60&i=64&j=64')
+  const lista = page.getByRole('tablist', { name: 'Herramienta' })
+  await expect(lista).toBeVisible({ timeout: 60_000 })
+  const cajas = await lista.getByRole('tab').evaluateAll((els) => els.map((e) => {
+    const r = e.getBoundingClientRect()
+    return { x: r.x, ancho: r.width }
+  }))
+  expect(cajas.length).toBeGreaterThan(1)
+  for (let k = 1; k < cajas.length; k++) expect(cajas[k - 1].x + cajas[k - 1].ancho).toBeLessThanOrEqual(cajas[k].x + 0.5)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth === document.documentElement.clientWidth)).toBe(true)
+})

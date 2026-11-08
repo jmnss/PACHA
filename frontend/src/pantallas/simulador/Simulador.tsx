@@ -14,6 +14,7 @@ import { Tarjeta } from '../../diseno/Tarjeta'
 import { TextoApi } from '../../idioma/TextoApi'
 import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
+import { useMovil } from '../../estado/useMovil'
 import { useMenosMovimiento } from '../../estado/useMenosMovimiento'
 import { usePlayback } from '../../tiempo/usePlayback'
 import { escribirEstado, leerEstado, sanearParametros, type EstadoSimulador, type ValorParametro } from './estadoSimulador'
@@ -89,7 +90,15 @@ export default function Simulador() {
     setCursor(null)
   }
 
+  const movil = useMovil()
   const nombreHerramienta = herramienta?.nombre ?? ''
+  // En móvil «Mundo» (dónde y cuándo) va antes que el tablero; en escritorio vive en la columna lateral.
+  const tarjetaMundo = cat && (
+    <Tarjeta titulo={t('sim.pantalla.mundo')}>
+      <PanelMundo catalogo={cat} cargando={mundo.isFetching} onCrear={crear}
+        actual={{ lat: estado.lat, lon: estado.lon, ext: estado.ext, fecha: estado.fecha, dem: estado.dem }} />
+    </Tarjeta>
+  )
   return (
     <>
       <CabeceraPantalla
@@ -101,6 +110,7 @@ export default function Simulador() {
       {cat && (
         <div className="simulador">
           <div className="simulador__principal">
+            {movil && tarjetaMundo}
             <Tarjeta titulo={t('sim.pantalla.tablero')} pie={mundo.data ? <SelloOrigen origen={mundo.data.origen} /> : undefined}>
               <Pestanas etiqueta={t('sim.pantalla.herramienta')} pestanas={cat.herramientas.map((h) => ({ id: h.id, etiqueta: <TextoApi texto={h.nombre} clave={clavesApi.simHerramienta(h.id, 'nombre')} /> }))} activa={estado.h}
                 onCambiar={(id) => { setElegidos({}); actualizar({ h: id, i: null, j: null, p: {} }, false) }} />
@@ -138,10 +148,7 @@ export default function Simulador() {
             {datos && mundo.data && <ResultadosEvento evento={datos} mundo={mundo.data} estado={estado} />}
           </div>
           <div className="simulador__lado">
-            <Tarjeta titulo={t('sim.pantalla.mundo')}>
-              <PanelMundo catalogo={cat} cargando={mundo.isFetching} onCrear={crear}
-                actual={{ lat: estado.lat, lon: estado.lon, ext: estado.ext, fecha: estado.fecha, dem: estado.dem }} />
-            </Tarjeta>
+            {!movil && tarjetaMundo}
             {herramienta && (
               <Tarjeta titulo={<>{t('sim.pantalla.parametros')} · <TextoApi texto={herramienta.nombre} clave={clavesApi.simHerramienta(herramienta.id, 'nombre')} /></>}>
                 <PanelHerramienta herramienta={herramienta} valores={valores} onCambio={(id, v) => setElegidos((e) => ({ ...e, [id]: v }))} />
