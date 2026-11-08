@@ -45,6 +45,22 @@ const PREFIJOS_DERIVADOS = [
 ]
 export const esClaveDerivada = (clave: string): boolean => PREFIJOS_DERIVADOS.some((p) => clave.startsWith(p))
 
+/** Texto del modelo con su clave (`TextoClave` de la API): lo que `textoApi` necesita, o nulos si no hay clave. */
+export interface TextoClaveApi {
+  clave_texto: string
+  valores_texto?: Record<string, string | number> | null
+  decimales_texto?: Record<string, number> | null
+}
+
+export function textoClave(tc: TextoClaveApi | null | undefined): {
+  clave: string | null
+  valores: Record<string, string | number> | null
+  decimales: Record<string, number> | null
+} {
+  if (!tc) return { clave: null, valores: null, decimales: null }
+  return { clave: tc.clave_texto, valores: tc.valores_texto ?? null, decimales: tc.decimales_texto ?? null }
+}
+
 /** Cifras de `valores_texto` que Python escribe con un número fijo de decimales. */
 const DECIMALES: Record<string, number> = { pct: 1, mw: 1, ha: 0, metros: 0 }
 
@@ -53,6 +69,7 @@ export function valoresApi(
   valores: Record<string, string | number> | null | undefined,
   formato: (n: number, op?: Intl.NumberFormatOptions) => string,
   fecha?: (iso: string) => string,
+  decimales?: Record<string, number> | null,
 ): Record<string, string | number> | undefined {
   if (!valores) return undefined
   return Object.fromEntries(
@@ -60,7 +77,7 @@ export function valoresApi(
       // Las fechas viajan en ISO (aaaa-mm-dd) y se escriben a la manera del idioma.
       if (typeof v === 'string' && fecha && /^\d{4}-\d{2}-\d{2}$/.test(v)) return [k, fecha(v)]
       if (typeof v !== 'number') return [k, v]
-      const d = DECIMALES[k]
+      const d = decimales?.[k] ?? DECIMALES[k]
       return [k, d === undefined ? formato(v) : formato(v, { minimumFractionDigits: d, maximumFractionDigits: d })]
     }),
   )

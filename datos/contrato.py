@@ -31,6 +31,14 @@ class _ConClave:
         return cls(texto(clave, **valores), clave=clave, valores=valores or None)
 
 
+class TextoClave(BaseModel):
+    """Texto del modelo reconocido contra una plantilla registrada: el cliente traduce `clave_texto`, rellena `{x}`
+    con `valores_texto` y respeta los `decimales_texto` de cada cifra."""
+    clave_texto: str
+    valores_texto: dict[str, float | str] = {}
+    decimales_texto: dict[str, int] = {}
+
+
 class EntradaNoValida(_ConClave, ValueError):
     """La petición o sus parámetros no son válidos (la API responde 422)."""
 

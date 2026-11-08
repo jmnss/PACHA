@@ -304,15 +304,73 @@ def _a_numero(t: str) -> float:
     return float(re.sub(r"[\s\u2009\u00a0]", "", t).replace("−", "-").replace(",", "."))
 
 
-def reconocer(plantilla: str, texto_es: str) -> dict[str, float] | None:
-    """Valores de `texto_es` si encaja con `plantilla` (cada `{x}` es un número con coma decimal); si no, None."""
+_FECHA_PLANTILLA = r"\d{2}/\d{2}/\d{4}"
+_PUNTO_PLANTILLA = r"[−+-]?\d+\.\d+"
+
+
+def _patron_marcador(nombre: str) -> str:
+    """Expresión de un marcador `{nombre}`: `fecha…` es dd/mm/aaaa; `…_punto` un número con punto; si no, con coma."""
+    if nombre.startswith("fecha"):
+        return _FECHA_PLANTILLA
+    if nombre.endswith("_punto"):
+        return _PUNTO_PLANTILLA
+    return _NUM_PLANTILLA
+
+
+def reconocer_con_decimales(plantilla: str, texto_es: str) -> tuple[dict[str, float | str], dict[str, int]] | None:
+    """Valores y decimales de `texto_es` si encaja con `plantilla`; si no, None.
+
+    Cada `{x}` es un número con coma decimal; `{fecha…}` es dd/mm/aaaa (valor: fecha ISO); `{…_punto}` es un número
+    con punto decimal y signo opcional. Los decimales son los que escribió el modelo en cada cifra."""
     partes = re.split(r"\{(\w+)\}", plantilla)
-    patron = "".join(f"(?P<{x}>{_NUM_PLANTILLA})" if k % 2 else re.escape(x) for k, x in enumerate(partes))
+    patron = "".join(f"(?P<{x}>{_patron_marcador(x)})" if k % 2 else re.escape(x) for k, x in enumerate(partes))
     m = re.fullmatch(patron, texto_es)
-    return {k: _a_numero(v) for k, v in m.groupdict().items()} if m else None
+    if not m:
+        return None
+    valores: dict[str, float | str] = {}
+    decimales: dict[str, int] = {}
+    for k, v in m.groupdict().items():
+        if k.startswith("fecha"):
+            d, mes, a = v.split("/")
+            valores[k] = f"{a}-{mes}-{d}"
+        elif k.endswith("_punto"):
+            valores[k] = float(v.replace("−", "-"))
+            decimales[k] = len(v.split(".")[1])
+        else:
+            valores[k] = _a_numero(v)
+            decimales[k] = len(v.split(",")[1]) if "," in v else 0
+    return valores, decimales
 
 
-def clave_metrica(prefijo: str, etiqueta: str, ayuda: str) -> tuple[str | None, dict[str, float]]:
+def reconocer(plantilla: str, texto_es: str) -> dict[str, float | str] | None:
+    """Valores de `texto_es` si encaja con `plantilla` (ver `reconocer_con_decimales`); si no, None."""
+    r = reconocer_con_decimales(plantilla, texto_es)
+    return r[0] if r else None
+
+
+def buscar_texto(prefijo: str, texto_es: str):
+    """`TextoClave` del texto del modelo si coincide con alguna clave de `REGISTRO` que empiece por `prefijo`:
+    primero por coincidencia literal y luego por plantilla (si varias encajan, la de más texto literal).
+    Si nada encaja devuelve None: el texto queda en español, nunca se inventa una clave."""
+    from datos.contrato import TextoClave
+    candidatas = {k: v for k, v in REGISTRO.items() if k.startswith(prefijo)}
+    for k, v in candidatas.items():
+        if v == texto_es:
+            return TextoClave(clave_texto=k)
+    mejor: tuple[int, str, dict, dict] | None = None
+    for k, v in candidatas.items():
+        r = reconocer_con_decimales(v, texto_es)
+        if r is None:
+            continue
+        literal = len(re.sub(r"\{\w+\}", "", v))
+        if mejor is None or literal > mejor[0]:
+            mejor = (literal, k, r[0], r[1])
+    if mejor is None:
+        return None
+    return TextoClave(clave_texto=mejor[1], valores_texto=mejor[2], decimales_texto=mejor[3])
+
+
+def clave_metrica(prefijo: str, etiqueta: str, ayuda: str) -> tuple[str | None, dict[str, float | str]]:
     """Clave base de una métrica escrita por el modelo: `<prefijo>.<slug(etiqueta)>` si la etiqueta coincide con
     la registrada y la ayuda encaja con la suya (o no hay ayuda). Si algo no cuadra, sin clave: el cliente la
     muestra en español con lang="es" en lugar de traducir algo distinto."""
@@ -352,3 +410,10 @@ def slug(t: str) -> str:
     for c in sin_tildes.lower():
         salida.append(c if c.isascii() and c.isalnum() else "_")
     return "_".join(p for p in "".join(salida).split("_") if p)
+
+
+# Plantillas del bloque de texto del modelo (notas y celdas del simulador, tablas y series del Observatorio…).
+# Al final del archivo para evitar ciclos de importación.
+from datos.claves_demo import PLANTILLAS  # noqa: E402
+
+REGISTRO.update(PLANTILLAS)

@@ -18,7 +18,7 @@ export interface ContextoIdioma {
   tn: Tn
   formatoNumero: (n: number, op?: Intl.NumberFormatOptions) => string
   formatoFecha: (f: Date | string, estilo: 'larga' | 'mes-anio' | 'corta') => string
-  textoApi: (texto: string, clave?: string | null, valores?: Valores | null) => ResultadoTextoApi
+  textoApi: (texto: string, clave?: string | null, valores?: Valores | null, decimales?: Record<string, number> | null) => ResultadoTextoApi
 }
 
 export function crearContexto(
@@ -35,7 +35,7 @@ export function crearContexto(
     tn,
     formatoNumero: (n, op) => formatoNumero(idioma, n, op),
     formatoFecha: (f, estilo) => formatoFecha(idioma, f, estilo, t),
-    textoApi: (texto, clave, valores) => {
+    textoApi: (texto, clave, valores, decimales) => {
       const conocida = !!clave && (cat ? clave in cat : claveConocida(clave))
       // Una clave derivada del id o del texto (no emitida por la API) solo vale si el español coincide: así el
       // texto de otro proveedor con los mismos ids nunca se cambia por el nuestro.
@@ -44,7 +44,7 @@ export function crearContexto(
       // En español manda el texto de la API: el catálogo es solo para traducirlo.
       if (idioma === 'es') return { texto, traducido: true }
       const fecha = (f: string) => formatoFecha(idioma, f, 'larga', t)
-      return { texto: t(clave as Parameters<T>[0], valoresApi(valores, (n, op) => formatoNumero(idioma, n, op), fecha)), traducido: true }
+      return { texto: t(clave as Parameters<T>[0], valoresApi(valores, (n, op) => formatoNumero(idioma, n, op), fecha, decimales)), traducido: true }
     },
   }
 }

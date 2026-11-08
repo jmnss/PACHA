@@ -6,10 +6,11 @@ import { describe, expect, it } from 'vitest'
 import { en } from './catalogos/en'
 import { es } from './catalogos/es'
 import { qu } from './catalogos/qu'
-import { clavesApi, slug, valorMetrica, valoresApi } from './clavesApi'
+import { clavesApi, slug, textoClave, valorMetrica, valoresApi } from './clavesApi'
 import { formatoNumero } from './formato'
 import { renderConIdioma } from './pruebas'
 import { TextoApi } from './TextoApi'
+import { useT } from './useT'
 
 const claves = JSON.parse(readFileSync(resolve(__dirname, '../../../api/claves.json'), 'utf8')) as { clave: string; es: string }[]
 
@@ -83,5 +84,28 @@ describe('textoApi: español y claves derivadas (spec §3)', () => {
   it('las fechas ISO de valores_texto se escriben a la manera del idioma', () => {
     renderConIdioma(createElement(TextoApi, { texto: 'El máximo de la serie llega el 05/01/2026 con unas 12 ha.', clave: 'api.impacto.lectura.pico', valores: { fecha: '2026-01-05', ha: 12 } }), 'en')
     expect(screen.getByText(/January 5, 2026/)).toBeInTheDocument()
+  })
+})
+
+describe('decimales y TextoClave (bloque C)', () => {
+  const f = (n: number, op?: Intl.NumberFormatOptions) => formatoNumero('en', n, op)
+
+  it('los decimales de la API ganan a la tabla fija DECIMALES', () => {
+    expect(valoresApi({ mm: 150 }, f, undefined, { mm: 1 })).toEqual({ mm: '150.0' })
+    expect(valoresApi({ pct: 12 }, f, undefined, { pct: 0 })).toEqual({ pct: '12' })
+    expect(valoresApi({ pct: 12 }, f)).toEqual({ pct: '12.0' })
+  })
+
+  it('textoClave devuelve clave, valores y decimales (o nulos)', () => {
+    expect(textoClave({ clave_texto: 'api.x', valores_texto: { a: 1 }, decimales_texto: { a: 2 } })).toEqual({ clave: 'api.x', valores: { a: 1 }, decimales: { a: 2 } })
+    expect(textoClave(null)).toEqual({ clave: null, valores: null, decimales: null })
+    expect(textoClave(undefined)).toEqual({ clave: null, valores: null, decimales: null })
+  })
+
+  it('textoApi con clave desconocida devuelve el español sin traducir', () => {
+    let r: { texto: string; traducido: boolean } | undefined
+    const Prueba = () => { r = useT().textoApi('Texto', 'api.no.existe', { mm: 1 }, { mm: 1 }); return null }
+    renderConIdioma(createElement(Prueba), 'en')
+    expect(r).toEqual({ texto: 'Texto', traducido: false })
   })
 })
