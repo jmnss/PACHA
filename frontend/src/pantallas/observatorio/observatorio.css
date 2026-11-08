@@ -4,7 +4,7 @@
 
 /* Lienzo de dos columnas: la principal + columna fija de --w-columna; la suma es el ancho del lienzo
    (1fr + 384 px + un hueco de 24 px). Debajo de 1100 px la columna baja. */
-.observatorio { display: grid; grid-template-columns: minmax(0, 1fr) var(--w-columna); gap: var(--gap); align-items: stretch; }
+.observatorio { display: grid; grid-template-columns: minmax(0, 1fr) var(--w-columna); gap: var(--gap); align-items: start; }
 .observatorio__principal, .observatorio__lado { display: flex; flex-direction: column; gap: var(--gap); min-width: 0; }
 @media (max-width: 1099px) { .observatorio { grid-template-columns: minmax(0, 1fr); } }
 
@@ -13,8 +13,7 @@
 .vista-mapa__acciones { display: flex; gap: var(--space-2); flex-wrap: wrap; }
 .observatorio__principal > .vista-mapa { flex: 0 1 auto; }
 .vista-mapa .tarjeta__cuerpo { display: flex; flex-direction: column; gap: var(--space-4); }
-/* El mapa absorbe la diferencia de altura con la columna lateral: las dos columnas terminan en el mismo borde. */
-.vista-mapa__mapa { position: relative; flex: 1; min-height: var(--h-mapa); max-height: var(--h-mapa-max); border-radius: var(--radius-card); overflow: hidden; }
+.vista-mapa__mapa { position: relative; min-height: var(--h-mapa); max-height: var(--h-mapa-max); border-radius: var(--radius-card); overflow: hidden; }
 .vista-mapa__estado { position: absolute; left: var(--space-3); right: var(--space-3); bottom: var(--space-6); z-index: 3; padding: var(--space-3) var(--space-4); background: var(--surface); border-radius: var(--radius-card); }
 .vista-mapa__aviso { margin: 0; color: var(--warning); font-size: var(--fs-13); }
 .vista-mapa__ayuda { margin: 0; color: var(--muted); font-size: var(--fs-12); line-height: var(--lh-16); }
@@ -51,7 +50,7 @@
 .vista-mapa__flota { position: absolute; inset: var(--space-3); z-index: 2; display: flex; flex-direction: column; justify-content: space-between; align-items: stretch; gap: var(--space-3); pointer-events: none; }
 .vista-mapa__flota > *, .vista-mapa__arriba > * { pointer-events: auto; }
 .vista-mapa__arriba { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-3); pointer-events: none; }
-.vista-mapa__capa, .controles-mapa, .vista-mapa__leyenda { background: color-mix(in srgb, var(--surface) 85%, transparent); border-radius: var(--radius-card); }
+.vista-mapa__capa, .vista-mapa__placa, .controles-mapa, .vista-mapa__leyenda { background: color-mix(in srgb, var(--surface) 85%, transparent); border-radius: var(--radius-card); }
 .vista-mapa__capa { margin: 0; padding: var(--space-2) var(--space-3); color: var(--secondary); font-size: var(--fs-12); line-height: var(--lh-16); max-width: 50%; }
 .controles-mapa { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-2) var(--space-3); width: var(--w-controles-mapa); max-width: 100%; }
 .controles-mapa .pestanas { border-bottom: 0; gap: var(--space-4); }
@@ -61,7 +60,9 @@
 @media (max-width: 699px) {
   .vista-mapa__arriba { flex-direction: column; align-items: stretch; }
   .vista-mapa__capa { max-width: 100%; }
-  .controles-mapa { width: 100%; }
+  .vista-mapa__placa { padding: var(--space-2) var(--space-3); display: flex; flex-direction: column; gap: var(--space-2); color: var(--secondary); font-size: var(--fs-12); line-height: var(--lh-16); }
+  .vista-mapa__placa-boton { text-align: left; text-decoration: none; color: inherit; min-height: var(--h-touch); }
+  .vista-mapa__placa .controles-mapa { width: 100%; padding: 0; background: none; }
   .vista-mapa__leyenda { margin-bottom: var(--space-8); }
 }
 .observatorio__salida { display: flex; flex-direction: column; gap: var(--space-3); align-items: flex-start; }

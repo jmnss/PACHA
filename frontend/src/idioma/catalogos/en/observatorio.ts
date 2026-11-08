@@ -93,6 +93,8 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.mapa.rotulo_modelo': 'Model · {instante}',
   'obs.mapa.rotulo_pasada': 'Pass · {fecha}',
   'obs.mapa.rotulo_cambio': 'Change · before {antes}, after {despues}',
+  'obs.mapa.resumen_capa': '{rotulo} · Layer · {pct} %',
+  'obs.mapa.resumen_capa_sola': 'Layer · {pct} %',
   'obs.mapa.ocultar_leyenda': 'Hide legend',
   'obs.mapa.mostrar_leyenda': 'Show legend',
   'obs.mapa.calculando_capa': 'Computing the layer…',

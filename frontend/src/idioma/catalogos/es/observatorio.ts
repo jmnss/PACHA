@@ -97,6 +97,8 @@ export const observatorio = {
   'obs.mapa.rotulo_modelo': 'Modelo · {instante}',
   'obs.mapa.rotulo_pasada': 'Pasada · {fecha}',
   'obs.mapa.rotulo_cambio': 'Cambio · antes {antes}, después {despues}',
+  'obs.mapa.resumen_capa': '{rotulo} · Capa · {pct} %',
+  'obs.mapa.resumen_capa_sola': 'Capa · {pct} %',
   'obs.mapa.ocultar_leyenda': 'Ocultar leyenda',
   'obs.mapa.mostrar_leyenda': 'Mostrar leyenda',
   'obs.mapa.calculando_capa': 'Calculando la capa…',

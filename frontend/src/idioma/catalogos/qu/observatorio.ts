@@ -94,6 +94,8 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.mapa.rotulo_modelo': 'Modelo · {instante}',
   'obs.mapa.rotulo_pasada': 'Pasada · {fecha}',
   'obs.mapa.rotulo_cambio': 'Tikray · ñawpa {antes}, washa {despues}',
+  'obs.mapa.resumen_capa': '{rotulo} · Capa · {pct} %',
+  'obs.mapa.resumen_capa_sola': 'Capa · {pct} %',
   'obs.mapa.ocultar_leyenda': 'Leyendata pakay',
   'obs.mapa.mostrar_leyenda': 'Leyendata rikuchiy',
   'obs.mapa.calculando_capa': 'Capata yupachishka…',

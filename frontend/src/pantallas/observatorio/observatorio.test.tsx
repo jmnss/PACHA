@@ -356,3 +356,27 @@ describe('derivados', () => {
     expect(hallazgo(r, '2026-04-12T00:00:00Z', '2026-05-18T00:00:00Z')).toMatch(/^Superficie inundada baja/)
   })
 })
+
+describe('Observatorio · placa del mapa', () => {
+  it('en móvil una sola placa plegada resume la capa y se despliega con el botón', async () => {
+    vi.stubGlobal('matchMedia', (q: string) => ({ matches: true, media: q, addEventListener: () => {}, removeEventListener: () => {} }))
+    montar()
+    await screen.findByTestId('mapa-falso')
+    const boton = await screen.findByRole('button', { name: /Cambio · antes .* · Capa · 85 %/ })
+    expect(boton).toHaveAttribute('aria-expanded', 'false')
+    expect(document.querySelectorAll('.vista-mapa__arriba .vista-mapa__placa')).toHaveLength(1)
+    expect(screen.queryByRole('slider', { name: /Opacidad/ })).not.toBeInTheDocument()
+    expect(screen.queryByRole('tab', { name: 'Satélite' })).not.toBeInTheDocument()
+    fireEvent.click(boton)
+    expect(boton).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('slider', { name: /Opacidad/ })).toBeInTheDocument()
+  })
+
+  it('en escritorio el rótulo y los controles siguen separados', async () => {
+    montar()
+    await listo()
+    expect(document.querySelector('.vista-mapa__placa')).toBeNull()
+    expect(screen.getByRole('slider', { name: /Opacidad/ })).toBeInTheDocument()
+    expect(document.querySelector('.vista-mapa__capa')).not.toBeNull()
+  })
+})

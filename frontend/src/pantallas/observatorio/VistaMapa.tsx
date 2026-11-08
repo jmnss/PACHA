@@ -83,6 +83,8 @@ function extremosDe(capa: CapaDto): [Clave, Clave] | undefined {
 export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId, polarizacion, onFijar, onEscenarioNuevo, parametros, pais, onPais, motivoReproductor }: Props) {
   const { t, idioma, textoApi } = useT()
   const idNota = useId()
+  const idPlaca = useId()
+  const [placaAbierta, setPlacaAbierta] = useState(false)
   const [modo, setModo] = useState<ModoCapa>('cambio')
   const movil = useMovil()
   const [aviso, setAviso] = useState<string | null>(null)
@@ -172,8 +174,23 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
           </MapaBase>
           <div className="vista-mapa__flota">
             <div className="vista-mapa__arriba">
-              {capa && rotulo ? <p className="vista-mapa__capa num">{rotulo}</p> : <span />}
-              <ControlesMapa base={base} onBase={elegirBase} opacidad={opacidad} onOpacidad={setOpacidad} conBases={conBases} />
+              {movil ? (
+                <div className="vista-mapa__placa">
+                  <button type="button" className="vista-mapa__plegar vista-mapa__placa-boton num" aria-expanded={placaAbierta} aria-controls={idPlaca} onClick={() => setPlacaAbierta((a) => !a)}>
+                    {capa && rotulo ? t('obs.mapa.resumen_capa', { rotulo, pct: Math.round(opacidad * 100) }) : t('obs.mapa.resumen_capa_sola', { pct: Math.round(opacidad * 100) })}
+                  </button>
+                  {placaAbierta && (
+                    <div id={idPlaca}>
+                      <ControlesMapa base={base} onBase={elegirBase} opacidad={opacidad} onOpacidad={setOpacidad} conBases={conBases} />
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <>
+                  {capa && rotulo ? <p className="vista-mapa__capa num">{rotulo}</p> : <span />}
+                  <ControlesMapa base={base} onBase={elegirBase} opacidad={opacidad} onOpacidad={setOpacidad} conBases={conBases} />
+                </>
+              )}
             </div>
             {capa && estilo && (
               <div className="vista-mapa__leyenda">
