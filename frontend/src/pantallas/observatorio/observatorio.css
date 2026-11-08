@@ -121,3 +121,7 @@
 .localizador { display: block; }
 .localizador__pais { fill: var(--raised); stroke: var(--secondary); stroke-width: 1; }
 .localizador__punto { fill: var(--accent); stroke: var(--text); stroke-width: 1; }
+
+/* Fila de vistas: pestañas a la izquierda y, en móvil, el menú de acciones a la derecha. */
+.observatorio__vistas { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); }
+.observatorio__vistas .pestanas { flex: 1; min-width: 0; }

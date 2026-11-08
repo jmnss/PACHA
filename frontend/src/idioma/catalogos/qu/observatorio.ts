@@ -11,6 +11,7 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.estructura.tipo_cambio': 'Tikray rikchay',
   'obs.estructura.escenario': 'Escenario',
   'obs.estructura.vistas_etiqueta': 'Observatoriopa rikuykuna',
+  'obs.estructura.mas_acciones': 'Astawan rurakuna',
   'obs.estructura.vista_mapa': 'Shuyu',
   'obs.estructura.vista_comparar': 'Ñawpa, washa',
   'obs.estructura.vista_serie': 'Wiñachik',

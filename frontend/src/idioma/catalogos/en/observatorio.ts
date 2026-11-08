@@ -10,6 +10,7 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.estructura.tipo_cambio': 'Type of change',
   'obs.estructura.escenario': 'Scenario',
   'obs.estructura.vistas_etiqueta': 'Observatory views',
+  'obs.estructura.mas_acciones': 'More actions',
   'obs.estructura.vista_mapa': 'Map',
   'obs.estructura.vista_comparar': 'Before and after',
   'obs.estructura.vista_serie': 'Series',

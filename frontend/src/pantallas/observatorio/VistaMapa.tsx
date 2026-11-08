@@ -4,6 +4,7 @@ import type { Clave } from '../../idioma/traductor'
 import { clavesApi } from '../../idioma/clavesApi'
 import { formatoHora } from '../../idioma/formato'
 import { useT } from '../../idioma/useT'
+import { useMovil } from '../../estado/useMovil'
 import { mensajeDeError } from '../../api/cliente'
 import { useCapa, useFotogramas, useSimular, type CapaDto, type Contexto, type Escenario, type ResultadoCambio } from '../../api/consultas'
 import { Boton } from '../../diseno/Boton'
@@ -46,8 +47,9 @@ interface Props {
   onEscenarioNuevo: (id: string, parametros: Valores) => void
   /** Parámetros vigentes: el punto nuevo los conserva. */
   parametros?: Valores
-  /** Solo en móvil: abre la hoja de parámetros del modelo. */
-  onAbrirParametros?: () => void
+  /** Vista de todo Ecuador (estado en la pantalla: en móvil lo cambia el menú de acciones). */
+  pais: boolean
+  onPais: (p: boolean) => void
   motivoReproductor?: string
 }
 
@@ -78,11 +80,11 @@ function extremosDe(capa: CapaDto): [Clave, Clave] | undefined {
 }
 
 /** Mapa con la capa elegida, su leyenda y sello, y la cinta de pasadas con sus controles debajo. */
-export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId, polarizacion, onFijar, onEscenarioNuevo, parametros, onAbrirParametros, motivoReproductor }: Props) {
+export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId, polarizacion, onFijar, onEscenarioNuevo, parametros, pais, onPais, motivoReproductor }: Props) {
   const { t, idioma, textoApi } = useT()
   const idNota = useId()
   const [modo, setModo] = useState<ModoCapa>('cambio')
-  const [pais, setPais] = useState(false)
+  const movil = useMovil()
   const [aviso, setAviso] = useState<string | null>(null)
   const simular = useSimular()
   const [base, setBase] = useState<MapaBaseId>(baseGuardada)
@@ -154,10 +156,11 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
         <div className="vista-mapa__barra">
           <Pestanas etiqueta={t('obs.mapa.capa_etiqueta')} pestanas={MODOS.map((m) => ({ id: m.id, etiqueta: t(m.clave) }))} activa={modo} onCambiar={(id) => setModo(id as ModoCapa)} />
           <div className="vista-mapa__acciones">
-            {onAbrirParametros && <Boton variante="secundario" onClick={onAbrirParametros}>{t('obs.parametros.titulo')}</Boton>}
-            <Boton variante="secundario" onClick={() => setPais((p) => !p)} aria-pressed={pais}>
-              {pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo')}
-            </Boton>
+            {!movil && (
+              <Boton variante="secundario" onClick={() => onPais(!pais)} aria-pressed={pais}>
+                {pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo')}
+              </Boton>
+            )}
           </div>
         </div>
         <div className="vista-mapa__mapa" role="group" aria-label={t('obs.estructura.vista_mapa')} aria-describedby={idNota}>

@@ -6,6 +6,7 @@ import { Boton } from '../../diseno/Boton'
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { Cargando, ErrorBloque } from '../../diseno/Estados'
 import { HojaInferior } from '../../diseno/HojaInferior'
+import { MenuAcciones, type AccionMenu } from '../../diseno/MenuAcciones'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { Pestanas } from '../../diseno/Pestanas'
 import { Selector } from '../../diseno/Selector'
@@ -207,6 +208,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
   const sim = useSimulacion(esc, controles, url.par, alNuevo)
   const movil = useMovil()
   const [hoja, setHoja] = useState(false)
+  const [pais, setPais] = useState(false)
   const motivoReproductor = sim.calculando ? t('obs.estructura.motivo_reproductor') : undefined
   const panel = !puedeSimular ? null : tipos.isPending ? (
     <Tarjeta titulo={t('obs.parametros.titulo')}><Cargando texto={t('obs.estructura.cargando_parametros')} filas={4} /></Tarjeta>
@@ -223,10 +225,16 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
 
   // «Impacto» solo existe para las historias (inundación, incendio); en otro escenario se muestra el mapa.
   const vista = url.vista === 'impacto' && !esc.historia ? 'mapa' : url.vista
+  const acciones: AccionMenu[] = []
+  if (puedeSimular) acciones.push({ id: 'parametros', texto: t('obs.parametros.titulo'), alElegir: () => setHoja(true) })
+  if (vista === 'mapa') acciones.push({ id: 'pais', texto: pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo'), alElegir: () => setPais((p) => !p), presionada: pais })
   return (
     <>
       <CabeceraPantalla titulo={t('obs.estructura.titulo')} hallazgo={texto} acciones={selectores} />
-      <Pestanas etiqueta={t('obs.estructura.vistas_etiqueta')} pestanas={(esc.historia ? VISTAS : VISTAS.filter((v) => v.id !== 'impacto')).map((v) => ({ id: v.id, etiqueta: t(v.clave) }))} activa={vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
+      <div className="observatorio__vistas">
+        <Pestanas etiqueta={t('obs.estructura.vistas_etiqueta')} pestanas={(esc.historia ? VISTAS : VISTAS.filter((v) => v.id !== 'impacto')).map((v) => ({ id: v.id, etiqueta: t(v.clave) }))} activa={vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
+        {movil && acciones.length > 0 && <MenuAcciones etiqueta={t('obs.estructura.mas_acciones')} acciones={acciones} />}
+      </div>
       <div className="observatorio">
         <div className="observatorio__principal">
           {vista === 'mapa' ? (
@@ -235,7 +243,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
               antesId={antesId} despuesId={despuesId} polarizacion={polarizacion}
               onFijar={(cual, id) => cambiar({ [cual === 'antes' ? 'antes' : 'despues']: id })}
               onEscenarioNuevo={irAPunto} parametros={sim.valores} motivoReproductor={motivoReproductor}
-              onAbrirParametros={puedeSimular && movil ? () => setHoja(true) : undefined}
+              pais={pais} onPais={setPais}
             />
           ) : vista === 'comparar' ? (
             <VistaAntesDespues

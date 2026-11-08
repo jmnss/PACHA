@@ -10,6 +10,7 @@ export const observatorio = {
   'obs.estructura.tipo_cambio': 'Tipo de cambio',
   'obs.estructura.escenario': 'Escenario',
   'obs.estructura.vistas_etiqueta': 'Vistas del Observatorio',
+  'obs.estructura.mas_acciones': 'Más acciones',
   'obs.estructura.vista_mapa': 'Mapa',
   'obs.estructura.vista_comparar': 'Antes y después',
   'obs.estructura.vista_serie': 'Serie',
