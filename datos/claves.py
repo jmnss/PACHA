@@ -348,8 +348,9 @@ def reconocer(plantilla: str, texto_es: str) -> dict[str, float | str] | None:
     return r[0] if r else None
 
 
-def buscar_texto(prefijo: str, texto_es: str):
-    """`TextoClave` del texto del modelo si coincide con alguna clave de `REGISTRO` que empiece por `prefijo`:
+def buscar_texto(prefijo: str | tuple[str, ...], texto_es: str):
+    """`TextoClave` del texto del modelo si coincide con alguna clave de `REGISTRO` que empiece por `prefijo` (o por
+    cualquiera de varios prefijos):
     primero por coincidencia literal y luego por plantilla (si varias encajan, la de más texto literal).
     Si nada encaja devuelve None: el texto queda en español, nunca se inventa una clave."""
     from datos.contrato import TextoClave
@@ -370,18 +371,26 @@ def buscar_texto(prefijo: str, texto_es: str):
     return TextoClave(clave_texto=mejor[1], valores_texto=mejor[2], decimales_texto=mejor[3])
 
 
+_FECHA_EN_TEXTO = re.compile(r"\d{2}/\d{2}/\d{4}")
+
+
 def clave_metrica(prefijo: str, etiqueta: str, ayuda: str) -> tuple[str | None, dict[str, float | str]]:
     """Clave base de una métrica escrita por el modelo: `<prefijo>.<slug(etiqueta)>` si la etiqueta coincide con
-    la registrada y la ayuda encaja con la suya (o no hay ayuda). Si algo no cuadra, sin clave: el cliente la
-    muestra en español con lang="es" en lugar de traducir algo distinto."""
-    base = f"{prefijo}.{slug(etiqueta)}"
-    if REGISTRO.get(f"{base}.etiqueta") != etiqueta:
+    la registrada y la ayuda encaja con la suya (o no hay ayuda). Una fecha dd/mm/aaaa en la etiqueta se busca como
+    `{fecha}` y viaja en ISO. Si algo no cuadra, sin clave: el cliente la muestra en español con lang="es" en lugar
+    de traducir algo distinto."""
+    base = f"{prefijo}.{slug(_FECHA_EN_TEXTO.sub('{fecha}', etiqueta))}"
+    plantilla_e = REGISTRO.get(f"{base}.etiqueta")
+    if plantilla_e is None:
+        return None, {}
+    de_etiqueta = reconocer(plantilla_e, etiqueta)
+    if de_etiqueta is None:
         return None, {}
     plantilla = REGISTRO.get(f"{base}.ayuda")
     if not ayuda:
-        return (base, {}) if plantilla is None else (None, {})
+        return (base, de_etiqueta) if plantilla is None else (None, {})
     valores = reconocer(plantilla, ayuda) if plantilla is not None else None
-    return (base, valores) if valores is not None else (None, {})
+    return (base, {**de_etiqueta, **valores}) if valores is not None else (None, {})
 
 
 def numero_de(texto_valor: str) -> float | None:

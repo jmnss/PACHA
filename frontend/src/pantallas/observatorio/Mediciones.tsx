@@ -11,7 +11,7 @@ import { Tarjeta } from '../../diseno/Tarjeta'
 import { descargarCsv } from '../../exportar/csv'
 import { formatoNumero } from '../../graficos/formato'
 import { TextoApi } from '../../idioma/TextoApi'
-import { clavesApi } from '../../idioma/clavesApi'
+import { clavesApi, textoClave, type TextoClaveApi } from '../../idioma/clavesApi'
 import { AyudaMetrica, EtiquetaMetrica, ValorMetrica } from '../../idioma/MetricaApi'
 import type { T } from '../../idioma/traductor'
 import type { CodigoIdioma } from '../../idioma/idiomas'
@@ -34,7 +34,9 @@ interface Props {
   onVerSerie?: () => void
 }
 
-type Fila = Record<string, string | number | null>
+/** Clave de la fila donde viajan los `TextoClave` de sus celdas (no es una columna). */
+const TEXTOS = '__textos'
+type Fila = Record<string, unknown>
 // Las claves de las filas llegan en español de la API; el rótulo de cada columna sale del catálogo.
 const COLUMNAS_ORDEN = ['Capa', 'Medida', 'Valor', '% del cuadrante']
 
@@ -47,7 +49,11 @@ function columnasDe(filas: Fila[], t: T, idioma: CodigoIdioma) {
     clave: c, etiqueta: rotulo[c], identidad: i === 0, numerica: c === 'Valor' || c.startsWith('%'),
     formato: c.startsWith('%')
       ? (v: unknown) => (typeof v === 'number' ? `${formatoNumero(v, 1, idioma)} %` : '')
-      : (v: unknown) => (typeof v === 'string' ? <TextoApi texto={v} /> : null),
+      : (v: unknown, f: Fila) => {
+        if (typeof v !== 'string') return null
+        const x = textoClave((f[TEXTOS] as Record<string, TextoClaveApi | null> | undefined)?.[c])
+        return <TextoApi texto={v} clave={x.clave} valores={x.valores} decimales={x.decimales} />
+      },
   }))
 }
 
@@ -73,7 +79,7 @@ export function Mediciones({ esc, antesId, despuesId, bbox, punto, cuadrante, po
   }
 
   const borrar = <Boton variante="terciario" onClick={onBorrar}>{t('obs.medicion.borrar')}</Boton>
-  const filas = (m?.tabla ?? []) as Fila[]
+  const filas = (m?.tabla ?? []).map((f, r) => ({ ...f, [TEXTOS]: m?.textos?.[r] ?? {} })) as Fila[]
   const enCuadrante = !!cuadrante
   const medida = m ? polarizacionMedida(m) : null
   const aSerie = new URLSearchParams(params)

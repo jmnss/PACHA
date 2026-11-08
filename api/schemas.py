@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, model_validator
 
-from datos.contrato import CampoVectorial, Metrica, Origen, Paleta, SerieTemporal, TablaResultado
+from datos.contrato import CampoVectorial, Metrica, Origen, Paleta, SerieTemporal, TablaResultado, TextoClave
 
 
 class Salud(BaseModel):
@@ -61,6 +61,7 @@ class ResultadoCambioDto(BaseModel):
     vectores: CampoVectorial | None
     capas_extra: list[CapaDto]
     origen: Origen
+    notas_texto: list[TextoClave | None] | None = None
 
 
 class PeticionCambio(BaseModel):
@@ -113,6 +114,7 @@ class MedicionDto(BaseModel):
     metricas: list[Metrica]
     tabla: list[dict[str, str | float | None]]
     origen: Origen
+    textos: list[dict[str, TextoClave | None]] | None = None
 
 
 # --- Contexto climático (dato real complementario, NO es NISAR) ---------------------------------

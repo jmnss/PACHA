@@ -60,3 +60,69 @@ PLANTILLAS.update({
     "api.sim.celda.modelo_ceniza": "Advección–difusión (3 clases)",
     "api.sim.celda.modelo_techos": "Carga húmeda vs. techos débiles (Spence et al., 2005)",
 })
+
+# --- Observatorio ----------------------------------------------------------------------------------------------
+# Nota 1 de Pedernales: el vector de la línea de vista depende de la latitud y de la incidencia. Las cifras llevan
+# signo (`{x:+.2f}`): el sufijo `_signo_punto` pide al cliente que lo escriba.
+PLANTILLAS.update({
+    "api.plantilla.nota.pedernales_los": "Vector LOS (este, norte, arriba) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR mira a la izquierda: el movimiento norte-sur casi no se proyecta en la línea de vista, por eso las fallas de rumbo N-S se complementan con desplazamientos de píxel (GOFF).",
+})
+
+# Títulos y columnas de la tabla de resultados por parcela.
+PLANTILLAS.update({
+    "api.obs.titulo_tabla.resultados_por_parcela": "Resultados por parcela",
+    "api.obs.titulo_tabla.resultados": "Resultados",
+})
+COLUMNAS_PARCELA_ES = ("Parcela", "Rotación", "Δσ⁰ HV (dB)", "Cambio detectado", "Cosecha estimada", "Cosecha real",
+                       "Cultivo cosechado")
+for _t in COLUMNAS_PARCELA_ES:
+    PLANTILLAS[f"api.obs.columna.{slug(_t)}"] = _t
+
+# Valores de celda: rotaciones y cultivos de `modelo/nisar.py` (ROTACIONES_*), valores sin dato y números con unidad.
+ROTACIONES_ES = ("Trigo → Arroz", "Trigo → Maíz", "Frutales", "Soja", "Maíz", "Trigo → Soja de segunda",
+                 "Arroz → Arroz", "Banano")
+CULTIVOS_ES = ("Trigo", "Arroz", "Maíz", "Frutales", "Soja", "Banano")
+for _t in (*ROTACIONES_ES, *CULTIVOS_ES, "Sin cambio detectado", "Sin dato (enmascarado)"):
+    PLANTILLAS[f"api.obs.valor.{slug(_t)}"] = _t
+PLANTILLAS.update({
+    "api.obs.valor.numero_db": "{v} dB",
+    "api.obs.valor.numero_cm": "{v} cm",
+    "api.obs.valor.numero_cm_ano": "{v} cm/año",
+    "api.obs.valor.numero_m_dia": "{v} m/día",
+    "api.obs.valor.numero_rad": "{v} rad",
+    "api.obs.valor.numero_gamma": "{v} γ",
+    "api.obs.valor.numero_km2": "{v} km²",
+})
+
+# Capas medidas (títulos de los paneles del análisis) y medidas por categoría.
+CAPAS_ES = ("Cambio de inundación", "Cambio de velocidad", "Cambio del frente", "Cambio por parcela",
+            "Coherencia interferométrica", "Desplazamiento LOS acumulado", "Desplazamiento LOS desenrollado",
+            "Error frente a la verdad sintética", "Interferograma envuelto (1 ciclo = 11,9 cm)",
+            "Razón logarítmica HV (después/antes)", "Velocidad vertical", "Área quemada detectada")
+for _t in CAPAS_ES:
+    PLANTILLAS[f"api.obs.capa.{slug(_t)}"] = _t
+PLANTILLAS.update({
+    "api.obs.capa.velocidad_fecha": "Velocidad · {fecha}",
+    "api.obs.capa.sigma0_hh_fecha": "σ⁰ HH · {fecha}",
+    "api.obs.capa.sigma0_hv_fecha": "σ⁰ HV · {fecha}",
+})
+MEDIDAS_ES = ("Media", "Mínimo", "Máximo", "Cosecha / labranza", "Crecimiento del cultivo", "Hielo nuevo (avance)",
+              "Hielo perdido (retroceso del frente)", "Inundación (trasplante de arroz)", "Inundación persistente",
+              "Nueva inundación", "Pérdida de inundación", "Severidad alta (< −4,5 dB)",
+              "Severidad moderada (−2,5 a −4,5 dB)", "Sin cambio")
+for _t in MEDIDAS_ES:
+    PLANTILLAS[f"api.obs.medida.{slug(_t)}"] = _t
+
+# Métricas de un cuadrante sobre la capa del mapa (`Media · <capa>`).
+for _m in ("Media", "Mínimo", "Máximo"):
+    PLANTILLAS[f"api.obs.metrica.{slug(_m)}_desplazamiento_los_desenrollado.etiqueta"] = f"{_m} · Desplazamiento LOS desenrollado"
+    PLANTILLAS[f"api.obs.metrica.{slug(_m)}_velocidad_fecha.etiqueta"] = f"{_m} · Velocidad · {{fecha}}"
+
+# Nombres de las líneas de las series (`SerieTemporal.nombres_texto`).
+NOMBRES_SERIE_ES = ("Detectada por el modelo (simulación)", "Verdad del modelo", "Bosque no quemado (control)",
+                    "Zona quemada", "Cerca de la falla (modelo de Okada)", "Cerca de la falla (observado)",
+                    "Zona estable (referencia)", "Detectado con GOFF", "Máximo hundimiento",
+                    "Punto seleccionado (3×3 px)", "Media del cuadrante")
+for _t in NOMBRES_SERIE_ES:
+    PLANTILLAS[f"api.obs.serie_nombre.{slug(_t)}"] = _t
+PLANTILLAS["api.obs.serie_nombre.frente_inicial"] = "A {km} km del frente inicial"

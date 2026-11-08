@@ -6,12 +6,12 @@ import { Estructura } from '../diseno/Estructura'
 import { AvisoTraduccion } from './AvisoTraduccion'
 import { datosAvisoQu } from './aviso'
 import { qu } from './catalogos/qu'
-import { es } from './catalogos/es'
 import { VALIDADAS_QU } from './catalogos/validadas'
 import { IDIOMAS } from './idiomas'
 import { ProveedorIdioma } from './ProveedorIdioma'
 import { renderConIdioma } from './pruebas'
 import { SelectorIdioma } from './SelectorIdioma'
+import { traductor } from './traductor'
 
 afterEach(() => {
   vi.unstubAllGlobals()
@@ -87,17 +87,14 @@ describe('AvisoTraduccion', () => {
 
   it('en kichwa cuenta las claves validadas sobre el total', () => {
     renderConIdioma(<AvisoTraduccion />, 'qu')
-    const texto = qu['idioma.aviso_qu']
-      .replace('{validadas}', String(VALIDADAS_QU.size))
-      .replace('{total}', String(Object.keys(qu).length))
+    // Las cifras se escriben con el formato del idioma (con 1 000 claves o más lleva separador de miles).
+    const texto = traductor('qu').t('idioma.aviso_qu', { validadas: VALIDADAS_QU.size, total: Object.keys(qu).length })
     expect(screen.getByRole('note')).toHaveTextContent(texto)
   })
 
   it('en kichwa lleva también el español, marcado con lang="es" (spec §2)', () => {
     renderConIdioma(<AvisoTraduccion />, 'qu')
-    const enEspanol = es['idioma.aviso_qu']
-      .replace('{validadas}', String(VALIDADAS_QU.size))
-      .replace('{total}', String(Object.keys(qu).length))
+    const enEspanol = traductor('es').t('idioma.aviso_qu', { validadas: VALIDADAS_QU.size, total: Object.keys(qu).length })
     expect(screen.getByRole('note').querySelector('[lang="es"]')).toHaveTextContent(enEspanol)
   })
 

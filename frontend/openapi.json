@@ -1517,6 +1517,30 @@
             },
             "title": "Tabla",
             "type": "array"
+          },
+          "textos": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": {
+                    "anyOf": [
+                      {
+                        "$ref": "#/components/schemas/TextoClave"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Textos"
           }
         },
         "required": [
@@ -2497,6 +2521,27 @@
             "title": "Notas",
             "type": "array"
           },
+          "notas_texto": {
+            "anyOf": [
+              {
+                "items": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/TextoClave"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notas Texto"
+          },
           "origen": {
             "$ref": "#/components/schemas/Origen"
           },
@@ -2583,6 +2628,20 @@
       },
       "SerieTemporal": {
         "properties": {
+          "nombres_texto": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/TextoClave"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nombres Texto"
+          },
           "origen": {
             "$ref": "#/components/schemas/Origen"
           },
@@ -2689,12 +2748,57 @@
       "TablaResultado": {
         "description": "Tabla de resultados (p. ej. una fila por parcela). Celdas: texto, número o nulo (sin valor).",
         "properties": {
+          "celdas_texto": {
+            "anyOf": [
+              {
+                "items": {
+                  "items": {
+                    "anyOf": [
+                      {
+                        "$ref": "#/components/schemas/TextoClave"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "type": "array"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Celdas Texto"
+          },
           "columnas": {
             "items": {
               "type": "string"
             },
             "title": "Columnas",
             "type": "array"
+          },
+          "columnas_texto": {
+            "anyOf": [
+              {
+                "items": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/TextoClave"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Columnas Texto"
           },
           "filas": {
             "items": {
@@ -2722,6 +2826,16 @@
           "titulo": {
             "title": "Titulo",
             "type": "string"
+          },
+          "titulo_texto": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TextoClave"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [

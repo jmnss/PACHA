@@ -40,7 +40,7 @@ def cambio(id: str, cuerpo: PeticionCambio, prov: ProveedorDatos = Depends(obten
         antes=_dto(r.antes), despues=_dto(r.despues), cambio=_dto(r.cambio),
         clasificacion=_dto(r.clasificacion) if r.clasificacion is not None else None,
         metricas=r.metricas, series=r.series, notas=r.notas, tablas=r.tablas, vectores=r.vectores,
-        capas_extra=[_dto(c) for c in r.capas_extra], origen=r.origen)
+        capas_extra=[_dto(c) for c in r.capas_extra], origen=r.origen, notas_texto=r.notas_texto)
 
 
 def _forma_de_medicion(prov: ProveedorDatos, id: str, antes: str, despues: str) -> tuple[int, int]:
@@ -83,7 +83,7 @@ def medicion(id: str, cuerpo: PeticionMedicion, prov: ProveedorDatos = Depends(o
         punto = (_indice(y, ny), _indice(x, nx))
     m = prov.medir(id, cuerpo.antes, cuerpo.despues, cuadrante=cuadrante, punto=punto)
     return MedicionDto(cuadrante=m.cuadrante, punto=m.punto, metricas=m.metricas, tabla=m.tabla,
-                       origen=m.origen)
+                       origen=m.origen, textos=m.textos)
 
 
 def _numeros(texto: str | None, n: int, nombre: str) -> tuple[float, ...] | None:

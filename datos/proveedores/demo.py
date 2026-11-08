@@ -18,7 +18,7 @@ from datetime import date, datetime, timezone
 import numpy as np
 import pandas as pd
 
-from datos.claves import clave_metrica, numero_de, texto
+from datos.claves import buscar_texto, clave_metrica, numero_de, texto
 from datos.contrato import (
     EntradaNoValida,
     NoEncontrado,
@@ -182,7 +182,32 @@ def _serie_contrato(s: nisar.Serie, origen: Origen) -> SerieTemporal:
             continue  # NaN no viaja en JSON; un hueco en la serie es un punto ausente
         t = pd.Timestamp(fila.fecha).to_pydatetime().replace(tzinfo=timezone.utc)
         puntos.append((t, float(fila.valor), _sin_nisar(fila.serie)))
-    return SerieTemporal(titulo=_sin_nisar(s.titulo), unidad=s.unidad, puntos=puntos, origen=origen)
+    nombres = {n: buscar_texto(("api.obs.serie_nombre.", "api.obs.valor."), n) for n in dict.fromkeys(p[2] for p in puntos)}
+    return SerieTemporal(titulo=_sin_nisar(s.titulo), unidad=s.unidad, puntos=puntos, origen=origen,
+                         nombres_texto={n: tc for n, tc in nombres.items() if tc is not None} or None)
+
+
+_ES_FECHA_ISO = re.compile(r"\d{4}-\d{2}-\d{2}")
+_CELDAS = ("api.obs.valor.", "api.obs.medida.")
+
+
+def _tabla_resultado(titulo: str, df, origen: Origen) -> TablaResultado:
+    """Tabla del análisis con el texto del modelo reconocido contra las plantillas (`*_texto` paralelos)."""
+    columnas = [_sin_nisar(c) for c in df.columns]
+    filas = [[_celda(x) for x in fila] for fila in df.itertuples(index=False, name=None)]
+    celdas = [[buscar_texto(_CELDAS, v) if isinstance(v, str) and v and not _ES_FECHA_ISO.fullmatch(v) else None
+               for v in fila] for fila in filas]
+    return TablaResultado(titulo=titulo, columnas=columnas, filas=filas, origen=origen,
+                          titulo_texto=buscar_texto("api.obs.titulo_tabla.", titulo),
+                          columnas_texto=[buscar_texto("api.obs.columna.", c) for c in columnas], celdas_texto=celdas)
+
+
+_PREFIJO_MEDICION = {"Capa": "api.obs.capa.", "Medida": "api.obs.medida.", "Valor": _CELDAS}
+
+
+def _textos_de_fila(fila: dict) -> dict:
+    return {col: buscar_texto(pre, fila[col]) if isinstance(fila.get(col), str) else None
+            for col, pre in _PREFIJO_MEDICION.items() if col in fila}
 
 
 # --- sitio del mapa (réplica de app.py:sitio_en_mapa; no se importa app.py) ---------------------
@@ -486,11 +511,8 @@ class ProveedorDemostracion:
         extras = [de_panel(a.paneles[k]) for k in _PANELES_EXTRA.get(escena.tipo, ())]
         tablas = []
         if a.tabla is not None:
-            tablas.append(TablaResultado(
-                titulo="Resultados por parcela" if escena.tipo == "agricultura" else "Resultados",
-                columnas=[_sin_nisar(c) for c in a.tabla.columns],
-                filas=[[_celda(x) for x in fila] for fila in a.tabla.itertuples(index=False, name=None)],
-                origen=esc.origen))
+            tablas.append(_tabla_resultado("Resultados por parcela" if escena.tipo == "agricultura" else "Resultados",
+                                           a.tabla, esc.origen))
         vectores = None
         if a.flechas is not None and len(a.flechas):
             f = a.flechas
@@ -510,6 +532,8 @@ class ProveedorDemostracion:
             notas=[str(n) for n in a.notas],
             origen=esc.origen,
             tablas=tablas, vectores=vectores, capas_extra=extras,
+            notas_texto=[buscar_texto("api.plantilla.nota.", str(n)) for n in a.notas]
+            if any(buscar_texto("api.plantilla.nota.", str(n)) for n in a.notas) else None,
         )
 
     def medir(self, escenario_id: str, antes_id: str, despues_id: str,
@@ -537,7 +561,8 @@ class ProveedorDemostracion:
         filas = [{k: (None if (isinstance(v, float) and not math.isfinite(v)) or v is None else
                       (float(v) if isinstance(v, (int, float, np.floating, np.integer)) else str(v)))
                   for k, v in fila.items()} for fila in tabla.to_dict("records")]
-        return Medicion(cuadrante=cuadrante, punto=punto, metricas=ms, tabla=filas, origen=esc.origen)
+        return Medicion(cuadrante=cuadrante, punto=punto, metricas=ms, tabla=filas, origen=esc.origen,
+                        textos=[_textos_de_fila(f) for f in filas])
 
     def serie_seleccion(self, escenario_id: str, cuadrante: tuple[int, int, int, int] | None = None,
                         punto: tuple[int, int] | None = None) -> SerieTemporal | None:

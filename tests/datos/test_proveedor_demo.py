@@ -430,3 +430,69 @@ def test_fecha_evento_invalida(prov, valor):
 def test_ids_existentes_no_cambian(prov):
     # El id depende solo de la huella de lat/lon: añadir `fecha_evento` no puede alterarlo.
     assert prov.simular("ec_la_segua", {"lat": -0.7, "lon": -80.2}).id == "ec_la_segua~661837931320"
+
+
+# --- texto del modelo con clave (bloque C) -----------------------------------------------------
+
+def _tc_ok(tc, clave_registrada=True):
+    from datos.claves import REGISTRO
+    assert tc is not None
+    d = tc if isinstance(tc, dict) else tc.model_dump()
+    assert (d["clave_texto"] in REGISTRO) == clave_registrada
+
+
+@pytest.mark.parametrize("esc_id", list(ESCENARIOS_DEMO))
+def test_textos_de_cambio_y_series_tienen_clave(prov, esc_id):
+    antes, despues = prov.intervalo_por_defecto(esc_id)
+    r = prov.cambio(esc_id, antes, despues, None)
+    for t in r.tablas:
+        _tc_ok(t.titulo_texto)
+        assert len(t.columnas_texto) == len(t.columnas)
+        for c in t.columnas_texto:
+            _tc_ok(c)
+        assert len(t.celdas_texto) == len(t.filas)
+        for fila, cf in zip(t.filas, t.celdas_texto):
+            for v, c in zip(fila, cf):
+                es_fecha = isinstance(v, str) and len(v) == 10 and v[4] == "-"
+                if isinstance(v, str) and v and not es_fecha:
+                    _tc_ok(c)
+    series = [*r.series, prov.serie_seleccion(esc_id, punto=(80, 80)), prov.serie_seleccion(esc_id, cuadrante=(60, 100, 60, 100))]
+    for s in series:
+        for nombre in {p[2] for p in s.puntos}:
+            _tc_ok(s.nombres_texto[nombre])
+    assert r.notas_texto is None or len(r.notas_texto) == len(r.notas)
+
+
+@pytest.mark.parametrize("esc_id", list(ESCENARIOS_DEMO))
+def test_textos_de_la_medicion_tienen_clave(prov, esc_id):
+    antes, despues = prov.intervalo_por_defecto(esc_id)
+    for kw in ({"punto": (80, 80)}, {"cuadrante": (60, 100, 60, 100)}):
+        m = prov.medir(esc_id, antes, despues, **kw)
+        assert len(m.textos) == len(m.tabla)
+        for fila, tx in zip(m.tabla, m.textos):
+            for col in ("Capa", "Medida", "Valor"):
+                if isinstance(fila.get(col), str):
+                    _tc_ok(tx[col])
+        for x in m.metricas:
+            assert x.clave_texto is not None, x.etiqueta
+
+
+def test_metrica_con_fecha_lleva_fecha_iso(prov):
+    antes, despues = prov.intervalo_por_defecto("ec_antisana")
+    m = prov.medir("ec_antisana", antes, despues, cuadrante=(60, 100, 60, 100))
+    con_fecha = [x for x in m.metricas if x.etiqueta.startswith("Media · Velocidad ·")]
+    assert con_fecha and con_fecha[0].clave_texto == "api.obs.metrica.media_velocidad_fecha"
+    assert con_fecha[0].valores_texto["fecha"] == despues_iso(prov, "ec_antisana", despues)
+
+
+def despues_iso(prov, esc_id, adq_id):
+    return next(a.instante for a in prov.escenario(esc_id).adquisiciones if a.id == adq_id).date().isoformat()
+
+
+def test_nota_de_pedernales_con_vector_los_lleva_cifras(prov):
+    antes, despues = prov.intervalo_por_defecto("ec_pedernales")
+    r = prov.cambio("ec_pedernales", antes, despues, None)
+    tc = r.notas_texto[0]
+    assert tc.clave_texto == "api.plantilla.nota.pedernales_los"
+    assert set(tc.valores_texto) == {"le_signo_punto", "ln_signo_punto", "lu_signo_punto"}
+    assert all(d == 2 for d in tc.decimales_texto.values())

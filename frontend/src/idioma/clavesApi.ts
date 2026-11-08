@@ -78,7 +78,9 @@ export function valoresApi(
       if (typeof v === 'string' && fecha && /^\d{4}-\d{2}-\d{2}$/.test(v)) return [k, fecha(v)]
       if (typeof v !== 'number') return [k, v]
       const d = decimales?.[k] ?? DECIMALES[k]
-      return [k, d === undefined ? formato(v) : formato(v, { minimumFractionDigits: d, maximumFractionDigits: d })]
+      // `…_signo_punto`: cifra que el modelo escribe siempre con signo (+0.64): se conserva en cada idioma.
+      const signo = k.endsWith('_signo_punto') ? ({ signDisplay: 'always' } as const) : {}
+      return [k, d === undefined ? formato(v, signo) : formato(v, { minimumFractionDigits: d, maximumFractionDigits: d, ...signo })]
     }),
   )
 }

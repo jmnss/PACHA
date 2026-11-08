@@ -1,4 +1,4 @@
-import { clavesApi } from '../idioma/clavesApi'
+import { clavesApi, textoClave, type TextoClaveApi } from '../idioma/clavesApi'
 import { TextoApi } from '../idioma/TextoApi'
 import { useT } from '../idioma/useT'
 import { esNotaSinVerificar } from './notasModelo'
@@ -9,26 +9,33 @@ interface Props {
   escenarioId?: string
   /** Notas que ya escribe la interfaz en el idioma activo (no son texto de la API): van tal cual, sin marca. */
   traducidas?: boolean
+  /** Texto con clave y cifras de cada nota (paralelo a `notas`): manda sobre la clave derivada del escenario. */
+  textos?: (TextoClaveApi | null)[] | null
 }
 
 /**
  * Notas que acompañan a un resultado del modelo de demostración. La línea de aviso va siempre encima y
  * cada nota de la API que menciona NISAR, sus productos o la banda L lleva la marca «sin verificar».
  */
-export function NotasModelo({ notas, escenarioId, traducidas = false }: Props) {
+export function NotasModelo({ notas, escenarioId, traducidas = false, textos }: Props) {
   const { t } = useT()
   if (notas.length === 0) return null
   return (
     <div className="notas-modelo">
       <p className="notas-modelo__aviso">{t('origen.notas.aviso')}</p>
       <ul className="notas-modelo__lista">
-        {notas.map((n, k) => (
+        {notas.map((n, k) => {
+          const propia = textoClave(textos?.[k])
+          return (
           <li key={n}>
-            {traducidas ? n : <TextoApi texto={n} clave={escenarioId ? clavesApi.nota(escenarioId, k) : null} />}
+            {traducidas ? n : propia.clave
+              ? <TextoApi texto={n} clave={propia.clave} valores={propia.valores} decimales={propia.decimales} />
+              : <TextoApi texto={n} clave={escenarioId ? clavesApi.nota(escenarioId, k) : null} />}
             {/* La marca se decide sobre el español de la API, que es lo que se compara con la documentación. */}
             {!traducidas && esNotaSinVerificar(n) && <span className="notas-modelo__marca"> {t('origen.notas.sin_verificar')}</span>}
           </li>
-        ))}
+          )
+        })}
       </ul>
     </div>
   )

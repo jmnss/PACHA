@@ -77,6 +77,11 @@ const MED_CUADRANTE = {
   punto: null, cuadrante: [0, 1, 0, 1], origen,
   metricas: [{ etiqueta: 'Área del cuadrante', valor: '3,2', unidad: 'km²', ayuda: '' }, { etiqueta: 'Nueva inundación', valor: '1,1', unidad: 'km²', ayuda: '' }],
   tabla: [{ Capa: 'σ⁰ HH · 12/04/2026', Medida: 'Media', Valor: '-6,25 dB', '% del cuadrante': null }],
+  textos: [{
+    Capa: { clave_texto: 'api.obs.capa.sigma0_hh_fecha', valores_texto: { fecha: '2026-04-12' }, decimales_texto: {} },
+    Medida: { clave_texto: 'api.obs.medida.media', valores_texto: {}, decimales_texto: {} },
+    Valor: { clave_texto: 'api.obs.valor.numero_db', valores_texto: { v: -6.25 }, decimales_texto: { v: 2 } },
+  }],
 }
 
 const NOTA = 'La medición y el cambio detectado usan las polarizaciones del análisis, no la elegida en el selector.'
@@ -431,5 +436,13 @@ describe('Observatorio · comparar · idioma', () => {
     expect(lineas).toContain('# idioma: en')
     expect(lineas).toContain('Section,Item,Measure,Value,% of quadrant')
     expect(lineas.some((l) => l.startsWith('Summary,Área del cuadrante'))).toBe(true)
+  })
+
+  it('en inglés la tabla de la medición traduce capa, medida y valor con su clave', async () => {
+    montarCon((ui) => renderConIdioma(ui, 'en'), '/observatorio?escenario=ec_x&vista=comparar&c=0.1,0.1,0.5,0.6')
+    const tabla = await screen.findByRole('table', { name: /quadrant|Quadrant/ })
+    expect(within(tabla).getByText('Mean')).not.toHaveAttribute('lang')
+    expect(within(tabla).getByText('σ⁰ HH · April 12, 2026')).toBeInTheDocument()
+    expect(within(tabla).getByText('-6.25 dB')).toBeInTheDocument()
   })
 })

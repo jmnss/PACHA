@@ -159,6 +159,21 @@ describe('Observatorio · series · idioma', () => {
     expect(texto).toContain('12 Apr 2026,10,Estimada')
   })
 
+  it('en inglés el nombre de cada línea sale de nombres_texto y la verdad sintética conserva su rótulo', async () => {
+    respuesta = cambio([{
+      ...serie('Superficie inundada', 'sintetico', ['Zona quemada', 'Verdad del modelo', 'Nombre nuevo']),
+      nombres_texto: {
+        'Zona quemada': { clave_texto: 'api.obs.serie_nombre.zona_quemada', valores_texto: {}, decimales_texto: {} },
+        'Verdad del modelo': { clave_texto: 'api.obs.serie_nombre.verdad_del_modelo', valores_texto: {}, decimales_texto: {} },
+      },
+    }])
+    envolver((ui) => renderConIdioma(ui, 'en'))
+    const tabla = await screen.findByRole('table', { name: 'Values of Superficie inundada' })
+    expect(within(tabla).getAllByText('Burned zone').length).toBeGreaterThan(0)
+    expect(within(tabla).getAllByText('Nombre nuevo')[0]).toHaveAttribute('lang', 'es')
+    expect(within(tabla).queryByText('Zona quemada')).toBeNull()
+  })
+
   it('con un punto muestra primero «En la selección» con gráfica, tabla, CSV y aviso de polarización', async () => {
     let contenido: Blob | null = null
     let nombre = ''

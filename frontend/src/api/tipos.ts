@@ -780,6 +780,10 @@ export interface components {
             tabla: {
                 [key: string]: string | number | null;
             }[];
+            /** Textos */
+            textos?: {
+                [key: string]: components["schemas"]["TextoClave"] | null;
+            }[] | null;
         };
         /** MesClimaDto */
         MesClimaDto: {
@@ -1120,6 +1124,8 @@ export interface components {
             metricas: components["schemas"]["Metrica"][];
             /** Notas */
             notas: string[];
+            /** Notas Texto */
+            notas_texto?: (components["schemas"]["TextoClave"] | null)[] | null;
             origen: components["schemas"]["Origen"];
             /** Series */
             series: components["schemas"]["SerieTemporal"][];
@@ -1148,6 +1154,10 @@ export interface components {
         };
         /** SerieTemporal */
         SerieTemporal: {
+            /** Nombres Texto */
+            nombres_texto?: {
+                [key: string]: components["schemas"]["TextoClave"];
+            } | null;
             origen: components["schemas"]["Origen"];
             /** Puntos */
             puntos: [
@@ -1174,13 +1184,18 @@ export interface components {
          * @description Tabla de resultados (p. ej. una fila por parcela). Celdas: texto, número o nulo (sin valor).
          */
         TablaResultado: {
+            /** Celdas Texto */
+            celdas_texto?: (components["schemas"]["TextoClave"] | null)[][] | null;
             /** Columnas */
             columnas: string[];
+            /** Columnas Texto */
+            columnas_texto?: (components["schemas"]["TextoClave"] | null)[] | null;
             /** Filas */
             filas: (string | number | null)[][];
             origen: components["schemas"]["Origen"];
             /** Titulo */
             titulo: string;
+            titulo_texto?: components["schemas"]["TextoClave"] | null;
         };
         /** TemporadaDto */
         TemporadaDto: {

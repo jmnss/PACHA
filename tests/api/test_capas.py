@@ -247,3 +247,32 @@ def test_serie_seleccion_sin_capacidad(cliente_ficticio):
     esc = cliente_ficticio.get("/api/escenarios").json()[0]
     r = cliente_ficticio.get(f"/api/escenarios/{esc['id']}/serie-seleccion?punto=0.5,0.5")
     assert r.status_code == 409
+
+
+def test_cambio_de_agricultura_trae_textos_de_la_tabla(cliente_demo):
+    esc = next(e for e in cliente_demo.get("/api/escenarios").json() if e["id"] == "ec_daule")
+    ids = [a["id"] for a in esc["adquisiciones"]]
+    r = cliente_demo.post("/api/escenarios/ec_daule/cambio", json={"antes": ids[0], "despues": ids[-1]})
+    assert r.status_code == 200
+    t = r.json()["tablas"][0]
+    assert t["titulo_texto"]["clave_texto"] == "api.obs.titulo_tabla.resultados_por_parcela"
+    assert len(t["columnas_texto"]) == len(t["columnas"]) and len(t["celdas_texto"]) == len(t["filas"])
+
+
+def test_cambio_de_terremoto_trae_notas_texto_con_cifras(cliente_demo):
+    esc = next(e for e in cliente_demo.get("/api/escenarios").json() if e["id"] == "ec_pedernales")
+    ids = [a["id"] for a in esc["adquisiciones"]]
+    r = cliente_demo.post("/api/escenarios/ec_pedernales/cambio", json={"antes": ids[0], "despues": ids[-1]})
+    j = r.json()
+    assert j["notas_texto"][0]["clave_texto"] == "api.plantilla.nota.pedernales_los" and j["notas_texto"][1] is None
+
+
+def test_medicion_trae_textos_y_la_fecha_del_glaciar_en_iso(cliente_demo):
+    esc = next(e for e in cliente_demo.get("/api/escenarios").json() if e["id"] == "ec_antisana")
+    ids = [a["id"] for a in esc["adquisiciones"]]
+    r = cliente_demo.post("/api/escenarios/ec_antisana/medicion", json={"antes": ids[0], "despues": ids[-1], "cuadrante": [0.3, 0.3, 0.7, 0.7]})
+    j = r.json()
+    assert len(j["textos"]) == len(j["tabla"])
+    con_fecha = [m for m in j["metricas"] if m["etiqueta"].startswith("Media · Velocidad ·")]
+    assert con_fecha and con_fecha[0]["clave_texto"] == "api.obs.metrica.media_velocidad_fecha"
+    assert len(con_fecha[0]["valores_texto"]["fecha"]) == 10

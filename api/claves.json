@@ -760,6 +760,150 @@
     "es": "Los píxeles con coherencia < 0,25 (ruptura superficial, decorrelación) se enmascaran, como hacen las componentes conexas del producto GUNW."
   },
   {
+    "clave": "api.obs.capa.area_quemada_detectada",
+    "es": "Área quemada detectada"
+  },
+  {
+    "clave": "api.obs.capa.cambio_de_inundacion",
+    "es": "Cambio de inundación"
+  },
+  {
+    "clave": "api.obs.capa.cambio_de_velocidad",
+    "es": "Cambio de velocidad"
+  },
+  {
+    "clave": "api.obs.capa.cambio_del_frente",
+    "es": "Cambio del frente"
+  },
+  {
+    "clave": "api.obs.capa.cambio_por_parcela",
+    "es": "Cambio por parcela"
+  },
+  {
+    "clave": "api.obs.capa.coherencia_interferometrica",
+    "es": "Coherencia interferométrica"
+  },
+  {
+    "clave": "api.obs.capa.desplazamiento_los_acumulado",
+    "es": "Desplazamiento LOS acumulado"
+  },
+  {
+    "clave": "api.obs.capa.desplazamiento_los_desenrollado",
+    "es": "Desplazamiento LOS desenrollado"
+  },
+  {
+    "clave": "api.obs.capa.error_frente_a_la_verdad_sintetica",
+    "es": "Error frente a la verdad sintética"
+  },
+  {
+    "clave": "api.obs.capa.interferograma_envuelto_1_ciclo_11_9_cm",
+    "es": "Interferograma envuelto (1 ciclo = 11,9 cm)"
+  },
+  {
+    "clave": "api.obs.capa.razon_logaritmica_hv_despues_antes",
+    "es": "Razón logarítmica HV (después/antes)"
+  },
+  {
+    "clave": "api.obs.capa.sigma0_hh_fecha",
+    "es": "σ⁰ HH · {fecha}"
+  },
+  {
+    "clave": "api.obs.capa.sigma0_hv_fecha",
+    "es": "σ⁰ HV · {fecha}"
+  },
+  {
+    "clave": "api.obs.capa.velocidad_fecha",
+    "es": "Velocidad · {fecha}"
+  },
+  {
+    "clave": "api.obs.capa.velocidad_vertical",
+    "es": "Velocidad vertical"
+  },
+  {
+    "clave": "api.obs.columna.0_hv_db",
+    "es": "Δσ⁰ HV (dB)"
+  },
+  {
+    "clave": "api.obs.columna.cambio_detectado",
+    "es": "Cambio detectado"
+  },
+  {
+    "clave": "api.obs.columna.cosecha_estimada",
+    "es": "Cosecha estimada"
+  },
+  {
+    "clave": "api.obs.columna.cosecha_real",
+    "es": "Cosecha real"
+  },
+  {
+    "clave": "api.obs.columna.cultivo_cosechado",
+    "es": "Cultivo cosechado"
+  },
+  {
+    "clave": "api.obs.columna.parcela",
+    "es": "Parcela"
+  },
+  {
+    "clave": "api.obs.columna.rotacion",
+    "es": "Rotación"
+  },
+  {
+    "clave": "api.obs.medida.cosecha_labranza",
+    "es": "Cosecha / labranza"
+  },
+  {
+    "clave": "api.obs.medida.crecimiento_del_cultivo",
+    "es": "Crecimiento del cultivo"
+  },
+  {
+    "clave": "api.obs.medida.hielo_nuevo_avance",
+    "es": "Hielo nuevo (avance)"
+  },
+  {
+    "clave": "api.obs.medida.hielo_perdido_retroceso_del_frente",
+    "es": "Hielo perdido (retroceso del frente)"
+  },
+  {
+    "clave": "api.obs.medida.inundacion_persistente",
+    "es": "Inundación persistente"
+  },
+  {
+    "clave": "api.obs.medida.inundacion_trasplante_de_arroz",
+    "es": "Inundación (trasplante de arroz)"
+  },
+  {
+    "clave": "api.obs.medida.maximo",
+    "es": "Máximo"
+  },
+  {
+    "clave": "api.obs.medida.media",
+    "es": "Media"
+  },
+  {
+    "clave": "api.obs.medida.minimo",
+    "es": "Mínimo"
+  },
+  {
+    "clave": "api.obs.medida.nueva_inundacion",
+    "es": "Nueva inundación"
+  },
+  {
+    "clave": "api.obs.medida.perdida_de_inundacion",
+    "es": "Pérdida de inundación"
+  },
+  {
+    "clave": "api.obs.medida.severidad_alta_4_5_db",
+    "es": "Severidad alta (< −4,5 dB)"
+  },
+  {
+    "clave": "api.obs.medida.severidad_moderada_2_5_a_4_5_db",
+    "es": "Severidad moderada (−2,5 a −4,5 dB)"
+  },
+  {
+    "clave": "api.obs.medida.sin_cambio",
+    "es": "Sin cambio"
+  },
+  {
     "clave": "api.obs.metrica.acierto_de_deteccion_verdad_sintetica.ayuda",
     "es": "Cosechada / no cosechada vs. verdad"
   },
@@ -952,12 +1096,36 @@
     "es": "Máx. hacia el satélite"
   },
   {
+    "clave": "api.obs.metrica.maximo_desplazamiento_los_desenrollado.etiqueta",
+    "es": "Máximo · Desplazamiento LOS desenrollado"
+  },
+  {
+    "clave": "api.obs.metrica.maximo_velocidad_fecha.etiqueta",
+    "es": "Máximo · Velocidad · {fecha}"
+  },
+  {
     "clave": "api.obs.metrica.maximo_velocidad_vertical.etiqueta",
     "es": "Máximo · Velocidad vertical"
   },
   {
+    "clave": "api.obs.metrica.media_desplazamiento_los_desenrollado.etiqueta",
+    "es": "Media · Desplazamiento LOS desenrollado"
+  },
+  {
+    "clave": "api.obs.metrica.media_velocidad_fecha.etiqueta",
+    "es": "Media · Velocidad · {fecha}"
+  },
+  {
     "clave": "api.obs.metrica.media_velocidad_vertical.etiqueta",
     "es": "Media · Velocidad vertical"
+  },
+  {
+    "clave": "api.obs.metrica.minimo_desplazamiento_los_desenrollado.etiqueta",
+    "es": "Mínimo · Desplazamiento LOS desenrollado"
+  },
+  {
+    "clave": "api.obs.metrica.minimo_velocidad_fecha.etiqueta",
+    "es": "Mínimo · Velocidad · {fecha}"
   },
   {
     "clave": "api.obs.metrica.minimo_velocidad_vertical.etiqueta",
@@ -1040,6 +1208,138 @@
     "es": "Descendente"
   },
   {
+    "clave": "api.obs.serie_nombre.bosque_no_quemado_control",
+    "es": "Bosque no quemado (control)"
+  },
+  {
+    "clave": "api.obs.serie_nombre.cerca_de_la_falla_modelo_de_okada",
+    "es": "Cerca de la falla (modelo de Okada)"
+  },
+  {
+    "clave": "api.obs.serie_nombre.cerca_de_la_falla_observado",
+    "es": "Cerca de la falla (observado)"
+  },
+  {
+    "clave": "api.obs.serie_nombre.detectada_por_el_modelo_simulacion",
+    "es": "Detectada por el modelo (simulación)"
+  },
+  {
+    "clave": "api.obs.serie_nombre.detectado_con_goff",
+    "es": "Detectado con GOFF"
+  },
+  {
+    "clave": "api.obs.serie_nombre.frente_inicial",
+    "es": "A {km} km del frente inicial"
+  },
+  {
+    "clave": "api.obs.serie_nombre.maximo_hundimiento",
+    "es": "Máximo hundimiento"
+  },
+  {
+    "clave": "api.obs.serie_nombre.media_del_cuadrante",
+    "es": "Media del cuadrante"
+  },
+  {
+    "clave": "api.obs.serie_nombre.punto_seleccionado_3_3_px",
+    "es": "Punto seleccionado (3×3 px)"
+  },
+  {
+    "clave": "api.obs.serie_nombre.verdad_del_modelo",
+    "es": "Verdad del modelo"
+  },
+  {
+    "clave": "api.obs.serie_nombre.zona_estable_referencia",
+    "es": "Zona estable (referencia)"
+  },
+  {
+    "clave": "api.obs.serie_nombre.zona_quemada",
+    "es": "Zona quemada"
+  },
+  {
+    "clave": "api.obs.titulo_tabla.resultados",
+    "es": "Resultados"
+  },
+  {
+    "clave": "api.obs.titulo_tabla.resultados_por_parcela",
+    "es": "Resultados por parcela"
+  },
+  {
+    "clave": "api.obs.valor.arroz",
+    "es": "Arroz"
+  },
+  {
+    "clave": "api.obs.valor.arroz_arroz",
+    "es": "Arroz → Arroz"
+  },
+  {
+    "clave": "api.obs.valor.banano",
+    "es": "Banano"
+  },
+  {
+    "clave": "api.obs.valor.frutales",
+    "es": "Frutales"
+  },
+  {
+    "clave": "api.obs.valor.maiz",
+    "es": "Maíz"
+  },
+  {
+    "clave": "api.obs.valor.numero_cm",
+    "es": "{v} cm"
+  },
+  {
+    "clave": "api.obs.valor.numero_cm_ano",
+    "es": "{v} cm/año"
+  },
+  {
+    "clave": "api.obs.valor.numero_db",
+    "es": "{v} dB"
+  },
+  {
+    "clave": "api.obs.valor.numero_gamma",
+    "es": "{v} γ"
+  },
+  {
+    "clave": "api.obs.valor.numero_km2",
+    "es": "{v} km²"
+  },
+  {
+    "clave": "api.obs.valor.numero_m_dia",
+    "es": "{v} m/día"
+  },
+  {
+    "clave": "api.obs.valor.numero_rad",
+    "es": "{v} rad"
+  },
+  {
+    "clave": "api.obs.valor.sin_cambio_detectado",
+    "es": "Sin cambio detectado"
+  },
+  {
+    "clave": "api.obs.valor.sin_dato_enmascarado",
+    "es": "Sin dato (enmascarado)"
+  },
+  {
+    "clave": "api.obs.valor.soja",
+    "es": "Soja"
+  },
+  {
+    "clave": "api.obs.valor.trigo",
+    "es": "Trigo"
+  },
+  {
+    "clave": "api.obs.valor.trigo_arroz",
+    "es": "Trigo → Arroz"
+  },
+  {
+    "clave": "api.obs.valor.trigo_maiz",
+    "es": "Trigo → Maíz"
+  },
+  {
+    "clave": "api.obs.valor.trigo_soja_de_segunda",
+    "es": "Trigo → Soja de segunda"
+  },
+  {
     "clave": "api.opcion.terremotos.rake.inversa",
     "es": "Inversa"
   },
@@ -1056,6 +1356,18 @@
     "es": "Rumbo sinistral"
   },
   {
+    "clave": "api.plantilla.nota.pedernales_los",
+    "es": "Vector LOS (este, norte, arriba) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR mira a la izquierda: el movimiento norte-sur casi no se proyecta en la línea de vista, por eso las fallas de rumbo N-S se complementan con desplazamientos de píxel (GOFF)."
+  },
+  {
+    "clave": "api.serie.0_hh_en_la_seleccion",
+    "es": "σ⁰ HH en la selección"
+  },
+  {
+    "clave": "api.serie.0_hv_en_la_seleccion",
+    "es": "σ⁰ HV en la selección"
+  },
+  {
     "clave": "api.serie.0_hv_medio",
     "es": "σ⁰ HV medio"
   },
@@ -1068,8 +1380,16 @@
     "es": "Desplazamiento LOS acumulado"
   },
   {
+    "clave": "api.serie.desplazamiento_los_acumulado_en_la_seleccion",
+    "es": "Desplazamiento LOS acumulado en la selección"
+  },
+  {
     "clave": "api.serie.desplazamiento_vertical_acumulado",
     "es": "Desplazamiento vertical acumulado"
+  },
+  {
+    "clave": "api.serie.desplazamiento_vertical_acumulado_en_la_seleccion",
+    "es": "Desplazamiento vertical acumulado en la selección"
   },
   {
     "clave": "api.serie.posicion_del_frente_respecto_a_la_1_a_fecha",
@@ -1082,6 +1402,10 @@
   {
     "clave": "api.serie.velocidad_superficial",
     "es": "Velocidad superficial"
+  },
+  {
+    "clave": "api.serie.velocidad_superficial_en_la_seleccion",
+    "es": "Velocidad superficial en la selección"
   },
   {
     "clave": "api.sim.capa.calado",

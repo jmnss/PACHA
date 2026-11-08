@@ -165,6 +165,8 @@ class SerieTemporal(BaseModel):
     unidad: str
     puntos: list[tuple[datetime, float, str]]  # (instante, valor, serie)
     origen: Origen
+    # Nombre (el de `puntos[*][2]`) -> clave del texto, para traducir las líneas; None si el proveedor no la da.
+    nombres_texto: dict[str, TextoClave] | None = None
 
 
 class Metrica(BaseModel):
@@ -184,6 +186,10 @@ class TablaResultado(BaseModel):
     columnas: list[str]
     filas: list[list[str | float | None]]
     origen: Origen
+    # Textos con clave, paralelos a `titulo`, `columnas` y `filas` (None donde no hay clave).
+    titulo_texto: TextoClave | None = None
+    columnas_texto: list[TextoClave | None] | None = None
+    celdas_texto: list[list[TextoClave | None]] | None = None
 
 
 class CampoVectorial(BaseModel):
@@ -216,6 +222,7 @@ class ResultadoCambio:
     tablas: list[TablaResultado] = field(default_factory=list)
     vectores: CampoVectorial | None = None
     capas_extra: list[CapaRaster] = field(default_factory=list)
+    notas_texto: list[TextoClave | None] | None = None   # paralelo a `notas`; solo las que tienen cifras variables
 
 
 class Medicion(BaseModel):
@@ -230,6 +237,8 @@ class Medicion(BaseModel):
     metricas: list[Metrica]
     tabla: list[dict[str, str | float | None]]
     origen: Origen
+    # Paralelo a `tabla`: por fila, {columna: TextoClave | None} para Capa, Medida y Valor.
+    textos: list[dict[str, TextoClave | None]] | None = None
 
     @model_validator(mode="after")
     def _uno_solo(self) -> "Medicion":

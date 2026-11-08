@@ -56,6 +56,12 @@ def _escenarios(salida: dict[str, str], prov) -> None:
                 salida[f"api.categoria.{capa.variable}.{k}"] = etiqueta
 
 
+def _series_de_seleccion(salida: dict[str, str]) -> None:
+    """Título de la serie de un punto o cuadrante («σ⁰ HH en la selección»): uno por tipo de cambio."""
+    for _, titulo, _unidad in nisar.SERIE_SELECCION.values():
+        salida[f"api.serie.{slug(titulo + ' en la selección')}"] = f"{titulo} en la selección"
+
+
 def _simulador(salida: dict[str, str]) -> None:
     """Catálogo del simulador: herramientas, controles, opciones y mundos predefinidos."""
     from datos import simulador
@@ -88,6 +94,7 @@ def generar() -> list[dict[str, str]]:
     salida: dict[str, str] = dict(REGISTRO)
     _tipos(salida, prov)
     _escenarios(salida, prov)
+    _series_de_seleccion(salida)
     _contexto(salida)
     _simulador(salida)
     return [{"clave": k, "es": salida[k]} for k in sorted(salida)]

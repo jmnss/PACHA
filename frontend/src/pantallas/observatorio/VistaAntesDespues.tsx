@@ -181,7 +181,7 @@ export function NotasResultado({ resultado, escenarioId }: { resultado: UseQuery
   if (notas.length === 0) return null
   return (
     <Tarjeta titulo={t('obs.comparar.como_leer')} pie={<SelloOrigen origen={resultado.data!.origen} />}>
-      <NotasModelo notas={notas} escenarioId={escenarioId} />
+      <NotasModelo notas={notas} escenarioId={escenarioId} textos={resultado.data?.notas_texto} />
     </Tarjeta>
   )
 }

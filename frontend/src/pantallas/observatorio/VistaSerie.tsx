@@ -10,7 +10,7 @@ import { Tabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { aCsv, descargarCsv } from '../../exportar/csv'
 import { esReal } from '../../diseno/origen'
-import { clavesApi } from '../../idioma/clavesApi'
+import { clavesApi, textoClave } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import { formatoHora } from '../../idioma/formato'
 import { useT } from '../../idioma/useT'
@@ -37,10 +37,10 @@ const limpio = (t: string) => t.normalize('NFD').replace(/[̀-ͯ]/g, '').replace
 const nombreCsvSerie = (escenario: string, serie: string) => `serie_${limpio(escenario)}_${limpio(serie) || 'serie'}.csv`
 
 /** Agrupa los puntos [instante, valor, nombre] de una serie de la API por nombre, conservando el orden de aparición. */
-function lineas(s: Serie): SerieLinea[] {
+function lineas(s: Serie, visible: (nombre: string) => string): SerieLinea[] {
   const grupos = new Map<string, [string, number | null][]>()
   for (const [t, v, nombre] of s.puntos) {
-    const clave = nombre || s.titulo
+    const clave = visible(nombre || s.titulo)
     if (!grupos.has(clave)) grupos.set(clave, [])
     grupos.get(clave)!.push([t, Number.isFinite(v) ? v : null])
   }
@@ -83,7 +83,7 @@ export function VistaSerie({ esc, resultado, antesId, despuesId, ms, punto, cuad
       ))}
       {r.notas.length > 0 && (
         <Tarjeta titulo={t('obs.comparar.como_leer')} pie={<SelloOrigen origen={r.origen} />}>
-          <NotasModelo notas={r.notas} escenarioId={esc.id} />
+          <NotasModelo notas={r.notas} escenarioId={esc.id} textos={r.notas_texto} />
         </Tarjeta>
       )}
     </div>
@@ -110,12 +110,19 @@ function BloqueSeleccion({ consulta, escenario, marcas, cursor }: { consulta: Us
 }
 
 function BloqueSerie({ s, escenario, marcas, cursor, titulo, aviso, archivo }: { s: Serie; escenario: string; marcas: MarcaLinea[]; cursor?: string; titulo?: string; aviso?: string; archivo?: string }) {
-  const { t, idioma } = useT()
+  const { t, idioma, textoApi } = useT()
   const sint = !esReal(s.origen)
-  const series = lineas(s)
+  // Nombre de cada línea en el idioma activo si la API trae su clave; la «verdad» se deja en español porque
+  // `rotulo` la reconoce y la nombra como verdad sintética.
+  const nombre = (n: string) => {
+    if (esVerdad(n, sint)) return { texto: n, traducido: true }
+    const x = textoClave(s.nombres_texto?.[n])
+    return textoApi(n, x.clave, x.valores, x.decimales)
+  }
+  const series = lineas(s, (n) => nombre(n).texto)
   // Una fila por punto; la columna «Serie» lleva el rótulo honesto (la verdad sintética se nombra como tal).
   const filas = s.puntos
-    .map(([ins, v, nombre]) => ({ ms: parseInstante(ins), instante: ins, valor: v, serie: rotulo(nombre || s.titulo, sint, t), api: !esVerdad(nombre || s.titulo, sint) }))
+    .map(([ins, v, nom]) => ({ ms: parseInstante(ins), instante: ins, valor: v, serie: rotulo(nombre(nom || s.titulo).texto, sint, t), api: !nombre(nom || s.titulo).traducido }))
     .sort((a, b) => a.ms - b.ms || a.serie.localeCompare(b.serie))
     .map((f) => ({ fecha: formatearFecha(f.instante, idioma) ?? f.instante, valor: f.valor, serie: f.serie, api: f.api }))
   const dec = filas.every((f) => Number.isInteger(f.valor)) ? 0 : 2

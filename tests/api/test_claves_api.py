@@ -136,7 +136,9 @@ def test_metricas_del_cambio_y_de_la_medicion_traen_claves(cliente_demo):
             if m["clave_texto"] is None or m["clave_texto"] == "api.medicion.posicion":
                 continue
             con_clave += 1
-            assert CLAVES[m["clave_texto"] + ".etiqueta"] == m["etiqueta"]
+            etiqueta = CLAVES[m["clave_texto"] + ".etiqueta"]
+            # Una etiqueta con fecha («Media · Velocidad · {fecha}») viaja con la fecha en ISO.
+            assert etiqueta == m["etiqueta"] or _variables(etiqueta) <= set(m["valores_texto"]), m
             if m["ayuda"]:
                 plantilla = CLAVES[m["clave_texto"] + ".ayuda"]
                 assert plantilla == m["ayuda"] or _variables(plantilla) <= set(m["valores_texto"]), m
