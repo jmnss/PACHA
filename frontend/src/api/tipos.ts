@@ -123,6 +123,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/escenarios/{id}/serie-seleccion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Serie Seleccion
+         * @description Evolución del observable en un punto y/o cuadrante (coordenadas normalizadas 0–1).
+         */
+        get: operations["serie_seleccion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/laboratorio/nubes": {
         parameters: {
             query?: never;
@@ -1430,6 +1450,40 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MedicionDto"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    serie_seleccion: {
+        parameters: {
+            query?: {
+                punto?: string | null;
+                cuadrante?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SerieTemporal"] | null;
                 };
             };
             /** @description Validation Error */

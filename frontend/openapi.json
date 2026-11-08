@@ -3224,6 +3224,86 @@
         "summary": "Medicion"
       }
     },
+    "/api/escenarios/{id}/serie-seleccion": {
+      "get": {
+        "description": "Evolución del observable en un punto y/o cuadrante (coordenadas normalizadas 0–1).",
+        "operationId": "serie_seleccion",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "punto",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Punto"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cuadrante",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cuadrante"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/SerieTemporal"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Serie Seleccion"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Serie Seleccion"
+      }
+    },
     "/api/laboratorio/nubes": {
       "get": {
         "operationId": "nubes",

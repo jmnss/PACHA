@@ -72,6 +72,8 @@ export const api = {
   'api.error.control_rango': '«{nombre}» debe estar entre {minimo} y {maximo}.',
   'api.error.cuadrante_fuera': 'El cuadrante {cuadrante} queda fuera de la imagen ({ny}×{nx} píxeles).',
   'api.error.cuadrante_sin_area': 'El cuadrante no tiene área.',
+  'api.error.serie_sel_formato': '«{nombre}» debe ser una lista de {n} números separados por comas.',
+  'api.error.serie_sel_rango': 'Indica un punto, un cuadrante o los dos, con valores entre 0 y 1.',
   'api.error.entrada_no_valida': 'Entrada no válida. {detalle}',
   'api.error.escenario_desconocido': 'No existe el recurso pedido: Escenario de demostración desconocido: {id}',
   'api.error.escenario_simulado_caducado': 'No existe el recurso pedido: Escenario simulado desconocido o caducado: {id}',

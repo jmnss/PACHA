@@ -74,6 +74,8 @@ export const api: Record<keyof typeof esApi, string> = {
   'api.error.control_rango': '“{nombre}” must be between {minimo} and {maximo}.',
   'api.error.cuadrante_fuera': 'The quadrant {cuadrante} falls outside the image ({ny}×{nx} pixels).',
   'api.error.cuadrante_sin_area': 'The quadrant has no area.',
+  'api.error.serie_sel_formato': '“{nombre}” must be a list of {n} numbers separated by commas.',
+  'api.error.serie_sel_rango': 'Give a point, a quadrant or both, with values between 0 and 1.',
   'api.error.entrada_no_valida': 'Invalid input. {detalle}',
   'api.error.escenario_desconocido': 'The requested resource does not exist: unknown demonstration scenario: {id}',
   'api.error.escenario_simulado_caducado': 'The requested resource does not exist: unknown or expired simulated scenario: {id}',

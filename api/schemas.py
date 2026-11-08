@@ -89,6 +89,24 @@ class PeticionMedicion(BaseModel):
         return self
 
 
+class PeticionSerieSeleccion(BaseModel):
+    """`punto` = (x, y) y/o `cuadrante` = (x0, y0, x1, y1), normalizados 0–1 como en `PeticionMedicion`.
+
+    Se admiten los dos a la vez; al menos uno.
+    """
+    cuadrante: tuple[float, float, float, float] | None = None
+    punto: tuple[float, float] | None = None
+
+    @model_validator(mode="after")
+    def _valido(self) -> "PeticionSerieSeleccion":
+        if self.cuadrante is None and self.punto is None:
+            raise ValueError("Indica `punto`, `cuadrante` o los dos.")
+        valores = (self.cuadrante or ()) + (self.punto or ())
+        if not all(0.0 <= v <= 1.0 for v in valores):
+            raise ValueError("El cuadrante o el punto deben estar entre 0 y 1.")
+        return self
+
+
 class MedicionDto(BaseModel):
     cuadrante: tuple[int, int, int, int] | None
     punto: tuple[int, int] | None

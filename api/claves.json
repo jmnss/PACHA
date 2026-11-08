@@ -428,6 +428,14 @@
     "es": "semilla debe ser un entero entre 0 y 2147483647."
   },
   {
+    "clave": "api.error.serie_sel_formato",
+    "es": "«{nombre}» debe ser una lista de {n} números separados por comas."
+  },
+  {
+    "clave": "api.error.serie_sel_rango",
+    "es": "Indica un punto, un cuadrante o los dos, con valores entre 0 y 1."
+  },
+  {
     "clave": "api.error.sim_interruptor",
     "es": "{parametro} debe ser verdadero o falso."
   },

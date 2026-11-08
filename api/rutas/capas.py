@@ -2,12 +2,14 @@
 import math
 
 from fastapi import APIRouter, Depends, Query
+from pydantic import ValidationError
 
 from api.deps import obtener
 from api.encoding import a_rejilla
 from api.schemas import (CapaDto, MedicionDto, PeticionCambio, PeticionMedicion,
-                         ResultadoCambioDto)
-from datos.contrato import CapaRaster, EntradaNoValida, ProveedorDatos
+                         PeticionSerieSeleccion, ResultadoCambioDto)
+from datos.contrato import (CapaRaster, CapacidadNoDisponible, EntradaNoValida, ProveedorDatos,
+                            SerieTemporal)
 
 router = APIRouter()
 
@@ -82,3 +84,41 @@ def medicion(id: str, cuerpo: PeticionMedicion, prov: ProveedorDatos = Depends(o
     m = prov.medir(id, cuerpo.antes, cuerpo.despues, cuadrante=cuadrante, punto=punto)
     return MedicionDto(cuadrante=m.cuadrante, punto=m.punto, metricas=m.metricas, tabla=m.tabla,
                        origen=m.origen)
+
+
+def _numeros(texto: str | None, n: int, nombre: str) -> tuple[float, ...] | None:
+    """`"0.5,0.5"` -> (0.5, 0.5); `None` si no se pidió. Error 422 con clave si no son `n` números."""
+    if texto is None:
+        return None
+    try:
+        v = tuple(float(t) for t in texto.split(","))
+    except ValueError:
+        v = ()
+    if len(v) != n or not all(math.isfinite(x) for x in v):
+        raise EntradaNoValida.con("api.error.serie_sel_formato", nombre=nombre, n=n)
+    return v
+
+
+@router.get("/escenarios/{id}/serie-seleccion", response_model=SerieTemporal | None)
+def serie_seleccion(id: str, punto: str | None = None, cuadrante: str | None = None,
+                    prov: ProveedorDatos = Depends(obtener)) -> SerieTemporal | None:
+    """Evolución del observable en un punto y/o cuadrante (coordenadas normalizadas 0–1)."""
+    try:
+        pet = PeticionSerieSeleccion(punto=_numeros(punto, 2, "punto"), cuadrante=_numeros(cuadrante, 4, "cuadrante"))
+    except ValidationError:
+        raise EntradaNoValida.con("api.error.serie_sel_rango") from None
+    if not hasattr(prov, "serie_seleccion"):
+        raise CapacidadNoDisponible("Este proveedor de datos no ofrece la serie de una selección.")
+    esc = prov.escenario(id)
+    pol = esc.polarizaciones[0] if esc.polarizaciones else None
+    ny, nx = prov.capa(id, esc.adquisiciones[0].id, esc.variables[0], pol).datos.shape
+    cuad = pt = None
+    if pet.cuadrante is not None:
+        x0, y0, x1, y1 = pet.cuadrante
+        c0, c1 = _intervalo(x0, x1, nx)
+        f0, f1 = _intervalo(y0, y1, ny)
+        cuad = (f0, f1, c0, c1)
+    if pet.punto is not None:
+        x, y = pet.punto
+        pt = (_indice(y, ny), _indice(x, nx))
+    return prov.serie_seleccion(id, cuadrante=cuad, punto=pt)

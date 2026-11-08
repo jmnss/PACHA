@@ -71,6 +71,8 @@ REGISTRO: dict[str, str] = {
     "api.error.pasada_despues_antes": "La pasada «después» debe ser posterior a la pasada «antes».",
     "api.error.fechas_distintas": "Elige dos fechas distintas.",
     "api.error.cuadrante_sin_area": "El cuadrante no tiene área.",
+    "api.error.serie_sel_formato": "«{nombre}» debe ser una lista de {n} números separados por comas.",
+    "api.error.serie_sel_rango": "Indica un punto, un cuadrante o los dos, con valores entre 0 y 1.",
 }
 
 # --- laboratorio del radar (prefijo api.lab.) ------------------------------------------------------

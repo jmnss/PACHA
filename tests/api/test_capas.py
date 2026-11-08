@@ -173,3 +173,40 @@ def test_demo_sintetico_en_todo(cliente_demo, id):
         assert c["origen"]["tipo"] == "sintetico"
     m = cliente_demo.post(f"/api/escenarios/{id}/medicion", json={"antes": a, "despues": d, "punto": [0.5, 0.5]}).json()
     assert m["origen"]["tipo"] == "sintetico"
+
+
+# --- serie de la selección -------------------------------------------------------------------
+
+def test_serie_seleccion_punto(cliente_demo):
+    r = cliente_demo.get("/api/escenarios/ec_la_segua/serie-seleccion?punto=0.5,0.5")
+    assert r.status_code == 200
+    s = r.json()
+    assert len({p[2] for p in s["puntos"]}) == 1
+    assert len(s["puntos"]) >= 20
+    assert s["origen"]["tipo"] == "sintetico"
+
+
+def test_serie_seleccion_punto_y_cuadrante(cliente_demo):
+    r = cliente_demo.get("/api/escenarios/ec_la_segua/serie-seleccion?punto=0.5,0.5&cuadrante=0.2,0.2,0.6,0.6")
+    assert r.status_code == 200
+    assert len({p[2] for p in r.json()["puntos"]}) == 2
+
+
+@pytest.mark.parametrize("consulta", ["punto=1.2,0.5", "cuadrante=0.3,0.3,0.3,0.6", "", "punto=a,b",
+                                      "punto=0.5", "cuadrante=0.1,0.2,0.3"])
+def test_serie_seleccion_valida(cliente_demo, consulta):
+    r = cliente_demo.get(f"/api/escenarios/ec_la_segua/serie-seleccion?{consulta}")
+    assert r.status_code == 422
+    assert r.json()["mensaje"]
+
+
+def test_serie_seleccion_mar_vacia(cliente_demo):
+    r = cliente_demo.get("/api/escenarios/ec_pedernales/serie-seleccion?cuadrante=0,0,0.1,0.1")
+    assert r.status_code == 200
+    assert r.json()["puntos"] == []
+
+
+def test_serie_seleccion_sin_capacidad(cliente_ficticio):
+    esc = cliente_ficticio.get("/api/escenarios").json()[0]
+    r = cliente_ficticio.get(f"/api/escenarios/{esc['id']}/serie-seleccion?punto=0.5,0.5")
+    assert r.status_code == 409
