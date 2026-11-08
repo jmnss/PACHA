@@ -88,10 +88,20 @@ for (const { nombre, ancho, alto } of ANCHOS) {
       const posts: string[] = []
       page.on('request', (r) => { if (r.method() === 'POST' && r.url().includes('/api/simulacion/escenario')) posts.push(r.url()) })
       await page.goto('/observatorio')
-      const todo = page.getByRole('button', { name: 'Ver todo Ecuador' })
+      // En móvil la acción vive en el menú «Más acciones»; en escritorio, en la barra del mapa.
+      const menu = page.getByRole('button', { name: 'Más acciones' })
+      const todo = page.getByRole('button', { name: 'Ver todo Ecuador' }).or(menu)
       await expect(todo).toBeVisible({ timeout: 30_000 })
-      await todo.click()
-      await expect(page.getByRole('button', { name: 'Ver el escenario' })).toBeVisible()
+      if (await menu.isVisible()) {
+        await menu.click()
+        await page.getByRole('menuitem', { name: 'Ver todo Ecuador' }).click()
+        await menu.click()
+        await expect(page.getByRole('menuitem', { name: 'Ver el escenario' })).toBeVisible()
+        await page.keyboard.press('Escape')
+      } else {
+        await todo.click()
+        await expect(page.getByRole('button', { name: 'Ver el escenario' })).toBeVisible()
+      }
       const lienzo = page.getByTestId('mapa')
       await expect(lienzo.locator('canvas.maplibregl-canvas')).toBeVisible()
       // Borde oeste del mapa con todo Ecuador a la vista (el encuadre deja 16 px de margen al oeste de

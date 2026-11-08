@@ -26,3 +26,14 @@ test('en móvil el mapa del Observatorio empieza a la vista (390x844)', async ({
   const caja = await mapa.boundingBox()
   expect(caja!.y).toBeLessThan(844)
 })
+
+test('el mapa del Observatorio tiene alto propio en escritorio y en móvil', async ({ page }) => {
+  for (const [ancho, alto] of [[1440, 900], [390, 844]]) {
+    await page.setViewportSize({ width: ancho, height: alto })
+    await page.goto('/observatorio')
+    const lienzo = page.getByTestId('mapa')
+    await expect(lienzo).toBeVisible()
+    const caja = await lienzo.boundingBox()
+    expect(caja!.height).toBeGreaterThan(300)
+  }
+})
