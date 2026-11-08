@@ -16,15 +16,15 @@ permissions:
 
 jobs:
   verificar:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
           cache: pip
       - run: pip install -r requirements.txt -r requirements-api.txt
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: npm
@@ -40,15 +40,15 @@ jobs:
 
   construir:
     needs: verificar
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
           cache: pip
       - run: pip install -r requirements.txt -r requirements-api.txt
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: npm
@@ -60,16 +60,16 @@ jobs:
       - run: bash scripts/construir_pages.sh
       - run: npx playwright test -c playwright.pages.config.ts
         working-directory: frontend
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: frontend/dist-pages
 
   publicar:
     needs: construir
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.despliegue.outputs.page_url }}
     steps:
       - id: despliegue
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

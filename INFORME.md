@@ -51,8 +51,9 @@ mundo dice «Relieve: SRTM (teselas Terrarium, AWS Open Data)» y «Relieve real
   (corrida 42464866619, verificar → construir → publicar en verde; el sitio responde 200). Antes fallaron dos corridas:
   lint (`_e` sin usar en `motor/errores.ts`) y la prueba dorada `ec_loja` (redondeo de `nansum` distinto en CI, 3·10⁻⁷;
   se añadió `rel=1e-6`).
-- Avisos de CI sin consecuencia hoy: las acciones `@v4/@v5` usan Node 20 (obsoleto, forzado a Node 24) y
-  `ubuntu-latest` pasará a Ubuntu 26; conviene subir versiones antes de que dejen de funcionar.
+- Avisos de CI corregidos (2026-11-08): acciones en versiones con Node 24 (`checkout@v7`, `setup-python@v7`,
+  `setup-node@v7`, `upload-pages-artifact@v5`, `deploy-pages@v5`) y máquina fijada en `ubuntu-24.04` en vez de
+  `ubuntu-latest`, para que el cambio a Ubuntu 26 no altere el flujo sin aviso.
 - Memoria en móvil (~600 MB): los móviles de gama baja pueden no cargar el motor; lo precalculado sigue funcionando.
 - Chrome Android sin `SharedWorker`: un motor por documento; casi todo el Recorrido está precalculado.
 - Textos kichwa nuevos (`estructura.motor.*`) sin validar por hablantes.
