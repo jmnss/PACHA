@@ -34,6 +34,10 @@ api.contexto.proximo_hito.solsticio_de_junio,solsticio de junio,June solstice,so
 api.contexto.regimen.bimodal_dos_epocas_de_lluvia,bimodal (dos épocas de lluvia),bimodal (two rainy seasons),bimodal (ishkay tamya pacha),no
 api.contexto.regimen.sin_estacionalidad_marcada,sin estacionalidad marcada,no marked seasonality,pacha tikray pishi rikurik,no
 api.contexto.regimen.unimodal_una_epoca_de_lluvia,unimodal (una época de lluvia),unimodal (one rainy season),unimodal (shuk tamya pacha),no
+api.contexto.region.amazonia,Amazonía,Amazon,Amazonía,no
+api.contexto.region.costa,Costa,Coast,Costa,no
+api.contexto.region.insular,Insular,Insular (Galápagos),Insular (Galápagos),no
+api.contexto.region.sierra,Sierra,Highlands,Sierra,no
 api.contexto.temporada.lluviosa,Lluviosa,Rainy,Tamya,no
 api.contexto.temporada.seca,Seca,Dry,Chaki,no
 api.contexto.temporada.transicion,Transición,Transition,Transición,no
@@ -193,6 +197,42 @@ api.nota.ec_la_segua.1,"El agua abierta refleja la señal lejos del radar (HH mu
 api.nota.ec_loja.1,"En banda L, HV responde a la dispersión de volumen de ramas y troncos; al consumirse la biomasa cae entre 3 y 8 dB. La señal se satura cerca de 100–150 Mg/ha, por lo que la pérdida de biomasa en bosques densos es una cota inferior.","In L band, HV responds to volume scattering from branches and trunks; as biomass is consumed it drops by 3 to 8 dB. The signal saturates near 100–150 Mg/ha, so biomass loss in dense forests is a lower bound.","Banda L-pi HV-ka rama, kaspikunapa volumen dispersiónman kutichin; biomasa rupashpa 3 manta 8 dB kama urayan. Señalka 100–150 Mg/ha kuchupi saturan, chaymanta tupu sachakunapi biomasapa chinkayka uray límite kan.",no
 api.nota.ec_pedernales.1,"Vector LOS (este, norte, arriba) = (+0.64, +0.09, +0.77). NISAR mira a la izquierda: el movimiento norte-sur casi no se proyecta en la línea de vista, por eso las fallas de rumbo N-S se complementan con desplazamientos de píxel (GOFF).","LOS vector (east, north, up) = (+0.64, +0.09, +0.77). NISAR looks to the left: north-south motion barely projects onto the line of sight, which is why N-S strike faults are complemented with pixel offsets (GOFF).","LOS vector (inti llukshina, chinchay, hawa) = (+0.64, +0.09, +0.77). NISAR-ka lluki ladoman rikun: chinchay-urin kuyuriyka rikuy línea-pi ashallata rikurin, chaymanta N-S rumbo fallakunataka píxel kuyuriykunawan (GOFF) paktachin.",no
 api.nota.ec_pedernales.2,"Los píxeles con coherencia < 0,25 (ruptura superficial, decorrelación) se enmascaran, como hacen las componentes conexas del producto GUNW.","Pixels with coherence < 0.25 (surface rupture, decorrelation) are masked, as the connected components of the GUNW product do.","Coherencia < 0,25 píxelkunataka (hawa ruptura, decorrelación) pakan, GUNW productopa componentes conexas shina.",no
+api.obs.capa.area_quemada_detectada,Área quemada detectada,Detected burned area,Rikushka rupashka allpa,no
+api.obs.capa.cambio_de_inundacion,Cambio de inundación,Flood change,Yaku jundaypa tikray,no
+api.obs.capa.cambio_de_velocidad,Cambio de velocidad,Speed change,Utkaypa tikray,no
+api.obs.capa.cambio_del_frente,Cambio del frente,Front change,Frentepa tikray,no
+api.obs.capa.cambio_por_parcela,Cambio por parcela,Change by parcel,Parcelakunapa tikray,no
+api.obs.capa.coherencia_interferometrica,Coherencia interferométrica,Interferometric coherence,Interferométrica coherencia,no
+api.obs.capa.desplazamiento_los_acumulado,Desplazamiento LOS acumulado,Accumulated line-of-sight displacement,Tantachishka LOS kuyuriy,no
+api.obs.capa.desplazamiento_los_desenrollado,Desplazamiento LOS desenrollado,Unwrapped line-of-sight displacement,Desenrollado LOS kuyuriy,no
+api.obs.capa.error_frente_a_la_verdad_sintetica,Error frente a la verdad sintética,Error against the synthetic truth,Sintético chiqanwan pantay,no
+api.obs.capa.interferograma_envuelto_1_ciclo_11_9_cm,"Interferograma envuelto (1 ciclo = 11,9 cm)",Wrapped interferogram (1 cycle = 11.9 cm),"Pillushka interferograma (1 ciclo = 11,9 cm)",no
+api.obs.capa.razon_logaritmica_hv_despues_antes,Razón logarítmica HV (después/antes),HV log ratio (after/before),HV logarítmica razón (washa/ñawpa),no
+api.obs.capa.sigma0_hh_fecha,σ⁰ HH · {fecha},σ⁰ HH · {fecha},σ⁰ HH · {fecha},no
+api.obs.capa.sigma0_hv_fecha,σ⁰ HV · {fecha},σ⁰ HV · {fecha},σ⁰ HV · {fecha},no
+api.obs.capa.velocidad_fecha,Velocidad · {fecha},Velocity · {fecha},Utkay · {fecha},no
+api.obs.capa.velocidad_vertical,Velocidad vertical,Vertical velocity,Vertical utkay,no
+api.obs.columna.0_hv_db,Δσ⁰ HV (dB),Δσ⁰ HV (dB),Δσ⁰ HV (dB),no
+api.obs.columna.cambio_detectado,Cambio detectado,Detected change,Rikushka tikray,no
+api.obs.columna.cosecha_estimada,Cosecha estimada,Estimated harvest,Yupashka pallay,no
+api.obs.columna.cosecha_real,Cosecha real,Actual harvest,Chiqan pallay,no
+api.obs.columna.cultivo_cosechado,Cultivo cosechado,Harvested crop,Pallashka tarpushka,no
+api.obs.columna.parcela,Parcela,Parcel,Parcela,no
+api.obs.columna.rotacion,Rotación,Rotation,Rotación,no
+api.obs.medida.cosecha_labranza,Cosecha / labranza,Harvest / tillage,Pallay / allpa yapuy,no
+api.obs.medida.crecimiento_del_cultivo,Crecimiento del cultivo,Crop growth,Tarpushkapa wiñay,no
+api.obs.medida.hielo_nuevo_avance,Hielo nuevo (avance),New ice (advance),Mushuk chullunku (ñawpaman rin),no
+api.obs.medida.hielo_perdido_retroceso_del_frente,Hielo perdido (retroceso del frente),Lost ice (front retreat),Chullunku illarishka (frente washaman kutin),no
+api.obs.medida.inundacion_persistente,Inundación persistente,Persistent flooding,Mana tukuk yaku junday,no
+api.obs.medida.inundacion_trasplante_de_arroz,Inundación (trasplante de arroz),Flooding (rice transplanting),Yaku junday (arroz tarpuy),no
+api.obs.medida.maximo,Máximo,Maximum,Ashtawan hatun,no
+api.obs.medida.media,Media,Mean,Chawpi,no
+api.obs.medida.minimo,Mínimo,Minimum,Ashtawan uchilla,no
+api.obs.medida.nueva_inundacion,Nueva inundación,New flooding,Mushuk yaku junday,no
+api.obs.medida.perdida_de_inundacion,Pérdida de inundación,Flood loss,Yaku jundaypa pishiyay,no
+api.obs.medida.severidad_alta_4_5_db,"Severidad alta (< −4,5 dB)",High severity (< −4.5 dB),"Hatun severidad (< −4,5 dB)",no
+api.obs.medida.severidad_moderada_2_5_a_4_5_db,"Severidad moderada (−2,5 a −4,5 dB)",Moderate severity (−2.5 to −4.5 dB),"Chawpi severidad (−2,5-manta −4,5 dB-kama)",no
+api.obs.medida.sin_cambio,Sin cambio,No change,Mana tikrashka,no
 api.obs.metrica.acierto_de_deteccion_verdad_sintetica.ayuda,Cosechada / no cosechada vs. verdad,Harvested / not harvested vs. truth,"Pallashka / mana pallashka, chiqan-wan chimpapurashka",no
 api.obs.metrica.acierto_de_deteccion_verdad_sintetica.etiqueta,Acierto de detección (verdad sintética),Detection accuracy (synthetic truth),Rikuypa alli tupay (sintético chiqan),no
 api.obs.metrica.acierto_del_detector_verdad_sintetica.ayuda,Clasificación píxel a píxel en la fecha final,Pixel-by-pixel classification on the final date,"Píxel píxelmanta clasificación, tukuri punchapi",no
@@ -241,8 +281,14 @@ api.obs.metrica.max_alejandose.ayuda,LOS negativo,Negative LOS,LOS negativo,no
 api.obs.metrica.max_alejandose.etiqueta,Máx. alejándose,Max. moving away,Ashtawan karuyay,no
 api.obs.metrica.max_hacia_el_satelite.ayuda,LOS positivo,Positive LOS,LOS positivo,no
 api.obs.metrica.max_hacia_el_satelite.etiqueta,Máx. hacia el satélite,Max. toward the satellite,Satéliteman ashtawan kuchuyay,no
+api.obs.metrica.maximo_desplazamiento_los_desenrollado.etiqueta,Máximo · Desplazamiento LOS desenrollado,Maximum · Unwrapped LOS displacement,Ashtawan hatun · Desenrollado LOS kuyuriy,no
+api.obs.metrica.maximo_velocidad_fecha.etiqueta,Máximo · Velocidad · {fecha},Maximum · Velocity · {fecha},Ashtawan hatun · Utkay · {fecha},no
 api.obs.metrica.maximo_velocidad_vertical.etiqueta,Máximo · Velocidad vertical,Maximum · Vertical velocity,Ashtawan hatun · Vertical utkay,no
+api.obs.metrica.media_desplazamiento_los_desenrollado.etiqueta,Media · Desplazamiento LOS desenrollado,Mean · Unwrapped LOS displacement,Chawpi · Desenrollado LOS kuyuriy,no
+api.obs.metrica.media_velocidad_fecha.etiqueta,Media · Velocidad · {fecha},Mean · Velocity · {fecha},Chawpi · Utkay · {fecha},no
 api.obs.metrica.media_velocidad_vertical.etiqueta,Media · Velocidad vertical,Mean · Vertical velocity,Chawpi · Vertical utkay,no
+api.obs.metrica.minimo_desplazamiento_los_desenrollado.etiqueta,Mínimo · Desplazamiento LOS desenrollado,Minimum · Unwrapped LOS displacement,Ashtawan uchilla · Desenrollado LOS kuyuriy,no
+api.obs.metrica.minimo_velocidad_fecha.etiqueta,Mínimo · Velocidad · {fecha},Minimum · Velocity · {fecha},Ashtawan uchilla · Utkay · {fecha},no
 api.obs.metrica.minimo_velocidad_vertical.etiqueta,Mínimo · Velocidad vertical,Minimum · Vertical velocity,Ashtawan uchilla · Vertical utkay,no
 api.obs.metrica.nueva_inundacion.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
 api.obs.metrica.nueva_inundacion.etiqueta,Nueva inundación,New flooding,Mushuk yaku junday,no
@@ -263,17 +309,56 @@ api.obs.metrica.velocidad_maxima_final.etiqueta,Velocidad máxima final,Final ma
 api.obs.metrica.velocidad_maxima_inicial.etiqueta,Velocidad máxima inicial,Initial maximum velocity,Kallaripi ashtawan utkay,no
 api.obs.orbita.ascendente,Ascendente,Ascending,Ascendente,no
 api.obs.orbita.descendente,Descendente,Descending,Descendente,no
+api.obs.serie_nombre.bosque_no_quemado_control,Bosque no quemado (control),Unburned forest (control),Mana rupashka sacha (control),no
+api.obs.serie_nombre.cerca_de_la_falla_modelo_de_okada,Cerca de la falla (modelo de Okada),Near the fault (Okada model),Falla kuchupi (Okada modelo),no
+api.obs.serie_nombre.cerca_de_la_falla_observado,Cerca de la falla (observado),Near the fault (observed),Falla kuchupi (rikushka),no
+api.obs.serie_nombre.detectada_por_el_modelo_simulacion,Detectada por el modelo (simulación),Detected by the model (simulation),Modelopa rikushka (simulación),no
+api.obs.serie_nombre.detectado_con_goff,Detectado con GOFF,Detected with GOFF,GOFF-wan rikushka,no
+api.obs.serie_nombre.frente_inicial,A {km} km del frente inicial,{km} km from the initial front,Kallari frentemanta {km} km-pi,no
+api.obs.serie_nombre.maximo_hundimiento,Máximo hundimiento,Maximum subsidence,Ashtawan urayay,no
+api.obs.serie_nombre.media_del_cuadrante,Media del cuadrante,Quadrant mean,Cuadrantepa chawpi,no
+api.obs.serie_nombre.punto_seleccionado_3_3_px,Punto seleccionado (3×3 px),Selected point (3×3 px),Akllashka punto (3×3 px),no
+api.obs.serie_nombre.verdad_del_modelo,Verdad del modelo,Model truth,Modelopa chiqan,no
+api.obs.serie_nombre.zona_estable_referencia,Zona estable (referencia),Stable zone (reference),Mana kuyuk zona (referencia),no
+api.obs.serie_nombre.zona_quemada,Zona quemada,Burned zone,Rupashka zona,no
+api.obs.titulo_tabla.resultados,Resultados,Results,Tukuri yupaykuna,no
+api.obs.titulo_tabla.resultados_por_parcela,Resultados por parcela,Results by parcel,Sapa parcelapa tukuri yupaykuna,no
+api.obs.valor.arroz,Arroz,Rice,Arroz,no
+api.obs.valor.arroz_arroz,Arroz → Arroz,Rice → Rice,Arroz → Arroz,no
+api.obs.valor.banano,Banano,Banana,Palanda,no
+api.obs.valor.frutales,Frutales,Fruit trees,Ruru yurakuna,no
+api.obs.valor.maiz,Maíz,Maize,Sara,no
+api.obs.valor.numero_cm,{v} cm,{v} cm,{v} cm,no
+api.obs.valor.numero_cm_ano,{v} cm/año,{v} cm/yr,{v} cm/wata,no
+api.obs.valor.numero_db,{v} dB,{v} dB,{v} dB,no
+api.obs.valor.numero_gamma,{v} γ,{v} γ,{v} γ,no
+api.obs.valor.numero_km2,{v} km²,{v} km²,{v} km²,no
+api.obs.valor.numero_m_dia,{v} m/día,{v} m/day,{v} m/puncha,no
+api.obs.valor.numero_rad,{v} rad,{v} rad,{v} rad,no
+api.obs.valor.sin_cambio_detectado,Sin cambio detectado,No change detected,Tikrayta mana rikushkachu,no
+api.obs.valor.sin_dato_enmascarado,Sin dato (enmascarado),No data (masked),Willay illa (pakashka),no
+api.obs.valor.soja,Soja,Soybean,Soja,no
+api.obs.valor.trigo,Trigo,Wheat,Trigo,no
+api.obs.valor.trigo_arroz,Trigo → Arroz,Wheat → Rice,Trigo → Arroz,no
+api.obs.valor.trigo_maiz,Trigo → Maíz,Wheat → Maize,Trigo → Sara,no
+api.obs.valor.trigo_soja_de_segunda,Trigo → Soja de segunda,Wheat → Second-crop soybean,Trigo → Soja (ishkay niki tarpuy),no
 api.opcion.terremotos.rake.inversa,Inversa,Reverse,Inversa,no
 api.opcion.terremotos.rake.normal,Normal,Normal,Normal,no
 api.opcion.terremotos.rake.rumbo_dextral,Rumbo dextral,Right-lateral strike-slip,Rumbo dextral,no
 api.opcion.terremotos.rake.rumbo_sinistral,Rumbo sinistral,Left-lateral strike-slip,Rumbo sinistral,no
+api.plantilla.nota.pedernales_los,"Vector LOS (este, norte, arriba) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR mira a la izquierda: el movimiento norte-sur casi no se proyecta en la línea de vista, por eso las fallas de rumbo N-S se complementan con desplazamientos de píxel (GOFF).","LOS vector (east, north, up) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR looks to the left: north-south motion barely projects onto the line of sight, which is why N-S strike faults are complemented with pixel offsets (GOFF).","LOS vector (inti llukshina, chinchay, hawa) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR-ka lluki ladoman rikun: chinchay-urin kuyuriyka rikuy línea-pi ashallata rikurin, chaymanta N-S rumbo fallakunataka píxel kuyuriykunawan (GOFF) paktachin.",no
+api.serie.0_hh_en_la_seleccion,σ⁰ HH en la selección,σ⁰ HH in the selection,Akllashkapi σ⁰ HH,no
+api.serie.0_hv_en_la_seleccion,σ⁰ HV en la selección,σ⁰ HV in the selection,Akllashkapi σ⁰ HV,no
 api.serie.0_hv_medio,σ⁰ HV medio,Mean σ⁰ HV,σ⁰ HV chawpi,no
 api.serie.0_hv_medio_por_rotacion,σ⁰ HV medio por rotación,Mean σ⁰ HV by rotation,Rotaciónmanta σ⁰ HV chawpi,no
 api.serie.desplazamiento_los_acumulado,Desplazamiento LOS acumulado,Cumulative LOS displacement,Tantachishka LOS kuyuriy,no
+api.serie.desplazamiento_los_acumulado_en_la_seleccion,Desplazamiento LOS acumulado en la selección,Cumulative LOS displacement in the selection,Akllashkapi tantachishka LOS kuyuriy,no
 api.serie.desplazamiento_vertical_acumulado,Desplazamiento vertical acumulado,Cumulative vertical displacement,Tantachishka vertical kuyuriy,no
+api.serie.desplazamiento_vertical_acumulado_en_la_seleccion,Desplazamiento vertical acumulado en la selección,Cumulative vertical displacement in the selection,Akllashkapi tantachishka vertical kuyuriy,no
 api.serie.posicion_del_frente_respecto_a_la_1_a_fecha,Posición del frente (respecto a la 1.ª fecha),Front position (relative to the 1st date),Frentepa maypi kashka (1.ª punchamanta),no
 api.serie.superficie_inundada,Superficie inundada,Flooded area,Yakuwan jundashka allpa,no
 api.serie.velocidad_superficial,Velocidad superficial,Surface velocity,Hawa utkay,no
+api.serie.velocidad_superficial_en_la_seleccion,Velocidad superficial en la selección,Surface velocity in the selection,Akllashkapi hawa utkay,no
 api.sim.capa.calado,Calado,Flow depth,Calado,no
 api.sim.capa.calado_del_lahar,Calado del lahar,Lahar flow depth,Laharpa calado,no
 api.sim.capa.corriente_piroclastica,Corriente piroclástica,Pyroclastic current,Corriente piroclástica,no
@@ -283,6 +368,29 @@ api.sim.capa.estado_del_fuego,Estado del fuego,Fire state,Ninapa kawsay,no
 api.sim.capa.frentes_de_onda,Frentes de onda,Wavefronts,Onda frentekuna,no
 api.sim.capa.intensidad_mmi,Intensidad (MMI),Intensity (MMI),Intensidad (MMI),no
 api.sim.capa.tsunami_calado_en_tierra_elevacion_del_mar,Tsunami: calado en tierra / elevación del mar,Tsunami: onshore flow depth / sea-level elevation,Tsunami: allpapi calado / mama kuchapa wichay,no
+api.sim.celda.agua,Agua,Water,Yaku,no
+api.sim.celda.bosque_andino,Bosque andino,Andean forest,Andes sacha,no
+api.sim.celda.bosque_seco_y_matorral,Bosque seco y matorral,Dry forest and scrub,"Chaki sacha, matorral ima",no
+api.sim.celda.bosque_tropical_humedo,Bosque tropical húmedo,Tropical rainforest,Tropical húmedo sacha,no
+api.sim.celda.ceniza_1_cm,Ceniza ≥ 1 cm,Ash ≥ 1 cm,Ceniza ≥ 1 cm,no
+api.sim.celda.cultivos_y_pastos,Cultivos y pastos,Crops and pasture,"Tarpushkakuna, kiwakuna ima",no
+api.sim.celda.extrema,Extrema,Extreme,Extrema,no
+api.sim.celda.flujo_piroclastico,Flujo piroclástico,Pyroclastic flow,Flujo piroclástico,no
+api.sim.celda.fuerte,Fuerte,Strong,Sinchi,no
+api.sim.celda.glaciar_y_nieve,Glaciar y nieve,Glacier and snow,"Glaciar, rasu ima",no
+api.sim.celda.lahar,Lahar,Lahar,Lahar,no
+api.sim.celda.ligera,Ligera,Light,Pishi,no
+api.sim.celda.modelo_ceniza,Advección–difusión (3 clases),Advection–diffusion (3 classes),Advección–difusión (3 clasekuna),no
+api.sim.celda.modelo_cono,"Cono de energía H/L = {hl_punto}, Hc = {hc} m","Energy cone H/L = {hl_punto}, Hc = {hc} m","Energía cono H/L = {hl_punto}, Hc = {hc} m",no
+api.sim.celda.modelo_laharz,"LAHARZ, V = {v_punto} hm³ por cauce","LAHARZ, V = {v_punto} hm³ per channel","LAHARZ, V = {v_punto} hm³ sapa ñanpi",no
+api.sim.celda.modelo_techos,"Carga húmeda vs. techos débiles (Spence et al., 2005)","Wet load vs. weak roofs (Spence et al., 2005)","Yakuyuk ceniza llashak, mana sinchi techokunawan tupachishka (Spence et al., 2005)",no
+api.sim.celda.moderada,Moderada,Moderate,Chawpi,no
+api.sim.celda.muy_fuerte,Muy fuerte,Very strong,Ancha sinchi,no
+api.sim.celda.paramo,Páramo,Páramo,Páramo,no
+api.sim.celda.severa,Severa,Severe,Severa,no
+api.sim.celda.techos_colapsados_viviendas,Techos colapsados (viviendas),Collapsed roofs (homes),Urmashka techokuna (wasikuna),no
+api.sim.celda.violenta,Violenta,Violent,Violenta,no
+api.sim.celda.zona_urbana,Zona urbana,Urban area,Marka zona,no
 api.sim.columna.area_km2,Área (km²),Area (km²),Allpa (km²),no
 api.sim.columna.area_quemada_km2,Área quemada (km²),Burned area (km²),Rupashka allpa (km²),no
 api.sim.columna.cobertura,Cobertura,Land cover,Cobertura,no
@@ -383,6 +491,32 @@ api.sim.mundo.quito_y_el_guagua_pichincha.descripcion,"Capital sobre el sistema 
 api.sim.mundo.quito_y_el_guagua_pichincha.nombre,Quito y el Guagua Pichincha,Quito and Guagua Pichincha,Quitowan Guagua Pichincha,no
 api.sim.mundo.tungurahua_y_banos.descripcion,Activo entre 1999 y 2016; Baños está a 8 km del cráter.,Active between 1999 and 2016; Baños is 8 km from the crater.,1999-manta 2016-kama kawsarka; Baños craterta 8 km mana karupi kan.,no
 api.sim.mundo.tungurahua_y_banos.nombre,Tungurahua y Baños,Tungurahua and Baños,Tungurahuawan Baños,no
+api.sim.nota.agua.radar,"NISAR (GCOV): cambio de HH entre fechas (< −5 dB agua abierta, > +3 dB doble rebote) y clasificación de inundación de la app. Se compara la extensión máxima simulada; en la pasada real el agua puede haber bajado (en una pasada posterior (ver «Espera hasta la primera imagen»)).","NISAR (GCOV): HH change between dates (< −5 dB open water, > +3 dB double bounce) and the app's flood classification. The maximum simulated extent is compared; in the real pass the water may have receded (in a later pass (see “Wait until the first image”)).","NISAR (GCOV): punchakuna chawpipi HH tikray (< −5 dB paskashka yaku, > +3 dB doble rebote), app-pa yaku junday clasificación ima. Simulashka ashtawan hatun yaku jundayta tupachin; chiqan pasadapika yakuka urayashkami kanman (shuk washa pasadapi («Ñawpa rikchakama shuyay» rikuy)).",no
+api.sim.nota.erupcion.alerta,Ecuador cuenta con sistemas de alerta temprana de lahares (p. ej. Cotopaxi): sube la evacuación para ver su efecto.,Ecuador has early warning systems for lahars (e.g. Cotopaxi): raise the evacuation to see its effect.,"Ecuadorka laharkunapak ñawpa willachiy sistemakunata charin (Cotopaxi shina): llukshinata wichachiy, imashina llakichinta rikunkapak.",no
+api.sim.nota.erupcion.radar,NISAR: la banda L ve a través de la nube de ceniza; los depósitos de lahar y flujo piroclástico destruyen la coherencia interferométrica (en una pasada posterior (ver «Espera hasta la primera imagen»)).,NISAR: L band sees through the ash cloud; lahar and pyroclastic flow deposits destroy interferometric coherence (in a later pass (see “Wait until the first image”)).,"NISAR: banda L-ka ceniza puyuta pasashpa rikun; laharpa, flujo piroclásticopa sakishka allpakunaka interferométrica coherenciata tukuchin (shuk washa pasadapi («Ñawpa rikchakama shuyay» rikuy)).",no
+api.sim.nota.erupcion.supuestos,"Las velocidades del lahar (8 m/s) y del flujo piroclástico (40 m/s), la altura de colapso y las letalidades son supuestos del juego; las áreas sí provienen de los modelos publicados.","The lahar (8 m/s) and pyroclastic flow (40 m/s) velocities, the collapse height and the lethalities are game assumptions; the areas do come from published models.","Laharpa (8 m/s), flujo piroclásticopa (40 m/s) utkaykuna, colapsopa hatun kay, letalidadkuna ima pukllaypa yuyashkakunami; allpakunaka killkashka modelokunamantami llukshin.",no
+api.sim.nota.erupcion.tefra,Cráter a {zv} m. Volumen de tefra {v} hm³ en {h} h; queda dentro del mundo el {pct} % de la masa.,Crater at {zv} m. Tephra volume {v} hm³ in {h} h; {pct} % of the mass stays inside the world.,Cráter {zv} m-pi. Tefrapa hatun kay {v} hm³ {h} h-pi; masapa {pct} % mundo ukupi sakirin.,no
+api.sim.nota.incendio.cobertura,El páramo y el bosque seco arden con facilidad; el bosque húmedo apenas propaga si el combustible supera su humedad de extinción.,Páramo and dry forest burn easily; humid forest barely spreads fire if the fuel is above its moisture of extinction.,"Páramo, chaki sacha ima utkalla rupan; húmedo sachaka ninata ashallata mirachin, combustiblepa humedad extinción humedadta yallikpi.",no
+api.sim.nota.incendio.paso,"Cada paso del autómata equivale a {min} min: el fuego avanza como máximo una celda ({m} m) por paso (supuesto de 0.25 m/s ≈ 0,9 km/h).",Each step of the automaton equals {min} min: the fire advances at most one cell ({m} m) per step (assumption of 0.25 m/s ≈ 0.9 km/h).,"Autómatapa sapa pasoka {min} min kan: ninaka sapa pasopi ashtawanka shuk celdallata ({m} m) ñawpaman rin (0.25 m/s ≈ 0,9 km/h yuyashka).",no
+api.sim.nota.incendio.radar,"NISAR: la próxima pasada llega en una pasada posterior (ver «Espera hasta la primera imagen»); quemado ⟺ LR < −2,5 dB en HV.",NISAR: the next pass arrives in a later pass (see “Wait until the first image”); burned ⟺ LR < −2.5 dB in HV.,"NISAR: katik pasadaka shuk washa pasadapi chayan («Ñawpa rikchakama shuyay» rikuy); rupashka ⟺ LR < −2,5 dB HV-pi.",no
+api.sim.nota.incendio.residentes,Residentes dentro del perímetro: {n}. No hay una función de mortalidad publicada para incendios forestales en Ecuador: se informa la exposición.,Residents inside the perimeter: {n}. No published mortality function exists for forest fires in Ecuador: exposure is reported.,Perímetro ukupi kawsakkuna: {n}. Ecuadorpi sacha incendiokunapak wañuy función mana killkashkachu: llakichishka runakunallatami willan.,no
+api.sim.nota.incendio.residentes_menos_de_uno,Residentes dentro del perímetro: < 1. No hay una función de mortalidad publicada para incendios forestales en Ecuador: se informa la exposición.,Residents inside the perimeter: < 1. No published mortality function exists for forest fires in Ecuador: exposure is reported.,Perímetro ukupi kawsakkuna: < 1. Ecuadorpi sacha incendiokunapak wañuy función mana killkashkachu: llakichishka runakunallatami willan.,no
+api.sim.nota.inundacion.hidrograma,Hidrograma triangular con pico de {q} m³/s a las {h} h; volumen total {v} hm³.,Triangular hydrograph with a peak of {q} m³/s at {h} h; total volume {v} hm³.,"Kimsa kuchuyuk hidrograma, {h} h-pi {q} m³/s ashtawan hatun yakuwan; tukuy hatun kay {v} hm³.",no
+api.sim.nota.inundacion.marejada,Nivel del mar elevado hasta {m} m durante {h} h (pulso senoidal).,Sea level raised up to {m} m for {h} h (sinusoidal pulse).,Mama kuchapa yaku {h} h-pi {m} m-kama wicharin (senoidal pulso).,no
+api.sim.nota.inundacion.mortalidad,Mortalidad de la «zona restante» de Jonkman (sin rotura de diques ni subida rápida): es una cota inferior en crecidas súbitas.,Jonkman's “remaining zone” mortality (no dike failure or rapid rise): it is a lower bound in flash floods.,"Jonkmanpa «puchushka zona» wañuy (mana diquekuna pakirishka, mana utka wichariy): utka crecidakunapika uray límite kan.",no
+api.sim.nota.terremoto.hipocentro_inversa_subduccion,"Hipocentro a {prof} km; mecanismo inversa (subducción) (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm.","Hypocenter at {prof} km; reverse (subduction) mechanism (rake {rake}°), strike {rumbo}°, dip {buz}°. Maximum uplift {sube} cm, subsidence {baja} cm.","Hipocentro {prof} km-pi; inversa (subducción) mecanismo (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Ashtawan wichay {sube} cm, allpa uraykay {baja} cm.",no
+api.sim.nota.terremoto.hipocentro_normal,"Hipocentro a {prof} km; mecanismo normal (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm.","Hypocenter at {prof} km; normal mechanism (rake {rake}°), strike {rumbo}°, dip {buz}°. Maximum uplift {sube} cm, subsidence {baja} cm.","Hipocentro {prof} km-pi; normal mecanismo (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Ashtawan wichay {sube} cm, allpa uraykay {baja} cm.",no
+api.sim.nota.terremoto.hipocentro_rumbo_dextral,"Hipocentro a {prof} km; mecanismo rumbo dextral (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm.","Hypocenter at {prof} km; right-lateral strike-slip mechanism (rake {rake}°), strike {rumbo}°, dip {buz}°. Maximum uplift {sube} cm, subsidence {baja} cm.","Hipocentro {prof} km-pi; rumbo dextral mecanismo (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Ashtawan wichay {sube} cm, allpa uraykay {baja} cm.",no
+api.sim.nota.terremoto.hipocentro_rumbo_sinistral,"Hipocentro a {prof} km; mecanismo rumbo sinistral (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm.","Hypocenter at {prof} km; left-lateral strike-slip mechanism (rake {rake}°), strike {rumbo}°, dip {buz}°. Maximum uplift {sube} cm, subsidence {baja} cm.","Hipocentro {prof} km-pi; rumbo sinistral mecanismo (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Ashtawan wichay {sube} cm, allpa uraykay {baja} cm.",no
+api.sim.nota.terremoto.ipe,La IPE de Allen et al. (2012) es de corteza activa; en sismos de subducción grandes puede infravalorar la intensidad lejana. No incluye amplificación por suelos blandos.,The Allen et al. (2012) GMPE is for active crust; in large subduction earthquakes it may underestimate distant intensity. It does not include amplification by soft soils.,Allen et al. (2012)-pa IPE-ka kawsak cortezapakmi; hatun subducción allpa kuyuykunapika karu intensidadta pishiyachishpa yupankamanmi. Llampu allpakunapa amplificaciónta mana yaykuchinchu.,no
+api.sim.nota.terremoto.pager,Los parámetros PAGER de Ecuador se calibraron con sismos de 1973–2007 (antes de Pedernales 2016): prueba Perú o Colombia para ver la sensibilidad a la vulnerabilidad.,The PAGER parameters for Ecuador were calibrated with 1973–2007 earthquakes (before Pedernales 2016): try Peru or Colombia to see the sensitivity to vulnerability.,"Ecuadorpa PAGER parámetrokunaka 1973–2007 allpa kuyuykunawan calibrashka karka (Pedernales 2016 ñawpa): Perú o Colombiata akllay, wasikunapa mana sinchi kayman imashina tikrakta rikunkapak.",no
+api.sim.nota.terremoto.radar,NISAR (GUNW): interferograma de 12 días que abarca el sismo; la atmósfera añade ~1 cm de ruido turbulento. El mar no tiene coherencia.,NISAR (GUNW): 12-day interferogram spanning the earthquake; the atmosphere adds ~1 cm of turbulent noise. The sea has no coherence.,"NISAR (GUNW): 12 punchapa interferograma, allpa kuyuy ñawpamanta washakama; wayra-pachaka ~1 cm turbulento ruidota yapan. Mama kuchaka coherenciata mana charinchu.",no
+api.sim.nota.terremoto.tsunami,Tsunami: el levantamiento del fondo marino (hasta {m} m) se propaga con aguas someras; la batimetría se limita a 1 500 m para acelerar el cálculo. La mortalidad de Jonkman (zona restante) subestima la de un tsunami.,"Tsunami: the uplift of the sea floor (up to {m} m) propagates with shallow-water equations; bathymetry is capped at 1,500 m to speed up the calculation. Jonkman's mortality (remaining zone) underestimates that of a tsunami.",Tsunami: mama kucha ukupi allpa wichariyka ({m} m-kama) mana ukku yakupa ecuacionkunawan mirarin; cálculota utkayachinkapak batimetríaka 1 500 m-kama kan. Jonkmanpa wañuyka (puchushka zona) tsunamipa wañuyta pishiyachishpa yupan.,no
+api.sim.nota.tormenta.deslizamientos,Los deslizamientos se muestran desde el final de la lluvia; no se estima su mortalidad.,Landslides are shown from the end of the rain; their mortality is not estimated.,Deslizamientokunaka tamya tukurishkamanta rikurin; paykunapa wañuyta mana yupanchu.,no
+api.sim.nota.tormenta.drenaje,La red de drenaje es la del DEM a la resolución del mundo: los cauces estrechos se ensanchan a una celda.,The drainage network is that of the DEM at the world's resolution: narrow channels widen to one cell.,Drenaje redka mundopa resoluciónpi DEM-pakmi: kichki ñankunaka shuk celdakama anchuyan.,no
+api.sim.nota.tormenta.lluvia_humedo,Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN húmedo (AMC III)).,Rainfall of {mm} mm in {h} h with a radius of {km} km. Antecedent soil moisture: {pct} % of available water (CN wet (AMC III)).,{km} km radiowan {h} h-pi {mm} mm tamya. Ñawpa allpapa humedad: mutkichina yakupa {pct} % (CN húmedo (AMC III)).,no
+api.sim.nota.tormenta.lluvia_normal,Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN normal (AMC II)).,Rainfall of {mm} mm in {h} h with a radius of {km} km. Antecedent soil moisture: {pct} % of available water (CN normal (AMC II)).,{km} km radiowan {h} h-pi {mm} mm tamya. Ñawpa allpapa humedad: mutkichina yakupa {pct} % (CN normal (AMC II)).,no
+api.sim.nota.tormenta.lluvia_seco,Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN seco (AMC I)).,Rainfall of {mm} mm in {h} h with a radius of {km} km. Antecedent soil moisture: {pct} % of available water (CN dry (AMC I)).,{km} km radiowan {h} h-pi {mm} mm tamya. Ñawpa allpapa humedad: mutkichina yakupa {pct} % (CN chaki (AMC I)).,no
 api.sim.opcion.terremoto.mecanismo.inversa_subduccion,Inversa (subducción),Reverse (subduction),Inversa (subducción),no
 api.sim.opcion.terremoto.mecanismo.normal,Normal,Normal,Normal,no
 api.sim.opcion.terremoto.mecanismo.rumbo_dextral,Rumbo dextral,Right-lateral strike-slip,Rumbo dextral,no

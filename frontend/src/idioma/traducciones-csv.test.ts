@@ -59,6 +59,11 @@ describe('traducciones_csv.mjs', () => {
     expect(texto).toContain('comun.capas.otros,{n} capas,')
   })
 
+  it('el CSV del repositorio está al día con los catálogos', () => {
+    expect(correr('exportar', csv).status).toBe(0)
+    expect(readFileSync(csv, 'utf8')).toBe(readFileSync(join(RAIZ, 'docs/traduccion-kichwa.csv'), 'utf8'))
+  })
+
   it('exportar → importar el mismo CSV no cambia ningún archivo', () => {
     expect(correr('exportar', csv).status).toBe(0)
     const antes = instantanea(catalogos)

@@ -25,7 +25,7 @@ Criterios del borrador:
 
 | Qué | Dónde | Cuántos textos |
 |---|---|---|
-| Textos cortos de la interfaz (botones, títulos, avisos, errores, textos de la API) | `docs/traduccion-kichwa.csv` (generado desde `frontend/src/idioma/catalogos/qu/*.ts`) | 923 claves |
+| Textos cortos de la interfaz (botones, títulos, avisos, errores, textos de la API) | `docs/traduccion-kichwa.csv` (generado desde `frontend/src/idioma/catalogos/qu/*.ts`) | 1083 claves |
 | Relatos de las Historias | `frontend/src/pantallas/historias/contenido/inundacion.qu.ts`, `incendio.qu.ts` | 2 relatos |
 | Explicaciones de términos de las Historias | `frontend/src/pantallas/historias/contenido/terminos.qu.ts` | 9 términos |
 | Guion del recorrido guiado | `frontend/src/pantallas/recorrido/guion.qu.ts` | 6 pasos |
@@ -94,6 +94,9 @@ Se dejaron en español porque el equipo no conoce un equivalente asentado. Lleva
 | validación, restauración, riesgo, cobertura, tipografía, límites, créditos de fuentes | Historias | Sin equivalente asentado. |
 | hectárea, a lo menos, ejemplo, óptico, contraste, coeficientes, cruzada, paralela | `obs.serie.*`, `obs.impacto.*`, `lab.*` | «a lo menos» queda en español hasta que un hablante proponga la forma natural. «Demostración» se dice «rikuchiy» (H1). |
 | Ascendente, Descendente (dirección orbital); Cobertura, Intensidad, Modelo (encabezados de tablas del simulador); «LOS positivo / negativo» | `api.obs.orbita.*`, `api.sim.columna.*`, `api.obs.metrica.max_*.ayuda` | Términos técnicos sin equivalente asentado (ronda de arreglos final). |
+| Severa, Violenta, Extrema (escala de intensidad); húmedo (bosque tropical húmedo, CN húmedo, bosque húmedo); páramo, matorral, zona (urbana, quemada, estable, restante), clase | `api.sim.celda.*`, `api.sim.nota.incendio.cobertura`, `api.sim.nota.tormenta.lluvia_*`, `api.obs.serie_nombre.*` | Sin equivalente asentado para los grados altos de la escala (ver C11) ni para «húmedo» como adjetivo técnico. |
+| techo, colapso, letalidad, tefra, cráter, masa, dique, hidrograma, pulso senoidal, energía (cono de), advección–difusión, perímetro, autómata, extinción (humedad de), función (de mortalidad), corteza, amplificación, calibrar, ruido turbulento, batimetría, ecuaciones (de aguas someras), drenaje (red de), resolución, referencia, control (serie de control), rotación, parcela, soja, trigo | `api.sim.celda.modelo_*`, `api.sim.celda.techos_colapsados_viviendas`, `api.sim.nota.*`, `api.obs.columna.*`, `api.obs.serie_nombre.*`, `api.obs.valor.*` | Términos de los modelos físicos y de cultivos sin equivalente asentado. |
+| Amazonía, Insular (Galápagos) | `api.contexto.region.*` | Regiones del Ecuador, como «Costa» y «Sierra». |
 | Nombres de los términos con explicación | `historias/contenido/terminos.qu.ts`, nombres en `fundamentos/contenido.qu.ts` | El nombre queda en español; solo la explicación está en kichwa. |
 
 ## Dudas abiertas
@@ -195,6 +198,28 @@ exactamente eso, con el mismo peso que en español.
 - **C10. «Shuklla» / «mana kikin».** «Shuklla» (solo uno) se usaba para «distinto»; en la Tarea 27 se
   cambió por «mana kikin» como en el resto del catálogo. Confirmar «mana kikinta kutichin» (responde
   distinto).
+- **C11. Grados de intensidad.** `api.sim.celda.ligera` «Pishi», `.moderada` «Chawpi», `.fuerte` «Sinchi»,
+  `.muy_fuerte` «Ancha sinchi»; `.severa`, `.violenta` y `.extrema` quedaron en español porque «ashtawan
+  sinchi» no distingue tres grados. ¿Hay una escala natural en kichwa?
+- **C12. «Pallay» y «kuchuy» (cosecha).** `api.obs.metrica.cosecha_labranza.etiqueta` y
+  `api.obs.medida.cosecha_labranza` dicen «Pallay / allpa yapuy»; `api.categoria.cambio_por_parcela.3` dice
+  «Kuchuy / allpa llankay». Las columnas nuevas siguen «pallay» (`api.obs.columna.cosecha_estimada` «Yupashka
+  pallay», `.cosecha_real` «Chiqan pallay», `.cultivo_cosechado` «Pallashka tarpushka»). ¿Cuál se usa para
+  cosechar granos (arroz, maíz) y cuál para labranza?
+- **C13. «Resultados».** `api.obs.titulo_tabla.resultados` «Tukuri yupaykuna» y `.resultados_por_parcela`
+  «Sapa parcelapa tukuri yupaykuna» (cifras finales). ¿Hay una palabra mejor para «resultados»?
+- **C14. Frases del modelo con forma dudosa.** «mutkichina yaku» (agua útil, `api.sim.nota.tormenta.lluvia_*`);
+  «yakuyuk ceniza llashak» (carga húmeda, `api.sim.celda.modelo_techos`); «mana ukku yaku» (aguas someras,
+  `api.sim.nota.terremoto.tsunami`); «kimsa kuchuyuk» (triangular, `api.sim.nota.inundacion.hidrograma`);
+  «rasu» (nieve, `api.sim.celda.glaciar_y_nieve`); «Ruru yurakuna» (frutales, `api.obs.valor.frutales`);
+  «ishkay niki tarpuy» (soja de segunda, `api.obs.valor.trigo_soja_de_segunda`); «Willay illa (pakashka)»
+  (sin dato, enmascarado, `api.obs.valor.sin_dato_enmascarado`); «Mana kuyuk zona» (zona estable,
+  `api.obs.serie_nombre.zona_estable_referencia`); «killkashka modelokuna» (modelos publicados,
+  `api.sim.nota.erupcion.supuestos`). Confirmar cada una.
+- **C15. «Shuk washa pasadapi».** Las notas `api.sim.nota.agua.radar`, `.erupcion.radar` e `.incendio.radar`
+  traducen «en una pasada posterior (ver «Espera hasta la primera imagen»)» como «shuk washa pasadapi
+  («Ñawpa rikchakama shuyay» rikuy)», con el nombre de `sim.espera.media`. El español repite paréntesis;
+  confirmar que la frase se entiende.
 
 ### I · Misma palabra española, traducciones distintas (sin resolver)
 
