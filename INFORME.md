@@ -626,3 +626,7 @@ Lo que falló en esta prueba: nada que bloquee. Lo que queda sin demostrar está
 ## Fase 1, Tarea 2: cajas y semillas de los sitios (2026-11-14)
 - Mazar: caja y semilla salen de `Clas_Super.tif` (la caja WGS84 de la máscara coincide con la inicial; semilla = píxel de agua más cercano al centroide de la región de agua más grande, 5,4 km²).
 - Daule-Peripa y Casitagua: caja y semilla siguen **aproximadas** (sin verificar). Pendiente (Tarea 6): pintar el DEM y comprobar que el vaso cae dentro de la caja; si no, ampliarla.
+
+## Fase 1, Tarea 4: relieve Copernicus (2026-11-14)
+- Formato de URL verificado con HEAD (200, 2026-11-14): `https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_S03_00_W079_00_DEM/Copernicus_DSM_COG_10_S03_00_W079_00_DEM.tif`. Lectura por ventana vía `/vsicurl/` comprobada con la caja de Mazar (972 × 756 px, 1638–3829 m); no se descargó ninguna tesela.
+- `scipy` añadido a `requirements-preparacion.txt`; `test_compatibilidad_pyodide.py` sigue en verde.

@@ -3,3 +3,4 @@
 # (tests/motor/test_compatibilidad_pyodide.py lo vigila): la app solo lee los derivados de data/nisar/<zona>/.
 asf_search==14.1.0
 rasterio==1.5.2
+scipy>=1.11
