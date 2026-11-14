@@ -72,7 +72,7 @@ cd frontend && npx playwright test              # extremo a extremo (necesita CH
 
 ## App Streamlit heredada
 
-La app original sigue funcionando y no se modifica: `python app.py` (http://localhost:8501). Su README está en [docs/README-streamlit.md](docs/README-streamlit.md).
+La app original en Streamlit se retiró el 2026-11-14. Su último estado está en la etiqueta `legado-streamlit` (`git checkout legado-streamlit`).
 
 ## Requisitos de entrega
 

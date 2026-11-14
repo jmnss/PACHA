@@ -1,7 +1,7 @@
 # CLAUDE.md — PACHA
 
-Instrucciones del proyecto para Claude Code. Complementa a `AGENTS.md` (que describe la app Streamlit
-heredada). Si hay conflicto, manda este archivo.
+Instrucciones del proyecto para Claude Code. La app Streamlit heredada (`app.py`, `interfaz/`) se retiró el 2026-11-14;
+su último estado está en la etiqueta `legado-streamlit`.
 
 ## Qué es
 
@@ -76,7 +76,6 @@ los problemas van a `INFORME.md`.
   los derivados.
 - `modelo/` — física y generador sintético. Solo se modifica en la Tarea 0.3 o para corregir un error
   con su prueba.
-- `app.py` e `interfaz/` — app Streamlit heredada; no se toca.
 - `python servidor.py` sirve la API y `frontend/dist` en `http://localhost:8000`.
 
 ## Comandos
@@ -104,7 +103,6 @@ Siempre primero, en cada shell: `source scripts/entorno.sh` (Node 22 con nvm, `C
 | Revisión visual en otro idioma | `bash scripts/revision_visual.sh <ruta> <nombre> <es\|en\|qu>` |
 | Claves de texto de la API (`api/claves.json`) | `python scripts/exportar_claves_api.py` |
 | Kichwa: exportar / importar el CSV de revisión | `node scripts/traducciones_csv.mjs exportar` · `node scripts/traducciones_csv.mjs importar docs/traduccion-kichwa.csv` |
-| App heredada | `python app.py` (Streamlit, http://localhost:8501) |
 
 ## Convenciones
 
@@ -136,5 +134,5 @@ ejecuta siempre.
 ## Prohibido sin pedir permiso
 
 Descargar granulos de NISAR sin el aviso del usuario de que su credencial existe; crear cuentas; escribir,
-imprimir o versionar credenciales; versionar HDF5 crudos; borrar `data/`, `modelo/`, `app.py`
+imprimir o versionar credenciales; versionar HDF5 crudos; borrar `data/`, `modelo/`
 o la historia de git; `git push`; instalar paquetes del sistema; modificar la rama `main`.

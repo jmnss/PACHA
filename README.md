@@ -71,7 +71,7 @@ cd frontend && npx playwright test              # end to end (needs CHROME_PATH 
 
 ## Legacy Streamlit app
 
-The original app still works and is not modified: `python app.py` (http://localhost:8501). Its README is in [docs/README-streamlit.md](docs/README-streamlit.md).
+The original Streamlit app was retired on 2026-11-14. Its last state is kept in the `legado-streamlit` tag (`git checkout legado-streamlit`).
 
 ## Submission requirements
 

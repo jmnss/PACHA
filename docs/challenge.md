@@ -104,6 +104,8 @@ la búsqueda de metadatos, no.
 
 ### Referencias que ya usa el código (no verificadas como recursos oficiales del challenge)
 
+Las referencias a `app.py` apuntan a la app Streamlit heredada, retirada el 2026-11-14 (etiqueta `legado-streamlit`).
+
 | Referencia en el código | Para qué | Estado |
 |---|---|---|
 | ASF SearchAPI `https://api.daac.asf.alaska.edu/services/search/param` con `dataset=NISAR` (`modelo/nisar.py:1550`) | Búsqueda de productos NISAR | `dataset=NISAR` y `processingLevel` verificados con `asf_search` (`docs/nisar-verificado.md` §5); la URL exacta de la API, pendiente |

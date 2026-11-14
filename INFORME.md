@@ -55,6 +55,16 @@ Streamlit heredada (`app.py`, regla de CLAUDE.md), los specs, planes, capturas e
 claves de `localStorage` (`nisar.idioma`, `nisar.mapaBase`, `nisar.simulador.bitacora`: cambiarlas borraría las
 preferencias y la bitácora de quien ya usó la app) ni la carpeta local del repo. El nombre es el mismo en es/en/qu.
 
+**Historia recuperada y limpieza (2026-11-14, con permiso del usuario).** La historia anterior (193 commits) estaba en la
+carpeta vieja `../modelo clima/`; se unió a `main` con un merge que conserva el árbol actual (sin reescribir ni forzar el
+push), así que los hashes citados en este informe vuelven a existir. Se recuperaron de esa historia `.claude/` (Taste
+Skill, que necesita `revision_visual.sh`), `.taste-skill/`, `.env.example` y `.vscode/`; `.gitignore` combina los dos.
+Se retiró lo heredado sin uso (etiqueta `legado-streamlit` antes del borrado): `app.py`, `interfaz/`, `archivo/`,
+`AGENTS.md`, `docs/README-streamlit.md`, `docs/capturas-actuales/` (11 MB) y las dependencias `streamlit`, `altair`,
+`folium` y `streamlit-folium`. Se conservan `modelo/` (lo usa la app), `data/terreno/` (relieve del Simulador) y la
+documentación científica (`docs/*.tex`, que aún cita `app.py`). Pendiente del equipo: Validación (`resultados/`,
+`docs/teoria_particion_espacial.*`). `datos_imagenes/` (material del equipo) queda fuera de git.
+
 ## Publicación de los bloques A, B y C (2026-11-08)
 
 Publicado en Pages con `13e7c08` (corrida 42519336402, 225 respuestas precalculadas). La corrida anterior falló en el

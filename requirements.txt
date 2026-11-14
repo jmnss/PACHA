@@ -4,10 +4,6 @@ PyYAML
 geopandas
 shapely
 pyproj
-streamlit
-altair
-folium
-streamlit-folium
 Pillow
 requests
 h5py
