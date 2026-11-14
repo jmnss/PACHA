@@ -1,12 +1,11 @@
-# INFORME — Migración a React
+# INFORME — PACHA (antes «NISAR · Ecuador»)
 
-Estado: **migración completa (bloques 0 a 5) más Simulador, Laboratorio, Recorrido, Fundamentos e Impacto,
-e idioma (es/en/kichwa) y accesibilidad implementados** (ver «Idioma y accesibilidad (2026-11-05)»). Kichwa:
-borrador sin validar (0 de 923 claves). Prueba con lector de pantalla: pendiente.
-Verificación (corrida el 2026-11-06 tras la revisión final del despliegue): pytest 291 (+2 omitidas por diseño), unittest 13 OK,
-vitest 573 (58 archivos), lint OK, build OK, Playwright 83/83 (con una intermitencia conocida, ver «Despliegue en
-GitHub Pages»), Playwright de Pages 11/11.
-Última actualización: 2026-11-06
+Estado (2026-11-14): app publicada en `https://jmnss.github.io/PACHA/` (demo sintético + contexto real de NASA POWER);
+fase de datos reales empezada (reglas, verificación de NISAR, catálogo); el equipo eligió **embalses y lluvia +
+incendios**; primera entrega del equipo (Mazar) evaluada. **Resumen para retomar: `docs/retomar.md`.**
+Verificación (2026-11-14): pytest 382 (+2 omitidas), unittest OK, vitest 624, lint OK, build OK, Playwright 93/93,
+Playwright de Pages 11/11.
+Última actualización: 2026-11-14
 
 Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea. Las secciones
 fechadas más abajo son históricas; **la lista vigente de pendientes es «Pendientes vigentes»**.
@@ -64,6 +63,12 @@ Se retiró lo heredado sin uso (etiqueta `legado-streamlit` antes del borrado): 
 `folium` y `streamlit-folium`. Se conservan `modelo/` (lo usa la app), `data/terreno/` (relieve del Simulador) y la
 documentación científica (`docs/*.tex`, que aún cita `app.py`). Pendiente del equipo: Validación (`resultados/`,
 `docs/teoria_particion_espacial.*`). `datos_imagenes/` (material del equipo) queda fuera de git.
+
+**Datos del equipo · Mazar (2026-11-14, rama `embalses`):** evaluados en `docs/datos-equipo-embalses.md`. El stack
+(HH, HV, HH−HV en dB; UTM 17S, 10 m) y la máscara comparten rejilla; la máscara marca ~110 km² (~20 % de la zona con
+datos) como agua, mucho más que el embalse, y no trae fecha ni granulo; `Tabla2.csv` es una tabla de atributos sin
+geometría. Pendiente de la respuesta del equipo sobre el formato. `tifffile` se usó solo para inspeccionar (la
+máscara de 2 bits se decodificó a mano: `tifffile` pide `imagecodecs` para eso).
 
 ## Publicación de los bloques A, B y C (2026-11-08)
 

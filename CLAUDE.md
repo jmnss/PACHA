@@ -19,6 +19,12 @@ demostración sintéticos** (`scripts/generar_datos_demo.py`) detrás de una cap
 el proveedor real se construye según la sección «Integración de datos reales» del plan. La app será **mixta**:
 cada capa dice de dónde sale.
 
+**Al empezar una sesión, lee primero `docs/retomar.md`** (estado, decisiones y pendientes en una página).
+
+**Foco actual (decisión del equipo, 2026-11-14):** embalses y lluvia + incendios, en una página con dos opciones;
+el equipo segmenta el agua y la app solo lee sus resultados (`docs/datos-equipo-embalses.md`). Se trabaja en la rama
+`embalses`; el material crudo del equipo va en `datos_imagenes/` (fuera de git).
+
 Documentos que mandan: `docs/challenge.md` (qué lograr), `docs/plan-migracion.md` (tareas, orden,
 alcance de la noche, contratos), `docs/diseno.md` (visual), `docs/contrato-datos.md` (datos). El avance y
 los problemas van a `INFORME.md`.
