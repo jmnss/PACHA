@@ -625,7 +625,7 @@ Lo que falló en esta prueba: nada que bloquee. Lo que queda sin demostrar está
 
 ## Fase 1, Tarea 2: cajas y semillas de los sitios (2026-11-14)
 - Mazar: caja y semilla salen de `Clas_Super.tif` (la caja WGS84 de la máscara coincide con la inicial; semilla = píxel de agua más cercano al centroide de la región de agua más grande, 5,4 km²).
-- Daule-Peripa y Casitagua: caja y semilla siguen **aproximadas** (sin verificar). Pendiente (Tarea 6): pintar el DEM y comprobar que el vaso cae dentro de la caja; si no, ampliarla.
+- Daule-Peripa y Casitagua: caja y semilla siguen **aproximadas** (sin verificar). Resuelto en la Tarea 6 (ver «Fase 1, Tarea 6» más abajo).
 
 ## Fase 1, Tarea 4: relieve Copernicus (2026-11-14)
 - Formato de URL verificado con HEAD (200, 2026-11-14): `https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_S03_00_W079_00_DEM/Copernicus_DSM_COG_10_S03_00_W079_00_DEM.tif`. Lectura por ventana vía `/vsicurl/` comprobada con la caja de Mazar (972 × 756 px, 1638–3829 m); no se descargó ninguna tesela.
@@ -634,7 +634,9 @@ Lo que falló en esta prueba: nada que bloquee. Lo que queda sin demostrar está
 ## Fase 1, Tarea 6: derivados reales versionados (2026-11-14)
 Salida de `python scripts/preparar_embalses.py --sitio todos` (desde cero, tras borrar `data/embalses` y `data/incendios`):
 - **Mazar** (`data/embalses/mazar/`): 2026-10-29, agua **5,43 km²** (máscara `Mazar_CS1029.tif`, copiada a `datos_imagenes/mazar/20261029/mascara.tif`); procedencia **incompleta** (falta `procedencia.json`). Relieve, curva y contorno: sí. 0,88 MB.
-- **Daule-Peripa** (`data/embalses/daule-peripa/`): sin entregas del equipo; solo relieve (80 m), curva y contorno del DEM. 0,38 MB. Caja y semilla ajustadas tras pintar el DEM: caja `[-79.55, -1.14, -79.30, -0.75]`, semilla `[-0,9127, -79,4430]`. El agua del DEM (≈135 km², cota de semilla 60 m) cae en el valle del vaso; la caja inicial dejaba escapar el relleno a la llanura al suroeste.
+- **Daule-Peripa** (`data/embalses/daule-peripa/`): sin entregas del equipo; solo relieve (50 m), curva y contorno del DEM. 0,38 MB. Caja y semilla ajustadas tras pintar el DEM: caja `[-79.55, -1.14, -79.30, -0.75]`, semilla `[-0,9127, -79,4430]`. La región de agua del DEM cae en el valle del vaso y mide **52,6 km²** (21 055 px × (50 m)², medido desempaquetando `agua_dem` de `dem.npz` con `resolucion_m` de `sitio.json`; la cifra no está en `sitio.json`). **No es la superficie del embalse**: es solo la región rellenada por el DEM a la cota de la semilla (60 m, elegida a ojo sobre el valle; la mediana de las celdas de esa región, que usa `curva.json` como `cota_dem_m`, es 51,15 m, de ahí la diferencia). La extensión real del embalse es mayor. La caja inicial dejaba escapar el relleno a la llanura al suroeste.
 - **Casitagua** (`data/incendios/casitagua/`): sin entregas; solo relieve (cotas 2458–3583 m, caja sensata) y contorno. 0,31 MB. El «agua del DEM» de este sitio no significa nada (la semilla queda en una cuenca baja y el relleno cubre casi toda la caja): no se usa para incendios.
 - **Tamaño total**: 1 584 599 bytes (≈1,58 MB) de 10 MB; no hizo falta bajar `lado_max`.
 - **Falta del equipo**: fecha de la primera máscara de Mazar (`Clas_Super.tif`, no copiada); `procedencia.json` de todas las fechas; stack del 29 oct (`Mazar_Stack.tif`, fecha sin confirmar); máscaras de Daule-Peripa; Casitagua antes y después del 17 sep 2026.
+- **Mazar, agua del DEM vs equipo**: el agua del DEM mide ≈6,27 km² (6 969 px × (30 m)²) frente a 5,43 km² de la máscara del equipo; son magnitudes distintas (DEM de otra fecha/nivel frente a una fecha de radar) y no se mezclan.
+- **Incendios**: `dem`, `curva` y el agua del DEM se ignoran para sitios con `tipo == incendio` (Casitagua) y no se muestran.
