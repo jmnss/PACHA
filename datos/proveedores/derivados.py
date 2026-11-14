@@ -87,7 +87,7 @@ class _Sitio:
 
     @property
     def id_escenario(self) -> str:
-        return f"{CARPETAS[self.tipo]}-{self.json['sitio']}"
+        return f"{self.tipo}-{self.json['sitio']}"
 
     def fecha(self, id: str) -> _Fecha:
         for f in self.fechas:
