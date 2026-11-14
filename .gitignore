@@ -1,9 +1,28 @@
+# Python
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.venv/
 .env
+
+# Node y compilaciones del frontend
 node_modules/
-# Datos NISAR crudos: nunca se versionan (CLAUDE.md, regla 5)
+frontend/dist/
+frontend/dist-pages/
+frontend/.precalculado/
+frontend/.cache-pyodide/
+test-results/
+playwright-report/
+
+# Herramientas locales
+.taste-skill/**/inspect/
+.superpowers/
+.inicio_noche
+
+# Datos que no se versionan
+data/demo/
+# Datos NISAR crudos y material del equipo sin procesar (CLAUDE.md, regla 5)
 data/nisar/crudo/
+datos_imagenes/
 *.h5
 *.netrc
