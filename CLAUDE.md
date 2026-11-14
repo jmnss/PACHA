@@ -65,8 +65,9 @@ los problemas van a `INFORME.md`.
 
 ## Arquitectura
 
-- `datos/` — contrato de datos (`contrato.py`) y proveedores: `demo` (sintético, hoy) y `real`
-  (esqueleto). Se elige con `NISAR_PROVEEDOR=demo|real` (por defecto `demo`).
+- `datos/` — contrato de datos (`contrato.py`) y proveedores: `demo` (sintético), `derivados`
+  (lo del equipo en `data/embalses|incendios/`), `mixto` (derivados reales con procedencia completa, sustitutos sintéticos
+  donde aún no los hay, y el demo) y `real` (esqueleto). Se elige con `NISAR_PROVEEDOR=demo|real|mixto` (por defecto `mixto`).
 - `api/` — FastAPI sin estado. **Solo habla con el contrato de `datos/`, nunca con `modelo/` directamente**
   (excepto `/api/contexto`, que usa los datos reales complementarios de `modelo/estaciones.py`).
 - `frontend/` — React 18 + Vite + TypeScript. Estado en la URL y en el navegador; sin cuentas.

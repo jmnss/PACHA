@@ -8,4 +8,4 @@ if [ -s "$NVM_DIR/nvm.sh" ]; then
 fi
 CHROME_LOCAL=/home/jnavas/.cache/ms-playwright/chromium-1248/chrome-linux64/chrome
 [ -f "$CHROME_LOCAL" ] && export CHROME_PATH="$CHROME_LOCAL"
-export NISAR_PROVEEDOR="${NISAR_PROVEEDOR:-demo}"
+export NISAR_PROVEEDOR="${NISAR_PROVEEDOR:-mixto}"

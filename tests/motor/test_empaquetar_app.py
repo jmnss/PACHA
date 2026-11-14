@@ -26,6 +26,14 @@ def test_incluye_lo_necesario():
         assert esperado in nombres, esperado
 
 
+def test_zip_incluye_derivados():
+    nombres = set(_nombres())
+    for esperado in ("data/embalses/mazar/sitio.json", "data/embalses/mazar/dem.npz",
+                     "data/incendios/casitagua/sitio.json", "datos/proveedores/mixto.py"):
+        assert esperado in nombres, esperado
+    assert not any(n.startswith("data/crudo/") for n in nombres)
+
+
 def test_excluye_lo_que_no_hace_falta():
     for n in _nombres():
         assert not n.startswith("data/demo/") and not n.startswith("data/terreno/"), n

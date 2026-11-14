@@ -6,16 +6,19 @@ import pytest
 from datos.contrato import CapaRaster, CapacidadNoDisponible, Medicion, ProveedorDatos, ResultadoCambio
 from datos.proveedores.demo import ProveedorDemostracion
 from datos.proveedores.derivados import ProveedorDerivados
+from datos.proveedores.mixto import ProveedorMixto
 from tests.datos.derivados_prueba import escribir_sitio_prueba
 from tests.datos.proveedor_ficticio import ProveedorFicticio
 
 
-@pytest.fixture(scope="module", params=["demo", "ficticio", "derivados"])
+@pytest.fixture(scope="module", params=["demo", "ficticio", "derivados", "mixto"])
 def proveedor(request, tmp_path_factory):
     if request.param == "derivados":
         raiz = tmp_path_factory.mktemp("derivados")
         escribir_sitio_prueba(raiz)
         return ProveedorDerivados(raiz)
+    if request.param == "mixto":
+        return ProveedorMixto()
     return ProveedorDemostracion() if request.param == "demo" else ProveedorFicticio()
 
 
@@ -24,7 +27,7 @@ def _casos(proveedor):
     for e in proveedor.escenarios():
         ids = [a.id for a in e.adquisiciones]
         pol = e.polarizaciones[0] if e.polarizaciones else None
-        if proveedor.nombre() == "demo":
+        if proveedor.nombre() in {"demo", "mixto"}:
             antes, despues = proveedor.intervalo_por_defecto(e.id)
         else:
             antes, despues = ids[0], ids[-1]
@@ -58,7 +61,7 @@ def test_origenes_validos_y_coherentes_con_el_proveedor(proveedor):
                 assert o.procedencia is not None
             if proveedor.nombre() == "demo":
                 assert o.tipo == "sintetico"
-            else:
+            elif proveedor.nombre() != "mixto":  # el mixto mezcla escenarios sintéticos (sustitutos, demo) y reales
                 assert o.tipo != "sintetico"
 
 
@@ -118,7 +121,7 @@ def test_medir_cuadrante_y_punto(proveedor):
 def test_simular_sin_capacidad_lanza_CapacidadNoDisponible(proveedor):
     if proveedor.nombre() == "demo":
         pytest.skip("el demo sí ofrece simulación")
-    e = proveedor.escenarios()[0]
+    e = proveedor.escenarios()[0]  # en el mixto, un sustituto
     assert not (e.capacidades.simulacion or e.capacidades.modelo_continuo or e.capacidades.verdad_terreno)
     with pytest.raises(CapacidadNoDisponible):
         proveedor.simular(e.id, {})

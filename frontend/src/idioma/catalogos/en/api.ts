@@ -83,6 +83,7 @@ export const api: Record<keyof typeof esApi, string> = {
   'api.error.escenario_simulado_caducado': 'The requested resource does not exist: unknown or expired simulated scenario: {id}',
   'api.error.estacional_booleano': 'estacional must be true or false.',
   'api.error.fecha_despues_antes': 'The “after” date must be later than the “before” date.',
+  'api.error.segunda_fecha_comparar': 'A second date with provenance is needed to compare.',
   'api.error.fecha_sin_zona': '{nombre} must include a time zone.',
   'api.error.fechas_distintas': 'Choose two different dates.',
   'api.error.fechas_fuera_rango': 'The dates fall outside the allowed range.',

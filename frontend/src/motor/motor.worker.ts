@@ -42,7 +42,7 @@ async function cargar(motorUrl: string): Promise<void> {
 import os, sys
 sys.path.insert(0, '/app')
 os.chdir('/app')
-os.environ['NISAR_PROVEEDOR'] = 'demo'
+os.environ['NISAR_PROVEEDOR'] = 'mixto'
 import requests_navegador
 requests_navegador.registrar('${motorUrl}')
 import arranque

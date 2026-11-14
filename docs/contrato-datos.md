@@ -1,7 +1,7 @@
 # Contrato de datos
 
 Vive en `datos/contrato.py`. Es lo que la interfaz necesita, venga de donde venga: el proveedor `demo`
-(sintético) o el `real` (esqueleto). La API solo habla con estos modelos. Todo dato lleva su `Origen`.
+(sintético), el `mixto` (por defecto), o el `real` (esqueleto). La API solo habla con estos modelos. Todo dato lleva su `Origen`.
 
 Convenciones: `bbox = (oeste, sur, este, norte)` en WGS84, con oeste < este y sur < norte. Los instantes
 son UTC. Las rejillas son 2D `float32`, con `NaN` = sin dato (la API las cuantiza a uint8 para viajar).
@@ -42,6 +42,13 @@ Escenarios simulados (proveedor demo): `simular(id, parametros)` devuelve un `Es
 `escenario` lo resuelven mientras esté en el registro (acotado a 32; luego `NoEncontrado`). Parámetros vacíos o
 iguales a los de demostración devuelven el id base. Con `lat` y `lon` coloca un punto del mapa.
 `fotogramas` sobre un id derivado exige `parametros` vacíos.
+
+Proveedor `mixto` (`datos/proveedores/mixto.py`): por cada `sitio.json` de `data/embalses/*` y `data/incendios/*`
+sirve el escenario real (`ProveedorDerivados`, `origen.clase == "nisar"`) si el sitio tiene fechas con procedencia
+completa; si no, un sustituto sintético (`origen.tipo == "sintetico"`). Nunca mezcla fechas reales y sintéticas en un
+escenario (Regla 7). Después van todos los escenarios demo. Los métodos opcionales (`tipos`, `intervalo_por_defecto`,
+`serie_seleccion`, `serie_superficie`, `simular`, `fotogramas`) se delegan al proveedor dueño del id; si no los
+ofrece, `CapacidadNoDisponible`. `tipos()` es el del demo.
 
 Excepciones: `DatosRealesNoDisponibles` (el proveedor real aún no está integrado) y
 `CapacidadNoDisponible` (el proveedor no ofrece esa operación). Ambas derivan de `RuntimeError`.

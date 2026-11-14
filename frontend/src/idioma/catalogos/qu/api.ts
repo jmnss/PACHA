@@ -83,6 +83,7 @@ export const api: Record<keyof typeof esApi, string> = {
   'api.error.escenario_simulado_caducado': 'Mañashka recurso mana tiyanchu: mana riksishka o tukurishka simulashka escenario: {id}',
   'api.error.estacional_booleano': 'estacional ari o mana kana kan.',
   'api.error.fecha_despues_antes': '«Washa» punchaka «ñawpa» punchamanta washaman kana kan.',
+  'api.error.segunda_fecha_comparar': 'Tupachinapaq ishkay kaq punchata charina kan, imamanta shamushkatapash rikuchishpa.',
   'api.error.fecha_sin_zona': '{nombre}-pi pacha zona kana kan.',
   'api.error.fechas_distintas': 'Ishkay mana kikin punchakunata akllay.',
   'api.error.fechas_fuera_rango': 'Punchakuna ushashka rangomanta hawapi kan.',

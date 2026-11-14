@@ -81,6 +81,7 @@ export const api = {
   'api.error.escenario_simulado_caducado': 'No existe el recurso pedido: Escenario simulado desconocido o caducado: {id}',
   'api.error.estacional_booleano': 'estacional debe ser verdadero o falso.',
   'api.error.fecha_despues_antes': 'La fecha \'después\' debe ser posterior a la fecha \'antes\'.',
+  'api.error.segunda_fecha_comparar': 'Hace falta una segunda fecha con procedencia para comparar.',
   'api.error.fecha_sin_zona': '{nombre} debe llevar zona horaria.',
   'api.error.fechas_distintas': 'Elige dos fechas distintas.',
   'api.error.fechas_fuera_rango': 'Las fechas quedan fuera del rango admitido.',

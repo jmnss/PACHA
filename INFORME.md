@@ -644,3 +644,10 @@ Salida de `python scripts/preparar_embalses.py --sitio todos` (desde cero, tras 
 ## Fase 1, Tarea 8: sustitutos sintéticos (2026-11-14)
 
 `sim-baja` del sustituto de embalse es un retroceso ilustrativo del agua desde la orilla de `agua_dem` (70 % de la superficie del DEM en la cota), no batimetría: el DEM de Copernicus es plano sobre el agua y no hay relieve bajo ella. `sim-alta` (cota + 2 m) siempre contiene `agua_dem` y `sim-baja` es subconjunto de `sim-alta`. Todo es sintético.
+
+## Fase 1, Tarea 9: proveedor mixto por defecto (2026-11-14)
+- `NISAR_PROVEEDOR` pasa a `demo|real|mixto`, por defecto `mixto` (también en `scripts/entorno.sh` y en el worker del motor del navegador). Hoy ningún sitio tiene procedencia completa: el mixto sirve los tres sustitutos sintéticos (`embalse-mazar`, `embalse-daule-peripa`, `incendio-casitagua`) más todos los escenarios demo.
+- El zip del motor incluye `data/embalses/**` y `data/incendios/**` (nunca `data/crudo/`). Sitio de Pages: **47 MB** (antes 42 MB).
+- Verificación: pytest 475 (+4 omitidas), unittest 13 OK, vitest 624, lint y build OK, Playwright normal 93/93, `construir_pages.sh` «Listo», e2e de Pages 11/11.
+- Ningún e2e dependía de que el proveedor por defecto fuera `demo`; sí lo hacía `test_por_defecto_es_demo` (pytest), ahora `test_demo_se_elige_por_variable`.
+- Arrastre de la Tarea 7: la clave `api.error.segunda_fecha_comparar` (en `datos/claves.py`) no estaba en los catálogos del frontend ni en el CSV de kichwa; añadida a es/en/qu (kichwa, borrador sin validar) y `docs/traduccion-kichwa.csv` re-exportado.

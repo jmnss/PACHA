@@ -23,6 +23,10 @@ def _archivos(raiz: Path) -> dict[str, Path]:
                 salida[f.relative_to(raiz).as_posix()] = f
     for nombre in DATOS:
         salida[nombre] = raiz / nombre
+    for carpeta in ("data/embalses", "data/incendios"):  # derivados del equipo (nunca data/crudo/)
+        for f in (raiz / carpeta).rglob("*"):
+            if f.is_file():
+                salida[f.relative_to(raiz).as_posix()] = f
     for f in (raiz / "frontend" / "src" / "motor" / "python").glob("*.py"):
         salida[f.name] = f
     return salida

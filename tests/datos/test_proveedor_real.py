@@ -7,8 +7,8 @@ from datos.proveedores.real import MENSAJE, ProveedorReal
 from datos.seleccion import obtener_proveedor
 
 
-def test_por_defecto_es_demo(monkeypatch):
-    monkeypatch.delenv("NISAR_PROVEEDOR", raising=False)
+def test_demo_se_elige_por_variable(monkeypatch):
+    monkeypatch.setenv("NISAR_PROVEEDOR", "demo")
     p = obtener_proveedor()
     assert isinstance(p, ProveedorDemostracion)
     assert obtener_proveedor() is p  # misma instancia: conserva la caché del demo
