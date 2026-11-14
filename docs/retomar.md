@@ -34,14 +34,15 @@ Actualizado: 2026-11-14. Léelo antes que `INFORME.md` (que es largo e históric
 
 ## Pendientes (en orden)
 
-1. **Respuesta del equipo** sobre el formato (`docs/datos-equipo-embalses.md`): varias fechas por embalse, máscara
-   GeoTIFF + `procedencia.json`, máscara afinada al embalse.
-2. Con eso: brainstorming → spec → plan (Superpowers) de la página embalses/incendios, el proveedor mixto
-   (real donde haya, demo donde no) y `scripts/preparar_embalses.py`. Presupuesto de derivados: ~10 MB
-   (hoy `dist-pages` pesa 42 MB).
-3. Credencial de Earthdata (la crea el usuario) si hace falta leer granulos para incendios o para el stack.
-4. Equipo: licencia (MIT provisional), Validación (`resultados/`, `docs/teoria_particion_espacial.*`), requisitos
-   de entrega (`docs/entrega.md`, por hacer), kichwa sin validar.
+1. **Ejecutar los planes por fases** (spec `docs/superpowers/specs/2026-11-14-embalses-incendios-design.md`; planes en
+   `docs/superpowers/plans/2026-11-14-fase{1..5}-*.md`, pensados para que los ejecute Sonnet). Sitios: Mazar y
+   Daule-Peripa (embalses, comparados) y Casitagua (incendio del 17 sep 2026).
+2. **Del equipo:** fecha de la primera máscara de Mazar (`Clas_Super.tif`), `procedencia.json` de cada fecha, stack
+   HH/HV del 29 oct, entregas de Daule-Peripa y de Casitagua (antes y después del 17 sep 2026). Ver
+   `docs/datos-equipo-embalses.md`.
+3. Credencial de Earthdata (la crea el usuario) si hace falta leer granulos. Disco del usuario: ~10 GB como máximo.
+4. Equipo: licencia (MIT provisional), Validación, requisitos de entrega (`docs/entrega.md`, por hacer), kichwa sin
+   validar.
 
 ## Cómo correr
 

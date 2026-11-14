@@ -71,3 +71,18 @@ tabla de atributos.
 `data/embalses/<embalse>/` derivados pequeños: superficie de agua por fecha (km²), mapa de agua ganada o perdida
 entre fechas, HH/HV reducidos para el comparador y `procedencia.json`. El proveedor de datos los sirve con el contrato
 de siempre y `origen = nisar` (derivado por el equipo, con su método en el sello).
+
+## Segunda entrega (2026-11-14): Mazar supervisada, dos fechas
+
+| Archivo | Qué es | Evaluación |
+|---|---|---|
+| `Clas_Super.tif` | Máscara supervisada de la **primera fecha** (fecha sin declarar). Misma rejilla exacta que `Mazar_Stack.tif` (EPSG:32717, 10 m, 2088 × 2725), 2 bits, `GDAL_NODATA = 3`. | Buena. 14,2 km² de agua en la escena; el agua es ~6 dB más oscura en HH (−11,8 frente a −5,7 dB). El embalse sale continuo; quedan ~5 900 manchas < 1 ha (≈ 5,3 km²) en laderas → se mide dentro del contorno. El borde sin dato sigue como 0. |
+| `Mazar_CS1029.tif` | Máscara supervisada del **29 oct 2026** (dato del equipo). Llegó reproyectada a EPSG:32717 por el equipo (el original estaba en 18S), uint8 8 bits, 2075 × 2739, píxel **10,063 × 9,950 m** (no cuadrado), origen ~2 m del de la primera fecha. `GDAL_NODATA = 256` (inválido para uint8: ArcGIS; tratar como «sin nodata declarado»). | Buena y más limpia: 7,6 km² de agua en la escena. **No está en la misma rejilla**: el script la remuestrea (vecino más cercano) a la de referencia. No trae stack (HH/HV) ni procedencia. |
+
+Comparación en la rejilla de referencia, dentro de un contorno provisional (regiones ≥ 10 ha de ambas fechas,
+dilatadas 150 m): primera fecha 7,03 km², 29 oct 5,65 km²; persistente 4,43, ganada 1,22, perdida 2,60 km². La pérdida
+se concentra en las orillas y en la cola del río. **Hipótesis por comprobar**: descenso del nivel entre las dos fechas;
+parte de la diferencia puede deberse a que las dos segmentaciones no son idénticas.
+
+Falta del equipo: fecha y `procedencia.json` de ambas fechas, stack HH/HV del 29 oct (opcional pero útil para el
+comparador) y el borde sin dato marcado.
