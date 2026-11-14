@@ -1,0 +1,8 @@
+/* Laboratorio del radar (docs/diseno.md). Solo tokens. */
+.laboratorio { display: flex; flex-direction: column; gap: var(--gap); min-width: 0; }
+.laboratorio__rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--w-selector-min), 1fr)); gap: var(--gap); }
+.laboratorio__controles { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+.laboratorio__controles .campo { min-width: var(--w-selector-min); flex: 1; }
+.laboratorio__texto { margin: var(--space-4) 0 0; max-width: var(--w-lectura); color: var(--secondary); line-height: var(--lh-24); }
+.laboratorio__nota { margin: 0; color: var(--muted); font-size: var(--fs-13); line-height: var(--lh-16); }
+.laboratorio__aviso { margin: 0; color: var(--warning); font-size: var(--fs-13); }

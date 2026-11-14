@@ -1,0 +1,21 @@
+export const historias = {
+  'historias.indice.etiqueta': 'Historias',
+  'historias.indice.principal': '{etiqueta} · historia principal',
+  'historias.pregunta': 'Qué ve el radar cuando el agua sube o el bosque arde, y por qué.',
+  'historias.creditos':
+    'Créditos: clima de NASA POWER, límites de provincias de geoBoundaries (CC0), tipografía Public Sans (SIL OFL).',
+  'historias.cargando': 'Cargando la historia…',
+  'historias.sin_escenario.titulo': 'Esta historia no tiene escenario',
+  'historias.sin_escenario.texto': 'No hay un escenario de demostración asociado a esta historia.',
+  'historias.marca.ejemplo': 'En este escenario de demostración',
+  'historias.marca.pendiente': 'pendiente de confirmar con la documentación oficial',
+  'historias.pol.etiqueta': 'Polarización',
+  'historias.pol.recomendada': '{pol} · recomendada',
+  'historias.comparador.sin_pasadas': 'Este escenario no tiene dos pasadas distintas para comparar.',
+  'historias.comparador.calculando': 'Calculando el cambio entre las dos pasadas…',
+  'historias.comparador.actualizando': 'Actualizando…',
+  'historias.comparador.antes': 'Antes · {fecha}',
+  'historias.comparador.despues': 'Después · {fecha}',
+  'historias.comparador.nota_cinta': 'Una muesca por pasada del satélite. Mueve el cursor para elegir «después»; «antes» queda fija.',
+  'historias.comparador.ver_observatorio': 'Ver en el Observatorio',
+}

@@ -1,0 +1,18 @@
+import { comun } from './comun'
+import { fecha } from './fecha'
+import { exportar } from './exportar'
+import { fundamentos } from './fundamentos'
+import { recorrido } from './recorrido'
+import { estructura } from './estructura'
+import { historias } from './historias'
+import { laboratorio } from './laboratorio'
+import { idioma } from './idioma'
+import { observatorio } from './observatorio'
+import { origen } from './origen'
+import { piezas } from './piezas'
+import { api } from './api'
+import { titulos } from './titulos'
+import { a11y } from './a11y'
+import { simulador } from './simulador'
+
+export const es = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador, ...laboratorio, ...recorrido, ...fundamentos, ...api, ...titulos, ...a11y }

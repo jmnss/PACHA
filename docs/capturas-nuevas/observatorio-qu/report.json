@@ -1,0 +1,1523 @@
+{
+ "url": "http://localhost:8000/observatorio?idioma=qu",
+ "at": "2026-11-06T08:39:35.819Z",
+ "allow": [
+  "palette-terracotta"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 4,
+   "filled": [
+    0.84,
+    0.64,
+    0.28,
+    0.25
+   ],
+   "motion": {
+    "elements": 31,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 31,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 2737,
+     "screens": 3,
+     "words": 553,
+     "img": 0,
+     "video": 0,
+     "canvas": 1,
+     "svg": 20,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Observatorio",
+     "words": 1,
+     "chars": 12,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Public Sans",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.23,
+     "top": 93,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Observatorio",
+     "words": 1,
+     "lines": 1,
+     "size": 26,
+     "font": "Public Sans"
+    },
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Public Sans",
+       "share": 0.94,
+       "mono": false
+      },
+      {
+       "family": "Helvetica Neue",
+       "share": 0.06,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      20,
+      26
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Public Sans",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 500,
+      "tracking": 0,
+      "contrast": 8.2
+     },
+     "measureChars": 58,
+     "max": {
+      "size": 26,
+      "vw": 1.8,
+      "font": "Public Sans",
+      "text": "Observatorio"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.06,
+     "smallText": 37
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#171719",
+     "bodyBgHsl": {
+      "h": 240,
+      "s": 0.04,
+      "l": 0.09
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#131217",
+       "top": 262,
+       "hsl": {
+        "h": 252,
+        "s": 0.12,
+        "l": 0.08
+       }
+      },
+      {
+       "color": "#171719",
+       "top": 335,
+       "hsl": {
+        "h": 240,
+        "s": 0.04,
+        "l": 0.09
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#8a8c92",
+       "share": 0.46
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.25
+      },
+      {
+       "color": "#b4b4b8",
+       "share": 0.25
+      },
+      {
+       "color": "#f0a868",
+       "share": 0.04
+      }
+     ],
+     "button": {
+      "bg": "#131217",
+      "hsl": {
+       "h": 252,
+       "s": 0.12,
+       "l": 0.08
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 2,
+     "radius": "pill",
+     "height": 34,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Willaykunaman pasay",
+      "Tukuy Ecuadorta rikuy"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 14,
+     "hairlineSamples": [
+      "nav.riel 50px",
+      "div.banda-demo__fila 1390px",
+      "p.aviso-traduccion 1390px",
+      "div.pestanas 1326px",
+      "div.tarjeta__pie 876px"
+     ],
+     "outlinedBoxes": 6,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 8,
+     "boxRadius": 6,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 6,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 4,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 262
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.38
+     }
+    ],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 900,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "public sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 2737,
+    "margins": {
+     "left": 82,
+     "right": 53
+    },
+    "sections": [
+     {
+      "sel": "section.tarjeta.vista-mapa",
+      "tag": "section",
+      "top": 262,
+      "height": 831,
+      "words": 65,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 103,
+      "right": 461,
+      "textLeft": 103,
+      "textRight": 477,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 1117,
+      "height": 352,
+      "words": 37,
+      "media": 0,
+      "middle": 284,
+      "heading": {
+       "text": "Pasadakunapa pacha",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 461,
+      "textLeft": 103,
+      "textRight": 461,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Observatorio",
+      "size": 26,
+      "top": 93,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 1041,
+      "n": 5
+     },
+     {
+      "x": 82,
+      "n": 2
+     },
+     {
+      "x": 103,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 8,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.05,
+    "voidBox": {
+     "x": 420,
+     "y": 180,
+     "w": 1020,
+     "h": 60
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": true,
+    "ground": "#171719",
+    "sidebar": {
+     "w": 50,
+     "tag": "nav",
+     "links": 7,
+     "share": 0.03
+    },
+    "topbar": {
+     "h": 36
+    },
+    "canvas": {
+     "left": 32,
+     "right": -19997
+    },
+    "hero": {
+     "text": "Observatorio",
+     "words": 1,
+     "chars": 12,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Public Sans",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.23,
+     "top": 93,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 1,
+    "layout": {
+     "panels": 6,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 8,
+     "radii": [
+      [
+       6,
+       7
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 2,
+     "leftAligned": 0,
+     "figures": 5,
+     "tabularShare": 1,
+     "kpiMax": 13
+    },
+    "rows": {
+     "count": 4,
+     "median": 42
+    },
+    "chartHues": 1,
+    "placeholders": [],
+    "type": {
+     "under13": 0.44,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      20,
+      26
+     ]
+    },
+    "title": {
+     "text": "Observatorio",
+     "size": 26,
+     "top": 93
+    },
+    "colourShare": 0.062
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 4,
+   "filled": [
+    0.83,
+    0.87,
+    0.92,
+    0.82
+   ],
+   "motion": {
+    "elements": 31,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 31,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 4030,
+     "screens": 3.9,
+     "words": 553,
+     "img": 0,
+     "video": 0,
+     "canvas": 1,
+     "svg": 20,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Observatorio",
+     "words": 1,
+     "chars": 12,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Public Sans",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.23,
+     "top": 93,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Observatorio",
+     "words": 1,
+     "lines": 1,
+     "size": 26,
+     "font": "Public Sans"
+    },
+    "headings": [
+     {
+      "text": "Observatorio",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Public Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.23,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.61,
+      "top": 93,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Public Sans",
+       "share": 0.94,
+       "mono": false
+      },
+      {
+       "family": "Helvetica Neue",
+       "share": 0.06,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      20,
+      26
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Public Sans",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 500,
+      "tracking": 0,
+      "contrast": 8.2
+     },
+     "measureChars": 103,
+     "max": {
+      "size": 26,
+      "vw": 3.4,
+      "font": "Public Sans",
+      "text": "Observatorio"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.06,
+     "smallText": 37
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#171719",
+     "bodyBgHsl": {
+      "h": 240,
+      "s": 0.04,
+      "l": 0.09
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#131217",
+       "top": 344,
+       "hsl": {
+        "h": 252,
+        "s": 0.12,
+        "l": 0.08
+       }
+      },
+      {
+       "color": "#171719",
+       "top": 417,
+       "hsl": {
+        "h": 240,
+        "s": 0.04,
+        "l": 0.09
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#8a8c92",
+       "share": 0.46
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.25
+      },
+      {
+       "color": "#b4b4b8",
+       "share": 0.25
+      },
+      {
+       "color": "#f0a868",
+       "share": 0.04
+      }
+     ],
+     "button": {
+      "bg": "#131217",
+      "hsl": {
+       "h": 252,
+       "s": 0.12,
+       "l": 0.08
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 2,
+     "radius": "pill",
+     "height": 34,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Willaykunaman pasay",
+      "Tukuy Ecuadorta rikuy"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 14,
+     "hairlineSamples": [
+      "nav.riel 50px",
+      "div.banda-demo__fila 718px",
+      "p.aviso-traduccion 718px",
+      "div.pestanas 654px",
+      "div.tarjeta__pie 612px"
+     ],
+     "outlinedBoxes": 6,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 8,
+     "boxRadius": 6,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 6,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 4,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 1695
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.47
+     }
+    ],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 1024,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "public sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 4030,
+    "margins": {
+     "left": 82,
+     "right": 53
+    },
+    "sections": [
+     {
+      "sel": "header.cabecera",
+      "tag": "header",
+      "top": 93,
+      "height": 166,
+      "words": 21,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Observatorio",
+       "size": 26,
+       "tag": "h1"
+      },
+      "left": 82,
+      "right": 208,
+      "textLeft": 82,
+      "textRight": 244,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.observatorio__principal",
+      "tag": "div",
+      "top": 344,
+      "height": 1327,
+      "words": 102,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 103,
+      "right": 53,
+      "textLeft": 103,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 1695,
+      "height": 1114,
+      "words": 140,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Modelopa parámetroskuna",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 53,
+      "textLeft": 103,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 3037,
+      "height": 354,
+      "words": 69,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Ishkay pasada chawpipi tikray",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 53,
+      "textLeft": 103,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 3415,
+      "height": 583,
+      "words": 62,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Pachapa tiyashka pacha",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 53,
+      "textLeft": 103,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Observatorio",
+      "size": 26,
+      "top": 93,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 99,
+      "n": 6
+     },
+     {
+      "x": 82,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 8,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": true,
+    "ground": "#171719",
+    "sidebar": {
+     "w": 50,
+     "tag": "nav",
+     "links": 7,
+     "share": 0.07
+    },
+    "topbar": {
+     "h": 36
+    },
+    "canvas": {
+     "left": 32,
+     "right": -18943
+    },
+    "hero": {
+     "text": "Observatorio",
+     "words": 1,
+     "chars": 12,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Public Sans",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.23,
+     "top": 93,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 1,
+    "layout": {
+     "panels": 6,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 8,
+     "radii": [
+      [
+       6,
+       7
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 2,
+     "leftAligned": 0,
+     "figures": 5,
+     "tabularShare": 1,
+     "kpiMax": 13
+    },
+    "rows": {
+     "count": 4,
+     "median": 42
+    },
+    "chartHues": 1,
+    "placeholders": [],
+    "type": {
+     "under13": 0.44,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      20,
+      26
+     ]
+    },
+    "title": {
+     "text": "Observatorio",
+     "size": 26,
+     "top": 93
+    },
+    "colourShare": 0.081
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 4,
+   "filled": [
+    0.79,
+    0.84,
+    0.7,
+    0.93
+   ],
+   "motion": {
+    "elements": 31,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 31,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 3315,
+     "screens": 3.9,
+     "words": 421,
+     "img": 0,
+     "video": 0,
+     "canvas": 1,
+     "svg": 19,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Observatorio",
+     "words": 1,
+     "chars": 12,
+     "lines": 1,
+     "size": 22,
+     "vw": 5.6,
+     "font": "Public Sans",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.27,
+     "top": 106,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Observatorio",
+     "words": 1,
+     "lines": 1,
+     "size": 22,
+     "font": "Public Sans"
+    },
+    "headings": [
+     {
+      "text": "Observatorio",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "Public Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.27,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 106,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Public Sans",
+       "share": 0.92,
+       "mono": false
+      },
+      {
+       "family": "Helvetica Neue",
+       "share": 0.08,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      20,
+      22
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Public Sans",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 500,
+      "tracking": 0,
+      "contrast": 8.2
+     },
+     "measureChars": 54,
+     "max": {
+      "size": 22,
+      "vw": 5.6,
+      "font": "Public Sans",
+      "text": "Observatorio"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.07,
+     "smallText": 21
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#171719",
+     "bodyBgHsl": {
+      "h": 240,
+      "s": 0.04,
+      "l": 0.09
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#131217",
+       "top": 455,
+       "hsl": {
+        "h": 252,
+        "s": 0.12,
+        "l": 0.08
+       }
+      },
+      {
+       "color": "#171719",
+       "top": 648,
+       "hsl": {
+        "h": 240,
+        "s": 0.04,
+        "l": 0.09
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#8a8c92",
+       "share": 0.42
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.28
+      },
+      {
+       "color": "#b4b4b8",
+       "share": 0.25
+      },
+      {
+       "color": "#f0a868",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#131217",
+      "hsl": {
+       "h": 252,
+       "s": 0.12,
+       "l": 0.08
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 5,
+     "inHero": 3,
+     "radius": "pill",
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Willaykunaman pasay",
+      "Modelopa parámetroskuna",
+      "Tukuy Ecuadorta rikuy"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 12,
+     "hairlineSamples": [
+      "nav.riel 390px",
+      "div.banda-demo__fila 390px",
+      "p.aviso-traduccion 390px",
+      "div.pestanas 358px",
+      "div.tarjeta__pie 316px"
+     ],
+     "outlinedBoxes": 5,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 7,
+     "boxRadius": 6,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 6,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.19
+     }
+    ],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 56,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "public sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 3315,
+    "margins": {
+     "left": 16,
+     "right": 16
+    },
+    "sections": [
+     {
+      "sel": "header.cabecera",
+      "tag": "header",
+      "top": 106,
+      "height": 272,
+      "words": 21,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Observatorio",
+       "size": 22,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta.vista-mapa",
+      "tag": "section",
+      "top": 455,
+      "height": 846,
+      "words": 57,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 37,
+      "right": 37,
+      "textLeft": 37,
+      "textRight": 43,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 1325,
+      "height": 552,
+      "words": 37,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Pasadakunapa pacha",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 37,
+      "right": 37,
+      "textLeft": 37,
+      "textRight": 37,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "aside.observatorio__lado",
+      "tag": "aside",
+      "top": 1901,
+      "height": 1342,
+      "words": 215,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Ishkay pasada chawpipi tikray",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 33,
+      "right": 37,
+      "textLeft": 33,
+      "textRight": 37,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Observatorio",
+      "size": 22,
+      "top": 106,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 33,
+      "n": 5
+     },
+     {
+      "x": 16,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 7,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#171719",
+    "sidebar": null,
+    "topbar": {
+     "h": 49
+    },
+    "canvas": {
+     "left": 16,
+     "right": -9276
+    },
+    "hero": {
+     "text": "Observatorio",
+     "words": 1,
+     "chars": 12,
+     "lines": 1,
+     "size": 22,
+     "vw": 5.6,
+     "font": "Public Sans",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.27,
+     "top": 106,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 1,
+    "layout": {
+     "panels": 5,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 6,
+     "radii": [
+      [
+       6,
+       6
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 2,
+     "leftAligned": 0,
+     "figures": 2,
+     "tabularShare": 1,
+     "kpiMax": 14
+    },
+    "rows": {
+     "count": 5,
+     "median": 82
+    },
+    "chartHues": 1,
+    "placeholders": [],
+    "type": {
+     "under13": 0.42,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      20,
+      22
+     ]
+    },
+    "title": {
+     "text": "Observatorio",
+     "size": 22,
+     "top": 106
+    },
+    "colourShare": 0.006
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "below-fold",
+   "width": 1440,
+   "message": "Only 2 of 6 blocks start on the first 1440px screen.",
+   "fix": "Every block the brief names shows its header and first rows on the first desktop screen: size the headline block to its question, cap long lists with \"View all\", and put time-sensitive blocks before long tables."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/observatorio-qu/desktop-fold.jpg",
+   "pages": [
+    "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/observatorio-qu/desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/observatorio-qu/tablet-fold.jpg",
+   "pages": [
+    "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/observatorio-qu/tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/observatorio-qu/mobile-fold.jpg",
+   "pages": [
+    "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/observatorio-qu/mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

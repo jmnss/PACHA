@@ -1,0 +1,23 @@
+/* Cinta de pasadas y reproductor (docs/diseno.md §8). Solo tokens. */
+.cinta { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+.cinta--vacia { color: var(--muted); font-size: var(--fs-12); line-height: var(--lh-16); }
+.cinta__pista {
+  position: relative; height: var(--h-control); cursor: pointer; touch-action: pan-y;
+  border-bottom: 1px solid var(--control); outline-offset: var(--space-1);
+}
+.cinta__temporada { position: absolute; top: 0; bottom: 0; background: var(--raised); }
+.cinta__muesca { position: absolute; bottom: 0; height: 40%; width: 1px; background: var(--muted); }
+.cinta__muesca--activa { height: 70%; background: var(--accent); }
+.cinta__evento { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--text); }
+.cinta__cursor { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--accent); }
+.cinta__fechas {
+  display: flex; justify-content: space-between; gap: var(--space-4);
+  font-size: var(--fs-12); line-height: var(--lh-16); color: var(--muted); font-variant-numeric: tabular-nums;
+}
+.cinta__fechas--evento span:first-child { color: var(--text); }
+
+.reproductor { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-4); }
+.reproductor__botones { display: flex; align-items: center; gap: var(--space-1); }
+.reproductor__ajustes { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.reproductor__motivo { flex-basis: 100%; margin: 0; font-size: var(--fs-12); line-height: var(--lh-16); color: var(--secondary); }
+.galeria-cinta { display: flex; flex-direction: column; gap: var(--space-4); }

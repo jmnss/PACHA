@@ -1,0 +1,38 @@
+import { useEffect, useId, useMemo, useRef } from 'react'
+import type { CapaDto } from '../../api/consultas'
+import { decodificarRejilla } from '../../api/rejilla'
+import { Leyenda } from '../../diseno/Leyenda'
+import { colorear } from '../../diseno/rampas'
+import { SelloOrigen } from '../../diseno/SelloOrigen'
+import { resumenLienzo } from '../../diseno/resumenLienzo'
+import { TextoApi } from '../../idioma/TextoApi'
+import { useT } from '../../idioma/useT'
+import { estiloDeCapa } from '../observatorio/derivados'
+
+/** Un panel del radar simulado: la rejilla de la API con su rampa, leyenda y sello de origen. */
+export function PanelRadar({ capa, titulo, propio = false }: { capa: CapaDto; titulo: string; /** El título ya viene traducido por la interfaz (no es texto de la API). */ propio?: boolean }) {
+  const { t, textoApi, formatoNumero } = useT()
+  const idResumen = useId()
+  const langTitulo = propio || textoApi(titulo).traducido ? undefined : 'es'
+  const lienzo = useRef<HTMLCanvasElement>(null)
+  const estilo = useMemo(() => estiloDeCapa(capa), [capa])
+  const px = useMemo(() => colorear(decodificarRejilla(capa.rejilla), estilo.rampa, estilo.categorias, capa.rejilla.columnas), [capa, estilo])
+  useEffect(() => {
+    const c = lienzo.current
+    if (!c) return
+    c.width = px.width
+    c.height = px.height
+    c.getContext('2d')?.putImageData(px, 0, 0)
+  }, [px])
+  return (
+    <figure className="panel-radar">
+      <figcaption className="panel-radar__titulo">{propio ? titulo : <TextoApi texto={titulo} />}</figcaption>
+      <canvas ref={lienzo} className="panel-radar__lienzo" role="img" aria-label={titulo} aria-describedby={idResumen} lang={langTitulo} />
+      <p id={idResumen} className="solo-lectores" lang={langTitulo}>
+        {resumenLienzo(titulo, { rejilla: capa.rejilla, origen: capa.origen, unidad: capa.unidad, categorica: capa.paleta === 'categorias' || !!estilo.categorias }, t, formatoNumero)}
+      </p>
+      <Leyenda paleta={capa.paleta} vmin={capa.rejilla.vmin} vmax={capa.rejilla.vmax} unidad={capa.unidad} leyenda={capa.leyenda} variable={capa.variable} />
+      <SelloOrigen origen={capa.origen} />
+    </figure>
+  )
+}

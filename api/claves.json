@@ -1,0 +1,2274 @@
+[
+  {
+    "clave": "api.categoria.area_quemada_detectada.1",
+    "es": "Severidad moderada (−2,5 a −4,5 dB)"
+  },
+  {
+    "clave": "api.categoria.area_quemada_detectada.2",
+    "es": "Severidad alta (< −4,5 dB)"
+  },
+  {
+    "clave": "api.categoria.cambio_de_inundacion.1",
+    "es": "Nueva inundación"
+  },
+  {
+    "clave": "api.categoria.cambio_de_inundacion.2",
+    "es": "Pérdida de inundación"
+  },
+  {
+    "clave": "api.categoria.cambio_de_inundacion.3",
+    "es": "Inundación persistente"
+  },
+  {
+    "clave": "api.categoria.cambio_del_frente.1",
+    "es": "Hielo nuevo (avance)"
+  },
+  {
+    "clave": "api.categoria.cambio_del_frente.2",
+    "es": "Hielo perdido (retroceso del frente)"
+  },
+  {
+    "clave": "api.categoria.cambio_por_parcela.1",
+    "es": "Sin cambio"
+  },
+  {
+    "clave": "api.categoria.cambio_por_parcela.2",
+    "es": "Crecimiento del cultivo"
+  },
+  {
+    "clave": "api.categoria.cambio_por_parcela.3",
+    "es": "Cosecha / labranza"
+  },
+  {
+    "clave": "api.categoria.cambio_por_parcela.4",
+    "es": "Inundación (trasplante de arroz)"
+  },
+  {
+    "clave": "api.contexto.estacion.invierno_austral",
+    "es": "invierno austral"
+  },
+  {
+    "clave": "api.contexto.estacion.invierno_boreal",
+    "es": "invierno boreal"
+  },
+  {
+    "clave": "api.contexto.estacion.otono_austral",
+    "es": "otoño austral"
+  },
+  {
+    "clave": "api.contexto.estacion.otono_boreal",
+    "es": "otoño boreal"
+  },
+  {
+    "clave": "api.contexto.estacion.primavera_austral",
+    "es": "primavera austral"
+  },
+  {
+    "clave": "api.contexto.estacion.primavera_boreal",
+    "es": "primavera boreal"
+  },
+  {
+    "clave": "api.contexto.estacion.verano_austral",
+    "es": "verano austral"
+  },
+  {
+    "clave": "api.contexto.estacion.verano_boreal",
+    "es": "verano boreal"
+  },
+  {
+    "clave": "api.contexto.nombre_local.entre_epocas",
+    "es": "entre épocas"
+  },
+  {
+    "clave": "api.contexto.nombre_local.epoca_calida",
+    "es": "época cálida"
+  },
+  {
+    "clave": "api.contexto.nombre_local.epoca_fria_de_garua",
+    "es": "época fría de garúa"
+  },
+  {
+    "clave": "api.contexto.nombre_local.invierno",
+    "es": "«invierno»"
+  },
+  {
+    "clave": "api.contexto.nombre_local.verano",
+    "es": "«verano»"
+  },
+  {
+    "clave": "api.contexto.proximo_hito.equinoccio_de_marzo",
+    "es": "equinoccio de marzo"
+  },
+  {
+    "clave": "api.contexto.proximo_hito.equinoccio_de_septiembre",
+    "es": "equinoccio de septiembre"
+  },
+  {
+    "clave": "api.contexto.proximo_hito.solsticio_de_diciembre",
+    "es": "solsticio de diciembre"
+  },
+  {
+    "clave": "api.contexto.proximo_hito.solsticio_de_junio",
+    "es": "solsticio de junio"
+  },
+  {
+    "clave": "api.contexto.regimen.bimodal_dos_epocas_de_lluvia",
+    "es": "bimodal (dos épocas de lluvia)"
+  },
+  {
+    "clave": "api.contexto.regimen.sin_estacionalidad_marcada",
+    "es": "sin estacionalidad marcada"
+  },
+  {
+    "clave": "api.contexto.regimen.unimodal_una_epoca_de_lluvia",
+    "es": "unimodal (una época de lluvia)"
+  },
+  {
+    "clave": "api.contexto.region.amazonia",
+    "es": "Amazonía"
+  },
+  {
+    "clave": "api.contexto.region.costa",
+    "es": "Costa"
+  },
+  {
+    "clave": "api.contexto.region.insular",
+    "es": "Insular"
+  },
+  {
+    "clave": "api.contexto.region.sierra",
+    "es": "Sierra"
+  },
+  {
+    "clave": "api.contexto.temporada.lluviosa",
+    "es": "Lluviosa"
+  },
+  {
+    "clave": "api.contexto.temporada.seca",
+    "es": "Seca"
+  },
+  {
+    "clave": "api.contexto.temporada.transicion",
+    "es": "Transición"
+  },
+  {
+    "clave": "api.control.agricultura.desfase_dias.etiqueta",
+    "es": "Adelanto (−) o retraso (+) de siembra y cosecha (días)"
+  },
+  {
+    "clave": "api.control.agricultura.factor_biomasa.etiqueta",
+    "es": "Vigor del cultivo (× biomasa)"
+  },
+  {
+    "clave": "api.control.glaciares.aceleracion.etiqueta",
+    "es": "Aceleración tras el evento (%)"
+  },
+  {
+    "clave": "api.control.glaciares.azimut_flujo.etiqueta",
+    "es": "Dirección del flujo (° desde el norte)"
+  },
+  {
+    "clave": "api.control.glaciares.retroceso_m_a.ayuda",
+    "es": "Negativo: el frente avanza."
+  },
+  {
+    "clave": "api.control.glaciares.retroceso_m_a.etiqueta",
+    "es": "Retroceso del frente (m/año)"
+  },
+  {
+    "clave": "api.control.glaciares.u_terminal.etiqueta",
+    "es": "Velocidad en el frente (m/día)"
+  },
+  {
+    "clave": "api.control.humedales.amplitud_estacional.etiqueta",
+    "es": "Pulso de inundación estacional"
+  },
+  {
+    "clave": "api.control.humedales.fraccion_inundada.etiqueta",
+    "es": "Superficie inundada inicial (%)"
+  },
+  {
+    "clave": "api.control.humedales.tasa_secado.ayuda",
+    "es": "Positivo: el humedal se seca; negativo: se expande."
+  },
+  {
+    "clave": "api.control.humedales.tasa_secado.etiqueta",
+    "es": "Tasa de secado (desv. topográfica/año)"
+  },
+  {
+    "clave": "api.control.incendios.biomasa_media.etiqueta",
+    "es": "Biomasa del bosque (Mg/ha)"
+  },
+  {
+    "clave": "api.control.incendios.hora_evento.etiqueta",
+    "es": "Hora de ignición"
+  },
+  {
+    "clave": "api.control.incendios.hora_evento.unidad",
+    "es": "h"
+  },
+  {
+    "clave": "api.control.incendios.radio_km.etiqueta",
+    "es": "Tamaño final del incendio (km)"
+  },
+  {
+    "clave": "api.control.incendios.viento_deg.etiqueta",
+    "es": "Dirección del viento (° desde el norte)"
+  },
+  {
+    "clave": "api.control.subsidencia.estacional_cm.etiqueta",
+    "es": "Oscilación estacional (cm)"
+  },
+  {
+    "clave": "api.control.subsidencia.factor_radio.etiqueta",
+    "es": "Extensión de los conos de hundimiento (×)"
+  },
+  {
+    "clave": "api.control.subsidencia.factor_tasa.etiqueta",
+    "es": "Intensidad de la extracción (× tasa)"
+  },
+  {
+    "clave": "api.control.terremotos.ancho_km.etiqueta",
+    "es": "Ancho de ruptura (km)"
+  },
+  {
+    "clave": "api.control.terremotos.buzamiento.etiqueta",
+    "es": "Buzamiento (°)"
+  },
+  {
+    "clave": "api.control.terremotos.deslizamiento_m.etiqueta",
+    "es": "Deslizamiento (m)"
+  },
+  {
+    "clave": "api.control.terremotos.hora_evento.etiqueta",
+    "es": "Hora del sismo"
+  },
+  {
+    "clave": "api.control.terremotos.hora_evento.unidad",
+    "es": "h"
+  },
+  {
+    "clave": "api.control.terremotos.longitud_km.etiqueta",
+    "es": "Longitud de ruptura (km)"
+  },
+  {
+    "clave": "api.control.terremotos.profundidad_km.etiqueta",
+    "es": "Profundidad del centroide (km)"
+  },
+  {
+    "clave": "api.control.terremotos.rake.etiqueta",
+    "es": "Mecanismo de la falla"
+  },
+  {
+    "clave": "api.control.terremotos.rumbo.etiqueta",
+    "es": "Rumbo de la falla (°)"
+  },
+  {
+    "clave": "api.error.adquisicion_desconocida",
+    "es": "No existe el recurso pedido: Adquisición desconocida: {id}"
+  },
+  {
+    "clave": "api.error.bbox_oeste_este",
+    "es": "bbox inválido: oeste ({oeste}) debe ser menor que este ({este})"
+  },
+  {
+    "clave": "api.error.bbox_sur_norte",
+    "es": "bbox inválido: sur ({sur}) debe ser menor que norte ({norte})"
+  },
+  {
+    "clave": "api.error.celda_fuera_malla",
+    "es": "La celda ({i}, {j}) queda fuera de la malla de {n}×{n}."
+  },
+  {
+    "clave": "api.error.ciudad_en_mar",
+    "es": "No se puede fundar una ciudad en el mar."
+  },
+  {
+    "clave": "api.error.ciudades_maximo",
+    "es": "Se admiten como máximo {maximo} ciudades fundadas."
+  },
+  {
+    "clave": "api.error.control_hora",
+    "es": "«{nombre}» debe estar entre 0 y 24 horas (sin incluir 24)."
+  },
+  {
+    "clave": "api.error.control_opcion",
+    "es": "«{nombre}» debe ser uno de: {opciones}."
+  },
+  {
+    "clave": "api.error.control_rango",
+    "es": "«{nombre}» debe estar entre {minimo} y {maximo}."
+  },
+  {
+    "clave": "api.error.cuadrante_fuera",
+    "es": "El cuadrante {cuadrante} queda fuera de la imagen ({ny}×{nx} píxeles)."
+  },
+  {
+    "clave": "api.error.cuadrante_sin_area",
+    "es": "El cuadrante no tiene área."
+  },
+  {
+    "clave": "api.error.entrada_no_valida",
+    "es": "Entrada no válida. {detalle}"
+  },
+  {
+    "clave": "api.error.escenario_desconocido",
+    "es": "No existe el recurso pedido: Escenario de demostración desconocido: {id}"
+  },
+  {
+    "clave": "api.error.escenario_simulado_caducado",
+    "es": "No existe el recurso pedido: Escenario simulado desconocido o caducado: {id}"
+  },
+  {
+    "clave": "api.error.estacional_booleano",
+    "es": "estacional debe ser verdadero o falso."
+  },
+  {
+    "clave": "api.error.fecha_despues_antes",
+    "es": "La fecha 'después' debe ser posterior a la fecha 'antes'."
+  },
+  {
+    "clave": "api.error.fecha_evento_formato",
+    "es": "La fecha del evento debe ser un texto con el formato AAAA-MM-DD, por ejemplo 2026-06-01."
+  },
+  {
+    "clave": "api.error.fecha_evento_rango",
+    "es": "La fecha del evento debe estar entre 2024-01-01 y 2030-12-31."
+  },
+  {
+    "clave": "api.error.fecha_sin_zona",
+    "es": "{nombre} debe llevar zona horaria."
+  },
+  {
+    "clave": "api.error.fechas_distintas",
+    "es": "Elige dos fechas distintas."
+  },
+  {
+    "clave": "api.error.fechas_fuera_rango",
+    "es": "Las fechas quedan fuera del rango admitido."
+  },
+  {
+    "clave": "api.error.fin_anterior_inicio",
+    "es": "El fin debe ser igual o posterior al inicio."
+  },
+  {
+    "clave": "api.error.fotogramas_maximo",
+    "es": "Se pedirían {n} fotogramas; el máximo es {maximo}. Amplía el paso o acorta el intervalo."
+  },
+  {
+    "clave": "api.error.fotogramas_por_vez",
+    "es": "Pide como máximo {maximo} fotogramas por vez; esta petición pedía {n}. Amplía el paso o acorta el intervalo."
+  },
+  {
+    "clave": "api.error.fuera_de_ecuador",
+    "es": "El punto elegido queda fuera de Ecuador: elige una latitud y una longitud dentro del país."
+  },
+  {
+    "clave": "api.error.herramienta_no_evento",
+    "es": "La herramienta no existe o no es un evento: elige incendio, tormenta, inundacion, terremoto o erupcion."
+  },
+  {
+    "clave": "api.error.impacto_categorias_inesperadas",
+    "es": "La clasificación del escenario no trae las categorías esperadas para resumir el impacto."
+  },
+  {
+    "clave": "api.error.impacto_no_disponible",
+    "es": "El resumen de impacto está disponible para inundaciones e incendios."
+  },
+  {
+    "clave": "api.error.impacto_sin_categorias",
+    "es": "Este escenario no tiene un cambio por categorías para resumir."
+  },
+  {
+    "clave": "api.error.inesperado",
+    "es": "Ocurrió un error inesperado en el servidor. Inténtalo de nuevo."
+  },
+  {
+    "clave": "api.error.lab_no_valida",
+    "es": "{nombre} no válida: elige una de {opciones}."
+  },
+  {
+    "clave": "api.error.lado_mundo",
+    "es": "El lado del mundo debe ser uno de: {opciones} km."
+  },
+  {
+    "clave": "api.error.latlon_rango",
+    "es": "lat debe estar entre -90 y 90, y lon entre -180 y 180."
+  },
+  {
+    "clave": "api.error.looks_rango",
+    "es": "looks debe estar entre 1 y 100."
+  },
+  {
+    "clave": "api.error.medir_uno_de_dos",
+    "es": "Indica exactamente uno de `cuadrante` o `punto`."
+  },
+  {
+    "clave": "api.error.nubes_rango",
+    "es": "La cobertura de nubes va de {min} a {max} %."
+  },
+  {
+    "clave": "api.error.numero_finito",
+    "es": "«{nombre}» debe ser un número finito."
+  },
+  {
+    "clave": "api.error.orbita_opcion",
+    "es": "orbita debe ser una de: {opciones}."
+  },
+  {
+    "clave": "api.error.paleta_desconocida",
+    "es": "Paleta desconocida en el modelo: {nombre}"
+  },
+  {
+    "clave": "api.error.parametro_desconocido",
+    "es": "Parámetro desconocido: {parametro}"
+  },
+  {
+    "clave": "api.error.parametro_desconocido_tipo",
+    "es": "Parámetro desconocido para este tipo de cambio: {parametro}"
+  },
+  {
+    "clave": "api.error.pasada_despues_antes",
+    "es": "La pasada «después» debe ser posterior a la pasada «antes»."
+  },
+  {
+    "clave": "api.error.paso_invalido",
+    "es": "El paso debe ser un número entero de minutos mayor que 0."
+  },
+  {
+    "clave": "api.error.polarizacion_no_disponible",
+    "es": "polarización no disponible: {polarizacion}; disponibles: {disponibles}"
+  },
+  {
+    "clave": "api.error.punto_faltan_coordenadas",
+    "es": "Para colocar un punto en el mapa hacen falta lat y lon."
+  },
+  {
+    "clave": "api.error.punto_fuera",
+    "es": "El punto {punto} queda fuera de la imagen ({ny}×{nx} píxeles)."
+  },
+  {
+    "clave": "api.error.semilla_rango",
+    "es": "semilla debe ser un entero entre 0 y 2147483647."
+  },
+  {
+    "clave": "api.error.serie_sel_formato",
+    "es": "«{nombre}» debe ser una lista de {n} números separados por comas."
+  },
+  {
+    "clave": "api.error.serie_sel_rango",
+    "es": "Indica un punto, un cuadrante o los dos, con valores entre 0 y 1."
+  },
+  {
+    "clave": "api.error.sim_interruptor",
+    "es": "{parametro} debe ser verdadero o falso."
+  },
+  {
+    "clave": "api.error.sim_numero",
+    "es": "{parametro} debe ser un número."
+  },
+  {
+    "clave": "api.error.sim_opcion",
+    "es": "{parametro} debe ser una de: {opciones}."
+  },
+  {
+    "clave": "api.error.sim_parametro_no_existe",
+    "es": "El parámetro {parametro} no existe para esta herramienta."
+  },
+  {
+    "clave": "api.error.sim_rango",
+    "es": "{parametro} debe estar entre {minimo} y {maximo}."
+  },
+  {
+    "clave": "api.error.simulado_sin_parametros",
+    "es": "Un escenario simulado ya lleva sus parámetros; no se pueden dar otros."
+  },
+  {
+    "clave": "api.error.sitio_no_catalogo",
+    "es": "No existe el recurso pedido: El sitio {id} no está en el catálogo"
+  },
+  {
+    "clave": "api.error.variable_desconocida",
+    "es": "variable desconocida: {variable}; disponibles: {disponibles}"
+  },
+  {
+    "clave": "api.error.variable_sin_polarizacion",
+    "es": "La variable {variable} no tiene polarización."
+  },
+  {
+    "clave": "api.escenario.ec_antisana.descripcion",
+    "es": "Escenario ilustrativo: glaciares tropicales que terminan en tierra y retroceden con el calentamiento; velocidades de decenas de metros al año."
+  },
+  {
+    "clave": "api.escenario.ec_antisana.sitio",
+    "es": "Glaciares del volcán Antisana"
+  },
+  {
+    "clave": "api.escenario.ec_daule.descripcion",
+    "es": "Escenario ilustrativo: dos ciclos de arroz bajo riego al año, con maíz y banano, en la cuenca baja del Guayas."
+  },
+  {
+    "clave": "api.escenario.ec_daule.sitio",
+    "es": "Arrozales de Daule (Guayas)"
+  },
+  {
+    "clave": "api.escenario.ec_guayaquil.descripcion",
+    "es": "Escenario ilustrativo: hundimiento de rellenos sobre arcillas blandas y antiguos manglares del estuario del Guayas."
+  },
+  {
+    "clave": "api.escenario.ec_guayaquil.sitio",
+    "es": "Guayaquil"
+  },
+  {
+    "clave": "api.escenario.ec_la_segua.descripcion",
+    "es": "Escenario ilustrativo: humedal Ramsar en la confluencia de los ríos Chone y Carrizal; la estación seca y la expansión agrícola reducen su espejo de agua."
+  },
+  {
+    "clave": "api.escenario.ec_la_segua.sitio",
+    "es": "Humedal La Segua (Manabí)"
+  },
+  {
+    "clave": "api.escenario.ec_loja.descripcion",
+    "es": "Escenario ilustrativo: bosque andino y matorral seco donde los incendios se concentran entre agosto y octubre."
+  },
+  {
+    "clave": "api.escenario.ec_loja.sitio",
+    "es": "Bosques andinos de Loja"
+  },
+  {
+    "clave": "api.escenario.ec_pedernales.descripcion",
+    "es": "Escenario ilustrativo: sismo de subducción frente a Manabí. El océano, al oeste, no tiene datos de radar."
+  },
+  {
+    "clave": "api.escenario.ec_pedernales.sitio",
+    "es": "Pedernales (Manabí)"
+  },
+  {
+    "clave": "api.impacto.accion.incendio.1",
+    "es": "Contrastar la cicatriz con los reportes de bomberos y con focos de calor ópticos antes de actuar."
+  },
+  {
+    "clave": "api.impacto.accion.incendio.1_hipotetica",
+    "es": "Si esto fuera un evento real, contrastar la cicatriz con los reportes de bomberos y con focos de calor ópticos antes de actuar."
+  },
+  {
+    "clave": "api.impacto.accion.incendio.2",
+    "es": "Priorizar la revisión de las zonas de severidad alta, donde la pérdida de estructura es mayor."
+  },
+  {
+    "clave": "api.impacto.accion.incendio.3",
+    "es": "Repetir el análisis tras las lluvias para vigilar la erosión de laderas sin cobertura."
+  },
+  {
+    "clave": "api.impacto.accion.inundacion.1",
+    "es": "Contrastar los bordes de la mancha con el aviso de la autoridad local antes de decidir cierres de vías."
+  },
+  {
+    "clave": "api.impacto.accion.inundacion.1_hipotetica",
+    "es": "Si esto fuera un evento real, contrastar los bordes de la mancha con el aviso de la autoridad local antes de decidir cierres de vías."
+  },
+  {
+    "clave": "api.impacto.accion.inundacion.2",
+    "es": "Priorizar la verificación en campo donde la superficie inundada crece más entre pasadas."
+  },
+  {
+    "clave": "api.impacto.accion.inundacion.3",
+    "es": "Repetir el análisis con la siguiente pasada para saber si el agua se retira o se extiende."
+  },
+  {
+    "clave": "api.impacto.cifra.incendio.parte_de_la_escena.ayuda",
+    "es": "Fracción del área analizada que aparece quemada."
+  },
+  {
+    "clave": "api.impacto.cifra.incendio.parte_de_la_escena.etiqueta",
+    "es": "Parte de la escena"
+  },
+  {
+    "clave": "api.impacto.cifra.incendio.severidad_alta.ayuda",
+    "es": "Hectáreas con la mayor caída de señal: la mayor pérdida de estructura del bosque."
+  },
+  {
+    "clave": "api.impacto.cifra.incendio.severidad_alta.etiqueta",
+    "es": "Severidad alta"
+  },
+  {
+    "clave": "api.impacto.cifra.incendio.superficie_quemada_detectada.ayuda",
+    "es": "Hectáreas donde la señal cruzada (HV) cayó lo bastante para marcar daño."
+  },
+  {
+    "clave": "api.impacto.cifra.incendio.superficie_quemada_detectada.etiqueta",
+    "es": "Superficie quemada detectada"
+  },
+  {
+    "clave": "api.impacto.cifra.inundacion.inundacion_nueva.ayuda",
+    "es": "Hectáreas que no tenían agua en la pasada «antes» y sí en la «después»."
+  },
+  {
+    "clave": "api.impacto.cifra.inundacion.inundacion_nueva.etiqueta",
+    "es": "Inundación nueva"
+  },
+  {
+    "clave": "api.impacto.cifra.inundacion.parte_de_la_escena.ayuda",
+    "es": "Fracción del área analizada que está inundada al final."
+  },
+  {
+    "clave": "api.impacto.cifra.inundacion.parte_de_la_escena.etiqueta",
+    "es": "Parte de la escena"
+  },
+  {
+    "clave": "api.impacto.cifra.inundacion.superficie_inundada_al_final.ayuda",
+    "es": "Hectáreas con agua en la pasada «después» (nueva inundación más la que ya estaba)."
+  },
+  {
+    "clave": "api.impacto.cifra.inundacion.superficie_inundada_al_final.etiqueta",
+    "es": "Superficie inundada al final"
+  },
+  {
+    "clave": "api.impacto.lectura.incendio",
+    "es": "En este escenario de demostración, el radar marca unas {ha} ha quemadas, el {pct} % del área analizada."
+  },
+  {
+    "clave": "api.impacto.lectura.inundacion",
+    "es": "En este escenario de demostración, el radar marca unas {ha} ha con agua al final del intervalo, el {pct} % del área analizada."
+  },
+  {
+    "clave": "api.impacto.lectura.pico",
+    "es": "El máximo de la serie llega el {fecha} con unas {ha} ha."
+  },
+  {
+    "clave": "api.impacto.nota.celdas",
+    "es": "Superficies medidas sobre la malla de análisis (celdas de unos {metros} m)."
+  },
+  {
+    "clave": "api.impacto.nota.orientativas",
+    "es": "Las acciones son orientativas y condicionales; no sustituyen a la autoridad competente."
+  },
+  {
+    "clave": "api.impacto.titulo.incendio",
+    "es": "Superficie quemada"
+  },
+  {
+    "clave": "api.impacto.titulo.inundacion",
+    "es": "Superficie inundada"
+  },
+  {
+    "clave": "api.lab.aviso_banda",
+    "es": "Banda S: ejemplo ilustrativo de otra frecuencia; pendiente de confirmar con la documentación oficial qué bandas entrega NISAR."
+  },
+  {
+    "clave": "api.lab.cambio.inundacion_a_cielo_abierto",
+    "es": "Inundación a cielo abierto"
+  },
+  {
+    "clave": "api.lab.cambio.inundacion_bajo_dosel",
+    "es": "Inundación bajo dosel"
+  },
+  {
+    "clave": "api.lab.cambio.quema_del_bosque",
+    "es": "Quema del bosque"
+  },
+  {
+    "clave": "api.lab.leyenda.agua",
+    "es": "Agua"
+  },
+  {
+    "clave": "api.lab.leyenda.bosque",
+    "es": "Bosque"
+  },
+  {
+    "clave": "api.lab.leyenda.bosque_inundado",
+    "es": "Bosque inundado"
+  },
+  {
+    "clave": "api.lab.leyenda.cambio_detectado",
+    "es": "Cambio detectado"
+  },
+  {
+    "clave": "api.lab.leyenda.cambio_sin_detectar",
+    "es": "Cambio sin detectar"
+  },
+  {
+    "clave": "api.lab.leyenda.cultivo",
+    "es": "Cultivo"
+  },
+  {
+    "clave": "api.lab.leyenda.falsa_alarma",
+    "es": "Falsa alarma"
+  },
+  {
+    "clave": "api.lab.leyenda.quemado",
+    "es": "Quemado"
+  },
+  {
+    "clave": "api.lab.leyenda.sin_cambio",
+    "es": "Sin cambio"
+  },
+  {
+    "clave": "api.lab.leyenda.tapado_por_nube",
+    "es": "Tapado por nube"
+  },
+  {
+    "clave": "api.lab.metrica.cambio_visto_por_el_optico.ayuda",
+    "es": "Lo mismo para una imagen óptica. Las nubes la tapan y, bajo el dosel, no ve el agua."
+  },
+  {
+    "clave": "api.lab.metrica.cambio_visto_por_el_optico.etiqueta",
+    "es": "Cambio visto por el óptico"
+  },
+  {
+    "clave": "api.lab.metrica.cambio_visto_por_el_radar.ayuda",
+    "es": "Parte de los píxeles que realmente cambiaron y que el radar marca como cambio. Las nubes no lo afectan."
+  },
+  {
+    "clave": "api.lab.metrica.cambio_visto_por_el_radar.etiqueta",
+    "es": "Cambio visto por el radar"
+  },
+  {
+    "clave": "api.lab.metrica.falsas_alarmas_del_radar.ayuda",
+    "es": "Píxeles sin cambio que el radar marca como cambio por el moteado (speckle). El radar no es perfecto."
+  },
+  {
+    "clave": "api.lab.metrica.falsas_alarmas_del_radar.etiqueta",
+    "es": "Falsas alarmas del radar"
+  },
+  {
+    "clave": "api.lab.metrica.tapado_por_nubes.ayuda",
+    "es": "Fracción de la escena que las nubes ocultan en la imagen óptica."
+  },
+  {
+    "clave": "api.lab.metrica.tapado_por_nubes.etiqueta",
+    "es": "Tapado por nubes"
+  },
+  {
+    "clave": "api.medicion.posicion.ayuda",
+    "es": "Centro del píxel (fila {fila}, columna {columna})"
+  },
+  {
+    "clave": "api.medicion.posicion.etiqueta",
+    "es": "Posición"
+  },
+  {
+    "clave": "api.nota.ec_antisana.1",
+    "es": "La velocidad sale de correlacionar parches de imagen entre dos fechas (12 días): desplazamiento / Δt. El perfil transversal sigue la ley de Glen (n = 3): u ∝ 1 − |y/W|⁴."
+  },
+  {
+    "clave": "api.nota.ec_daule.1",
+    "es": "Un cultivo en crecimiento aumenta la dispersión de volumen (HV sube hasta ~10 dB); la cosecha devuelve la parcela al nivel de suelo desnudo. La inundación para trasplantar arroz produce reflexión especular, con HV por debajo de −32 dB."
+  },
+  {
+    "clave": "api.nota.ec_guayaquil.1",
+    "es": "Se ajusta, píxel a píxel, d(t) = a + v·t (+ término estacional si la serie supera ~10 meses). La atmósfera turbulenta es aleatoria entre fechas y se promedia al usar muchas adquisiciones."
+  },
+  {
+    "clave": "api.nota.ec_la_segua.1",
+    "es": "El agua abierta refleja la señal lejos del radar (HH muy bajo); bajo el dosel inundado, el doble rebote tronco-agua eleva HH y la razón HH/HV, algo que solo la banda L detecta porque atraviesa la copa de los árboles."
+  },
+  {
+    "clave": "api.nota.ec_loja.1",
+    "es": "En banda L, HV responde a la dispersión de volumen de ramas y troncos; al consumirse la biomasa cae entre 3 y 8 dB. La señal se satura cerca de 100–150 Mg/ha, por lo que la pérdida de biomasa en bosques densos es una cota inferior."
+  },
+  {
+    "clave": "api.nota.ec_pedernales.1",
+    "es": "Vector LOS (este, norte, arriba) = (+0.64, +0.09, +0.77). NISAR mira a la izquierda: el movimiento norte-sur casi no se proyecta en la línea de vista, por eso las fallas de rumbo N-S se complementan con desplazamientos de píxel (GOFF)."
+  },
+  {
+    "clave": "api.nota.ec_pedernales.2",
+    "es": "Los píxeles con coherencia < 0,25 (ruptura superficial, decorrelación) se enmascaran, como hacen las componentes conexas del producto GUNW."
+  },
+  {
+    "clave": "api.obs.capa.area_quemada_detectada",
+    "es": "Área quemada detectada"
+  },
+  {
+    "clave": "api.obs.capa.cambio_de_inundacion",
+    "es": "Cambio de inundación"
+  },
+  {
+    "clave": "api.obs.capa.cambio_de_velocidad",
+    "es": "Cambio de velocidad"
+  },
+  {
+    "clave": "api.obs.capa.cambio_del_frente",
+    "es": "Cambio del frente"
+  },
+  {
+    "clave": "api.obs.capa.cambio_por_parcela",
+    "es": "Cambio por parcela"
+  },
+  {
+    "clave": "api.obs.capa.coherencia_interferometrica",
+    "es": "Coherencia interferométrica"
+  },
+  {
+    "clave": "api.obs.capa.desplazamiento_los_acumulado",
+    "es": "Desplazamiento LOS acumulado"
+  },
+  {
+    "clave": "api.obs.capa.desplazamiento_los_desenrollado",
+    "es": "Desplazamiento LOS desenrollado"
+  },
+  {
+    "clave": "api.obs.capa.error_frente_a_la_verdad_sintetica",
+    "es": "Error frente a la verdad sintética"
+  },
+  {
+    "clave": "api.obs.capa.interferograma_envuelto_1_ciclo_11_9_cm",
+    "es": "Interferograma envuelto (1 ciclo = 11,9 cm)"
+  },
+  {
+    "clave": "api.obs.capa.razon_logaritmica_hv_despues_antes",
+    "es": "Razón logarítmica HV (después/antes)"
+  },
+  {
+    "clave": "api.obs.capa.sigma0_hh_fecha",
+    "es": "σ⁰ HH · {fecha}"
+  },
+  {
+    "clave": "api.obs.capa.sigma0_hv_fecha",
+    "es": "σ⁰ HV · {fecha}"
+  },
+  {
+    "clave": "api.obs.capa.velocidad_fecha",
+    "es": "Velocidad · {fecha}"
+  },
+  {
+    "clave": "api.obs.capa.velocidad_vertical",
+    "es": "Velocidad vertical"
+  },
+  {
+    "clave": "api.obs.columna.0_hv_db",
+    "es": "Δσ⁰ HV (dB)"
+  },
+  {
+    "clave": "api.obs.columna.cambio_detectado",
+    "es": "Cambio detectado"
+  },
+  {
+    "clave": "api.obs.columna.cosecha_estimada",
+    "es": "Cosecha estimada"
+  },
+  {
+    "clave": "api.obs.columna.cosecha_real",
+    "es": "Cosecha real"
+  },
+  {
+    "clave": "api.obs.columna.cultivo_cosechado",
+    "es": "Cultivo cosechado"
+  },
+  {
+    "clave": "api.obs.columna.parcela",
+    "es": "Parcela"
+  },
+  {
+    "clave": "api.obs.columna.rotacion",
+    "es": "Rotación"
+  },
+  {
+    "clave": "api.obs.medida.cosecha_labranza",
+    "es": "Cosecha / labranza"
+  },
+  {
+    "clave": "api.obs.medida.crecimiento_del_cultivo",
+    "es": "Crecimiento del cultivo"
+  },
+  {
+    "clave": "api.obs.medida.hielo_nuevo_avance",
+    "es": "Hielo nuevo (avance)"
+  },
+  {
+    "clave": "api.obs.medida.hielo_perdido_retroceso_del_frente",
+    "es": "Hielo perdido (retroceso del frente)"
+  },
+  {
+    "clave": "api.obs.medida.inundacion_persistente",
+    "es": "Inundación persistente"
+  },
+  {
+    "clave": "api.obs.medida.inundacion_trasplante_de_arroz",
+    "es": "Inundación (trasplante de arroz)"
+  },
+  {
+    "clave": "api.obs.medida.maximo",
+    "es": "Máximo"
+  },
+  {
+    "clave": "api.obs.medida.media",
+    "es": "Media"
+  },
+  {
+    "clave": "api.obs.medida.minimo",
+    "es": "Mínimo"
+  },
+  {
+    "clave": "api.obs.medida.nueva_inundacion",
+    "es": "Nueva inundación"
+  },
+  {
+    "clave": "api.obs.medida.perdida_de_inundacion",
+    "es": "Pérdida de inundación"
+  },
+  {
+    "clave": "api.obs.medida.severidad_alta_4_5_db",
+    "es": "Severidad alta (< −4,5 dB)"
+  },
+  {
+    "clave": "api.obs.medida.severidad_moderada_2_5_a_4_5_db",
+    "es": "Severidad moderada (−2,5 a −4,5 dB)"
+  },
+  {
+    "clave": "api.obs.medida.sin_cambio",
+    "es": "Sin cambio"
+  },
+  {
+    "clave": "api.obs.metrica.acierto_de_deteccion_verdad_sintetica.ayuda",
+    "es": "Cosechada / no cosechada vs. verdad"
+  },
+  {
+    "clave": "api.obs.metrica.acierto_de_deteccion_verdad_sintetica.etiqueta",
+    "es": "Acierto de detección (verdad sintética)"
+  },
+  {
+    "clave": "api.obs.metrica.acierto_del_detector_verdad_sintetica.ayuda",
+    "es": "Clasificación píxel a píxel en la fecha final"
+  },
+  {
+    "clave": "api.obs.metrica.acierto_del_detector_verdad_sintetica.etiqueta",
+    "es": "Acierto del detector (verdad sintética)"
+  },
+  {
+    "clave": "api.obs.metrica.adquisiciones_usadas.ayuda",
+    "es": "Pila de interferogramas de 12 días"
+  },
+  {
+    "clave": "api.obs.metrica.adquisiciones_usadas.etiqueta",
+    "es": "Adquisiciones usadas"
+  },
+  {
+    "clave": "api.obs.metrica.area_con_5_cm_ano.ayuda",
+    "es": "Umbral de daño a infraestructura"
+  },
+  {
+    "clave": "api.obs.metrica.area_con_5_cm_ano.etiqueta",
+    "es": "Área con > 5 cm/año"
+  },
+  {
+    "clave": "api.obs.metrica.area_deformada_5_cm.etiqueta",
+    "es": "Área deformada > 5 cm"
+  },
+  {
+    "clave": "api.obs.metrica.area_del_cuadrante.ayuda",
+    "es": "{filas} × {columnas} píxeles de {metros} m"
+  },
+  {
+    "clave": "api.obs.metrica.area_del_cuadrante.etiqueta",
+    "es": "Área del cuadrante"
+  },
+  {
+    "clave": "api.obs.metrica.area_inundada_final.etiqueta",
+    "es": "Área inundada final"
+  },
+  {
+    "clave": "api.obs.metrica.area_inundada_inicial.ayuda",
+    "es": "Agua abierta + vegetación inundada"
+  },
+  {
+    "clave": "api.obs.metrica.area_inundada_inicial.etiqueta",
+    "es": "Área inundada inicial"
+  },
+  {
+    "clave": "api.obs.metrica.area_quemada_detectada.etiqueta",
+    "es": "Área quemada detectada"
+  },
+  {
+    "clave": "api.obs.metrica.area_quemada_simulada_verdad_sintetica.ayuda",
+    "es": "Verdad del modelo en el intervalo"
+  },
+  {
+    "clave": "api.obs.metrica.area_quemada_simulada_verdad_sintetica.etiqueta",
+    "es": "Área quemada simulada (verdad sintética)"
+  },
+  {
+    "clave": "api.obs.metrica.biomasa_perdida.ayuda",
+    "es": "Inversión del modelo de nube de agua"
+  },
+  {
+    "clave": "api.obs.metrica.biomasa_perdida.etiqueta",
+    "es": "Biomasa perdida"
+  },
+  {
+    "clave": "api.obs.metrica.cambio_neto.ayuda",
+    "es": "Negativo = pérdida de humedal"
+  },
+  {
+    "clave": "api.obs.metrica.cambio_neto.etiqueta",
+    "es": "Cambio neto"
+  },
+  {
+    "clave": "api.obs.metrica.co2_emitido_estimado.ayuda",
+    "es": "47 % de carbono en la biomasa × 44/12"
+  },
+  {
+    "clave": "api.obs.metrica.co2_emitido_estimado.etiqueta",
+    "es": "CO₂ emitido (estimado)"
+  },
+  {
+    "clave": "api.obs.metrica.cosecha_labranza.ayuda",
+    "es": "{pct} % del cuadrante"
+  },
+  {
+    "clave": "api.obs.metrica.cosecha_labranza.etiqueta",
+    "es": "Cosecha / labranza"
+  },
+  {
+    "clave": "api.obs.metrica.cosechas_detectadas.ayuda",
+    "es": "Caída de HV > 3 dB hasta nivel de suelo"
+  },
+  {
+    "clave": "api.obs.metrica.cosechas_detectadas.etiqueta",
+    "es": "Cosechas detectadas"
+  },
+  {
+    "clave": "api.obs.metrica.crecimiento_del_cultivo.ayuda",
+    "es": "{pct} % del cuadrante"
+  },
+  {
+    "clave": "api.obs.metrica.crecimiento_del_cultivo.etiqueta",
+    "es": "Crecimiento del cultivo"
+  },
+  {
+    "clave": "api.obs.metrica.error_medio_de_fecha.ayuda",
+    "es": "Limitado por la revisita de 12 días"
+  },
+  {
+    "clave": "api.obs.metrica.error_medio_de_fecha.etiqueta",
+    "es": "Error medio de fecha"
+  },
+  {
+    "clave": "api.obs.metrica.f1_del_detector_verdad_sintetica.ayuda",
+    "es": "Coincidencia entre detección y verdad"
+  },
+  {
+    "clave": "api.obs.metrica.f1_del_detector_verdad_sintetica.etiqueta",
+    "es": "F1 del detector (verdad sintética)"
+  },
+  {
+    "clave": "api.obs.metrica.franjas_interferometricas.ayuda",
+    "es": "Una franja = λ/2 = 11,9 cm"
+  },
+  {
+    "clave": "api.obs.metrica.franjas_interferometricas.etiqueta",
+    "es": "Franjas interferométricas"
+  },
+  {
+    "clave": "api.obs.metrica.hielo_perdido.etiqueta",
+    "es": "Hielo perdido"
+  },
+  {
+    "clave": "api.obs.metrica.hundimiento_maximo.ayuda",
+    "es": "Percentil 1 de la velocidad vertical"
+  },
+  {
+    "clave": "api.obs.metrica.hundimiento_maximo.etiqueta",
+    "es": "Hundimiento máximo"
+  },
+  {
+    "clave": "api.obs.metrica.inundacion_persistente.ayuda",
+    "es": "{pct} % del cuadrante"
+  },
+  {
+    "clave": "api.obs.metrica.inundacion_persistente.etiqueta",
+    "es": "Inundación persistente"
+  },
+  {
+    "clave": "api.obs.metrica.inundacion_trasplante_de_arroz.ayuda",
+    "es": "{pct} % del cuadrante"
+  },
+  {
+    "clave": "api.obs.metrica.inundacion_trasplante_de_arroz.etiqueta",
+    "es": "Inundación (trasplante de arroz)"
+  },
+  {
+    "clave": "api.obs.metrica.magnitud_del_escenario.ayuda",
+    "es": "Okada: M0 = μ·L·W·deslizamiento"
+  },
+  {
+    "clave": "api.obs.metrica.magnitud_del_escenario.etiqueta",
+    "es": "Magnitud del escenario"
+  },
+  {
+    "clave": "api.obs.metrica.max_alejandose.ayuda",
+    "es": "LOS negativo"
+  },
+  {
+    "clave": "api.obs.metrica.max_alejandose.etiqueta",
+    "es": "Máx. alejándose"
+  },
+  {
+    "clave": "api.obs.metrica.max_hacia_el_satelite.ayuda",
+    "es": "LOS positivo"
+  },
+  {
+    "clave": "api.obs.metrica.max_hacia_el_satelite.etiqueta",
+    "es": "Máx. hacia el satélite"
+  },
+  {
+    "clave": "api.obs.metrica.maximo_desplazamiento_los_desenrollado.etiqueta",
+    "es": "Máximo · Desplazamiento LOS desenrollado"
+  },
+  {
+    "clave": "api.obs.metrica.maximo_velocidad_fecha.etiqueta",
+    "es": "Máximo · Velocidad · {fecha}"
+  },
+  {
+    "clave": "api.obs.metrica.maximo_velocidad_vertical.etiqueta",
+    "es": "Máximo · Velocidad vertical"
+  },
+  {
+    "clave": "api.obs.metrica.media_desplazamiento_los_desenrollado.etiqueta",
+    "es": "Media · Desplazamiento LOS desenrollado"
+  },
+  {
+    "clave": "api.obs.metrica.media_velocidad_fecha.etiqueta",
+    "es": "Media · Velocidad · {fecha}"
+  },
+  {
+    "clave": "api.obs.metrica.media_velocidad_vertical.etiqueta",
+    "es": "Media · Velocidad vertical"
+  },
+  {
+    "clave": "api.obs.metrica.minimo_desplazamiento_los_desenrollado.etiqueta",
+    "es": "Mínimo · Desplazamiento LOS desenrollado"
+  },
+  {
+    "clave": "api.obs.metrica.minimo_velocidad_fecha.etiqueta",
+    "es": "Mínimo · Velocidad · {fecha}"
+  },
+  {
+    "clave": "api.obs.metrica.minimo_velocidad_vertical.etiqueta",
+    "es": "Mínimo · Velocidad vertical"
+  },
+  {
+    "clave": "api.obs.metrica.nueva_inundacion.ayuda",
+    "es": "{pct} % del cuadrante"
+  },
+  {
+    "clave": "api.obs.metrica.nueva_inundacion.etiqueta",
+    "es": "Nueva inundación"
+  },
+  {
+    "clave": "api.obs.metrica.parcelas_analizadas.etiqueta",
+    "es": "Parcelas analizadas"
+  },
+  {
+    "clave": "api.obs.metrica.perdida_de_inundacion.ayuda",
+    "es": "{pct} % del cuadrante"
+  },
+  {
+    "clave": "api.obs.metrica.perdida_de_inundacion.etiqueta",
+    "es": "Pérdida de inundación"
+  },
+  {
+    "clave": "api.obs.metrica.retroceso_del_frente.ayuda",
+    "es": "Sobre la línea de flujo central"
+  },
+  {
+    "clave": "api.obs.metrica.retroceso_del_frente.etiqueta",
+    "es": "Retroceso del frente"
+  },
+  {
+    "clave": "api.obs.metrica.rmse_frente_a_la_verdad_sintetica.ayuda",
+    "es": "Atmósfera y decorrelación residuales"
+  },
+  {
+    "clave": "api.obs.metrica.rmse_frente_a_la_verdad_sintetica.etiqueta",
+    "es": "RMSE frente a la verdad sintética"
+  },
+  {
+    "clave": "api.obs.metrica.severidad_alta_4_5_db.ayuda",
+    "es": "{pct} % del cuadrante"
+  },
+  {
+    "clave": "api.obs.metrica.severidad_alta_4_5_db.etiqueta",
+    "es": "Severidad alta (< −4,5 dB)"
+  },
+  {
+    "clave": "api.obs.metrica.severidad_moderada_2_5_a_4_5_db.ayuda",
+    "es": "{pct} % del cuadrante"
+  },
+  {
+    "clave": "api.obs.metrica.severidad_moderada_2_5_a_4_5_db.etiqueta",
+    "es": "Severidad moderada (−2,5 a −4,5 dB)"
+  },
+  {
+    "clave": "api.obs.metrica.sin_cambio.ayuda",
+    "es": "{pct} % del cuadrante"
+  },
+  {
+    "clave": "api.obs.metrica.sin_cambio.etiqueta",
+    "es": "Sin cambio"
+  },
+  {
+    "clave": "api.obs.metrica.velocidad_maxima_final.etiqueta",
+    "es": "Velocidad máxima final"
+  },
+  {
+    "clave": "api.obs.metrica.velocidad_maxima_inicial.etiqueta",
+    "es": "Velocidad máxima inicial"
+  },
+  {
+    "clave": "api.obs.orbita.ascendente",
+    "es": "Ascendente"
+  },
+  {
+    "clave": "api.obs.orbita.descendente",
+    "es": "Descendente"
+  },
+  {
+    "clave": "api.obs.serie_nombre.bosque_no_quemado_control",
+    "es": "Bosque no quemado (control)"
+  },
+  {
+    "clave": "api.obs.serie_nombre.cerca_de_la_falla_modelo_de_okada",
+    "es": "Cerca de la falla (modelo de Okada)"
+  },
+  {
+    "clave": "api.obs.serie_nombre.cerca_de_la_falla_observado",
+    "es": "Cerca de la falla (observado)"
+  },
+  {
+    "clave": "api.obs.serie_nombre.detectada_por_el_modelo_simulacion",
+    "es": "Detectada por el modelo (simulación)"
+  },
+  {
+    "clave": "api.obs.serie_nombre.detectado_con_goff",
+    "es": "Detectado con GOFF"
+  },
+  {
+    "clave": "api.obs.serie_nombre.frente_inicial",
+    "es": "A {km} km del frente inicial"
+  },
+  {
+    "clave": "api.obs.serie_nombre.maximo_hundimiento",
+    "es": "Máximo hundimiento"
+  },
+  {
+    "clave": "api.obs.serie_nombre.media_del_cuadrante",
+    "es": "Media del cuadrante"
+  },
+  {
+    "clave": "api.obs.serie_nombre.punto_seleccionado_3_3_px",
+    "es": "Punto seleccionado (3×3 px)"
+  },
+  {
+    "clave": "api.obs.serie_nombre.verdad_del_modelo",
+    "es": "Verdad del modelo"
+  },
+  {
+    "clave": "api.obs.serie_nombre.zona_estable_referencia",
+    "es": "Zona estable (referencia)"
+  },
+  {
+    "clave": "api.obs.serie_nombre.zona_quemada",
+    "es": "Zona quemada"
+  },
+  {
+    "clave": "api.obs.titulo_tabla.resultados",
+    "es": "Resultados"
+  },
+  {
+    "clave": "api.obs.titulo_tabla.resultados_por_parcela",
+    "es": "Resultados por parcela"
+  },
+  {
+    "clave": "api.obs.valor.arroz",
+    "es": "Arroz"
+  },
+  {
+    "clave": "api.obs.valor.arroz_arroz",
+    "es": "Arroz → Arroz"
+  },
+  {
+    "clave": "api.obs.valor.banano",
+    "es": "Banano"
+  },
+  {
+    "clave": "api.obs.valor.frutales",
+    "es": "Frutales"
+  },
+  {
+    "clave": "api.obs.valor.maiz",
+    "es": "Maíz"
+  },
+  {
+    "clave": "api.obs.valor.numero_cm",
+    "es": "{v} cm"
+  },
+  {
+    "clave": "api.obs.valor.numero_cm_ano",
+    "es": "{v} cm/año"
+  },
+  {
+    "clave": "api.obs.valor.numero_db",
+    "es": "{v} dB"
+  },
+  {
+    "clave": "api.obs.valor.numero_gamma",
+    "es": "{v} γ"
+  },
+  {
+    "clave": "api.obs.valor.numero_km2",
+    "es": "{v} km²"
+  },
+  {
+    "clave": "api.obs.valor.numero_m_dia",
+    "es": "{v} m/día"
+  },
+  {
+    "clave": "api.obs.valor.numero_rad",
+    "es": "{v} rad"
+  },
+  {
+    "clave": "api.obs.valor.sin_cambio_detectado",
+    "es": "Sin cambio detectado"
+  },
+  {
+    "clave": "api.obs.valor.sin_dato_enmascarado",
+    "es": "Sin dato (enmascarado)"
+  },
+  {
+    "clave": "api.obs.valor.soja",
+    "es": "Soja"
+  },
+  {
+    "clave": "api.obs.valor.trigo",
+    "es": "Trigo"
+  },
+  {
+    "clave": "api.obs.valor.trigo_arroz",
+    "es": "Trigo → Arroz"
+  },
+  {
+    "clave": "api.obs.valor.trigo_maiz",
+    "es": "Trigo → Maíz"
+  },
+  {
+    "clave": "api.obs.valor.trigo_soja_de_segunda",
+    "es": "Trigo → Soja de segunda"
+  },
+  {
+    "clave": "api.opcion.terremotos.rake.inversa",
+    "es": "Inversa"
+  },
+  {
+    "clave": "api.opcion.terremotos.rake.normal",
+    "es": "Normal"
+  },
+  {
+    "clave": "api.opcion.terremotos.rake.rumbo_dextral",
+    "es": "Rumbo dextral"
+  },
+  {
+    "clave": "api.opcion.terremotos.rake.rumbo_sinistral",
+    "es": "Rumbo sinistral"
+  },
+  {
+    "clave": "api.plantilla.nota.pedernales_los",
+    "es": "Vector LOS (este, norte, arriba) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR mira a la izquierda: el movimiento norte-sur casi no se proyecta en la línea de vista, por eso las fallas de rumbo N-S se complementan con desplazamientos de píxel (GOFF)."
+  },
+  {
+    "clave": "api.serie.0_hh_en_la_seleccion",
+    "es": "σ⁰ HH en la selección"
+  },
+  {
+    "clave": "api.serie.0_hv_en_la_seleccion",
+    "es": "σ⁰ HV en la selección"
+  },
+  {
+    "clave": "api.serie.0_hv_medio",
+    "es": "σ⁰ HV medio"
+  },
+  {
+    "clave": "api.serie.0_hv_medio_por_rotacion",
+    "es": "σ⁰ HV medio por rotación"
+  },
+  {
+    "clave": "api.serie.desplazamiento_los_acumulado",
+    "es": "Desplazamiento LOS acumulado"
+  },
+  {
+    "clave": "api.serie.desplazamiento_los_acumulado_en_la_seleccion",
+    "es": "Desplazamiento LOS acumulado en la selección"
+  },
+  {
+    "clave": "api.serie.desplazamiento_vertical_acumulado",
+    "es": "Desplazamiento vertical acumulado"
+  },
+  {
+    "clave": "api.serie.desplazamiento_vertical_acumulado_en_la_seleccion",
+    "es": "Desplazamiento vertical acumulado en la selección"
+  },
+  {
+    "clave": "api.serie.posicion_del_frente_respecto_a_la_1_a_fecha",
+    "es": "Posición del frente (respecto a la 1.ª fecha)"
+  },
+  {
+    "clave": "api.serie.superficie_inundada",
+    "es": "Superficie inundada"
+  },
+  {
+    "clave": "api.serie.velocidad_superficial",
+    "es": "Velocidad superficial"
+  },
+  {
+    "clave": "api.serie.velocidad_superficial_en_la_seleccion",
+    "es": "Velocidad superficial en la selección"
+  },
+  {
+    "clave": "api.sim.capa.calado",
+    "es": "Calado"
+  },
+  {
+    "clave": "api.sim.capa.calado_del_lahar",
+    "es": "Calado del lahar"
+  },
+  {
+    "clave": "api.sim.capa.corriente_piroclastica",
+    "es": "Corriente piroclástica"
+  },
+  {
+    "clave": "api.sim.capa.deslizamientos",
+    "es": "Deslizamientos"
+  },
+  {
+    "clave": "api.sim.capa.espesor_de_ceniza",
+    "es": "Espesor de ceniza"
+  },
+  {
+    "clave": "api.sim.capa.estado_del_fuego",
+    "es": "Estado del fuego"
+  },
+  {
+    "clave": "api.sim.capa.frentes_de_onda",
+    "es": "Frentes de onda"
+  },
+  {
+    "clave": "api.sim.capa.intensidad_mmi",
+    "es": "Intensidad (MMI)"
+  },
+  {
+    "clave": "api.sim.capa.tsunami_calado_en_tierra_elevacion_del_mar",
+    "es": "Tsunami: calado en tierra / elevación del mar"
+  },
+  {
+    "clave": "api.sim.celda.agua",
+    "es": "Agua"
+  },
+  {
+    "clave": "api.sim.celda.bosque_andino",
+    "es": "Bosque andino"
+  },
+  {
+    "clave": "api.sim.celda.bosque_seco_y_matorral",
+    "es": "Bosque seco y matorral"
+  },
+  {
+    "clave": "api.sim.celda.bosque_tropical_humedo",
+    "es": "Bosque tropical húmedo"
+  },
+  {
+    "clave": "api.sim.celda.ceniza_1_cm",
+    "es": "Ceniza ≥ 1 cm"
+  },
+  {
+    "clave": "api.sim.celda.cultivos_y_pastos",
+    "es": "Cultivos y pastos"
+  },
+  {
+    "clave": "api.sim.celda.extrema",
+    "es": "Extrema"
+  },
+  {
+    "clave": "api.sim.celda.flujo_piroclastico",
+    "es": "Flujo piroclástico"
+  },
+  {
+    "clave": "api.sim.celda.fuerte",
+    "es": "Fuerte"
+  },
+  {
+    "clave": "api.sim.celda.glaciar_y_nieve",
+    "es": "Glaciar y nieve"
+  },
+  {
+    "clave": "api.sim.celda.iv",
+    "es": "IV"
+  },
+  {
+    "clave": "api.sim.celda.ix",
+    "es": "IX"
+  },
+  {
+    "clave": "api.sim.celda.lahar",
+    "es": "Lahar"
+  },
+  {
+    "clave": "api.sim.celda.ligera",
+    "es": "Ligera"
+  },
+  {
+    "clave": "api.sim.celda.modelo_ceniza",
+    "es": "Advección–difusión (3 clases)"
+  },
+  {
+    "clave": "api.sim.celda.modelo_cono",
+    "es": "Cono de energía H/L = {hl_punto}, Hc = {hc} m"
+  },
+  {
+    "clave": "api.sim.celda.modelo_laharz",
+    "es": "LAHARZ, V = {v_punto} hm³ por cauce"
+  },
+  {
+    "clave": "api.sim.celda.modelo_techos",
+    "es": "Carga húmeda vs. techos débiles (Spence et al., 2005)"
+  },
+  {
+    "clave": "api.sim.celda.moderada",
+    "es": "Moderada"
+  },
+  {
+    "clave": "api.sim.celda.muy_fuerte",
+    "es": "Muy fuerte"
+  },
+  {
+    "clave": "api.sim.celda.paramo",
+    "es": "Páramo"
+  },
+  {
+    "clave": "api.sim.celda.severa",
+    "es": "Severa"
+  },
+  {
+    "clave": "api.sim.celda.techos_colapsados_viviendas",
+    "es": "Techos colapsados (viviendas)"
+  },
+  {
+    "clave": "api.sim.celda.v",
+    "es": "V"
+  },
+  {
+    "clave": "api.sim.celda.vi",
+    "es": "VI"
+  },
+  {
+    "clave": "api.sim.celda.vii",
+    "es": "VII"
+  },
+  {
+    "clave": "api.sim.celda.viii",
+    "es": "VIII"
+  },
+  {
+    "clave": "api.sim.celda.violenta",
+    "es": "Violenta"
+  },
+  {
+    "clave": "api.sim.celda.x",
+    "es": "X"
+  },
+  {
+    "clave": "api.sim.celda.zona_urbana",
+    "es": "Zona urbana"
+  },
+  {
+    "clave": "api.sim.columna.area_km2",
+    "es": "Área (km²)"
+  },
+  {
+    "clave": "api.sim.columna.area_quemada_km2",
+    "es": "Área quemada (km²)"
+  },
+  {
+    "clave": "api.sim.columna.cobertura",
+    "es": "Cobertura"
+  },
+  {
+    "clave": "api.sim.columna.intensidad",
+    "es": "Intensidad"
+  },
+  {
+    "clave": "api.sim.columna.modelo",
+    "es": "Modelo"
+  },
+  {
+    "clave": "api.sim.columna.peligro",
+    "es": "Peligro"
+  },
+  {
+    "clave": "api.sim.columna.percepcion",
+    "es": "Percepción"
+  },
+  {
+    "clave": "api.sim.columna.poblacion",
+    "es": "Población"
+  },
+  {
+    "clave": "api.sim.control.ciudad.habitantes.etiqueta",
+    "es": "Habitantes"
+  },
+  {
+    "clave": "api.sim.control.ciudad.nombre.etiqueta",
+    "es": "Nombre de la ciudad"
+  },
+  {
+    "clave": "api.sim.control.erupcion.duracion_h.etiqueta",
+    "es": "Duración de la fase explosiva"
+  },
+  {
+    "clave": "api.sim.control.erupcion.evacuacion.etiqueta",
+    "es": "Población evacuada a tiempo"
+  },
+  {
+    "clave": "api.sim.control.erupcion.semilla.ayuda",
+    "es": "La misma semilla repite el mismo evento."
+  },
+  {
+    "clave": "api.sim.control.erupcion.semilla.etiqueta",
+    "es": "Semilla del azar"
+  },
+  {
+    "clave": "api.sim.control.erupcion.vei.etiqueta",
+    "es": "Índice de explosividad volcánica (IEV)"
+  },
+  {
+    "clave": "api.sim.control.erupcion.viento_deg.etiqueta",
+    "es": "Viento hacia (° desde el norte)"
+  },
+  {
+    "clave": "api.sim.control.erupcion.viento_ms.etiqueta",
+    "es": "Viento en altura"
+  },
+  {
+    "clave": "api.sim.control.erupcion.volumen_lahar_hm3.ayuda",
+    "es": "1 hm³ = 1 millón de m³."
+  },
+  {
+    "clave": "api.sim.control.erupcion.volumen_lahar_hm3.etiqueta",
+    "es": "Volumen de lahar por cauce"
+  },
+  {
+    "clave": "api.sim.control.incendio.horas.etiqueta",
+    "es": "Duración simulada"
+  },
+  {
+    "clave": "api.sim.control.incendio.humedad_comb.ayuda",
+    "es": "Por defecto se deriva de la humedad del suelo en la fecha elegida."
+  },
+  {
+    "clave": "api.sim.control.incendio.humedad_comb.etiqueta",
+    "es": "Humedad del combustible muerto"
+  },
+  {
+    "clave": "api.sim.control.incendio.semilla.ayuda",
+    "es": "La misma semilla repite el mismo evento."
+  },
+  {
+    "clave": "api.sim.control.incendio.semilla.etiqueta",
+    "es": "Semilla del azar"
+  },
+  {
+    "clave": "api.sim.control.incendio.viento_deg.etiqueta",
+    "es": "Viento hacia (° desde el norte)"
+  },
+  {
+    "clave": "api.sim.control.incendio.viento_ms.etiqueta",
+    "es": "Viento"
+  },
+  {
+    "clave": "api.sim.control.inundacion.altura_marejada_m.etiqueta",
+    "es": "Sobreelevación del mar"
+  },
+  {
+    "clave": "api.sim.control.inundacion.caudal_m3s.ayuda",
+    "es": "Clic en un río → desborde; clic en el mar → marejada costera."
+  },
+  {
+    "clave": "api.sim.control.inundacion.caudal_m3s.etiqueta",
+    "es": "Caudal pico del desborde"
+  },
+  {
+    "clave": "api.sim.control.inundacion.duracion_h.etiqueta",
+    "es": "Duración de la crecida o marejada"
+  },
+  {
+    "clave": "api.sim.control.inundacion.semilla.ayuda",
+    "es": "La misma semilla repite el mismo evento."
+  },
+  {
+    "clave": "api.sim.control.inundacion.semilla.etiqueta",
+    "es": "Semilla del azar"
+  },
+  {
+    "clave": "api.sim.control.terremoto.mecanismo.etiqueta",
+    "es": "Mecanismo"
+  },
+  {
+    "clave": "api.sim.control.terremoto.mw.etiqueta",
+    "es": "Magnitud Mw"
+  },
+  {
+    "clave": "api.sim.control.terremoto.pais.etiqueta",
+    "es": "Vulnerabilidad de las construcciones (PAGER)"
+  },
+  {
+    "clave": "api.sim.control.terremoto.profundidad_km.etiqueta",
+    "es": "Profundidad del hipocentro"
+  },
+  {
+    "clave": "api.sim.control.terremoto.rumbo.ayuda",
+    "es": "La fosa de Ecuador corre aproximadamente N25°E."
+  },
+  {
+    "clave": "api.sim.control.terremoto.rumbo.etiqueta",
+    "es": "Rumbo de la falla"
+  },
+  {
+    "clave": "api.sim.control.terremoto.semilla.ayuda",
+    "es": "La misma semilla repite el mismo evento."
+  },
+  {
+    "clave": "api.sim.control.terremoto.semilla.etiqueta",
+    "es": "Semilla del azar"
+  },
+  {
+    "clave": "api.sim.control.terremoto.tsunami.etiqueta",
+    "es": "Tsunami si el epicentro está en el mar"
+  },
+  {
+    "clave": "api.sim.control.tormenta.cohesion_kpa.ayuda",
+    "es": "Incluye el refuerzo de las raíces; menos cohesión = más deslizamientos."
+  },
+  {
+    "clave": "api.sim.control.tormenta.cohesion_kpa.etiqueta",
+    "es": "Cohesión del suelo c′"
+  },
+  {
+    "clave": "api.sim.control.tormenta.duracion_h.etiqueta",
+    "es": "Duración de la lluvia"
+  },
+  {
+    "clave": "api.sim.control.tormenta.friccion_deg.etiqueta",
+    "es": "Ángulo de fricción φ′"
+  },
+  {
+    "clave": "api.sim.control.tormenta.lluvia_mm.ayuda",
+    "es": "El récord diario en la Costa ecuatoriana ronda los 200–300 mm."
+  },
+  {
+    "clave": "api.sim.control.tormenta.lluvia_mm.etiqueta",
+    "es": "Lluvia total en el centro"
+  },
+  {
+    "clave": "api.sim.control.tormenta.radio_km.etiqueta",
+    "es": "Radio de la tormenta"
+  },
+  {
+    "clave": "api.sim.control.tormenta.semilla.ayuda",
+    "es": "La misma semilla repite el mismo evento."
+  },
+  {
+    "clave": "api.sim.control.tormenta.semilla.etiqueta",
+    "es": "Semilla del azar"
+  },
+  {
+    "clave": "api.sim.herramienta.ciudad.nombre",
+    "es": "Fundar ciudad"
+  },
+  {
+    "clave": "api.sim.herramienta.erupcion.nombre",
+    "es": "Erupción"
+  },
+  {
+    "clave": "api.sim.herramienta.incendio.nombre",
+    "es": "Incendio"
+  },
+  {
+    "clave": "api.sim.herramienta.inundacion.nombre",
+    "es": "Desborde / marejada"
+  },
+  {
+    "clave": "api.sim.herramienta.terremoto.nombre",
+    "es": "Terremoto"
+  },
+  {
+    "clave": "api.sim.herramienta.tormenta.nombre",
+    "es": "Tormenta"
+  },
+  {
+    "clave": "api.sim.metrica.acierto_iou.etiqueta",
+    "es": "Acierto (IoU)"
+  },
+  {
+    "clave": "api.sim.metrica.area_inundada.etiqueta",
+    "es": "Área inundada"
+  },
+  {
+    "clave": "api.sim.metrica.area_inundada_deteccion_del_modelo_simulacion.etiqueta",
+    "es": "Área inundada · detección del modelo (simulación)"
+  },
+  {
+    "clave": "api.sim.metrica.area_quemada.etiqueta",
+    "es": "Área quemada"
+  },
+  {
+    "clave": "api.sim.metrica.area_quemada_deteccion_del_modelo_simulacion.etiqueta",
+    "es": "Área quemada · detección del modelo (simulación)"
+  },
+  {
+    "clave": "api.sim.metrica.biomasa_consumida.etiqueta",
+    "es": "Biomasa consumida"
+  },
+  {
+    "clave": "api.sim.metrica.ceniza_1_cm.etiqueta",
+    "es": "Ceniza ≥ 1 cm"
+  },
+  {
+    "clave": "api.sim.metrica.co2_emitido.etiqueta",
+    "es": "CO₂ emitido"
+  },
+  {
+    "clave": "api.sim.metrica.columna_eruptiva.etiqueta",
+    "es": "Columna eruptiva"
+  },
+  {
+    "clave": "api.sim.metrica.deslizamientos.etiqueta",
+    "es": "Deslizamientos"
+  },
+  {
+    "clave": "api.sim.metrica.deslizamientos_perdida_de_coherencia.etiqueta",
+    "es": "Deslizamientos (pérdida de coherencia)"
+  },
+  {
+    "clave": "api.sim.metrica.desplazamiento_los_maximo.etiqueta",
+    "es": "Desplazamiento LOS máximo"
+  },
+  {
+    "clave": "api.sim.metrica.flujos_piroclasticos.etiqueta",
+    "es": "Flujos piroclásticos"
+  },
+  {
+    "clave": "api.sim.metrica.flujos_y_ceniza_10_cm_deteccion_del_modelo_simulacion.etiqueta",
+    "es": "Flujos y ceniza > 10 cm · detección del modelo (simulación)"
+  },
+  {
+    "clave": "api.sim.metrica.franjas_en_el_interferograma.etiqueta",
+    "es": "Franjas en el interferograma"
+  },
+  {
+    "clave": "api.sim.metrica.humedad_del_combustible.etiqueta",
+    "es": "Humedad del combustible"
+  },
+  {
+    "clave": "api.sim.metrica.intensidad_maxima.etiqueta",
+    "es": "Intensidad máxima"
+  },
+  {
+    "clave": "api.sim.metrica.lahares.etiqueta",
+    "es": "Lahares"
+  },
+  {
+    "clave": "api.sim.metrica.magnitud.etiqueta",
+    "es": "Magnitud"
+  },
+  {
+    "clave": "api.sim.metrica.perdidas_en_viviendas.etiqueta",
+    "es": "Pérdidas en viviendas"
+  },
+  {
+    "clave": "api.sim.metrica.personas_a_evacuar.etiqueta",
+    "es": "Personas a evacuar"
+  },
+  {
+    "clave": "api.sim.metrica.poblacion_con_mmi_vi.etiqueta",
+    "es": "Población con MMI ≥ VI"
+  },
+  {
+    "clave": "api.sim.metrica.poblacion_expuesta.etiqueta",
+    "es": "Población expuesta"
+  },
+  {
+    "clave": "api.sim.metrica.precision_exhaustividad.etiqueta",
+    "es": "Precisión · exhaustividad"
+  },
+  {
+    "clave": "api.sim.metrica.tsunami_en_tierra.etiqueta",
+    "es": "Tsunami en tierra"
+  },
+  {
+    "clave": "api.sim.metrica.victimas_estimadas.etiqueta",
+    "es": "Víctimas estimadas"
+  },
+  {
+    "clave": "api.sim.metrica.victimas_sin_alerta.etiqueta",
+    "es": "Víctimas sin alerta"
+  },
+  {
+    "clave": "api.sim.metrica.viviendas_destruidas_equiv.etiqueta",
+    "es": "Viviendas destruidas (equiv.)"
+  },
+  {
+    "clave": "api.sim.mundo.bosques_secos_de_loja.descripcion",
+    "es": "Bosque andino y matorral seco con incendios recurrentes entre agosto y octubre."
+  },
+  {
+    "clave": "api.sim.mundo.bosques_secos_de_loja.nombre",
+    "es": "Bosques secos de Loja"
+  },
+  {
+    "clave": "api.sim.mundo.cotopaxi_y_el_valle_de_latacunga.descripcion",
+    "es": "Volcán más vigilado del país; en 1877 sus lahares bajaron por los ríos Cutuchi y Pita."
+  },
+  {
+    "clave": "api.sim.mundo.cotopaxi_y_el_valle_de_latacunga.nombre",
+    "es": "Cotopaxi y el valle de Latacunga"
+  },
+  {
+    "clave": "api.sim.mundo.cuenca_baja_del_guayas_babahoyo.descripcion",
+    "es": "Llanura de inundación que se anega en casi todos los inviernos."
+  },
+  {
+    "clave": "api.sim.mundo.cuenca_baja_del_guayas_babahoyo.nombre",
+    "es": "Cuenca baja del Guayas (Babahoyo)"
+  },
+  {
+    "clave": "api.sim.mundo.galapagos_santa_cruz.descripcion",
+    "es": "Isla volcánica con zonas áridas y húmedas; el mar rodea todo el mundo."
+  },
+  {
+    "clave": "api.sim.mundo.galapagos_santa_cruz.nombre",
+    "es": "Galápagos: Santa Cruz"
+  },
+  {
+    "clave": "api.sim.mundo.guayaquil_y_el_estuario.descripcion",
+    "es": "Ciudad baja sobre el estuario: sensible a marejadas y desbordes."
+  },
+  {
+    "clave": "api.sim.mundo.guayaquil_y_el_estuario.nombre",
+    "es": "Guayaquil y el estuario"
+  },
+  {
+    "clave": "api.sim.mundo.pedernales_y_la_costa_de_manabi.descripcion",
+    "es": "Zona de subducción del sismo de 2016 (Mw 7,8); el mar al oeste permite tsunamis."
+  },
+  {
+    "clave": "api.sim.mundo.pedernales_y_la_costa_de_manabi.nombre",
+    "es": "Pedernales y la costa de Manabí"
+  },
+  {
+    "clave": "api.sim.mundo.quito_y_el_guagua_pichincha.descripcion",
+    "es": "Capital sobre el sistema de fallas inversas de Quito, a los pies de un volcán activo."
+  },
+  {
+    "clave": "api.sim.mundo.quito_y_el_guagua_pichincha.nombre",
+    "es": "Quito y el Guagua Pichincha"
+  },
+  {
+    "clave": "api.sim.mundo.tungurahua_y_banos.descripcion",
+    "es": "Activo entre 1999 y 2016; Baños está a 8 km del cráter."
+  },
+  {
+    "clave": "api.sim.mundo.tungurahua_y_banos.nombre",
+    "es": "Tungurahua y Baños"
+  },
+  {
+    "clave": "api.sim.nota.agua.radar",
+    "es": "NISAR (GCOV): cambio de HH entre fechas (< −5 dB agua abierta, > +3 dB doble rebote) y clasificación de inundación de la app. Se compara la extensión máxima simulada; en la pasada real el agua puede haber bajado (en una pasada posterior (ver «Espera hasta la primera imagen»))."
+  },
+  {
+    "clave": "api.sim.nota.erupcion.alerta",
+    "es": "Ecuador cuenta con sistemas de alerta temprana de lahares (p. ej. Cotopaxi): sube la evacuación para ver su efecto."
+  },
+  {
+    "clave": "api.sim.nota.erupcion.radar",
+    "es": "NISAR: la banda L ve a través de la nube de ceniza; los depósitos de lahar y flujo piroclástico destruyen la coherencia interferométrica (en una pasada posterior (ver «Espera hasta la primera imagen»))."
+  },
+  {
+    "clave": "api.sim.nota.erupcion.supuestos",
+    "es": "Las velocidades del lahar (8 m/s) y del flujo piroclástico (40 m/s), la altura de colapso y las letalidades son supuestos del juego; las áreas sí provienen de los modelos publicados."
+  },
+  {
+    "clave": "api.sim.nota.erupcion.tefra",
+    "es": "Cráter a {zv} m. Volumen de tefra {v} hm³ en {h} h; queda dentro del mundo el {pct} % de la masa."
+  },
+  {
+    "clave": "api.sim.nota.incendio.cobertura",
+    "es": "El páramo y el bosque seco arden con facilidad; el bosque húmedo apenas propaga si el combustible supera su humedad de extinción."
+  },
+  {
+    "clave": "api.sim.nota.incendio.paso",
+    "es": "Cada paso del autómata equivale a {min} min: el fuego avanza como máximo una celda ({m} m) por paso (supuesto de 0.25 m/s ≈ 0,9 km/h)."
+  },
+  {
+    "clave": "api.sim.nota.incendio.radar",
+    "es": "NISAR: la próxima pasada llega días después del evento (ver «Espera hasta la primera imagen»); quemado ⟺ LR < −2,5 dB en HV."
+  },
+  {
+    "clave": "api.sim.nota.incendio.residentes",
+    "es": "Residentes dentro del perímetro: {n}. No hay una función de mortalidad publicada para incendios forestales en Ecuador: se informa la exposición."
+  },
+  {
+    "clave": "api.sim.nota.incendio.residentes_menos_de_uno",
+    "es": "Residentes dentro del perímetro: < 1. No hay una función de mortalidad publicada para incendios forestales en Ecuador: se informa la exposición."
+  },
+  {
+    "clave": "api.sim.nota.inundacion.hidrograma",
+    "es": "Hidrograma triangular con pico de {q} m³/s a las {h} h; volumen total {v} hm³."
+  },
+  {
+    "clave": "api.sim.nota.inundacion.marejada",
+    "es": "Nivel del mar elevado hasta {m} m durante {h} h (pulso senoidal)."
+  },
+  {
+    "clave": "api.sim.nota.inundacion.mortalidad",
+    "es": "Mortalidad de la «zona restante» de Jonkman (sin rotura de diques ni subida rápida): es una cota inferior en crecidas súbitas."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.hipocentro_inversa_subduccion",
+    "es": "Hipocentro a {prof} km; mecanismo inversa (subducción) (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.hipocentro_normal",
+    "es": "Hipocentro a {prof} km; mecanismo normal (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.hipocentro_rumbo_dextral",
+    "es": "Hipocentro a {prof} km; mecanismo rumbo dextral (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.hipocentro_rumbo_sinistral",
+    "es": "Hipocentro a {prof} km; mecanismo rumbo sinistral (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.ipe",
+    "es": "La IPE de Allen et al. (2012) es de corteza activa; en sismos de subducción grandes puede infravalorar la intensidad lejana. No incluye amplificación por suelos blandos."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.pager",
+    "es": "Los parámetros PAGER de Ecuador se calibraron con sismos de 1973–2007 (antes de Pedernales 2016): prueba Perú o Colombia para ver la sensibilidad a la vulnerabilidad."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.radar",
+    "es": "NISAR (GUNW): interferograma de 12 días que abarca el sismo; la atmósfera añade ~1 cm de ruido turbulento. El mar no tiene coherencia."
+  },
+  {
+    "clave": "api.sim.nota.terremoto.tsunami",
+    "es": "Tsunami: el levantamiento del fondo marino (hasta {m} m) se propaga con aguas someras; la batimetría se limita a 1 500 m para acelerar el cálculo. La mortalidad de Jonkman (zona restante) subestima la de un tsunami."
+  },
+  {
+    "clave": "api.sim.nota.tormenta.deslizamientos",
+    "es": "Los deslizamientos se muestran desde el final de la lluvia; no se estima su mortalidad."
+  },
+  {
+    "clave": "api.sim.nota.tormenta.drenaje",
+    "es": "La red de drenaje es la del DEM a la resolución del mundo: los cauces estrechos se ensanchan a una celda."
+  },
+  {
+    "clave": "api.sim.nota.tormenta.lluvia_humedo",
+    "es": "Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN húmedo (AMC III))."
+  },
+  {
+    "clave": "api.sim.nota.tormenta.lluvia_normal",
+    "es": "Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN normal (AMC II))."
+  },
+  {
+    "clave": "api.sim.nota.tormenta.lluvia_seco",
+    "es": "Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN seco (AMC I))."
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.mecanismo.inversa_subduccion",
+    "es": "Inversa (subducción)"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.mecanismo.normal",
+    "es": "Normal"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.mecanismo.rumbo_dextral",
+    "es": "Rumbo dextral"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.mecanismo.rumbo_sinistral",
+    "es": "Rumbo sinistral"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.pais.colombia",
+    "es": "Colombia"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.pais.ecuador",
+    "es": "Ecuador"
+  },
+  {
+    "clave": "api.sim.opcion.terremoto.pais.peru",
+    "es": "Perú"
+  },
+  {
+    "clave": "api.sim.panel.0_hh_antes_db",
+    "es": "σ⁰ HH antes (dB)"
+  },
+  {
+    "clave": "api.sim.panel.0_hh_en_el_pico_de_la_crecida_db",
+    "es": "σ⁰ HH en el pico de la crecida (dB)"
+  },
+  {
+    "clave": "api.sim.panel.0_hv_antes_db",
+    "es": "σ⁰ HV antes (dB)"
+  },
+  {
+    "clave": "api.sim.panel.0_hv_despues_db",
+    "es": "σ⁰ HV después (dB)"
+  },
+  {
+    "clave": "api.sim.panel.coherencia_antes_de_la_erupcion",
+    "es": "Coherencia antes de la erupción"
+  },
+  {
+    "clave": "api.sim.panel.coherencia_con_la_erupcion",
+    "es": "Coherencia con la erupción"
+  },
+  {
+    "clave": "api.sim.panel.coherencia_interferometrica",
+    "es": "Coherencia interferométrica"
+  },
+  {
+    "clave": "api.sim.panel.desplazamiento_en_la_linea_de_vista",
+    "es": "Desplazamiento en la línea de vista"
+  },
+  {
+    "clave": "api.sim.panel.deteccion_de_inundacion",
+    "es": "Detección de inundación"
+  },
+  {
+    "clave": "api.sim.panel.interferograma_envuelto_fase_los",
+    "es": "Interferograma envuelto (fase LOS)"
+  },
+  {
+    "clave": "api.sim.panel.perdida_de_coherencia_antes_despues",
+    "es": "Pérdida de coherencia (antes − después)"
+  },
+  {
+    "clave": "api.sim.panel.razon_logaritmica_hv_despues_antes",
+    "es": "Razón logarítmica HV después/antes"
+  },
+  {
+    "clave": "api.sim.titulo.erupcion",
+    "es": "Erupción IEV {vei}"
+  },
+  {
+    "clave": "api.sim.titulo.erupcion_volcan",
+    "es": "Erupción IEV {vei} del {volcan}"
+  },
+  {
+    "clave": "api.sim.titulo.incendio",
+    "es": "Incendio forestal"
+  },
+  {
+    "clave": "api.sim.titulo.inundacion",
+    "es": "Desborde de río"
+  },
+  {
+    "clave": "api.sim.titulo.inundacion_marejada",
+    "es": "Marejada costera"
+  },
+  {
+    "clave": "api.sim.titulo.terremoto",
+    "es": "Terremoto Mw {mw}"
+  },
+  {
+    "clave": "api.sim.titulo.tormenta",
+    "es": "Tormenta extrema"
+  },
+  {
+    "clave": "api.tipo.agricultura.descripcion",
+    "es": "Series temporales por parcela: siembra, crecimiento, inundación de arroz y cosecha."
+  },
+  {
+    "clave": "api.tipo.agricultura.nombre",
+    "es": "Actividad agrícola"
+  },
+  {
+    "clave": "api.tipo.agricultura.observable",
+    "es": "σ⁰ HV por parcela (dB)"
+  },
+  {
+    "clave": "api.tipo.glaciares.descripcion",
+    "es": "Seguimiento de desplazamientos (offset tracking) entre adquisiciones de 12 días."
+  },
+  {
+    "clave": "api.tipo.glaciares.nombre",
+    "es": "Movimiento de glaciares"
+  },
+  {
+    "clave": "api.tipo.glaciares.observable",
+    "es": "Velocidad superficial (m/día)"
+  },
+  {
+    "clave": "api.tipo.humedales.descripcion",
+    "es": "Clasificación de inundación: agua abierta (reflexión especular, HH muy bajo) y vegetación inundada (doble rebote tronco-agua, HH muy alto)."
+  },
+  {
+    "clave": "api.tipo.humedales.nombre",
+    "es": "Pérdida de humedales"
+  },
+  {
+    "clave": "api.tipo.humedales.observable",
+    "es": "σ⁰ HH y HV (dB)"
+  },
+  {
+    "clave": "api.tipo.incendios.descripcion",
+    "es": "Razón logarítmica HV después/antes e inversión de biomasa con el modelo de nube de agua."
+  },
+  {
+    "clave": "api.tipo.incendios.nombre",
+    "es": "Incendios forestales"
+  },
+  {
+    "clave": "api.tipo.incendios.observable",
+    "es": "σ⁰ HV (dB)"
+  },
+  {
+    "clave": "api.tipo.subsidencia.descripcion",
+    "es": "Series temporales InSAR: ajuste por mínimos cuadrados de la pila de interferogramas."
+  },
+  {
+    "clave": "api.tipo.subsidencia.nombre",
+    "es": "Subsidencia del terreno"
+  },
+  {
+    "clave": "api.tipo.subsidencia.observable",
+    "es": "Velocidad vertical (cm/año)"
+  },
+  {
+    "clave": "api.tipo.terremotos.descripcion",
+    "es": "Interferometría diferencial de 12 días; el modelo de Okada genera la deformación cosísmica."
+  },
+  {
+    "clave": "api.tipo.terremotos.nombre",
+    "es": "Terremotos"
+  },
+  {
+    "clave": "api.tipo.terremotos.observable",
+    "es": "Desplazamiento LOS (cm)"
+  },
+  {
+    "clave": "api.unidad.cm_ano",
+    "es": "cm/año"
+  },
+  {
+    "clave": "api.unidad.dias",
+    "es": "días"
+  },
+  {
+    "clave": "api.unidad.m_dia",
+    "es": "m/día"
+  }
+]

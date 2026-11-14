@@ -1,0 +1,123 @@
+:root {
+  /* superficies: la elevación se marca solo por luminosidad */
+  --ground:   #171719;   /* fondo de la app */
+  --surface:  #131217;   /* tarjetas, más oscuras que el fondo */
+  --raised:   #212023;   /* paneles anidados, campos */
+  --border:   #222224;
+  --rule:     #1b1a1f;   /* filas de tablas */
+  --control:  #6c6c70;   /* bordes de controles; ≥ 3:1 sobre --ground (3,4), --surface (3,6) y --raised (3,1) */
+  --grid:     #2b2b2b;   /* rejilla de gráficos */
+
+  /* texto: dos grises, y se ven distintos */
+  --text:      #ffffff;
+  --secondary: #b4b4b8;
+  --muted:     #8a8c92;  /* 4,5:1 sobre --surface */
+
+  /* acento: una línea de 1 px, nunca un relleno */
+  --accent:   #e5b93c;   /* amarillo cenit */
+
+  /* estado */
+  --positive: #44a282;   --pill-positive-bg: #1b2828; --pill-positive-ink: #5fc39c;
+  --negative: #e5566f;   --pill-negative-bg: #2c1a20; --pill-negative-ink: #e5566f;
+  --warning:  #e0773a;   --pill-warning-bg:  #2a1c14; --pill-warning-ink:  #e0773a;
+  --pill-neutral-bg: #212023; --pill-neutral-ink: #bdbdc0;
+
+  /* gráficos: un solo tono */
+  --chart-1: #e5b93c;    /* serie principal: lo detectado, hoy, el periodo actual */
+  --chart-2: #f2f2f3;    /* referencia: la verdad sintética del modelo (punteada) */
+  --chart-3: #8a8c92;    /* comparación o lo posterior al cursor */
+  --chart-linea: 2px;    /* grosor de las líneas de datos */
+  --chart-punto: 5px;    /* punto de la cabecera de leyenda */
+
+  /* origen de los datos (banda y sellos de demostración) */
+  --demo-bg:  #2a1c14;
+  --demo-ink: #f0a868;   /* 8,2:1 sobre --demo-bg */
+  --demo-edge:#e0773a;
+
+  /* escala de espaciado (docs/diseno.md §6), base de 4 px */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  --gap: 24px;            /* un solo hueco, horizontal y vertical */
+  --page-padding: 32px;   /* relleno de página */
+  --card-padding: 20px;   /* relleno de tarjeta */
+
+  /* radios */
+  --radius-card: 6px;
+  --radius-pill: 999px;   /* campos y botones */
+  --radius-chip: 4px;
+
+  /* alturas */
+  --h-control: 34px;
+  --h-table-row: 42px;
+  --h-table-head: 38px;
+  --h-list-row: 28px;
+
+  /* solo lo que flota */
+  --shadow-float: 0 12px 28px rgba(0, 0, 0, 0.2);
+
+  /* escala tipográfica (docs/diseno.md §5): tamaños y interlineados */
+  --fs-12: 12px; --fs-13: 13px; --fs-14: 14px; --fs-16: 16px; --fs-20: 20px; --fs-22: 22px; --fs-26: 26px;
+  --lh-16: 16px; --lh-20: 20px; --lh-24: 24px; --lh-26: 26px; --lh-28: 28px; --lh-32: 32px;
+
+  /* tipografía (docs/diseno.md §5) */
+  --font-sans: 'Public Sans', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
+/* Cifras tabulares en todo lo que sea número (docs/diseno.md §5) */
+.tabular, .num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* estructura y componentes (docs/diseno.md §6, §7, §8, §10) */
+:root {
+  --w-rail: 50px;          /* riel de iconos */
+  --h-banda: 36px;         /* banda de demostración (32 px en móvil) */
+  --h-banda-movil: 32px;
+  --h-barra-inferior: 56px;
+  --w-columna: 384px;      /* columna fija del Observatorio */
+  --size-objetivo: 24px;   /* objetivo mínimo de puntero (WCAG 2.5.8) */
+  --h-touch: 44px;         /* objetivo táctil mínimo en móvil */
+  --w-lectura: 48ch;       /* medida de lectura de Historias: 48ch de Public Sans 16 px dan unos 66 caracteres por línea, espacios incluidos (máx. 68; medido en navegador) */
+  --focus-ring: 2px solid var(--text);
+  --focus-offset: 2px;
+  --t-respuesta: 150ms;    /* 120–180 ms, solo transform y opacity */
+  --size-thumb: 14px;      /* tirador del deslizador */
+  --size-tirador: 32px;    /* tirador del comparador */
+  --w-switch: 28px;  --h-switch: 16px;
+  --size-thumb-switch: 10px;
+  --size-2: 2px;           /* pista del deslizador, desfases finos */
+  --offset-subrayado: 3px;
+  --w-flotante: 420px;     /* panel flotante de la banda */
+  --w-termino: 320px;      /* panel de un término */
+  --w-menu-acciones: 220px; /* lista del menú de acciones de móvil */
+  --w-panel-idioma: 184px; /* panel del selector de idioma */
+  --w-selector-min: 200px; /* selectores de la cabecera del Observatorio */
+  --h-comparador: clamp(380px, 68vh, 660px); /* alto máximo de la imagen del comparador */
+  --w-fecha-min: 140px;    /* selectores de fecha y polarización de «Antes y después» */
+  --h-mapa: clamp(440px, calc(100vh - 240px), 780px); /* mapa inmersivo del Observatorio: el alto de la ventana menos cabecera y barra */
+  --h-mapa-max: 820px;
+  --h-recorrido: clamp(420px, calc(100vh - 140px), 760px); /* pantalla incrustada del recorrido */
+  --h-mapa-movil: clamp(360px, 62vh, 540px);
+  --w-controles-mapa: 240px; /* placa flotante: mapa base y opacidad */
+  --w-leyenda-mapa: 280px;
+  --w-kpi-min: 160px;      /* ancho mínimo de una cifra de la franja */
+  --w-icono-min: 120px;    /* celda de la galería de iconos */
+  --scrim: rgba(0, 0, 0, 0.6); /* fondo tras una hoja modal */
+  --z-flotante: 20;
+  --z-banda: 30;
+}

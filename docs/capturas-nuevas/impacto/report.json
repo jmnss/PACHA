@@ -1,0 +1,1599 @@
+{
+ "url": "http://localhost:8000/observatorio?vista=impacto",
+ "at": "2026-11-05T23:58:55.755Z",
+ "allow": [
+  "palette-terracotta"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    0.73,
+    0.81,
+    0.26
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 2672,
+     "screens": 3,
+     "words": 680,
+     "img": 0,
+     "video": 0,
+     "canvas": 1,
+     "svg": 14,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Observatorio",
+     "words": 1,
+     "chars": 12,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Public Sans",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.23,
+     "top": 68,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Observatorio",
+     "words": 1,
+     "lines": 1,
+     "size": 26,
+     "font": "Public Sans"
+    },
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Public Sans",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      20,
+      26
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Public Sans",
+      "size": 13,
+      "leading": 1.54,
+      "weight": 600,
+      "tracking": 0,
+      "contrast": 8.2
+     },
+     "measureChars": 58,
+     "max": {
+      "size": 26,
+      "vw": 1.8,
+      "font": "Public Sans",
+      "text": "Observatorio"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.03,
+     "smallText": 27
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#171719",
+     "bodyBgHsl": {
+      "h": 240,
+      "s": 0.04,
+      "l": 0.09
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#131217",
+       "top": 237,
+       "hsl": {
+        "h": 252,
+        "s": 0.12,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#8a8c92",
+       "share": 0.49
+      },
+      {
+       "color": "#b4b4b8",
+       "share": 0.31
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.17
+      },
+      {
+       "color": "#f0a868",
+       "share": 0.02
+      },
+      {
+       "color": "#171719",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#ffffff",
+      "hsl": {
+       "h": 0,
+       "s": 0,
+       "l": 1
+      },
+      "fg": "#171719"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 34,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Descargar informe (PNG)"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 12,
+     "hairlineSamples": [
+      "nav.riel 50px",
+      "div.banda-demo__fila 1390px",
+      "div.pestanas 1326px",
+      "div.tarjeta__pie 876px",
+      "h3.panel-sim__subtitulo 342px"
+     ],
+     "outlinedBoxes": 9,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 9,
+     "boxRadius": 6,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 237
+      },
+      {
+       "count": 4,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 237
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 900,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "public sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 2672,
+    "margins": {
+     "left": 82,
+     "right": 53
+    },
+    "sections": [
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 237,
+      "height": 368,
+      "words": 67,
+      "media": 0,
+      "middle": 39,
+      "heading": {
+       "text": "548",
+       "size": 26,
+       "tag": "dd"
+      },
+      "left": 103,
+      "right": 622,
+      "textLeft": 103,
+      "textRight": 622,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.impacto__rejilla",
+      "tag": "div",
+      "top": 629,
+      "height": 366,
+      "words": 43,
+      "media": 2,
+      "middle": 145,
+      "heading": {
+       "text": "Hectáreas por categoría",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 122,
+      "right": 461,
+      "textLeft": 122,
+      "textRight": 479,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 1019,
+      "height": 350,
+      "words": 21,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Evolución frente a la pasada «antes»",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 461,
+      "textLeft": 103,
+      "textRight": 771,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 1393,
+      "height": 306,
+      "words": 83,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Qué podría hacerse con esto",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 815,
+      "textLeft": 103,
+      "textRight": 815,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Observatorio",
+      "size": 26,
+      "top": 68,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 1041,
+      "n": 5
+     },
+     {
+      "x": 103,
+      "n": 3
+     },
+     {
+      "x": 82,
+      "n": 2
+     },
+     {
+      "x": 574,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 11,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.07,
+    "voidBox": {
+     "x": 840,
+     "y": 180,
+     "w": 180,
+     "h": 480
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": true,
+    "ground": "#171719",
+    "sidebar": {
+     "w": 50,
+     "tag": "nav",
+     "links": 6,
+     "share": 0.03
+    },
+    "topbar": {
+     "h": 36
+    },
+    "canvas": {
+     "left": 32,
+     "right": 44
+    },
+    "hero": {
+     "text": "Observatorio",
+     "words": 1,
+     "chars": 12,
+     "lines": 1,
+     "size": 26,
+     "vw": 1.8,
+     "font": "Public Sans",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.23,
+     "top": 68,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 2,
+    "layout": {
+     "panels": 8,
+     "firstScreen": 3,
+     "ragged": [
+      {
+       "diff": 798,
+       "top": 237
+      }
+     ],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 10,
+     "radii": [
+      [
+       6,
+       9
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 2,
+     "leftAligned": 0,
+     "figures": 4,
+     "tabularShare": 1,
+     "kpiMax": 13
+    },
+    "rows": {
+     "count": 4,
+     "median": 42
+    },
+    "chartHues": 1,
+    "placeholders": [],
+    "type": {
+     "under13": 0.37,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      20,
+      26
+     ]
+    },
+    "title": {
+     "text": "Observatorio",
+     "size": 26,
+     "top": 68
+    },
+    "colourShare": 0.007
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.63,
+    0.83,
+    0.92,
+    0.82,
+    0.8
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 4156,
+     "screens": 4.1,
+     "words": 680,
+     "img": 0,
+     "video": 0,
+     "canvas": 1,
+     "svg": 14,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Observatorio",
+     "words": 1,
+     "chars": 12,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Public Sans",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.23,
+     "top": 68,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Observatorio",
+     "words": 1,
+     "lines": 1,
+     "size": 26,
+     "font": "Public Sans"
+    },
+    "headings": [
+     {
+      "text": "Observatorio",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Public Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.23,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.61,
+      "top": 68,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "548 ha",
+      "words": 2,
+      "chars": 6,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Public Sans",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.23,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.21,
+      "top": 441,
+      "tag": "dd",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 2,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Public Sans",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      20,
+      26
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "Public Sans",
+      "size": 13,
+      "leading": 1.54,
+      "weight": 600,
+      "tracking": 0,
+      "contrast": 8.2
+     },
+     "measureChars": 103,
+     "max": {
+      "size": 26,
+      "vw": 3.4,
+      "font": "Public Sans",
+      "text": "Observatorio"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.03,
+     "smallText": 27
+    },
+    "eyebrows": [
+     {
+      "text": "Superficie inundada al final",
+      "above": "548 ha",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 397
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#171719",
+     "bodyBgHsl": {
+      "h": 240,
+      "s": 0.04,
+      "l": 0.09
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#131217",
+       "top": 319,
+       "hsl": {
+        "h": 252,
+        "s": 0.12,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#8a8c92",
+       "share": 0.49
+      },
+      {
+       "color": "#b4b4b8",
+       "share": 0.31
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.17
+      },
+      {
+       "color": "#f0a868",
+       "share": 0.02
+      },
+      {
+       "color": "#171719",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#ffffff",
+      "hsl": {
+       "h": 0,
+       "s": 0,
+       "l": 1
+      },
+      "fg": "#171719"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 34,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Descargar informe (PNG)"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 12,
+     "hairlineSamples": [
+      "nav.riel 50px",
+      "div.banda-demo__fila 718px",
+      "div.pestanas 654px",
+      "div.tarjeta__pie 612px",
+      "h3.panel-sim__subtitulo 612px"
+     ],
+     "outlinedBoxes": 9,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 9,
+     "boxRadius": 6,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 319
+      },
+      {
+       "count": 4,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 1841
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 1024,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "public sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 4156,
+    "margins": {
+     "left": 82,
+     "right": 53
+    },
+    "sections": [
+     {
+      "sel": "header.cabecera",
+      "tag": "header",
+      "top": 68,
+      "height": 166,
+      "words": 23,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Observatorio",
+       "size": 26,
+       "tag": "h1"
+      },
+      "left": 82,
+      "right": 217,
+      "textLeft": 82,
+      "textRight": 217,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.observatorio__principal",
+      "tag": "div",
+      "top": 319,
+      "height": 1498,
+      "words": 214,
+      "media": 3,
+      "middle": 0,
+      "heading": {
+       "text": "548",
+       "size": 26,
+       "tag": "dd"
+      },
+      "left": 103,
+      "right": 53,
+      "textLeft": 103,
+      "textRight": 96,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 1841,
+      "height": 1098,
+      "words": 172,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Parámetros del modelo",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 53,
+      "textLeft": 103,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 3167,
+      "height": 354,
+      "words": 68,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Cambio entre dos pasadas",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 53,
+      "textLeft": 103,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 3545,
+      "height": 579,
+      "words": 75,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Contexto del lugar",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 103,
+      "right": 53,
+      "textLeft": 103,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Observatorio",
+      "size": 26,
+      "top": 68,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 99,
+      "n": 8
+     },
+     {
+      "x": 82,
+      "n": 2
+     },
+     {
+      "x": 442,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 11,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": true,
+    "ground": "#171719",
+    "sidebar": {
+     "w": 50,
+     "tag": "nav",
+     "links": 6,
+     "share": 0.07
+    },
+    "topbar": {
+     "h": 36
+    },
+    "canvas": {
+     "left": 32,
+     "right": 53
+    },
+    "hero": {
+     "text": "Observatorio",
+     "words": 1,
+     "chars": 12,
+     "lines": 1,
+     "size": 26,
+     "vw": 3.4,
+     "font": "Public Sans",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.23,
+     "top": 68,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 2,
+    "layout": {
+     "panels": 8,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 10,
+     "radii": [
+      [
+       6,
+       9
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 2,
+     "leftAligned": 0,
+     "figures": 4,
+     "tabularShare": 1,
+     "kpiMax": 13
+    },
+    "rows": {
+     "count": 4,
+     "median": 42
+    },
+    "chartHues": 1,
+    "placeholders": [],
+    "type": {
+     "under13": 0.37,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      20,
+      26
+     ]
+    },
+    "title": {
+     "text": "Observatorio",
+     "size": 26,
+     "top": 68
+    },
+    "colourShare": 0.024
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.79,
+    0.62,
+    0.87,
+    0.78,
+    0.93
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 3920,
+     "screens": 4.6,
+     "words": 510,
+     "img": 0,
+     "video": 0,
+     "canvas": 1,
+     "svg": 13,
+     "sections": 6,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Observatorio",
+     "words": 1,
+     "chars": 12,
+     "lines": 1,
+     "size": 22,
+     "vw": 5.6,
+     "font": "Public Sans",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.27,
+     "top": 48,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Observatorio",
+     "words": 1,
+     "lines": 1,
+     "size": 22,
+     "font": "Public Sans"
+    },
+    "headings": [
+     {
+      "text": "Observatorio",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "Public Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.27,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 48,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "548 ha",
+      "words": 2,
+      "chars": 6,
+      "lines": 1,
+      "size": 26,
+      "vw": 6.7,
+      "font": "Public Sans",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.23,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.3,
+      "top": 519,
+      "tag": "dd",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 2,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Public Sans",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      20,
+      22,
+      26
+     ],
+     "sizeCount": 7,
+     "notLoaded": [],
+     "body": {
+      "font": "Public Sans",
+      "size": 14,
+      "leading": 1.71,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 9
+     },
+     "measureChars": 54,
+     "max": {
+      "size": 26,
+      "vw": 6.7,
+      "font": "Public Sans",
+      "text": "548"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.03,
+     "smallText": 17
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#171719",
+     "bodyBgHsl": {
+      "h": 240,
+      "s": 0.04,
+      "l": 0.09
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#131217",
+       "top": 397,
+       "hsl": {
+        "h": 252,
+        "s": 0.12,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#8a8c92",
+       "share": 0.47
+      },
+      {
+       "color": "#b4b4b8",
+       "share": 0.35
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.15
+      },
+      {
+       "color": "#f0a868",
+       "share": 0.02
+      },
+      {
+       "color": "#171719",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#ffffff",
+      "hsl": {
+       "h": 0,
+       "s": 0,
+       "l": 1
+      },
+      "fg": "#171719"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Descargar informe (PNG)"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 10,
+     "hairlineSamples": [
+      "nav.riel 390px",
+      "div.banda-demo__fila 390px",
+      "div.pestanas 358px",
+      "div.tarjeta__pie 316px",
+      "div.tarjeta__pie 316px"
+     ],
+     "outlinedBoxes": 8,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 8,
+     "boxRadius": 6,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 56,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "public sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 3920,
+    "margins": {
+     "left": 16,
+     "right": 16
+    },
+    "sections": [
+     {
+      "sel": "header.cabecera",
+      "tag": "header",
+      "top": 48,
+      "height": 272,
+      "words": 23,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Observatorio",
+       "size": 22,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.observatorio__principal",
+      "tag": "div",
+      "top": 397,
+      "height": 2089,
+      "words": 214,
+      "media": 3,
+      "middle": 0,
+      "heading": {
+       "text": "548",
+       "size": 26,
+       "tag": "dd"
+      },
+      "left": 37,
+      "right": 37,
+      "textLeft": 37,
+      "textRight": 41,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "aside.observatorio__lado",
+      "tag": "aside",
+      "top": 2510,
+      "height": 1338,
+      "words": 244,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Cambio entre dos pasadas",
+       "size": 16,
+       "tag": "h2"
+      },
+      "left": 33,
+      "right": 37,
+      "textLeft": 33,
+      "textRight": 37,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Observatorio",
+      "size": 22,
+      "top": 48,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 33,
+      "n": 10
+     },
+     {
+      "x": 16,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 12,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#171719",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 16,
+     "right": 16
+    },
+    "hero": {
+     "text": "Observatorio",
+     "words": 1,
+     "chars": 12,
+     "lines": 1,
+     "size": 22,
+     "vw": 5.6,
+     "font": "Public Sans",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.27,
+     "top": 48,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 2,
+    "layout": {
+     "panels": 7,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 9,
+     "radii": [
+      [
+       6,
+       8
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 2,
+     "leftAligned": 0,
+     "figures": 1,
+     "tabularShare": 1,
+     "kpiMax": 14
+    },
+    "rows": {
+     "count": 4,
+     "median": 82
+    },
+    "chartHues": 1,
+    "placeholders": [],
+    "type": {
+     "under13": 0.34,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      20,
+      22,
+      26
+     ]
+    },
+    "title": {
+     "text": "Observatorio",
+     "size": 22,
+     "top": 48
+    },
+    "colourShare": 0.002
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "ragged-row",
+   "width": 1440,
+   "message": "1 pair(s) of cards in one row end at different heights (by 798px).",
+   "fix": "Cards that share a row share a bottom edge: balance them by their content (the same number of rows, a block of similar height beside it), or stack them. In testing, ragged rows were marked down every time."
+  },
+  {
+   "level": "WARN",
+   "id": "below-fold",
+   "width": 1440,
+   "message": "Only 3 of 8 blocks start on the first 1440px screen.",
+   "fix": "Every block the brief names shows its header and first rows on the first desktop screen: size the headline block to its question, cap long lists with \"View all\", and put time-sensitive blocks before long tables."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/impacto/desktop-fold.jpg",
+   "pages": [
+    "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/impacto/desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/impacto/tablet-fold.jpg",
+   "pages": [
+    "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/impacto/tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/impacto/mobile-fold.jpg",
+   "pages": [
+    "/home/jnavas/NASA2026/modelo clima/docs/capturas-nuevas/impacto/mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

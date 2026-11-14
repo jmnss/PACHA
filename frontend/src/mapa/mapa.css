@@ -1,0 +1,19 @@
+.mapa { position: relative; width: 100%; height: 100%; background: var(--ground); border-radius: var(--radius-card); overflow: hidden; }
+.mapa__lienzo { position: absolute; inset: 0; }
+.mapa__atribucion { position: absolute; right: var(--space-2); bottom: var(--space-2); z-index: 2; margin: 0; font-size: var(--fs-12); line-height: var(--lh-16); color: var(--secondary); }
+.mapa__atribucion a { color: inherit; text-decoration: underline; }
+.mapa__marcador { width: 12px; height: 12px; padding: 0; border-radius: var(--radius-pill); background: var(--accent); border: 2px solid var(--ground); }
+button.mapa__marcador { cursor: pointer; }
+/* Objetivo táctil amplio sin agrandar el punto: el área invisible alrededor también responde al toque. */
+button.mapa__marcador::after { content: ''; position: absolute; inset: calc(-1 * var(--space-3)); }
+button.mapa__marcador:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+.mapa__marcador--actual { width: 18px; height: 18px; border-color: var(--text); }
+/* Placa de provincia y región: abajo a la izquierda; en móvil la atribución también va a la izquierda, así que sube. */
+.mapa__provincia { position: absolute; left: var(--space-2); bottom: var(--space-2); z-index: 2; margin: 0; padding: var(--space-1) var(--space-2); font-size: var(--fs-12); line-height: var(--lh-16); color: var(--text); border-radius: var(--radius-chip); background: color-mix(in srgb, var(--surface) 85%, transparent); pointer-events: none; }
+@media (max-width: 699px) { .mapa__provincia { bottom: calc(var(--space-2) + var(--lh-16) + var(--space-3)); } }
+.maplibregl-canvas { outline: none; }
+.mapa__atribucion { max-width: 70%; text-align: right; padding: var(--space-1) var(--space-2); border-radius: var(--radius-chip); background: color-mix(in srgb, var(--surface) 85%, transparent); }
+/* Ciudades de respaldo (solo sin mapa base de Esri): texto de 12 px junto a un punto, sin capturar clics. */
+.mapa__ciudad { display: flex; align-items: center; gap: var(--space-1); pointer-events: none; color: var(--text); font-size: var(--fs-12); line-height: var(--lh-16); font-weight: 500; padding: 0 var(--space-1); border-radius: var(--radius-chip); background: color-mix(in srgb, var(--surface) 70%, transparent); white-space: nowrap; }
+.mapa__ciudad::before { content: ''; width: var(--space-1); height: var(--space-1); border-radius: var(--radius-pill); background: var(--secondary); }
+@media (max-width: 699px) { .mapa__atribucion { left: var(--space-2); max-width: none; } }

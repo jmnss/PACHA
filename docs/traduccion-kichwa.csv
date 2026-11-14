@@ -1,0 +1,1091 @@
+﻿clave,es,en,qu,validada
+a11y.lienzo.con_media,{que}. Origen: {origen}. Valor medio de la zona: {valor}.,{que}. Source: {origen}. Mean value of the area: {valor}.,{que}. Maypi llukshishka: {origen}. Allpapa chawpi chanin: {valor}.,no
+a11y.lienzo.sin_media,{que}. Origen: {origen}.,{que}. Source: {origen}.,{que}. Maypi llukshishka: {origen}.,no
+a11y.mapa.nota,Mapa interactivo de la capa elegida. Las mismas cifras están en el panel de métricas y en la tabla de resultados de esta pantalla.,Interactive map of the chosen layer. The same figures are in the metrics panel and in the results table on this screen.,"Akllashka capapa shuyu, makiwan llamkachishka. Shinallatak yupaykuna kay pantallapi yupaykunapa panka ukupi, tabla ukupipash kan.",no
+a11y.saltar,Saltar al contenido,Skip to content,Willaykunaman pasay,no
+api.categoria.area_quemada_detectada.1,"Severidad moderada (−2,5 a −4,5 dB)",Moderate severity (−2.5 to −4.5 dB),"Chawpi severidad (−2,5-manta −4,5 dB-kama)",no
+api.categoria.area_quemada_detectada.2,"Severidad alta (< −4,5 dB)",High severity (< −4.5 dB),"Sinchi severidad (< −4,5 dB)",no
+api.categoria.cambio_de_inundacion.1,Nueva inundación,New flooding,Mushuk yaku junday,no
+api.categoria.cambio_de_inundacion.2,Pérdida de inundación,Flood loss,Yaku jundaypa pishiyay,no
+api.categoria.cambio_de_inundacion.3,Inundación persistente,Persistent flooding,Mana tukuk yaku junday,no
+api.categoria.cambio_del_frente.1,Hielo nuevo (avance),New ice (advance),Mushuk chullunku (ñawpaman rin),no
+api.categoria.cambio_del_frente.2,Hielo perdido (retroceso del frente),Lost ice (front retreat),Chullunku illarishka (frente washaman kutin),no
+api.categoria.cambio_por_parcela.1,Sin cambio,No change,Tikray illa,no
+api.categoria.cambio_por_parcela.2,Crecimiento del cultivo,Crop growth,Tarpushkapa wiñay,no
+api.categoria.cambio_por_parcela.3,Cosecha / labranza,Harvest / tillage,Kuchuy / allpa llankay,no
+api.categoria.cambio_por_parcela.4,Inundación (trasplante de arroz),Flooding (rice transplanting),Yaku junday (arroz tarpuy),no
+api.contexto.estacion.invierno_austral,invierno austral,austral winter,invierno austral,no
+api.contexto.estacion.invierno_boreal,invierno boreal,boreal winter,invierno boreal,no
+api.contexto.estacion.otono_austral,otoño austral,austral autumn,otoño austral,no
+api.contexto.estacion.otono_boreal,otoño boreal,boreal autumn,otoño boreal,no
+api.contexto.estacion.primavera_austral,primavera austral,austral spring,primavera austral,no
+api.contexto.estacion.primavera_boreal,primavera boreal,boreal spring,primavera boreal,no
+api.contexto.estacion.verano_austral,verano austral,austral summer,verano austral,no
+api.contexto.estacion.verano_boreal,verano boreal,boreal summer,verano boreal,no
+api.contexto.nombre_local.entre_epocas,entre épocas,between seasons,pachakuna chawpipi,no
+api.contexto.nombre_local.epoca_calida,época cálida,warm season,kunuk pacha,no
+api.contexto.nombre_local.epoca_fria_de_garua,época fría de garúa,"cool, drizzly season",chiri garúa pacha,no
+api.contexto.nombre_local.invierno,«invierno»,“winter”,«invierno»,no
+api.contexto.nombre_local.verano,«verano»,“summer”,«verano»,no
+api.contexto.proximo_hito.equinoccio_de_marzo,equinoccio de marzo,March equinox,equinoccio de marzo,no
+api.contexto.proximo_hito.equinoccio_de_septiembre,equinoccio de septiembre,September equinox,equinoccio de septiembre,no
+api.contexto.proximo_hito.solsticio_de_diciembre,solsticio de diciembre,December solstice,solsticio de diciembre,no
+api.contexto.proximo_hito.solsticio_de_junio,solsticio de junio,June solstice,solsticio de junio,no
+api.contexto.regimen.bimodal_dos_epocas_de_lluvia,bimodal (dos épocas de lluvia),bimodal (two rainy seasons),bimodal (ishkay tamya pacha),no
+api.contexto.regimen.sin_estacionalidad_marcada,sin estacionalidad marcada,no marked seasonality,pacha tikray pishi rikurik,no
+api.contexto.regimen.unimodal_una_epoca_de_lluvia,unimodal (una época de lluvia),unimodal (one rainy season),unimodal (shuk tamya pacha),no
+api.contexto.region.amazonia,Amazonía,Amazon,Amazonía,no
+api.contexto.region.costa,Costa,Coast,Costa,no
+api.contexto.region.insular,Insular,Insular (Galápagos),Insular (Galápagos),no
+api.contexto.region.sierra,Sierra,Highlands,Sierra,no
+api.contexto.temporada.lluviosa,Lluviosa,Rainy,Tamya,no
+api.contexto.temporada.seca,Seca,Dry,Chaki,no
+api.contexto.temporada.transicion,Transición,Transition,Transición,no
+api.control.agricultura.desfase_dias.etiqueta,Adelanto (−) o retraso (+) de siembra y cosecha (días),Earlier (−) or later (+) sowing and harvest (days),"Tarpuy, kuchuy ñawpachiy (−) o washachiy (+) (punchakuna)",no
+api.control.agricultura.factor_biomasa.etiqueta,Vigor del cultivo (× biomasa),Crop vigor (× biomass),Tarpushkapa sinchi kay (× biomasa),no
+api.control.glaciares.aceleracion.etiqueta,Aceleración tras el evento (%),Acceleration after the event (%),Evento washa utkayachiy (%),no
+api.control.glaciares.azimut_flujo.etiqueta,Dirección del flujo (° desde el norte),Flow direction (° from north),Kuyuy ñan (° nortemanta),no
+api.control.glaciares.retroceso_m_a.ayuda,Negativo: el frente avanza.,Negative: the front advances.,Negativo: frente ñawpaman rin.,no
+api.control.glaciares.retroceso_m_a.etiqueta,Retroceso del frente (m/año),Front retreat (m/yr),Frentepa washaman kutiy (m/wata),no
+api.control.glaciares.u_terminal.etiqueta,Velocidad en el frente (m/día),Speed at the front (m/day),Frentepi utkay (m/punchapi),no
+api.control.humedales.amplitud_estacional.etiqueta,Pulso de inundación estacional,Seasonal flood pulse,Pachapa yaku jundaypa wicharishka,no
+api.control.humedales.fraccion_inundada.etiqueta,Superficie inundada inicial (%),Initial flooded area (%),Kallari yakuwan jundashka allpa (%),no
+api.control.humedales.tasa_secado.ayuda,Positivo: el humedal se seca; negativo: se expande.,Positive: the wetland dries out; negative: it expands.,Positivo: humedal chakirin; negativo: hatunyarin.,no
+api.control.humedales.tasa_secado.etiqueta,Tasa de secado (desv. topográfica/año),Drying rate (topographic dev./yr),Chakiy utkay (topográfica desv./wata),no
+api.control.incendios.biomasa_media.etiqueta,Biomasa del bosque (Mg/ha),Forest biomass (Mg/ha),Sachapa biomasa (Mg/ha),no
+api.control.incendios.hora_evento.etiqueta,Hora de ignición,Ignition time,Nina kallarina hora,no
+api.control.incendios.hora_evento.unidad,h,h,h,no
+api.control.incendios.radio_km.etiqueta,Tamaño final del incendio (km),Final fire size (km),Incendiopa tukuri hatun (km),no
+api.control.incendios.viento_deg.etiqueta,Dirección del viento (° desde el norte),Wind direction (° from north),Wayrapa ñan (° nortemanta),no
+api.control.subsidencia.estacional_cm.etiqueta,Oscilación estacional (cm),Seasonal oscillation (cm),Pachapa wichay uray (cm),no
+api.control.subsidencia.factor_radio.etiqueta,Extensión de los conos de hundimiento (×),Extent of the subsidence cones (×),Allpa uraykaypa conokuna hatun (×),no
+api.control.subsidencia.factor_tasa.etiqueta,Intensidad de la extracción (× tasa),Extraction intensity (× rate),Hurkuypa sinchi kay (× tasa),no
+api.control.terremotos.ancho_km.etiqueta,Ancho de ruptura (km),Rupture width (km),Rupturapa anchu (km),no
+api.control.terremotos.buzamiento.etiqueta,Buzamiento (°),Dip (°),Buzamiento (°),no
+api.control.terremotos.deslizamiento_m.etiqueta,Deslizamiento (m),Slip (m),Deslizamiento (m),no
+api.control.terremotos.hora_evento.etiqueta,Hora del sismo,Earthquake time,Allpa kuyuy hora,no
+api.control.terremotos.hora_evento.unidad,h,h,h,no
+api.control.terremotos.longitud_km.etiqueta,Longitud de ruptura (km),Rupture length (km),Rupturapa suni (km),no
+api.control.terremotos.profundidad_km.etiqueta,Profundidad del centroide (km),Centroid depth (km),Centroidepa ukku (km),no
+api.control.terremotos.rake.etiqueta,Mecanismo de la falla,Fault mechanism,Fallapa mecanismo,no
+api.control.terremotos.rumbo.etiqueta,Rumbo de la falla (°),Fault strike (°),Fallapa rumbo (°),no
+api.error.adquisicion_desconocida,No existe el recurso pedido: Adquisición desconocida: {id},The requested resource does not exist: unknown acquisition: {id},Mañashka recurso mana tiyanchu: mana riksishka adquisición: {id},no
+api.error.bbox_oeste_este,bbox inválido: oeste ({oeste}) debe ser menor que este ({este}),Invalid bbox: west ({oeste}) must be less than east ({este}),Mana alli bbox: oeste ({oeste}) este ({este})-manta pishiyana kan,no
+api.error.bbox_sur_norte,bbox inválido: sur ({sur}) debe ser menor que norte ({norte}),Invalid bbox: south ({sur}) must be less than north ({norte}),Mana alli bbox: sur ({sur}) norte ({norte})-manta pishiyana kan,no
+api.error.celda_fuera_malla,"La celda ({i}, {j}) queda fuera de la malla de {n}×{n}.","Cell ({i}, {j}) falls outside the {n}×{n} grid.","Celda ({i}, {j}) {n}×{n} mallamanta hawapi kan.",no
+api.error.ciudad_en_mar,No se puede fundar una ciudad en el mar.,A city cannot be founded at sea.,Mama kuchapi markata mana sayachiyta ushanchu.,no
+api.error.ciudades_maximo,Se admiten como máximo {maximo} ciudades fundadas.,At most {maximo} founded cities are allowed.,Sayachishka markakuna {maximo}-kama ushan.,no
+api.error.control_hora,«{nombre}» debe estar entre 0 y 24 horas (sin incluir 24).,“{nombre}” must be between 0 and 24 hours (24 not included).,«{nombre}» 0-manta 24-kama horakunapi kana kan (24 mana yaykunchu).,no
+api.error.control_opcion,«{nombre}» debe ser uno de: {opciones}.,“{nombre}” must be one of: {opciones}.,«{nombre}» kay ukumanta shuk kana kan: {opciones}.,no
+api.error.control_rango,«{nombre}» debe estar entre {minimo} y {maximo}.,“{nombre}” must be between {minimo} and {maximo}.,«{nombre}» {minimo}-manta {maximo}-kama kana kan.,no
+api.error.cuadrante_fuera,El cuadrante {cuadrante} queda fuera de la imagen ({ny}×{nx} píxeles).,The quadrant {cuadrante} falls outside the image ({ny}×{nx} pixels).,Cuadrante {cuadrante} rikchamanta hawapi kan ({ny}×{nx} pixel).,no
+api.error.cuadrante_sin_area,El cuadrante no tiene área.,The quadrant has no area.,Cuadrante mana hatun kayta charinchu.,no
+api.error.entrada_no_valida,Entrada no válida. {detalle},Invalid input. {detalle},Mana alli churashka. {detalle},no
+api.error.escenario_desconocido,No existe el recurso pedido: Escenario de demostración desconocido: {id},The requested resource does not exist: unknown demonstration scenario: {id},Mañashka recurso mana tiyanchu: mana riksishka rikuchiy escenario: {id},no
+api.error.escenario_simulado_caducado,No existe el recurso pedido: Escenario simulado desconocido o caducado: {id},The requested resource does not exist: unknown or expired simulated scenario: {id},Mañashka recurso mana tiyanchu: mana riksishka o tukurishka simulashka escenario: {id},no
+api.error.estacional_booleano,estacional debe ser verdadero o falso.,estacional must be true or false.,estacional ari o mana kana kan.,no
+api.error.fecha_despues_antes,La fecha 'después' debe ser posterior a la fecha 'antes'.,The “after” date must be later than the “before” date.,«Washa» punchaka «ñawpa» punchamanta washaman kana kan.,no
+api.error.fecha_evento_formato,"La fecha del evento debe ser un texto con el formato AAAA-MM-DD, por ejemplo 2026-06-01.","The event date must be text in the format YYYY-MM-DD, for example 2026-06-01.","Ruwaypa p'unchawka qillqa kachun, AAAA-MM-DD hinata, ahinataq 2026-06-01.",no
+api.error.fecha_evento_rango,La fecha del evento debe estar entre 2024-01-01 y 2030-12-31.,The event date must be between 2024-01-01 and 2030-12-31.,Ruwaypa p'unchawka 2024-01-01 wan 2030-12-31 chawpipi kachun.,no
+api.error.fecha_sin_zona,{nombre} debe llevar zona horaria.,{nombre} must include a time zone.,{nombre}-pi pacha zona kana kan.,no
+api.error.fechas_distintas,Elige dos fechas distintas.,Choose two different dates.,Ishkay mana kikin punchakunata akllay.,no
+api.error.fechas_fuera_rango,Las fechas quedan fuera del rango admitido.,The dates fall outside the allowed range.,Punchakuna ushashka rangomanta hawapi kan.,no
+api.error.fin_anterior_inicio,El fin debe ser igual o posterior al inicio.,The end must be equal to or later than the start.,Tukurika kallarimanta washaman o kikin kana kan.,no
+api.error.fotogramas_maximo,Se pedirían {n} fotogramas; el máximo es {maximo}. Amplía el paso o acorta el intervalo.,{n} frames would be requested; the maximum is {maximo}. Widen the step or shorten the interval.,{n} fotogramakuna mañashka kanman; ashtawan hatunka {maximo} kan. Pasota hatunyachiy o intervalota pishiyachiy.,no
+api.error.fotogramas_por_vez,Pide como máximo {maximo} fotogramas por vez; esta petición pedía {n}. Amplía el paso o acorta el intervalo.,Request at most {maximo} frames at a time; this request asked for {n}. Widen the step or shorten the interval.,Shuk kutipi {maximo} fotogramakunallata maña; kay mañayka {n} mañarka. Pasota hatunyachiy o intervalota pishiyachiy.,no
+api.error.fuera_de_ecuador,El punto elegido queda fuera de Ecuador: elige una latitud y una longitud dentro del país.,The chosen point is outside Ecuador: choose a latitude and longitude inside the country.,"Akllashka puntoka Ecuadormanta hawapi kan: mamallaktapi latitud, longitud ima akllay.",no
+api.error.herramienta_no_evento,"La herramienta no existe o no es un evento: elige incendio, tormenta, inundacion, terremoto o erupcion.","The tool does not exist or is not an event: choose incendio, tormenta, inundacion, terremoto or erupcion.","Herramientaka mana tiyanchu o mana evento kanchu: incendio, tormenta, inundacion, terremoto o erupcion akllay.",no
+api.error.impacto_categorias_inesperadas,La clasificación del escenario no trae las categorías esperadas para resumir el impacto.,The scenario classification does not have the categories expected to summarise the impact.,Escenariopa clasificación llakichiyta pishiyachinkapak minishtishka categoríakunata mana charinchu.,no
+api.error.impacto_no_disponible,El resumen de impacto está disponible para inundaciones e incendios.,The impact summary is available for floods and fires.,"Llakichiy pishiyachiy yaku jundaykunapak, incendiokunapak ima kan.",no
+api.error.impacto_sin_categorias,Este escenario no tiene un cambio por categorías para resumir.,This scenario has no change by categories to summarise.,Kay escenariopika pishiyachinkapak categoríakunawan tikray mana kanchu.,no
+api.error.inesperado,Ocurrió un error inesperado en el servidor. Inténtalo de nuevo.,An unexpected error occurred on the server. Please try again.,Servidorpi mana yuyashka pantay tiyarka. Kutin ruray.,no
+api.error.lab_no_valida,{nombre} no válida: elige una de {opciones}.,Invalid {nombre}: choose one of {opciones}.,{nombre} mana alli: {opciones} ukumanta shuk akllay.,no
+api.error.lado_mundo,El lado del mundo debe ser uno de: {opciones} km.,The world side must be one of: {opciones} km.,Mundopa kinray kay ukumanta shuk kana kan: {opciones} km.,no
+api.error.latlon_rango,"lat debe estar entre -90 y 90, y lon entre -180 y 180.","lat must be between -90 and 90, and lon between -180 and 180.","lat -90-manta 90-kama, lon -180-manta 180-kama kana kan.",no
+api.error.looks_rango,looks debe estar entre 1 y 100.,looks must be between 1 and 100.,looks 1-manta 100-kama kana kan.,no
+api.error.medir_uno_de_dos,Indica exactamente uno de `cuadrante` o `punto`.,Give exactly one of `cuadrante` or `punto`.,`cuadrante` o `punto`-manta shuklla willay.,no
+api.error.nubes_rango,La cobertura de nubes va de {min} a {max} %.,Cloud cover ranges from {min} to {max} %.,Puyuwan pakashka {min}-manta {max} %-kama kan.,no
+api.error.numero_finito,«{nombre}» debe ser un número finito.,“{nombre}” must be a finite number.,«{nombre}» tukuri yupay kana kan.,no
+api.error.orbita_opcion,orbita debe ser una de: {opciones}.,orbita must be one of: {opciones}.,orbita kay ukumanta shuk kana kan: {opciones}.,no
+api.error.paleta_desconocida,Paleta desconocida en el modelo: {nombre},Unknown palette in the model: {nombre},Modelopi mana riksishka paleta: {nombre},no
+api.error.parametro_desconocido,Parámetro desconocido: {parametro},Unknown parameter: {parametro},Mana riksishka parámetro: {parametro},no
+api.error.parametro_desconocido_tipo,Parámetro desconocido para este tipo de cambio: {parametro},Unknown parameter for this type of change: {parametro},Kay tikray rikchaypak mana riksishka parámetro: {parametro},no
+api.error.pasada_despues_antes,La pasada «después» debe ser posterior a la pasada «antes».,The “after” pass must be later than the “before” pass.,«Washa» pasadaka «ñawpa» pasadamanta washaman kana kan.,no
+api.error.paso_invalido,El paso debe ser un número entero de minutos mayor que 0.,The step must be a whole number of minutes greater than 0.,Pasoka 0-manta hatun tukuy minutokuna kana kan.,no
+api.error.polarizacion_no_disponible,polarización no disponible: {polarizacion}; disponibles: {disponibles},polarization not available: {polarizacion}; available: {disponibles},polarización mana kanchu: {polarizacion}; kan: {disponibles},no
+api.error.punto_faltan_coordenadas,Para colocar un punto en el mapa hacen falta lat y lon.,"To place a point on the map, lat and lon are needed.","Shuyupi puntota churankapak lat, lon ima minishtin.",no
+api.error.punto_fuera,El punto {punto} queda fuera de la imagen ({ny}×{nx} píxeles).,The point {punto} falls outside the image ({ny}×{nx} pixels).,Punto {punto} rikchamanta hawapi kan ({ny}×{nx} pixel).,no
+api.error.semilla_rango,semilla debe ser un entero entre 0 y 2147483647.,semilla must be a whole number between 0 and 2147483647.,semilla 0-manta 2147483647-kama tukuy yupay kana kan.,no
+api.error.serie_sel_formato,«{nombre}» debe ser una lista de {n} números separados por comas.,“{nombre}” must be a list of {n} numbers separated by commas.,«{nombre}» {n} yupaykunata coma nisqawan rakisqa kachun.,no
+api.error.serie_sel_rango,"Indica un punto, un cuadrante o los dos, con valores entre 0 y 1.","Give a point, a quadrant or both, with values between 0 and 1.","Huk puntuta, huk cuadrantita utaq iskaynintapas rikuchiy, 0 wan 1 chawpipi.",no
+api.error.sim_interruptor,{parametro} debe ser verdadero o falso.,{parametro} must be true or false.,{parametro} ari o mana kana kan.,no
+api.error.sim_numero,{parametro} debe ser un número.,{parametro} must be a number.,{parametro} yupay kana kan.,no
+api.error.sim_opcion,{parametro} debe ser una de: {opciones}.,{parametro} must be one of: {opciones}.,{parametro} kay ukumanta shuk kana kan: {opciones}.,no
+api.error.sim_parametro_no_existe,El parámetro {parametro} no existe para esta herramienta.,The parameter {parametro} does not exist for this tool.,Parámetro {parametro} kay herramientapak mana tiyanchu.,no
+api.error.sim_rango,{parametro} debe estar entre {minimo} y {maximo}.,{parametro} must be between {minimo} and {maximo}.,{parametro} {minimo}-manta {maximo}-kama kana kan.,no
+api.error.simulado_sin_parametros,Un escenario simulado ya lleva sus parámetros; no se pueden dar otros.,A simulated scenario already carries its parameters; no others can be given.,Simulashka escenariopika parámetrokuna kan; shukkunata mana kuna ushanchu.,no
+api.error.sitio_no_catalogo,No existe el recurso pedido: El sitio {id} no está en el catálogo,The requested resource does not exist: site {id} is not in the catalogue,Mañashka recurso mana tiyanchu: {id} sitiuka catalogopi mana kanchu,no
+api.error.variable_desconocida,variable desconocida: {variable}; disponibles: {disponibles},unknown variable: {variable}; available: {disponibles},mana riksishka variable: {variable}; kan: {disponibles},no
+api.error.variable_sin_polarizacion,La variable {variable} no tiene polarización.,The variable {variable} has no polarization.,{variable} variableka polarizaciónta mana charinchu.,no
+api.escenario.ec_antisana.descripcion,Escenario ilustrativo: glaciares tropicales que terminan en tierra y retroceden con el calentamiento; velocidades de decenas de metros al año.,Illustrative scenario: tropical glaciers that end on land and retreat with warming; speeds of tens of metres per year.,"Rikuchiy escenario: allpapi tukurik tropical glaciarkuna, kunuk pachawan washaman kutinkuna; sapa watapi chunka chunka metro utkay.",no
+api.escenario.ec_antisana.sitio,Glaciares del volcán Antisana,Antisana volcano glaciers,Antisana volcanpa glaciarkuna,no
+api.escenario.ec_daule.descripcion,"Escenario ilustrativo: dos ciclos de arroz bajo riego al año, con maíz y banano, en la cuenca baja del Guayas.","Illustrative scenario: two irrigated rice cycles a year, with maize and banana, in the lower Guayas basin.","Rikuchiy escenario: sapa watapi ishkay kuti riegowan arroz tarpuy, sara, palanda ima, Guayas cuenca baja-pi.",no
+api.escenario.ec_daule.sitio,Arrozales de Daule (Guayas),Daule rice fields (Guayas),Daulepa arroz tarpuykuna (Guayas),no
+api.escenario.ec_guayaquil.descripcion,Escenario ilustrativo: hundimiento de rellenos sobre arcillas blandas y antiguos manglares del estuario del Guayas.,Illustrative scenario: settling of fill over soft clays and former mangroves of the Guayas estuary.,"Rikuchiy escenario: Guayas estuariopa llampu arcillakunapi, ñawpa manglarkunapi ima churashka allpa uraykay.",no
+api.escenario.ec_guayaquil.sitio,Guayaquil,Guayaquil,Guayaquil,no
+api.escenario.ec_la_segua.descripcion,Escenario ilustrativo: humedal Ramsar en la confluencia de los ríos Chone y Carrizal; la estación seca y la expansión agrícola reducen su espejo de agua.,Illustrative scenario: Ramsar wetland at the confluence of the Chone and Carrizal rivers; the dry season and agricultural expansion shrink its water surface.,"Rikuchiy escenario: Chone, Carrizal mayukuna tinkunapi Ramsar humedal; chaki pacha, tarpuy hatunyaywan yaku patapa hatun kay pishiyan.",no
+api.escenario.ec_la_segua.sitio,Humedal La Segua (Manabí),La Segua wetland (Manabí),La Segua humedal (Manabí),no
+api.escenario.ec_loja.descripcion,Escenario ilustrativo: bosque andino y matorral seco donde los incendios se concentran entre agosto y octubre.,Illustrative scenario: Andean forest and dry scrub where fires concentrate between August and October.,"Rikuchiy escenario: Andes sacha, chaki matorral ima, maypi incendiokuna agosto-manta octubre-kama tantarin.",no
+api.escenario.ec_loja.sitio,Bosques andinos de Loja,Loja Andean forests,Lojapa Andes sachakuna,no
+api.escenario.ec_pedernales.descripcion,"Escenario ilustrativo: sismo de subducción frente a Manabí. El océano, al oeste, no tiene datos de radar.","Illustrative scenario: subduction earthquake off Manabí. The ocean, to the west, has no radar data.","Rikuchiy escenario: Manabí ñawpapi subducción allpa kuyuy. Mama kucha, intipa chinkana kinraypi, radar willaykunata mana charin.",no
+api.escenario.ec_pedernales.sitio,Pedernales (Manabí),Pedernales (Manabí),Pedernales (Manabí),no
+api.impacto.accion.incendio.1,Contrastar la cicatriz con los reportes de bomberos y con focos de calor ópticos antes de actuar.,Cross-check the scar against firefighters' reports and optical heat hotspots before acting.,"Ruranapak ñawpa, cicatrizta bomberokunapa willaykunawan, óptico rupay puntukunawan ima tupachiy.",no
+api.impacto.accion.incendio.1_hipotetica,"Si esto fuera un evento real, contrastar la cicatriz con los reportes de bomberos y con focos de calor ópticos antes de actuar.","If this were a real event, cross-check the scar against firefighters' reports and optical heat hotspots before acting.","Kay chiqan evento kakpika, ruranapak ñawpa, cicatrizta bomberokunapa willaykunawan, óptico rupay puntukunawan ima tupachiy.",no
+api.impacto.accion.incendio.2,"Priorizar la revisión de las zonas de severidad alta, donde la pérdida de estructura es mayor.","Prioritise checking the high-severity zones, where the loss of structure is greatest.","Sinchi severidad zonakunata ñawpaman llanchiy, maypi sacha kayka ashtawan tukurin.",no
+api.impacto.accion.incendio.3,Repetir el análisis tras las lluvias para vigilar la erosión de laderas sin cobertura.,Repeat the analysis after the rains to watch for erosion on slopes without cover.,"Tamyakuna washa analisista kutin ruray, mana pakana charik ladera allpa apayta rikunkapak.",no
+api.impacto.accion.inundacion.1,Contrastar los bordes de la mancha con el aviso de la autoridad local antes de decidir cierres de vías.,Cross-check the edges of the flooded patch against the local authority's warning before deciding on road closures.,"Ñankuna wichkankapak, yaku mancha kinrayta llaktapa kamachikpa willaywan tupachiy.",no
+api.impacto.accion.inundacion.1_hipotetica,"Si esto fuera un evento real, contrastar los bordes de la mancha con el aviso de la autoridad local antes de decidir cierres de vías.","If this were a real event, cross-check the edges of the flooded patch against the local authority's warning before deciding on road closures.","Kay chiqan evento kakpika, ñankuna wichkankapak, yaku mancha kinrayta llaktapa kamachikpa willaywan tupachiy.",no
+api.impacto.accion.inundacion.2,Priorizar la verificación en campo donde la superficie inundada crece más entre pasadas.,Prioritise field verification where the flooded area grows most between passes.,Pasadakuna chawpipi yaku jundashka allpa ashtawan hatunyakpi chakrapi chiqanyachiyta ñawpaman llanchiy.,no
+api.impacto.accion.inundacion.3,Repetir el análisis con la siguiente pasada para saber si el agua se retira o se extiende.,Repeat the analysis with the next pass to learn whether the water recedes or spreads.,"Yakuka llukshin o mirarin yachankapak, katik pasadawan analisista kutin ruray.",no
+api.impacto.cifra.incendio.parte_de_la_escena.ayuda,Fracción del área analizada que aparece quemada.,Fraction of the analysed area that appears burned.,Analizashka allpapa rupashka rikurik rakiy.,no
+api.impacto.cifra.incendio.parte_de_la_escena.etiqueta,Parte de la escena,Share of the scene,Escenapa rakiy,no
+api.impacto.cifra.incendio.severidad_alta.ayuda,Hectáreas con la mayor caída de señal: la mayor pérdida de estructura del bosque.,Hectares with the largest drop in signal: the greatest loss of forest structure.,Ashtawan señal urayashka hectáreakuna: sacha estructura ashtawan tukurishka.,no
+api.impacto.cifra.incendio.severidad_alta.etiqueta,Severidad alta,High severity,Sinchi severidad,no
+api.impacto.cifra.incendio.superficie_quemada_detectada.ayuda,Hectáreas donde la señal cruzada (HV) cayó lo bastante para marcar daño.,Hectares where the cross-polarized signal (HV) dropped enough to mark damage.,Hectáreakuna maypi cruzada señal (HV) wakin yapakta urayarka.,no
+api.impacto.cifra.incendio.superficie_quemada_detectada.etiqueta,Superficie quemada detectada,Detected burned area,Rikushka rupashka allpa,no
+api.impacto.cifra.inundacion.inundacion_nueva.ayuda,Hectáreas que no tenían agua en la pasada «antes» y sí en la «después».,Hectares that had no water in the “before” pass and do in the “after” pass.,"Hectáreakuna «ñawpa» pasadapi yaku mana charik, «washa» pasadapi yaku charik.",no
+api.impacto.cifra.inundacion.inundacion_nueva.etiqueta,Inundación nueva,New flooding,Mushuk yaku junday,no
+api.impacto.cifra.inundacion.parte_de_la_escena.ayuda,Fracción del área analizada que está inundada al final.,Fraction of the analysed area that is flooded at the end.,Analizashka allpapa tukuripi yakuwan jundashka rakiy.,no
+api.impacto.cifra.inundacion.parte_de_la_escena.etiqueta,Parte de la escena,Share of the scene,Escenapa rakiy,no
+api.impacto.cifra.inundacion.superficie_inundada_al_final.ayuda,Hectáreas con agua en la pasada «después» (nueva inundación más la que ya estaba).,Hectares with water in the “after” pass (new flooding plus what was already there).,"Hectáreakuna «washa» pasadapi yakuwan (mushuk yaku junday, ñawpamanta kakpash).",no
+api.impacto.cifra.inundacion.superficie_inundada_al_final.etiqueta,Superficie inundada al final,Flooded area at the end,Tukuripi yakuwan jundashka allpa,no
+api.impacto.lectura.incendio,"En este escenario de demostración, el radar marca unas {ha} ha quemadas, el {pct} % del área analizada.","In this demonstration scenario, the radar marks about {ha} ha burned, {pct} % of the analysed area.","Kay rikuchiy escenariopi, radarka {ha} ha shina rupashkata rikuchin, analizashka allpapa {pct} %.",no
+api.impacto.lectura.inundacion,"En este escenario de demostración, el radar marca unas {ha} ha con agua al final del intervalo, el {pct} % del área analizada.","In this demonstration scenario, the radar marks about {ha} ha with water at the end of the interval, {pct} % of the analysed area.","Kay rikuchiy escenariopi, radarka intervalopa tukuripi {ha} ha shina yakuwan rikuchin, analizashka allpapa {pct} %.",no
+api.impacto.lectura.pico,El máximo de la serie llega el {fecha} con unas {ha} ha.,The maximum of the series is reached on {fecha} with about {ha} ha.,Wiñachikpa ashtawan chanin {fecha} punchapi {ha} ha shina kan.,no
+api.impacto.nota.celdas,Superficies medidas sobre la malla de análisis (celdas de unos {metros} m).,Areas measured on the analysis grid (cells of about {metros} m).,Allpa hatun kay analisis mallapi tupushka (celdakuna {metros} m shina).,no
+api.impacto.nota.orientativas,Las acciones son orientativas y condicionales; no sustituyen a la autoridad competente.,The actions are indicative and conditional; they do not replace the competent authority.,"Ruraykunaka yachachikllami, wakinpi kan; ushak kamachikpa rantiyta mana ruranchu.",no
+api.impacto.titulo.incendio,Superficie quemada,Burned area,Rupashka allpa,no
+api.impacto.titulo.inundacion,Superficie inundada,Flooded area,Yakuwan jundashka allpa,no
+api.lab.aviso_banda,Banda S: ejemplo ilustrativo de otra frecuencia; pendiente de confirmar con la documentación oficial qué bandas entrega NISAR.,S band: illustrative example of another frequency; pending confirmation from the official documentation on which bands NISAR delivers.,"Banda S: shuk frecuenciapa rikuchiy ejemplo; NISAR ima bandakunata kuyman, kamachik panka-wan chiqanyachina kan.",no
+api.lab.cambio.inundacion_a_cielo_abierto,Inundación a cielo abierto,Open-sky flooding,Pamba hawa yaku junday,no
+api.lab.cambio.inundacion_bajo_dosel,Inundación bajo dosel,Flooding under canopy,Sacha pakana uku yaku junday,no
+api.lab.cambio.quema_del_bosque,Quema del bosque,Forest burning,Sachapa rupay,no
+api.lab.leyenda.agua,Agua,Water,Yaku,no
+api.lab.leyenda.bosque,Bosque,Forest,Sacha,no
+api.lab.leyenda.bosque_inundado,Bosque inundado,Flooded forest,Yakuwan jundashka sacha,no
+api.lab.leyenda.cambio_detectado,Cambio detectado,Change detected,Rikushka tikray,no
+api.lab.leyenda.cambio_sin_detectar,Cambio sin detectar,Change not detected,Mana rikushka tikray,no
+api.lab.leyenda.cultivo,Cultivo,Crop,Tarpushka,no
+api.lab.leyenda.falsa_alarma,Falsa alarma,False alarm,Llulla alarma,no
+api.lab.leyenda.quemado,Quemado,Burned,Rupashka,no
+api.lab.leyenda.sin_cambio,Sin cambio,No change,Tikray illa,no
+api.lab.leyenda.tapado_por_nube,Tapado por nube,Hidden by cloud,Puyuwan pakashka,no
+api.lab.metrica.cambio_visto_por_el_optico.ayuda,"Lo mismo para una imagen óptica. Las nubes la tapan y, bajo el dosel, no ve el agua.","The same for an optical image. Clouds hide it and, under the canopy, it cannot see the water.","Óptico rikchapak kikin. Puyukuna pakan, sacha pakana ukupika yakuta mana rikunchu.",no
+api.lab.metrica.cambio_visto_por_el_optico.etiqueta,Cambio visto por el óptico,Change seen by the optical image,Ópticopa rikushka tikray,no
+api.lab.metrica.cambio_visto_por_el_radar.ayuda,Parte de los píxeles que realmente cambiaron y que el radar marca como cambio. Las nubes no lo afectan.,Share of the pixels that really changed and that the radar marks as change. Clouds do not affect it.,"Chiqan tikrashka pixelkunapa rakiy, radar tikrayta rikuchikpi. Puyukunaka mana llakichinchu.",no
+api.lab.metrica.cambio_visto_por_el_radar.etiqueta,Cambio visto por el radar,Change seen by the radar,Radarpa rikushka tikray,no
+api.lab.metrica.falsas_alarmas_del_radar.ayuda,Píxeles sin cambio que el radar marca como cambio por el moteado (speckle). El radar no es perfecto.,Unchanged pixels that the radar marks as change because of speckle. The radar is not perfect.,"Mana tikrashka pixelkuna, radar moteadowan tikrashka shina rikuchikpi. Radarka mana tukuy alli kanchu.",no
+api.lab.metrica.falsas_alarmas_del_radar.etiqueta,Falsas alarmas del radar,Radar false alarms,Radarpa llulla alarmakuna,no
+api.lab.metrica.tapado_por_nubes.ayuda,Fracción de la escena que las nubes ocultan en la imagen óptica.,Fraction of the scene that clouds hide in the optical image.,Óptico rikchapi puyukunawan pakashka escenapa rakiy.,no
+api.lab.metrica.tapado_por_nubes.etiqueta,Tapado por nubes,Hidden by clouds,Puyukunawan pakashka,no
+api.medicion.posicion.ayuda,"Centro del píxel (fila {fila}, columna {columna})","Centre of the pixel (row {fila}, column {columna})","Pixelpa chawpi (fila {fila}, columna {columna})",no
+api.medicion.posicion.etiqueta,Posición,Position,Maypi,no
+api.nota.ec_antisana.1,La velocidad sale de correlacionar parches de imagen entre dos fechas (12 días): desplazamiento / Δt. El perfil transversal sigue la ley de Glen (n = 3): u ∝ 1 − |y/W|⁴.,Velocity comes from correlating image patches between two dates (12 days): displacement / Δt. The cross profile follows Glen's law (n = 3): u ∝ 1 − |y/W|⁴.,Utkayka ishkay punchakunapura (12 punchakuna) imagenpa pedazokunata correlacionashpa llukshin: kuyuriy / Δt. Chimpa perfilka Glenpa kamachiyta katin (n = 3): u ∝ 1 − |y/W|⁴.,no
+api.nota.ec_daule.1,"Un cultivo en crecimiento aumenta la dispersión de volumen (HV sube hasta ~10 dB); la cosecha devuelve la parcela al nivel de suelo desnudo. La inundación para trasplantar arroz produce reflexión especular, con HV por debajo de −32 dB.","A growing crop increases volume scattering (HV rises to ~10 dB); harvest returns the plot to bare-soil level. Flooding to transplant rice produces specular reflection, with HV below −32 dB.","Wiñakuk tarpushkaka volumen dispersiónta yapachin (HV ~10 dB kama wichayan); pallayka parcelata lluchu allpa nivelman tikrachin. Arroz tarpunkapak yakuwan jundachiyka reflexión especularta rurachin, HV −32 dB uraypi.",no
+api.nota.ec_guayaquil.1,"Se ajusta, píxel a píxel, d(t) = a + v·t (+ término estacional si la serie supera ~10 meses). La atmósfera turbulenta es aleatoria entre fechas y se promedia al usar muchas adquisiciones.","A fit is made pixel by pixel, d(t) = a + v·t (+ a seasonal term if the series exceeds ~10 months). Turbulent atmosphere is random between dates and averages out when many acquisitions are used.","Píxel píxelmanta d(t) = a + v·t tupachin (serie ~10 killakunata yallikpika temporada términotapash). Muyuk wayra-pachaka punchakunapura mana rikushka shina kan, achka adquisicionkunawan promedio tukun.",no
+api.nota.ec_la_segua.1,"El agua abierta refleja la señal lejos del radar (HH muy bajo); bajo el dosel inundado, el doble rebote tronco-agua eleva HH y la razón HH/HV, algo que solo la banda L detecta porque atraviesa la copa de los árboles.","Open water reflects the signal away from the radar (very low HH); under flooded canopy, the trunk-water double bounce raises HH and the HH/HV ratio, something only L band detects because it passes through the tree crowns.","Paskashka yakuka señalta radarmanta karuman kutichin (HH ancha uray); yakuwan jundashka sacha panka ukupika, sachapa-yakupa doble reboteka HH-ta, HH/HV razóntapash wichachin; chaytaka banda L-lla rikun, yura umakunata pasashpa.",no
+api.nota.ec_loja.1,"En banda L, HV responde a la dispersión de volumen de ramas y troncos; al consumirse la biomasa cae entre 3 y 8 dB. La señal se satura cerca de 100–150 Mg/ha, por lo que la pérdida de biomasa en bosques densos es una cota inferior.","In L band, HV responds to volume scattering from branches and trunks; as biomass is consumed it drops by 3 to 8 dB. The signal saturates near 100–150 Mg/ha, so biomass loss in dense forests is a lower bound.","Banda L-pi HV-ka rama, kaspikunapa volumen dispersiónman kutichin; biomasa rupashpa 3 manta 8 dB kama urayan. Señalka 100–150 Mg/ha kuchupi saturan, chaymanta tupu sachakunapi biomasapa chinkayka uray límite kan.",no
+api.nota.ec_pedernales.1,"Vector LOS (este, norte, arriba) = (+0.64, +0.09, +0.77). NISAR mira a la izquierda: el movimiento norte-sur casi no se proyecta en la línea de vista, por eso las fallas de rumbo N-S se complementan con desplazamientos de píxel (GOFF).","LOS vector (east, north, up) = (+0.64, +0.09, +0.77). NISAR looks to the left: north-south motion barely projects onto the line of sight, which is why N-S strike faults are complemented with pixel offsets (GOFF).","LOS vector (inti llukshina, chinchay, hawa) = (+0.64, +0.09, +0.77). NISAR-ka lluki ladoman rikun: chinchay-urin kuyuriyka rikuy línea-pi ashallata rikurin, chaymanta N-S rumbo fallakunataka píxel kuyuriykunawan (GOFF) paktachin.",no
+api.nota.ec_pedernales.2,"Los píxeles con coherencia < 0,25 (ruptura superficial, decorrelación) se enmascaran, como hacen las componentes conexas del producto GUNW.","Pixels with coherence < 0.25 (surface rupture, decorrelation) are masked, as the connected components of the GUNW product do.","Coherencia < 0,25 píxelkunataka (hawa ruptura, decorrelación) pakan, GUNW productopa componentes conexas shina.",no
+api.obs.capa.area_quemada_detectada,Área quemada detectada,Detected burned area,Rikushka rupashka allpa,no
+api.obs.capa.cambio_de_inundacion,Cambio de inundación,Flood change,Yaku jundaypa tikray,no
+api.obs.capa.cambio_de_velocidad,Cambio de velocidad,Speed change,Utkaypa tikray,no
+api.obs.capa.cambio_del_frente,Cambio del frente,Front change,Frentepa tikray,no
+api.obs.capa.cambio_por_parcela,Cambio por parcela,Change by parcel,Parcelakunapa tikray,no
+api.obs.capa.coherencia_interferometrica,Coherencia interferométrica,Interferometric coherence,Interferométrica coherencia,no
+api.obs.capa.desplazamiento_los_acumulado,Desplazamiento LOS acumulado,Accumulated line-of-sight displacement,Tantachishka LOS kuyuriy,no
+api.obs.capa.desplazamiento_los_desenrollado,Desplazamiento LOS desenrollado,Unwrapped line-of-sight displacement,Desenrollado LOS kuyuriy,no
+api.obs.capa.error_frente_a_la_verdad_sintetica,Error frente a la verdad sintética,Error against the synthetic truth,Sintético chiqanwan pantay,no
+api.obs.capa.interferograma_envuelto_1_ciclo_11_9_cm,"Interferograma envuelto (1 ciclo = 11,9 cm)",Wrapped interferogram (1 cycle = 11.9 cm),"Pillushka interferograma (1 ciclo = 11,9 cm)",no
+api.obs.capa.razon_logaritmica_hv_despues_antes,Razón logarítmica HV (después/antes),HV log ratio (after/before),HV logarítmica razón (washa/ñawpa),no
+api.obs.capa.sigma0_hh_fecha,σ⁰ HH · {fecha},σ⁰ HH · {fecha},σ⁰ HH · {fecha},no
+api.obs.capa.sigma0_hv_fecha,σ⁰ HV · {fecha},σ⁰ HV · {fecha},σ⁰ HV · {fecha},no
+api.obs.capa.velocidad_fecha,Velocidad · {fecha},Velocity · {fecha},Utkay · {fecha},no
+api.obs.capa.velocidad_vertical,Velocidad vertical,Vertical velocity,Vertical utkay,no
+api.obs.columna.0_hv_db,Δσ⁰ HV (dB),Δσ⁰ HV (dB),Δσ⁰ HV (dB),no
+api.obs.columna.cambio_detectado,Cambio detectado,Detected change,Rikushka tikray,no
+api.obs.columna.cosecha_estimada,Cosecha estimada,Estimated harvest,Yupashka pallay,no
+api.obs.columna.cosecha_real,Cosecha real,Actual harvest,Chiqan pallay,no
+api.obs.columna.cultivo_cosechado,Cultivo cosechado,Harvested crop,Pallashka tarpushka,no
+api.obs.columna.parcela,Parcela,Parcel,Parcela,no
+api.obs.columna.rotacion,Rotación,Rotation,Rotación,no
+api.obs.medida.cosecha_labranza,Cosecha / labranza,Harvest / tillage,Pallay / allpa yapuy,no
+api.obs.medida.crecimiento_del_cultivo,Crecimiento del cultivo,Crop growth,Tarpushkapa wiñay,no
+api.obs.medida.hielo_nuevo_avance,Hielo nuevo (avance),New ice (advance),Mushuk chullunku (ñawpaman rin),no
+api.obs.medida.hielo_perdido_retroceso_del_frente,Hielo perdido (retroceso del frente),Lost ice (front retreat),Chullunku illarishka (frente washaman kutin),no
+api.obs.medida.inundacion_persistente,Inundación persistente,Persistent flooding,Mana tukuk yaku junday,no
+api.obs.medida.inundacion_trasplante_de_arroz,Inundación (trasplante de arroz),Flooding (rice transplanting),Yaku junday (arroz tarpuy),no
+api.obs.medida.maximo,Máximo,Maximum,Ashtawan hatun,no
+api.obs.medida.media,Media,Mean,Chawpi,no
+api.obs.medida.minimo,Mínimo,Minimum,Ashtawan uchilla,no
+api.obs.medida.nueva_inundacion,Nueva inundación,New flooding,Mushuk yaku junday,no
+api.obs.medida.perdida_de_inundacion,Pérdida de inundación,Flood loss,Yaku jundaypa pishiyay,no
+api.obs.medida.severidad_alta_4_5_db,"Severidad alta (< −4,5 dB)",High severity (< −4.5 dB),"Hatun severidad (< −4,5 dB)",no
+api.obs.medida.severidad_moderada_2_5_a_4_5_db,"Severidad moderada (−2,5 a −4,5 dB)",Moderate severity (−2.5 to −4.5 dB),"Chawpi severidad (−2,5-manta −4,5 dB-kama)",no
+api.obs.medida.sin_cambio,Sin cambio,No change,Mana tikrashka,no
+api.obs.metrica.acierto_de_deteccion_verdad_sintetica.ayuda,Cosechada / no cosechada vs. verdad,Harvested / not harvested vs. truth,"Pallashka / mana pallashka, chiqan-wan chimpapurashka",no
+api.obs.metrica.acierto_de_deteccion_verdad_sintetica.etiqueta,Acierto de detección (verdad sintética),Detection accuracy (synthetic truth),Rikuypa alli tupay (sintético chiqan),no
+api.obs.metrica.acierto_del_detector_verdad_sintetica.ayuda,Clasificación píxel a píxel en la fecha final,Pixel-by-pixel classification on the final date,"Píxel píxelmanta clasificación, tukuri punchapi",no
+api.obs.metrica.acierto_del_detector_verdad_sintetica.etiqueta,Acierto del detector (verdad sintética),Detector accuracy (synthetic truth),Detectorpa alli tupay (sintético chiqan),no
+api.obs.metrica.adquisiciones_usadas.ayuda,Pila de interferogramas de 12 días,Stack of 12-day interferograms,12 punchakunapa interferogramakunapa pila,no
+api.obs.metrica.adquisiciones_usadas.etiqueta,Adquisiciones usadas,Acquisitions used,Mutkichishka adquisicionkuna,no
+api.obs.metrica.area_con_5_cm_ano.ayuda,Umbral de daño a infraestructura,Infrastructure damage threshold,Infraestructurapa wakllichiy umbral,no
+api.obs.metrica.area_con_5_cm_ano.etiqueta,Área con > 5 cm/año,Area with > 5 cm/yr,> 5 cm/wata allpa,no
+api.obs.metrica.area_deformada_5_cm.etiqueta,Área deformada > 5 cm,Deformed area > 5 cm,Kuyurishka allpa > 5 cm,no
+api.obs.metrica.area_del_cuadrante.ayuda,{filas} × {columnas} píxeles de {metros} m,{filas} × {columnas} pixels of {metros} m,"{filas} × {columnas} píxelkuna, {metros} m",no
+api.obs.metrica.area_del_cuadrante.etiqueta,Área del cuadrante,Quadrant area,Cuadrantepa allpa,no
+api.obs.metrica.area_inundada_final.etiqueta,Área inundada final,Final flooded area,Tukuripi yakuwan jundashka allpa,no
+api.obs.metrica.area_inundada_inicial.ayuda,Agua abierta + vegetación inundada,Open water + flooded vegetation,Paskashka yaku + yakuwan jundashka yuyukuna,no
+api.obs.metrica.area_inundada_inicial.etiqueta,Área inundada inicial,Initial flooded area,Kallaripi yakuwan jundashka allpa,no
+api.obs.metrica.area_quemada_detectada.etiqueta,Área quemada detectada,Detected burned area,Rikushka rupashka allpa,no
+api.obs.metrica.area_quemada_simulada_verdad_sintetica.ayuda,Verdad del modelo en el intervalo,Model truth over the interval,"Modelopa chiqan, intervalopi",no
+api.obs.metrica.area_quemada_simulada_verdad_sintetica.etiqueta,Área quemada simulada (verdad sintética),Simulated burned area (synthetic truth),Simulashka rupashka allpa (sintético chiqan),no
+api.obs.metrica.biomasa_perdida.ayuda,Inversión del modelo de nube de agua,Inversion of the water cloud model,Yaku pukyu modelopa inversión,no
+api.obs.metrica.biomasa_perdida.etiqueta,Biomasa perdida,Biomass lost,Chinkashka biomasa,no
+api.obs.metrica.cambio_neto.ayuda,Negativo = pérdida de humedal,Negative = wetland loss,Negativo = humedalpa chinkay,no
+api.obs.metrica.cambio_neto.etiqueta,Cambio neto,Net change,Chiqan tikray,no
+api.obs.metrica.co2_emitido_estimado.ayuda,47 % de carbono en la biomasa × 44/12,47 % carbon in biomass × 44/12,Biomasapi 47 % carbono × 44/12,no
+api.obs.metrica.co2_emitido_estimado.etiqueta,CO₂ emitido (estimado),CO₂ emitted (estimated),Llukchishka CO₂ (yuyashka),no
+api.obs.metrica.cosecha_labranza.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.cosecha_labranza.etiqueta,Cosecha / labranza,Harvest / tillage,Pallay / allpa yapuy,no
+api.obs.metrica.cosechas_detectadas.ayuda,Caída de HV > 3 dB hasta nivel de suelo,HV drop > 3 dB down to soil level,"HV > 3 dB urayan, allpa nivel kama",no
+api.obs.metrica.cosechas_detectadas.etiqueta,Cosechas detectadas,Harvests detected,Rikushka pallaykuna,no
+api.obs.metrica.crecimiento_del_cultivo.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.crecimiento_del_cultivo.etiqueta,Crecimiento del cultivo,Crop growth,Tarpushkapa wiñay,no
+api.obs.metrica.error_medio_de_fecha.ayuda,Limitado por la revisita de 12 días,Limited by the 12-day revisit,12 punchakunapi kutin rikuywan harkashka,no
+api.obs.metrica.error_medio_de_fecha.etiqueta,Error medio de fecha,Mean date error,Punchapa chawpi pantay,no
+api.obs.metrica.f1_del_detector_verdad_sintetica.ayuda,Coincidencia entre detección y verdad,Agreement between detection and truth,"Rikuy, chiqanpash tupay",no
+api.obs.metrica.f1_del_detector_verdad_sintetica.etiqueta,F1 del detector (verdad sintética),Detector F1 (synthetic truth),Detectorpa F1 (sintético chiqan),no
+api.obs.metrica.franjas_interferometricas.ayuda,"Una franja = λ/2 = 11,9 cm",One fringe = λ/2 = 11.9 cm,"Shuk franja = λ/2 = 11,9 cm",no
+api.obs.metrica.franjas_interferometricas.etiqueta,Franjas interferométricas,Interferometric fringes,Interferométrica franjakuna,no
+api.obs.metrica.hielo_perdido.etiqueta,Hielo perdido,Ice lost,Chinkashka chullunku,no
+api.obs.metrica.hundimiento_maximo.ayuda,Percentil 1 de la velocidad vertical,1st percentile of vertical velocity,Vertical utkaypa 1 percentil,no
+api.obs.metrica.hundimiento_maximo.etiqueta,Hundimiento máximo,Maximum subsidence,Ashtawan urayay,no
+api.obs.metrica.inundacion_persistente.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.inundacion_persistente.etiqueta,Inundación persistente,Persistent flooding,Mana tukuk yaku junday,no
+api.obs.metrica.inundacion_trasplante_de_arroz.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.inundacion_trasplante_de_arroz.etiqueta,Inundación (trasplante de arroz),Flooding (rice transplanting),Yaku junday (arroz tarpuy),no
+api.obs.metrica.magnitud_del_escenario.ayuda,Okada: M0 = μ·L·W·deslizamiento,Okada: M0 = μ·L·W·slip,Okada: M0 = μ·L·W·deslizamiento,no
+api.obs.metrica.magnitud_del_escenario.etiqueta,Magnitud del escenario,Scenario magnitude,Escenariopa magnitud,no
+api.obs.metrica.max_alejandose.ayuda,LOS negativo,Negative LOS,LOS negativo,no
+api.obs.metrica.max_alejandose.etiqueta,Máx. alejándose,Max. moving away,Ashtawan karuyay,no
+api.obs.metrica.max_hacia_el_satelite.ayuda,LOS positivo,Positive LOS,LOS positivo,no
+api.obs.metrica.max_hacia_el_satelite.etiqueta,Máx. hacia el satélite,Max. toward the satellite,Satéliteman ashtawan kuchuyay,no
+api.obs.metrica.maximo_desplazamiento_los_desenrollado.etiqueta,Máximo · Desplazamiento LOS desenrollado,Maximum · Unwrapped LOS displacement,Ashtawan hatun · Desenrollado LOS kuyuriy,no
+api.obs.metrica.maximo_velocidad_fecha.etiqueta,Máximo · Velocidad · {fecha},Maximum · Velocity · {fecha},Ashtawan hatun · Utkay · {fecha},no
+api.obs.metrica.maximo_velocidad_vertical.etiqueta,Máximo · Velocidad vertical,Maximum · Vertical velocity,Ashtawan hatun · Vertical utkay,no
+api.obs.metrica.media_desplazamiento_los_desenrollado.etiqueta,Media · Desplazamiento LOS desenrollado,Mean · Unwrapped LOS displacement,Chawpi · Desenrollado LOS kuyuriy,no
+api.obs.metrica.media_velocidad_fecha.etiqueta,Media · Velocidad · {fecha},Mean · Velocity · {fecha},Chawpi · Utkay · {fecha},no
+api.obs.metrica.media_velocidad_vertical.etiqueta,Media · Velocidad vertical,Mean · Vertical velocity,Chawpi · Vertical utkay,no
+api.obs.metrica.minimo_desplazamiento_los_desenrollado.etiqueta,Mínimo · Desplazamiento LOS desenrollado,Minimum · Unwrapped LOS displacement,Ashtawan uchilla · Desenrollado LOS kuyuriy,no
+api.obs.metrica.minimo_velocidad_fecha.etiqueta,Mínimo · Velocidad · {fecha},Minimum · Velocity · {fecha},Ashtawan uchilla · Utkay · {fecha},no
+api.obs.metrica.minimo_velocidad_vertical.etiqueta,Mínimo · Velocidad vertical,Minimum · Vertical velocity,Ashtawan uchilla · Vertical utkay,no
+api.obs.metrica.nueva_inundacion.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.nueva_inundacion.etiqueta,Nueva inundación,New flooding,Mushuk yaku junday,no
+api.obs.metrica.parcelas_analizadas.etiqueta,Parcelas analizadas,Plots analyzed,Rikushka parcelakuna,no
+api.obs.metrica.perdida_de_inundacion.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.perdida_de_inundacion.etiqueta,Pérdida de inundación,Flood loss,Yaku jundaypa pishiyay,no
+api.obs.metrica.retroceso_del_frente.ayuda,Sobre la línea de flujo central,Along the central flow line,Chawpi flujo línea-pi,no
+api.obs.metrica.retroceso_del_frente.etiqueta,Retroceso del frente,Front retreat,Frentepa washaman tikray,no
+api.obs.metrica.rmse_frente_a_la_verdad_sintetica.ayuda,Atmósfera y decorrelación residuales,Residual atmosphere and decorrelation,"Puchushka wayra-pacha, decorrelaciónpash",no
+api.obs.metrica.rmse_frente_a_la_verdad_sintetica.etiqueta,RMSE frente a la verdad sintética,RMSE against the synthetic truth,Sintético chiqanwan RMSE,no
+api.obs.metrica.severidad_alta_4_5_db.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.severidad_alta_4_5_db.etiqueta,"Severidad alta (< −4,5 dB)",High severity (< −4.5 dB),"Hatun severidad (< −4,5 dB)",no
+api.obs.metrica.severidad_moderada_2_5_a_4_5_db.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.severidad_moderada_2_5_a_4_5_db.etiqueta,"Severidad moderada (−2,5 a −4,5 dB)",Moderate severity (−2.5 to −4.5 dB),"Chawpi severidad (−2,5 manta −4,5 dB kama)",no
+api.obs.metrica.sin_cambio.ayuda,{pct} % del cuadrante,{pct} % of the quadrant,Cuadrantepa {pct} %,no
+api.obs.metrica.sin_cambio.etiqueta,Sin cambio,No change,Mana tikrashka,no
+api.obs.metrica.velocidad_maxima_final.etiqueta,Velocidad máxima final,Final maximum velocity,Tukuripi ashtawan utkay,no
+api.obs.metrica.velocidad_maxima_inicial.etiqueta,Velocidad máxima inicial,Initial maximum velocity,Kallaripi ashtawan utkay,no
+api.obs.orbita.ascendente,Ascendente,Ascending,Ascendente,no
+api.obs.orbita.descendente,Descendente,Descending,Descendente,no
+api.obs.serie_nombre.bosque_no_quemado_control,Bosque no quemado (control),Unburned forest (control),Mana rupashka sacha (control),no
+api.obs.serie_nombre.cerca_de_la_falla_modelo_de_okada,Cerca de la falla (modelo de Okada),Near the fault (Okada model),Falla kuchupi (Okada modelo),no
+api.obs.serie_nombre.cerca_de_la_falla_observado,Cerca de la falla (observado),Near the fault (observed),Falla kuchupi (rikushka),no
+api.obs.serie_nombre.detectada_por_el_modelo_simulacion,Detectada por el modelo (simulación),Detected by the model (simulation),Modelopa rikushka (simulación),no
+api.obs.serie_nombre.detectado_con_goff,Detectado con GOFF,Detected with GOFF,GOFF-wan rikushka,no
+api.obs.serie_nombre.frente_inicial,A {km} km del frente inicial,{km} km from the initial front,Kallari frentemanta {km} km-pi,no
+api.obs.serie_nombre.maximo_hundimiento,Máximo hundimiento,Maximum subsidence,Ashtawan urayay,no
+api.obs.serie_nombre.media_del_cuadrante,Media del cuadrante,Quadrant mean,Cuadrantepa chawpi,no
+api.obs.serie_nombre.punto_seleccionado_3_3_px,Punto seleccionado (3×3 px),Selected point (3×3 px),Akllashka punto (3×3 px),no
+api.obs.serie_nombre.verdad_del_modelo,Verdad del modelo,Model truth,Modelopa chiqan,no
+api.obs.serie_nombre.zona_estable_referencia,Zona estable (referencia),Stable zone (reference),Mana kuyuk zona (referencia),no
+api.obs.serie_nombre.zona_quemada,Zona quemada,Burned zone,Rupashka zona,no
+api.obs.titulo_tabla.resultados,Resultados,Results,Tukuri yupaykuna,no
+api.obs.titulo_tabla.resultados_por_parcela,Resultados por parcela,Results by parcel,Sapa parcelapa tukuri yupaykuna,no
+api.obs.valor.arroz,Arroz,Rice,Arroz,no
+api.obs.valor.arroz_arroz,Arroz → Arroz,Rice → Rice,Arroz → Arroz,no
+api.obs.valor.banano,Banano,Banana,Palanda,no
+api.obs.valor.frutales,Frutales,Fruit trees,Ruru yurakuna,no
+api.obs.valor.maiz,Maíz,Maize,Sara,no
+api.obs.valor.numero_cm,{v} cm,{v} cm,{v} cm,no
+api.obs.valor.numero_cm_ano,{v} cm/año,{v} cm/yr,{v} cm/wata,no
+api.obs.valor.numero_db,{v} dB,{v} dB,{v} dB,no
+api.obs.valor.numero_gamma,{v} γ,{v} γ,{v} γ,no
+api.obs.valor.numero_km2,{v} km²,{v} km²,{v} km²,no
+api.obs.valor.numero_m_dia,{v} m/día,{v} m/day,{v} m/puncha,no
+api.obs.valor.numero_rad,{v} rad,{v} rad,{v} rad,no
+api.obs.valor.sin_cambio_detectado,Sin cambio detectado,No change detected,Tikrayta mana rikushkachu,no
+api.obs.valor.sin_dato_enmascarado,Sin dato (enmascarado),No data (masked),Willay illa (pakashka),no
+api.obs.valor.soja,Soja,Soybean,Soja,no
+api.obs.valor.trigo,Trigo,Wheat,Trigo,no
+api.obs.valor.trigo_arroz,Trigo → Arroz,Wheat → Rice,Trigo → Arroz,no
+api.obs.valor.trigo_maiz,Trigo → Maíz,Wheat → Maize,Trigo → Sara,no
+api.obs.valor.trigo_soja_de_segunda,Trigo → Soja de segunda,Wheat → Second-crop soybean,Trigo → Soja (ishkay niki tarpuy),no
+api.opcion.terremotos.rake.inversa,Inversa,Reverse,Inversa,no
+api.opcion.terremotos.rake.normal,Normal,Normal,Normal,no
+api.opcion.terremotos.rake.rumbo_dextral,Rumbo dextral,Right-lateral strike-slip,Rumbo dextral,no
+api.opcion.terremotos.rake.rumbo_sinistral,Rumbo sinistral,Left-lateral strike-slip,Rumbo sinistral,no
+api.plantilla.nota.pedernales_los,"Vector LOS (este, norte, arriba) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR mira a la izquierda: el movimiento norte-sur casi no se proyecta en la línea de vista, por eso las fallas de rumbo N-S se complementan con desplazamientos de píxel (GOFF).","LOS vector (east, north, up) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR looks to the left: north-south motion barely projects onto the line of sight, which is why N-S strike faults are complemented with pixel offsets (GOFF).","LOS vector (inti llukshina, chinchay, hawa) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR-ka lluki ladoman rikun: chinchay-urin kuyuriyka rikuy línea-pi ashallata rikurin, chaymanta N-S rumbo fallakunataka píxel kuyuriykunawan (GOFF) paktachin.",no
+api.serie.0_hh_en_la_seleccion,σ⁰ HH en la selección,σ⁰ HH in the selection,Akllashkapi σ⁰ HH,no
+api.serie.0_hv_en_la_seleccion,σ⁰ HV en la selección,σ⁰ HV in the selection,Akllashkapi σ⁰ HV,no
+api.serie.0_hv_medio,σ⁰ HV medio,Mean σ⁰ HV,σ⁰ HV chawpi,no
+api.serie.0_hv_medio_por_rotacion,σ⁰ HV medio por rotación,Mean σ⁰ HV by rotation,Rotaciónmanta σ⁰ HV chawpi,no
+api.serie.desplazamiento_los_acumulado,Desplazamiento LOS acumulado,Cumulative LOS displacement,Tantachishka LOS kuyuriy,no
+api.serie.desplazamiento_los_acumulado_en_la_seleccion,Desplazamiento LOS acumulado en la selección,Cumulative LOS displacement in the selection,Akllashkapi tantachishka LOS kuyuriy,no
+api.serie.desplazamiento_vertical_acumulado,Desplazamiento vertical acumulado,Cumulative vertical displacement,Tantachishka vertical kuyuriy,no
+api.serie.desplazamiento_vertical_acumulado_en_la_seleccion,Desplazamiento vertical acumulado en la selección,Cumulative vertical displacement in the selection,Akllashkapi tantachishka vertical kuyuriy,no
+api.serie.posicion_del_frente_respecto_a_la_1_a_fecha,Posición del frente (respecto a la 1.ª fecha),Front position (relative to the 1st date),Frentepa maypi kashka (1.ª punchamanta),no
+api.serie.superficie_inundada,Superficie inundada,Flooded area,Yakuwan jundashka allpa,no
+api.serie.velocidad_superficial,Velocidad superficial,Surface velocity,Hawa utkay,no
+api.serie.velocidad_superficial_en_la_seleccion,Velocidad superficial en la selección,Surface velocity in the selection,Akllashkapi hawa utkay,no
+api.sim.capa.calado,Calado,Flow depth,Calado,no
+api.sim.capa.calado_del_lahar,Calado del lahar,Lahar flow depth,Laharpa calado,no
+api.sim.capa.corriente_piroclastica,Corriente piroclástica,Pyroclastic current,Corriente piroclástica,no
+api.sim.capa.deslizamientos,Deslizamientos,Landslides,Deslizamientos,no
+api.sim.capa.espesor_de_ceniza,Espesor de ceniza,Ash thickness,Cenizapa anchu,no
+api.sim.capa.estado_del_fuego,Estado del fuego,Fire state,Ninapa kawsay,no
+api.sim.capa.frentes_de_onda,Frentes de onda,Wavefronts,Onda frentekuna,no
+api.sim.capa.intensidad_mmi,Intensidad (MMI),Intensity (MMI),Intensidad (MMI),no
+api.sim.capa.tsunami_calado_en_tierra_elevacion_del_mar,Tsunami: calado en tierra / elevación del mar,Tsunami: onshore flow depth / sea-level elevation,Tsunami: allpapi calado / mama kuchapa wichay,no
+api.sim.celda.agua,Agua,Water,Yaku,no
+api.sim.celda.bosque_andino,Bosque andino,Andean forest,Andes sacha,no
+api.sim.celda.bosque_seco_y_matorral,Bosque seco y matorral,Dry forest and scrub,"Chaki sacha, matorral ima",no
+api.sim.celda.bosque_tropical_humedo,Bosque tropical húmedo,Tropical rainforest,Tropical húmedo sacha,no
+api.sim.celda.ceniza_1_cm,Ceniza ≥ 1 cm,Ash ≥ 1 cm,Ceniza ≥ 1 cm,no
+api.sim.celda.cultivos_y_pastos,Cultivos y pastos,Crops and pasture,"Tarpushkakuna, kiwakuna ima",no
+api.sim.celda.extrema,Extrema,Extreme,Extrema,no
+api.sim.celda.flujo_piroclastico,Flujo piroclástico,Pyroclastic flow,Flujo piroclástico,no
+api.sim.celda.fuerte,Fuerte,Strong,Sinchi,no
+api.sim.celda.glaciar_y_nieve,Glaciar y nieve,Glacier and snow,"Glaciar, rasu ima",no
+api.sim.celda.iv,IV,IV,IV,no
+api.sim.celda.ix,IX,IX,IX,no
+api.sim.celda.lahar,Lahar,Lahar,Lahar,no
+api.sim.celda.ligera,Ligera,Light,Pishi,no
+api.sim.celda.modelo_ceniza,Advección–difusión (3 clases),Advection–diffusion (3 classes),Advección–difusión (3 clasekuna),no
+api.sim.celda.modelo_cono,"Cono de energía H/L = {hl_punto}, Hc = {hc} m","Energy cone H/L = {hl_punto}, Hc = {hc} m","Energía cono H/L = {hl_punto}, Hc = {hc} m",no
+api.sim.celda.modelo_laharz,"LAHARZ, V = {v_punto} hm³ por cauce","LAHARZ, V = {v_punto} hm³ per channel","LAHARZ, V = {v_punto} hm³ sapa ñanpi",no
+api.sim.celda.modelo_techos,"Carga húmeda vs. techos débiles (Spence et al., 2005)","Wet load vs. weak roofs (Spence et al., 2005)","Yakuyuk ceniza llashak, mana sinchi techokunawan tupachishka (Spence et al., 2005)",no
+api.sim.celda.moderada,Moderada,Moderate,Chawpi,no
+api.sim.celda.muy_fuerte,Muy fuerte,Very strong,Ancha sinchi,no
+api.sim.celda.paramo,Páramo,Páramo,Páramo,no
+api.sim.celda.severa,Severa,Severe,Severa,no
+api.sim.celda.techos_colapsados_viviendas,Techos colapsados (viviendas),Collapsed roofs (homes),Urmashka techokuna (wasikuna),no
+api.sim.celda.v,V,V,V,no
+api.sim.celda.vi,VI,VI,VI,no
+api.sim.celda.vii,VII,VII,VII,no
+api.sim.celda.viii,VIII,VIII,VIII,no
+api.sim.celda.violenta,Violenta,Violent,Violenta,no
+api.sim.celda.x,X,X,X,no
+api.sim.celda.zona_urbana,Zona urbana,Urban area,Marka zona,no
+api.sim.columna.area_km2,Área (km²),Area (km²),Allpa (km²),no
+api.sim.columna.area_quemada_km2,Área quemada (km²),Burned area (km²),Rupashka allpa (km²),no
+api.sim.columna.cobertura,Cobertura,Land cover,Cobertura,no
+api.sim.columna.intensidad,Intensidad,Intensity,Intensidad,no
+api.sim.columna.modelo,Modelo,Model,Modelo,no
+api.sim.columna.peligro,Peligro,Hazard,Llaki,no
+api.sim.columna.percepcion,Percepción,Perceived shaking,Imashina uyarin,no
+api.sim.columna.poblacion,Población,Population,Runakuna,no
+api.sim.control.ciudad.habitantes.etiqueta,Habitantes,Inhabitants,Kawsakkuna,no
+api.sim.control.ciudad.nombre.etiqueta,Nombre de la ciudad,City name,Markapa shuti,no
+api.sim.control.erupcion.duracion_h.etiqueta,Duración de la fase explosiva,Duration of the explosive phase,Fase explosivapa mashna pacha,no
+api.sim.control.erupcion.evacuacion.etiqueta,Población evacuada a tiempo,Population evacuated in time,Pacha kakpi llukshishka runakuna,no
+api.sim.control.erupcion.semilla.ayuda,La misma semilla repite el mismo evento.,The same seed repeats the same event.,Kikin mujuka kikin eventota kutin rurachin.,no
+api.sim.control.erupcion.semilla.etiqueta,Semilla del azar,Random seed,Pachapa muju,no
+api.sim.control.erupcion.vei.etiqueta,Índice de explosividad volcánica (IEV),Volcanic explosivity index (VEI),Volcanpa explosividad índice (IEV),no
+api.sim.control.erupcion.viento_deg.etiqueta,Viento hacia (° desde el norte),Wind towards (° from north),Wayra rishka ñan (° nortemanta),no
+api.sim.control.erupcion.viento_ms.etiqueta,Viento en altura,Wind at altitude,Hawapi wayra,no
+api.sim.control.erupcion.volumen_lahar_hm3.ayuda,1 hm³ = 1 millón de m³.,1 hm³ = 1 million m³.,1 hm³ = 1 hunu m³.,no
+api.sim.control.erupcion.volumen_lahar_hm3.etiqueta,Volumen de lahar por cauce,Lahar volume per channel,Sapa ñanpi laharpa hatun kay,no
+api.sim.control.incendio.horas.etiqueta,Duración simulada,Simulated duration,Simulashka pacha,no
+api.sim.control.incendio.humedad_comb.ayuda,Por defecto se deriva de la humedad del suelo en la fecha elegida.,By default it is derived from the soil moisture on the chosen date.,Kikin kashpaka akllashka punchapi allpapa humedadmanta yupashka.,no
+api.sim.control.incendio.humedad_comb.etiqueta,Humedad del combustible muerto,Dead fuel moisture,Wañushka combustiblepa humedad,no
+api.sim.control.incendio.semilla.ayuda,La misma semilla repite el mismo evento.,The same seed repeats the same event.,Kikin mujuka kikin eventota kutin rurachin.,no
+api.sim.control.incendio.semilla.etiqueta,Semilla del azar,Random seed,Pachapa muju,no
+api.sim.control.incendio.viento_deg.etiqueta,Viento hacia (° desde el norte),Wind towards (° from north),Wayra rishka ñan (° nortemanta),no
+api.sim.control.incendio.viento_ms.etiqueta,Viento,Wind,Wayra,no
+api.sim.control.inundacion.altura_marejada_m.etiqueta,Sobreelevación del mar,Sea level rise,Mama kuchapa wichay,no
+api.sim.control.inundacion.caudal_m3s.ayuda,Clic en un río → desborde; clic en el mar → marejada costera.,Click on a river → overflow; click on the sea → coastal surge.,Mayupi ñitiy → hawaman llukshin; mama kuchapi ñitiy → kucha patapi marejada.,no
+api.sim.control.inundacion.caudal_m3s.etiqueta,Caudal pico del desborde,Peak overflow discharge,Hawaman llukshikpa ashtawan yaku,no
+api.sim.control.inundacion.duracion_h.etiqueta,Duración de la crecida o marejada,Duration of the flood or surge,Crecida o marejadapa mashna pacha,no
+api.sim.control.inundacion.semilla.ayuda,La misma semilla repite el mismo evento.,The same seed repeats the same event.,Kikin mujuka kikin eventota kutin rurachin.,no
+api.sim.control.inundacion.semilla.etiqueta,Semilla del azar,Random seed,Pachapa muju,no
+api.sim.control.terremoto.mecanismo.etiqueta,Mecanismo,Mechanism,Mecanismo,no
+api.sim.control.terremoto.mw.etiqueta,Magnitud Mw,Magnitude Mw,Magnitud Mw,no
+api.sim.control.terremoto.pais.etiqueta,Vulnerabilidad de las construcciones (PAGER),Building vulnerability (PAGER),Wasikunapa mana sinchi kay (PAGER),no
+api.sim.control.terremoto.profundidad_km.etiqueta,Profundidad del hipocentro,Hypocentre depth,Hipocentropa ukku,no
+api.sim.control.terremoto.rumbo.ayuda,La fosa de Ecuador corre aproximadamente N25°E.,The Ecuadorian trench runs roughly N25°E.,Ecuadorpa fosaka N25°E shina rin.,no
+api.sim.control.terremoto.rumbo.etiqueta,Rumbo de la falla,Fault strike,Fallapa rumbo,no
+api.sim.control.terremoto.semilla.ayuda,La misma semilla repite el mismo evento.,The same seed repeats the same event.,Kikin mujuka kikin eventota kutin rurachin.,no
+api.sim.control.terremoto.semilla.etiqueta,Semilla del azar,Random seed,Pachapa muju,no
+api.sim.control.terremoto.tsunami.etiqueta,Tsunami si el epicentro está en el mar,Tsunami if the epicentre is at sea,Epicentro mama kuchapi kakpi tsunami,no
+api.sim.control.tormenta.cohesion_kpa.ayuda,Incluye el refuerzo de las raíces; menos cohesión = más deslizamientos.,Includes root reinforcement; less cohesion = more landslides.,Sapikunapa sinchi kayta yaykuchin; pishi cohesión = ashtawan deslizamientokuna.,no
+api.sim.control.tormenta.cohesion_kpa.etiqueta,Cohesión del suelo c′,Soil cohesion c′,Allpapa cohesión c′,no
+api.sim.control.tormenta.duracion_h.etiqueta,Duración de la lluvia,Rain duration,Tamyapa mashna pacha,no
+api.sim.control.tormenta.friccion_deg.etiqueta,Ángulo de fricción φ′,Friction angle φ′,Fricción ángulo φ′,no
+api.sim.control.tormenta.lluvia_mm.ayuda,El récord diario en la Costa ecuatoriana ronda los 200–300 mm.,The daily record on the Ecuadorian Coast is around 200–300 mm.,Ecuadorpa Costapi punchapa ashtawan tamya 200–300 mm shina kan.,no
+api.sim.control.tormenta.lluvia_mm.etiqueta,Lluvia total en el centro,Total rainfall at the centre,Chawpipi tukuy tamya,no
+api.sim.control.tormenta.radio_km.etiqueta,Radio de la tormenta,Storm radius,Tormentapa radio,no
+api.sim.control.tormenta.semilla.ayuda,La misma semilla repite el mismo evento.,The same seed repeats the same event.,Kikin mujuka kikin eventota kutin rurachin.,no
+api.sim.control.tormenta.semilla.etiqueta,Semilla del azar,Random seed,Pachapa muju,no
+api.sim.herramienta.ciudad.nombre,Fundar ciudad,Found a city,Marka sayachiy,no
+api.sim.herramienta.erupcion.nombre,Erupción,Eruption,Erupción,no
+api.sim.herramienta.incendio.nombre,Incendio,Fire,Incendio,no
+api.sim.herramienta.inundacion.nombre,Desborde / marejada,Overflow / surge,Hawaman llukshiy / marejada,no
+api.sim.herramienta.terremoto.nombre,Terremoto,Earthquake,Allpa kuyuy,no
+api.sim.herramienta.tormenta.nombre,Tormenta,Storm,Tormenta,no
+api.sim.metrica.acierto_iou.etiqueta,Acierto (IoU),Accuracy (IoU),Alli tupay (IoU),no
+api.sim.metrica.area_inundada.etiqueta,Área inundada,Flooded area,Yakuwan jundashka allpa,no
+api.sim.metrica.area_inundada_deteccion_del_modelo_simulacion.etiqueta,Área inundada · detección del modelo (simulación),Flooded area · model detection (simulation),Yakuwan jundashka allpa · modelopa rikushka (simulación),no
+api.sim.metrica.area_quemada.etiqueta,Área quemada,Burned area,Rupashka allpa,no
+api.sim.metrica.area_quemada_deteccion_del_modelo_simulacion.etiqueta,Área quemada · detección del modelo (simulación),Burned area · model detection (simulation),Rupashka allpa · modelopa rikushka (simulación),no
+api.sim.metrica.biomasa_consumida.etiqueta,Biomasa consumida,Biomass consumed,Tukuchishka biomasa,no
+api.sim.metrica.ceniza_1_cm.etiqueta,Ceniza ≥ 1 cm,Ash ≥ 1 cm,Ceniza ≥ 1 cm,no
+api.sim.metrica.co2_emitido.etiqueta,CO₂ emitido,CO₂ emitted,Llukchishka CO₂,no
+api.sim.metrica.columna_eruptiva.etiqueta,Columna eruptiva,Eruption column,Erupción columna,no
+api.sim.metrica.deslizamientos.etiqueta,Deslizamientos,Landslides,Deslizamientos,no
+api.sim.metrica.deslizamientos_perdida_de_coherencia.etiqueta,Deslizamientos (pérdida de coherencia),Landslides (loss of coherence),Deslizamientos (coherencia illay),no
+api.sim.metrica.desplazamiento_los_maximo.etiqueta,Desplazamiento LOS máximo,Maximum LOS displacement,Ashtawan rikuy ñanpi kuyuy,no
+api.sim.metrica.flujos_piroclasticos.etiqueta,Flujos piroclásticos,Pyroclastic flows,Flujos piroclásticos,no
+api.sim.metrica.flujos_y_ceniza_10_cm_deteccion_del_modelo_simulacion.etiqueta,Flujos y ceniza > 10 cm · detección del modelo (simulación),Flows and ash > 10 cm · model detection (simulation),"Flujokuna, ceniza > 10 cm · modelopa rikushka (simulación)",no
+api.sim.metrica.franjas_en_el_interferograma.etiqueta,Franjas en el interferograma,Fringes in the interferogram,Interferogramapi franjakuna,no
+api.sim.metrica.humedad_del_combustible.etiqueta,Humedad del combustible,Fuel moisture,Combustiblepa humedad,no
+api.sim.metrica.intensidad_maxima.etiqueta,Intensidad máxima,Maximum intensity,Ashtawan intensidad,no
+api.sim.metrica.lahares.etiqueta,Lahares,Lahars,Laharkuna,no
+api.sim.metrica.magnitud.etiqueta,Magnitud,Magnitude,Magnitud,no
+api.sim.metrica.perdidas_en_viviendas.etiqueta,Pérdidas en viviendas,Housing losses,Wasikunapi tukuri,no
+api.sim.metrica.personas_a_evacuar.etiqueta,Personas a evacuar,People to evacuate,Llukshina runakuna,no
+api.sim.metrica.poblacion_con_mmi_vi.etiqueta,Población con MMI ≥ VI,Population with MMI ≥ VI,MMI ≥ VI charik runakuna,no
+api.sim.metrica.poblacion_expuesta.etiqueta,Población expuesta,Exposed population,Rikuchishka runakuna,no
+api.sim.metrica.precision_exhaustividad.etiqueta,Precisión · exhaustividad,Precision · recall,Alli kay · tukuy,no
+api.sim.metrica.tsunami_en_tierra.etiqueta,Tsunami en tierra,Onshore tsunami,Allpapi tsunami,no
+api.sim.metrica.victimas_estimadas.etiqueta,Víctimas estimadas,Estimated casualties,Yupashka wañuk runakuna,no
+api.sim.metrica.victimas_sin_alerta.etiqueta,Víctimas sin alerta,Casualties without warning,Mana willashka wañuk runakuna,no
+api.sim.metrica.viviendas_destruidas_equiv.etiqueta,Viviendas destruidas (equiv.),Houses destroyed (equiv.),Tukuchishka wasikuna (equiv.),no
+api.sim.mundo.bosques_secos_de_loja.descripcion,Bosque andino y matorral seco con incendios recurrentes entre agosto y octubre.,Andean forest and dry scrub with recurring fires between August and October.,"Andes sacha, chaki matorral ima, agosto-manta octubre-kama kutin incendiokunawan.",no
+api.sim.mundo.bosques_secos_de_loja.nombre,Bosques secos de Loja,Dry forests of Loja,Lojapa chaki sachakuna,no
+api.sim.mundo.cotopaxi_y_el_valle_de_latacunga.descripcion,Volcán más vigilado del país; en 1877 sus lahares bajaron por los ríos Cutuchi y Pita.,The most closely monitored volcano in the country; in 1877 its lahars came down the Cutuchi and Pita rivers.,"Mamallaktapi ashtawan rikurishka volcán; 1877 watapi laharkunaka Cutuchi, Pita mayukunapi urmarka.",no
+api.sim.mundo.cotopaxi_y_el_valle_de_latacunga.nombre,Cotopaxi y el valle de Latacunga,Cotopaxi and the Latacunga valley,Cotopaxiwan Latacunga valle,no
+api.sim.mundo.cuenca_baja_del_guayas_babahoyo.descripcion,Llanura de inundación que se anega en casi todos los inviernos.,Floodplain that is flooded in almost every winter.,"Yaku jundak pampa, tukuy invierno shina yakuwan jundarin.",no
+api.sim.mundo.cuenca_baja_del_guayas_babahoyo.nombre,Cuenca baja del Guayas (Babahoyo),Lower Guayas basin (Babahoyo),Guayas cuenca baja (Babahoyo),no
+api.sim.mundo.galapagos_santa_cruz.descripcion,Isla volcánica con zonas áridas y húmedas; el mar rodea todo el mundo.,Volcanic island with arid and humid zones; the sea surrounds the whole world.,"Volcán isla chaki, humedad zonakunawan; mama kuchaka tukuy mundota muyuntin.",no
+api.sim.mundo.galapagos_santa_cruz.nombre,Galápagos: Santa Cruz,Galápagos: Santa Cruz,Galápagos: Santa Cruz,no
+api.sim.mundo.guayaquil_y_el_estuario.descripcion,Ciudad baja sobre el estuario: sensible a marejadas y desbordes.,Low-lying city on the estuary: sensitive to surges and overflows.,"Estuariopi uray marka: marejadakunapak, hawaman llukshiykunapak ima llakichishka.",no
+api.sim.mundo.guayaquil_y_el_estuario.nombre,Guayaquil y el estuario,Guayaquil and the estuary,Guayaquilwan estuario,no
+api.sim.mundo.pedernales_y_la_costa_de_manabi.descripcion,"Zona de subducción del sismo de 2016 (Mw 7,8); el mar al oeste permite tsunamis.",Subduction zone of the 2016 earthquake (Mw 7.8); the sea to the west allows tsunamis.,"2016 allpa kuyuypa subducción zona (Mw 7,8); intipa chinkana kinraypi mama kuchaka tsunamikunata ushan.",no
+api.sim.mundo.pedernales_y_la_costa_de_manabi.nombre,Pedernales y la costa de Manabí,Pedernales and the Manabí coast,Pedernaleswan Manabí kucha pata,no
+api.sim.mundo.quito_y_el_guagua_pichincha.descripcion,"Capital sobre el sistema de fallas inversas de Quito, a los pies de un volcán activo.","Capital city above the Quito reverse fault system, at the foot of an active volcano.","Hatun marka Quitopa inversa falla sistema hawapi, kawsak volcanpa chakipi.",no
+api.sim.mundo.quito_y_el_guagua_pichincha.nombre,Quito y el Guagua Pichincha,Quito and Guagua Pichincha,Quitowan Guagua Pichincha,no
+api.sim.mundo.tungurahua_y_banos.descripcion,Activo entre 1999 y 2016; Baños está a 8 km del cráter.,Active between 1999 and 2016; Baños is 8 km from the crater.,1999-manta 2016-kama kawsarka; Baños craterta 8 km mana karupi kan.,no
+api.sim.mundo.tungurahua_y_banos.nombre,Tungurahua y Baños,Tungurahua and Baños,Tungurahuawan Baños,no
+api.sim.nota.agua.radar,"NISAR (GCOV): cambio de HH entre fechas (< −5 dB agua abierta, > +3 dB doble rebote) y clasificación de inundación de la app. Se compara la extensión máxima simulada; en la pasada real el agua puede haber bajado (en una pasada posterior (ver «Espera hasta la primera imagen»)).","NISAR (GCOV): HH change between dates (< −5 dB open water, > +3 dB double bounce) and the app's flood classification. The maximum simulated extent is compared; in the real pass the water may have receded (in a later pass (see “Wait until the first image”)).","NISAR (GCOV): punchakuna chawpipi HH tikray (< −5 dB paskashka yaku, > +3 dB doble rebote), app-pa yaku junday clasificación ima. Simulashka ashtawan hatun yaku jundayta tupachin; chiqan pasadapika yakuka urayashkami kanman (shuk washa pasadapi («Ñawpa rikchakama shuyay» rikuy)).",no
+api.sim.nota.erupcion.alerta,Ecuador cuenta con sistemas de alerta temprana de lahares (p. ej. Cotopaxi): sube la evacuación para ver su efecto.,Ecuador has early warning systems for lahars (e.g. Cotopaxi): raise the evacuation to see its effect.,"Ecuadorka laharkunapak ñawpa willachiy sistemakunata charin (Cotopaxi shina): llukshinata wichachiy, imashina llakichinta rikunkapak.",no
+api.sim.nota.erupcion.radar,NISAR: la banda L ve a través de la nube de ceniza; los depósitos de lahar y flujo piroclástico destruyen la coherencia interferométrica (en una pasada posterior (ver «Espera hasta la primera imagen»)).,NISAR: L band sees through the ash cloud; lahar and pyroclastic flow deposits destroy interferometric coherence (in a later pass (see “Wait until the first image”)).,"NISAR: banda L-ka ceniza puyuta pasashpa rikun; laharpa, flujo piroclásticopa sakishka allpakunaka interferométrica coherenciata tukuchin (shuk washa pasadapi («Ñawpa rikchakama shuyay» rikuy)).",no
+api.sim.nota.erupcion.supuestos,"Las velocidades del lahar (8 m/s) y del flujo piroclástico (40 m/s), la altura de colapso y las letalidades son supuestos del juego; las áreas sí provienen de los modelos publicados.","The lahar (8 m/s) and pyroclastic flow (40 m/s) velocities, the collapse height and the lethalities are game assumptions; the areas do come from published models.","Laharpa (8 m/s), flujo piroclásticopa (40 m/s) utkaykuna, colapsopa hatun kay, letalidadkuna ima pukllaypa yuyashkakunami; allpakunaka killkashka modelokunamantami llukshin.",no
+api.sim.nota.erupcion.tefra,Cráter a {zv} m. Volumen de tefra {v} hm³ en {h} h; queda dentro del mundo el {pct} % de la masa.,Crater at {zv} m. Tephra volume {v} hm³ in {h} h; {pct} % of the mass stays inside the world.,Cráter {zv} m-pi. Tefrapa hatun kay {v} hm³ {h} h-pi; masapa {pct} % mundo ukupi sakirin.,no
+api.sim.nota.incendio.cobertura,El páramo y el bosque seco arden con facilidad; el bosque húmedo apenas propaga si el combustible supera su humedad de extinción.,Páramo and dry forest burn easily; humid forest barely spreads fire if the fuel is above its moisture of extinction.,"Páramo, chaki sacha ima utkalla rupan; húmedo sachaka ninata ashallata mirachin, combustiblepa humedad extinción humedadta yallikpi.",no
+api.sim.nota.incendio.paso,"Cada paso del autómata equivale a {min} min: el fuego avanza como máximo una celda ({m} m) por paso (supuesto de 0.25 m/s ≈ 0,9 km/h).",Each step of the automaton equals {min} min: the fire advances at most one cell ({m} m) per step (assumption of 0.25 m/s ≈ 0.9 km/h).,"Autómatapa sapa pasoka {min} min kan: ninaka sapa pasopi ashtawanka shuk celdallata ({m} m) ñawpaman rin (0.25 m/s ≈ 0,9 km/h yuyashka).",no
+api.sim.nota.incendio.radar,"NISAR: la próxima pasada llega días después del evento (ver «Espera hasta la primera imagen»); quemado ⟺ LR < −2,5 dB en HV.",NISAR: the next pass arrives days after the event (see “Wait until the first image”); burned ⟺ LR < −2.5 dB in HV.,"NISAR: katik pasadaka eventomanta washa punchakunapi chayan («Ñawpa rikchakama shuyay» rikuy); rupashka ⟺ LR < −2,5 dB HV-pi.",no
+api.sim.nota.incendio.residentes,Residentes dentro del perímetro: {n}. No hay una función de mortalidad publicada para incendios forestales en Ecuador: se informa la exposición.,Residents inside the perimeter: {n}. No published mortality function exists for forest fires in Ecuador: exposure is reported.,Perímetro ukupi kawsakkuna: {n}. Ecuadorpi sacha incendiokunapak wañuy función mana killkashkachu: llakichishka runakunallatami willan.,no
+api.sim.nota.incendio.residentes_menos_de_uno,Residentes dentro del perímetro: < 1. No hay una función de mortalidad publicada para incendios forestales en Ecuador: se informa la exposición.,Residents inside the perimeter: < 1. No published mortality function exists for forest fires in Ecuador: exposure is reported.,Perímetro ukupi kawsakkuna: < 1. Ecuadorpi sacha incendiokunapak wañuy función mana killkashkachu: llakichishka runakunallatami willan.,no
+api.sim.nota.inundacion.hidrograma,Hidrograma triangular con pico de {q} m³/s a las {h} h; volumen total {v} hm³.,Triangular hydrograph with a peak of {q} m³/s at {h} h; total volume {v} hm³.,"Kimsa kuchuyuk hidrograma, {h} h-pi {q} m³/s ashtawan hatun yakuwan; tukuy hatun kay {v} hm³.",no
+api.sim.nota.inundacion.marejada,Nivel del mar elevado hasta {m} m durante {h} h (pulso senoidal).,Sea level raised up to {m} m for {h} h (sinusoidal pulse).,Mama kuchapa yaku {h} h-pi {m} m-kama wicharin (senoidal pulso).,no
+api.sim.nota.inundacion.mortalidad,Mortalidad de la «zona restante» de Jonkman (sin rotura de diques ni subida rápida): es una cota inferior en crecidas súbitas.,Jonkman's “remaining zone” mortality (no dike failure or rapid rise): it is a lower bound in flash floods.,"Jonkmanpa «puchushka zona» wañuy (mana diquekuna pakirishka, mana utka wichariy): utka crecidakunapika uray límite kan.",no
+api.sim.nota.terremoto.hipocentro_inversa_subduccion,"Hipocentro a {prof} km; mecanismo inversa (subducción) (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm.","Hypocenter at {prof} km; reverse (subduction) mechanism (rake {rake}°), strike {rumbo}°, dip {buz}°. Maximum uplift {sube} cm, subsidence {baja} cm.","Hipocentro {prof} km-pi; inversa (subducción) mecanismo (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Ashtawan wichay {sube} cm, allpa uraykay {baja} cm.",no
+api.sim.nota.terremoto.hipocentro_normal,"Hipocentro a {prof} km; mecanismo normal (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm.","Hypocenter at {prof} km; normal mechanism (rake {rake}°), strike {rumbo}°, dip {buz}°. Maximum uplift {sube} cm, subsidence {baja} cm.","Hipocentro {prof} km-pi; normal mecanismo (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Ashtawan wichay {sube} cm, allpa uraykay {baja} cm.",no
+api.sim.nota.terremoto.hipocentro_rumbo_dextral,"Hipocentro a {prof} km; mecanismo rumbo dextral (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm.","Hypocenter at {prof} km; right-lateral strike-slip mechanism (rake {rake}°), strike {rumbo}°, dip {buz}°. Maximum uplift {sube} cm, subsidence {baja} cm.","Hipocentro {prof} km-pi; rumbo dextral mecanismo (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Ashtawan wichay {sube} cm, allpa uraykay {baja} cm.",no
+api.sim.nota.terremoto.hipocentro_rumbo_sinistral,"Hipocentro a {prof} km; mecanismo rumbo sinistral (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Levantamiento máximo {sube} cm, hundimiento {baja} cm.","Hypocenter at {prof} km; left-lateral strike-slip mechanism (rake {rake}°), strike {rumbo}°, dip {buz}°. Maximum uplift {sube} cm, subsidence {baja} cm.","Hipocentro {prof} km-pi; rumbo sinistral mecanismo (rake {rake}°), rumbo {rumbo}°, buzamiento {buz}°. Ashtawan wichay {sube} cm, allpa uraykay {baja} cm.",no
+api.sim.nota.terremoto.ipe,La IPE de Allen et al. (2012) es de corteza activa; en sismos de subducción grandes puede infravalorar la intensidad lejana. No incluye amplificación por suelos blandos.,The Allen et al. (2012) intensity prediction equation (IPE) is for active crust; in large subduction earthquakes it may underestimate distant intensity. It does not include amplification by soft soils.,Allen et al. (2012)-pa IPE-ka kawsak cortezapakmi; hatun subducción allpa kuyuykunapika karu intensidadta pishiyachishpa yupankamanmi. Llampu allpakunapa amplificaciónta mana yaykuchinchu.,no
+api.sim.nota.terremoto.pager,Los parámetros PAGER de Ecuador se calibraron con sismos de 1973–2007 (antes de Pedernales 2016): prueba Perú o Colombia para ver la sensibilidad a la vulnerabilidad.,The PAGER parameters for Ecuador were calibrated with 1973–2007 earthquakes (before Pedernales 2016): try Peru or Colombia to see the sensitivity to vulnerability.,"Ecuadorpa PAGER parámetrokunaka 1973–2007 allpa kuyuykunawan calibrashka karka (Pedernales 2016 ñawpa): Perú o Colombiata akllay, wasikunapa mana sinchi kayman imashina tikrakta rikunkapak.",no
+api.sim.nota.terremoto.radar,NISAR (GUNW): interferograma de 12 días que abarca el sismo; la atmósfera añade ~1 cm de ruido turbulento. El mar no tiene coherencia.,NISAR (GUNW): 12-day interferogram spanning the earthquake; the atmosphere adds ~1 cm of turbulent noise. The sea has no coherence.,"NISAR (GUNW): 12 punchapa interferograma, allpa kuyuy ñawpamanta washakama; wayra-pachaka ~1 cm turbulento ruidota yapan. Mama kuchaka coherenciata mana charinchu.",no
+api.sim.nota.terremoto.tsunami,Tsunami: el levantamiento del fondo marino (hasta {m} m) se propaga con aguas someras; la batimetría se limita a 1 500 m para acelerar el cálculo. La mortalidad de Jonkman (zona restante) subestima la de un tsunami.,"Tsunami: the uplift of the sea floor (up to {m} m) propagates with shallow-water equations; bathymetry is capped at 1,500 m to speed up the calculation. Jonkman's mortality (remaining zone) underestimates that of a tsunami.",Tsunami: mama kucha ukupi allpa wichariyka ({m} m-kama) mana ukku yakupa ecuacionkunawan mirarin; cálculota utkayachinkapak batimetríaka 1 500 m-kama kan. Jonkmanpa wañuyka (puchushka zona) tsunamipa wañuyta pishiyachishpa yupan.,no
+api.sim.nota.tormenta.deslizamientos,Los deslizamientos se muestran desde el final de la lluvia; no se estima su mortalidad.,Landslides are shown from the end of the rain; their mortality is not estimated.,Deslizamientokunaka tamya tukurishkamanta rikurin; paykunapa wañuyta mana yupanchu.,no
+api.sim.nota.tormenta.drenaje,La red de drenaje es la del DEM a la resolución del mundo: los cauces estrechos se ensanchan a una celda.,The drainage network is that of the DEM at the world's resolution: narrow channels widen to one cell.,Drenaje redka mundopa resoluciónpi DEM-pakmi: kichki ñankunaka shuk celdakama anchuyan.,no
+api.sim.nota.tormenta.lluvia_humedo,Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN húmedo (AMC III)).,Rainfall of {mm} mm in {h} h with a radius of {km} km. Antecedent soil moisture: {pct} % of available water (CN wet (AMC III)).,{km} km radiowan {h} h-pi {mm} mm tamya. Ñawpa allpapa humedad: mutkichina yakupa {pct} % (CN húmedo (AMC III)).,no
+api.sim.nota.tormenta.lluvia_normal,Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN normal (AMC II)).,Rainfall of {mm} mm in {h} h with a radius of {km} km. Antecedent soil moisture: {pct} % of available water (CN normal (AMC II)).,{km} km radiowan {h} h-pi {mm} mm tamya. Ñawpa allpapa humedad: mutkichina yakupa {pct} % (CN normal (AMC II)).,no
+api.sim.nota.tormenta.lluvia_seco,Lluvia de {mm} mm en {h} h con radio de {km} km. Humedad antecedente del suelo: {pct} % del agua útil (CN seco (AMC I)).,Rainfall of {mm} mm in {h} h with a radius of {km} km. Antecedent soil moisture: {pct} % of available water (CN dry (AMC I)).,{km} km radiowan {h} h-pi {mm} mm tamya. Ñawpa allpapa humedad: mutkichina yakupa {pct} % (CN chaki (AMC I)).,no
+api.sim.opcion.terremoto.mecanismo.inversa_subduccion,Inversa (subducción),Reverse (subduction),Inversa (subducción),no
+api.sim.opcion.terremoto.mecanismo.normal,Normal,Normal,Normal,no
+api.sim.opcion.terremoto.mecanismo.rumbo_dextral,Rumbo dextral,Right-lateral strike-slip,Rumbo dextral,no
+api.sim.opcion.terremoto.mecanismo.rumbo_sinistral,Rumbo sinistral,Left-lateral strike-slip,Rumbo sinistral,no
+api.sim.opcion.terremoto.pais.colombia,Colombia,Colombia,Colombia,no
+api.sim.opcion.terremoto.pais.ecuador,Ecuador,Ecuador,Ecuador,no
+api.sim.opcion.terremoto.pais.peru,Perú,Peru,Perú,no
+api.sim.panel.0_hh_antes_db,σ⁰ HH antes (dB),σ⁰ HH before (dB),σ⁰ HH ñawpa (dB),no
+api.sim.panel.0_hh_en_el_pico_de_la_crecida_db,σ⁰ HH en el pico de la crecida (dB),σ⁰ HH at flood peak (dB),σ⁰ HH crecidapa hatun pachapi (dB),no
+api.sim.panel.0_hv_antes_db,σ⁰ HV antes (dB),σ⁰ HV before (dB),σ⁰ HV ñawpa (dB),no
+api.sim.panel.0_hv_despues_db,σ⁰ HV después (dB),σ⁰ HV after (dB),σ⁰ HV washa (dB),no
+api.sim.panel.coherencia_antes_de_la_erupcion,Coherencia antes de la erupción,Coherence before the eruption,Erupciónmanta ñawpa coherencia,no
+api.sim.panel.coherencia_con_la_erupcion,Coherencia con la erupción,Coherence with the eruption,Erupciónwan coherencia,no
+api.sim.panel.coherencia_interferometrica,Coherencia interferométrica,Interferometric coherence,Interferométrica coherencia,no
+api.sim.panel.desplazamiento_en_la_linea_de_vista,Desplazamiento en la línea de vista,Line-of-sight displacement,Rikuy línea-pi kuyuriy,no
+api.sim.panel.deteccion_de_inundacion,Detección de inundación,Flood detection,Yaku jundayta rikuy,no
+api.sim.panel.interferograma_envuelto_fase_los,Interferograma envuelto (fase LOS),Wrapped interferogram (LOS phase),Pillushka interferograma (LOS fase),no
+api.sim.panel.perdida_de_coherencia_antes_despues,Pérdida de coherencia (antes − después),Coherence loss (before − after),Coherenciapa chinkay (ñawpa − washa),no
+api.sim.panel.razon_logaritmica_hv_despues_antes,Razón logarítmica HV después/antes,HV log ratio after/before,HV logarítmica razón washa/ñawpa,no
+api.sim.titulo.erupcion,Erupción IEV {vei},Eruption VEI {vei},Erupción IEV {vei},no
+api.sim.titulo.erupcion_volcan,Erupción IEV {vei} del {volcan},VEI {vei} eruption of {volcan},{volcan}-pa IEV {vei} erupción,no
+api.sim.titulo.incendio,Incendio forestal,Forest fire,Sacha incendio,no
+api.sim.titulo.inundacion,Desborde de río,River overflow,Mayupa hawaman llukshiy,no
+api.sim.titulo.inundacion_marejada,Marejada costera,Coastal surge,Kucha patapi marejada,no
+api.sim.titulo.terremoto,Terremoto Mw {mw},Earthquake Mw {mw},Allpa kuyuy Mw {mw},no
+api.sim.titulo.tormenta,Tormenta extrema,Extreme storm,Sinchi tormenta,no
+api.tipo.agricultura.descripcion,"Series temporales por parcela: siembra, crecimiento, inundación de arroz y cosecha.","Time series per plot: sowing, growth, rice flooding and harvest.","Sapa parcelapi pacha wiñachik: tarpuy, wiñay, arroz yaku junday, kuchuy ima.",no
+api.tipo.agricultura.nombre,Actividad agrícola,Agricultural activity,Chakra llankay,no
+api.tipo.agricultura.observable,σ⁰ HV por parcela (dB),σ⁰ HV per plot (dB),σ⁰ HV sapa chakrapi (dB),no
+api.tipo.glaciares.descripcion,Seguimiento de desplazamientos (offset tracking) entre adquisiciones de 12 días.,Displacement tracking (offset tracking) between 12-day acquisitions.,12 punchapi adquisicionkuna chawpipi kuyuykunata katiy (offset tracking).,no
+api.tipo.glaciares.nombre,Movimiento de glaciares,Glacier movement,Glaciarkunapa kuyuy,no
+api.tipo.glaciares.observable,Velocidad superficial (m/día),Surface velocity (m/day),Patapi usqhay (m/p'unchaw),no
+api.tipo.humedales.descripcion,"Clasificación de inundación: agua abierta (reflexión especular, HH muy bajo) y vegetación inundada (doble rebote tronco-agua, HH muy alto).","Flood classification: open water (specular reflection, very low HH) and flooded vegetation (trunk-water double bounce, very high HH).","Yaku junday clasificación: paskashka yaku (especular reflexión, HH ancha uray), yakuwan jundashka sacha yuyu (sachapa-yakupa ishkay kutichiy, sinchi HH).",no
+api.tipo.humedales.nombre,Pérdida de humedales,Wetland loss,Humedalkunapa illay,no
+api.tipo.humedales.observable,σ⁰ HH y HV (dB),σ⁰ HH and HV (dB),σ⁰ HH chaymanta HV (dB),no
+api.tipo.incendios.descripcion,Razón logarítmica HV después/antes e inversión de biomasa con el modelo de nube de agua.,Logarithmic HV after/before ratio and biomass inversion with the water-cloud model.,"HV washa/ñawpa razón logarítmica, biomasa inversión ima yaku-puyu modelowan.",no
+api.tipo.incendios.nombre,Incendios forestales,Forest fires,Sacha incendiokuna,no
+api.tipo.incendios.observable,σ⁰ HV (dB),σ⁰ HV (dB),σ⁰ HV (dB),no
+api.tipo.subsidencia.descripcion,Series temporales InSAR: ajuste por mínimos cuadrados de la pila de interferogramas.,InSAR time series: least-squares fit of the interferogram stack.,InSAR pacha wiñachik: interferograma pilapa mínimos cuadrados ajuste.,no
+api.tipo.subsidencia.nombre,Subsidencia del terreno,Land subsidence,Allpa uraykay,no
+api.tipo.subsidencia.observable,Velocidad vertical (cm/año),Vertical velocity (cm/year),Uraman uraykuy (cm/wata),no
+api.tipo.terremotos.descripcion,Interferometría diferencial de 12 días; el modelo de Okada genera la deformación cosísmica.,12-day differential interferometry; the Okada model generates the coseismic deformation.,12 punchapi diferencial interferometría; Okada modelo cosísmica deformaciónta rurachin.,no
+api.tipo.terremotos.nombre,Terremotos,Earthquakes,Allpa kuyuykuna,no
+api.tipo.terremotos.observable,Desplazamiento LOS (cm),LOS displacement (cm),LOS kuyuy (cm),no
+api.unidad.cm_ano,cm/año,cm/yr,cm/wata,no
+api.unidad.dias,días,days,punchakuna,no
+api.unidad.m_dia,m/día,m/day,m/puncha,no
+api.valor.mil,mil,thousand,waranka,no
+api.valor.personas,personas,people,runakuna,no
+comun.capas.otros,{n} capas,{n} layers,{n} capakuna,no
+comun.capas.uno,{n} capa,{n} layer,{n} capa,no
+comun.cargando,Cargando…,Loading…,Chaskishka…,no
+comun.cerrar,Cerrar,Close,Wichkay,no
+estructura.banda.aviso,Aviso de datos de demostración,Demonstration data notice,Rikuchiy willaykunamanta willachiy,no
+estructura.banda.cerrar_panel,Cerrar este panel,Close this panel,Kay panelta wichkay,no
+estructura.banda.corto,DEMOSTRACIÓN · no son datos reales de NISAR,DEMO · not real NISAR data,RIKUCHIY · mana NISAR-pa chiqan willaykuna kanchu,no
+estructura.banda.fecha,Fecha,Date,Puncha,no
+estructura.banda.generador,Generador,Generator,Rurachik,no
+estructura.banda.largo,DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR,DEMONSTRATION DATA · not real NISAR observations,RIKUCHIY WILLAYKUNA · mana NISAR-pa chiqan rikuykuna kanchu,no
+estructura.banda.panel_texto,"Los mapas, series y cifras que ves los fabrica un generador para enseñar cómo se vería el radar. No son mediciones de NISAR ni describen un hecho real. Cada dato lleva su origen.","The maps, series and figures you see are made by a generator to show how the radar would look. They are not NISAR measurements and do not describe a real event. Every data item carries its origin.","Kaypi rikushka shuyukuna, yupaykuna shinallatak shuk rurachikmi rurashka, radar imashina rikurinata yachachinkapak. Mana NISAR-pa tupushkachu, mana chiqan pasashkatapash willanchu. Sapa willaypak kallarishkami tiyan.",no
+estructura.banda.panel_titulo,Qué significa «datos de demostración»,What «demonstration data» means,Ima niyta munan «rikuchiy willaykuna»,no
+estructura.banda.que_significa,Qué significa,What this means,Ima niyta munan,no
+estructura.banda.semilla,Semilla,Seed,Muju,no
+estructura.banda.sin_origen,Los datos de origen aún no se han cargado.,The origin data have not been loaded yet.,Kallari willaykuna manaraka apamushkachu.,no
+estructura.estado.reintentar,Reintentar,Retry,Kutin ruray,no
+estructura.estado.ultimo_dato,Último dato bueno: {hora}.,Last good data: {hora}.,Kipa alli willay: {hora}.,no
+estructura.limite_error.mensaje,No se pudo cargar la pantalla.,The screen could not be loaded.,Mana kay pantallata kichayta ushashkachu.,no
+estructura.motor.cargando,Preparando el motor de cálculo… (primera visita: unos 25 MB),Preparing the computation engine… (first visit: about 25 MB),Yupana motorta allichikun… (punta kutin: 25 MB shina),no
+estructura.motor.error,El motor de cálculo no pudo cargarse en este navegador; lo precalculado sigue disponible.,The computation engine could not load in this browser; precomputed content is still available.,Yupana motorka kay navegadorpi mana chaskiyta ushashkachu; ñawpa yupashkaka tiyakunllami.,no
+estructura.motor.no_disponible,"Esta función necesita el motor de cálculo, que no pudo cargarse en este navegador.","This feature needs the computation engine, which could not load in this browser.","Kay ruranaka yupana motorta minishtin, shinapash kay navegadorpi mana chaskiyta ushashkachu.",no
+estructura.no_encontrada.hallazgo,Esta dirección no existe en la app.,This address does not exist in the app.,Kay ñan kay app-pi mana tiyanchu.,no
+estructura.no_encontrada.titulo,Página no encontrada,Page not found,Kay panka mana tiyanchu,no
+estructura.riel.fundamentos,Fundamentos,Fundamentals,Sapi yachay,no
+estructura.riel.fundamentos_corto,Base,Basics,Sapi,no
+estructura.riel.historias,Historias,Stories,Willakuykuna,no
+estructura.riel.historias_corto,Inicio,Start,Kallari,no
+estructura.riel.laboratorio,Laboratorio del radar,Radar lab,Radarpa laboratorio,no
+estructura.riel.laboratorio_corto,Lab.,Lab,Lab.,no
+estructura.riel.observatorio,Observatorio,Observatory,Observatorio,no
+estructura.riel.observatorio_corto,Observ.,Observ.,Rikuy,no
+estructura.riel.principal,Principal,Main,Hatun,no
+estructura.riel.recorrido,Recorrido guiado,Guided tour,Pushashka purina,no
+estructura.riel.recorrido_corto,Tour,Tour,Purina,no
+estructura.riel.simulador,Simulador de eventos,Event simulator,Simulador de eventos,no
+estructura.riel.simulador_corto,Simul.,Simul.,Simul.,no
+estructura.tabla.anterior,Anterior,Previous,Ñawpa,no
+estructura.tabla.rango,{desde}–{hasta} de {total},{desde}–{hasta} of {total},"{desde}–{hasta}, {total}-manta",no
+estructura.tabla.siguiente,Siguiente,Next,Katik,no
+estructura.tabla.sin_dato,sin dato,no data,willay illa,no
+exportar.error.generico,El servidor no pudo completar la solicitud.,The server could not complete the request.,Servidor mana tukuchishkachu mañaytaka.,no
+exportar.error.lienzo,No se pudo crear el lienzo de exportación.,Could not create the export canvas.,Mana rurashkachu exportana lienzota.,no
+exportar.error.png,No se pudo generar el PNG.,Could not generate the PNG.,Mana rurashkachu PNG-ta.,no
+exportar.error.red,No se pudo conectar con el servidor.,Could not connect to the server.,Servidor-wan mana tinkichishkachu.,no
+exportar.error.respuesta_invalida,La respuesta del servidor no es válida.,The server response is not valid.,Servidorpa kutichiyka mana allichu.,no
+exportar.franja.demo,DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR,DEMONSTRATION DATA · not real NISAR observations,RIKUCHIY WILLAYKUNA · NISAR-pa chiqan rikuykuna mana kanchu,no
+exportar.franja.fuente_desconocida,desconocida,unknown,mana yachashka,no
+fecha.dia.1,lunes,Monday,lunes,no
+fecha.dia.2,martes,Tuesday,martes,no
+fecha.dia.3,miércoles,Wednesday,miércoles,no
+fecha.dia.4,jueves,Thursday,jueves,no
+fecha.dia.5,viernes,Friday,viernes,no
+fecha.dia.6,sábado,Saturday,sábado,no
+fecha.dia.7,domingo,Sunday,domingo,no
+fecha.mes.1,Enero,January,Enero,no
+fecha.mes.10,Octubre,October,Octubre,no
+fecha.mes.11,Noviembre,November,Noviembre,no
+fecha.mes.12,Diciembre,December,Diciembre,no
+fecha.mes.2,Febrero,February,Febrero,no
+fecha.mes.3,Marzo,March,Marzo,no
+fecha.mes.4,Abril,April,Abril,no
+fecha.mes.5,Mayo,May,Mayo,no
+fecha.mes.6,Junio,June,Junio,no
+fecha.mes.7,Julio,July,Julio,no
+fecha.mes.8,Agosto,August,Agosto,no
+fecha.mes.9,Septiembre,September,Septiembre,no
+fundamentos.col.banda,Banda,Band,Banda,no
+fundamentos.col.cambio,Cambio,Change,Tikray,no
+fundamentos.col.longitud,Longitud de onda típica,Typical wavelength,Ondapa sapa kutin sunilla,no
+fundamentos.col.nota,Qué implica,What it implies,Ima ninmi,no
+fundamentos.col.pol,Polarización que suele resaltarlo,Polarization that usually highlights it,Ashtawan rikuchik polarización,no
+fundamentos.col.que_ve,Qué ve el radar,What the radar sees,Radarka ima rikun,no
+fundamentos.hallazgo,Lo mínimo que hay que saber para leer una imagen de radar.,The minimum you need to know to read a radar image.,Radar rikchata ñawinchinkapak pishi yachana.,no
+fundamentos.nota.bandas,"Longitudes típicas por convención general, no propias de una misión.","Typical wavelengths by general convention, not specific to any mission.","Sapa kutin sunikuna tukuy ima kawsaymanta, mana shuk misionpak.",no
+fundamentos.nota.cambios,Descripción general de la física; en la app los ejemplos son de demostración.,General description of the physics; in the app the examples are demonstration data.,Física tukuy rikuchiymi; appika ejemplokunaka rikuchiymi.,no
+fundamentos.nota.mision,"Mientras no haya acceso a los datos oficiales, todo lo que ves aquí son datos de demostración.","Until there is access to the official data, everything you see here is demonstration data.","Kamachik willaykunaman mana chayana kakpika, kaypi rikushkaka tukuy rikuchiy willaykunami.",no
+fundamentos.tabla.bandas,Bandas de radar y su longitud de onda típica,Radar bands and their typical wavelength,"Radar bandakuna, ondapa sapa kutin sunilla",no
+fundamentos.tabla.cambios,Cambios y su huella en el radar,Changes and their radar signature,"Tikraykuna, radarpi paykunapa ñan",no
+fundamentos.tarjeta.cambios,Qué ve el radar en cada tipo de cambio,What the radar sees in each type of change,Sapa tikrayta radarka ima rikun,no
+fundamentos.tarjeta.mision,La misión NISAR,The NISAR mission,NISAR misión,no
+fundamentos.tarjeta.pol_bandas,Polarizaciones y bandas,Polarizations and bands,"Polarizacionkuna, bandakuna",no
+fundamentos.tarjeta.radar,Un radar que ilumina por sí mismo,A radar that lights its own scene,Pay kikin kanchachik radar,no
+fundamentos.titulo,Fundamentos,Fundamentals,Sapi yachay,no
+historias.cargando,Cargando la historia…,Loading the story…,Willakuyta chaskishka…,no
+historias.comparador.actualizando,Actualizando…,Updating…,Mushukyachishka…,no
+historias.comparador.antes,Antes · {fecha},Before · {fecha},Ñawpa · {fecha},no
+historias.comparador.calculando,Calculando el cambio entre las dos pasadas…,Calculating the change between the two passes…,Ishkay pasadakunapa tikrayta yupachishka…,no
+historias.comparador.despues,Después · {fecha},After · {fecha},Washa · {fecha},no
+historias.comparador.nota_cinta,Una muesca por pasada del satélite. Mueve el cursor para elegir «después»; «antes» queda fija.,One notch per satellite pass. Move the cursor to choose «after»; «before» stays fixed.,Sapa satélitepa pasadapak shuk rikchay. Kursorta kuyuchishpa «washa»ta akllay; «ñawpa» sayashkallami kan.,no
+historias.comparador.sin_pasadas,Este escenario no tiene dos pasadas distintas para comparar.,This scenario does not have two different passes to compare.,Kay escenariopi mana ishkay mana kikin pasadakuna tiyanchu tupachinkapak.,no
+historias.comparador.ver_observatorio,Ver en el Observatorio,View in the Observatory,Observatoriopi rikuy,no
+historias.creditos,"Créditos: clima de NASA POWER, límites de provincias de geoBoundaries (CC0), tipografía Public Sans (SIL OFL).","Credits: climate data from NASA POWER, province boundaries from geoBoundaries (CC0), Public Sans typeface (SIL OFL).","Yupaychay: NASA POWER-manta clima, geoBoundaries-manta provinciakunapa límites (CC0), Public Sans tipografía (SIL OFL).",no
+historias.indice.etiqueta,Historias,Stories,Willakuykuna,no
+historias.indice.principal,{etiqueta} · historia principal,{etiqueta} · main story,{etiqueta} · hatun willakuy,no
+historias.marca.ejemplo,En este escenario de demostración,In this demonstration scenario,Kay rikuchiy escenariopi,no
+historias.marca.pendiente,pendiente de confirmar con la documentación oficial,pending confirmation with the official documentation,kamachik panka-wan chiqanyachina kan,no
+historias.pol.etiqueta,Polarización,Polarization,Polarización,no
+historias.pol.recomendada,{pol} · recomendada,{pol} · recommended,{pol} · ruranapak,no
+historias.pregunta,"Qué ve el radar cuando el agua sube o el bosque arde, y por qué.","What the radar sees when the water rises or the forest burns, and why.","Yaku wicharikpi o sacha ninawan rupakpi, radarka ima rikun, imarayku?",no
+historias.sin_escenario.texto,No hay un escenario de demostración asociado a esta historia.,There is no demonstration scenario linked to this story.,Kay willakuywan rikuchiy escenario mana tiyanchu.,no
+historias.sin_escenario.titulo,Esta historia no tiene escenario,This story has no scenario,Kay willakuypak escenario mana tiyanchu,no
+idioma.aviso_qu,Traducción en revisión por hablantes · {validadas} de {total} textos validados,Translation under review by speakers · {validadas} of {total} texts validated,Kichwa tikrayka manaraka chiqanyachishkachu · {total}-manta {validadas} chiqanyachishka,no
+idioma.selector.etiqueta,Idioma,Language,Shimi,no
+idioma.sin_traducir,Texto aún sin traducir; se muestra en español,Text not yet translated; shown in Spanish,Kay killkaka mana tikrashkachu; castellano shimipi rikuchishka,no
+lab.comun.preparando,Preparando el experimento…,Preparing the experiment…,Yachanata allichishpa…,no
+lab.nubes.activo,activo,active,activo,no
+lab.nubes.activo_explicacion,"Emite su propia señal y mide el eco, así que no necesita luz del Sol ni se detiene por las nubes.","It emits its own signal and measures the echo, so it needs no sunlight and clouds do not stop it.","Pay kikinpa señalta kachan, ecota tupun, chaymanta inti achikta mana minishtinchu, puyukunapash mana harkanchu.",no
+lab.nubes.ajusta,Ajusta las nubes,Adjust the clouds,Puyukunata allichiy,no
+lab.nubes.cambio_optico,Cambio que ve el óptico,Change seen by the optical sensor,Ópticopa rikushka tikray,no
+lab.nubes.cambio_radar,Cambio que ve el radar,Change seen by the radar,Radarpa rikushka tikray,no
+lab.nubes.cobertura,Cobertura de nubes,Cloud cover,Puyuwan pakashka,no
+lab.nubes.explica_antes,El radar es un sensor ,Radar is an ,Radarka ,no
+lab.nubes.explica_despues,": lo que ve no depende de la nube. Aun sin nubes, el óptico no detecta el agua bajo el dosel del bosque, y el radar sí (el agua bajo los árboles devuelve más señal por un doble rebote)."," sensor: what it sees does not depend on cloud. Even without clouds, the optical sensor cannot detect water under the forest canopy, while the radar can (water under trees returns more signal through a double bounce)."," sensormi: paypa rikushka mana puyumanta kanchu. Puyu mana kakpipash, ópticoka sacha pankakuna ukupi yakuta mana tarin, radarka tarin (kiwa ukupi yakuka ishkay kutin tupashpa ashtawan señalta kutichin).",no
+lab.nubes.explica_titulo,Qué muestra este experimento,What this experiment shows,Kay yachanaka ima rikuchin,no
+lab.nubes.limite,Las nubes tapan la imagen óptica posterior a la inundación. Al radar no le afectan.,Clouds cover the optical image taken after the flood. They do not affect the radar.,Puyukunaka yaku wicharishka washa óptico rikchata pakan. Radarta mana llakichinchu.,no
+lab.nubes.nota,"Escena inventada con coeficientes ilustrativos: sirve para entender el principio, no describe un lugar real ni una observación de NISAR.","Invented scene with illustrative coefficients: it helps to understand the principle, it does not describe a real place or a NISAR observation.","Rurashka rikuchiy, ejemplo yuyay coeficientekunawan: kay yuyayta intindinkapak sirwin, ni chiqan llaktatachu ni NISAR-pa rikuyta willanchu.",no
+lab.nubes.optico,Imagen óptica después de la inundación,Optical image after the flood,Yaku wicharishka washa óptico rikcha,no
+lab.nubes.radar,Radar después de la inundación,Radar after the flood,Yaku wicharishka washa radar,no
+lab.pantalla.experimentos,Experimentos,Experiments,Yachanakuna,no
+lab.pantalla.hallazgo,Dos experimentos con una escena inventada: qué pasa cuando hay nubes y qué polarización resalta cada cambio.,Two experiments with an invented scene: what happens when there are clouds and which polarization highlights each change.,"Ishkay yachana, rurashka rikuchiywan: puyu tiyakpi ima pasan, polarización ima tikraykunata rikuchin.",no
+lab.pantalla.titulo,Laboratorio del radar,Radar laboratory,Radarpa laboratorio,no
+lab.pestana.nubes,La nube no lo detiene,Clouds do not stop it,Puyuka mana harkanchu,no
+lab.pestana.polarizacion,Polarización y banda,Polarization and band,Polarizacionpash bandapash,no
+lab.pol.aviso_banda,Banda S: ejemplo ilustrativo; pendiente de confirmar con la documentación oficial.,S band: illustrative example; pending confirmation with the official documentation.,Banda S: ejemplo yuyay; kamachik panka-wan chiqanyachina kan.,no
+lab.pol.banda,Banda,Band,Banda,no
+lab.pol.banda_l,Banda L,L band,Banda L,no
+lab.pol.banda_s,Banda S (ejemplo),S band (example),Banda S (ejemplo),no
+lab.pol.barras_titulo,σ⁰ por superficie (dB),σ⁰ per surface (dB),σ⁰ sapa pachapi (dB),no
+lab.pol.col_cambio,Cambio,Change,Tikray,no
+lab.pol.col_contraste,Contraste (dB),Contrast (dB),Contraste (dB),no
+lab.pol.col_mejor,Polarización que más lo resalta,Polarization that highlights it most,Aswa rikuchik polarización,no
+lab.pol.cual_resalta,Qué polarización resalta cada cambio,Which polarization highlights each change,Ima polarización sapa tikrayta rikuchin,no
+lab.pol.elige,Elige cómo mira el radar,Choose how the radar looks,Radar imashina rikukta akllay,no
+lab.pol.inundado_corta,Inundado,Flooded,Yakuwan,no
+lab.pol.polarizacion,Polarización,Polarization,Polarización,no
+lab.pol.respuesta_titulo,Respuesta de cada superficie en {pol},Response of each surface in {pol},Sapa pachapa kutichiy {pol}-pi,no
+lab.pol.superficies,Superficies de la escena,Surfaces in the scene,Rikuchiypi pachakuna,no
+lab.pol.tabla_titulo,Polarización que más resalta cada cambio,Polarization that highlights each change the most,Sapa tikrayta ashtawan rikuchik polarización,no
+lab.pol.termino,polarización,polarization,polarización,no
+lab.pol.termino_explicacion,Orientación de la onda que el radar emite y recibe. HH y VV son «paralelas»; HV mezcla orientaciones y responde sobre todo a la estructura de la vegetación.,"Orientation of the wave the radar emits and receives. HH and VV are ""parallel""; HV mixes orientations and responds mostly to the structure of the vegetation.","Radarpa kachashka, chaskishka ondapa kuntuy. HH, VV «paralelakuna» kan; HV kuntuykunata chapuk, ashtawan sacha ruraypa shinallata kutichin.",no
+lab.pol.texto_antes,Cada cambio cambia la ,Each change alters the ,Sapa tikrayka ,no
+lab.pol.texto_despues," de forma distinta: el agua abierta apaga la señal paralela, el agua bajo árboles la dispara por doble rebote y la pérdida de biomasa apaga la cruzada (HV)."," differently: open water switches off the parallel signal, water under trees boosts it through a double bounce, and biomass loss switches off the cross-polarized one (HV).","-ta shuk shukmanta tikrachin: paskashka yakuka paralela señalta wañuchin, kiwa ukupi yakuka ishkay kutin tupashpa wiñachin, biomasa chinkayka cruzada señalta (HV) wañuchin.",no
+lab.pol.vista_radar,"Lo que ve el radar · banda {banda}, {pol}","What the radar sees · {banda} band, {pol}","Radarpa rikushka · banda {banda}, {pol}",no
+obs.ayuda.aviso,Los detalles de NISAR están pendientes de confirmar con la documentación oficial.,NISAR details are pending confirmation with the official documentation.,NISAR-pa willaykunaka kamachik panka-wan chiqanyachina kan.,no
+obs.ayuda.interferometria,interferometría,interferometry,interferometría,no
+obs.ayuda.interferometria_antes,Un radar como el de NISAR puede medir movimientos de la superficie a escala de centímetros mediante ,A radar like NISAR’s can measure surface movements at the centimetre scale through ,NISAR shina radarka pacha pata kuyuykunata centímetro tupupi tupuy ushan ,no
+obs.ayuda.interferometria_explicacion,"Técnica que compara la fase de la señal de radar de dos pasadas sobre el mismo lugar: una diferencia de fase corresponde a un desplazamiento de la superficie, del orden de centímetros.","A technique that compares the phase of the radar signal from two passes over the same place: a phase difference corresponds to a displacement of the surface, on the order of centimetres.","Shuk kikin pachapi ishkay pasadakunapa radar señalpa fasenta tupachin: fase shuktaktami pacha patapa kuyuyta nin, centímetrokunapa tupupi.",no
+obs.ayuda.resumen,Cómo ve el radar este tipo de cambio,How the radar sees this type of change,Radar kay tikray rikchayta imashina rikun,no
+obs.comparar.antes,Antes,Before,Ñawpa,no
+obs.comparar.aviso_sin_area,Dibuja un recuadro con área,Draw a box with an area,Áreayuk shuk cuadrota shuyuy,no
+obs.comparar.ayuda_gestos,"Pulsa la imagen para medir un punto, o arrástrala para medir un cuadrante.","Click the image to measure a point, or drag it to measure a quadrant.","Rikchata ñitiy shuk puntota tupunkapak, o aysaspa shuk cuadrota tupunkapak.",no
+obs.comparar.cargando,Calculando el cambio entre las dos fechas…,Computing the change between the two dates…,Ishkay punchakunapa tikrayta yupachishka…,no
+obs.comparar.como_leer,Cómo leer esto,How to read this,Kayta imashina ñawinchina,no
+obs.comparar.descargar_png,Descargar PNG,Download PNG,PNGta uraykachay,no
+obs.comparar.despues,Después,After,Washa,no
+obs.comparar.elige_dos,Elige dos fechas distintas,Choose two different dates,Ishkay mana kikin punchakunata akllay,no
+obs.comparar.elige_dos_texto,Este escenario necesita dos pasadas distintas para compararlas. Fíjalas desde la vista Mapa.,This scenario needs two different passes to compare them. Set them from the Map view.,Kay escenariopika ishkay mana kikin pasadakuna tupachinkapak minishtin. Shuyu rikuypi churay.,no
+obs.comparar.error_lienzo,No se pudo dibujar la capa.,The layer could not be drawn.,Capata mana shuyuyta ushashkachu.,no
+obs.comparar.etiqueta_antes,Antes · {fecha},Before · {fecha},Ñawpa · {fecha},no
+obs.comparar.etiqueta_despues,Después · {fecha},After · {fecha},Washa · {fecha},no
+obs.comparar.explica_hh,Se emite y se recibe con la onda en horizontal.,It is sent and received with the wave horizontal.,"Ondata horizontalpi kachan, horizontalpi chaskin.",no
+obs.comparar.explica_hv,Se emite en horizontal y se recibe en vertical.,It is sent horizontally and received vertically.,"Horizontalpi kachan, verticalpi chaskin.",no
+obs.comparar.explica_polarizacion,"Orientación de la onda de radar al emitirse y al recibirse. Cada combinación responde distinto al agua, la vegetación y el suelo.","Orientation of the radar wave when it is sent and when it is received. Each combination responds differently to water, vegetation and soil.","Radar ondapa ima kuchupi llukshin, ima kuchupi chaskishka. Sapa tinkichiyka yakuta, sachata, allpata shuk shinami kutichin.",no
+obs.comparar.explica_sigma,"Cuánta señal vuelve al satélite desde cada punto del suelo. El agua lisa devuelve poca; las copas de los árboles, mucha.",How much signal returns to the satellite from each point on the ground. Smooth water returns little; tree canopies return a lot.,Sapa allpa puntomanta mashna señal satéliteman kutimun. Llampu yakuka pishillata kutichin; sachakunapa pankakunaka achkata.,no
+obs.comparar.polarizacion,Polarización,Polarization,Polarización,no
+obs.comparar.titulo_capa,{capa} · {antes} a {despues},{capa} · {antes} to {despues},{capa} · {antes}-manta {despues}-kama,no
+obs.comparar.ver,Ver,View,Rikuy,no
+obs.comparar.vista_clasificacion,Clasificación,Classification,Clasificación,no
+obs.comparar.vista_comparar,{variable} antes y después,{variable} before and after,"{variable} ñawpa, washa",no
+obs.contexto.cargando,Cargando el contexto…,Loading the context…,Tiyashka pachata chaskishka…,no
+obs.contexto.estacion,Estación astronómica hoy,Astronomical season today,Kunan astronómico pacha,no
+obs.contexto.humedad,Humedad del suelo estimada hoy,Estimated soil moisture today,Kunan allpapa humedad yupashka,no
+obs.contexto.mm_mes,mm por mes,mm per month,mm sapa killapi,no
+obs.contexto.nota_antes,Clima real de ,Real climate from ,Chiqan clima ,no
+obs.contexto.nota_despues,", no de NISAR. La humedad del suelo es una estimación por balance hídrico sobre la climatología, no una medición.",", not from NISAR. Soil moisture is an estimate from a water balance over the climatology, not a measurement.","-manta, mana NISAR-manta. Allpapa humedadka yaku yupaywan yupashka, mana tupushkachu.",no
+obs.contexto.power_explicacion,Servicio de la NASA con clima estimado a partir de satélites y modelos. Sirve para saber en qué temporada está un lugar; no son observaciones del radar NISAR.,NASA service with climate estimated from satellites and models. It tells which season a place is in; these are not NISAR radar observations.,"NASA-pa llamkay: satélitekunawan, modelokunawan clima yupashka. Shuk pacha ima temporadapi kakta yachankapak; mana NISAR radarpa rikuykunachu.",no
+obs.contexto.precipitacion,Precipitación mensual,Monthly precipitation,Killa tamya,no
+obs.contexto.provincia,Provincia,Province,Provincia,no
+obs.contexto.proximo_hito,Próximo hito,Next milestone,Shamuk hito,no
+obs.contexto.region,Región,Region,Región,no
+obs.contexto.sin_contexto,Sin contexto,No context,Tiyashka pacha illa,no
+obs.contexto.sin_datos,No hay datos climáticos para este punto.,There is no climate data for this point.,Kay pachapak clima willaykuna mana tiyanchu.,no
+obs.contexto.temporada,Temporada en la pasada activa,Season at the active pass,Rikuk pasadapi pacha,no
+obs.contexto.temporada_lluviosa,Lluviosa,Rainy,Tamya,no
+obs.contexto.temporada_seca,Seca,Dry,Chaki,no
+obs.contexto.titulo,Contexto del lugar,Context of the place,Pachapa tiyashka pacha,no
+obs.estructura.calculando_cambio,Calculando el cambio entre las dos pasadas…,Computing the change between the two passes…,Ishkay pasadakunapa tikrayta yupachishka…,no
+obs.estructura.cargando_escenario,Cargando el escenario…,Loading the scenario…,Escenariota chaskishka…,no
+obs.estructura.cargando_parametros,Cargando los parámetros…,Loading the parameters…,Parámetroskunata chaskishka…,no
+obs.estructura.elige_tipo,Elige un tipo,Choose a type,Shuk rikchayta akllay,no
+obs.estructura.error_cambio,No se pudo calcular el cambio entre las dos pasadas elegidas.,The change between the two chosen passes could not be computed.,Akllashka ishkay pasadakunapa tikrayta mana yupayta ushashkachu.,no
+obs.estructura.escenario,Escenario,Scenario,Escenario,no
+obs.estructura.escenario_no_disponible,Escenario no disponible,Scenario not available,Escenario mana tiyanchu,no
+obs.estructura.lado_etiqueta,Métricas y contexto,Metrics and context,"Yupaykuna, tiyashka pacha",no
+obs.estructura.mas_acciones,Más acciones,More actions,Astawan rurakuna,no
+obs.estructura.motivo_reproductor,Se está calculando un escenario nuevo; el reproductor vuelve al terminar.,A new scenario is being computed; the player returns when it finishes.,Mushuk escenariota yupachishka; tukurikpi reproductor kutimunka.,no
+obs.estructura.observable,Qué observa el radar en esta demostración:,What the radar observes in this demonstration:,Kay rikuchiypi radar ima rikun:,no
+obs.estructura.pregunta,Qué cambió aquí entre dos pasadas y cuánto.,"What changed here between two passes, and by how much.","Kaypi ima tikrarka ishkay pasada chawpipi, imashina hatunta.",no
+obs.estructura.sigma0_explicacion,Retrodispersión: fracción de la señal del radar que vuelve al satélite.,Backscatter: the fraction of the radar signal that returns to the satellite.,Kutimuq ch'iqiy: radarpa willayninpa satelitiman kutimuq rakinmi.,no
+obs.estructura.sigma0_termino,σ⁰,σ⁰,σ⁰,no
+obs.estructura.sin_pareja,Elige dos pasadas distintas para ver el cambio.,Choose two different passes to see the change.,Ishkay mana kikin pasadakunata akllay tikrayta rikunkapak.,no
+obs.estructura.tipo_cambio,Tipo de cambio,Type of change,Tikray rikchay,no
+obs.estructura.titulo,Observatorio,Observatory,Observatorio,no
+obs.estructura.vista_comparar,Antes y después,Before and after,"Ñawpa, washa",no
+obs.estructura.vista_impacto,Impacto,Impact,Llakichiy,no
+obs.estructura.vista_mapa,Mapa,Map,Shuyu,no
+obs.estructura.vista_serie,Serie,Series,Wiñachik,no
+obs.estructura.vistas_etiqueta,Vistas del Observatorio,Observatory views,Observatoriopa rikuykuna,no
+obs.estructura.volver_a,Volver a {nombre},Back to {nombre},{nombre}-man kutiy,no
+obs.flujo.aria,Campo de flujo: {n} flechas; la mayor corresponde a {max} {unidad}. Arriba es el norte.,Flow field: {n} arrows; the longest corresponds to {max} {unidad}. Up is north.,Kuyuy shuyu: {n} flechakuna; ashtawan hatunka {max} {unidad}-wan tupan. Hawa nortemi.,no
+obs.flujo.nota,Arriba es el norte. Cada flecha apunta hacia donde se mueve el hielo en esa celda; su largo es proporcional a la velocidad.,Up is north. Each arrow points where the ice moves in that cell; its length is proportional to the speed.,Hawa nortemi. Sapa flechaka chay celdapi chullunkuna mayman kuyukta rikuchin; suni utkayman tupan.,no
+obs.flujo.sin_movimiento,Sin movimiento apreciable entre las dos pasadas.,No appreciable movement between the two passes.,Ishkay pasadakuna chawpipi rikuy ushana kuyuy mana kanchu.,no
+obs.flujo.titulo,Campo de flujo,Flow field,Kuyuy shuyu,no
+obs.hallazgo.baja,{sujeto} baja de {a} a {b}{unidad} entre el {desde} y el {hasta},{sujeto} falls from {a} to {b}{unidad} between {desde} and {hasta},{sujeto} {desde}-manta {hasta}-kama {a}-manta {b}{unidad}-man uraykun,no
+obs.hallazgo.demo,"En este escenario de demostración, {frase}.","In this demonstration scenario, {frase}.","Kay rikuchiy escenariopi, {frase}.",no
+obs.hallazgo.igual,{sujeto} se mantiene en {a}{unidad} entre el {desde} y el {hasta},{sujeto} stays at {a}{unidad} between {desde} and {hasta},{sujeto} {desde}-manta {hasta}-kama {a}{unidad}-pi sayarin,no
+obs.hallazgo.real,{frase}.,{frase}.,{frase}.,no
+obs.hallazgo.sube,{sujeto} sube de {a} a {b}{unidad} entre el {desde} y el {hasta},{sujeto} rises from {a} to {b}{unidad} between {desde} and {hasta},{sujeto} {desde}-manta {hasta}-kama {a}-manta {b}{unidad}-man wicharin,no
+obs.impacto.acciones,Qué podría hacerse con esto,What could be done with this,Kaywan ima rurana kanman,no
+obs.impacto.calculando,Calculando el impacto…,Computing the impact…,Llakichiyta yupachishka…,no
+obs.impacto.descargar,Descargar informe (PNG),Download report (PNG),Willayta uraykachay (PNG),no
+obs.impacto.donde,Dónde: {antes} → {despues},Where: {antes} → {despues},Maypi: {antes} → {despues},no
+obs.impacto.elige_dos,Elige dos pasadas distintas para resumir el impacto.,Choose two different passes to summarize the impact.,Llakichiyta pishiyachinkapak ishkay mana kikin pasadakunata akllay.,no
+obs.impacto.error_informe,No se pudo generar el informe.,The report could not be generated.,Willayta mana rurayta ushashkachu.,no
+obs.impacto.evolucion,Evolución frente a la pasada «antes»,Change compared with the “before” pass,«Ñawpa» pasadawan tupachishpa wiñay,no
+obs.impacto.hectareas,Hectáreas por categoría,Hectares by category,Hectáreakuna sapa rikchaypi,no
+obs.impacto.informe_ejemplo,Ejemplo ilustrativo con datos de demostración: no es una observación real de NISAR.,Illustrative example with demonstration data: this is not a real NISAR observation.,Rikuchiy willaykunawan ejemplo yuyay: mana NISAR-pa chiqan rikuychu.,no
+obs.impacto.informe_lienzo,No se pudo crear el lienzo del informe.,The report canvas could not be created.,Willaypa lienzota mana rurayta ushashkachu.,no
+obs.impacto.informe_pasadas,Pasadas comparadas: {antes} → {despues},Passes compared: {antes} → {despues},Tupachishka pasadakuna: {antes} → {despues},no
+obs.mapa.aviso_fuera,Ese punto está fuera de Ecuador. Elige un punto dentro del país.,That point is outside Ecuador. Choose a point inside the country.,Chay punto Ecuador hawapi kan. Mamallakta ukupi shuk puntota akllay.,no
+obs.mapa.ayuda_escenario,"Pulsa el mapa para simular una escena en ese punto, o abre todo Ecuador para elegir otro lugar.","Click the map to simulate a scene at that point, or open all of Ecuador to choose another place.","Shuyuta ñitiy chay puntopi escenariota rikuchinkapak, o tukuy Ecuadorta kichay shuk llaktata akllankapak.",no
+obs.mapa.ayuda_pais,Pulsa un punto dentro de Ecuador para simular una escena allí.,Click a point inside Ecuador to simulate a scene there.,Chaypi escenariota rikuchinkapak Ecuador ukupi shuk puntota ñitiy.,no
+obs.mapa.calculando_capa,Calculando la capa…,Computing the layer…,Capata yupachishka…,no
+obs.mapa.calculando_escena,Calculando la escena en ese punto…,Computing the scene at that point…,Chay puntopi escenariota yupachishka…,no
+obs.mapa.capa_etiqueta,Capa del mapa,Map layer,Shuyupa capa,no
+obs.mapa.cinta_titulo,Cinta de pasadas,Pass timeline,Pasadakunapa pacha,no
+obs.mapa.modo_cambio,Cambio detectado,Detected change,Tikray rikushka,no
+obs.mapa.modo_modelo,Modelo en el tiempo,Model over time,Pachapi modelo,no
+obs.mapa.mostrar_leyenda,Mostrar leyenda,Show legend,Leyendata rikuchiy,no
+obs.mapa.motivo_antes,La pasada «antes» debe ser anterior a la pasada «después».,The “before” pass must come earlier than the “after” pass.,«Ñawpa» pasadaka «washa» pasadamanta ñawpaklla kana kan.,no
+obs.mapa.motivo_despues,La pasada «después» debe ser posterior a la pasada «antes».,The “after” pass must come later than the “before” pass.,«Washa» pasadaka «ñawpa» pasadamanta washaklla kana kan.,no
+obs.mapa.ocultar_leyenda,Ocultar leyenda,Hide legend,Leyendata pakay,no
+obs.mapa.resumen_capa,{rotulo} · Capa · {pct} %,{rotulo} · Layer · {pct} %,{rotulo} · Capa · {pct} %,no
+obs.mapa.resumen_capa_sola,Capa · {pct} %,Layer · {pct} %,Capa · {pct} %,no
+obs.mapa.rotulo_cambio,"Cambio · antes {antes}, después {despues}","Change · before {antes}, after {despues}","Tikray · ñawpa {antes}, washa {despues}",no
+obs.mapa.rotulo_modelo,Modelo · {instante},Model · {instante},Modelo · {instante},no
+obs.mapa.rotulo_pasada,Pasada · {fecha},Pass · {fecha},Pasada · {fecha},no
+obs.mapa.sin_cambio_titulo,Sin cambio que mostrar,No change to show,Rikuchinkapak tikray mana kanchu,no
+obs.mapa.ver_escenario,Ver el escenario,View the scenario,Escenariota rikuy,no
+obs.mapa.ver_todo,Ver todo Ecuador,View all of Ecuador,Tukuy Ecuadorta rikuy,no
+obs.medicion.borrar,Borrar selección,Clear selection,Akllashkata tukuchiy,no
+obs.medicion.col_capa,Capa,Layer,Capa,no
+obs.medicion.col_medida,Medida,Measure,Tupuy,no
+obs.medicion.col_pct,% del cuadrante,% of quadrant,% cuadropa,no
+obs.medicion.coordenadas,Coordenadas aproximadas,Approximate coordinates,Yaklla coordenadakuna,no
+obs.medicion.csv_apartado,Apartado,Section,Rakirina,no
+obs.medicion.csv_concepto,Concepto,Item,Imapak,no
+obs.medicion.csv_detalle,Detalle,Detail,Hatunyachishka,no
+obs.medicion.csv_resumen,Resumen,Summary,Pishiyachishka,no
+obs.medicion.cuadrante_titulo,Medición en un cuadrante,Measurement in a quadrant,Cuadropi tupuy,no
+obs.medicion.descargar_csv,Descargar CSV,Download CSV,CSVta uraykachay,no
+obs.medicion.hem_e,E,E,E,no
+obs.medicion.hem_n,N,N,N,no
+obs.medicion.hem_o,O,W,O,no
+obs.medicion.hem_s,S,S,S,no
+obs.medicion.midiendo,Midiendo…,Measuring…,Tupushka…,no
+obs.medicion.nada_texto,"Pulsa un punto de la imagen para ver sus valores, o arrastra para medir un cuadrante.","Click a point on the image to see its values, or drag to measure a quadrant.","Rikchapi shuk puntota ñitiy chaninkunata rikunkapak, o aysaspa shuk cuadrota tupuy.",no
+obs.medicion.nada_titulo,Nada seleccionado,Nothing selected,Mana imapash akllashkachu,no
+obs.medicion.nota_polarizacion,"La medición y el cambio detectado usan las polarizaciones del análisis, no la elegida en el selector.","The measurement and the detected change use the analysis polarizations, not the one chosen in the selector.","Tupuy, tikray rikushkapash analysispa polarizaciónkunata llankan, mana akllashkata.",no
+obs.medicion.punto_titulo,Medición en un punto,Measurement at a point,Puntopi tupuy,no
+obs.medicion.tabla_cuadrante,Medidas del cuadrante,Quadrant measurements,Cuadropa tupuykuna,no
+obs.medicion.tabla_punto,Valores en el punto,Values at the point,Puntopi chaninkuna,no
+obs.medicion.titulo,Medición,Measurement,Tupuy,no
+obs.medicion.valor_pixel,Valor medido en el píxel más cercano al punto,Value measured at the pixel closest to the point,Puntoman asha kaklla píxelpi tupushka chanin,no
+obs.medicion.ver_serie,Ver su evolución en Serie,See its evolution in Series,Wiñachikpi pay kay wiñayninta rikuy,no
+obs.metricas.antes_despues,Antes · {antes}  |  Después · {despues},Before · {antes}  |  After · {despues},Ñawpa · {antes}  |  Washa · {despues},no
+obs.metricas.calculando,Calculando el cambio…,Computing the change…,Tikrayta yupachishka…,no
+obs.metricas.cambio_titulo,Cambio entre dos pasadas,Change between two passes,Ishkay pasada chawpipi tikray,no
+obs.metricas.col_metrica,Métrica,Metric,Yupay,no
+obs.metricas.col_valor,Valor,Value,Chanin,no
+obs.metricas.direccion,Dirección orbital,Orbital direction,Órbitapa ñan,no
+obs.metricas.pasada_activa,Pasada activa,Active pass,Kunan pasada,no
+obs.metricas.pasada_base,{n} de {total},{n} of {total},{total}-manta {n},no
+obs.metricas.sin_cambio_titulo,Sin cambio que mostrar,No change to show,Rikuchinkapak tikray mana kanchu,no
+obs.metricas.tabla_titulo,Métricas del cambio,Change metrics,Tikraypa yupaykuna,no
+obs.parametros.calculando,Calculando… {s} s,Computing… {s} s,Yupachishka… {s} s,no
+obs.parametros.controles_titulo,Controles de este tipo de cambio,Controls for this type of change,Kay tikray rikchaypa controlkuna,no
+obs.parametros.estacional,Variación estacional,Seasonal variation,Pachapa tikray,no
+obs.parametros.estacional_ayuda,"Si está activa, la escena sigue el ciclo de lluvias y sequía del lugar.","When on, the scene follows the place’s cycle of rainy and dry seasons.","Kallarishka kakpi, escenaka kay pachapa tamya, chaki pachapa muyuntami katin.",no
+obs.parametros.fecha_ayuda,Cambia la fecha y todas las pasadas se mueven con ella. Datos de demostración.,Change the date and every pass moves with it. Demonstration data.,"P'unchawta tikray, llapa pasadakuna paywan rinka. Rikuchiy willaykuna.",no
+obs.parametros.fecha_evento,Fecha del evento,Event date,Evento puncha,no
+obs.parametros.fecha_limite,Entre 2024-01-01 y 2030-12-31 (ilustrativo),Between 2024-01-01 and 2030-12-31 (illustrative),2024-01-01 wan 2030-12-31 chawpipi (rikuchinapaq),no
+obs.parametros.hora_limite,"De 00:00 a 23:45 (hora local del escenario, en pasos de 15 minutos)","From 00:00 to 23:45 (scenario local time, in 15-minute steps)","00:00-manta 23:45-kama (escenariopa hora, 15 minutokunawan)",no
+obs.parametros.intro,"Estos parámetros mueven el simulador de demostración: generan una escena sintética nueva, no cambian ningún dato real ni de NISAR.",These parameters drive the demonstration simulator: they generate a new synthetic scene and do not change any real or NISAR data.,"Kay parámetroskunaka rikuchiy simuladorta kuyuchin: mushuk rurashka escenata rurachin, mana ima chiqan willaytapash, NISAR-pa willaytapash tikranchu.",no
+obs.parametros.miradas,Número de miradas (ENL),Number of looks (ENL),Rikuykunapa yupay (ENL),no
+obs.parametros.miradas_ayuda,"Más miradas, menos moteado.","More looks, less speckle.","Ashtawan achka rikuykuna, ashtawan pishi moteado.",no
+obs.parametros.miradas_explicacion,Número equivalente de miradas: cuántas observaciones independientes se promedian para suavizar el moteado (speckle) de una imagen de radar. Más miradas dan una imagen más lisa pero con menos detalle.,Equivalent number of looks: how many independent observations are averaged to smooth the speckle of a radar image. More looks give a smoother image but with less detail.,"Rikuykunapa tupana yupay: radar rikchapa moteadota (speckle) llampuyachinkapak mashna mana rakishka rikuykuna tupachishka kan. Ashtawan achka rikuykunaka ashtawan llampu rikchata kun, ashtawan pishi sumak willaywan.",no
+obs.parametros.miradas_limite,De 1 a 100 miradas,From 1 to 100 looks,1-manta 100-kama rikuykuna,no
+obs.parametros.miradas_valor,{n} miradas,{n} looks,{n} rikuykuna,no
+obs.parametros.opciones_limite,Una de las opciones,One of the options,Shuk akllanakunamanta,no
+obs.parametros.orbita,Dirección de la órbita,Orbit direction,Órbitapa ñan,no
+obs.parametros.orbita_ascendente,Ascendente,Ascending,Wicharik,no
+obs.parametros.orbita_ayuda,Desde qué lado mira el radar.,From which side the radar looks.,Ima kuchumanta radar rikun.,no
+obs.parametros.orbita_descendente,Descendente,Descending,Uraykuk,no
+obs.parametros.orbita_explicacion,Sentido en que el satélite recorre su órbita al pasar sobre el lugar: ascendente (hacia el norte) o descendente (hacia el sur). Cambia desde qué lado mira el radar el mismo sitio.,Direction in which the satellite travels along its orbit as it passes over the place: ascending (northward) or descending (southward). It changes which side the radar looks at the same site from.,Satélite kay pachapi purikpi órbitapi ima ñanta rin: wicharik (norteman) o uraykuk (surman). Kikin pachata radar ima kuchumanta rikunmi tikran.,no
+obs.parametros.orbita_limite,Ascendente o descendente,Ascending or descending,Wicharik o uraykuk,no
+obs.parametros.orbita_termino,Paso orbital,Orbital pass,Paso orbital,no
+obs.parametros.rango_limite,De {min} a {max}{unidad},From {min} to {max}{unidad},{min}-manta {max}-kama{unidad},no
+obs.parametros.restablecer,Restablecer parámetros,Reset parameters,Parámetroskunata kutin churay,no
+obs.parametros.resumen,{pasadas} pasadas · píxel de {resolucion} m,{pasadas} passes · {resolucion} m pixel,{pasadas} pasadakuna · {resolucion} m pixel,no
+obs.parametros.semilla,Semilla,Seed,Muju,no
+obs.parametros.semilla_ayuda,La semilla fija el azar del simulador: la misma semilla repite exactamente la misma escena.,The seed fixes the simulator’s randomness: the same seed repeats exactly the same scene.,Mujuka simuladorpa mana yuyashka ruraytami sayachin: kikin mujuka kikin escenatami kutin rurachin.,no
+obs.parametros.semilla_invalida,Escribe un entero entre 0 y {max}.,Enter an integer between 0 and {max}.,0-manta {max}-kama tukuy yupayta killkay.,no
+obs.parametros.semilla_limite,Entero entre 0 y {max},Integer between 0 and {max},0-manta {max}-kama tukuy yupay,no
+obs.parametros.titulo,Parámetros del modelo,Model parameters,Modelopa parámetroskuna,no
+obs.serie.calculando,Calculando las series…,Computing the series…,Wiñachikkunata yupachishka…,no
+obs.serie.col_fecha,Fecha,Date,Puncha,no
+obs.serie.col_serie,Serie,Series,Wiñachik,no
+obs.serie.col_valor,Valor ({unidad}),Value ({unidad}),Chanin ({unidad}),no
+obs.serie.marca_antes,antes,before,ñawpa,no
+obs.serie.marca_despues,después,after,washa,no
+obs.serie.marca_evento,Evento,Event,Evento,no
+obs.serie.nota_verdad,"La línea punteada es la verdad sintética del modelo de demostración, no una medición.","The dotted line is the synthetic truth of the demonstration model, not a measurement.","Puntukuna siki rikuchiy modelopa sintético chiqanmi, mana tupushkachu.",no
+obs.serie.seleccion_aviso_pol,"La serie usa la polarización del observable del tipo, no la del selector.","The series uses the polarization of the type's observable, not the one in the selector.","Wiñachikka tipopa rikuna polarización-wan llamkan, akllanapa mana.",no
+obs.serie.seleccion_calculando,Calculando la serie de la selección…,Computing the series of the selection…,Akllasqapa wiñachikta yupachkan…,no
+obs.serie.seleccion_titulo,En la selección,In the selection,Akllasqapi,no
+obs.serie.seleccion_vacia_texto,El punto o el cuadrante cae en agua o en una zona sin dato del radar.,The point or quadrant falls on water or on an area with no radar data.,Punto utaq cuadrante yakupi utaq radarpa mana willayniyuq pachapi tarikun.,no
+obs.serie.seleccion_vacia_titulo,Sin dato en la selección,No data in the selection,Akllasqapi mana willay kanchu,no
+obs.serie.sin_pareja_texto,Este escenario necesita al menos dos pasadas distintas para calcular sus series.,This scenario needs at least two different passes to compute its series.,Kay escenariopika wiñachikkunata yupankapak a lo menos ishkay mana kikin pasadakuna minishtin.,no
+obs.serie.sin_series,Sin series,No series,Wiñachik mana kanchu,no
+obs.serie.sin_series_texto,Este escenario no devuelve series temporales. Prueba con la vista Mapa o con otro escenario.,This scenario returns no time series. Try the Map view or another scenario.,Kay escenariopika pachapi wiñachikkuna mana kanchu. Shuyu rikuypi o shuk escenariopi llankay.,no
+obs.serie.valores_de,Valores de {titulo},Values of {titulo},{titulo}-pa chaninkuna,no
+obs.tiempo.anterior,Pasada anterior · {fecha},Previous pass · {fecha},Ñawpa pasada · {fecha},no
+obs.tiempo.fijar_antes,Fijar como «antes»,Set as “before”,«Ñawpa» shina churay,no
+obs.tiempo.fijar_despues,Fijar como «después»,Set as “after”,«Washa» shina churay,no
+obs.tiempo.siguiente,Siguiente · {fecha},Next · {fecha},Katik pasada · {fecha},no
+obs.tiempo.sin_modelo_continuo,Este escenario no tiene modelo continuo: el reproductor solo avanza de pasada en pasada.,This scenario has no continuous model: the player only advances from pass to pass.,Kay escenariopi mana tukuy pacha modelo kanchu: reproductorka pasadamanta pasadallami rin.,no
+obs.tiempo.temporada,Temporada {temporada},{temporada} season,Temporada {temporada},no
+obs.tiempo.una_pasada,Este escenario tiene una sola pasada.,This scenario has only one pass.,Kay escenariopika shuk pasadallami kan.,no
+obs.variable.area_quemada_detectada,Área quemada detectada,Detected burned area,Rikushka rupashka pacha,no
+obs.variable.cambio_de_inundacion,Cambio de inundación,Flood change,Yaku jundaypa tikray,no
+obs.variable.cambio_de_velocidad,Cambio de velocidad,Speed change,Utkaypa tikray,no
+obs.variable.cambio_del_frente,Cambio del frente,Front change,Frentepa tikray,no
+obs.variable.cambio_por_parcela,Cambio por parcela,Change by parcel,Parcelakunapa tikray,no
+obs.variable.coherencia_interferometrica,Coherencia interferométrica,Interferometric coherence,Coherencia interferométrica,no
+obs.variable.desplazamiento_los,Desplazamiento en la línea de vista,Line-of-sight displacement,Rikuy ñanpi kuyuy,no
+obs.variable.desplazamiento_los_acumulado,Desplazamiento acumulado en la línea de vista,Accumulated line-of-sight displacement,Rikuy ñanpi tantachishka kuyuy,no
+obs.variable.desplazamiento_los_desenrollado,Desplazamiento en la línea de vista desenrollado,Unwrapped line-of-sight displacement,Rikuy ñanpi desenrollado kuyuy,no
+obs.variable.error_frente_a_la_verdad_sintetica,Error frente a la verdad sintética,Error against the synthetic truth,Sintético chiqanwan pantay,no
+obs.variable.fase_interferometrica,Fase interferométrica,Interferometric phase,Fase interferométrica,no
+obs.variable.velocidad_vertical,Velocidad vertical,Vertical velocity,Vertical utkay,no
+origen.leyenda.desplazamiento_mas,hacia el satélite,toward the satellite,satéliteman kuchuyakun,no
+origen.leyenda.desplazamiento_menos,alejándose,moving away,karuyakun,no
+origen.leyenda.divergente_mas,más señal,stronger signal,achka señal,no
+origen.leyenda.divergente_menos,menos señal,weaker signal,pishi señal,no
+origen.leyenda.gris_mas,más claro,lighter,yurakyashka,no
+origen.leyenda.gris_menos,más oscuro,darker,yanayashka,no
+origen.leyenda.secuencial_mas,más,more,achka,no
+origen.leyenda.secuencial_menos,menos,less,pishi,no
+origen.leyenda.titulo,Leyenda,Legend,Rikuchik,no
+origen.leyenda.titulo_rango,"Leyenda, {unidad}, de {desde} a {hasta}","Legend, {unidad}, from {desde} to {hasta}","Rikuchik, {unidad}, {desde}-manta {hasta}-kama",no
+origen.leyenda.titulo_unidad,"Leyenda, {unidad}","Legend, {unidad}","Rikuchik, {unidad}",no
+origen.leyenda.transparente,(transparente),(transparent),(transparente),no
+origen.notas.aviso,"Notas del modelo de demostración · los detalles sobre NISAR (productos, geometría, bandas) están pendientes de confirmar con la documentación oficial.","Demonstration model notes · details about NISAR (products, geometry, bands) are pending confirmation against the official documentation.","Rikuchiy modelopa willachiykuna · NISAR-manta willaykuna (productos, geometría, bandakuna) manaraka chiqanyachishkachu, kamachik panka-wan chiqanyachina kan.",no
+origen.notas.sin_verificar,(sin verificar),(unverified),(mana chiqanyachishka),no
+origen.sello.desconocida,desconocida,unknown,mana yachashka,no
+origen.sello.generado,generado {fecha},generated {fecha},rurashka puncha {fecha},no
+origen.sello.generador,generador,generator,rurachik,no
+origen.sello.generador_version,generador v{version},generator v{version},rurachik v{version},no
+origen.sello.real,Real,Real,Chiqan,no
+origen.sello.semilla,semilla {semilla},seed {semilla},muju {semilla},no
+origen.sello.sintetico,Sintético,Synthetic,Rurashka,no
+origen.sello.sintetico_no_verificado,Sintético (no verificado),Synthetic (unverified),Rurashka (mana chiqanyachishka),no
+piezas.comparador.aviso_rangos,Las dos imágenes venían con rangos distintos; se muestran con el rango común para que los colores sean comparables.,The two images came with different ranges; they are shown with the common range so the colors are comparable.,"Ishkay rikchakuna mana kikin rangokunawan shamushka; shuk rangolla rikuchishka, llimpikuna tupachina kachun.",no
+piezas.comparador.divisor,Divisor entre antes y después,Divider between before and after,Ñawpa-washa chawpipi rakik,no
+piezas.comparador.divisor_valor,{n} % de la imagen es «antes»,"{n} % of the image is ""before""",Rikchapa {n} % «ñawpa» kan,no
+piezas.comparador.error_dibujo,No se pudo dibujar la comparación.,The comparison could not be drawn.,Mana tupachiyta rikuchiyta ushashkachu.,no
+piezas.comparador.sin_misma_zona,"Las dos imágenes no cubren la misma zona, así que no se pueden comparar.","The two images do not cover the same area, so they cannot be compared.","Ishkay rikchakuna mana shuk kikin allpatachu rikuchin, chaymi mana tupachiyta ushanchu.",no
+piezas.comparador.unidad_valor,valor,value,chanin,no
+piezas.grafico.marca_fuera.otros,{n} marcas quedan fuera del rango de fechas: {lista}.,{n} markers fall outside the date range: {lista}.,{n} marcakuna punchakunapa rangomanta hawapi kan: {lista}.,no
+piezas.grafico.marca_fuera.uno,Una marca queda fuera del rango de fechas: {lista}.,One marker falls outside the date range: {lista}.,Shuk marca punchakunapa rangomanta hawapi kan: {lista}.,no
+piezas.grafico.resumen_barras,{titulo}: {valores} {unidad}. {sello},{titulo}: {valores} {unidad}. {sello},{titulo}: {valores} {unidad}. {sello},no
+piezas.grafico.resumen_barras_vacio,{titulo}: sin datos. {sello},{titulo}: no data. {sello},{titulo}: willaykuna illan. {sello},no
+piezas.grafico.resumen_fuera, Fuera del rango temporal: {lista}., Outside the time range: {lista}., Pacha rangomanta hawapi: {lista}.,no
+piezas.grafico.resumen_linea,"{titulo}: {series}; de {minimo} a {maximo} {unidad}, del {desde} al {hasta}.{marcas}{fuera} {sello}","{titulo}: {series}; from {minimo} to {maximo} {unidad}, from {desde} to {hasta}.{marcas}{fuera} {sello}","{titulo}: {series}; {minimo}-manta {maximo}-kama {unidad}, {desde}-manta {hasta}-kama.{marcas}{fuera} {sello}",no
+piezas.grafico.resumen_linea_vacio,{titulo}: sin datos en este rango.{marcas}{fuera} {sello},{titulo}: no data in this range.{marcas}{fuera} {sello},{titulo}: kay rangopi willaykuna illan.{marcas}{fuera} {sello},no
+piezas.grafico.resumen_marcas, Marcas: {lista}., Markers: {lista}., Marcakuna: {lista}.,no
+piezas.grafico.sin_datos,Sin datos en este rango,No data in this range,Kay rangopi willaykuna illan,no
+piezas.grafico.titulo_barras,Barras,Bars,Barras,no
+piezas.grafico.titulo_linea,Gráfico,Chart,Gráfico,no
+piezas.grafico.verdad_sintetica,verdad sintética,synthetic ground truth,rurashka chiqan,no
+piezas.mapa.base,Mapa base,Base map,Mapa base,no
+piezas.mapa.base_oscuro,Oscuro,Dark,Yana,no
+piezas.mapa.base_relieve,Relieve,Terrain,Relieve,no
+piezas.mapa.base_satelite,Satélite,Satellite,Satélite,no
+piezas.mapa.opacidad,Opacidad de la capa,Layer opacity,Capapa opacidad,no
+piezas.mapa.region.amazonia,Amazonía,Amazon,Amazonía,no
+piezas.mapa.region.costa,Costa,Coast,Kucha kuchu,no
+piezas.mapa.region.insular,Insular (Galápagos),Insular (Galápagos),Insular (Galápagos),no
+piezas.mapa.region.sierra,Sierra,Highlands,Urku,no
+piezas.tiempo.cinta.etiqueta,Instante de la cinta de pasadas,Pass timeline instant,Pasadakunapa pacha,no
+piezas.tiempo.cinta.evento,Evento: {fecha},Event: {fecha},Evento: {fecha},no
+piezas.tiempo.cinta.franja,Franja tenue: temporada lluviosa,Faint band: rainy season,Pishi rikuy banda: tamya pacha,no
+piezas.tiempo.cinta.sin_pasadas,Sin pasadas disponibles.,No passes available.,Pasadakuna illan.,no
+piezas.tiempo.cinta.temporada_lluviosa,Temporada lluviosa,Rainy season,Tamya pacha,no
+piezas.tiempo.cinta.valor,"Pasada {i} de {n}, {fecha}","Pass {i} of {n}, {fecha}","{n}-manta {i} pasada, {fecha}",no
+piezas.tiempo.paso.1,1 min,1 min,1 min,no
+piezas.tiempo.paso.10,10 min,10 min,10 min,no
+piezas.tiempo.paso.1440,1 día,1 day,1 puncha,no
+piezas.tiempo.paso.17280,12 días,12 days,12 puncha,no
+piezas.tiempo.paso.360,6 h,6 h,6 h,no
+piezas.tiempo.paso.60,1 h,1 h,1 h,no
+piezas.tiempo.reproductor.avanzar,Avanzar un paso,Step forward,Shuk paso ñawpaman,no
+piezas.tiempo.reproductor.grupo,Controles de tiempo,Time controls,Pachata pushana,no
+piezas.tiempo.reproductor.ir_evento,Ir al evento,Go to event,Eventoman riy,no
+piezas.tiempo.reproductor.ir_final,Ir al final,Go to end,Tukuriman riy,no
+piezas.tiempo.reproductor.ir_inicio,Ir al inicio,Go to start,Kallariman riy,no
+piezas.tiempo.reproductor.paso,Paso,Step,Paso,no
+piezas.tiempo.reproductor.pausa,Pausa,Pause,Sayachiy,no
+piezas.tiempo.reproductor.reproducir,Reproducir,Play,Kallarichiy,no
+piezas.tiempo.reproductor.retroceder,Retroceder un paso,Step back,Shuk paso kipaman,no
+piezas.tiempo.reproductor.velocidad,Velocidad,Speed,Utkay,no
+piezas.tiempo.velocidad.lenta,Lenta (1 s),Slow (1 s),Mana utka (1 s),no
+piezas.tiempo.velocidad.normal,"Normal (0,5 s)",Normal (0.5 s),"Normal (0,5 s)",no
+piezas.tiempo.velocidad.rapida,"Rápida (0,25 s)",Fast (0.25 s),"Utka (0,25 s)",no
+recorrido.anterior,Anterior,Previous,Ñawpa,no
+recorrido.contador,Paso {i} de {n},Step {i} of {n},{n}-manta {i} ñan,no
+recorrido.hallazgo,Menos de dos minutos para ver por qué un radar importa. Todo son datos de demostración.,Less than two minutes to see why a radar matters. Everything shown is demonstration data.,Ishkay minutomanta pishi: radarka imarayku ministirishkata rikuy. Tukuy kaykunaka rikuchiy willaykunami.,no
+recorrido.marco,Pantalla del paso: {titulo},Screen for the step: {titulo},Ñanpa pantalla: {titulo},no
+recorrido.paso_n,Paso {i}: {titulo},Step {i}: {titulo},{i} ñan: {titulo},no
+recorrido.pasos,Pasos,Steps,Ñankuna,no
+recorrido.pausar,Pausar,Pause,Sayachiy,no
+recorrido.reanudar,Reanudar,Resume,Katichiy,no
+recorrido.siguiente,Siguiente,Next,Katik,no
+recorrido.titulo,Recorrido,Tour,Purina,no
+sim.bitacora.col_area,Área (km²),Area (km²),Área (km²),no
+sim.bitacora.col_deteccion,Detección del radar,Radar detection,Radarpa tarinakuy,no
+sim.bitacora.col_evento,Evento,Event,Evento,no
+sim.bitacora.col_expuestos,Expuestos,Exposed,Llakichishka,no
+sim.bitacora.col_lugar,Lugar,Place,Maypi,no
+sim.bitacora.col_perdidas,Pérdidas (M USD),Losses (M USD),Chinkachishka (M USD),no
+sim.bitacora.col_temporada,Temporada,Season,Pacha,no
+sim.bitacora.col_victimas,Víctimas,Casualties,Wañushka,no
+sim.bitacora.descargar,Descargar CSV,Download CSV,CSVta uraykachay,no
+sim.bitacora.tabla,Eventos simulados en este navegador,Events simulated in this browser,Kay navegadorpi simulashka eventokuna,no
+sim.bitacora.titulo,Bitácora de eventos,Event log,Eventokunapa bitácora,no
+sim.bitacora.vaciar,Vaciar la bitácora,Clear the log,Bitácorata chullayachiy,no
+sim.coords,"{lat}° {ns}, {lon}° {eo}","{lat}° {ns}, {lon}° {eo}","{lat}° {ns}, {lon}° {eo}",no
+sim.coords.norte,N,N,N,no
+sim.coords.oeste,O,W,O,no
+sim.coords.sur,S,S,S,no
+sim.espera.dura_antes,Este evento dura {dur} h: lo más probable es que ocurra y termine antes de la primera imagen.,This event lasts {dur} h: it will most likely happen and end before the first image.,Kay evento {dur} h kawsan: ñawpa rikchamanta ñawpa tukurinmanmi.,no
+sim.espera.dura_durante,Este evento dura {dur} h: la primera imagen podría llegar durante el evento.,This event lasts {dur} h: the first image could arrive during the event.,Kay evento {dur} h kawsan: ñawpa rikcha eventopi chayanmanmi.,no
+sim.espera.duracion,Duración del evento,Event duration,Eventopa kawsay,no
+sim.espera.duracion_corta,Evento,Event,Evento,no
+sim.espera.grafico,Duración del evento y espera hasta la primera imagen (horas),Event duration and wait until the first image (hours),"Eventopa kawsay, ñawpa rikchakama shuyaypash (horakuna)",no
+sim.espera.instantaneo,Este evento es instantáneo: la imagen siempre llega después de que ocurre.,This event is instantaneous: the image always arrives after it happens.,Kay evento kikillanmi: rikcha tukuy pacha washa chayan.,no
+sim.espera.intro_pendiente,"Con un ciclo de repetición supuesto de {ciclo} días (pendiente de confirmar con la documentación oficial), un radar como NISAR tardaría entre {min} y {max} días en volver a pasar por este lugar; en promedio, {medio} días.","With an assumed repeat cycle of {ciclo} days (pending confirmation with the official documentation), a radar like NISAR would take between {min} and {max} days to pass over this place again; on average, {medio} days.","{ciclo} punchapi kutimuy yuyashka ciclowan (kamachik panka-wan chiqanyachina kan), NISAR shina radar kay ukuta {min}-manta {max}-kama punchapi kutin pasankapak; chawpipi, {medio} punchakuna.",no
+sim.espera.intro_verificado,"Con un ciclo de repetición supuesto de {ciclo} días (verificado), un radar como NISAR tardaría entre {min} y {max} días en volver a pasar por este lugar; en promedio, {medio} días.","With an assumed repeat cycle of {ciclo} days (verified), a radar like NISAR would take between {min} and {max} days to pass over this place again; on average, {medio} days.","{ciclo} punchapi kutimuy yuyashka ciclowan (chiqanyachishka), NISAR shina radar kay ukuta {min}-manta {max}-kama punchapi kutin pasankapak; chawpipi, {medio} punchakuna.",no
+sim.espera.maxima,Espera máxima hasta la primera imagen,Maximum wait until the first image,Ñawpa rikchakama hatun shuyay,no
+sim.espera.maxima_corta,Espera máx.,Max. wait,Hatun shuyay,no
+sim.espera.media,Espera media hasta la primera imagen,Mean wait until the first image,Ñawpa rikchakama chawpi shuyay,no
+sim.espera.media_corta,Espera media,Mean wait,Chawpi shuyay,no
+sim.espera.titulo,¿Cuándo lo vería el radar?,When would the radar see it?,Ima pachapi radar rikunman?,no
+sim.gemelo.deteccion_aria,Detección del radar frente a la verdad sintética,Radar detection against the synthetic ground truth,"Radarpa tarinakuy, sintético chiqanwan tupachishka",no
+sim.gemelo.nota,"Es una simulación de un radar como NISAR sobre el evento simulado, no una observación. Desliza el divisor para pasar de «antes» a «después».","This is a simulation of a radar like NISAR over the simulated event, not an observation. Slide the divider to go from “before” to “after”.","Kayka NISAR shina radarpa simulaciónmi, rurachishka eventopi; mana rikuychu. Rakikta kuyuchiy «ñawpa»-manta «washa»-man rinkapak.",no
+sim.gemelo.por_que_hh,"La polarización HH responde con fuerza al agua abierta, que se ve oscura por la reflexión especular, y a la vegetación inundada, que se ve brillante por el doble rebote.","HH polarization responds strongly to open water, which looks dark because of specular reflection, and to flooded vegetation, which looks bright because of double-bounce scattering.","HH polarización paskashka yakuwan sinchita kutichin, chay reflexión especularrayku yanayan, yakupi sachawanpash, chay doble rebote-rayku llimpin.",no
+sim.gemelo.por_que_hv,La polarización HV (emite en horizontal y recibe en vertical) responde a la estructura del dosel y a su biomasa: se oscurece donde el fuego consume la vegetación.,"HV polarization (transmits horizontal, receives vertical) responds to canopy structure and biomass: it darkens where fire consumes the vegetation.","HV polarización (horizontalpi kachan, verticalpi chaskin) sachapa ukuta hawatapash biomasatapash rikuchin: ninapi sacha tukurikpi yanayan.",no
+sim.gemelo.titulo,Lo que vería un radar como NISAR,What a radar like NISAR would see,NISAR shina radar imata rikunman,no
+sim.informe.aviso,Simulación con modelos físicos publicados: no son observaciones reales de NISAR.,Simulation with published physical models: these are not real NISAR observations.,Yachay rurashka modelokunawan simulación: mana NISAR-pa chiqan rikuychu.,no
+sim.informe.error_imagen,No se pudo cargar la imagen del informe.,Could not load the report image.,Willaypa rikchata mana chaskiyta ushashkachu.,no
+sim.informe.error_lienzo,No se pudo crear el lienzo del informe.,Could not create the report canvas.,Willaypa lienzota mana rurayta ushashkachu.,no
+sim.informe.temporada,temporada {temporada},season: {temporada},pacha: {temporada},no
+sim.mundo.creando,Creando el mundo…,Creating the world…,Mundota rurashka…,no
+sim.mundo.crear,Crear el mundo,Create the world,Mundota ruray,no
+sim.mundo.fecha,Fecha (fija la temporada),Date (sets the season),Puncha (pachata churan),no
+sim.mundo.km,{k} km,{k} km,{k} km,no
+sim.mundo.lado,Lado del mundo,Side of the world,Mundopa kinray,no
+sim.mundo.latitud,Latitud,Latitude,Latitud,no
+sim.mundo.longitud,Longitud,Longitude,Longitud,no
+sim.mundo.lugar,Lugar,Place,Maypi,no
+sim.mundo.propio,Coordenadas propias,Custom coordinates,Kikin coordenadakuna,no
+sim.mundo.relieve_real,Relieve real (SRTM),Real terrain (SRTM),Chiqan allpa pata (SRTM),no
+sim.pantalla.animacion,Animación del evento,Event animation,Eventopa kuyuri,no
+sim.pantalla.cargando_simulador,Cargando el simulador…,Loading the simulator…,Simuladorta chaskishka…,no
+sim.pantalla.celda,Celda {m} m,Cell {m} m,Celda {m} m,no
+sim.pantalla.creando_mundo,"Creando el mundo: la primera vez se descarga el relieve, unos segundos.","Creating the world: the first time the terrain is downloaded, which takes a few seconds.","Mundota rurashka: ñawpa kutipi allpa patata uraykachin, pishi pachapi.",no
+sim.pantalla.datos_mundo,Datos del mundo,World data,Mundopa willaykuna,no
+sim.pantalla.habitantes,{n} habitantes,{n} inhabitants,{n} kawsakkuna,no
+sim.pantalla.hallazgo,"Provoca un incendio, una tormenta, una crecida, un terremoto o una erupción sobre el relieve de Ecuador y mira cómo lo vería un radar como NISAR. Todo es una simulación.","Trigger a fire, a storm, a flood, an earthquake or an eruption on the terrain of Ecuador and see how a radar like NISAR would see it. Everything is a simulation.","Ecuadorpa allpa patapi incendio, tormenta, crecida, allpa kuyuy o volcanpa erupción-ta rurachiy; NISAR shina radar imashina rikushkata rikuy. Tukuy kaymi simulación.",no
+sim.pantalla.herramienta,Herramienta,Tool,Herramienta,no
+sim.pantalla.instante,Instante del evento,Moment of the event,Eventopa pacha,no
+sim.pantalla.mundo,Mundo,World,Mundo,no
+sim.pantalla.nota_ciudad,Pulsa el tablero para fundar una ciudad; el mundo se vuelve a poblar con ella.,Press the board to found a city; the world is repopulated with it.,Tablerota ñitiy markata sayachinkapak; mundo chaywan kawsakkunawan junta kan.,no
+sim.pantalla.nota_evento,Pulsa el tablero (o muévete con las flechas y pulsa Enter) para desatar el evento en esa celda.,Press the board (or move with the arrow keys and press Enter) to trigger the event in that cell.,"Tablerota ñitiy (flechakunawan kuyuspa Enter-ta ñitiy), chay celdapi eventota rurachinkapak.",no
+sim.pantalla.parametros,Parámetros,Parameters,Parámetroskuna,no
+sim.pantalla.quitar_ciudades,Quitar las ciudades fundadas,Remove the founded cities,Sayachishka markakunata llukchiy,no
+sim.pantalla.relieve,Relieve,Terrain,Allpa pata,no
+sim.pantalla.simulando,Simulando {herramienta}… puede tardar unos segundos.,Simulating {herramienta}… this may take a few seconds.,{herramienta}-ta simulashka… pishi pachata apanka.,no
+sim.pantalla.tablero,Tablero,Board,Tablero,no
+sim.pantalla.temporada,Temporada,Season,Pacha,no
+sim.pantalla.titulo,Simulador de eventos,Event simulator,Simulador de eventos,no
+sim.res.copiar,Copiar enlace,Copy link,Enlaceta copiay,no
+sim.res.detalle,Detalle de los efectos: {titulo},Effects in detail: {titulo},Efectokunapa willay: {titulo},no
+sim.res.enlace_copiado,Enlace copiado.,Link copied.,Enlace copiashka.,no
+sim.res.enlace_error,No se pudo copiar: copia la dirección del navegador.,Could not copy: copy the address from the browser.,Mana copiayta ushashkachu: navegadorpa direcciónta copiay.,no
+sim.res.informe,Informe de una página (PNG),One-page report (PNG),Shuk panka willay (PNG),no
+sim.res.informe_error,No se pudo generar el informe.,Could not generate the report.,Willayta mana rurayta ushashkachu.,no
+sim.res.modelos,Modelos usados,Models used,Llamkachishka modelokuna,no
+sim.tablero.aria,"Tablero del simulador. Pulsa una celda, o mueve el cursor con las flechas (Mayús avanza de diez en diez) y pulsa Enter, para desatar el evento.","Simulator board. Press a cell, or move the cursor with the arrow keys (Shift moves ten at a time) and press Enter, to trigger the event.","Simuladorpa tablero. Celdata ñitiy. Cursorta flechakunawan kuyuchiy (Mayús chunka chunkata rin) shinallatak Enter-ta ñitiy, eventota rurachinkapak.",no
+titulos.fundamentos,Fundamentos,Fundamentals,Sapi yachay,no
+titulos.historias,Historias,Stories,Willakuykuna,no
+titulos.laboratorio,Laboratorio del radar,Radar lab,Radarpa laboratorio,no
+titulos.observatorio,Observatorio,Observatory,Observatorio,no
+titulos.recorrido,Recorrido guiado,Guided tour,Pushashka purina,no
+titulos.simulador,Simulador de eventos,Event simulator,Simulador de eventos,no

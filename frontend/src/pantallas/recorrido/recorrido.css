@@ -1,0 +1,16 @@
+/* Recorrido guiado (docs/diseno.md). Solo tokens. */
+.recorrido { display: flex; flex-direction: column; gap: var(--gap); min-width: 0; outline: none; }
+.recorrido__paso { display: flex; flex-direction: column; gap: var(--space-3); }
+.recorrido__contador { margin: 0; color: var(--muted); font-size: var(--fs-13); }
+.recorrido__titulo { margin: 0; font-size: var(--fs-22); line-height: var(--lh-28); font-weight: 700; }
+.recorrido__texto { margin: 0; max-width: var(--w-lectura); color: var(--secondary); line-height: var(--lh-24); }
+.recorrido__controles { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.recorrido__pasos { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--space-1); }
+.recorrido__punto { width: var(--space-6); height: var(--h-touch); padding: 0; border: 0; background: transparent; cursor: pointer; position: relative; }
+.recorrido__punto::after { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: var(--size-2); background: var(--control); }
+.recorrido__punto--activo::after { background: var(--accent); }
+.recorrido__punto:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+.recorrido__marco { width: 100%; height: var(--h-recorrido); border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--ground); }
+
+.recorrido__cuerpo { display: grid; grid-template-columns: var(--w-columna) minmax(0, 1fr); gap: var(--gap); align-items: start; }
+@media (max-width: 1099px) { .recorrido__cuerpo { grid-template-columns: minmax(0, 1fr); } }

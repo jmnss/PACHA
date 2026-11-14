@@ -1,0 +1,100 @@
+# Challenge: «Dancing with the SARs» (NASA Space Apps Challenge)
+
+Resumen de trabajo redactado por el equipo a partir del enunciado. **No es el texto oficial.** Toda
+decisión de producto se evalúa contra este documento; si una tarea no sirve a estos objetivos, no se hace.
+
+## Objetivo
+
+Construir una aplicación interactiva que use datos de radar de la misión NISAR (NASA-ISRO Synthetic
+Aperture Radar) para rastrear y visualizar uno o más tipos de cambio en la superficie terrestre, en
+ubicaciones del mundo.
+
+## Tipos de cambio mencionados
+
+- Pérdida o expansión de humedales e inundaciones.
+- Deforestación e incendios forestales.
+- Cambios en cultivos y su salud.
+- Humedad del suelo.
+- Glaciares y hielo marino.
+- Deformación del terreno por terremotos y subsidencia costera.
+
+## Datos
+
+- Descargar datos de NISAR de libre acceso a partir de la lista de recursos del challenge.
+- Se pueden añadir datos complementarios para dar contexto: imágenes ópticas, capas GIS, población,
+  tipo de vegetación.
+
+## Qué valora el challenge
+
+- Herramientas intuitivas y visualizaciones innovadoras: mapas interactivos de detección de cambios,
+  animaciones de series temporales, dashboards, comparadores deslizantes antes/después.
+- Que los datos de NISAR sean accesibles a un público amplio: científicos, gestores de recursos,
+  educadores, tomadores de decisiones y público general.
+
+## Resultado deseado
+
+Una solución de código abierto, fácil de usar, que traduzca observaciones de radar complejas en
+información accionable.
+
+## Interpretación científica esperada
+
+- Formular hipótesis sobre los impulsores físicos de lo que se ve (o no se ve) en los datos SAR.
+- Indicar qué polarizaciones resaltan los cambios.
+- Plantear aplicaciones futuras de NISAR.
+
+## Consideraciones opcionales
+
+- Usar distintas polarizaciones o frecuencias.
+- Series temporales con varias fechas.
+- Mostrar el impacto de factores humanos (agricultura, industria).
+- Narrativa de datos convincente.
+- Contexto personal si se conoce la zona de estudio.
+- Elementos interactivos como sliders de imágenes y mapas web.
+
+## Conceptos clave que la app y su texto deben tratar con rigor
+
+- El radar es un sensor activo: funciona de día y de noche y con nubes.
+- Es sensible a la rugosidad y a la constante dieléctrica; por eso resalta agua, inundaciones y humedad.
+- Distintas polarizaciones revelan estructura y propiedades del material.
+- SAR puede medir movimiento superficial a escala de centímetros.
+
+## Reglas de honestidad científica del proyecto
+
+1. La app nunca presenta como datos reales de NISAR lo que no lo sea.
+2. Mientras se usen datos sintéticos, la interfaz muestra de forma permanente y visible la etiqueta
+   «DATOS DE DEMOSTRACIÓN: no son observaciones reales de NISAR», y cada capa, gráfico y exportación
+   lleva metadatos de origen (sintético o real), fuente, producto y fecha.
+3. Los textos explicativos y las hipótesis sobre impulsores físicos apoyados en datos sintéticos se
+   redactan como ejemplos ilustrativos, no como hallazgos sobre un lugar real. No se inventan mediciones,
+   fechas ni resultados de eventos reales.
+4. Los datos sintéticos se generan con un script reproducible del repositorio, con semilla fija y
+   documentado, y se marcan como tales en su metadata.
+5. Ningún detalle técnico de NISAR (productos, estructura de archivos, bandas, URLs, fechas de la misión)
+   se da por cierto sin una fuente oficial; lo no verificado se marca «pendiente de confirmar con la
+   documentación oficial».
+
+## Recursos de datos del challenge
+
+**PENDIENTE:** los recursos oficiales se habilitarán más adelante (parte final del hackathon). Pegar aquí
+la lista oficial y los requisitos de entrega cuando estén disponibles.
+
+### Referencias que ya usa el código (no verificadas como recursos oficiales del challenge)
+
+| Referencia en el código | Para qué | Estado |
+|---|---|---|
+| ASF SearchAPI `https://api.daac.asf.alaska.edu/services/search/param` con `dataset=NISAR` (`modelo/nisar.py:1550`) | Búsqueda de productos NISAR | Pendiente de confirmar con la documentación oficial. **No se usa en esta etapa.** |
+| `https://nisar-docs.asf.alaska.edu` (`app.py:856`, `app.py:1542`) | Documentación de productos | Pendiente de confirmar |
+| Productos «GCOV, GUNW, GOFF, GSLC», ruta interna HDF5 `science/LSAR/GCOV/grids/frequencyA`, datasets `unwrappedPhase`, `coherenceMagnitude`, `xCoordinates` (`modelo/nisar.py:1658-1725`) | Lectura de HDF5 reales | Pendiente de confirmar. Nunca probado con un archivo real: `data/nisar/` no existe |
+| Ficha `nisar.MISION` (lanzamiento, órbita, frecuencias, «BETA feb. 2026 / PROVISIONAL 20 jul. 2026») (`modelo/nisar.py:55-64`) | Texto de la misión | Pendiente de confirmar |
+| «JPL D-102272» como especificación de GUNW (`modelo/nisar.py:1813`) | Nota de signo LOS | Pendiente de confirmar |
+| ISRO Bhoonidhi (`app.py:860`) | Banda S | Pendiente de confirmar |
+| NASA POWER, API de climatología regional (`scripts/preparar_datos_ecuador.py:22`) → `data/clima_ecuador_power.csv` | Clima mensual 2001–2025 | Dato real complementario ya descargado |
+| geoBoundaries gbOpen ECU ADM1, CC0 (`scripts/preparar_datos_ecuador.py:20`) → `data/ecuador_provincias.geojson` | Provincias | Dato real complementario ya descargado |
+| Teselas Terrarium de AWS Open Data (`modelo/desastres.py:49`) | Relieve SRTM del Modo Dios | Dato real complementario, se descarga al usar el Modo Dios |
+| OpenStreetMap Nominatim (`app.py:660`) | Geocodificación | Servicio externo |
+| Esri World Dark Gray e Imagery (`app.py:503-508`) | Mapas base; el frontend React los usa (más Topo y etiquetas de referencia) cuando hay internet | Servicio externo, sin clave; ya en uso |
+
+## Requisitos de entrega
+
+**PENDIENTE de confirmar por el equipo** (formato, plazo, vídeo, repositorio, licencia exigida). No se
+asume ninguno.

@@ -1,0 +1,20 @@
+/// <reference types="vitest/config" />
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  base: process.env.VITE_BASE || '/',
+  plugins: [react()],
+  worker: { format: 'es' },
+  server: {
+    proxy: { '/api': 'http://127.0.0.1:8000' },
+  },
+  preview: {
+    proxy: { '/api': 'http://127.0.0.1:8000' },
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/test-setup.ts'],
+    exclude: ['e2e/**', 'node_modules/**'],
+  },
+})

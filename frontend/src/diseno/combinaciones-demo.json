@@ -1,0 +1,107 @@
+[
+  {
+    "variable": "area_quemada_detectada",
+    "paleta": "categorias",
+    "unidad": "",
+    "leyenda": [
+      "Severidad moderada (−2,5 a −4,5 dB)",
+      "Severidad alta (< −4,5 dB)"
+    ]
+  },
+  {
+    "variable": "cambio_de_inundacion",
+    "paleta": "categorias",
+    "unidad": "",
+    "leyenda": [
+      "Nueva inundación",
+      "Pérdida de inundación",
+      "Inundación persistente"
+    ]
+  },
+  {
+    "variable": "cambio_de_velocidad",
+    "paleta": "divergente",
+    "unidad": "m/día",
+    "leyenda": null
+  },
+  {
+    "variable": "cambio_del_frente",
+    "paleta": "categorias",
+    "unidad": "",
+    "leyenda": [
+      "Hielo nuevo (avance)",
+      "Hielo perdido (retroceso del frente)"
+    ]
+  },
+  {
+    "variable": "cambio_por_parcela",
+    "paleta": "categorias",
+    "unidad": "",
+    "leyenda": [
+      "Sin cambio",
+      "Crecimiento del cultivo",
+      "Cosecha / labranza",
+      "Inundación (trasplante de arroz)"
+    ]
+  },
+  {
+    "variable": "coherencia_interferometrica",
+    "paleta": "secuencial",
+    "unidad": "γ",
+    "leyenda": null
+  },
+  {
+    "variable": "desplazamiento_los",
+    "paleta": "divergente",
+    "unidad": "cm",
+    "leyenda": null
+  },
+  {
+    "variable": "desplazamiento_los_acumulado",
+    "paleta": "divergente",
+    "unidad": "cm",
+    "leyenda": null
+  },
+  {
+    "variable": "desplazamiento_los_desenrollado",
+    "paleta": "divergente",
+    "unidad": "cm",
+    "leyenda": null
+  },
+  {
+    "variable": "error_frente_a_la_verdad_sintetica",
+    "paleta": "divergente",
+    "unidad": "cm/año",
+    "leyenda": null
+  },
+  {
+    "variable": "interferograma_envuelto_1_ciclo_11_9_cm",
+    "paleta": "ciclico",
+    "unidad": "rad",
+    "leyenda": null
+  },
+  {
+    "variable": "razon_logaritmica_hv_despues_antes",
+    "paleta": "divergente",
+    "unidad": "dB",
+    "leyenda": null
+  },
+  {
+    "variable": "sigma0",
+    "paleta": "gris",
+    "unidad": "dB",
+    "leyenda": null
+  },
+  {
+    "variable": "velocidad",
+    "paleta": "secuencial",
+    "unidad": "m/día",
+    "leyenda": null
+  },
+  {
+    "variable": "velocidad_vertical",
+    "paleta": "divergente",
+    "unidad": "cm/año",
+    "leyenda": null
+  }
+]

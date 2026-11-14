@@ -1,0 +1,22 @@
+import type { fecha as esFecha } from '../es/fecha'
+export const fecha: Record<keyof typeof esFecha, string> = {
+  'fecha.mes.1': 'January',
+  'fecha.mes.2': 'February',
+  'fecha.mes.3': 'March',
+  'fecha.mes.4': 'April',
+  'fecha.mes.5': 'May',
+  'fecha.mes.6': 'June',
+  'fecha.mes.7': 'July',
+  'fecha.mes.8': 'August',
+  'fecha.mes.9': 'September',
+  'fecha.mes.10': 'October',
+  'fecha.mes.11': 'November',
+  'fecha.mes.12': 'December',
+  'fecha.dia.1': 'Monday',
+  'fecha.dia.2': 'Tuesday',
+  'fecha.dia.3': 'Wednesday',
+  'fecha.dia.4': 'Thursday',
+  'fecha.dia.5': 'Friday',
+  'fecha.dia.6': 'Saturday',
+  'fecha.dia.7': 'Sunday',
+}

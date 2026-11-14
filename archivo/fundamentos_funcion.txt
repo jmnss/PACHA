@@ -1,0 +1,120 @@
+def renderizar_fundamentos_cientificos():
+    st.markdown("## Fundamentos científicos")
+    st.markdown("""
+    Esta sección contiene contenido educativo sobre los fundamentos de la teledetección,
+    la física de la señal SAR y los detalles de la misión NISAR. El contenido está organizado
+    en pestañas interactivas para una exploración guiada.
+    """)
+    tabs = st.tabs(["2.1. Fondo", "2.2. Fundamentos físicos SAR", "2.3. La misión NISAR"])
+
+    # Pestaña 2.1
+    with tabs[0]:
+        st.markdown("### 2.1. Fondo: fundamentos de la teledetección terrestre")
+        st.markdown("La teledetección terrestre permite obtener información de la superficie del planeta")
+        st.markdown("mediante sensores instalados en satélites o plataformas aéreas. Estos sistemas")
+        st.markdown("complementan las observaciones de campo y permiten analizar regiones extensas,")
+        st.markdown("identificar patrones espaciales y estudiar cambios ambientales a lo largo del tiempo.")
+        st.markdown("")
+        st.markdown("**Teledetección pasiva:** registra energía procedente de fuentes naturales, como")
+        st.markdown("la radiación solar reflejada por la superficie terrestre. La interacción entre la")
+        st.markdown("radiación electromagnética y los materiales genera respuestas espectrales que")
+        st.markdown("estudian propiedades de la vegetación, el agua, los suelos y las rocas.")
+        st.markdown("")
+        st.markdown("**Teledetección activa:** utiliza instrumentos que emiten su propia señal")
+        st.markdown("electromagnética y registran la respuesta de los objetos observados. El radar")
+        st.markdown("de apertura sintética (SAR) pertenece a esta categoría y opera mediante microondas.")
+        st.markdown("")
+        st.markdown("El SAR transmite señales que interactúan con la superficie terrestre. El instrumento")
+        st.markdown("registra la señal de retorno y procesa sus características para generar información")
+        st.markdown("sobre las propiedades físicas y geométricas del terreno.")
+        st.markdown("")
+        st.markdown("La apertura sintética permite obtener una resolución espacial elevada mediante el")
+        st.markdown("procesamiento coherente de las señales adquiridas durante el movimiento del sensor.")
+        st.markdown("")
+        st.markdown("**Ventaja fundamental:** El radar tiene capacidad de adquisición durante el día y")
+        st.markdown("la noche y su relativa independencia respecto de la cobertura nubosa. Sin embargo,")
+        st.markdown("la lluvia intensa, la geometría de observación, el ruido de la señal y las")
+        st.markdown("condiciones atmosféricas pueden afectar determinadas mediciones o aplicaciones.")
+        st.markdown("")
+        st.markdown("*Nota: La respuesta SAR depende de la combinación de las propiedades físicas,")
+        st.markdown("la longitud de onda, la polarización, la geometría y el procesamiento. No presents")
+        st.markdown("estas relaciones como reglas universales.")
+MODO_MODELO = "🎞️ Modelo en el tiempo"
+MODO_CAMBIO = "🛰️ Cambio detectado (antes → después)"
+PASOS = {
+    "1 minuto": timedelta(minutes=1),
+    "10 minutos": timedelta(minutes=10),
+    "1 hora": timedelta(hours=1),
+    "6 horas": timedelta(hours=6),
+    "1 día": timedelta(days=1),
+    "12 días (ciclo NISAR)": timedelta(days=12),
+}
+VELOCIDADES = {"Lenta": 1.0, "Normal": 0.5, "Rápida": 0.25}  # segundos por cuadro
+MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
+
+# Configuración de la sección de fundamentos científicos
+FUNDAMENTOS_TABS = ["2.1. Fondo", "2.2. Fundamentos físicos SAR", "2.3. La misión NISAR"]
+
+st.markdown(
+    f"""
+    <style>
+        .block-container {{ padding-top: 1.6rem; padding-bottom: 2.4rem; }}
+        h1, h2, h3 {{ letter-spacing: -0.02em; }}
+        .kpi-card {{
+            background: {SUPERFICIE};
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 12px;
+            padding: 0.9rem 1rem;
+            height: 100%;
+        }}
+        .kpi-label {{
+            color: {TENUE};
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.35rem;
+        }}
+        .kpi-value {{ color: {TINTA}; font-size: 1.55rem; font-weight: 650; line-height: 1.15; }}
+        .kpi-help {{ color: {TENUE}; font-size: 0.75rem; margin-top: 0.3rem; }}
+        .chips {{ display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.2rem 0 1rem; }}
+        .chip {{
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 999px;
+            padding: 0.15rem 0.65rem;
+            font-size: 0.8rem;
+            color: {TINTA_2};
+            background: {SUPERFICIE};
+        }}
+        .chip b {{ color: {TINTA}; font-weight: 600; }}
+        .panel-titulo {{ color: {TINTA_2}; font-size: 0.85rem; margin: 0.2rem 0 0.35rem; }}
+        .leyenda {{ display: flex; flex-wrap: wrap; gap: 0.35rem 0.9rem; margin-top: 0.4rem; }}
+        .leyenda span {{ display: inline-flex; align-items: center; gap: 0.4rem; color: {TINTA_2}; font-size: 0.8rem; }}
+        .leyenda i {{ width: 12px; height: 12px; border-radius: 3px; display: inline-block; }}
+        .sin-mayus {{ text-transform: none; }}
+        .barra {{ margin-top: 0.45rem; max-width: 100%; }}
+        .barra-grad {{ height: 10px; border-radius: 3px; }}
+        .barra-etq {{
+            display: flex; justify-content: space-between; color: {TINTA_2};
+            font-size: 0.74rem; font-variant-numeric: tabular-nums; margin-top: 0.2rem;
+        }}
+        .barra-unidad {{ color: {TENUE}; font-size: 0.72rem; text-align: center; }}
+        .section-label {{
+            font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase;
+            color: {TENUE}; margin: 0.6rem 0 0.6rem;
+        }}
+        .reloj {{ color: {TINTA}; font-size: 1.35rem; font-weight: 650; margin: 0.15rem 0 0.1rem; }}
+        .reloj small {{ color: {TENUE}; font-size: 0.8rem; font-weight: 400; margin-left: 0.6rem; }}
+        .nota-nisar {{ color: {TINTA_2}; font-size: 0.82rem; margin: 0.3rem 0 0.6rem; }}
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+_selector_imagen = components.declare_component(
+    "selector_imagen", path=str(Path(__file__).resolve().parent / "componentes" / "selector_imagen")
+)
+
+
+# ---------------------------------------------------------------------------
+# Utilidades de visualización
+# ---------------------------------------------------------------------------

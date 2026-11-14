@@ -1,0 +1,3893 @@
+{
+  "components": {
+    "schemas": {
+      "Adquisicion": {
+        "properties": {
+          "direccion_orbital": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Direccion Orbital"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "instante": {
+            "format": "date-time",
+            "title": "Instante",
+            "type": "string"
+          },
+          "polarizaciones": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Polarizaciones",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "instante",
+          "polarizaciones"
+        ],
+        "title": "Adquisicion",
+        "type": "object"
+      },
+      "AstronomiaDto": {
+        "properties": {
+          "declinacion_deg": {
+            "title": "Declinacion Deg",
+            "type": "number"
+          },
+          "duracion_dia_h": {
+            "title": "Duracion Dia H",
+            "type": "number"
+          },
+          "elevacion_mediodia_deg": {
+            "title": "Elevacion Mediodia Deg",
+            "type": "number"
+          },
+          "estacion": {
+            "title": "Estacion",
+            "type": "string"
+          },
+          "fecha_proximo_hito": {
+            "format": "date",
+            "title": "Fecha Proximo Hito",
+            "type": "string"
+          },
+          "hemisferio": {
+            "enum": [
+              "norte",
+              "sur"
+            ],
+            "title": "Hemisferio",
+            "type": "string"
+          },
+          "pasos_cenitales": {
+            "items": {
+              "format": "date",
+              "type": "string"
+            },
+            "title": "Pasos Cenitales",
+            "type": "array"
+          },
+          "proximo_hito": {
+            "title": "Proximo Hito",
+            "type": "string"
+          }
+        },
+        "required": [
+          "estacion",
+          "hemisferio",
+          "declinacion_deg",
+          "elevacion_mediodia_deg",
+          "duracion_dia_h",
+          "proximo_hito",
+          "fecha_proximo_hito",
+          "pasos_cenitales"
+        ],
+        "title": "AstronomiaDto",
+        "type": "object"
+      },
+      "CambioResaltadoDto": {
+        "properties": {
+          "cambio": {
+            "title": "Cambio",
+            "type": "string"
+          },
+          "contraste_db": {
+            "title": "Contraste Db",
+            "type": "number"
+          },
+          "contrastes": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "title": "Contrastes",
+            "type": "object"
+          },
+          "mejor_pol": {
+            "title": "Mejor Pol",
+            "type": "string"
+          }
+        },
+        "required": [
+          "cambio",
+          "mejor_pol",
+          "contraste_db",
+          "contrastes"
+        ],
+        "title": "CambioResaltadoDto",
+        "type": "object"
+      },
+      "CampoVectorial": {
+        "description": "Flechas de flujo: posiciones `x`, `y` en km (respecto al centro de la escena, y hacia el norte) y\ncomponentes `u` (este) y `v` (norte) en `unidad`.",
+        "properties": {
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "u": {
+            "items": {
+              "type": "number"
+            },
+            "title": "U",
+            "type": "array"
+          },
+          "unidad": {
+            "title": "Unidad",
+            "type": "string"
+          },
+          "v": {
+            "items": {
+              "type": "number"
+            },
+            "title": "V",
+            "type": "array"
+          },
+          "x": {
+            "items": {
+              "type": "number"
+            },
+            "title": "X",
+            "type": "array"
+          },
+          "y": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Y",
+            "type": "array"
+          }
+        },
+        "required": [
+          "x",
+          "y",
+          "u",
+          "v",
+          "unidad",
+          "origen"
+        ],
+        "title": "CampoVectorial",
+        "type": "object"
+      },
+      "CapaDto": {
+        "description": "Metadatos de una `CapaRaster` más su rejilla cuantizada (vmin/vmax de la capa).",
+        "properties": {
+          "adquisicion_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Adquisicion Id"
+          },
+          "escenario_id": {
+            "title": "Escenario Id",
+            "type": "string"
+          },
+          "instante": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Instante"
+          },
+          "leyenda": {
+            "anyOf": [
+              {
+                "items": {
+                  "maxItems": 2,
+                  "minItems": 2,
+                  "prefixItems": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leyenda"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "paleta": {
+            "enum": [
+              "gris",
+              "secuencial",
+              "divergente",
+              "ciclico",
+              "categorias"
+            ],
+            "title": "Paleta",
+            "type": "string"
+          },
+          "polarizacion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Polarizacion"
+          },
+          "rejilla": {
+            "$ref": "#/components/schemas/Rejilla"
+          },
+          "unidad": {
+            "title": "Unidad",
+            "type": "string"
+          },
+          "variable": {
+            "title": "Variable",
+            "type": "string"
+          }
+        },
+        "required": [
+          "escenario_id",
+          "adquisicion_id",
+          "variable",
+          "polarizacion",
+          "unidad",
+          "paleta",
+          "leyenda",
+          "instante",
+          "rejilla",
+          "origen"
+        ],
+        "title": "CapaDto",
+        "type": "object"
+      },
+      "CapaEventoDto": {
+        "properties": {
+          "clave": {
+            "title": "Clave",
+            "type": "string"
+          },
+          "clave_texto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clave Texto"
+          },
+          "estilo": {
+            "title": "Estilo",
+            "type": "string"
+          },
+          "etiquetas": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Etiquetas",
+            "type": "array"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "unidad": {
+            "title": "Unidad",
+            "type": "string"
+          }
+        },
+        "required": [
+          "clave",
+          "nombre",
+          "estilo",
+          "unidad",
+          "etiquetas"
+        ],
+        "title": "CapaEventoDto",
+        "type": "object"
+      },
+      "Capacidades": {
+        "properties": {
+          "modelo_continuo": {
+            "title": "Modelo Continuo",
+            "type": "boolean"
+          },
+          "simulacion": {
+            "title": "Simulacion",
+            "type": "boolean"
+          },
+          "verdad_terreno": {
+            "title": "Verdad Terreno",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "simulacion",
+          "modelo_continuo",
+          "verdad_terreno"
+        ],
+        "title": "Capacidades",
+        "type": "object"
+      },
+      "CatalogoDto": {
+        "properties": {
+          "extensiones_km": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Extensiones Km",
+            "type": "array"
+          },
+          "herramientas": {
+            "items": {
+              "$ref": "#/components/schemas/HerramientaDto"
+            },
+            "title": "Herramientas",
+            "type": "array"
+          },
+          "mundos": {
+            "items": {
+              "$ref": "#/components/schemas/MundoPredefinidoDto"
+            },
+            "title": "Mundos",
+            "type": "array"
+          },
+          "volcanes": {
+            "items": {
+              "$ref": "#/components/schemas/VolcanDto"
+            },
+            "title": "Volcanes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "herramientas",
+          "mundos",
+          "volcanes",
+          "extensiones_km"
+        ],
+        "title": "CatalogoDto",
+        "type": "object"
+      },
+      "CategoriaImpactoDto": {
+        "properties": {
+          "etiqueta": {
+            "title": "Etiqueta",
+            "type": "string"
+          },
+          "ha": {
+            "title": "Ha",
+            "type": "number"
+          },
+          "km2": {
+            "title": "Km2",
+            "type": "number"
+          },
+          "pct_escena": {
+            "title": "Pct Escena",
+            "type": "number"
+          }
+        },
+        "required": [
+          "etiqueta",
+          "km2",
+          "ha",
+          "pct_escena"
+        ],
+        "title": "CategoriaImpactoDto",
+        "type": "object"
+      },
+      "CiudadExtra": {
+        "properties": {
+          "habitantes": {
+            "maximum": 1000000.0,
+            "minimum": 1000.0,
+            "title": "Habitantes",
+            "type": "integer"
+          },
+          "lat": {
+            "maximum": 2.0,
+            "minimum": -6.0,
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "maximum": -75.0,
+            "minimum": -93.0,
+            "title": "Lon",
+            "type": "number"
+          },
+          "nombre": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Nombre",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nombre",
+          "lat",
+          "lon",
+          "habitantes"
+        ],
+        "title": "CiudadExtra",
+        "type": "object"
+      },
+      "ContextoDto": {
+        "description": "Clima, temporada y suelo de un punto. Es contexto real complementario (NASA POWER y\ngeoBoundaries): NO es una observación de NISAR y su `origen.tipo=\"real\"` no activa la banda\nde demostración. La respuesta es `null` si el punto cae fuera de la malla o de Ecuador.",
+        "properties": {
+          "clima_mensual": {
+            "items": {
+              "$ref": "#/components/schemas/MesClimaDto"
+            },
+            "title": "Clima Mensual",
+            "type": "array"
+          },
+          "elevacion_malla_m": {
+            "title": "Elevacion Malla M",
+            "type": "number"
+          },
+          "estacion_astronomica": {
+            "$ref": "#/components/schemas/AstronomiaDto"
+          },
+          "fecha": {
+            "format": "date",
+            "title": "Fecha",
+            "type": "string"
+          },
+          "humedad_suelo": {
+            "title": "Humedad Suelo",
+            "type": "number"
+          },
+          "lat": {
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "title": "Lon",
+            "type": "number"
+          },
+          "mes_actual": {
+            "maximum": 12.0,
+            "minimum": 1.0,
+            "title": "Mes Actual",
+            "type": "integer"
+          },
+          "metodo_climatologia": {
+            "title": "Metodo Climatologia",
+            "type": "string"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "provincia": {
+            "title": "Provincia",
+            "type": "string"
+          },
+          "region": {
+            "title": "Region",
+            "type": "string"
+          },
+          "temporada": {
+            "$ref": "#/components/schemas/TemporadaDto"
+          }
+        },
+        "required": [
+          "origen",
+          "lat",
+          "lon",
+          "fecha",
+          "mes_actual",
+          "region",
+          "provincia",
+          "estacion_astronomica",
+          "temporada",
+          "humedad_suelo",
+          "elevacion_malla_m",
+          "metodo_climatologia",
+          "clima_mensual"
+        ],
+        "title": "ContextoDto",
+        "type": "object"
+      },
+      "Control": {
+        "description": "Parámetro ajustable de la simulación. `minimo`, `maximo`, `paso` y `valor_defecto` están en las\nunidades del modelo (las que recibe `simular`); el valor mostrado es valor × `escala`.",
+        "properties": {
+          "ayuda": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ayuda"
+          },
+          "escala": {
+            "default": 1.0,
+            "title": "Escala",
+            "type": "number"
+          },
+          "etiqueta": {
+            "title": "Etiqueta",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "maximo": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Maximo"
+          },
+          "minimo": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minimo"
+          },
+          "opciones": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Opcion"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Opciones"
+          },
+          "paso": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Paso"
+          },
+          "tipo": {
+            "enum": [
+              "deslizador",
+              "selector",
+              "hora",
+              "interruptor"
+            ],
+            "title": "Tipo",
+            "type": "string"
+          },
+          "unidad": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unidad"
+          },
+          "valor_defecto": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valor Defecto"
+          }
+        },
+        "required": [
+          "id",
+          "etiqueta",
+          "tipo"
+        ],
+        "title": "Control",
+        "type": "object"
+      },
+      "ControlDto": {
+        "properties": {
+          "ayuda": {
+            "title": "Ayuda",
+            "type": "string"
+          },
+          "defecto": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              }
+            ],
+            "title": "Defecto"
+          },
+          "escala": {
+            "title": "Escala",
+            "type": "number"
+          },
+          "etiqueta": {
+            "title": "Etiqueta",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "maximo": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Maximo"
+          },
+          "minimo": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minimo"
+          },
+          "opciones": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Opciones"
+          },
+          "paso": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Paso"
+          },
+          "tipo": {
+            "title": "Tipo",
+            "type": "string"
+          },
+          "unidad": {
+            "title": "Unidad",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "etiqueta",
+          "tipo",
+          "minimo",
+          "maximo",
+          "paso",
+          "defecto",
+          "opciones",
+          "ayuda",
+          "unidad",
+          "escala"
+        ],
+        "title": "ControlDto",
+        "type": "object"
+      },
+      "ErrorDto": {
+        "properties": {
+          "clave_texto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clave Texto"
+          },
+          "mensaje": {
+            "title": "Mensaje",
+            "type": "string"
+          },
+          "valores_texto": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valores Texto"
+          }
+        },
+        "required": [
+          "mensaje"
+        ],
+        "title": "ErrorDto",
+        "type": "object"
+      },
+      "Escenario": {
+        "properties": {
+          "adquisiciones": {
+            "items": {
+              "$ref": "#/components/schemas/Adquisicion"
+            },
+            "minItems": 1,
+            "title": "Adquisiciones",
+            "type": "array"
+          },
+          "bbox": {
+            "maxItems": 4,
+            "minItems": 4,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "Bbox",
+            "type": "array"
+          },
+          "capacidades": {
+            "$ref": "#/components/schemas/Capacidades"
+          },
+          "historia": {
+            "anyOf": [
+              {
+                "enum": [
+                  "inundacion",
+                  "incendio"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Historia"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "instante_evento": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Instante Evento"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "polarizaciones": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Polarizaciones",
+            "type": "array"
+          },
+          "region": {
+            "title": "Region",
+            "type": "string"
+          },
+          "resolucion_m": {
+            "exclusiveMinimum": 0.0,
+            "title": "Resolucion M",
+            "type": "number"
+          },
+          "tipo_cambio": {
+            "title": "Tipo Cambio",
+            "type": "string"
+          },
+          "variables": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Variables",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "nombre",
+          "tipo_cambio",
+          "region",
+          "bbox",
+          "resolucion_m",
+          "polarizaciones",
+          "variables",
+          "adquisiciones",
+          "capacidades",
+          "origen"
+        ],
+        "title": "Escenario",
+        "type": "object"
+      },
+      "EsperaRadarDto": {
+        "properties": {
+          "ciclo_dias": {
+            "title": "Ciclo Dias",
+            "type": "integer"
+          },
+          "duracion_evento_h": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duracion Evento H"
+          },
+          "maximo_dias": {
+            "title": "Maximo Dias",
+            "type": "integer"
+          },
+          "medio_dias": {
+            "title": "Medio Dias",
+            "type": "number"
+          },
+          "minimo_dias": {
+            "title": "Minimo Dias",
+            "type": "integer"
+          },
+          "verificado": {
+            "title": "Verificado",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ciclo_dias",
+          "minimo_dias",
+          "maximo_dias",
+          "medio_dias",
+          "duracion_evento_h",
+          "verificado"
+        ],
+        "title": "EsperaRadarDto",
+        "type": "object"
+      },
+      "EventoDto": {
+        "properties": {
+          "capas": {
+            "items": {
+              "$ref": "#/components/schemas/CapaEventoDto"
+            },
+            "title": "Capas",
+            "type": "array"
+          },
+          "celda": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Celda",
+            "type": "array"
+          },
+          "clave_texto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clave Texto"
+          },
+          "comparable": {
+            "title": "Comparable",
+            "type": "boolean"
+          },
+          "cuadros_png_b64": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cuadros Png B64",
+            "type": "array"
+          },
+          "espera_radar": {
+            "$ref": "#/components/schemas/EsperaRadarDto"
+          },
+          "herramienta": {
+            "title": "Herramienta",
+            "type": "string"
+          },
+          "lat": {
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "title": "Lon",
+            "type": "number"
+          },
+          "metricas": {
+            "items": {
+              "$ref": "#/components/schemas/MetricaEventoDto"
+            },
+            "title": "Metricas",
+            "type": "array"
+          },
+          "metricas_radar": {
+            "items": {
+              "$ref": "#/components/schemas/MetricaEventoDto"
+            },
+            "title": "Metricas Radar",
+            "type": "array"
+          },
+          "modelos": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Modelos",
+            "type": "array"
+          },
+          "notas": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Notas",
+            "type": "array"
+          },
+          "notas_texto": {
+            "anyOf": [
+              {
+                "items": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/TextoClave"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notas Texto"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "paneles": {
+            "items": {
+              "$ref": "#/components/schemas/CapaDto"
+            },
+            "title": "Paneles",
+            "type": "array"
+          },
+          "polarizacion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Polarizacion"
+          },
+          "resumen": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Resumen",
+            "type": "object"
+          },
+          "tabla": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TablaEventoDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "tiempos": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tiempos",
+            "type": "array"
+          },
+          "titulo": {
+            "title": "Titulo",
+            "type": "string"
+          },
+          "titulos_paneles": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Titulos Paneles",
+            "type": "array"
+          },
+          "valores_texto": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valores Texto"
+          }
+        },
+        "required": [
+          "herramienta",
+          "titulo",
+          "celda",
+          "lat",
+          "lon",
+          "tiempos",
+          "cuadros_png_b64",
+          "capas",
+          "metricas",
+          "tabla",
+          "notas",
+          "modelos",
+          "paneles",
+          "titulos_paneles",
+          "comparable",
+          "polarizacion",
+          "metricas_radar",
+          "espera_radar",
+          "resumen",
+          "origen"
+        ],
+        "title": "EventoDto",
+        "type": "object"
+      },
+      "Frase": {
+        "description": "Texto de la API con su clave: el cliente traduce `clave_texto` y rellena `{x}` con `valores_texto`.",
+        "properties": {
+          "clave_texto": {
+            "title": "Clave Texto",
+            "type": "string"
+          },
+          "valores_texto": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "default": {},
+            "title": "Valores Texto",
+            "type": "object"
+          }
+        },
+        "required": [
+          "clave_texto"
+        ],
+        "title": "Frase",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HerramientaDto": {
+        "properties": {
+          "controles": {
+            "items": {
+              "$ref": "#/components/schemas/ControlDto"
+            },
+            "title": "Controles",
+            "type": "array"
+          },
+          "icono": {
+            "title": "Icono",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "icono",
+          "nombre",
+          "controles"
+        ],
+        "title": "HerramientaDto",
+        "type": "object"
+      },
+      "ImpactoDto": {
+        "properties": {
+          "acciones": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Acciones",
+            "type": "array"
+          },
+          "acciones_frases": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Frase"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acciones Frases"
+          },
+          "antes": {
+            "title": "Antes",
+            "type": "string"
+          },
+          "area_escena_km2": {
+            "title": "Area Escena Km2",
+            "type": "number"
+          },
+          "capa": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "categorias": {
+            "items": {
+              "$ref": "#/components/schemas/CategoriaImpactoDto"
+            },
+            "title": "Categorias",
+            "type": "array"
+          },
+          "cifras": {
+            "items": {
+              "$ref": "#/components/schemas/Metrica"
+            },
+            "title": "Cifras",
+            "type": "array"
+          },
+          "despues": {
+            "title": "Despues",
+            "type": "string"
+          },
+          "escenario": {
+            "title": "Escenario",
+            "type": "string"
+          },
+          "evolucion": {
+            "items": {
+              "$ref": "#/components/schemas/PuntoEvolucionDto"
+            },
+            "title": "Evolucion",
+            "type": "array"
+          },
+          "lectura": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Lectura",
+            "type": "array"
+          },
+          "lectura_frases": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Frase"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lectura Frases"
+          },
+          "notas": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Notas",
+            "type": "array"
+          },
+          "notas_frases": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Frase"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notas Frases"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "resolucion_celda_m": {
+            "title": "Resolucion Celda M",
+            "type": "number"
+          },
+          "tipo": {
+            "title": "Tipo",
+            "type": "string"
+          },
+          "titulo": {
+            "title": "Titulo",
+            "type": "string"
+          },
+          "titulo_frase": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Frase"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "titulo",
+          "tipo",
+          "escenario",
+          "antes",
+          "despues",
+          "cifras",
+          "categorias",
+          "evolucion",
+          "lectura",
+          "acciones",
+          "notas",
+          "capa",
+          "area_escena_km2",
+          "resolucion_celda_m",
+          "origen"
+        ],
+        "title": "ImpactoDto",
+        "type": "object"
+      },
+      "MarcaDto": {
+        "properties": {
+          "texto": {
+            "title": "Texto",
+            "type": "string"
+          },
+          "tipo": {
+            "title": "Tipo",
+            "type": "string"
+          },
+          "x": {
+            "title": "X",
+            "type": "number"
+          },
+          "y": {
+            "title": "Y",
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y",
+          "texto",
+          "tipo"
+        ],
+        "title": "MarcaDto",
+        "type": "object"
+      },
+      "MedicionDto": {
+        "properties": {
+          "cuadrante": {
+            "anyOf": [
+              {
+                "maxItems": 4,
+                "minItems": 4,
+                "prefixItems": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cuadrante"
+          },
+          "metricas": {
+            "items": {
+              "$ref": "#/components/schemas/Metrica"
+            },
+            "title": "Metricas",
+            "type": "array"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "punto": {
+            "anyOf": [
+              {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Punto"
+          },
+          "tabla": {
+            "items": {
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": "object"
+            },
+            "title": "Tabla",
+            "type": "array"
+          },
+          "textos": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": {
+                    "anyOf": [
+                      {
+                        "$ref": "#/components/schemas/TextoClave"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Textos"
+          }
+        },
+        "required": [
+          "cuadrante",
+          "punto",
+          "metricas",
+          "tabla",
+          "origen"
+        ],
+        "title": "MedicionDto",
+        "type": "object"
+      },
+      "MesClimaDto": {
+        "properties": {
+          "et0_mm": {
+            "title": "Et0 Mm",
+            "type": "number"
+          },
+          "mes": {
+            "title": "Mes",
+            "type": "string"
+          },
+          "mes_num": {
+            "title": "Mes Num",
+            "type": "integer"
+          },
+          "precipitacion_mm": {
+            "title": "Precipitacion Mm",
+            "type": "number"
+          },
+          "temperatura_c": {
+            "title": "Temperatura C",
+            "type": "number"
+          },
+          "temporada": {
+            "title": "Temporada",
+            "type": "string"
+          }
+        },
+        "required": [
+          "mes",
+          "mes_num",
+          "precipitacion_mm",
+          "et0_mm",
+          "temperatura_c",
+          "temporada"
+        ],
+        "title": "MesClimaDto",
+        "type": "object"
+      },
+      "Metrica": {
+        "properties": {
+          "ayuda": {
+            "title": "Ayuda",
+            "type": "string"
+          },
+          "clave_texto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clave Texto"
+          },
+          "etiqueta": {
+            "title": "Etiqueta",
+            "type": "string"
+          },
+          "unidad": {
+            "title": "Unidad",
+            "type": "string"
+          },
+          "valor": {
+            "title": "Valor",
+            "type": "string"
+          },
+          "valores_texto": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valores Texto"
+          }
+        },
+        "required": [
+          "etiqueta",
+          "valor",
+          "unidad",
+          "ayuda"
+        ],
+        "title": "Metrica",
+        "type": "object"
+      },
+      "MetricaEventoDto": {
+        "properties": {
+          "ayuda": {
+            "title": "Ayuda",
+            "type": "string"
+          },
+          "clave_texto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clave Texto"
+          },
+          "etiqueta": {
+            "title": "Etiqueta",
+            "type": "string"
+          },
+          "valor": {
+            "title": "Valor",
+            "type": "string"
+          },
+          "valores_texto": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valores Texto"
+          }
+        },
+        "required": [
+          "etiqueta",
+          "valor",
+          "ayuda"
+        ],
+        "title": "MetricaEventoDto",
+        "type": "object"
+      },
+      "MundoDto": {
+        "properties": {
+          "bbox": {
+            "maxItems": 4,
+            "minItems": 4,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "Bbox",
+            "type": "array"
+          },
+          "fuente_dem": {
+            "title": "Fuente Dem",
+            "type": "string"
+          },
+          "habitantes": {
+            "title": "Habitantes",
+            "type": "number"
+          },
+          "humedad_combustible_defecto": {
+            "title": "Humedad Combustible Defecto",
+            "type": "number"
+          },
+          "humedad_suelo_pct": {
+            "title": "Humedad Suelo Pct",
+            "type": "number"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "marcas": {
+            "items": {
+              "$ref": "#/components/schemas/MarcaDto"
+            },
+            "title": "Marcas",
+            "type": "array"
+          },
+          "n": {
+            "title": "N",
+            "type": "integer"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "pixel_m": {
+            "title": "Pixel M",
+            "type": "number"
+          },
+          "prec_anual_mm": {
+            "title": "Prec Anual Mm",
+            "type": "number"
+          },
+          "region": {
+            "title": "Region",
+            "type": "string"
+          },
+          "relieve_png_b64": {
+            "title": "Relieve Png B64",
+            "type": "string"
+          },
+          "temporada": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Temporada"
+          }
+        },
+        "required": [
+          "id",
+          "n",
+          "bbox",
+          "region",
+          "fuente_dem",
+          "pixel_m",
+          "habitantes",
+          "humedad_suelo_pct",
+          "humedad_combustible_defecto",
+          "temporada",
+          "prec_anual_mm",
+          "relieve_png_b64",
+          "marcas",
+          "origen"
+        ],
+        "title": "MundoDto",
+        "type": "object"
+      },
+      "MundoPredefinidoDto": {
+        "properties": {
+          "descripcion": {
+            "title": "Descripcion",
+            "type": "string"
+          },
+          "extension_km": {
+            "title": "Extension Km",
+            "type": "integer"
+          },
+          "herramienta": {
+            "title": "Herramienta",
+            "type": "string"
+          },
+          "lat": {
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "title": "Lon",
+            "type": "number"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nombre",
+          "lat",
+          "lon",
+          "extension_km",
+          "herramienta",
+          "descripcion"
+        ],
+        "title": "MundoPredefinidoDto",
+        "type": "object"
+      },
+      "NubesDto": {
+        "properties": {
+          "cambio_optico": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "cambio_radar": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "cobertura_real": {
+            "title": "Cobertura Real",
+            "type": "number"
+          },
+          "metricas": {
+            "items": {
+              "$ref": "#/components/schemas/Metrica"
+            },
+            "title": "Metricas",
+            "type": "array"
+          },
+          "optico": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "porcentaje_optico": {
+            "title": "Porcentaje Optico",
+            "type": "number"
+          },
+          "porcentaje_radar": {
+            "title": "Porcentaje Radar",
+            "type": "number"
+          },
+          "radar": {
+            "$ref": "#/components/schemas/CapaDto"
+          }
+        },
+        "required": [
+          "optico",
+          "radar",
+          "cambio_optico",
+          "cambio_radar",
+          "metricas",
+          "porcentaje_radar",
+          "porcentaje_optico",
+          "cobertura_real",
+          "origen"
+        ],
+        "title": "NubesDto",
+        "type": "object"
+      },
+      "Opcion": {
+        "properties": {
+          "etiqueta": {
+            "title": "Etiqueta",
+            "type": "string"
+          },
+          "valor": {
+            "title": "Valor",
+            "type": "number"
+          }
+        },
+        "required": [
+          "valor",
+          "etiqueta"
+        ],
+        "title": "Opcion",
+        "type": "object"
+      },
+      "Origen": {
+        "description": "De dónde sale un dato. `tipo=\"sintetico\"` activa la banda de demostración.",
+        "properties": {
+          "fecha_generacion": {
+            "format": "date-time",
+            "title": "Fecha Generacion",
+            "type": "string"
+          },
+          "fuente": {
+            "title": "Fuente",
+            "type": "string"
+          },
+          "generador": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generador"
+          },
+          "notas": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notas"
+          },
+          "producto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Producto"
+          },
+          "semilla": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Semilla"
+          },
+          "tipo": {
+            "enum": [
+              "sintetico",
+              "real"
+            ],
+            "title": "Tipo",
+            "type": "string"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          }
+        },
+        "required": [
+          "tipo",
+          "fuente",
+          "fecha_generacion"
+        ],
+        "title": "Origen",
+        "type": "object"
+      },
+      "PeticionCambio": {
+        "properties": {
+          "antes": {
+            "title": "Antes",
+            "type": "string"
+          },
+          "despues": {
+            "title": "Despues",
+            "type": "string"
+          },
+          "polarizacion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Polarizacion"
+          }
+        },
+        "required": [
+          "antes",
+          "despues"
+        ],
+        "title": "PeticionCambio",
+        "type": "object"
+      },
+      "PeticionCiudad": {
+        "properties": {
+          "celda": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Celda",
+            "type": "array"
+          },
+          "habitantes": {
+            "title": "Habitantes",
+            "type": "integer"
+          },
+          "mundo": {
+            "$ref": "#/components/schemas/PeticionMundo"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          }
+        },
+        "required": [
+          "mundo",
+          "celda",
+          "nombre",
+          "habitantes"
+        ],
+        "title": "PeticionCiudad",
+        "type": "object"
+      },
+      "PeticionEscenario": {
+        "properties": {
+          "escenario_id": {
+            "title": "Escenario Id",
+            "type": "string"
+          },
+          "parametros": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "default": {},
+            "title": "Parametros",
+            "type": "object"
+          }
+        },
+        "required": [
+          "escenario_id"
+        ],
+        "title": "PeticionEscenario",
+        "type": "object"
+      },
+      "PeticionEvento": {
+        "properties": {
+          "celda": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "title": "Celda",
+            "type": "array"
+          },
+          "herramienta": {
+            "maxLength": 20,
+            "title": "Herramienta",
+            "type": "string"
+          },
+          "mundo": {
+            "$ref": "#/components/schemas/PeticionMundo"
+          },
+          "parametros": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "maxProperties": 16,
+            "title": "Parametros",
+            "type": "object"
+          }
+        },
+        "required": [
+          "mundo",
+          "herramienta",
+          "celda"
+        ],
+        "title": "PeticionEvento",
+        "type": "object"
+      },
+      "PeticionFotogramas": {
+        "properties": {
+          "escenario_id": {
+            "title": "Escenario Id",
+            "type": "string"
+          },
+          "fin": {
+            "format": "date-time",
+            "title": "Fin",
+            "type": "string"
+          },
+          "inicio": {
+            "format": "date-time",
+            "title": "Inicio",
+            "type": "string"
+          },
+          "parametros": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "default": {},
+            "title": "Parametros",
+            "type": "object"
+          },
+          "paso_min": {
+            "title": "Paso Min",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "escenario_id",
+          "inicio",
+          "fin",
+          "paso_min"
+        ],
+        "title": "PeticionFotogramas",
+        "type": "object"
+      },
+      "PeticionMedicion": {
+        "description": "`cuadrante` = [x0, y0, x1, y1] y `punto` = [x, y], normalizados 0–1 sobre la imagen.\n\nx crece hacia la derecha (columnas); y=0 es la fila superior (norte) y crece hacia abajo.",
+        "properties": {
+          "antes": {
+            "title": "Antes",
+            "type": "string"
+          },
+          "cuadrante": {
+            "anyOf": [
+              {
+                "maxItems": 4,
+                "minItems": 4,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cuadrante"
+          },
+          "despues": {
+            "title": "Despues",
+            "type": "string"
+          },
+          "punto": {
+            "anyOf": [
+              {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Punto"
+          }
+        },
+        "required": [
+          "antes",
+          "despues"
+        ],
+        "title": "PeticionMedicion",
+        "type": "object"
+      },
+      "PeticionMundo": {
+        "properties": {
+          "ciudades": {
+            "items": {
+              "$ref": "#/components/schemas/CiudadExtra"
+            },
+            "maxItems": 8,
+            "title": "Ciudades",
+            "type": "array"
+          },
+          "extension_km": {
+            "default": 40,
+            "title": "Extension Km",
+            "type": "integer"
+          },
+          "fecha": {
+            "format": "date",
+            "title": "Fecha",
+            "type": "string"
+          },
+          "lat": {
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "title": "Lon",
+            "type": "number"
+          },
+          "usar_dem": {
+            "default": true,
+            "title": "Usar Dem",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "lat",
+          "lon",
+          "fecha"
+        ],
+        "title": "PeticionMundo",
+        "type": "object"
+      },
+      "PuntoEvolucionDto": {
+        "properties": {
+          "ha": {
+            "title": "Ha",
+            "type": "number"
+          },
+          "instante": {
+            "format": "date-time",
+            "title": "Instante",
+            "type": "string"
+          }
+        },
+        "required": [
+          "instante",
+          "ha"
+        ],
+        "title": "PuntoEvolucionDto",
+        "type": "object"
+      },
+      "Rejilla": {
+        "description": "Ráster cuantizado a uint8: 0 = sin dato, 1..255 = lineal entre vmin y vmax. Máximo 512 por lado.",
+        "properties": {
+          "bbox": {
+            "maxItems": 4,
+            "minItems": 4,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "Bbox",
+            "type": "array"
+          },
+          "columnas": {
+            "maximum": 512.0,
+            "minimum": 1.0,
+            "title": "Columnas",
+            "type": "integer"
+          },
+          "datos_b64": {
+            "title": "Datos B64",
+            "type": "string"
+          },
+          "filas": {
+            "maximum": 512.0,
+            "minimum": 1.0,
+            "title": "Filas",
+            "type": "integer"
+          },
+          "vmax": {
+            "title": "Vmax",
+            "type": "number"
+          },
+          "vmin": {
+            "title": "Vmin",
+            "type": "number"
+          }
+        },
+        "required": [
+          "filas",
+          "columnas",
+          "vmin",
+          "vmax",
+          "bbox",
+          "datos_b64"
+        ],
+        "title": "Rejilla",
+        "type": "object"
+      },
+      "RespuestaDto": {
+        "properties": {
+          "aviso_banda": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Aviso Banda"
+          },
+          "banda": {
+            "title": "Banda",
+            "type": "string"
+          },
+          "cambios": {
+            "items": {
+              "$ref": "#/components/schemas/CambioResaltadoDto"
+            },
+            "title": "Cambios",
+            "type": "array"
+          },
+          "capa": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "pol": {
+            "title": "Pol",
+            "type": "string"
+          },
+          "respuestas": {
+            "items": {
+              "$ref": "#/components/schemas/RespuestaSuperficieDto"
+            },
+            "title": "Respuestas",
+            "type": "array"
+          },
+          "superficies": {
+            "$ref": "#/components/schemas/CapaDto"
+          }
+        },
+        "required": [
+          "banda",
+          "pol",
+          "capa",
+          "superficies",
+          "respuestas",
+          "cambios",
+          "aviso_banda",
+          "origen"
+        ],
+        "title": "RespuestaDto",
+        "type": "object"
+      },
+      "RespuestaSuperficieDto": {
+        "properties": {
+          "db": {
+            "title": "Db",
+            "type": "number"
+          },
+          "pol": {
+            "title": "Pol",
+            "type": "string"
+          },
+          "superficie": {
+            "title": "Superficie",
+            "type": "string"
+          }
+        },
+        "required": [
+          "superficie",
+          "pol",
+          "db"
+        ],
+        "title": "RespuestaSuperficieDto",
+        "type": "object"
+      },
+      "ResultadoCambioDto": {
+        "properties": {
+          "antes": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "cambio": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "capas_extra": {
+            "items": {
+              "$ref": "#/components/schemas/CapaDto"
+            },
+            "title": "Capas Extra",
+            "type": "array"
+          },
+          "clasificacion": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CapaDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "despues": {
+            "$ref": "#/components/schemas/CapaDto"
+          },
+          "metricas": {
+            "items": {
+              "$ref": "#/components/schemas/Metrica"
+            },
+            "title": "Metricas",
+            "type": "array"
+          },
+          "notas": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Notas",
+            "type": "array"
+          },
+          "notas_texto": {
+            "anyOf": [
+              {
+                "items": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/TextoClave"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notas Texto"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "series": {
+            "items": {
+              "$ref": "#/components/schemas/SerieTemporal"
+            },
+            "title": "Series",
+            "type": "array"
+          },
+          "tablas": {
+            "items": {
+              "$ref": "#/components/schemas/TablaResultado"
+            },
+            "title": "Tablas",
+            "type": "array"
+          },
+          "vectores": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CampoVectorial"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "antes",
+          "despues",
+          "cambio",
+          "clasificacion",
+          "metricas",
+          "series",
+          "notas",
+          "tablas",
+          "vectores",
+          "capas_extra",
+          "origen"
+        ],
+        "title": "ResultadoCambioDto",
+        "type": "object"
+      },
+      "Salud": {
+        "properties": {
+          "estado": {
+            "const": "ok",
+            "title": "Estado",
+            "type": "string"
+          },
+          "hay_sinteticos": {
+            "title": "Hay Sinteticos",
+            "type": "boolean"
+          },
+          "origen_tipo": {
+            "enum": [
+              "sintetico",
+              "real",
+              "mixto",
+              "desconocido"
+            ],
+            "title": "Origen Tipo",
+            "type": "string"
+          },
+          "proveedor": {
+            "title": "Proveedor",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "estado",
+          "version",
+          "proveedor",
+          "origen_tipo",
+          "hay_sinteticos"
+        ],
+        "title": "Salud",
+        "type": "object"
+      },
+      "SerieTemporal": {
+        "properties": {
+          "nombres_texto": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/TextoClave"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nombres Texto"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "puntos": {
+            "items": {
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "type": "array"
+            },
+            "title": "Puntos",
+            "type": "array"
+          },
+          "titulo": {
+            "title": "Titulo",
+            "type": "string"
+          },
+          "unidad": {
+            "title": "Unidad",
+            "type": "string"
+          }
+        },
+        "required": [
+          "titulo",
+          "unidad",
+          "puntos",
+          "origen"
+        ],
+        "title": "SerieTemporal",
+        "type": "object"
+      },
+      "TablaEventoDto": {
+        "properties": {
+          "celdas_texto": {
+            "anyOf": [
+              {
+                "items": {
+                  "items": {
+                    "anyOf": [
+                      {
+                        "$ref": "#/components/schemas/TextoClave"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "type": "array"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Celdas Texto"
+          },
+          "columnas": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Columnas",
+            "type": "array"
+          },
+          "filas": {
+            "items": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "title": "Filas",
+            "type": "array"
+          }
+        },
+        "required": [
+          "columnas",
+          "filas"
+        ],
+        "title": "TablaEventoDto",
+        "type": "object"
+      },
+      "TablaResultado": {
+        "description": "Tabla de resultados (p. ej. una fila por parcela). Celdas: texto, número o nulo (sin valor).",
+        "properties": {
+          "celdas_texto": {
+            "anyOf": [
+              {
+                "items": {
+                  "items": {
+                    "anyOf": [
+                      {
+                        "$ref": "#/components/schemas/TextoClave"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "type": "array"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Celdas Texto"
+          },
+          "columnas": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Columnas",
+            "type": "array"
+          },
+          "columnas_texto": {
+            "anyOf": [
+              {
+                "items": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/TextoClave"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Columnas Texto"
+          },
+          "filas": {
+            "items": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "title": "Filas",
+            "type": "array"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "titulo": {
+            "title": "Titulo",
+            "type": "string"
+          },
+          "titulo_texto": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TextoClave"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "titulo",
+          "columnas",
+          "filas",
+          "origen"
+        ],
+        "title": "TablaResultado",
+        "type": "object"
+      },
+      "TemporadaDto": {
+        "properties": {
+          "et0_mes_mm": {
+            "title": "Et0 Mes Mm",
+            "type": "number"
+          },
+          "meses_lluviosos": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Meses Lluviosos",
+            "type": "array"
+          },
+          "meses_secos": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Meses Secos",
+            "type": "array"
+          },
+          "nombre_local": {
+            "title": "Nombre Local",
+            "type": "string"
+          },
+          "prec_media_mm": {
+            "title": "Prec Media Mm",
+            "type": "number"
+          },
+          "prec_mes_mm": {
+            "title": "Prec Mes Mm",
+            "type": "number"
+          },
+          "regimen": {
+            "title": "Regimen",
+            "type": "string"
+          },
+          "t2m_c": {
+            "title": "T2M C",
+            "type": "number"
+          },
+          "temporada": {
+            "title": "Temporada",
+            "type": "string"
+          }
+        },
+        "required": [
+          "temporada",
+          "nombre_local",
+          "prec_mes_mm",
+          "prec_media_mm",
+          "et0_mes_mm",
+          "t2m_c",
+          "regimen",
+          "meses_lluviosos",
+          "meses_secos"
+        ],
+        "title": "TemporadaDto",
+        "type": "object"
+      },
+      "TextoClave": {
+        "description": "Texto del modelo reconocido contra una plantilla registrada: el cliente traduce `clave_texto`, rellena `{x}`\ncon `valores_texto` y respeta los `decimales_texto` de cada cifra.",
+        "properties": {
+          "clave_texto": {
+            "title": "Clave Texto",
+            "type": "string"
+          },
+          "decimales_texto": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "default": {},
+            "title": "Decimales Texto",
+            "type": "object"
+          },
+          "valores_texto": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "default": {},
+            "title": "Valores Texto",
+            "type": "object"
+          }
+        },
+        "required": [
+          "clave_texto"
+        ],
+        "title": "TextoClave",
+        "type": "object"
+      },
+      "TipoCambio": {
+        "properties": {
+          "controles": {
+            "items": {
+              "$ref": "#/components/schemas/Control"
+            },
+            "title": "Controles",
+            "type": "array"
+          },
+          "descripcion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Descripcion"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "observable": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observable"
+          }
+        },
+        "required": [
+          "id",
+          "nombre"
+        ],
+        "title": "TipoCambio",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "VolcanDto": {
+        "properties": {
+          "lat": {
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "title": "Lon",
+            "type": "number"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nombre",
+          "lat",
+          "lon"
+        ],
+        "title": "VolcanDto",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "NISAR · Ecuador",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/contexto": {
+      "get": {
+        "operationId": "contexto",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "lat",
+            "required": true,
+            "schema": {
+              "maximum": 90,
+              "minimum": -90,
+              "title": "Lat",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "lon",
+            "required": true,
+            "schema": {
+              "maximum": 180,
+              "minimum": -180,
+              "title": "Lon",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "fecha",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Fecha"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ContextoDto"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Contexto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Contexto"
+      }
+    },
+    "/api/escenarios": {
+      "get": {
+        "operationId": "escenarios",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Escenario"
+                  },
+                  "title": "Response Escenarios",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Escenarios"
+      }
+    },
+    "/api/escenarios/{id}": {
+      "get": {
+        "operationId": "escenario",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Escenario"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Escenario"
+      }
+    },
+    "/api/escenarios/{id}/cambio": {
+      "post": {
+        "operationId": "cambio",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeticionCambio"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultadoCambioDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Cambio"
+      }
+    },
+    "/api/escenarios/{id}/capa": {
+      "get": {
+        "operationId": "capa",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "adquisicion",
+            "required": true,
+            "schema": {
+              "title": "Adquisicion",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "variable",
+            "required": true,
+            "schema": {
+              "title": "Variable",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "polarizacion",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Polarizacion"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapaDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Capa"
+      }
+    },
+    "/api/escenarios/{id}/impacto": {
+      "get": {
+        "operationId": "resumen_impacto",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "antes",
+            "required": true,
+            "schema": {
+              "title": "Antes",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "despues",
+            "required": true,
+            "schema": {
+              "title": "Despues",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "polarizacion",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Polarizacion"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImpactoDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resumen Impacto"
+      }
+    },
+    "/api/escenarios/{id}/medicion": {
+      "post": {
+        "operationId": "medicion",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeticionMedicion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MedicionDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Medicion"
+      }
+    },
+    "/api/escenarios/{id}/serie-seleccion": {
+      "get": {
+        "description": "Evolución del observable en un punto y/o cuadrante (coordenadas normalizadas 0–1).",
+        "operationId": "serie_seleccion",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "punto",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Punto"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cuadrante",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cuadrante"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/SerieTemporal"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Serie Seleccion"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Serie Seleccion"
+      }
+    },
+    "/api/laboratorio/nubes": {
+      "get": {
+        "operationId": "nubes",
+        "parameters": [
+          {
+            "description": "Cobertura de nubes, % (0–100)",
+            "in": "query",
+            "name": "cobertura",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "description": "Cobertura de nubes, % (0–100)",
+              "title": "Cobertura",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "semilla",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "maximum": 999,
+              "minimum": 0,
+              "title": "Semilla",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NubesDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Nubes"
+      }
+    },
+    "/api/laboratorio/respuesta": {
+      "get": {
+        "operationId": "respuesta",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "banda",
+            "required": false,
+            "schema": {
+              "default": "L",
+              "title": "Banda",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pol",
+            "required": false,
+            "schema": {
+              "default": "HH",
+              "title": "Pol",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespuestaDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Respuesta"
+      }
+    },
+    "/api/salud": {
+      "get": {
+        "operationId": "salud",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Salud"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Salud"
+      }
+    },
+    "/api/simulacion/escenario": {
+      "post": {
+        "operationId": "simular",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeticionEscenario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Escenario"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Simular"
+      }
+    },
+    "/api/simulacion/fotogramas": {
+      "post": {
+        "operationId": "fotogramas",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeticionFotogramas"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CapaDto"
+                  },
+                  "title": "Response Fotogramas",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Fotogramas"
+      }
+    },
+    "/api/simulador/catalogo": {
+      "get": {
+        "operationId": "catalogo_simulador",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogoDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Catalogo Simulador"
+      }
+    },
+    "/api/simulador/ciudad": {
+      "post": {
+        "operationId": "fundar_ciudad",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeticionCiudad"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PeticionMundo"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Fundar Ciudad"
+      }
+    },
+    "/api/simulador/evento": {
+      "post": {
+        "operationId": "desatar_evento",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeticionEvento"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventoDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Desatar Evento"
+      }
+    },
+    "/api/simulador/mundo": {
+      "post": {
+        "operationId": "crear_mundo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeticionMundo"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MundoDto"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Crear Mundo"
+      }
+    },
+    "/api/tipos": {
+      "get": {
+        "operationId": "tipos",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TipoCambio"
+                  },
+                  "title": "Response Tipos",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Tipos"
+      }
+    }
+  }
+}

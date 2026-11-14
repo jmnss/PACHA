@@ -1,0 +1,137 @@
+import time
+
+import numpy as np
+
+from api.encoding import a_rejilla, de_rejilla
+from datos.contrato import CapaRaster, Origen
+from datos.proveedores.demo import ProveedorDemostracion
+
+
+def _capa(datos, vmin=-20.0, vmax=0.0, bbox=(-80.0, -3.0, -79.0, -2.0)):
+    base = ProveedorDemostracion()
+    e = base.escenarios()[0]
+    c = base.capa(e.id, e.adquisiciones[0].id, e.variables[0], e.polarizaciones[0])
+    return CapaRaster(
+        escenario_id=c.escenario_id, adquisicion_id=c.adquisicion_id, variable=c.variable,
+        polarizacion=c.polarizacion, unidad=c.unidad, paleta="gris", vmin=vmin, vmax=vmax,
+        leyenda=None, datos=datos, bbox=bbox, origen=c.origen,
+    )
+
+
+def test_ida_y_vuelta_dentro_del_paso():
+    rng = np.random.default_rng(1)
+    d = rng.uniform(-30, 10, (64, 80)).astype(np.float32)
+    r = a_rejilla(_capa(d))
+    v = de_rejilla(r)
+    ref = np.clip(d, -20, 0)
+    assert np.nanmax(np.abs(v - ref)) <= 20 / 254 + 1e-6
+
+
+def test_nan_es_cero():
+    d = np.full((4, 4), -10.0, dtype=np.float32)
+    d[1, 2] = np.nan
+    r = a_rejilla(_capa(d))
+    q = np.frombuffer(__import__("base64").b64decode(r.datos_b64), dtype=np.uint8).reshape(4, 4)
+    assert q[1, 2] == 0 and (q.sum() > 0) and np.count_nonzero(q) == 15
+    assert np.isnan(de_rejilla(r)[1, 2])
+
+
+def test_2048_se_reduce_a_512_conservando_bbox():
+    d = np.random.default_rng(0).uniform(-20, 0, (2048, 2048)).astype(np.float32)
+    t = time.perf_counter()
+    r = a_rejilla(_capa(d))
+    assert time.perf_counter() - t < 2.0
+    assert (r.filas, r.columnas) == (512, 512)
+    assert r.bbox == (-80.0, -3.0, -79.0, -2.0)
+
+
+def test_capa_pequena_no_se_amplia():
+    r = a_rejilla(_capa(np.zeros((30, 40), dtype=np.float32)))
+    assert (r.filas, r.columnas) == (30, 40)
+
+
+def test_bloque_todo_nan_y_promedio_ignorando_nan():
+    d = np.full((1024, 1024), np.nan, dtype=np.float32)
+    d[0, 0] = -10.0  # bloque 2x2 con un solo valor: el promedio es ese valor
+    v = de_rejilla(a_rejilla(_capa(d)))
+    assert abs(v[0, 0] - -10.0) <= 20 / 254
+    assert np.isnan(v[1, 1])
+
+
+def test_lado_no_multiplo_y_forma():
+    r = a_rejilla(_capa(np.zeros((1000, 700), dtype=np.float32)))
+    assert (r.filas, r.columnas) == (500, 350)
+    r = a_rejilla(_capa(np.zeros((513, 10), dtype=np.float32)))
+    assert (r.filas, r.columnas) == (257, 5)
+
+
+def test_vmin_igual_vmax_no_divide_por_cero():
+    d = np.array([[5.0, np.nan]], dtype=np.float32)
+    v = de_rejilla(a_rejilla(_capa(d, vmin=5.0, vmax=5.0)))
+    assert v[0, 0] == 5.0 and np.isnan(v[0, 1])
+
+
+# ---- capas categóricas: los códigos viajan tal cual ----
+def _capa_cat(datos, leyenda=("a", "b", "c", "d")):
+    c = _capa(datos)
+    return CapaRaster(**{**c.__dict__, "paleta": "categorias", "vmin": 0.0, "vmax": 1.0,
+                         "leyenda": [(e, "#000000") for e in leyenda]})
+
+
+def test_categorica_codigos_0_a_4_sobreviven():
+    d = np.array([[0, 1, 2], [3, 4, np.nan]], dtype=np.float32)
+    r = a_rejilla(_capa_cat(d))
+    assert (r.vmin, r.vmax) == (0.0, 4.0)
+    v = de_rejilla(r, categorica=True)
+    assert v[0, 1] == 1 and v[0, 2] == 2 and v[1, 0] == 3 and v[1, 1] == 4
+    assert np.isnan(v[0, 0]) and np.isnan(v[1, 2])
+
+
+def test_categorica_reduccion_usa_moda_sin_inventar_valores():
+    rng = np.random.default_rng(3)
+    d = rng.integers(0, 5, (2048, 2048)).astype(np.float32)
+    d[:4, :4] = 3  # bloque uniforme
+    r = a_rejilla(_capa_cat(d), max_lado=512)
+    assert (r.filas, r.columnas) == (512, 512)
+    v = de_rejilla(r, categorica=True)
+    assert v[0, 0] == 3
+    assert set(np.unique(v[~np.isnan(v)])) <= {1.0, 2.0, 3.0, 4.0}
+
+
+def test_categorica_real_del_demo_conserva_codigos():
+    p = ProveedorDemostracion()
+    e = next(x for x in p.escenarios() if x.id == "ec_daule")
+    a = e.adquisiciones
+    cap = p.cambio(e.id, a[0].id, a[-1].id, None).cambio
+    assert cap.paleta == "categorias" and cap.leyenda
+    r = a_rejilla(cap, max_lado=512)
+    v = de_rejilla(r, categorica=True)
+    esperado = np.where(np.nan_to_num(cap.datos) == 0, np.nan, cap.datos)
+    assert np.array_equal(np.nan_to_num(v), np.nan_to_num(esperado))
+    assert r.vmax == len(cap.leyenda)
+
+
+def test_ida_y_vuelta_conserva_el_orden_de_filas():
+    # Rejilla 2x2 asimétrica: fila 0 (norte) = [-20 (mín), 0 (máx)], fila 1 = [NaN, -10].
+    d = np.array([[-20.0, 0.0], [np.nan, -10.0]], dtype=np.float32)
+    v = de_rejilla(a_rejilla(_capa(d)))
+    assert v.shape == (2, 2)
+    assert abs(v[0, 0] + 20) < 0.1 and abs(v[0, 1]) < 0.1
+    assert np.isnan(v[1, 0]) and abs(v[1, 1] + 10) < 0.1
+
+
+def test_max_lado_fuera_de_rango_es_error():
+    import pytest
+    d = np.zeros((4, 4), dtype=np.float32)
+    for malo in (0, -1, 513):
+        with pytest.raises(ValueError, match="max_lado"):
+            a_rejilla(_capa(d), max_lado=malo)
+
+
+def test_vmin_vmax_no_finitos_son_error():
+    import pytest
+    d = np.zeros((4, 4), dtype=np.float32)
+    with pytest.raises(ValueError, match="finitos"):
+        a_rejilla(_capa(d, vmin=float("nan")))
+    with pytest.raises(ValueError, match="finitos"):
+        a_rejilla(_capa(d, vmax=float("inf")))
