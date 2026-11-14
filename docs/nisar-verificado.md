@@ -80,6 +80,7 @@ comprobará en los atributos del HDF5); el valor de «sin dato»; la convención
 | Credenciales en `~/.netrc` (`machine urs.earthdata.nasa.gov`) | GU `access-overview` | «configure a local .netrc file to securely store credentials» |
 | Datos en AWS us-west-2; S3 directo solo desde esa región | GU `earthaccess`, `aws-s3-access` | «NISAR data is hosted in the AWS us-west-2 region» |
 | La búsqueda de metadatos no exige cuenta | CAT | `asf_search.search(dataset='NISAR', …)` respondió sin credenciales el 2026-11-14 |
+| Respuesta urgente (UR): colección por nivel (`NISAR_UR_L2`), órbita de pronóstico, sin corrección ionosférica ni troposférica; se activa por sismos PAGER naranja/rojo, alertas volcánicas de aviación naranja/roja o a pedido de USGS, NOAA o NASA; se borra a los 30 días | GU `urgent-response` | «UR products are available for 30 days, after which they are removed from the archive» |
 | La guía no ofrece cita recomendada para los productos | GU `access-overview` | (ausencia comprobada; la cita se busca en ASF antes del cierre) |
 
 ## 5. Revisión del código y los textos heredados

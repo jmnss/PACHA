@@ -55,3 +55,27 @@ def test_importaciones_perezosas_conocidas():
     malas = [(f.relative_to(RAIZ).as_posix(), m) for f in _archivos()
              for m, nivel, extra in _externas(f) if not nivel and m not in PYODIDE | PEREZOSOS | extra]
     assert not malas, f"Importaciones dentro de funciones desconocidas: {malas}"
+
+
+def _solo_preparacion():
+    """Paquetes de requirements-preparacion.txt (nombre de importación)."""
+    alias = {"asf_search": "asf_search", "earthaccess": "earthaccess", "h5py": "h5py", "rasterio": "rasterio",
+             "xarray": "xarray", "rioxarray": "rioxarray", "h5netcdf": "h5netcdf", "fsspec": "fsspec",
+             "pyproj": "pyproj", "netcdf4": "netCDF4"}
+    nombres = set()
+    for linea in (RAIZ / "requirements-preparacion.txt").read_text(encoding="utf-8").splitlines():
+        linea = linea.split("#")[0].strip()
+        if linea:
+            base = linea.split("[")[0].split("=")[0].split("<")[0].split(">")[0].split("~")[0].strip().lower()
+            nombres.add(alias.get(base.replace("-", "_"), base.replace("-", "_")))
+    return nombres
+
+
+def test_dependencias_de_preparacion_fuera_de_la_app():
+    """Lo de requirements-preparacion.txt solo lo usan los scripts fuera de línea: nunca api/, datos/ ni modelo/
+    (ni a nivel de módulo ni dentro de funciones), salvo los lectores heredados ya conocidos (PEREZOSOS)."""
+    prohibidos = _solo_preparacion() - PEREZOSOS
+    assert prohibidos, "requirements-preparacion.txt debería declarar al menos una dependencia"
+    malas = [(f.relative_to(RAIZ).as_posix(), m) for f in _archivos()
+             for m, _nivel, _extra in _externas(f) if m in prohibidos]
+    assert not malas, f"Dependencias de preparación importadas desde la app: {malas}"

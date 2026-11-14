@@ -31,6 +31,13 @@ Hallazgos que cambian supuestos:
 - Hay un **hueco permanente de datos** del 27 jul al 10 ago 2026.
 - Un GCOV sobre Ecuador pesa ~7,4 GB: la preparación tiene que leer por partes o en streaming.
 
+**Tarea 1 · Reconocimiento del catálogo** (`feat(scripts): reconocimiento del catálogo NISAR sobre Ecuador`):
+`scripts/explorar_catalogo.py` (solo metadatos con `asf_search` 14.1.0, sin cuenta; `requirements-preparacion.txt`)
+escribe `docs/catalogo-ecuador.md`. Resultado: La Segua 20 GCOV y 16 GUNW; Loja 62 GCOV y 43 GUNW; Ecuador continental
+454 GCOV y 372 GUNW; Galápagos 63 GCOV. Series regulares del 17 jun al 5 nov 2026 (PROVISIONAL + VALIDATED), solo HH y
+HV (sin VV), 1,2–7,6 GB por GCOV. Prueba nueva en `tests/motor/test_compatibilidad_pyodide.py`: lo de
+`requirements-preparacion.txt` no se importa desde `api/`, `datos/` ni `modelo/`. **No se descargó nada.**
+
 ## Publicación de los bloques A, B y C (2026-11-08)
 
 Publicado en Pages con `13e7c08` (corrida 42519336402, 225 respuestas precalculadas). La corrida anterior falló en el

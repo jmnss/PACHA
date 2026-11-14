@@ -1,0 +1,4 @@
+# Dependencias SOLO de los scripts de preparación de datos reales (scripts/explorar_catalogo.py y, más adelante,
+# scripts/preparar_datos_reales.py). Nunca se importan desde api/, datos/ ni modelo/
+# (tests/motor/test_compatibilidad_pyodide.py lo vigila): la app solo lee los derivados de data/nisar/<zona>/.
+asf_search==14.1.0
