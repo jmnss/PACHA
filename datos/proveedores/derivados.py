@@ -105,7 +105,7 @@ class _Sitio:
         """Máscara bool del contorno sobre la rejilla (todo True si el sitio no trae contorno)."""
         if self._dentro is None:
             ruta = self.json.get("contorno")
-            if not ruta:
+            if not ruta:  # sin contorno el cambio no se restringe: cuenta toda la rejilla
                 self._dentro = np.ones(self.forma, bool)
             else:
                 gj = json.loads((self.carpeta / ruta).read_text(encoding="utf-8"))
@@ -122,15 +122,15 @@ class ProveedorDerivados:
 
     def __init__(self, raiz: Path = DIR_DATOS) -> None:
         self._raiz = Path(raiz)
-        self._sitios: dict[str, _Sitio] = {}
+        self._sitios: dict[str, _Sitio] = {}  # por id de escenario: un embalse y un incendio pueden llamarse igual
         for carpeta in CARPETAS.values():
             for ruta in sorted((self._raiz / carpeta).glob("*/sitio.json")):
                 try:
                     s = _Sitio(ruta.parent)
                 except (OSError, ValueError, KeyError):  # un sitio ilegible no tumba a los demás
                     continue
-                self._sitios[s.json["sitio"]] = s
-        self._escenarios = {s.id_escenario: s for s in self._sitios.values() if s.fechas}
+                self._sitios[s.id_escenario] = s
+        self._escenarios = {k: s for k, s in self._sitios.items() if s.fechas}
 
     # --- consulta ---------------------------------------------------------------------------------
 
@@ -138,7 +138,7 @@ class ProveedorDerivados:
         return "derivados"
 
     def sitios(self) -> dict[str, dict]:
-        """Todos los `sitio.json` leídos, mostrables o no."""
+        """Todos los `sitio.json` leídos (por id de escenario), mostrables o no."""
         return {k: s.json for k, s in self._sitios.items()}
 
     def _sitio(self, escenario_id: str) -> _Sitio:
@@ -214,6 +214,8 @@ class ProveedorDerivados:
         a, d = s.fecha(antes_id), s.fecha(despues_id)  # una fecha sin procedencia no existe: 404, nunca se inventa
         if a.id == d.id:
             raise CapacidadNoDisponible(texto("api.error.segunda_fecha_comparar"))
+        if a.instante > d.instante:  # igual que el proveedor demo: la comparación va de la fecha anterior a la posterior
+            raise EntradaNoValida.con("api.error.fecha_despues_antes")
         return a, d
 
     def _clasificar(self, s: _Sitio, a: _Fecha, d: _Fecha) -> np.ndarray:

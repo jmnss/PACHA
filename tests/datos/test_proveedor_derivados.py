@@ -21,13 +21,13 @@ def test_fecha_sin_procedencia_no_se_expone(raiz):
     assert [a.id for a in esc.adquisiciones] == ["20261029", "20261110"]
     with pytest.raises(NoEncontrado):
         p.capa("embalses-lago", "20261122", "mascara", None)
-    assert len(p.sitios()["lago"]["fechas"]) == 3  # el sitio.json se lee entero, mostrable o no
+    assert len(p.sitios()["embalses-lago"]["fechas"]) == 3  # el sitio.json se lee entero, mostrable o no
 
 
 def test_sitio_sin_fechas_mostrables_no_tiene_escenario(tmp_path):
     escribir_sitio_prueba(tmp_path, fechas=[{"fecha": "2026-10-29", "mascara": mascara_con_celdas(range(5)), "procedencia": False}])
     p = ProveedorDerivados(tmp_path)
-    assert p.escenarios() == [] and "lago" in p.sitios()
+    assert p.escenarios() == [] and "embalses-lago" in p.sitios()
     with pytest.raises(NoEncontrado):
         p.escenario("embalses-lago")
 
@@ -138,6 +138,23 @@ def test_una_sola_fecha_cambio_409(tmp_path):
     assert p.intervalo_por_defecto("embalses-lago") == ("20261029", "20261029")
 
 
+def test_antes_posterior_a_despues_se_rechaza(raiz):
+    p = ProveedorDerivados(raiz)
+    with pytest.raises(EntradaNoValida) as e:
+        p.cambio("embalses-lago", "20261110", "20261029", None)
+    assert e.value.clave == "api.error.fecha_despues_antes"
+    with pytest.raises(EntradaNoValida):
+        p.medir("embalses-lago", "20261110", "20261029", punto=(0, 0))
+
+
+def test_mismo_nombre_de_sitio_en_embalse_e_incendio_no_colisiona(tmp_path):
+    escribir_sitio_prueba(tmp_path, tipo="embalse")
+    escribir_sitio_prueba(tmp_path, tipo="incendio")
+    p = ProveedorDerivados(tmp_path)
+    assert {e.id for e in p.escenarios()} == {"embalses-lago", "incendios-lago"}
+    assert set(p.sitios()) == {"embalses-lago", "incendios-lago"}
+
+
 def test_antes_igual_despues_409(raiz):
     with pytest.raises(CapacidadNoDisponible):
         ProveedorDerivados(raiz).cambio("embalses-lago", "20261029", "20261029", None)
@@ -169,8 +186,22 @@ def test_sin_capacidades_de_simulacion(raiz):
         p.fotogramas("embalses-lago", {}, None, None, 60)
 
 
-def test_datos_reales_del_repo_sin_procedencia_no_dan_escenario():
-    assert ProveedorDerivados().escenarios() == []  # Mazar y compañía aún no traen procedencia completa
+def test_derivados_reales_sin_procedencia_no_dan_escenario(tmp_path):
+    """Copia de Mazar con la procedencia quitada: no hay fecha mostrable, no hay escenario."""
+    import json
+    import shutil
+    from pathlib import Path
+    origen = Path(__file__).resolve().parents[2] / "data" / "embalses" / "mazar"
+    if not origen.exists():
+        pytest.skip("no hay derivados de Mazar")
+    destino = tmp_path / "embalses" / "mazar"
+    shutil.copytree(origen, destino)
+    sj = json.loads((destino / "sitio.json").read_text())
+    for f in sj["fechas"]:
+        f.update(procedencia=None, procedencia_completa=False)
+    (destino / "sitio.json").write_text(json.dumps(sj))
+    p = ProveedorDerivados(tmp_path)
+    assert p.escenarios() == [] and "embalses-mazar" in p.sitios()
 
 
 def test_utm_coincide_con_pyproj():
