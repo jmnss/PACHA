@@ -418,7 +418,7 @@ del equipo: `docs/datos-equipo-embalses.md`.
   - `test_sustituto_incendio_id_estable`: `escenarios()[0].id == "incendio-casitagua"`; tras vaciar la caché LRU
     del demo, `capa(...)` sigue funcionando.
 - [x] **Step 2:** FAIL → **Step 3:** implementar → **Step 4:** `python -m pytest tests -q` PASS.
-- [ ] **Step 5: Commit** `feat(datos): sustitutos sintéticos de embalse (sobre el DEM) e incendio (Casitagua)`
+- [x] **Step 5: Commit** `feat(datos): sustitutos sintéticos de embalse (sobre el DEM) e incendio (Casitagua)`
 
 ---
 
