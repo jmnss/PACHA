@@ -38,6 +38,15 @@ escribe `docs/catalogo-ecuador.md`. Resultado: La Segua 20 GCOV y 16 GUNW; Loja 
 HV (sin VV), 1,2–7,6 GB por GCOV. Prueba nueva en `tests/motor/test_compatibilidad_pyodide.py`: lo de
 `requirements-preparacion.txt` no se importa desde `api/`, `datos/` ni `modelo/`. **No se descargó nada.**
 
+**Despliegue en el repositorio nuevo (2026-11-14):** el repositorio se llama ahora `jmnss/PACHA` y no traía
+`.github/workflows/pages.yml`; se reconstruyó según el plan de despliegue y las versiones de acciones anotadas el
+2026-11-08 (`checkout@v7`, `setup-python@v7`, `setup-node@v7`, `upload-pages-artifact@v5`, `deploy-pages@v5`,
+`ubuntu-24.04`). La base de Pages ya no está fija: `PAGES_BASE` (en CI, `/<nombre del repo>/`; por defecto `/PACHA/`)
+la usan `construir_pages.sh`, `playwright.pages.config.ts` y `e2e/pages.spec.ts`. Pages activado con fuente
+GitHub Actions; URL: `https://jmnss.github.io/PACHA/`. Verificación local antes del push: pytest 382 (+2 omitidas),
+unittest OK, vitest 624, lint OK, sitio de Pages 42 MB y e2e de Pages 11/11. No se corrió el Playwright normal
+(el flujo de CI no lo usa).
+
 ## Publicación de los bloques A, B y C (2026-11-08)
 
 Publicado en Pages con `13e7c08` (corrida 42519336402, 225 respuestas precalculadas). La corrida anterior falló en el

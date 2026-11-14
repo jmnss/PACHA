@@ -19,7 +19,7 @@ test('el recorrido incrusta pantallas con la base', async ({ page }) => {
   const marco = page.locator('iframe')
   await expect(marco).toBeVisible({ timeout: 120_000 })
   const src = await marco.getAttribute('src')
-  expect(src?.startsWith('/NISAR-Ecuador/')).toBe(true)
+  expect(src?.startsWith(process.env.PAGES_BASE ?? '/PACHA/')).toBe(true)
   expect(src).toContain('incrustado=1')
   await expect(page.frameLocator('iframe').getByRole('region', { name: 'Aviso de datos de demostración' }))
     .toBeVisible({ timeout: 120_000 })

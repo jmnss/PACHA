@@ -7,7 +7,7 @@ Las cifras se leen en pantalla (las calcula la app); no las memorices ni las inv
 
 ## Antes de empezar (preparación)
 
-0. La versión publicada está en `https://jmnss.github.io/NISAR-Ecuador/`: ábrela un minuto antes para que el motor de cálculo ya esté cargado (la primera visita descarga unos 25 MB).
+0. La versión publicada está en `https://jmnss.github.io/PACHA/`: ábrela un minuto antes para que el motor de cálculo ya esté cargado (la primera visita descarga unos 25 MB).
 1. `cd frontend && npm run build && cd .. && python servidor.py` y abrir `http://localhost:8000/` (o la versión de desarrollo).
 2. Comprobar que la banda naranja «DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR» está arriba.
 3. Tener a mano el Observatorio (`/observatorio`) por si preguntan por una medición o por los otros tipos de cambio.

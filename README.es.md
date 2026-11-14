@@ -27,7 +27,7 @@ En `/simulador` (antes «Modo Dios» de la app Streamlit) puedes provocar un inc
 
 ## Versión publicada
 
-La app está publicada en **https://jmnss.github.io/NISAR-Ecuador/** (GitHub Pages, sitio estático sin servidor). Todo se
+La app está publicada en **https://jmnss.github.io/PACHA/** (GitHub Pages, sitio estático sin servidor). Todo se
 calcula en tu navegador: la API Python corre allí con Pyodide. La primera visita descarga unos 25 MB; lo precalculado
 (portada, historias y escenarios) se ve de inmediato. El Simulador puede tardar hasta un minuto en tormentas e
 inundaciones, y los móviles de gama baja pueden no cargar el motor. El aviso de datos de demostración no cambia: los

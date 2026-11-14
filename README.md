@@ -27,7 +27,7 @@ An open web app that shows how the NISAR radar (NASA-ISRO) can "see" **floods an
 
 ## Published version
 
-The app is published at **https://jmnss.github.io/NISAR-Ecuador/** (GitHub Pages, static site, no server). Everything is
+The app is published at **https://jmnss.github.io/PACHA/** (GitHub Pages, static site, no server). Everything is
 computed in your browser: the Python API runs there with Pyodide. The first visit downloads about 25 MB; precomputed
 content (home, stories and scenarios) shows immediately. The Simulator can take up to a minute for storms and floods,
 and low-end phones may not be able to load the engine. The demonstration-data notice is unchanged: the data is synthetic.

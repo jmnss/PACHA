@@ -27,3 +27,9 @@ dist-ssr
 test-results
 playwright-report
 dist-revision
+
+# Sitio de Pages y artefactos del precálculo (scripts/construir_pages.sh)
+dist-pages
+.precalculado
+.tmp-app
+.cache-pyodide
