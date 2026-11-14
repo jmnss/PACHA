@@ -448,6 +448,10 @@
     "es": "El punto {punto} queda fuera de la imagen ({ny}×{nx} píxeles)."
   },
   {
+    "clave": "api.error.segunda_fecha_comparar",
+    "es": "Hace falta una segunda fecha con procedencia para comparar."
+  },
+  {
     "clave": "api.error.semilla_rango",
     "es": "semilla debe ser un entero entre 0 y 2147483647."
   },

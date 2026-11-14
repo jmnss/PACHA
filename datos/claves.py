@@ -57,6 +57,7 @@ REGISTRO: dict[str, str] = {
     "api.error.variable_desconocida": "variable desconocida: {variable}; disponibles: {disponibles}",
     "api.error.polarizacion_no_disponible": "polarización no disponible: {polarizacion}; disponibles: {disponibles}",
     "api.error.variable_sin_polarizacion": "La variable {variable} no tiene polarización.",
+    "api.error.segunda_fecha_comparar": "Hace falta una segunda fecha con procedencia para comparar.",
     "api.error.fecha_despues_antes": "La fecha 'después' debe ser posterior a la fecha 'antes'.",
     "api.error.medir_uno_de_dos": "Indica exactamente uno de `cuadrante` o `punto`.",
     "api.error.cuadrante_fuera": "El cuadrante {cuadrante} queda fuera de la imagen ({ny}×{nx} píxeles).",

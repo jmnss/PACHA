@@ -5,11 +5,17 @@ import pytest
 
 from datos.contrato import CapaRaster, CapacidadNoDisponible, Medicion, ProveedorDatos, ResultadoCambio
 from datos.proveedores.demo import ProveedorDemostracion
+from datos.proveedores.derivados import ProveedorDerivados
+from tests.datos.derivados_prueba import escribir_sitio_prueba
 from tests.datos.proveedor_ficticio import ProveedorFicticio
 
 
-@pytest.fixture(scope="module", params=["demo", "ficticio"])
-def proveedor(request):
+@pytest.fixture(scope="module", params=["demo", "ficticio", "derivados"])
+def proveedor(request, tmp_path_factory):
+    if request.param == "derivados":
+        raiz = tmp_path_factory.mktemp("derivados")
+        escribir_sitio_prueba(raiz)
+        return ProveedorDerivados(raiz)
     return ProveedorDemostracion() if request.param == "demo" else ProveedorFicticio()
 
 
@@ -46,6 +52,10 @@ def test_origenes_validos_y_coherentes_con_el_proveedor(proveedor):
         for o in _origenes(proveedor, e, antes, despues, pol):
             assert o.tipo in {"real", "sintetico"}
             assert o.fuente.strip()
+            if o.clase is not None:
+                assert (o.clase == "sintetico") == (o.tipo == "sintetico")
+            if o.clase == "nisar":
+                assert o.procedencia is not None
             if proveedor.nombre() == "demo":
                 assert o.tipo == "sintetico"
             else:
