@@ -123,3 +123,47 @@ def test_sustituto_incendio_id_estable(tmp_path):
         p.escenario("incendio-otro")
     with pytest.raises(CapacidadNoDisponible):
         p.simular("incendio-casitagua", None)
+
+
+def _sitio_plano_ruidoso(tmp_path):
+    """DEM como los reales: plano y con ruido sobre el agua (agua_dem NO es exactamente dem <= nivel)."""
+    carpeta, sj, _ = _sitio_v(tmp_path)
+    ny, nx = FORMA
+    rng = np.random.default_rng(3)
+    yy, xx = np.mgrid[0:ny, 0:nx]
+    agua = ((yy - 15) ** 2 / 100 + (xx - 20) ** 2 / 225) <= 1
+    dem = np.where(agua, 100 + rng.integers(0, 6, FORMA), 120 + rng.integers(0, 15, FORMA)).astype(np.int16)
+    np.savez_compressed(carpeta / "dem.npz", dem=dem, agua_dem=np.packbits(agua))
+    curva = json.loads((carpeta / "curva.json").read_text())
+    curva["cota_dem_m"] = 102.0
+    (carpeta / "curva.json").write_text(json.dumps(curva))
+    return carpeta, sj, agua
+
+
+def _comprobar_anidado(p, agua):
+    alta = p.capa("embalse-lago", "sim-alta", "mascara", None).datos == 1
+    baja = p.capa("embalse-lago", "sim-baja", "mascara", None).datos == 1
+    assert (alta[agua & p._dentro]).all()      # sim-alta contiene el agua del DEM
+    assert not (baja & ~alta).any()            # sim-baja es subconjunto de sim-alta
+    assert alta.sum() > baja.sum() > 0
+    r = p.cambio("embalse-lago", "sim-alta", "sim-baja", None)
+    assert not (r.cambio.datos == 2).any()     # sin «agua ganada» en una bajada
+
+
+def test_sustituto_embalse_anidado_con_dem_plano_ruidoso(tmp_path):
+    carpeta, sj, agua = _sitio_plano_ruidoso(tmp_path)
+    _comprobar_anidado(SustitutoEmbalse(sj, carpeta), agua)
+
+
+def test_sustituto_embalse_anidado_con_datos_reales():
+    from datos.proveedores.derivados import DIR_DATOS
+    for sitio in ("mazar", "daule-peripa"):
+        carpeta = DIR_DATOS / "embalses" / sitio
+        if not (carpeta / "dem.npz").exists():
+            pytest.skip("derivados reales no presentes")
+        sj = json.loads((carpeta / "sitio.json").read_text())
+        p = SustitutoEmbalse(sj, carpeta)
+        alta = p.capa(f"embalse-{sitio}", "sim-alta", "mascara", None).datos == 1
+        baja = p.capa(f"embalse-{sitio}", "sim-baja", "mascara", None).datos == 1
+        assert alta[p._agua_dem & p._dentro & p._valido].all()
+        assert not (baja & ~alta).any() and alta.sum() > baja.sum() > 0

@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 
 from datos.contrato import (Adquisicion, CapaRaster, Capacidades, CapacidadNoDisponible, Escenario, EntradaNoValida,
-                            NoEncontrado, Origen, ResultadoCambio, SerieTemporal)
+                            Medicion, NoEncontrado, Origen, ResultadoCambio, SerieTemporal)
 from datos.proveedores._embalse_comun import (TITULO_SERIE, capa_clasificacion, clasificar, dentro_contorno,
                                               medir_mascaras, metricas_cambio, validar_par)
 from datos.proveedores.demo import ProveedorDemostracion
@@ -92,28 +92,21 @@ class SustitutoEmbalse:
         fecha = datetime.fromisoformat(sitio_json["fecha_preparacion"].replace("Z", "+00:00"))
         self.origen = Origen(tipo="sintetico", clase="sintetico", fuente="demo", generador=GENERADOR,
                              semilla=self.semilla, fecha_generacion=fecha, notas=NOTAS)
-        self._niveles = self._niveles_sim()
-        # Superficie de sim-baja: el 70 % de la que el DEM da en la cota del agua (así nunca supera a sim-alta)
-        self._objetivo_km2 = 0.7 * float((self._agua(float(self._curva["cota_dem_m"])) == 1).sum()) * self.km2_pixel
-        self._mascaras = {k: self._agua(n) for k, n in self._niveles.items()}
+        # sim-alta: cota del agua en el DEM + 2 m. sim-baja: el 70 % de la superficie que el DEM da en esa cota, por
+        # retroceso desde la orilla (el DEM es plano sobre el agua; no hay batimetría, así que no hay «nivel» que
+        # buscar en la curva). El retroceso parte de `agua_dem`, que sim-alta siempre contiene: baja ⊆ alta.
+        cota = float(self._curva["cota_dem_m"])
+        alta = self._agua(cota + 2.0)
+        en_cota = float((self._agua(cota) == 1).sum()) * self.km2_pixel
+        self._mascaras = {"sim-alta": alta, "sim-baja": self._codigos(self._retroceso(0.7 * en_cota))}
         self._gamma: dict[tuple[str, str], np.ndarray] = {}
 
     # --- construcción -----------------------------------------------------------------------------
 
-    def _niveles_sim(self) -> dict[str, float]:
-        """sim-alta = cota del agua en el DEM + 2 m; sim-baja = nivel de la curva con el 70 % de la superficie
-        que tiene la curva en esa cota."""
-        c = self._curva
-        cota = float(c["cota_dem_m"])
-        niveles = np.asarray(c["niveles_m"], float)
-        sup = np.maximum.accumulate(np.asarray(c["superficie_km2"], float))  # monótona, para poder invertirla
-        objetivo = 0.7 * float(np.interp(cota, niveles, sup))
-        return {"sim-alta": cota + 2.0, "sim-baja": float(np.interp(objetivo, sup, niveles))}
-
     def _retroceso(self, km2: float) -> np.ndarray:
         """Bajo la cota del agua el DEM es plano (no hay batimetría): el agua se retira de la orilla hacia el centro
         del espejo del DEM hasta quedar con `km2` de superficie (ilustrativo)."""
-        base = self._agua_dem & self._valido
+        base = self._agua_dem & self._valido & self._dentro
         # profundidad + un desempate pseudoaleatorio fijo por sitio, para que la orilla no quede en bandas
         clave = _profundidad_orilla(base) + np.random.default_rng(self.semilla).random(self.forma) * 0.5
         n = min(int(round(km2 / self.km2_pixel)), int(base.sum()))
@@ -123,17 +116,17 @@ class SustitutoEmbalse:
             agua.ravel()[plano] = True
         return agua & base
 
-    def _agua(self, nivel: float) -> np.ndarray:
-        """Códigos 1 agua / 2 resto / 0 sin dato. Sobre la cota del agua en el DEM: celdas con cota <= nivel
-        conectadas al agua del DEM; bajo ella, el espejo se retira de la orilla (`_retroceso`)."""
-        if nivel < float(self._curva["cota_dem_m"]):
-            agua = self._retroceso(self._objetivo_km2)
-        else:
-            bajo = self._valido & (np.nan_to_num(self._dem, nan=np.inf) <= nivel)
-            agua = _conectada(bajo, self._agua_dem)
+    def _codigos(self, agua: np.ndarray) -> np.ndarray:
+        """Códigos 1 agua / 2 resto / 0 sin dato (sin dato del DEM o fuera del contorno)."""
         m = np.where(agua, 1, 2).astype(np.uint8)
         m[~self._valido | ~self._dentro] = 0
         return m
+
+    def _agua(self, nivel: float) -> np.ndarray:
+        """Máscara de agua a un nivel por encima de la cota del DEM: celdas con cota <= nivel conectadas al agua del
+        DEM, más el propio `agua_dem` (el ruido del DEM no debe dejar celdas del espejo en seco)."""
+        bajo = self._valido & (np.nan_to_num(self._dem, nan=np.inf) <= nivel)
+        return self._codigos(_conectada(bajo, self._agua_dem) | (self._agua_dem & self._valido))
 
     def _gamma0(self, adq: str, pol: str) -> np.ndarray:
         clave = (adq, pol)
@@ -218,26 +211,28 @@ class SustitutoEmbalse:
         cod = clasificar(self._mascaras[antes_id], self._mascaras[despues_id], self._dentro)
         clasif = capa_clasificacion(self.id, despues_id, "embalse", cod, self.bbox, self.origen)
         metricas = metricas_cambio("embalse", self._superficie(antes_id), self._superficie(despues_id),
-                                   antes_id, despues_id)
+                                   ADQUISICIONES[antes_id].date().isoformat(),
+                                   ADQUISICIONES[despues_id].date().isoformat())
         return ResultadoCambio(antes=self.capa(self.id, antes_id, "gamma0", pol),
                                despues=self.capa(self.id, despues_id, "gamma0", pol), cambio=clasif,
                                clasificacion=clasif, metricas=metricas, series=[self.serie_superficie(self.id)],
                                notas=[], origen=self.origen)
 
     def medir(self, escenario_id: str, antes_id: str, despues_id: str,
-              cuadrante: tuple[int, int, int, int] | None = None, punto: tuple[int, int] | None = None):
+              cuadrante: tuple[int, int, int, int] | None = None, punto: tuple[int, int] | None = None) -> Medicion:
         if (cuadrante is None) == (punto is None):
             raise EntradaNoValida.con("api.error.medir_uno_de_dos")
         self._par(escenario_id, antes_id, despues_id)
         fechas = {"Antes": antes_id, "Después": despues_id}
         return medir_mascaras([n for n, _ in self._j["leyenda"]], self.km2_pixel, self._mascaras[antes_id],
-                              self._mascaras[despues_id], despues_id, self.origen,
+                              self._mascaras[despues_id], ADQUISICIONES[despues_id].date().isoformat(), self.origen,
                               lambda capa, pol, f, c: float(self._gamma0(fechas[capa], pol)[f, c]), cuadrante, punto)
 
     def simular(self, escenario_id: str, parametros: dict | None) -> Escenario:
         raise CapacidadNoDisponible("El sustituto sintético no se puede simular.")
 
-    def fotogramas(self, escenario_id, parametros, inicio, fin, paso_min):
+    def fotogramas(self, escenario_id: str, parametros: dict | None, inicio: datetime | None, fin: datetime | None,
+                   paso_min: int) -> list[CapaRaster]:
         raise CapacidadNoDisponible("El sustituto sintético no tiene modelo continuo.")
 
 
@@ -298,11 +293,12 @@ class SustitutoIncendio:
             capas_extra=[self._capa(c) for c in r.capas_extra] if r.capas_extra else r.capas_extra)
 
     def medir(self, escenario_id: str, antes_id: str, despues_id: str,
-              cuadrante: tuple[int, int, int, int] | None = None, punto: tuple[int, int] | None = None):
+              cuadrante: tuple[int, int, int, int] | None = None, punto: tuple[int, int] | None = None) -> Medicion:
         return self._con_demo(escenario_id, lambda i: self._demo.medir(i, antes_id, despues_id, cuadrante, punto))
 
     def simular(self, escenario_id: str, parametros: dict | None) -> Escenario:
         raise CapacidadNoDisponible("El sustituto sintético no se puede simular.")
 
-    def fotogramas(self, escenario_id, parametros, inicio, fin, paso_min):
+    def fotogramas(self, escenario_id: str, parametros: dict | None, inicio: datetime | None, fin: datetime | None,
+                   paso_min: int) -> list[CapaRaster]:
         raise CapacidadNoDisponible("El sustituto sintético no tiene modelo continuo.")

@@ -640,3 +640,7 @@ Salida de `python scripts/preparar_embalses.py --sitio todos` (desde cero, tras 
 - **Falta del equipo**: fecha de la primera máscara de Mazar (`Clas_Super.tif`, no copiada); `procedencia.json` de todas las fechas; stack del 29 oct (`Mazar_Stack.tif`, fecha sin confirmar); máscaras de Daule-Peripa; Casitagua antes y después del 17 sep 2026.
 - **Mazar, agua del DEM vs equipo**: el agua del DEM mide ≈6,27 km² (6 969 px × (30 m)²) frente a 5,43 km² de la máscara del equipo; son magnitudes distintas (DEM de otra fecha/nivel frente a una fecha de radar) y no se mezclan.
 - **Incendios**: `dem`, `curva` y el agua del DEM se ignoran para sitios con `tipo == incendio` (Casitagua) y no se muestran.
+
+## Fase 1, Tarea 8: sustitutos sintéticos (2026-11-14)
+
+`sim-baja` del sustituto de embalse es un retroceso ilustrativo del agua desde la orilla de `agua_dem` (70 % de la superficie del DEM en la cota), no batimetría: el DEM de Copernicus es plano sobre el agua y no hay relieve bajo ella. `sim-alta` (cota + 2 m) siempre contiene `agua_dem` y `sim-baja` es subconjunto de `sim-alta`. Todo es sintético.
