@@ -3,3 +3,7 @@ __pycache__/
 .pytest_cache/
 .env
 node_modules/
+# Datos NISAR crudos: nunca se versionan (CLAUDE.md, regla 5)
+data/nisar/crudo/
+*.h5
+*.netrc

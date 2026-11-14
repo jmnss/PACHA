@@ -11,6 +11,26 @@ GitHub Pages»), Playwright de Pages 11/11.
 Este archivo lo mantiene Claude durante la ejecución. Se actualiza al cerrar cada tarea. Las secciones
 fechadas más abajo son históricas; **la lista vigente de pendientes es «Pendientes vigentes»**.
 
+## Fase de datos reales (2026-11-14, rama `datos-reales`)
+
+**Estado del repositorio al empezar:** el repo local no tenía historia (un `git init` con todo en el índice y `main`
+sin commits) y el remoto `origin/main` solo tenía un «Initial commit» con `LICENSE`. No existía la rama
+`migracion-react`, así que los hashes citados en este informe (`13e7c08`, `ea651d9`…) ya no existen en este repo.
+Para trabajar en ramas sin tocar `main` se creó **localmente** un commit de base con el contenido del índice
+(padre `origin/main`): `migracion-react` y `datos-reales` salen de él. `main` no se tocó y no se hizo push.
+**Pendiente del equipo:** confirmar si la historia anterior se perdió o vive en otro lugar.
+
+**Tarea 0 · Reglas** (`docs: reglas para la fase de datos reales`): reglas 5, 6 y 7 de `CLAUDE.md` reescritas;
+`docs/nisar-verificado.md` nuevo (fuentes, fecha de consulta y cita; §5 revisa el código y los textos heredados);
+recursos oficiales del challenge en `docs/challenge.md`; `data/nisar/crudo/`, `*.h5` y `*.netrc` en `.gitignore`.
+Hallazgos que cambian supuestos:
+- **Ya hay datos VALIDATED** (publicados el 6 nov 2026, adquisiciones desde el 21 oct 2026), además de
+  PROVISIONAL (17 jun – 23 oct 2026) y BETA. La madurez del contrato tiene tres valores, no dos.
+- **GCOV es γ⁰, no σ⁰.** El lector heredado (`modelo/nisar.py:1662`, `1756`) rotula σ⁰; se corrige en el lector nuevo.
+- `nisar.MISION` da λ ≈ 23,8 cm y 9,4 cm; la guía oficial dice 24 cm y 9,3 cm.
+- Hay un **hueco permanente de datos** del 27 jul al 10 ago 2026.
+- Un GCOV sobre Ecuador pesa ~7,4 GB: la preparación tiene que leer por partes o en streaming.
+
 ## Publicación de los bloques A, B y C (2026-11-08)
 
 Publicado en Pages con `13e7c08` (corrida 42519336402, 225 respuestas precalculadas). La corrida anterior falló en el

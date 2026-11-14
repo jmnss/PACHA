@@ -11,10 +11,12 @@ de Ecuador) e **incendios forestales** (segunda historia, Sierra), con un observ
 tipos de cambio. Se migra de Streamlit a React en la rama `migracion-react`. Se trabaja en ramas; se integra en `main` con permiso;
 **cada push a `main` publica la app en GitHub Pages**.
 
-**Situación de los datos:** aún no hay acceso a los recursos oficiales del challenge ni a datos de NISAR.
-La app funciona con **datos de demostración sintéticos**, generados por `scripts/generar_datos_demo.py`,
-detrás de una capa de datos intercambiable. El proveedor real es un esqueleto que falla con un mensaje
-claro hasta que se ejecute la sección «Integración de datos reales» del plan.
+**Situación de los datos (fase de datos reales, desde 2026-11-14, rama `datos-reales`):** ya están los
+recursos oficiales del challenge (`docs/challenge.md`, «Recursos») y NISAR publica productos de banda L en ASF
+DAAC (BETA, PROVISIONAL y VALIDATED; ver `docs/nisar-verificado.md`). La app sigue funcionando con **datos de
+demostración sintéticos** (`scripts/generar_datos_demo.py`) detrás de una capa de datos intercambiable mientras
+el proveedor real se construye según la sección «Integración de datos reales» del plan. La app será **mixta**:
+cada capa dice de dónde sale.
 
 Documentos que mandan: `docs/challenge.md` (qué lograr), `docs/plan-migracion.md` (tareas, orden,
 alcance de la noche, contratos), `docs/diseno.md` (visual), `docs/contrato-datos.md` (datos). El avance y
@@ -28,14 +30,31 @@ los problemas van a `INFORME.md`.
 3. **Un commit por tarea**, con el mensaje que indica el plan.
 4. **Todo el frontend sigue `docs/diseno.md`** y se verifica en navegador real a tres anchos (1440, 768,
    390) con `bash scripts/revision_visual.sh <ruta> <nombre>`.
-5. **No descargues ni busques datos reales de NISAR en esta etapa**, no crees cuentas y no uses
-   credenciales. ASF, Earthdata y Bhoonidhi quedan fuera hasta la integración de datos reales.
+5. **Datos reales: metadatos libres, descargas solo con la credencial del usuario y fuera del repo.**
+   - Se permite consultar el catálogo de ASF/Earthdata **solo para metadatos** (granulos, fechas, huellas,
+     polarizaciones, tamaños), que no exige cuenta (`scripts/explorar_catalogo.py`).
+   - Las **descargas** de granulos NISAR solo cuando el usuario avise de que su credencial de Earthdata existe.
+     La credencial vive en `~/.netrc` o en `EARTHDATA_TOKEN`, fuera del repo: **nunca se escribe, se imprime,
+     se registra en un log ni se pone en un commit**. No se crean cuentas; no se registra nadie en SAOCOM,
+     RCM ni Bhoonidhi.
+   - Los HDF5 crudos van a `data/nisar/crudo/` (en `.gitignore`) y **nunca se versionan**. Solo se versionan
+     los derivados pequeños (`data/nisar/<zona>/`, con su `procedencia.json`) dentro del presupuesto de MB
+     que fije el spec.
 6. **No inventes detalles técnicos de NISAR** (productos, rutas de archivos, bandas, URLs, fechas de la
-   misión). Lo no verificado en una fuente oficial se marca «pendiente de confirmar con la documentación
-   oficial». El código heredado de `modelo/nisar.py:1550-1820` y `nisar.MISION` no está verificado.
-7. **Nunca presentes datos sintéticos como datos reales.** Todo dato lleva `origen`; la banda «DATOS DE
-   DEMOSTRACIÓN» es visible siempre que haya datos sintéticos; las exportaciones llevan su marca; las
-   hipótesis sobre datos sintéticos se redactan como ejemplos ilustrativos.
+   misión). Lo verificado se registra en `docs/nisar-verificado.md` con la URL, la fecha de consulta y una
+   cita corta. **Solo lo que está en ese archivo puede dejar de decir «pendiente de confirmar con la
+   documentación oficial»**; todo lo demás sigue marcado. El código heredado de `modelo/nisar.py:1550-1820` y
+   `nisar.MISION` se revisó contra ese archivo (su §5): lo que no figura allí como verificado no lo está.
+7. **Honestidad en una app mixta.** Nunca se presenta como real lo que no lo es.
+   - Cada capa, serie y exportación lleva `origen` (`nisar`, `otro_sensor`, `sintetico` o `complementario`)
+     y su **procedencia**: producto, colección, id del granulo, fecha de adquisición, polarización, frecuencia
+     (A/B) y madurez (BETA, PROVISIONAL o VALIDATED).
+   - **Una capa real sin procedencia completa no se muestra.**
+   - La banda «DATOS DE DEMOSTRACIÓN» se muestra siempre que haya algo sintético en pantalla.
+   - El Simulador sigue siendo 100 % sintético.
+   - Las hipótesis sobre datos sintéticos se redactan como ejemplos ilustrativos; las hipótesis sobre datos
+     reales, como **hipótesis** por comprobar, nunca como conclusiones. Un evento real (fecha, lugar) solo se
+     nombra con su fuente.
 
 ## Arquitectura
 
@@ -50,6 +69,10 @@ los problemas van a `INFORME.md`.
 - **Dependencias Python:** toda dependencia nueva de `api/`, `datos/` o `modelo/` debe existir en la distribución de
   Pyodide, y el código debe funcionar en Python 3.13 (local) y en el de la versión de Pyodide fijada (hoy 3.14).
   `tests/motor/test_compatibilidad_pyodide.py` lo vigila.
+- `scripts/preparar_datos_reales.py` — preparación **fuera de línea** (descarga con permiso, recorte, dB,
+  reducción y cuantización) a `data/nisar/<zona>/`. Sus dependencias (`requirements-preparacion.txt`:
+  `asf_search`, `earthaccess`, `h5py`…) **nunca** se importan desde `api/`, `datos/` ni `modelo/`; la app solo lee
+  los derivados.
 - `modelo/` — física y generador sintético. Solo se modifica en la Tarea 0.3 o para corregir un error
   con su prueba.
 - `app.py` e `interfaz/` — app Streamlit heredada; no se toca.
@@ -64,6 +87,7 @@ Siempre primero, en cada shell: `source scripts/entorno.sh` (Node 22 con nvm, `C
 |---|---|
 | Instalar Python | `python -m pip install -r requirements.txt -r requirements-api.txt` |
 | Generar datos de demostración | `python scripts/generar_datos_demo.py` |
+| Explorar el catálogo NISAR (solo metadatos) | `python -m pip install -r requirements-preparacion.txt && python scripts/explorar_catalogo.py` |
 | Instalar frontend | `cd frontend && npm install` |
 | Correr todo (producción) | `cd frontend && npm run build && cd .. && python servidor.py` |
 | Desarrollo | `python servidor.py` y en otra terminal `cd frontend && npm run dev` (http://localhost:5173) |
@@ -110,5 +134,6 @@ ejecuta siempre.
 
 ## Prohibido sin pedir permiso
 
-Descargar o buscar datos de NISAR; crear cuentas o usar credenciales; borrar `data/`, `modelo/`, `app.py`
+Descargar granulos de NISAR sin el aviso del usuario de que su credencial existe; crear cuentas; escribir,
+imprimir o versionar credenciales; versionar HDF5 crudos; borrar `data/`, `modelo/`, `app.py`
 o la historia de git; `git push`; instalar paquetes del sistema; modificar la rama `main`.
