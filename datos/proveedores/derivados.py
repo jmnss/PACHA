@@ -8,14 +8,14 @@ lleva el origen con la procedencia de su propia fecha. Solo numpy, json y pydant
 from __future__ import annotations
 
 import json
-import math
 from datetime import datetime
 from pathlib import Path
 
 import numpy as np
 
-from datos.claves import texto
-from datos.contorno_raster import rasterizar_contorno
+from datos.proveedores._embalse_comun import (TITULO_SERIE as _TITULO_SERIE, capa_clasificacion,
+                                              clasificar, dentro_contorno, medir_mascaras, metricas_cambio,
+                                              num as _num, validar_par)
 from datos.contrato import (Adquisicion, CapaRaster, Capacidades, CapacidadNoDisponible, Escenario, EntradaNoValida,
                             Medicion, Metrica, NoEncontrado, Origen, Procedencia, ResultadoCambio, SerieTemporal,
                             faltantes_procedencia)
@@ -23,16 +23,6 @@ from datos.contrato import (Adquisicion, CapaRaster, Capacidades, CapacidadNoDis
 DIR_DATOS = Path(__file__).resolve().parents[2] / "data"  # carpeta data/ en la raíz del proyecto
 CARPETAS = {"embalse": "embalses", "incendio": "incendios"}
 FUENTE = "equipo PACHA"
-# Categorías del cambio entre dos máscaras: código 1..4 → (nombre, color). El 0 es «sin dato» (fuera del contorno).
-CLASES_CAMBIO = {
-    "embalse": [("Agua persistente", "#2a6fb0"), ("Agua ganada", "#2f9e8f"), ("Agua perdida", "#c9822b"),
-                ("Sin agua", "#6f6d7a")],
-    "incendio": [("Quemado en ambas", "#6b4a3a"), ("Quemado nuevo", "#c0392b"), ("Recuperado", "#4f8a4b"),
-                 ("Sin quemar", "#6f6d7a")],
-}
-_TITULO_SERIE = {"embalse": "Superficie de agua", "incendio": "Superficie quemada"}
-
-
 def _procedencia(d: dict | None) -> Procedencia | None:
     """Procedencia del `sitio.json` (claves de `procedencia.json`) → modelo; None si no se puede leer."""
     if not isinstance(d, dict):
@@ -104,17 +94,8 @@ class _Sitio:
     def dentro(self) -> np.ndarray:
         """Máscara bool del contorno sobre la rejilla (todo True si el sitio no trae contorno)."""
         if self._dentro is None:
-            ruta = self.json.get("contorno")
-            if not ruta:  # sin contorno el cambio no se restringe: cuenta toda la rejilla
-                self._dentro = np.ones(self.forma, bool)
-            else:
-                gj = json.loads((self.carpeta / ruta).read_text(encoding="utf-8"))
-                self._dentro = rasterizar_contorno(gj, self.json["epsg"], self.json["transform"], self.forma)
+            self._dentro = dentro_contorno(self.carpeta, self.json)
         return self._dentro
-
-
-def _num(v: float, decimales: int = 2) -> str:
-    return f"{v:.{decimales}f}"
 
 
 class ProveedorDerivados:
@@ -212,19 +193,8 @@ class ProveedorDerivados:
 
     def _par(self, s: _Sitio, antes_id: str, despues_id: str) -> tuple[_Fecha, _Fecha]:
         a, d = s.fecha(antes_id), s.fecha(despues_id)  # una fecha sin procedencia no existe: 404, nunca se inventa
-        if a.id == d.id:
-            raise CapacidadNoDisponible(texto("api.error.segunda_fecha_comparar"))
-        if a.instante > d.instante:  # igual que el proveedor demo: la comparación va de la fecha anterior a la posterior
-            raise EntradaNoValida.con("api.error.fecha_despues_antes")
+        validar_par(a.id, d.id, a.instante, d.instante)
         return a, d
-
-    def _clasificar(self, s: _Sitio, a: _Fecha, d: _Fecha) -> np.ndarray:
-        """Códigos 1 persistente, 2 ganada, 3 perdida, 4 sin clase; 0 donde falta dato o fuera del contorno."""
-        ma, md = s.arrays(a)["mascara"], s.arrays(d)["mascara"]
-        a1, d1 = ma == 1, md == 1
-        out = np.where(a1 & d1, 1, np.where(~a1 & d1, 2, np.where(a1 & ~d1, 3, 4))).astype(np.uint8)
-        out[(ma == 0) | (md == 0) | ~s.dentro()] = 0
-        return out
 
     def cambio(self, escenario_id: str, antes_id: str, despues_id: str, polarizacion: str | None) -> ResultadoCambio:
         s = self._sitio(escenario_id)
@@ -235,25 +205,9 @@ class ProveedorDerivados:
             capa_a, capa_d = self._gamma0(s, a, pol), self._gamma0(s, d, pol)
         else:
             capa_a, capa_d = self._mascara(s, a), self._mascara(s, d)
-        leyenda = [tuple(x) for x in CLASES_CAMBIO[s.tipo]]
-        cod = self._clasificar(s, a, d)
-        clasif = CapaRaster(
-            escenario_id=s.id_escenario, adquisicion_id=d.id, variable="cambio", polarizacion=None, unidad="",
-            paleta="categorias", vmin=0, vmax=len(leyenda), leyenda=leyenda, datos=cod, bbox=s.bbox, origen=d.origen)
-        sa, sd = self._superficie(s, a), self._superficie(s, d)
-        dif = sd - sa
-        pct = _num(dif / sa * 100, 1) if sa else "—"
-        nombre = _TITULO_SERIE[s.tipo].lower()
-        metricas = [
-            Metrica(etiqueta=f"{_TITULO_SERIE[s.tipo]} antes", valor=_num(sa), unidad="km²",
-                    ayuda=f"Medida en la rejilla original, dentro del contorno, el {a.fila['fecha']}."),
-            Metrica(etiqueta=f"{_TITULO_SERIE[s.tipo]} después", valor=_num(sd), unidad="km²",
-                    ayuda=f"Medida en la rejilla original, dentro del contorno, el {d.fila['fecha']}."),
-            Metrica(etiqueta="Variación de superficie", valor=_num(dif), unidad="km²",
-                    ayuda=f"Cambio de la {nombre} entre las dos fechas."),
-            Metrica(etiqueta="Variación relativa", valor=pct, unidad="%",
-                    ayuda=f"Cambio de la {nombre} respecto a la fecha anterior."),
-        ]
+        cod = clasificar(s.arrays(a)["mascara"], s.arrays(d)["mascara"], s.dentro())
+        clasif = capa_clasificacion(s.id_escenario, d.id, s.tipo, cod, s.bbox, d.origen)
+        metricas = metricas_cambio(s.tipo, self._superficie(s, a), self._superficie(s, d), a.fila["fecha"], d.fila["fecha"])
         return ResultadoCambio(antes=capa_a, despues=capa_d, cambio=clasif, clasificacion=clasif, metricas=metricas,
                                series=[self.serie_superficie(escenario_id)], notas=[], origen=d.origen)
 
@@ -266,39 +220,14 @@ class ProveedorDerivados:
             raise EntradaNoValida.con("api.error.medir_uno_de_dos")
         s = self._sitio(escenario_id)
         a, d = self._par(s, antes_id, despues_id)
-        ny, nx = s.forma
-        nombres = [n for n, _ in s.json["leyenda"]]
-        ma, md = s.arrays(a)["mascara"], s.arrays(d)["mascara"]
-        if cuadrante is not None:
-            f0, f1, c0, c1 = cuadrante
-            if not (0 <= f0 < f1 <= ny and 0 <= c0 < c1 <= nx):
-                raise EntradaNoValida.con("api.error.cuadrante_fuera", cuadrante=cuadrante, ny=ny, nx=nx)
-            bloque = md[f0:f1, c0:c1]
-            metricas, tabla = [], []
-            for codigo, nom in enumerate(nombres, 1):
-                km2 = float((bloque == codigo).sum()) * s.km2_pixel
-                metricas.append(Metrica(etiqueta=f"Superficie de «{nom}»", valor=_num(km2, 3), unidad="km²",
-                                        ayuda=f"Píxeles de esa clase dentro del cuadrante, el {d.fila['fecha']}."))
-                tabla.append({"Capa": "Después", "Medida": nom, "Valor": km2})
-            return Medicion(cuadrante=cuadrante, metricas=metricas, tabla=tabla, origen=d.origen)
-        f, c = punto
-        if not (0 <= f < ny and 0 <= c < nx):
-            raise EntradaNoValida.con("api.error.punto_fuera", punto=punto, ny=ny, nx=nx)
+        fechas = {"Antes": a, "Después": d}
 
-        def clase(m: np.ndarray) -> str:
-            v = int(m[f, c])
-            return nombres[v - 1] if 1 <= v <= len(nombres) else "sin dato"
+        def gamma(capa: str, pol: str, f: int, c: int) -> float | None:
+            fecha = fechas[capa]
+            return float(self._gamma0(s, fecha, pol).datos[f, c]) if fecha.stack else None
 
-        tabla = []
-        for capa, fecha, m in (("Antes", a, ma), ("Después", d, md)):
-            tabla.append({"Capa": capa, "Medida": "Clase", "Valor": clase(m)})
-            for pol in ("HH", "HV"):
-                if fecha.stack:
-                    v = float(self._gamma0(s, fecha, pol).datos[f, c])
-                    tabla.append({"Capa": capa, "Medida": f"{pol} (dB)", "Valor": v if math.isfinite(v) else None})
-        metricas = [Metrica(etiqueta="Clase después", valor=clase(md), unidad="",
-                            ayuda=f"Clase del píxel ({f}, {c}) el {d.fila['fecha']}.")]
-        return Medicion(punto=punto, metricas=metricas, tabla=tabla, origen=d.origen)
+        return medir_mascaras([n for n, _ in s.json["leyenda"]], s.km2_pixel, s.arrays(a)["mascara"],
+                               s.arrays(d)["mascara"], d.fila["fecha"], d.origen, gamma, cuadrante, punto)
 
     # --- lo que este proveedor no ofrece ----------------------------------------------------------
 
