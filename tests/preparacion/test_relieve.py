@@ -58,3 +58,12 @@ def test_teselas_copernicus_mazar():
 def test_teselas_hemisferio_norte():
     urls = teselas_copernicus((10.2, 0.1, 10.5, 0.4))
     assert len(urls) == 1 and "N00_00_E010_00" in urls[0]
+
+
+def test_curva_agua_sin_cota_valida():
+    import numpy as np
+    import pytest
+    from preparacion.relieve import curva_nivel_superficie
+    dem = np.full((4, 4), np.nan, np.float32)
+    with pytest.raises(ValueError):
+        curva_nivel_superficie(dem, np.ones((4, 4), bool), 0.001)

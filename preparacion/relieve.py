@@ -84,7 +84,10 @@ def curva_nivel_superficie(dem: np.ndarray, agua_dem: np.ndarray, area_px_km2: f
     """Curva nivel-superficie-volumen. Sobre la cota del agua en el DEM: celdas <= nivel conectadas al agua.
     Bajo ella no hay batimetría: extrapolación ilustrativa (la superficie cae linealmente al 30 % en
     `bajada_max_m`) y volumen relativo negativo. 1 km² por 1 m = 1 hm³."""
-    cota = float(np.median(dem[agua_dem]))
+    valores = dem[agua_dem & np.isfinite(dem)]
+    if valores.size == 0:
+        raise ValueError("El agua no tiene cotas válidas en el DEM.")
+    cota = float(np.median(valores))
     n_sube, n_baja = int(round(subida_max_m / paso_m)), int(round(bajada_max_m / paso_m))
     niveles = [cota + k * paso_m for k in range(-n_baja, n_sube + 1)]
 
