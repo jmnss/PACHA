@@ -839,7 +839,8 @@
               {
                 "enum": [
                   "inundacion",
-                  "incendio"
+                  "incendio",
+                  "embalse"
                 ],
                 "type": "string"
               },
@@ -887,6 +888,17 @@
             "exclusiveMinimum": 0.0,
             "title": "Resolucion M",
             "type": "number"
+          },
+          "sitio": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sitio"
           },
           "tipo_cambio": {
             "title": "Tipo Cambio",
@@ -1925,6 +1937,23 @@
       "Origen": {
         "description": "De dónde sale un dato. `tipo=\"sintetico\"` activa la banda de demostración.",
         "properties": {
+          "clase": {
+            "anyOf": [
+              {
+                "enum": [
+                  "nisar",
+                  "otro_sensor",
+                  "sintetico",
+                  "complementario"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clase"
+          },
           "fecha_generacion": {
             "format": "date-time",
             "title": "Fecha Generacion",
@@ -1955,6 +1984,16 @@
               }
             ],
             "title": "Notas"
+          },
+          "procedencia": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Procedencia"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "producto": {
             "anyOf": [
@@ -2318,6 +2357,139 @@
           "fecha"
         ],
         "title": "PeticionMundo",
+        "type": "object"
+      },
+      "Procedencia": {
+        "description": "Procedencia de una capa real: de qué producto, granulo y pasada sale.",
+        "properties": {
+          "autor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Autor"
+          },
+          "coleccion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Coleccion"
+          },
+          "fecha_adquisicion": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fecha Adquisicion"
+          },
+          "fecha_proceso": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fecha Proceso"
+          },
+          "frecuencia": {
+            "anyOf": [
+              {
+                "enum": [
+                  "A",
+                  "B"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Frecuencia"
+          },
+          "granulos": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Granulos",
+            "type": "array"
+          },
+          "madurez": {
+            "anyOf": [
+              {
+                "enum": [
+                  "BETA",
+                  "PROVISIONAL",
+                  "VALIDATED"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Madurez"
+          },
+          "metodo": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metodo"
+          },
+          "polarizaciones": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Polarizaciones",
+            "type": "array"
+          },
+          "producto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Producto"
+          },
+          "unidades": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unidades"
+          }
+        },
+        "title": "Procedencia",
         "type": "object"
       },
       "PuntoEvolucionDto": {

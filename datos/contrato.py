@@ -74,11 +74,47 @@ def validar_bbox(bbox: BBox) -> BBox:
     return bbox
 
 
+ClaseOrigen = Literal["nisar", "otro_sensor", "sintetico", "complementario"]
+
+
+class Procedencia(BaseModel):
+    """Procedencia de una capa real: de qué producto, granulo y pasada sale."""
+    model_config = ConfigDict(frozen=True)
+
+    producto: str | None = None
+    coleccion: str | None = None
+    granulos: list[str] = []
+    fecha_adquisicion: AwareDatetime | None = None
+    polarizaciones: list[str] = []
+    frecuencia: Literal["A", "B"] | None = None
+    madurez: Literal["BETA", "PROVISIONAL", "VALIDATED"] | None = None
+    unidades: str | None = None
+    metodo: dict | None = None  # nombre, clases, parametros
+    autor: str | None = None
+    fecha_proceso: str | None = None
+
+
+_EXIGIDOS: dict[str, tuple[str, ...]] = {
+    "nisar": ("producto", "coleccion", "granulos", "fecha_adquisicion",
+              "polarizaciones", "frecuencia", "madurez"),
+    "otro_sensor": ("producto", "granulos", "fecha_adquisicion", "polarizaciones"),
+}
+
+
+def faltantes_procedencia(clase: ClaseOrigen, p: Procedencia | None) -> list[str]:
+    """Nombres de los campos de procedencia que faltan para esa clase de origen."""
+    exigidos = _EXIGIDOS.get(clase, ())
+    if p is None:
+        return list(exigidos)
+    return [c for c in exigidos if not getattr(p, c)]
+
+
 class Origen(BaseModel):
     """De dónde sale un dato. `tipo="sintetico"` activa la banda de demostración."""
     model_config = ConfigDict(frozen=True)
 
     tipo: Literal["sintetico", "real"]
+    clase: ClaseOrigen | None = None
     fuente: str
     producto: str | None = None
     generador: str | None = None
@@ -86,6 +122,18 @@ class Origen(BaseModel):
     semilla: int | None = None
     fecha_generacion: AwareDatetime  # con zona horaria; naive se rechaza
     notas: str | None = None
+    procedencia: Procedencia | None = None
+
+    @model_validator(mode="after")
+    def _coherencia_clase(self) -> "Origen":
+        if self.clase is None:
+            return self
+        if (self.clase == "sintetico") != (self.tipo == "sintetico"):
+            raise ValueError(f"clase «{self.clase}» no es coherente con tipo «{self.tipo}»")
+        faltan = faltantes_procedencia(self.clase, self.procedencia)
+        if faltan:
+            raise ValueError(f"Procedencia incompleta: faltan {', '.join(faltan)}")
+        return self
 
 
 class Adquisicion(BaseModel):
@@ -105,7 +153,8 @@ class Escenario(BaseModel):
     id: str
     nombre: str
     tipo_cambio: str
-    historia: Literal["inundacion", "incendio"] | None = None
+    historia: Literal["inundacion", "incendio", "embalse"] | None = None
+    sitio: str | None = None
     region: str
     bbox: BBox
     resolucion_m: float = Field(gt=0)

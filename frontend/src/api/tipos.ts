@@ -592,7 +592,7 @@ export interface components {
             ];
             capacidades: components["schemas"]["Capacidades"];
             /** Historia */
-            historia?: ("inundacion" | "incendio") | null;
+            historia?: ("inundacion" | "incendio" | "embalse") | null;
             /** Id */
             id: string;
             /** Instante Evento */
@@ -606,6 +606,8 @@ export interface components {
             region: string;
             /** Resolucion M */
             resolucion_m: number;
+            /** Sitio */
+            sitio?: string | null;
             /** Tipo Cambio */
             tipo_cambio: string;
             /** Variables */
@@ -910,6 +912,8 @@ export interface components {
          * @description De dónde sale un dato. `tipo="sintetico"` activa la banda de demostración.
          */
         Origen: {
+            /** Clase */
+            clase?: ("nisar" | "otro_sensor" | "sintetico" | "complementario") | null;
             /**
              * Fecha Generacion
              * Format: date-time
@@ -921,6 +925,7 @@ export interface components {
             generador?: string | null;
             /** Notas */
             notas?: string | null;
+            procedencia?: components["schemas"]["Procedencia"] | null;
             /** Producto */
             producto?: string | null;
             /** Semilla */
@@ -1053,6 +1058,42 @@ export interface components {
              * @default true
              */
             usar_dem: boolean;
+        };
+        /**
+         * Procedencia
+         * @description Procedencia de una capa real: de qué producto, granulo y pasada sale.
+         */
+        Procedencia: {
+            /** Autor */
+            autor?: string | null;
+            /** Coleccion */
+            coleccion?: string | null;
+            /** Fecha Adquisicion */
+            fecha_adquisicion?: string | null;
+            /** Fecha Proceso */
+            fecha_proceso?: string | null;
+            /** Frecuencia */
+            frecuencia?: ("A" | "B") | null;
+            /**
+             * Granulos
+             * @default []
+             */
+            granulos: string[];
+            /** Madurez */
+            madurez?: ("BETA" | "PROVISIONAL" | "VALIDATED") | null;
+            /** Metodo */
+            metodo?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Polarizaciones
+             * @default []
+             */
+            polarizaciones: string[];
+            /** Producto */
+            producto?: string | null;
+            /** Unidades */
+            unidades?: string | null;
         };
         /** PuntoEvolucionDto */
         PuntoEvolucionDto: {

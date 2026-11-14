@@ -8,7 +8,8 @@ from pydantic import ValidationError
 
 from datos.contrato import (
     Adquisicion, CapaRaster, Capacidades, CapacidadNoDisponible, DatosRealesNoDisponibles,
-    Escenario, Medicion, Metrica, Origen, ProveedorDatos, SerieTemporal,
+    Escenario, Medicion, Metrica, Origen, Procedencia, ProveedorDatos, SerieTemporal,
+    faltantes_procedencia,
 )
 
 AHORA = datetime(2026, 1, 1, tzinfo=timezone.utc)
@@ -166,3 +167,46 @@ def test_resultado_cambio_campos_nuevos_son_opcionales():
     CampoVectorial(x=[0.0], y=[0.0], u=[1.0], v=[2.0], unidad="m/día", origen=origen())
     with pytest.raises(ValidationError):
         CampoVectorial(x=[0.0], y=[], u=[1.0], v=[2.0], unidad="m/día", origen=origen())
+
+
+def _proc(**kw) -> Procedencia:
+    base = dict(
+        producto="GCOV", coleccion="NISAR_L2_GCOV_V1", granulos=["NISAR_L2_PR_GCOV_X"],
+        fecha_adquisicion=datetime(2026, 10, 29, 23, 31, tzinfo=timezone.utc),
+        polarizaciones=["HH", "HV"], frecuencia="A", madurez="VALIDATED",
+    )
+    base.update(kw)
+    return Procedencia(**base)
+
+
+def test_origen_nisar_sin_procedencia_completa_se_rechaza():
+    with pytest.raises(ValidationError, match="coleccion"):
+        Origen(tipo="real", clase="nisar", fuente="x", fecha_generacion=AHORA,
+               procedencia=Procedencia(producto="GCOV"))
+
+
+def test_origen_clase_sintetico_exige_tipo_sintetico():
+    with pytest.raises(ValidationError):
+        Origen(tipo="real", clase="sintetico", fuente="x", fecha_generacion=AHORA)
+    for clase in ("nisar", "otro_sensor"):
+        with pytest.raises(ValidationError):
+            Origen(tipo="sintetico", clase=clase, fuente="x", fecha_generacion=AHORA,
+                   procedencia=_proc())
+
+
+def test_origen_sin_clase_sigue_valiendo():
+    Origen(tipo="real", fuente="ficticio", fecha_generacion=AHORA)
+
+
+def test_faltantes_procedencia():
+    assert faltantes_procedencia("nisar", _proc()) == []
+    assert faltantes_procedencia("nisar", _proc(madurez=None)) == ["madurez"]
+    assert faltantes_procedencia("otro_sensor", _proc(coleccion=None)) == []
+
+
+def test_escenario_admite_embalse_y_sitio():
+    e = escenario().model_copy(update={"historia": "embalse", "sitio": "mazar"})
+    assert Escenario(**e.model_dump()).sitio == "mazar"
+    d = escenario().model_dump()
+    d.update(historia="embalse", sitio="mazar")
+    assert Escenario(**d).historia == "embalse"
