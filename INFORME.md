@@ -630,3 +630,11 @@ Lo que falló en esta prueba: nada que bloquee. Lo que queda sin demostrar está
 ## Fase 1, Tarea 4: relieve Copernicus (2026-11-14)
 - Formato de URL verificado con HEAD (200, 2026-11-14): `https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_S03_00_W079_00_DEM/Copernicus_DSM_COG_10_S03_00_W079_00_DEM.tif`. Lectura por ventana vía `/vsicurl/` comprobada con la caja de Mazar (972 × 756 px, 1638–3829 m); no se descargó ninguna tesela.
 - `scipy` añadido a `requirements-preparacion.txt`; `test_compatibilidad_pyodide.py` sigue en verde.
+
+## Fase 1, Tarea 6: derivados reales versionados (2026-11-14)
+Salida de `python scripts/preparar_embalses.py --sitio todos` (desde cero, tras borrar `data/embalses` y `data/incendios`):
+- **Mazar** (`data/embalses/mazar/`): 2026-10-29, agua **5,43 km²** (máscara `Mazar_CS1029.tif`, copiada a `datos_imagenes/mazar/20261029/mascara.tif`); procedencia **incompleta** (falta `procedencia.json`). Relieve, curva y contorno: sí. 0,88 MB.
+- **Daule-Peripa** (`data/embalses/daule-peripa/`): sin entregas del equipo; solo relieve (80 m), curva y contorno del DEM. 0,38 MB. Caja y semilla ajustadas tras pintar el DEM: caja `[-79.55, -1.14, -79.30, -0.75]`, semilla `[-0,9127, -79,4430]`. El agua del DEM (≈135 km², cota de semilla 60 m) cae en el valle del vaso; la caja inicial dejaba escapar el relleno a la llanura al suroeste.
+- **Casitagua** (`data/incendios/casitagua/`): sin entregas; solo relieve (cotas 2458–3583 m, caja sensata) y contorno. 0,31 MB. El «agua del DEM» de este sitio no significa nada (la semilla queda en una cuenca baja y el relleno cubre casi toda la caja): no se usa para incendios.
+- **Tamaño total**: 1 584 599 bytes (≈1,58 MB) de 10 MB; no hizo falta bajar `lado_max`.
+- **Falta del equipo**: fecha de la primera máscara de Mazar (`Clas_Super.tif`, no copiada); `procedencia.json` de todas las fechas; stack del 29 oct (`Mazar_Stack.tif`, fecha sin confirmar); máscaras de Daule-Peripa; Casitagua antes y después del 17 sep 2026.

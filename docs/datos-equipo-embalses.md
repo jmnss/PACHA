@@ -86,3 +86,9 @@ parte de la diferencia puede deberse a que las dos segmentaciones no son idénti
 
 Falta del equipo: fecha y `procedencia.json` de ambas fechas, stack HH/HV del 29 oct (opcional pero útil para el
 comparador) y el borde sin dato marcado.
+
+## Estado (2026-11-14, Tarea 6 de la fase 1)
+- Derivados versionados en `data/embalses/` y `data/incendios/` (≈1,58 MB de 10 MB), generados con `scripts/preparar_embalses.py`.
+- **Mazar**: una fecha (2026-10-29, agua 5,43 km²), sin `procedencia.json`; con relieve Copernicus, curva nivel–superficie y contorno.
+- **Daule-Peripa** y **Casitagua**: solo relieve y contorno; esperan máscaras del equipo (Casitagua, antes y después del 17 sep 2026).
+- Pendientes del equipo: fecha de la primera máscara de Mazar, procedencia de cada fecha, stack del 29 oct.
