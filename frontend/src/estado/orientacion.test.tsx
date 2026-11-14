@@ -48,11 +48,11 @@ describe('orientación', () => {
     expect(document.activeElement).toBe(container.querySelector('main#contenido'))
   })
 
-  it('document.title = «Observatorio · NISAR Ecuador» y cambia con el idioma', () => {
+  it('document.title = «Observatorio · PACHA» y cambia con el idioma', () => {
     montarEstructura('es')
-    expect(document.title).toBe('Observatorio · NISAR Ecuador')
+    expect(document.title).toBe('Observatorio · PACHA')
     act(() => { fireEvent.click(screen.getByText('cambiar')) })
-    expect(document.title).toBe('Observatory · NISAR Ecuador')
+    expect(document.title).toBe('Observatory · PACHA')
   })
 
   describe('encabezados', () => {

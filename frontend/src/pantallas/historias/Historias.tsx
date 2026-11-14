@@ -55,7 +55,7 @@ export default function Historias() {
 
   return (
     <>
-      <CabeceraPantalla titulo="NISAR · Ecuador" hallazgo={t('historias.pregunta')} />
+      <CabeceraPantalla titulo="PACHA" hallazgo={t('historias.pregunta')} />
       {esc ? null : indice}
       {cuerpo}
       <footer className="historias__creditos">{t('historias.creditos')}</footer>

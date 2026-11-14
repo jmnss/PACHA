@@ -54,7 +54,7 @@ export function Estructura() {
     <div className="estructura">
       <a href="#contenido" className="saltar" onClick={saltar}>{t('a11y.saltar')}</a>
       {!incrustado && <nav className="riel" aria-label={t('estructura.riel.principal')}>
-        <span className="riel__marca" role="img" aria-label="NISAR · Ecuador">
+        <span className="riel__marca" role="img" aria-label="PACHA">
           <Marca />
         </span>
         <ul className="riel__lista">

@@ -11,7 +11,7 @@ import { Estructura } from './Estructura'
 import { Tabla } from './Tabla'
 
 const origen = {
-  tipo: 'sintetico' as const, fuente: 'Generador de demostración NISAR·Ecuador', producto: null,
+  tipo: 'sintetico' as const, fuente: 'Generador de demostración PACHA', producto: null,
   generador: 'datos/generador.py', version: '1', semilla: 7, fecha_generacion: '2026-11-05T08:00:00Z', notas: null,
 }
 const salud = { estado: 'ok', hay_sinteticos: true, origen_tipo: 'sintetico', proveedor: 'x', version: '1' }

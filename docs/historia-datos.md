@@ -1,6 +1,6 @@
 # Guion de presentación: historias de datos (3 minutos; 90 s con el recorrido)
 
-Para quien presente la app NISAR · Ecuador. Ruta de partida: `/` (Historias). Todo lo que se ve hoy son
+Para quien presente la app PACHA. Ruta de partida: `/` (Historias). Todo lo que se ve hoy son
 **datos de demostración sintéticos**: dilo en los primeros diez segundos y no lo sueltes. No se afirma nada
 sobre un lugar real ni sobre capacidades de NISAR que no estén confirmadas con la documentación oficial.
 Las cifras se leen en pantalla (las calcula la app); no las memorices ni las inventes.
@@ -23,7 +23,7 @@ datos de demostración.
 
 ## Minuto 0:00 a 0:30 · Qué es y qué NO es
 
-- Mostrar: la cabecera «NISAR · Ecuador» y el índice con las dos historias.
+- Mostrar: la cabecera «PACHA» y el índice con las dos historias.
 - Decir: «Esta app traduce lo que ve un radar de satélite en información que cualquiera puede leer. Dos
   historias: una inundación en la Costa baja y un incendio en la Sierra.»
 - Advertir (obligatorio): «Todo lo que van a ver son datos de demostración generados por un script con semilla

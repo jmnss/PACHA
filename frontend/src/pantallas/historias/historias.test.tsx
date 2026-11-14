@@ -101,7 +101,7 @@ describe('Historias · contenido escrito a mano', () => {
 describe('Historias · pantalla', () => {
   it('muestra el nombre del producto, el índice y las cinco partes de la inundación', async () => {
     montar()
-    expect(screen.getByRole('heading', { level: 1, name: 'NISAR · Ecuador' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'PACHA' })).toBeInTheDocument()
     const indice = screen.getByRole('navigation', { name: 'Historias' })
     expect(within(indice).getAllByRole('link')).toHaveLength(2)
     expect(await screen.findByRole('heading', { name: HISTORIAS[0].titulo })).toBeInTheDocument()

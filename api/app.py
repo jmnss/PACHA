@@ -101,7 +101,7 @@ def create_app(proveedor: ProveedorDatos | None = None) -> FastAPI:
         app.state.proveedor = proveedor if proveedor is not None else obtener_proveedor()
         yield
 
-    app = FastAPI(title="NISAR · Ecuador", version=VERSION, lifespan=lifespan,
+    app = FastAPI(title="PACHA", version=VERSION, lifespan=lifespan,
                   generate_unique_id_function=_id_operacion)
     app.add_middleware(GZipMiddleware, minimum_size=1000)
     _registrar_errores(app)

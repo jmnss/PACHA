@@ -251,7 +251,7 @@ Marca en `INFORME.md`: **N1** = primera noche, **N2** = segunda, **R** = integra
 **Interfaces:** Consumes: `nisar.simular`, `nisar.cargar_sitios`. Produces:
 `ESCENARIOS_DEMO: dict[str, dict]` (los seis sitios de Ecuador; `ec_la_segua` con `historia="inundacion"`, `ec_loja` con `historia="incendio"`, el resto `None`);
 `PARAMETROS_DEMO = {"semilla": 7, "looks": 12.0, "orbita": "Ascendente", "estacional": True}`;
-`origen_demo(parametros: dict) -> Origen` (`tipo="sintetico"`, `fuente="Generador de demostración NISAR·Ecuador"`, `generador="datos/generador.py"`, `version="1"`, `semilla`, `fecha_generacion`, `notas` con los parámetros no por defecto);
+`origen_demo(parametros: dict) -> Origen` (`tipo="sintetico"`, `fuente="Generador de demostración PACHA"`, `generador="datos/generador.py"`, `version="1"`, `semilla`, `fecha_generacion`, `notas` con los parámetros no por defecto);
 `generar_escena(sitio_id: str, parametros: dict | None = None, sitio: dict | None = None) -> nisar.Escena` (en memoria, con `functools.lru_cache` sobre la clave canónica; `sitio` permite un punto elegido en el mapa);
 `exportar(destino: Path, sitios: list[str] | None = None) -> Path`, que escribe `manifest.json` (origen, parámetros, bbox, fechas, hash SHA-256 del contenido de cada cubo) y `<id>.npz` como instantánea abierta y verificable. La CLI `scripts/generar_datos_demo.py` llama a `exportar(Path("data/demo"))`.
 

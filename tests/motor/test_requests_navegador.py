@@ -5,7 +5,7 @@ import pytest
 
 import requests_navegador as rn
 
-M = "https://x.github.io/NISAR-Ecuador/motor/"
+M = "https://x.github.io/PACHA/motor/"
 
 
 def test_ruta_local_traduce_teselas_de_aws():

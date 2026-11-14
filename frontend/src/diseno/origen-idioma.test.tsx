@@ -12,14 +12,14 @@ import { SelloOrigen } from './SelloOrigen'
 import { Termino } from './Termino'
 
 const origenDemo = {
-  tipo: 'sintetico', fuente: 'Generador de demostración NISAR·Ecuador', producto: null,
+  tipo: 'sintetico', fuente: 'Generador de demostración PACHA', producto: null,
   generador: 'datos/generador.py', version: '1', semilla: 7, fecha_generacion: '2026-11-05T08:00:00Z', notas: null,
 } as Origen
 
 describe('textoSello por idioma', () => {
   it('sin t devuelve el español de siempre', () => {
     expect(textoSello(origenDemo)).toBe(
-      'Sintético · Generador de demostración NISAR·Ecuador · generador v1 · semilla 7 · generado 2026-11-05',
+      'Sintético · Generador de demostración PACHA · generador v1 · semilla 7 · generado 2026-11-05',
     )
     expect(textoSello(null)).toBe('Sintético (no verificado)')
   })

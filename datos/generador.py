@@ -29,7 +29,7 @@ ESCENARIOS_DEMO: dict[str, dict] = {
 
 PARAMETROS_DEMO: dict = {"semilla": 7, "looks": 12.0, "orbita": "Ascendente", "estacional": True}
 
-FUENTE_DEMO = "Generador de demostración NISAR·Ecuador"
+FUENTE_DEMO = "Generador de demostración PACHA"
 GENERADOR = "datos/generador.py"
 VERSION = "1"
 

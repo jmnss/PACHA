@@ -1,4 +1,6 @@
-# NISAR · Ecuador
+# PACHA
+
+*Formerly «NISAR · Ecuador».*
 
 Español: [README.es.md](README.es.md)
 

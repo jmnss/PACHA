@@ -8,7 +8,7 @@ import { fechaEje, parseInstante } from './fechas'
 import { Linea } from './Linea'
 
 const origen = {
-  tipo: 'sintetico' as const, fuente: 'Generador de demostración NISAR·Ecuador', producto: null,
+  tipo: 'sintetico' as const, fuente: 'Generador de demostración PACHA', producto: null,
   generador: 'datos/generador.py', version: '1', semilla: 7, fecha_generacion: '2026-11-05T08:00:00Z', notas: null,
 }
 const pts = (vs: (number | null)[]): [string, number | null][] =>

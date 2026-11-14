@@ -47,6 +47,14 @@ GitHub Actions; URL: `https://jmnss.github.io/PACHA/`. Verificación local antes
 unittest OK, vitest 624, lint OK, sitio de Pages 42 MB y e2e de Pages 11/11. No se corrió el Playwright normal
 (el flujo de CI no lo usa).
 
+**Nombre del proyecto: PACHA (2026-11-14, decisión del equipo).** Cambiado en la cabecera de Historias, la marca del
+riel (nombre accesible), el título de la pestaña («<Pantalla> · PACHA»), `index.html`, el título de la API (y
+`frontend/openapi.json`), la fuente del generador de demostración («Generador de demostración PACHA»), el paquete
+`pacha-frontend`, los README, `CLAUDE.md`, `docs/diseno.md` y `docs/historia-datos.md`. **No se cambió:** la app
+Streamlit heredada (`app.py`, regla de CLAUDE.md), los specs, planes, capturas e informes fechados (son historia), las
+claves de `localStorage` (`nisar.idioma`, `nisar.mapaBase`, `nisar.simulador.bitacora`: cambiarlas borraría las
+preferencias y la bitácora de quien ya usó la app) ni la carpeta local del repo. El nombre es el mismo en es/en/qu.
+
 ## Publicación de los bloques A, B y C (2026-11-08)
 
 Publicado en Pages con `13e7c08` (corrida 42519336402, 225 respuestas precalculadas). La corrida anterior falló en el

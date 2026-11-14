@@ -13,7 +13,7 @@ import { Tabla } from './Tabla'
 import { Termino } from './Termino'
 
 const origenSint = {
-  tipo: 'sintetico' as const, fuente: 'Generador de demostración NISAR·Ecuador', producto: null,
+  tipo: 'sintetico' as const, fuente: 'Generador de demostración PACHA', producto: null,
   generador: 'datos/generador.py', version: '1', semilla: 7, fecha_generacion: '2026-11-05T08:00:00Z', notas: null,
 }
 const salud = (hay: boolean) => ({ estado: 'ok', hay_sinteticos: hay, origen_tipo: hay ? 'sintetico' : 'real', proveedor: 'x', version: '1' })
@@ -95,7 +95,7 @@ describe('SelloOrigen', () => {
   it('muestra tipo, fuente y fecha', () => {
     render(<SelloOrigen origen={origenSint} />)
     expect(screen.getByText(
-      'Sintético · Generador de demostración NISAR·Ecuador · generador v1 · semilla 7 · generado 2026-11-05',
+      'Sintético · Generador de demostración PACHA · generador v1 · semilla 7 · generado 2026-11-05',
     )).toBeInTheDocument()
   })
   it('para origen real sin generador, solo fuente y fecha', () => {

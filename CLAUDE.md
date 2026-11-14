@@ -1,10 +1,11 @@
-# CLAUDE.md — NISAR · Ecuador
+# CLAUDE.md — PACHA
 
 Instrucciones del proyecto para Claude Code. Complementa a `AGENTS.md` (que describe la app Streamlit
 heredada). Si hay conflicto, manda este archivo.
 
 ## Qué es
 
+**PACHA** (antes «NISAR · Ecuador»; repositorio `jmnss/PACHA`, publicado en `https://jmnss.github.io/PACHA/`).
 Proyecto para el NASA Space Apps Challenge «Dancing with the SARs» (`docs/challenge.md`). Una app web
 abierta que muestra cómo el radar NISAR ve **inundaciones y humedales** (historia principal, Costa baja
 de Ecuador) e **incendios forestales** (segunda historia, Sierra), con un observatorio para los seis

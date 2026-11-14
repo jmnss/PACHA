@@ -1,4 +1,4 @@
-# Documento de diseño — NISAR · Ecuador
+# Documento de diseño — PACHA
 
 Dirección elegida: **A · Sala de control** (estilo `data-terminal` de Taste Skill, semilla 1100125639,
 tipo «markets», oscuro). Este documento manda sobre toda decisión visual del frontend React. Si algo
@@ -11,7 +11,7 @@ La ficha de la skill queda en `.taste-skill/app/direction.json`; se reimprime co
 
 ## 1. Qué es la app y qué material propio tiene
 
-NISAR · Ecuador simula y analiza observaciones del radar NISAR (banda L, NASA–ISRO) sobre Ecuador y
+PACHA (antes «NISAR · Ecuador») simula y analiza observaciones del radar NISAR (banda L, NASA–ISRO) sobre Ecuador y
 detecta seis tipos de cambio: humedales, incendios, terremotos, glaciares, agricultura y subsidencia.
 Incluye el Modo Dios, un simulador de desastres sobre relieve real. Público: estudiantes, equipos
 científicos y jurados que la usan en sesiones largas, a veces en móvil.
@@ -55,7 +55,7 @@ texto, con cuerpo de 16 px.
 - Una firma del sistema como protagonista: la cinta de pasadas.
 - Las cifras van en la misma Public Sans con cifras tabulares (nada de monoespaciada en etiquetas).
 
-**Producto y marca:** el nombre se mantiene, «NISAR · Ecuador». Marca: un círculo de 1,5 px con una
+**Producto y marca:** el nombre es «PACHA» (decisión del equipo, 2026-11-14; antes «NISAR · Ecuador»). Es el mismo en los tres idiomas. Marca: un círculo de 1,5 px con una
 línea horizontal que lo cruza (el ecuador), en blanco; el amarillo solo marca selección y no la marca.
 
 **Lo que se descarta del diseño actual:** degradado cian-magenta, Orbitron, Share Tech Mono, rejilla de
