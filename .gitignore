@@ -23,6 +23,7 @@ playwright-report/
 data/demo/
 # Datos NISAR crudos y material del equipo sin procesar (CLAUDE.md, regla 5)
 data/nisar/crudo/
+data/crudo/
 datos_imagenes/
 *.h5
 *.netrc

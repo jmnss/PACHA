@@ -622,3 +622,7 @@ Hallazgos de la revisión general del plan de idioma y accesibilidad, verificado
 3. **Lector de pantalla (Orca/NVDA), Historias y Observatorio en los tres idiomas: no realizada.** *Pendiente: requiere persona con lector de pantalla.* Hasta entonces no se afirma cumplimiento total de WCAG; solo que axe no encuentra infracciones graves o críticas en las etiquetas wcag2a/2aa/21a/21aa/22aa.
 
 Lo que falló en esta prueba: nada que bloquee. Lo que queda sin demostrar está en «Pendientes vigentes» (grupo «Idioma y accesibilidad»).
+
+## Fase 1, Tarea 2: cajas y semillas de los sitios (2026-11-14)
+- Mazar: caja y semilla salen de `Clas_Super.tif` (la caja WGS84 de la máscara coincide con la inicial; semilla = píxel de agua más cercano al centroide de la región de agua más grande, 5,4 km²).
+- Daule-Peripa y Casitagua: caja y semilla siguen **aproximadas** (sin verificar). Pendiente (Tarea 6): pintar el DEM y comprobar que el vaso cae dentro de la caja; si no, ampliarla.
