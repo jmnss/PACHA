@@ -7,6 +7,7 @@ Solo numpy, json y pydantic (corre también en Pyodide).
 """
 from __future__ import annotations
 
+import warnings
 from datetime import datetime
 from pathlib import Path
 
@@ -34,7 +35,8 @@ class ProveedorMixto:
                 try:
                     dueno = (SustitutoEmbalse(sitio, carpeta) if tipo == "embalse"
                              else SustitutoIncendio(sitio, self._demo))
-                except (OSError, ValueError, KeyError):  # sin DEM/curva legibles no hay nada que sustituir
+                except (OSError, ValueError, KeyError) as e:  # sin DEM/curva legibles no hay nada que sustituir
+                    warnings.warn(f"sin sustituto para {id_} (carpeta {carpeta}): {e}")
                     continue
             self._duenos[id_] = dueno
             self._ids_propios.append(id_)

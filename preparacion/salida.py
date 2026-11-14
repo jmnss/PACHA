@@ -79,6 +79,13 @@ def _fila_semilla(sitio: Sitio, rej: Rejilla) -> tuple[int, int]:
     return f, c
 
 
+def _dentro_en(m: Raster, ref: Rejilla, dentro: np.ndarray | None, gj: dict | None) -> np.ndarray | None:
+    """El contorno en la rejilla ORIGINAL de la máscara: la superficie se mide ahí, no tras remuestrear."""
+    if dentro is None or _mismo_rejilla(m, ref):
+        return dentro
+    return geojson_a_mascara(gj, Rejilla(m.transform, m.datos.shape[1], m.datos.shape[0], m.crs))
+
+
 def _escribir_json(ruta: Path, datos) -> None:
     ruta.write_text(json.dumps(datos, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
@@ -152,7 +159,7 @@ def escribir_sitio(sitio: Sitio, fechas: list[Fecha], destino: Path,
         filas.append({
             "fecha": f.fecha.isoformat(), "archivo": nombre_npz,
             "instante": (f.procedencia or {}).get("fecha_adquisicion_utc"),
-            "superficie_km2": {clase: round(superficie_km2(Raster(m_ref, ref.transform, ref.crs), 1, dentro), 4)},
+            "superficie_km2": {clase: round(superficie_km2(m, 1, _dentro_en(m, ref, dentro, gj)), 4)},
             "procedencia": f.procedencia, "procedencia_completa": not faltan, "faltan": faltan, "stack": stack,
         })
 

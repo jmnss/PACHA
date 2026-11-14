@@ -20,3 +20,14 @@ def test_cli_sin_dem_en_tmp(tmp_path, valores):
 def test_cli_incendio_va_a_incendios(tmp_path):
     assert main(["--sitio", "casitagua", "--entrada", str(tmp_path), "--salida", str(tmp_path / "s"), "--sin-dem"]) == 0
     assert (tmp_path / "s" / "incendios" / "casitagua" / "sitio.json").exists()
+
+
+def test_cli_informa_lo_que_falta_y_lo_omitido(tmp_path, valores, capsys):
+    entrada = tmp_path / "e"
+    for f in ("20261029", "20261030"):
+        (entrada / "mazar" / f).mkdir(parents=True)
+    escribir(entrada / "mazar" / "20261029" / "mascara.tif", np.where(valores == 3, 255, valores).astype(np.uint8))
+    (entrada / "mazar" / "20261030" / "mascara.tif").write_text("no es un tif")
+    main(["--sitio", "mazar", "--entrada", str(entrada), "--salida", str(tmp_path / "s"), "--sin-dem"])
+    fuera = capsys.readouterr().out
+    assert "faltan: ['procedencia.json']" in fuera and "OMITIDA" in fuera

@@ -34,15 +34,22 @@ def main(argv: list[str] | None = None) -> int:
     for s in elegidos:
         dem_fn = None if a.sin_dem else (lambda rej, s=s: dem_en_rejilla(s.bbox, rej, CRUDO))
         destino = salida / CARPETAS[s.tipo] / s.sitio
-        sj = escribir_sitio(s, descubrir(Path(a.entrada), s.sitio), destino, dem_fn=dem_fn,
+        entregas = descubrir(Path(a.entrada), s.sitio)
+        sj = escribir_sitio(s, entregas, destino, dem_fn=dem_fn,
                             regenerar_contorno=a.regenerar_contorno)
         print(f"== {s.nombre} ({s.sitio}) -> {destino}")
         if not sj["fechas"]:
             print("   sin entregas del equipo: solo relieve y contorno" if sj["dem"] else "   sin entregas ni relieve")
+        escritas = {f["fecha"] for f in sj["fechas"]}
+        for e in entregas:
+            if e.fecha.isoformat() not in escritas:
+                print(f"   {e.fecha}  OMITIDA (no se pudo leer; ver avisos). Falta: {', '.join(e.faltan) or 'nada declarado'}")
         for f in sj["fechas"]:
             sup = ", ".join(f"{k} {v:.2f} km2" for k, v in f["superficie_km2"].items())
             falta = "completa" if f["procedencia_completa"] else "falta: " + ", ".join(f["faltan"])
             print(f"   {f['fecha']}  {sup}  procedencia {falta}")
+            if f["faltan"]:
+                print(f"      faltan: {f['faltan']}")
         print(f"   relieve: {'si' if sj['dem'] else 'no'}  contorno: {'si' if sj['contorno'] else 'no'}  "
               f"escrito: {tamano_mb(destino):.2f} MB")
     total = sum(tamano_mb(salida / c) for c in CARPETAS.values())

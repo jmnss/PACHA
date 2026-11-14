@@ -84,3 +84,17 @@ def test_dem_con_semilla_sin_cota_no_aborta(tmp_path):
     s = cargar_sitios()["mazar"]
     sj = escribir_sitio(s, [], tmp_path / "m", dem_fn=lambda r: np.full((r.alto, r.ancho), np.nan, np.float32))
     assert sj["dem"] is None and sj["curva"] is None
+
+
+def test_superficie_en_la_rejilla_original(tmp_path):
+    from affine import Affine
+    from rasterio.warp import transform_bounds
+    o, _, _, n = transform_bounds("EPSG:4326", "EPSG:32717", *cargar_sitios()["mazar"].bbox)
+    m = np.zeros((100, 120), np.uint8)
+    m[20:80, 20:100] = 1
+    d = tmp_path / "e" / "mazar" / "20261029"
+    d.mkdir(parents=True)
+    escribir(d / "mascara.tif", m, transform=Affine(10.063, 0, o + 500, 0, -9.950, n - 500))
+    sj = escribir_sitio(cargar_sitios()["mazar"], descubrir(tmp_path / "e", "mazar"), tmp_path / "out")
+    exacta = int((m == 1).sum()) * 10.063 * 9.950 / 1e6
+    assert sj["fechas"][0]["superficie_km2"]["agua"] == pytest.approx(exacta, abs=1e-4)

@@ -8,6 +8,7 @@ lleva el origen con la procedencia de su propia fecha. Solo numpy, json y pydant
 from __future__ import annotations
 
 import json
+import warnings
 from datetime import datetime
 from pathlib import Path
 
@@ -108,7 +109,8 @@ class ProveedorDerivados:
             for ruta in sorted((self._raiz / carpeta).glob("*/sitio.json")):
                 try:
                     s = _Sitio(ruta.parent)
-                except (OSError, ValueError, KeyError):  # un sitio ilegible no tumba a los demás
+                except (OSError, ValueError, KeyError) as e:  # un sitio ilegible no tumba a los demás
+                    warnings.warn(f"sitio omitido (no se pudo leer {ruta}): {e}")
                     continue
                 self._sitios[s.id_escenario] = s
         self._escenarios = {k: s for k, s in self._sitios.items() if s.fechas}
