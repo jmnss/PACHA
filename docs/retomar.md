@@ -11,6 +11,23 @@ Actualizado: 2026-11-14 (cierre de la fase 1). Léelo antes que `INFORME.md` (qu
   hace falta). La app Streamlit se retiró: etiqueta `legado-streamlit`.
 - Ramas: `main` (publicada), **`embalses` (trabajo actual)**, `datos-reales` (= main), `migracion-react` (historia vieja).
 
+## En pausa: fase 2 hasta rediseñar la UX (2026-11-14)
+
+**Decisión del usuario:** antes de empezar la fase 2 (`docs/superpowers/plans/2026-11-14-fase2-pagina-embalses.md`,
+que ya trabaja con frontend) hay que pasar por un proceso de cambios de interfaz: la UI actual carece de
+propiedades intuitivas y de UX. Ese trabajo se hace en **otro chat**; la fase 2 **no se empieza** hasta que el
+usuario lo diga.
+
+**Al retomar:**
+1. Leer qué cambió el rediseño en el frontend (`git log`, `docs/diseno.md`) y **reconciliar el plan de la fase 2**
+   (y quizá 3–5) con la interfaz nueva antes de ejecutarlas: sus rutas, componentes y pruebas pueden haber cambiado.
+2. La fase 1 (datos) no depende de la UI: ids `embalse-mazar`, `embalse-daule-peripa`, `incendio-casitagua`,
+   proveedor `mixto` por defecto, derivados en `data/embalses/` y `data/incendios/` (1,58 MB).
+3. Pendientes de la fase 1 (equipo y menores aplazados): ver la sección «Fase 1» más abajo.
+4. Modelos de subagentes: `sonnet` para implementar tareas bien especificadas; `opus` para revisiones y
+   razonamiento (también la revisión final de rama).
+5. Para ver la app: `source scripts/entorno.sh && (cd frontend && npm run build) && python servidor.py` → http://localhost:8000.
+
 ## Decisión del equipo (2026-11-14)
 
 - La app se centra en **embalses y lluvia** y en **incendios**: una página con dos opciones intercambiables (datos,
