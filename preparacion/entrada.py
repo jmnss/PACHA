@@ -37,7 +37,10 @@ class Fecha:
 def descubrir(raiz: Path, sitio: str) -> list[Fecha]:
     """Fechas entregadas para un sitio, ordenadas; las carpetas con otro nombre se ignoran con aviso."""
     salida = []
-    for carpeta in sorted((Path(raiz) / sitio).iterdir()):
+    base = Path(raiz) / sitio
+    if not base.is_dir():
+        return salida
+    for carpeta in sorted(base.iterdir()):
         if not carpeta.is_dir():
             continue
         try:
@@ -49,9 +52,17 @@ def descubrir(raiz: Path, sitio: str) -> list[Fecha]:
             continue
         mascara, stack, prov = carpeta / "mascara.tif", carpeta / "stack.tif", carpeta / "procedencia.json"
         faltan = [n for n, ruta in (("mascara.tif", mascara), ("procedencia.json", prov)) if not ruta.exists()]
-        salida.append(Fecha(
-            sitio=sitio, fecha=f, mascara=mascara, stack=stack if stack.exists() else None,
-            procedencia=json.loads(prov.read_text(encoding="utf-8")) if prov.exists() else None, faltan=faltan))
+        procedencia = None
+        if prov.exists():
+            try:
+                procedencia = json.loads(prov.read_text(encoding="utf-8"))
+                if not isinstance(procedencia, dict):
+                    raise ValueError
+            except ValueError:  # JSON mal formado (UnicodeDecodeError también es ValueError)
+                procedencia = None
+                faltan.append("procedencia.json (ilegible)")
+        salida.append(Fecha(sitio=sitio, fecha=f, mascara=mascara, stack=stack if stack.exists() else None,
+                            procedencia=procedencia, faltan=faltan))
     return sorted(salida, key=lambda x: x.fecha)
 
 
@@ -67,7 +78,7 @@ def _nodata_declarado(src) -> int | None:
 
 def leer_mascara(ruta: Path, stack_hh: np.ndarray | None = None) -> Raster:
     """Máscara uint8; los códigos sin dato (3, 255 y el nodata declarado) pasan a 255. Los píxeles con
-    `stack_hh == 0` (borde sin dato del stack) también."""
+    `stack_hh == 0` o NaN (borde sin dato del stack) también."""
     with rasterio.open(ruta) as src:
         datos = src.read(1).astype(np.uint8)
         sin_dato = np.isin(datos, (3, SIN_DATO))
@@ -78,7 +89,7 @@ def leer_mascara(ruta: Path, stack_hh: np.ndarray | None = None) -> Raster:
     if stack_hh is not None:
         if stack_hh.shape != datos.shape:
             raise ValueError(f"el stack {stack_hh.shape} no tiene la rejilla de la máscara {datos.shape}")
-        sin_dato |= stack_hh == 0
+        sin_dato |= (stack_hh == 0) | ~np.isfinite(stack_hh)
     datos[sin_dato] = SIN_DATO
     return Raster(datos, transform, crs)
 
@@ -102,10 +113,16 @@ def validar_procedencia(p: dict | None, clase: str = "nisar") -> list[str]:
     if p is None:
         return ["procedencia.json"]
     fecha = p.get("fecha_adquisicion_utc")
+    try:
+        adquisicion = datetime.fromisoformat(fecha.replace("Z", "+00:00")) if fecha else None
+        if adquisicion is not None and adquisicion.tzinfo is None:
+            adquisicion = None
+    except (AttributeError, ValueError):
+        adquisicion = None
     metodo = p.get("metodo")
     prov = Procedencia(
         producto=p.get("producto"), coleccion=p.get("coleccion"), granulos=p.get("granulos") or [],
-        fecha_adquisicion=datetime.fromisoformat(fecha.replace("Z", "+00:00")) if fecha else None,
+        fecha_adquisicion=adquisicion,
         polarizaciones=p.get("polarizaciones") or [], frecuencia=p.get("frecuencia"), madurez=p.get("madurez"),
         unidades=p.get("unidades_stack"), metodo=metodo if isinstance(metodo, dict) else None,
         autor=p.get("autor"), fecha_proceso=p.get("fecha_proceso"))
