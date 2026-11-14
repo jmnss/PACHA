@@ -30,6 +30,15 @@ El material crudo vive en `datos_imagenes/` (fuera de git, `.gitignore`).
    oscuras que no son agua. Lo decide el equipo; la app solo lo lee.
 4. Marcar el borde sin dato como 3 en la máscara.
 
+**Aclaración del equipo (2026-11-14):** esta máscara era una **prueba de formato** (el formato sirve). El equipo
+pasará a **segmentación supervisada** para mejorar el agua; la evaluación del contenido de arriba aplica solo a la prueba.
+
+**Nombres de las clases:** un GeoTIFF guarda números, no texto. La máscara sigue con códigos (1 agua, 0 no agua,
+255 o 3 sin dato) y los nombres van en `procedencia.json` → `"clases": {"1": "agua", "0": "no agua", "255": "sin dato"}`
+(opcional también la tabla de atributos de ArcGIS, `.tif.aux.xml`). Si la segmentación supervisada añade clases
+(p. ej. vegetación inundada), se añaden códigos y nombres igual. `scripts/preparar_embalses.py` los convierte a la
+convención del contrato (código k = `leyenda[k-1]`, 0 = sin dato) y a los tres idiomas.
+
 ## Formato que pide la app (por embalse y por fecha)
 
 ```
@@ -47,6 +56,7 @@ datos_imagenes/<embalse>/<AAAAMMDD>/
   "producto": "GCOV", "coleccion": "NISAR_L2_GCOV_V1", "madurez": "VALIDATED",
   "frecuencia": "A", "polarizaciones": ["HH", "HV"],
   "unidades_stack": "gamma0 dB",
+  "clases": {"1": "agua", "0": "no agua", "255": "sin dato"},
   "metodo": {"nombre": "segmentación no supervisada (p. ej. k-medias)", "clases": 2, "parametros": {}},
   "autor": "equipo PACHA", "fecha_proceso": "2026-11-14"
 }

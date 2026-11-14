@@ -29,7 +29,8 @@ Actualizado: 2026-11-14. Léelo antes que `INFORME.md` (que es largo e históric
 - **No hay credencial de Earthdata todavía**: no se ha descargado nada de NISAR.
 - Primera entrega del equipo (Mazar) evaluada en `docs/datos-equipo-embalses.md`: la máscara está bien alineada, pero
   marca ~20 % de la escena como agua (incluye zonas oscuras que no son agua), y faltan fechas y procedencia; el CSV no
-  sirve sin geometría. Ahí está el formato pedido.
+  sirve sin geometría. Ahí está el formato pedido. Esa máscara fue una **prueba de formato** (válida); el equipo hará segmentación supervisada. Las
+  clases van como códigos en el TIF y sus nombres («agua», «no agua») en `procedencia.json`.
 
 ## Pendientes (en orden)
 
