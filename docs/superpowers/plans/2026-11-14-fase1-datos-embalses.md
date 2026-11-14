@@ -75,7 +75,7 @@ del equipo: `docs/datos-equipo-embalses.md`.
     madurez. `otro_sensor` exige producto, granulos, fecha_adquisicion, polarizaciones. Las demás clases: `[]`.
   - `Escenario.historia: Literal["inundacion","incendio","embalse"] | None`, `Escenario.sitio: str | None = None`.
 
-- [ ] **Step 1: Tests que fallan** en `tests/datos/test_contrato.py`:
+- [x] **Step 1: Tests que fallan** en `tests/datos/test_contrato.py`:
   - `test_origen_nisar_sin_procedencia_completa_se_rechaza`: `Origen(tipo="real", clase="nisar", fuente="x",
     fecha_generacion=…, procedencia=Procedencia(producto="GCOV"))` lanza `ValidationError` cuyo texto nombra
     `coleccion`.
@@ -88,15 +88,15 @@ del equipo: `docs/datos-equipo-embalses.md`.
     `madurez="VALIDATED"`, `producto="GCOV"`, `coleccion="NISAR_L2_GCOV_V1"`) → `[]`; sin `madurez` → `["madurez"]`;
     para `otro_sensor` sin `coleccion` → `[]`.
   - `test_escenario_admite_embalse_y_sitio`: `Escenario(..., historia="embalse", sitio="mazar")` válido.
-- [ ] **Step 2:** `python -m pytest tests/datos/test_contrato.py -q` → FAIL (`Procedencia` no existe).
-- [ ] **Step 3:** Implementar en `datos/contrato.py`. Validador `model_validator(mode="after")` en `Origen`:
+- [x] **Step 2:** `python -m pytest tests/datos/test_contrato.py -q` → FAIL (`Procedencia` no existe).
+- [x] **Step 3:** Implementar en `datos/contrato.py`. Validador `model_validator(mode="after")` en `Origen`:
   coherencia `clase`↔`tipo` y `faltantes_procedencia(...) == []` cuando `clase` ∈ {nisar, otro_sensor}.
   Mensaje: `"Procedencia incompleta: faltan {campos}"`.
-- [ ] **Step 4:** `python -m pytest tests -q` → PASS (incluye `tests/api/test_contrato_openapi.py`: si falla,
+- [x] **Step 4:** `python -m pytest tests -q` → PASS (incluye `tests/api/test_contrato_openapi.py`: si falla,
   regenerar con `python scripts/exportar_openapi.py && cd frontend && npm run tipos` y volver a correr).
   `cd frontend && npm test && npm run lint` → PASS.
-- [ ] **Step 5:** Actualizar `docs/contrato-datos.md` (filas `Origen`, `Escenario`, nueva `Procedencia`).
-- [ ] **Step 6: Commit** `feat(datos): procedencia y clase de origen en el contrato; historia «embalse»`
+- [x] **Step 5:** Actualizar `docs/contrato-datos.md` (filas `Origen`, `Escenario`, nueva `Procedencia`).
+- [x] **Step 6: Commit** `feat(datos): procedencia y clase de origen en el contrato; historia «embalse»`
 
 ---
 
@@ -139,10 +139,10 @@ del equipo: `docs/datos-equipo-embalses.md`.
     `producto`, `coleccion`, `madurez`, `frecuencia`, `polarizaciones`, `unidades_stack`, `metodo`, `autor`,
     `fecha_proceso`) y devuelve `faltantes_procedencia(...)`; `None` → `["procedencia.json"]`.
 
-- [ ] **Step 0:** Instalar: `python -m pip install -r requirements-preparacion.txt`. Las cajas y semillas de
+- [x] **Step 0:** Instalar: `python -m pip install -r requirements-preparacion.txt`. Las cajas y semillas de
   Daule-Peripa y Casitagua son aproximadas: comprobarlas pintando el DEM en la Tarea 6 (el vaso de Daule-Peripa
   debe caer dentro de la caja; si no, ampliar la caja) y anotarlo en `INFORME.md`.
-- [ ] **Step 1: Tests que fallan** (`tests/preparacion/test_entrada.py`). Fixtures en `conftest.py` que escriben
+- [x] **Step 1: Tests que fallan** (`tests/preparacion/test_entrada.py`). Fixtures en `conftest.py` que escriben
   GeoTIFF pequeños con rasterio en `tmp_path` (EPSG:32717, 10 m, 40 × 30 px):
   - `test_leer_mascara_2bits_nodata_3`: GeoTIFF `NBITS=2`, `nodata=3`, con valores {0,1,3} → `datos` con
     {0,1,255}.
@@ -153,10 +153,10 @@ del equipo: `docs/datos-equipo-embalses.md`.
   - `test_descubrir_ordena_y_marca_faltantes`: dos carpetas `20261029` y `20260701`, una sin `procedencia.json`
     → orden por fecha y `faltan == ["procedencia.json"]` en la que no lo tiene.
   - `test_validar_procedencia_ejemplo_del_doc`: el JSON de ejemplo de `docs/datos-equipo-embalses.md` → `[]`.
-- [ ] **Step 2:** `python -m pytest tests/preparacion -q` → FAIL.
-- [ ] **Step 3:** Implementar `preparacion/` (rasterio para leer; GDAL lee 2 bits sin `imagecodecs`).
-- [ ] **Step 4:** `python -m pytest tests -q` → PASS (incluida la compatibilidad con Pyodide).
-- [ ] **Step 5: Commit** `feat(preparacion): sitios y lectura de las entregas del equipo`
+- [x] **Step 2:** `python -m pytest tests/preparacion -q` → FAIL.
+- [x] **Step 3:** Implementar `preparacion/` (rasterio para leer; GDAL lee 2 bits sin `imagecodecs`).
+- [x] **Step 4:** `python -m pytest tests -q` → PASS (incluida la compatibilidad con Pyodide).
+- [x] **Step 5: Commit** `feat(preparacion): sitios y lectura de las entregas del equipo`
 
 ---
 
@@ -189,7 +189,7 @@ del equipo: `docs/datos-equipo-embalses.md`.
   - `medidas.contorno_a_geojson(contorno: np.ndarray, ref: Rejilla, simplificar_m: float = 20) -> dict`
     (polígonos en WGS84; shapely) y `medidas.geojson_a_mascara(gj: dict, rejilla: Rejilla) -> np.ndarray[bool]`.
 
-- [ ] **Step 1: Tests que fallan:**
+- [x] **Step 1: Tests que fallan:**
   - `test_remuestreo_rejilla_no_cuadrada`: máscara origen con píxel 10,063 × 9,950 m desplazada 2 m; un bloque de
     agua de 100 × 100 m → en la rejilla de 10 m queda un bloque de 10 ± 1 px de lado en la posición esperada.
   - `test_remuestreo_desde_utm18`: la misma máscara reproyectada a EPSG:32718 y vuelta a la de referencia →
@@ -199,11 +199,11 @@ del equipo: `docs/datos-equipo-embalses.md`.
   - `test_contorno_descarta_manchas_pequenas`: una región de 20 ha y 50 manchas de 0,5 ha → el contorno contiene
     la región y ninguna mancha lejana (> 150 m).
   - `test_reducir_categorica_moda` y `test_reducir_continua_promedia_en_lineal` (−10 dB y −20 dB → −12,6 dB).
-- [ ] **Step 2:** `python -m pytest tests/preparacion -q` → FAIL.
-- [ ] **Step 3:** Implementar con `rasterio.warp.reproject` (`Resampling.nearest` para máscaras, `bilinear` para
+- [x] **Step 2:** `python -m pytest tests/preparacion -q` → FAIL.
+- [x] **Step 3:** Implementar con `rasterio.warp.reproject` (`Resampling.nearest` para máscaras, `bilinear` para
   dB al reproyectar) y `scipy.ndimage` para regiones y dilatación.
-- [ ] **Step 4:** `python -m pytest tests -q` → PASS.
-- [ ] **Step 5: Commit** `feat(preparacion): rejilla de referencia, remuestreo y superficie dentro del contorno`
+- [x] **Step 4:** `python -m pytest tests -q` → PASS.
+- [x] **Step 5: Commit** `feat(preparacion): rejilla de referencia, remuestreo y superficie dentro del contorno`
 
 ---
 
@@ -235,18 +235,18 @@ del equipo: `docs/datos-equipo-embalses.md`.
     (nivel − dem) en esas celdas. Por debajo: **extrapolación ilustrativa** (no hay batimetría): superficie
     decrece linealmente hasta 30 % de la superficie a `cota_dem` en `bajada_max_m`; `extrapolado=True` en esos
     niveles; volumen relativo negativo integrado de esa superficie.
-- [ ] **Step 1: Tests que fallan** con un DEM sintético en V (cañón) de 200 × 100 celdas:
+- [x] **Step 1: Tests que fallan** con un DEM sintético en V (cañón) de 200 × 100 celdas:
   - `test_superficie_agua_dem_conectada`: dos depresiones a la misma cota; solo la conectada a la semilla.
   - `test_curva_monotona`: `superficie_km2` y `volumen_hm3` crecientes con el nivel; `extrapolado` True solo por
     debajo de `cota_dem_m`.
   - `test_comprobar_espacio_aborta`: con `shutil.disk_usage` simulado a 1 GB libre → `SystemExit`.
   - `test_teselas_copernicus_mazar`: bbox de Mazar → incluye la tesela con `S03_00_W079_00`.
-- [ ] **Step 2:** `python -m pytest tests/preparacion -q` → FAIL.
-- [ ] **Step 3:** Implementar. Sin red en las pruebas (la red solo en el Step 5).
-- [ ] **Step 4:** `python -m pytest tests -q` → PASS.
-- [ ] **Step 5:** Comprobación con red (no es prueba automática): `python -c "from preparacion.relieve import
+- [x] **Step 2:** `python -m pytest tests/preparacion -q` → FAIL.
+- [x] **Step 3:** Implementar. Sin red en las pruebas (la red solo en el Step 5).
+- [x] **Step 4:** `python -m pytest tests -q` → PASS.
+- [x] **Step 5:** Comprobación con red (no es prueba automática): `python -c "from preparacion.relieve import
   teselas_copernicus; print(teselas_copernicus((-78.74,-2.80,-78.55,-2.55)))"` y HEAD a la primera URL → 200.
-- [ ] **Step 6: Commit** `feat(preparacion): relieve Copernicus y curva nivel–superficie`
+- [x] **Step 6: Commit** `feat(preparacion): relieve Copernicus y curva nivel–superficie`
 
 ---
 
@@ -289,7 +289,7 @@ del equipo: `docs/datos-equipo-embalses.md`.
   [--salida data] [--regenerar-contorno] [--sin-dem]`. Imprime un informe por sitio: fechas, superficie, qué falta
   de la procedencia, tamaño escrito y el total frente a 10 MB. Sitios sin entregas del equipo: solo DEM, curva y
   contorno (agua del DEM dilatada) — es lo que usan los sustitutos.
-- [ ] **Step 1: Tests que fallan:**
+- [x] **Step 1: Tests que fallan:**
   - `test_cuantizacion_ida_y_vuelta`: −12,3 dB → q → valor con error ≤ (vmax−vmin)/254; NaN → 0.
   - `test_escribir_sitio_formato`: con fixtures de la Tarea 2 (dos fechas, una sin procedencia) → `sitio.json`
     con dos fechas, `procedencia_completa` [True, False], `faltan` [[], ["procedencia.json"]], `.npz` con
@@ -297,8 +297,8 @@ del equipo: `docs/datos-equipo-embalses.md`.
   - `test_no_sobrescribe_contorno`: contorno existente con contenido marcado se conserva.
   - `test_cli_sin_dem_en_tmp`: `main(["--sitio","mazar","--entrada",tmp,"--salida",tmp2,"--sin-dem"])` termina con
     código 0 y escribe `tmp2/embalses/mazar/sitio.json`.
-- [ ] **Step 2:** FAIL → **Step 3:** implementar → **Step 4:** `python -m pytest tests -q` PASS.
-- [ ] **Step 5: Commit** `feat(preparacion): derivados de embalses e incendio y CLI preparar_embalses`
+- [x] **Step 2:** FAIL → **Step 3:** implementar → **Step 4:** `python -m pytest tests -q` PASS.
+- [x] **Step 5: Commit** `feat(preparacion): derivados de embalses e incendio y CLI preparar_embalses`
 
 ---
 
@@ -309,24 +309,24 @@ del equipo: `docs/datos-equipo-embalses.md`.
 - Create: `tests/datos/test_presupuesto_derivados.py`
 - Modify: `INFORME.md`, `docs/datos-equipo-embalses.md` (§ estado)
 
-- [ ] **Step 1: Test que falla:** `test_derivados_dentro_del_presupuesto`: suma de tamaños bajo `data/embalses` y
+- [x] **Step 1: Test que falla:** `test_derivados_dentro_del_presupuesto`: suma de tamaños bajo `data/embalses` y
   `data/incendios` ≤ 10 × 1024² bytes; y `test_sitio_json_valido`: cada `sitio.json` existe, tiene `version == 1`
   y sus `archivo`, `dem`, `curva`, `contorno` existen. (Falla hoy porque no existen las carpetas.)
-- [ ] **Step 2: Organizar la entrada sin tocar los originales.** El script espera
+- [x] **Step 2: Organizar la entrada sin tocar los originales.** El script espera
   `datos_imagenes/<sitio>/<AAAAMMDD>/`. Hoy hay archivos sueltos (`Mazar_Stack.tif`, `Clas_Super.tif` —primera
   fecha, **fecha desconocida**—, `Mazar_CS1029.tif` —29 oct 2026—). **Copiar** (`cp`, nunca `mv`) solo lo que
   tenga fecha conocida: `datos_imagenes/mazar/20261029/mascara.tif` ← `Mazar_CS1029.tif`. La primera fecha **no**
   se copia hasta que el equipo diga su fecha (anotarlo en `INFORME.md` como pendiente). Ninguna fecha tiene
   `procedencia.json`: es lo esperado; el informe lo dirá.
-- [ ] **Step 3:** `python scripts/preparar_embalses.py --sitio todos`. Comprobar a ojo (PNG en el scratchpad, no
+- [x] **Step 3:** `python scripts/preparar_embalses.py --sitio todos`. Comprobar a ojo (PNG en el scratchpad, no
   en el repo) que el agua del DEM de Daule-Peripa y Mazar cae en el vaso; si no, ajustar `semilla`/`bbox` en
   `preparacion/sitios.json` y repetir.
-- [ ] **Step 4:** `python -m pytest tests -q` → PASS (si el presupuesto no alcanza: bajar `lado_max`, no quitar
+- [x] **Step 4:** `python -m pytest tests -q` → PASS (si el presupuesto no alcanza: bajar `lado_max`, no quitar
   fechas).
-- [ ] **Step 5:** Anotar en `INFORME.md`: superficies por fecha, tamaño total, qué falta del equipo (fecha de la
+- [x] **Step 5:** Anotar en `INFORME.md`: superficies por fecha, tamaño total, qué falta del equipo (fecha de la
   primera máscara de Mazar, procedencia de todas, stack del 29 oct, Daule-Peripa, Casitagua antes/después del
   17 sep 2026).
-- [ ] **Step 6: Commit** `data: derivados de Mazar, Daule-Peripa y Casitagua (relieve y máscaras del equipo)`
+- [x] **Step 6: Commit** `data: derivados de Mazar, Daule-Peripa y Casitagua (relieve y máscaras del equipo)`
 
 ---
 
@@ -368,7 +368,7 @@ del equipo: `docs/datos-equipo-embalses.md`.
     sola fecha → `CapacidadNoDisponible("Hace falta una segunda fecha con procedencia para comparar.")`.
   - `medir`: cuadrante → píxeles de cada clase de `despues` dentro del cuadrante en km²; punto → clase y dB de
     ambas fechas. `origen` de `despues`.
-- [ ] **Step 1: Tests que fallan** (`tests/datos/test_proveedor_derivados.py`, con `derivados_prueba`):
+- [x] **Step 1: Tests que fallan** (`tests/datos/test_proveedor_derivados.py`, con `derivados_prueba`):
   - `test_fecha_sin_procedencia_no_se_expone`: sitio con 3 fechas, una sin procedencia → 2 adquisiciones.
   - `test_sitio_sin_fechas_mostrables_no_tiene_escenario`.
   - `test_capa_mascara_codigos_contrato`: códigos ∈ {0,1,2}, `leyenda[0][0] == "agua"`.
@@ -379,9 +379,9 @@ del equipo: `docs/datos-equipo-embalses.md`.
     es la de esa fecha.
   - En `test_conformidad.py`, el parámetro `"derivados"`; adaptar `test_origenes_validos…` para aceptar `clase`
     y exigir `procedencia` no nula cuando `clase == "nisar"`.
-- [ ] **Step 2:** FAIL → **Step 3:** implementar (solo numpy/json/pydantic) → **Step 4:**
+- [x] **Step 2:** FAIL → **Step 3:** implementar (solo numpy/json/pydantic) → **Step 4:**
   `python -m pytest tests -q` PASS.
-- [ ] **Step 5: Commit** `feat(datos): proveedor de derivados del equipo (embalses e incendio)`
+- [x] **Step 5: Commit** `feat(datos): proveedor de derivados del equipo (embalses e incendio)`
 
 ---
 
@@ -411,13 +411,13 @@ del equipo: `docs/datos-equipo-embalses.md`.
     "lon": …})`, centro del `bbox`); expone id `incendio-casitagua`, `historia="incendio"`,
     `sitio="casitagua"`, `nombre="Casitagua"`; traduce ids en cada llamada (`dataclasses.replace(capa,
     escenario_id=…)`) y **vuelve a simular** si el id derivado caducó (`NoEncontrado`).
-- [ ] **Step 1: Tests que fallan:**
+- [x] **Step 1: Tests que fallan:**
   - `test_sustituto_embalse_forma_del_vaso`: con un DEM sintético en V → el agua de `sim-alta` contiene
     `agua_dem` y su superficie > la de `sim-baja`.
   - `test_sustituto_embalse_es_sintetico`: todos los orígenes `tipo == "sintetico"`.
   - `test_sustituto_incendio_id_estable`: `escenarios()[0].id == "incendio-casitagua"`; tras vaciar la caché LRU
     del demo, `capa(...)` sigue funcionando.
-- [ ] **Step 2:** FAIL → **Step 3:** implementar → **Step 4:** `python -m pytest tests -q` PASS.
+- [x] **Step 2:** FAIL → **Step 3:** implementar → **Step 4:** `python -m pytest tests -q` PASS.
 - [ ] **Step 5: Commit** `feat(datos): sustitutos sintéticos de embalse (sobre el DEM) e incendio (Casitagua)`
 
 ---
@@ -442,7 +442,7 @@ del equipo: `docs/datos-equipo-embalses.md`.
     no lo tiene → `CapacidadNoDisponible`. `tipos()` = los del demo.
   - `obtener_proveedor()` admite `demo | real | mixto`; por defecto `mixto`.
   - `empaquetar_app.py` añade al zip todo `data/embalses/**` y `data/incendios/**` (sin `data/crudo/`).
-- [ ] **Step 1: Tests que fallan:**
+- [x] **Step 1: Tests que fallan:**
   - `test_mixto_sustituye_si_no_hay_reales`: raíz de prueba con Mazar sin fechas mostrables →
     `escenario("embalse-mazar").origen.tipo == "sintetico"`.
   - `test_mixto_prefiere_reales`: raíz con fechas mostrables → `origen.clase == "nisar"`.
@@ -450,18 +450,18 @@ del equipo: `docs/datos-equipo-embalses.md`.
   - `test_seleccion_por_defecto_mixto` (sin variable de entorno).
   - `test_zip_incluye_derivados` en `tests/motor/test_empaquetar_app.py`.
   - Conformidad con `"mixto"`.
-- [ ] **Step 2:** FAIL → **Step 3:** implementar → **Step 4:** verificación completa:
+- [x] **Step 2:** FAIL → **Step 3:** implementar → **Step 4:** verificación completa:
   `python -m pytest tests -q`, `python -m unittest modelo.clima modelo.desastres`,
   `cd frontend && npm test && npm run lint && npm run build`, `npx playwright test` → todo PASS. Si algún e2e
   dependía de que el proveedor por defecto fuera `demo`, corregir la prueba (no el proveedor) y anotarlo.
-- [ ] **Step 5:** `bash scripts/construir_pages.sh` → termina «Listo»; anotar el tamaño de `frontend/dist-pages`
+- [x] **Step 5:** `bash scripts/construir_pages.sh` → termina «Listo»; anotar el tamaño de `frontend/dist-pages`
   en `INFORME.md` (antes 42 MB).
-- [ ] **Step 6: Commit** `feat(datos): proveedor mixto por defecto (reales, sustitutos y demo) y derivados en Pages`
+- [x] **Step 6: Commit** `feat(datos): proveedor mixto por defecto (reales, sustitutos y demo) y derivados en Pages`
 
 ---
 
 ## Cierre de la fase
 
-- [ ] Actualizar `docs/retomar.md` (estado de la fase 1, qué falta del equipo).
-- [ ] Commit `docs: cierre de la fase 1 (datos de embalses e incendio)`.
-- [ ] No se hace `git push` ni se toca `main`.
+- [x] Actualizar `docs/retomar.md` (estado de la fase 1, qué falta del equipo).
+- [x] Commit `docs: cierre de la fase 1 (datos de embalses e incendio)`.
+- [x] No se hace `git push` ni se toca `main`.

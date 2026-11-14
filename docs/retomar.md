@@ -1,6 +1,6 @@
 # Retomar el trabajo (resumen para una sesión nueva)
 
-Actualizado: 2026-11-14. Léelo antes que `INFORME.md` (que es largo e histórico).
+Actualizado: 2026-11-14 (cierre de la fase 1). Léelo antes que `INFORME.md` (que es largo e histórico).
 
 ## Qué es y dónde está
 
@@ -57,3 +57,14 @@ cd frontend && npm ci && npm run build && cd .. && python servidor.py   # http:/
 Pruebas (todas en verde el 2026-11-14): pytest 382 (+2 omitidas), unittest 13 OK, vitest 624, lint, build,
 Playwright 93, Pages 11. Revisión visual: `bash scripts/revision_visual.sh <ruta> <nombre>` (la Taste Skill está en
 `.claude/skills/`).
+
+## Fase 1: datos de embalses e incendio (cerrada, rama `embalses`)
+**Hecho.** Contrato con procedencia (`datos.contrato`); `preparacion/` (sitios, entrada del equipo, rejilla, medidas, relieve Copernicus, salida) y `scripts/preparar_embalses.py`, que escribe `data/embalses/<sitio>/` y `data/incendios/<sitio>/` (`sitio.json`, `<AAAAMMDD>.npz`, `dem.npz`, `curva.json`, `contorno.geojson`; ~1,6 MB de 10). Proveedores `derivados` (reales del equipo) y `sustituto` (sintético con relieve real), reunidos en **`mixto`, el proveedor por defecto** (`NISAR_PROVEEDOR=demo|real|mixto`). Ids de escenario: `embalse-mazar`, `embalse-daule-peripa`, `incendio-casitagua`. Hoy ninguna fecha tiene procedencia completa, así que se sirven los sustitutos sintéticos (y se etiquetan como tales).
+**Comandos.** `python scripts/preparar_embalses.py --sitio todos [--entrada datos_imagenes] [--salida data] [--regenerar-contorno] [--sin-dem]` (el DEM usa red; imprime lo que falta y lo omitido). Pruebas: `python -m pytest tests -q`.
+**Falta del equipo.** Fecha de la primera máscara de Mazar (`Clas_Super.tif`); `procedencia.json` de todas las fechas (la fecha 2026-10-29 de Mazar está inferida del nombre `Mazar_CS1029.tif`); stack del 29 oct; entregas de Daule-Peripa y de Casitagua (antes y después del 17 sep 2026).
+**Menores diferidos.**
+- T3: contorno con lista vacía; signo en `_es_cuadrado`; guardia de CRS en `superficie_km2` (supone metros).
+- T4: mediana con NaN; `except` demasiado amplio en el DEM; fijar versión de scipy.
+- T5: `.npz` obsoletos al volver a correr (no se borran); excepciones de `dem_fn` no capturadas salvo ValueError/IndexError.
+- T7: textos de métrica solo en español (sin en/qu); 409 sin `clave_texto`.
+- T9: instancia demo separada; el bbox del sustituto de incendio difiere del de `sitio.json`; el borrador kichwa de `api.error.segunda_fecha_comparar` no está validado.
