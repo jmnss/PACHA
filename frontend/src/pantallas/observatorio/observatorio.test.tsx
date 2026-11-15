@@ -95,7 +95,7 @@ const posts = () => llamadas.filter((l) => l.metodo === 'POST' && l.url === '/ap
 function Ubicacion() {
   return <output data-testid="ubicacion">{useLocation().search}</output>
 }
-function montar(ruta = '/observatorio?escenario=ec_x') {
+function montar(ruta = '/explorar/observatorio?escenario=ec_x') {
   const cliente = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   return render(
     <QueryClientProvider client={cliente}>
@@ -167,12 +167,12 @@ describe('Observatorio · mapa y tiempo', () => {
   it('la capa alterna entre «modelo en el tiempo» y «cambio detectado»', async () => {
     montar()
     await listo()
-    const cambio = screen.getByRole('tab', { name: 'Cambio detectado' })
-    const modelo = screen.getByRole('tab', { name: 'Modelo en el tiempo' })
-    expect(cambio).toHaveAttribute('aria-selected', 'true')
+    const cambio = screen.getByRole('radio', { name: 'Cambio detectado' })
+    const modelo = screen.getByRole('radio', { name: 'Modelo en el tiempo' })
+    expect(cambio).toHaveAttribute('aria-checked', 'true')
     expect(screen.queryByText('dB')).not.toBeInTheDocument()
     fireEvent.click(modelo)
-    expect(modelo).toHaveAttribute('aria-selected', 'true')
+    expect(modelo).toHaveAttribute('aria-checked', 'true')
     await waitFor(() => expect(llamadas.some((l) => l.url.startsWith('/api/escenarios/ec_x/capa?adquisicion=2026-04-12&variable=sigma0&polarizacion=HH'))).toBe(true))
     await waitFor(() => expect(screen.queryByText(/Nueva inundación/)).not.toBeInTheDocument())
     expect(screen.getAllByText('dB').length).toBeGreaterThan(0)
@@ -219,7 +219,7 @@ describe('Observatorio · mapa y tiempo', () => {
   })
 
   it('lee la vista de la URL y las vistas pendientes avisan', async () => {
-    montar('/observatorio?escenario=ec_x&vista=serie')
+    montar('/explorar/observatorio?escenario=ec_x&vista=serie')
     expect(await screen.findByRole('tab', { name: 'Serie', selected: true })).toBeInTheDocument()
     expect(screen.queryByTestId('mapa-falso')).not.toBeInTheDocument()
   })
@@ -231,7 +231,7 @@ describe('Observatorio · fotogramas del modelo continuo', () => {
   it('con un paso de 1 h pide un bloque de fotogramas y avanzar mueve el instante en horas', async () => {
     montar()
     await listo()
-    fireEvent.click(screen.getByRole('tab', { name: 'Modelo en el tiempo' }))
+    fireEvent.click(screen.getByRole('radio', { name: 'Modelo en el tiempo' }))
     fireEvent.change(screen.getByRole('combobox', { name: 'Paso' }), { target: { value: '60' } })
     await waitFor(() => expect(fotogramas()).toHaveLength(1))
     expect(fotogramas()[0].cuerpo).toEqual({
@@ -254,7 +254,7 @@ describe('Observatorio · fotogramas del modelo continuo', () => {
 
 describe('Observatorio · casos límite', () => {
   it('con una sola pasada no hay petición de cambio: muestra el motivo y no queda cargando', async () => {
-    montar('/observatorio?escenario=ec_uno')
+    montar('/explorar/observatorio?escenario=ec_uno')
     expect(await screen.findAllByText('Elige dos pasadas distintas para ver el cambio.')).not.toHaveLength(0)
     expect(screen.queryByText(/Calculando/)).not.toBeInTheDocument()
     expect(cambios()).toHaveLength(0)
@@ -272,7 +272,7 @@ describe('Observatorio · casos límite', () => {
   })
 
   it('un escenario caducado (404) ofrece volver al escenario base y deja los selectores', async () => {
-    montar('/observatorio?escenario=ec_x~caducado')
+    montar('/explorar/observatorio?escenario=ec_x~caducado')
     expect(await screen.findByRole('alert')).toHaveTextContent('El escenario no existe.')
     expect(screen.getByRole('button', { name: 'Reintentar' })).toBeInTheDocument()
     expect(screen.getByLabelText('Escenario')).toBeInTheDocument()
@@ -318,14 +318,14 @@ describe('Observatorio · casos límite', () => {
   })
 
   it('el mapa y el reloj hablan de la misma pasada: la anterior o igual al instante', async () => {
-    montar('/observatorio?escenario=ec_x&t=2026-04-30T00:00:00.000Z')
+    montar('/explorar/observatorio?escenario=ec_x&t=2026-04-30T00:00:00.000Z')
     await listo()
     const reloj = screen.getByTestId('reloj')
     await waitFor(() => expect(reloj).toHaveTextContent('Pasada anterior · 24 abr 2026'))
     expect(reloj).toHaveTextContent('Siguiente · 6 may 2026')
     const kpi = screen.getByText('Pasada activa').closest('div') as HTMLElement
     expect(kpi).toHaveTextContent('24 abr 2026')
-    fireEvent.click(screen.getByRole('tab', { name: 'Modelo en el tiempo' }))
+    fireEvent.click(screen.getByRole('radio', { name: 'Modelo en el tiempo' }))
     await waitFor(() => expect(llamadas.some((l) => l.url.includes('/capa?adquisicion=2026-04-24&'))).toBe(true))
     expect(await screen.findByText('Pasada · 24 abr 2026')).toBeInTheDocument()
   })
@@ -346,7 +346,7 @@ describe('Observatorio · casos límite', () => {
   })
 
   it('desde un escenario derivado el clic envía el id base', async () => {
-    montar('/observatorio?escenario=ec_x~abc123')
+    montar('/explorar/observatorio?escenario=ec_x~abc123')
     await listo()
     fireEvent.click(screen.getByText('Clic dentro de Ecuador'))
     await waitFor(() => expect(posts()).toHaveLength(1))

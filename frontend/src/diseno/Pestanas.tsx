@@ -1,4 +1,5 @@
 import { useRef, type KeyboardEvent, type ReactNode } from 'react'
+import { idPanelPestana } from './panelPestana'
 
 export interface Pestana {
   id: string
@@ -12,7 +13,10 @@ interface Props {
   etiqueta: string
 }
 
-/** La activa lleva una línea de 1 px --accent del ancho de su etiqueta; ninguna otra se marca. */
+/**
+ * Pestañas de verdad: cada una gobierna un `tabpanel` (ver `propsPanel`). Para elegir una variante de lo mismo
+ * sin panel propio se usa `ControlSegmentado`. La activa lleva una línea --ocre-borde del ancho de su etiqueta.
+ */
 export function Pestanas({ pestanas, activa, onCambiar, etiqueta }: Props) {
   const refs = useRef<(HTMLButtonElement | null)[]>([])
 
@@ -40,6 +44,7 @@ export function Pestanas({ pestanas, activa, onCambiar, etiqueta }: Props) {
             role="tab"
             id={`pestana-${p.id}`}
             aria-selected={esActiva}
+            aria-controls={idPanelPestana(p.id)}
             tabIndex={esActiva ? 0 : -1}
             className={`pestanas__pestana${esActiva ? ' pestanas__pestana--activa' : ''}`}
             onClick={() => onCambiar(p.id)}

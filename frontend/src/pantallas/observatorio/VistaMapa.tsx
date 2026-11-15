@@ -11,7 +11,7 @@ import { Boton } from '../../diseno/Boton'
 import { IconoChevron } from '../../diseno/iconos'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
 import { Leyenda } from '../../diseno/Leyenda'
-import { Pestanas } from '../../diseno/Pestanas'
+import { ControlSegmentado } from '../../diseno/ControlSegmentado'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { formatearFecha, formatearInstante } from '../../tiempo/fechas'
@@ -173,7 +173,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
     <>
       <Tarjeta pie={capa ? <SelloOrigen origen={capa.origen} /> : undefined} className="vista-mapa">
         <div className="vista-mapa__barra">
-          <Pestanas etiqueta={t('obs.mapa.capa_etiqueta')} pestanas={MODOS.map((m) => ({ id: m.id, etiqueta: t(m.clave) }))} activa={modo} onCambiar={(id) => setModo(id as ModoCapa)} />
+          <ControlSegmentado etiqueta={t('obs.mapa.capa_etiqueta')} opciones={MODOS.map((m) => ({ id: m.id, etiqueta: t(m.clave) }))} valor={modo} onCambiar={(id) => setModo(id as ModoCapa)} />
           <div className="vista-mapa__acciones">
             {!movil && (
               <Boton variante="secundario" onClick={() => onPais(!pais)} aria-pressed={pais}>

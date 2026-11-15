@@ -107,7 +107,7 @@ describe('Observatorio · idioma', () => {
   }
 
   it('el panel de parámetros y la ayuda del radar pasan por el traductor', async () => {
-    const { container } = montar('/observatorio?escenario=ec_x')
+    const { container } = montar('/explorar/observatorio?escenario=ec_x')
     await screen.findByText(/⟦Estos parámetros/)
     fireEvent.click(screen.getByText(/⟦Cómo ve el radar/))
     expect(textosPropios(container)).toEqual([])
@@ -115,7 +115,7 @@ describe('Observatorio · idioma', () => {
   })
 
   it('los nombres de tipo y de escenario salen del catálogo por su clave, no del texto de la API', async () => {
-    const { container } = montar('/observatorio?escenario=ec_x')
+    const { container } = montar('/explorar/observatorio?escenario=ec_x')
     await esperar()
     expect(await screen.findByRole('option', { name: '⟦Pérdida de humedales⟧' })).toBeInTheDocument()
     // «ec_x» no tiene clave en el catálogo: su nombre queda en español.
@@ -124,7 +124,7 @@ describe('Observatorio · idioma', () => {
   })
 
   it('el contexto del lugar pasa por el traductor y deja el texto de la API marcado', async () => {
-    const { container } = montar('/observatorio?escenario=ec_x')
+    const { container } = montar('/explorar/observatorio?escenario=ec_x')
     const titulo = await screen.findByRole('heading', { name: '⟦Contexto del lugar⟧' })
     const panel = titulo.closest('section') as HTMLElement
     await within(panel).findByText('⟦Costa⟧')
@@ -137,13 +137,13 @@ describe('Observatorio · idioma', () => {
 
   it.each<[CodigoIdioma, string]>([['en', 'Context of the place'], ['qu', 'Pachapa tiyashka pacha'], ['es', 'Contexto del lugar']])(
     'en %s el título del contexto y los meses salen del idioma activo', async (idioma, titulo) => {
-      montar('/observatorio?escenario=ec_x', (ui) => renderConIdioma(ui, idioma))
+      montar('/explorar/observatorio?escenario=ec_x', (ui) => renderConIdioma(ui, idioma))
       expect(await screen.findByRole('heading', { name: titulo })).toBeInTheDocument()
     },
   )
 
   it('mapa, cinta de tiempo y métricas pasan por el traductor', async () => {
-    const { container } = montar('/observatorio?escenario=ec_x&vista=mapa')
+    const { container } = montar('/explorar/observatorio?escenario=ec_x&vista=mapa')
     await screen.findByRole('button', { name: '⟦Ver todo Ecuador⟧' })
     await screen.findByText('⟦Métricas del cambio⟧')
     const tarjetas = container.querySelectorAll<HTMLElement>('.vista-mapa, .bloque-tiempo, .panel-metricas__base, .franja-kpi, .observatorio__lado')
@@ -154,7 +154,7 @@ describe('Observatorio · idioma', () => {
 
   it.each<[CodigoIdioma, string]>([['en', 'That point is outside Ecuador. Choose a point inside the country.'], ['qu', 'Chay punto Ecuador hawapi kan. Mamallakta ukupi shuk puntota akllay.']])(
     'el aviso de «fuera de Ecuador» sale en %s', async (idioma, aviso) => {
-      montar('/observatorio?escenario=ec_x&vista=mapa', (ui) => renderConIdioma(ui, idioma))
+      montar('/explorar/observatorio?escenario=ec_x&vista=mapa', (ui) => renderConIdioma(ui, idioma))
       fireEvent.click(await screen.findByText('Clic fuera de Ecuador'))
       expect(await screen.findByRole('alert')).toHaveTextContent(aviso)
     },

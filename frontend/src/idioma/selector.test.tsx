@@ -129,7 +129,7 @@ describe('Estructura y el selector', () => {
     montar('/')
     const nav = screen.getByRole('navigation', { name: 'Principal' })
     expect(within(nav).getByRole('button', { name: 'Idioma: ES' })).toBeInTheDocument()
-    expect(within(nav).getAllByRole('listitem')).toHaveLength(7)
+    expect(within(nav).getAllByRole('listitem')).toHaveLength(5)
   })
 
   it('con ?incrustado=1 no se muestra', () => {

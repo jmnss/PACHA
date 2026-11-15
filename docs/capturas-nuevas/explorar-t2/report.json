@@ -1,0 +1,1633 @@
+{
+ "url": "http://localhost:8000/explorar/observatorio",
+ "at": "2026-11-15T16:40:12.962Z",
+ "allow": [
+  "palette-terracotta"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 4,
+   "filled": [
+    0.69,
+    0.76,
+    0.35,
+    0.32
+   ],
+   "motion": {
+    "elements": 31,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 31,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 2858,
+     "screens": 3.2,
+     "words": 618,
+     "img": 0,
+     "video": 0,
+     "canvas": 1,
+     "svg": 18,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Observatory",
+     "words": 1,
+     "chars": 11,
+     "lines": 1,
+     "size": 28,
+     "vw": 1.9,
+     "font": "Spectral",
+     "weight": 600,
+     "tracking": 0,
+     "leading": 1.14,
+     "top": 129,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Observatory",
+     "words": 1,
+     "lines": 1,
+     "size": 28,
+     "font": "Spectral"
+    },
+    "headings": [
+     {
+      "text": "Observatory",
+      "words": 1,
+      "chars": 11,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Spectral",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.14,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.33,
+      "top": 129,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Public Sans",
+       "share": 0.9,
+       "mono": false
+      },
+      {
+       "family": "Helvetica Neue",
+       "share": 0.06,
+       "mono": false
+      },
+      {
+       "family": "Spectral",
+       "share": 0.03,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      20,
+      28
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Public Sans",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 6.1
+     },
+     "measureChars": 58,
+     "max": {
+      "size": 28,
+      "vw": 1.9,
+      "font": "Spectral",
+      "text": "Observatory"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.01,
+     "centerShare": 0.06,
+     "smallText": 34
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f1e9dd",
+     "bodyBgHsl": {
+      "h": 36,
+      "s": 0.42,
+      "l": 0.91
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f8f3ec",
+       "top": 346,
+       "hsl": {
+        "h": 35,
+        "s": 0.46,
+        "l": 0.95
+       }
+      },
+      {
+       "color": "#24282b",
+       "top": 421,
+       "hsl": {
+        "h": 206,
+        "s": 0.09,
+        "l": 0.15
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#635a4f",
+       "share": 0.48
+      },
+      {
+       "color": "#574f45",
+       "share": 0.22
+      },
+      {
+       "color": "#1f1d1a",
+       "share": 0.18
+      },
+      {
+       "color": "#f1e9dd",
+       "share": 0.07
+      },
+      {
+       "color": "#c9bfb0",
+       "share": 0.03
+      }
+     ],
+     "button": {
+      "bg": "#f8f3ec",
+      "hsl": {
+       "h": 35,
+       "s": 0.46,
+       "l": 0.95
+      },
+      "fg": "#1f1d1a"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 6,
+     "inHero": 3,
+     "radius": 8,
+     "height": 36,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Detected change",
+      "View all of Ecuador"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 18,
+     "hairlineSamples": [
+      "nav.riel 184px",
+      "div.banda-demo__fila 1256px",
+      "nav.subnav 1192px",
+      "div.pestanas 1192px",
+      "div.tarjeta__pie 742px"
+     ],
+     "outlinedBoxes": 6,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 8,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 8,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 4,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 346
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.27
+     }
+    ],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 900,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "public sans",
+     "spectral"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 2858,
+    "margins": {
+     "left": 216,
+     "right": 51
+    },
+    "sections": [
+     {
+      "sel": "header.cabecera",
+      "tag": "header",
+      "top": 129,
+      "height": 132,
+      "words": 33,
+      "media": 0,
+      "middle": 308,
+      "heading": null,
+      "left": 216,
+      "right": 32,
+      "textLeft": 216,
+      "textRight": 192,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div#panel-mapa.observatorio",
+      "tag": "div",
+      "top": 346,
+      "height": 2480,
+      "words": 494,
+      "media": 2,
+      "middle": 62,
+      "heading": {
+       "text": "Pass timeline",
+       "size": 17,
+       "tag": "h2"
+      },
+      "left": 237,
+      "right": 51,
+      "textLeft": 237,
+      "textRight": 51,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Observatory",
+      "size": 28,
+      "top": 129,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 1041,
+      "n": 5
+     },
+     {
+      "x": 216,
+      "n": 2
+     },
+     {
+      "x": 237,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 8,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.08,
+    "voidBox": {
+     "x": 540,
+     "y": 240,
+     "w": 900,
+     "h": 120
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": false,
+    "ground": "#f1e9dd",
+    "sidebar": {
+     "w": 184,
+     "tag": "nav",
+     "links": 5,
+     "share": 0.13
+    },
+    "topbar": {
+     "h": 36
+    },
+    "canvas": {
+     "left": 32,
+     "right": -20064
+    },
+    "hero": {
+     "text": "Observatory",
+     "words": 1,
+     "chars": 11,
+     "lines": 1,
+     "size": 28,
+     "vw": 1.9,
+     "font": "Spectral",
+     "weight": 600,
+     "tracking": 0,
+     "leading": 1.14,
+     "top": 129,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 1,
+    "layout": {
+     "panels": 7,
+     "firstScreen": 3,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 9,
+     "radii": [
+      [
+       8,
+       7
+      ],
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 6,
+     "borderSamples": [
+      "#cdbda6 on #f8f3ec (1.66:1)",
+      "#cdbda6 on #f8f3ec (1.66:1)",
+      "#cdbda6 on #f8f3ec (1.66:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 2,
+     "leftAligned": 0,
+     "figures": 5,
+     "tabularShare": 1,
+     "kpiMax": 13
+    },
+    "rows": {
+     "count": 4,
+     "median": 42
+    },
+    "chartHues": 2,
+    "placeholders": [],
+    "type": {
+     "under13": 0.43,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      20,
+      28
+     ]
+    },
+    "title": {
+     "text": "Observatory",
+     "size": 28,
+     "top": 129
+    },
+    "colourShare": 0.05
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.78,
+    0.92,
+    0.92,
+    0.85,
+    0.85
+   ],
+   "motion": {
+    "elements": 31,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 31,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 4254,
+     "screens": 4.2,
+     "words": 618,
+     "img": 0,
+     "video": 0,
+     "canvas": 1,
+     "svg": 18,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Observatory",
+     "words": 1,
+     "chars": 11,
+     "lines": 1,
+     "size": 28,
+     "vw": 3.6,
+     "font": "Spectral",
+     "weight": 600,
+     "tracking": 0,
+     "leading": 1.14,
+     "top": 129,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Observatory",
+     "words": 1,
+     "lines": 1,
+     "size": 28,
+     "font": "Spectral"
+    },
+    "headings": [
+     {
+      "text": "Observatory",
+      "words": 1,
+      "chars": 11,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Spectral",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.14,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.61,
+      "top": 129,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Public Sans",
+       "share": 0.9,
+       "mono": false
+      },
+      {
+       "family": "Helvetica Neue",
+       "share": 0.06,
+       "mono": false
+      },
+      {
+       "family": "Spectral",
+       "share": 0.03,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      20,
+      28
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Public Sans",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 6.1
+     },
+     "measureChars": 81,
+     "max": {
+      "size": 28,
+      "vw": 3.6,
+      "font": "Spectral",
+      "text": "Observatory"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.01,
+     "centerShare": 0.06,
+     "smallText": 34
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f1e9dd",
+     "bodyBgHsl": {
+      "h": 36,
+      "s": 0.42,
+      "l": 0.91
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f8f3ec",
+       "top": 430,
+       "hsl": {
+        "h": 35,
+        "s": 0.46,
+        "l": 0.95
+       }
+      },
+      {
+       "color": "#24282b",
+       "top": 505,
+       "hsl": {
+        "h": 206,
+        "s": 0.09,
+        "l": 0.15
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#635a4f",
+       "share": 0.48
+      },
+      {
+       "color": "#574f45",
+       "share": 0.22
+      },
+      {
+       "color": "#1f1d1a",
+       "share": 0.18
+      },
+      {
+       "color": "#f1e9dd",
+       "share": 0.07
+      },
+      {
+       "color": "#c9bfb0",
+       "share": 0.03
+      }
+     ],
+     "button": {
+      "bg": "#f8f3ec",
+      "hsl": {
+       "h": 35,
+       "s": 0.46,
+       "l": 0.95
+      },
+      "fg": "#1f1d1a"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 6,
+     "inHero": 3,
+     "radius": 8,
+     "height": 36,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Detected change",
+      "View all of Ecuador"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 18,
+     "hairlineSamples": [
+      "nav.riel 184px",
+      "div.banda-demo__fila 584px",
+      "nav.subnav 520px",
+      "div.pestanas 520px",
+      "div.tarjeta__pie 478px"
+     ],
+     "outlinedBoxes": 6,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 8,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 8,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 4,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 1850
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.32
+     }
+    ],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 1024,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "public sans",
+     "spectral"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 4254,
+    "margins": {
+     "left": 216,
+     "right": 53
+    },
+    "sections": [
+     {
+      "sel": "header.cabecera",
+      "tag": "header",
+      "top": 129,
+      "height": 216,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 216,
+      "right": 98,
+      "textLeft": 216,
+      "textRight": 98,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.observatorio__principal",
+      "tag": "div",
+      "top": 430,
+      "height": 1396,
+      "words": 113,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 237,
+      "right": 53,
+      "textLeft": 237,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 1850,
+      "height": 1149,
+      "words": 154,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Model parameters",
+       "size": 17,
+       "tag": "h2"
+      },
+      "left": 237,
+      "right": 53,
+      "textLeft": 237,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 3227,
+      "height": 379,
+      "words": 65,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Change between two passes",
+       "size": 17,
+       "tag": "h2"
+      },
+      "left": 237,
+      "right": 53,
+      "textLeft": 237,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 3630,
+      "height": 592,
+      "words": 73,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Context of the place",
+       "size": 17,
+       "tag": "h2"
+      },
+      "left": 237,
+      "right": 53,
+      "textLeft": 237,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Observatory",
+      "size": 28,
+      "top": 129,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 233,
+      "n": 6
+     },
+     {
+      "x": 216,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 8,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": false,
+    "ground": "#f1e9dd",
+    "sidebar": {
+     "w": 184,
+     "tag": "nav",
+     "links": 5,
+     "share": 0.24
+    },
+    "topbar": {
+     "h": 36
+    },
+    "canvas": {
+     "left": 32,
+     "right": -14559
+    },
+    "hero": {
+     "text": "Observatory",
+     "words": 1,
+     "chars": 11,
+     "lines": 1,
+     "size": 28,
+     "vw": 3.6,
+     "font": "Spectral",
+     "weight": 600,
+     "tracking": 0,
+     "leading": 1.14,
+     "top": 129,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 1,
+    "layout": {
+     "panels": 7,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 9,
+     "radii": [
+      [
+       8,
+       7
+      ],
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 6,
+     "borderSamples": [
+      "#cdbda6 on #f8f3ec (1.66:1)",
+      "#cdbda6 on #f8f3ec (1.66:1)",
+      "#cdbda6 on #f8f3ec (1.66:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 2,
+     "leftAligned": 0,
+     "figures": 5,
+     "tabularShare": 1,
+     "kpiMax": 13
+    },
+    "rows": {
+     "count": 4,
+     "median": 42
+    },
+    "chartHues": 2,
+    "placeholders": [],
+    "type": {
+     "under13": 0.43,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      20,
+      28
+     ]
+    },
+    "title": {
+     "text": "Observatory",
+     "size": 28,
+     "top": 129
+    },
+    "colourShare": 0.045
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 4,
+   "filled": [
+    0.7,
+    0.87,
+    0.64,
+    0.93
+   ],
+   "motion": {
+    "elements": 31,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 31,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 3241,
+     "screens": 3.8,
+     "words": 452,
+     "img": 0,
+     "video": 0,
+     "canvas": 1,
+     "svg": 19,
+     "sections": 4,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Observatory",
+     "words": 1,
+     "chars": 11,
+     "lines": 1,
+     "size": 22,
+     "vw": 5.6,
+     "font": "Spectral",
+     "weight": 600,
+     "tracking": 0,
+     "leading": 1.27,
+     "top": 109,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Observatory",
+     "words": 1,
+     "lines": 1,
+     "size": 22,
+     "font": "Spectral"
+    },
+    "headings": [
+     {
+      "text": "Observatory",
+      "words": 1,
+      "chars": 11,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "Spectral",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.27,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 109,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Public Sans",
+       "share": 0.87,
+       "mono": false
+      },
+      {
+       "family": "Helvetica Neue",
+       "share": 0.09,
+       "mono": false
+      },
+      {
+       "family": "Spectral",
+       "share": 0.04,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      17,
+      20,
+      22
+     ],
+     "sizeCount": 7,
+     "notLoaded": [],
+     "body": {
+      "font": "Public Sans",
+      "size": 12,
+      "leading": 1.33,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 54,
+     "max": {
+      "size": 22,
+      "vw": 5.6,
+      "font": "Spectral",
+      "text": "Observatory"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.05,
+     "smallText": 20
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f1e9dd",
+     "bodyBgHsl": {
+      "h": 36,
+      "s": 0.42,
+      "l": 0.91
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f8f3ec",
+       "top": 458,
+       "hsl": {
+        "h": 35,
+        "s": 0.46,
+        "l": 0.95
+       }
+      },
+      {
+       "color": "#24282b",
+       "top": 541,
+       "hsl": {
+        "h": 206,
+        "s": 0.09,
+        "l": 0.15
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#635a4f",
+       "share": 0.42
+      },
+      {
+       "color": "#574f45",
+       "share": 0.27
+      },
+      {
+       "color": "#1f1d1a",
+       "share": 0.17
+      },
+      {
+       "color": "#f1e9dd",
+       "share": 0.09
+      },
+      {
+       "color": "#c9bfb0",
+       "share": 0.04
+      }
+     ],
+     "button": {
+      "bg": "#f8f3ec",
+      "hsl": {
+       "h": 35,
+       "s": 0.46,
+       "l": 0.95
+      },
+      "fg": "#1f1d1a"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 4,
+     "inHero": 2,
+     "radius": 8,
+     "height": 44,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Detected change"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 15,
+     "hairlineSamples": [
+      "nav.riel 390px",
+      "div.banda-demo__fila 390px",
+      "nav.subnav 358px",
+      "div.pestanas 306px",
+      "div.tarjeta__pie 316px"
+     ],
+     "outlinedBoxes": 6,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 7,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 8,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "canvas",
+      "ratio": 0.29
+     }
+    ],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 56,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "public sans",
+     "spectral"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 3241,
+    "margins": {
+     "left": 16,
+     "right": 16
+    },
+    "sections": [
+     {
+      "sel": "header.cabecera",
+      "tag": "header",
+      "top": 109,
+      "height": 272,
+      "words": 21,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 24,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.observatorio__principal",
+      "tag": "div",
+      "top": 458,
+      "height": 1271,
+      "words": 103,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 37,
+      "right": 37,
+      "textLeft": 37,
+      "textRight": 37,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 2013,
+      "height": 484,
+      "words": 63,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Change between two passes",
+       "size": 17,
+       "tag": "h2"
+      },
+      "left": 37,
+      "right": 67,
+      "textLeft": 37,
+      "textRight": 67,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.tarjeta",
+      "tag": "section",
+      "top": 2521,
+      "height": 648,
+      "words": 73,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Context of the place",
+       "size": 17,
+       "tag": "h2"
+      },
+      "left": 37,
+      "right": 37,
+      "textLeft": 37,
+      "textRight": 37,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Observatory",
+      "size": 22,
+      "top": 109,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 33,
+      "n": 5
+     },
+     {
+      "x": 16,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 7,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": false,
+    "ground": "#f1e9dd",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 16,
+     "right": -9276
+    },
+    "hero": {
+     "text": "Observatory",
+     "words": 1,
+     "chars": 11,
+     "lines": 1,
+     "size": 22,
+     "vw": 5.6,
+     "font": "Spectral",
+     "weight": 600,
+     "tracking": 0,
+     "leading": 1.27,
+     "top": 109,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 1,
+    "layout": {
+     "panels": 6,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 7,
+     "radii": [
+      [
+       8,
+       7
+      ]
+     ],
+     "heavyBorders": 6,
+     "borderSamples": [
+      "#cdbda6 on #f8f3ec (1.66:1)",
+      "#cdbda6 on #f8f3ec (1.66:1)",
+      "#cdbda6 on #f8f3ec (1.66:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 2,
+     "leftAligned": 0,
+     "figures": 1,
+     "tabularShare": 1,
+     "kpiMax": 14
+    },
+    "rows": {
+     "count": 5,
+     "median": 82
+    },
+    "chartHues": 2,
+    "placeholders": [],
+    "type": {
+     "under13": 0.4,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      16,
+      17,
+      20,
+      22
+     ]
+    },
+    "title": {
+     "text": "Observatory",
+     "size": 22,
+     "top": 109
+    },
+    "colourShare": 0.03
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "button-fx",
+   "width": 1440,
+   "message": "Buttons with shadow/glow.",
+   "fix": "Flat fill, one colour.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "palette-cream",
+   "width": 1440,
+   "message": "Yellow-cream background (page background #f1e9dd, section #f8f3ec, button #f8f3ec).",
+   "fix": "Use the drawn palette. If you want warmth, take a low-chroma stone or bone, not a yellow cream.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "font-count",
+   "width": 1440,
+   "message": "3 typefaces in use (Public Sans, Helvetica Neue, Spectral).",
+   "fix": "Two at most.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "heavy-borders",
+   "width": 1440,
+   "message": "6 panel borders are dark against their ground: #cdbda6 on #f8f3ec (1.66:1) | #cdbda6 on #f8f3ec (1.66:1) | #cdbda6 on #f8f3ec (1.66:1)",
+   "fix": "A panel border is a whisper: about 1.1–1.3:1 against its ground on a light screen (#e5e7eb–#ededed on white), and about 1.2–1.5:1 on a dark one (#1a1a1a on #000, #2e2e2e on #111). Darker lines turn the screen into a grid of boxes; keep the stronger line for controls.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "below-fold",
+   "width": 1440,
+   "message": "Only 3 of 7 blocks start on the first 1440px screen.",
+   "fix": "Every block the brief names shows its header and first rows on the first desktop screen: size the headline block to its question, cap long lists with \"View all\", and put time-sensitive blocks before long tables."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "/home/jnavas/NASA2026/NISAR-Ecuador/docs/capturas-nuevas/explorar-t2/desktop-fold.jpg",
+   "pages": [
+    "/home/jnavas/NASA2026/NISAR-Ecuador/docs/capturas-nuevas/explorar-t2/desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "/home/jnavas/NASA2026/NISAR-Ecuador/docs/capturas-nuevas/explorar-t2/tablet-fold.jpg",
+   "pages": [
+    "/home/jnavas/NASA2026/NISAR-Ecuador/docs/capturas-nuevas/explorar-t2/tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "/home/jnavas/NASA2026/NISAR-Ecuador/docs/capturas-nuevas/explorar-t2/mobile-fold.jpg",
+   "pages": [
+    "/home/jnavas/NASA2026/NISAR-Ecuador/docs/capturas-nuevas/explorar-t2/mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

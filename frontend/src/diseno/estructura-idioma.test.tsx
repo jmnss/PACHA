@@ -70,12 +70,12 @@ describe('honestidad de la banda en los tres idiomas', () => {
 })
 
 describe('riel', () => {
-  it('las etiquetas cortas en kichwa caben (≤ 7 caracteres)', async () => {
+  it('las etiquetas cortas en kichwa caben (≤ 8 caracteres)', async () => {
     simularApi()
     renderConIdioma(estructura, 'qu')
     const nav = screen.getByRole('navigation', { name: qu['estructura.riel.principal'] })
     for (const l of within(nav).getAllByRole('link')) {
-      expect(l.querySelector('.riel__etiqueta')!.textContent!.length).toBeLessThanOrEqual(7)
+      expect(l.querySelector('.riel__etiqueta')!.textContent!.length).toBeLessThanOrEqual(8)
     }
   })
 })

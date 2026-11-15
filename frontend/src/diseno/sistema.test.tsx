@@ -154,16 +154,13 @@ describe('Estructura', () => {
       <Routes><Route element={<Estructura />}><Route index element={<p>hola</p>} /></Route></Routes>,
     )
     const nav = screen.getByRole('navigation', { name: 'Principal' })
-    // WCAG 2.5.3: el nombre empieza por la etiqueta corta visible en móvil y sigue con la larga.
-    expect(within(nav).getByRole('link', { name: 'Inicio · Historias' })).toHaveAttribute('href', '/')
-    expect(within(nav).getByRole('link', { name: 'Observ. · Observatorio' })).toHaveAttribute('href', '/observatorio')
-    expect(within(nav).getByRole('link', { name: 'Simul. · Simulador de eventos' })).toHaveAttribute('href', '/simulador')
-    expect(within(nav).getAllByRole('link')).toHaveLength(6)
-    expect(within(nav).getByRole('link', { name: 'Inicio · Historias' })).toHaveAttribute('aria-current', 'page')
-    for (const l of within(nav).getAllByRole('link')) {
-      const visible = l.querySelector('.riel__etiqueta')!.textContent!
-      expect(within(nav).getAllByRole('link', { name: (nombre) => nombre.startsWith(`${visible} · `) })).toContain(l)
-    }
+    // WCAG 2.5.3: el nombre accesible es la etiqueta visible.
+    expect(within(nav).getByRole('link', { name: 'Inicio' })).toHaveAttribute('href', '/')
+    expect(within(nav).getByRole('link', { name: 'Explorar' })).toHaveAttribute('href', '/explorar')
+    expect(within(nav).getByRole('link', { name: 'Simular' })).toHaveAttribute('href', '/simular')
+    expect(within(nav).getByRole('link', { name: 'Aprender' })).toHaveAttribute('href', '/aprender')
+    expect(within(nav).getAllByRole('link')).toHaveLength(4)
+    expect(within(nav).getByRole('link', { name: 'Inicio' })).toHaveAttribute('aria-current', 'page')
   })
 })
 
@@ -179,8 +176,8 @@ describe('foco al navegar (spec §4.3)', () => {
     <Routes>
       <Route element={<Estructura />}>
         <Route index element={<CabeceraPantalla titulo="Inicio" />} />
-        <Route path="observatorio" element={<PantallaQueCarga />} />
-        <Route path="fundamentos" element={<CabeceraPantalla titulo="Base" />} />
+        <Route path="explorar" element={<PantallaQueCarga />} />
+        <Route path="aprender" element={<CabeceraPantalla titulo="Base" />} />
       </Route>
     </Routes>
   )
@@ -196,7 +193,7 @@ describe('foco al navegar (spec §4.3)', () => {
   it('va al h1 en cada visita, también al volver a la misma ruta', async () => {
     simularApi(true)
     envolver(rutas)
-    for (const [destino, titulo] of [[/Fundamentos/, 'Base'], [/Historias/, 'Inicio'], [/Fundamentos/, 'Base'], [/Fundamentos/, 'Base']] as const) {
+    for (const [destino, titulo] of [[/Aprender/, 'Base'], [/Inicio/, 'Inicio'], [/Aprender/, 'Base'], [/Aprender/, 'Base']] as const) {
       enlace(destino).focus()
       fireEvent.click(enlace(destino))
       await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('heading', { level: 1, name: titulo })))
@@ -206,8 +203,8 @@ describe('foco al navegar (spec §4.3)', () => {
   it('desde una pantalla que carga, acaba en el h1 definitivo y no en <body>', async () => {
     simularApi(true)
     envolver(rutas)
-    enlace(/Observatorio/).focus()
-    fireEvent.click(enlace(/Observatorio/))
+    enlace(/Explorar/).focus()
+    fireEvent.click(enlace(/Explorar/))
     await screen.findByRole('heading', { level: 1, name: 'Definitiva' })
     await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('heading', { level: 1, name: 'Definitiva' })))
   })

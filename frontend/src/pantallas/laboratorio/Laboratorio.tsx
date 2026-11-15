@@ -1,5 +1,5 @@
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
-import { Pestanas } from '../../diseno/Pestanas'
+import { ControlSegmentado } from '../../diseno/ControlSegmentado'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
 import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
@@ -27,11 +27,11 @@ export default function Laboratorio() {
         titulo={t('lab.pantalla.titulo')}
         hallazgo={t('lab.pantalla.hallazgo')}
       />
-      <Pestanas
+      <ControlSegmentado
         etiqueta={t('lab.pantalla.experimentos')}
-        activa={url.vista}
+        valor={url.vista}
         onCambiar={(id) => cambiar({ vista: id as (typeof VISTAS)[number] })}
-        pestanas={[{ id: 'nubes', etiqueta: t('lab.pestana.nubes') }, { id: 'polarizacion', etiqueta: t('lab.pestana.polarizacion') }]}
+        opciones={[{ id: 'nubes', etiqueta: t('lab.pestana.nubes') }, { id: 'polarizacion', etiqueta: t('lab.pestana.polarizacion') }]}
       />
       {url.vista === 'nubes'
         ? <VistaNubes cobertura={url.nubes} onCobertura={(n) => cambiar({ nubes: n }, { reemplazar: true })} />

@@ -6,7 +6,7 @@ const base = process.env.PAGES_BASE ?? '/PACHA/'
 
 export default defineConfig({
   testDir: './e2e',
-  testMatch: ['pages.spec.ts'],
+  testMatch: ['pages.spec.ts', 'redirecciones.spec.ts'],
   timeout: 180_000,
   use: {
     locale: 'es-EC',

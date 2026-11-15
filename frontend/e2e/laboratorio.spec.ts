@@ -6,7 +6,7 @@ for (const { nombre, ancho, alto } of [{ nombre: 'escritorio 1440', ancho: 1440,
     test.use({ viewport: { width: ancho, height: alto } })
 
     test('las nubes tapan el óptico y el radar no cambia', async ({ page }) => {
-      await page.goto('/laboratorio?nubes=0')
+      await page.goto('/aprender/laboratorio?nubes=0')
       await expect(page.getByRole('region', { name: 'Aviso de datos de demostración' })).toBeVisible()
       const radar = page.locator('.franja-kpi__item', { hasText: 'Cambio visto por el radar' }).locator('.franja-kpi__valor')
       const optico = page.locator('.franja-kpi__item', { hasText: 'Cambio visto por el óptico' }).locator('.franja-kpi__valor')
@@ -20,13 +20,13 @@ for (const { nombre, ancho, alto } of [{ nombre: 'escritorio 1440', ancho: 1440,
     })
 
     test('la banda S avisa de que está pendiente de confirmar', async ({ page }) => {
-      await page.goto('/laboratorio?vista=polarizacion&banda=S')
+      await page.goto('/aprender/laboratorio?vista=polarizacion&banda=S')
       await expect(page.getByText(/pendiente de confirmar con la documentación oficial/).first()).toBeVisible({ timeout: 30_000 })
       await expect(page.getByText('Quema del bosque').first()).toBeVisible()
     })
 
     test('el recorrido incrusta la pantalla del paso, sin riel y con la banda, y avanza con el teclado', async ({ page }) => {
-      await page.goto('/recorrido')
+      await page.goto('/aprender/recorrido')
       await page.getByRole('button', { name: 'Pausar' }).click()
       const marco = page.frameLocator('iframe')
       await expect(marco.getByRole('region', { name: 'Aviso de datos de demostración' })).toBeVisible({ timeout: 30_000 })

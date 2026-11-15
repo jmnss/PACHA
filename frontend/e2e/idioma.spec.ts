@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-const OBS = '/observatorio?escenario=ec_la_segua'
+const OBS = '/explorar/observatorio?escenario=ec_la_segua'
 
 async function esperarCarga(page: import('@playwright/test').Page) {
   await page.waitForLoadState('networkidle')
@@ -51,7 +51,7 @@ test.describe('idioma', () => {
 
   test('el recorrido incrustado sigue al idioma de la página sin peticiones nuevas', async ({ page }) => {
     test.setTimeout(60_000)
-    await page.goto('/recorrido?idioma=qu')
+    await page.goto('/aprender/recorrido?idioma=qu')
     await esperarCarga(page)
     const marco = page.frameLocator('iframe.recorrido__marco')
     await expect(marco.locator('html')).toHaveAttribute('lang', 'qu-EC', { timeout: 15_000 })
@@ -71,7 +71,7 @@ test.describe('idioma', () => {
     test.setTimeout(150_000)
     await page.setViewportSize({ width: 1440, height: 900 })
     // Erupción: unos 40 fotogramas (≈ 7 s de animación), tiempo de sobra para cambiar de idioma reproduciendo.
-    await page.goto('/simulador?lat=-4.05&lon=-79.25&dem=0&ext=60&h=erupcion&i=64&j=64&idioma=es')
+    await page.goto('/simular?lat=-4.05&lon=-79.25&dem=0&ext=60&h=erupcion&i=64&j=64&idioma=es')
     await expect(page.getByRole('heading', { name: /Erupción/ }).first()).toBeVisible({ timeout: 90_000 })
     await page.waitForLoadState('networkidle')
     const instante = page.locator('.reproductor-evento').getByRole('slider')

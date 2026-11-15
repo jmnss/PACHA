@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 
 // Requiere `npm run build` previo (servidor.py sirve frontend/dist). Relieve sintético: sin red.
 const ANCHOS = [{ nombre: 'escritorio 1440', ancho: 1440, alto: 900 }, { nombre: 'móvil 390', ancho: 390, alto: 844 }]
-const RUTA = '/simulador?lat=-4.05&lon=-79.25&dem=0&ext=60'
+const RUTA = '/simular?lat=-4.05&lon=-79.25&dem=0&ext=60'
 
 for (const { nombre, ancho, alto } of ANCHOS) {
   test.describe(`simulador · ${nombre}`, () => {
@@ -27,7 +27,7 @@ for (const { nombre, ancho, alto } of ANCHOS) {
       await page.getByRole('button', { name: 'Copiar enlace' }).click()
       await expect(page.getByText('Enlace copiado.')).toBeVisible()
       const enlace = await page.evaluate(() => navigator.clipboard.readText())
-      expect(enlace).toContain('/simulador?')
+      expect(enlace).toContain('/simular?')
       expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBe(false)
 
       // Quien abre el enlace recrea el mismo evento.
@@ -36,19 +36,19 @@ for (const { nombre, ancho, alto } of ANCHOS) {
     })
 
     test('un enlace manipulado cae a los valores por defecto sin romper la pantalla', async ({ page }) => {
-      await page.goto('/simulador?lat=999&ext=7&h=meteorito&i=-4&p=__proto__:1')
+      await page.goto('/simular?lat=999&ext=7&h=meteorito&i=-4&p=__proto__:1')
       await expect(page.getByRole('group', { name: /Tablero del simulador/ })).toBeVisible({ timeout: 60_000 })
       await expect(page.getByRole('alert')).toHaveCount(0)
     })
   })
 }
 
-test('en móvil las pestañas de herramienta no se solapan y no hay desbordamiento horizontal', async ({ page }) => {
+test('en móvil los botones de herramienta no se solapan y no hay desbordamiento horizontal', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/simulador?lat=-4.05&lon=-79.25&dem=0&ext=60&i=64&j=64')
-  const lista = page.getByRole('tablist', { name: 'Herramienta' })
+  await page.goto('/simular?lat=-4.05&lon=-79.25&dem=0&ext=60&i=64&j=64')
+  const lista = page.getByRole('radiogroup', { name: 'Herramienta' })
   await expect(lista).toBeVisible({ timeout: 60_000 })
-  const cajas = await lista.getByRole('tab').evaluateAll((els) => els.map((e) => {
+  const cajas = await lista.getByRole('radio').evaluateAll((els) => els.map((e) => {
     const r = e.getBoundingClientRect()
     return { x: r.x, ancho: r.width }
   }))

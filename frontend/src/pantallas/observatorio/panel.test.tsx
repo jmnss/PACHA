@@ -76,19 +76,19 @@ const panel = () => screen.findByText('Restablecer parámetros')
 
 describe('PanelSimulacion', () => {
   it('solo aparece si el escenario tiene capacidades.simulacion', async () => {
-    const a = montar('/observatorio?escenario=ec_real')
+    const a = montar('/explorar/observatorio?escenario=ec_real')
     await screen.findByTestId('mapa-falso')
     await screen.findByText(/Cinta de pasadas/)
     expect(screen.queryByText('Parámetros del modelo')).not.toBeInTheDocument()
     expect(screen.queryByText('Restablecer parámetros')).not.toBeInTheDocument()
     a.unmount()
-    montar('/observatorio?escenario=ec_x')
+    montar('/explorar/observatorio?escenario=ec_x')
     await panel()
     expect(screen.getByText('Parámetros del modelo')).toBeInTheDocument()
   })
 
   it('incluye semilla, ENL, paso orbital, estacionalidad, fecha del evento y los controles del tipo', async () => {
-    montar('/observatorio?escenario=ec_x')
+    montar('/explorar/observatorio?escenario=ec_x')
     await panel()
     expect(screen.getByLabelText('Semilla')).toHaveValue(7)
     expect(screen.getByLabelText('Número de miradas (ENL)')).toHaveValue('12')
@@ -108,7 +108,7 @@ describe('PanelSimulacion', () => {
   })
 
   it('cambiar la fecha del evento pide el escenario con fecha_evento', async () => {
-    montar('/observatorio?escenario=ec_x')
+    montar('/explorar/observatorio?escenario=ec_x')
     await panel()
     fireEvent.change(screen.getByLabelText('Fecha del evento'), { target: { value: '2026-06-01' } })
     await waitFor(() => expect(posts()).toHaveLength(1), { timeout: 3000 })
@@ -116,7 +116,7 @@ describe('PanelSimulacion', () => {
   })
 
   it('la fecha del evento admite teclear el año: el borrador no se pisa hasta que es válido, y al salir vuelve la vigente', async () => {
-    montar('/observatorio?escenario=ec_x')
+    montar('/explorar/observatorio?escenario=ec_x')
     await panel()
     const campo = screen.getByLabelText('Fecha del evento') as HTMLInputElement
     fireEvent.change(campo, { target: { value: '0020-06-01' } })
@@ -131,7 +131,7 @@ describe('PanelSimulacion', () => {
   })
 
   it('incluye el control de hora de los incendios', async () => {
-    montar('/observatorio?escenario=ec_fuego')
+    montar('/explorar/observatorio?escenario=ec_fuego')
     await panel()
     const hora = screen.getByLabelText('Hora de ignición')
     expect(hora).toHaveValue('14:00')
@@ -143,7 +143,7 @@ describe('PanelSimulacion', () => {
     const falsos = () => vi.useFakeTimers()
 
     it('varios cambios seguidos hacen una sola petición, 300 ms después de la última', async () => {
-      montar('/observatorio?escenario=ec_x')
+      montar('/explorar/observatorio?escenario=ec_x')
       await panel()
       falsos()
       const ENL = screen.getByLabelText('Número de miradas (ENL)')
@@ -167,7 +167,7 @@ describe('PanelSimulacion', () => {
     it('mientras calcula muestra el tiempo transcurrido y desactiva el reproductor con su motivo', async () => {
       let resolver: (r: Response) => void = () => {}
       respuestaSimular = () => new Promise<Response>((r) => { resolver = r })
-      montar('/observatorio?escenario=ec_x')
+      montar('/explorar/observatorio?escenario=ec_x')
       await panel()
       falsos()
       fireEvent.click(screen.getByRole('switch', { name: 'Variación estacional' }))
@@ -184,7 +184,7 @@ describe('PanelSimulacion', () => {
 
     it('un error 422 del servidor se ve en español dentro del panel', async () => {
       respuestaSimular = () => json({ mensaje: 'looks debe estar entre 1 y 100.' }, 422)
-      montar('/observatorio?escenario=ec_x')
+      montar('/explorar/observatorio?escenario=ec_x')
       await panel()
       falsos()
       fireEvent.change(screen.getByLabelText('Número de miradas (ENL)'), { target: { value: '50' } })
@@ -216,7 +216,7 @@ describe('PanelSimulacion', () => {
     await panel()
     expect(screen.getByLabelText('Número de miradas (ENL)')).toHaveValue('12')
     cleanup()
-    montar('/observatorio?escenario=ec_x&par=%%%basura')
+    montar('/explorar/observatorio?escenario=ec_x&par=%%%basura')
     await panel()
     expect(screen.getByLabelText('Semilla')).toHaveValue(7)
   })
@@ -225,7 +225,7 @@ describe('PanelSimulacion', () => {
 
   it('en móvil el panel abre como hoja inferior desde el menú y se cierra con Escape devolviendo el foco al menú', async () => {
     movilSim()
-    montar('/observatorio?escenario=ec_x&vista=comparar')
+    montar('/explorar/observatorio?escenario=ec_x&vista=comparar')
     await screen.findByText(/Cinta de pasadas|Antes y después/)
     expect(screen.queryByText('Restablecer parámetros')).not.toBeInTheDocument()
     const menu = await screen.findByRole('button', { name: 'Más acciones' })
@@ -247,7 +247,7 @@ describe('PanelSimulacion', () => {
 
   it('en móvil el menú de la vista mapa alterna «Ver todo Ecuador» y la barra ya no tiene esos botones', async () => {
     movilSim()
-    montar('/observatorio?escenario=ec_x')
+    montar('/explorar/observatorio?escenario=ec_x')
     await screen.findByText(/Cinta de pasadas/)
     expect(screen.queryByRole('button', { name: 'Ver todo Ecuador' })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Parámetros del modelo' })).not.toBeInTheDocument()
@@ -259,12 +259,12 @@ describe('PanelSimulacion', () => {
 
   it('sin capacidad de simulación el menú no ofrece «Parámetros del modelo»', async () => {
     movilSim()
-    montar('/observatorio?escenario=ec_x')
+    montar('/explorar/observatorio?escenario=ec_x')
     await screen.findByText(/Cinta de pasadas/)
     fireEvent.click(await screen.findByRole('button', { name: 'Más acciones' }))
     expect(screen.getByRole('menuitem', { name: 'Parámetros del modelo' })).toBeInTheDocument()
     cleanup()
-    montar('/observatorio?escenario=ec_real')
+    montar('/explorar/observatorio?escenario=ec_real')
     await screen.findByText(/Cinta de pasadas/)
     fireEvent.click(await screen.findByRole('button', { name: 'Más acciones' }))
     expect(screen.queryByRole('menuitem', { name: 'Parámetros del modelo' })).not.toBeInTheDocument()
@@ -272,7 +272,7 @@ describe('PanelSimulacion', () => {
   })
 
   it('en escritorio no hay menú y los botones siguen en la barra del mapa', async () => {
-    montar('/observatorio?escenario=ec_x')
+    montar('/explorar/observatorio?escenario=ec_x')
     await screen.findByText(/Cinta de pasadas/)
     expect(screen.queryByRole('button', { name: 'Más acciones' })).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Ver todo Ecuador' })).toBeInTheDocument()

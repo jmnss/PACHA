@@ -31,7 +31,7 @@ export default function Historias() {
         return (
           <Link
             key={h.clave}
-            to={i === 0 ? '/' : `/?historia=${h.clave}`}
+            to={i === 0 ? '/explorar/historias' : `/explorar/historias?historia=${h.clave}`}
             className={`historias__enlace${activa ? ' historias__enlace--activa' : ''}`}
             aria-current={activa ? 'page' : undefined}
           >

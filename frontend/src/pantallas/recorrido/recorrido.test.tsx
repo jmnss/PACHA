@@ -7,7 +7,7 @@ import { renderConIdioma, renderPseudo, textosSinTraducir } from '../../idioma/p
 import { GUION, guionDe } from './guion'
 import Recorrido from './Recorrido'
 
-const montar = (ruta = '/recorrido') => render(<MemoryRouter initialEntries={[ruta]}><Recorrido /></MemoryRouter>)
+const montar = (ruta = '/aprender/recorrido') => render(<MemoryRouter initialEntries={[ruta]}><Recorrido /></MemoryRouter>)
 
 describe('guion', () => {
   it('tiene pasos con rutas internas únicas y duración razonable (< 2 min en total)', () => {
@@ -24,10 +24,10 @@ describe('Recorrido', () => {
   it('incrusta la pantalla del paso con ?incrustado=1 y avanza con el teclado', () => {
     const { container } = montar()
     const marco = () => container.querySelector('iframe')!
-    expect(marco().getAttribute('src')).toBe('/?incrustado=1')
+    expect(marco().getAttribute('src')).toBe('/explorar/historias?incrustado=1')
     fireEvent.keyDown(container.querySelector('.recorrido')!, { key: 'ArrowRight' })
     expect(screen.getByText(GUION[1].titulo)).toBeInTheDocument()
-    expect(marco().getAttribute('src')).toBe('/laboratorio?nubes=70&incrustado=1')
+    expect(marco().getAttribute('src')).toBe('/aprender/laboratorio?nubes=70&incrustado=1')
   })
   it('pausa y reanuda', () => {
     montar()
@@ -35,7 +35,7 @@ describe('Recorrido', () => {
     expect(screen.getByRole('button', { name: 'Reanudar' })).toBeInTheDocument()
   })
   it('un paso fuera de rango cae al primero', () => {
-    montar('/recorrido?paso=99')
+    montar('/aprender/recorrido?paso=99')
     expect(screen.getByText(GUION[0].titulo)).toBeInTheDocument()
   })
 })
@@ -72,14 +72,14 @@ describe('Recorrido · idiomas', () => {
     })
     it(`${idioma}: la pantalla muestra el guion y los controles traducidos`, () => {
       const { t } = traductor(idioma)
-      const { container } = renderConIdioma(<MemoryRouter initialEntries={['/recorrido']}><Recorrido /></MemoryRouter>, idioma)
+      const { container } = renderConIdioma(<MemoryRouter initialEntries={['/aprender/recorrido']}><Recorrido /></MemoryRouter>, idioma)
       expect(screen.getByRole('heading', { level: 2 }).textContent).toBe(guionDe(idioma)[0].titulo)
       expect(screen.getByRole('button', { name: t('recorrido.pausar') })).toBeInTheDocument()
       expect(container.querySelector('[data-contenido-largo]')).not.toBeNull()
     })
   }
   it('renderPseudo no deja texto de interfaz sin traducir', () => {
-    const { container } = renderPseudo(<MemoryRouter initialEntries={['/recorrido']}><Recorrido /></MemoryRouter>)
+    const { container } = renderPseudo(<MemoryRouter initialEntries={['/aprender/recorrido']}><Recorrido /></MemoryRouter>)
     expect(textosSinTraducir(container)).toEqual([])
   })
 })

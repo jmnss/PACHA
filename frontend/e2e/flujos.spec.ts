@@ -11,7 +11,7 @@ for (const { nombre, ancho, alto } of ANCHOS) {
   test.describe(`flujos · ${nombre}`, () => {
     test.use({ viewport: { width: ancho, height: alto } })
 
-    for (const ruta of ['/', '/observatorio']) {
+    for (const ruta of ['/', '/explorar/observatorio']) {
       test(`banda de demostración visible y sin cerrar en ${ruta}`, async ({ page }) => {
         await page.goto(ruta)
         const banda = page.getByRole('region', { name: 'Aviso de datos de demostración' })
@@ -23,7 +23,7 @@ for (const { nombre, ancho, alto } of ANCHOS) {
     }
 
     test('Historias: el comparador se mueve con el teclado', async ({ page }) => {
-      await page.goto('/')
+      await page.goto('/explorar/historias')
       const divisor = page.getByRole('slider', { name: 'Divisor entre antes y después' }).first()
       await expect(divisor).toBeAttached({ timeout: 30_000 })
       await divisor.scrollIntoViewIfNeeded()
@@ -37,8 +37,8 @@ for (const { nombre, ancho, alto } of ANCHOS) {
     })
 
     test('Observatorio: con paso de 1 h el mapa anima los fotogramas del modelo', async ({ page }) => {
-      await page.goto('/observatorio')
-      await page.getByRole('tab', { name: 'Modelo en el tiempo' }).click()
+      await page.goto('/explorar/observatorio')
+      await page.getByRole('radio', { name: 'Modelo en el tiempo' }).click()
       await page.getByRole('combobox', { name: 'Paso' }).selectOption('60')
       const rotulo = page.getByText(/^Modelo · /)
       await expect(rotulo).toBeVisible({ timeout: 60_000 })
@@ -50,7 +50,7 @@ for (const { nombre, ancho, alto } of ANCHOS) {
     })
 
     test('Observatorio: Play avanza el instante de la cinta', async ({ page }) => {
-      await page.goto('/observatorio')
+      await page.goto('/explorar/observatorio')
       const cinta = page.getByRole('slider', { name: 'Instante de la cinta de pasadas' })
       await expect(cinta).toBeVisible({ timeout: 30_000 })
       const texto = () => cinta.getAttribute('aria-valuetext')
@@ -64,7 +64,7 @@ for (const { nombre, ancho, alto } of ANCHOS) {
     })
 
     test('Observatorio · comparar: un cuadrante se mide y el CSV lleva su origen', async ({ page }) => {
-      await page.goto('/observatorio?vista=comparar')
+      await page.goto('/explorar/observatorio?vista=comparar')
       const gesto = page.getByTestId('comparador-gesto')
       await expect(gesto).toBeVisible({ timeout: 30_000 })
       await gesto.scrollIntoViewIfNeeded()
@@ -85,7 +85,7 @@ for (const { nombre, ancho, alto } of ANCHOS) {
     })
 
     test('Observatorio · comparar: de un punto a su evolución en Serie', async ({ page }) => {
-      await page.goto('/observatorio?escenario=ec_la_segua&vista=comparar')
+      await page.goto('/explorar/observatorio?escenario=ec_la_segua&vista=comparar')
       const gesto = page.getByTestId('comparador-gesto')
       await expect(gesto).toBeVisible({ timeout: 30_000 })
       await gesto.scrollIntoViewIfNeeded()
@@ -103,7 +103,7 @@ for (const { nombre, ancho, alto } of ANCHOS) {
     test('Observatorio · mapa: un marcador del catálogo lleva a su escenario sin crear uno derivado', async ({ page }) => {
       const posts: string[] = []
       page.on('request', (r) => { if (r.method() === 'POST' && r.url().includes('/api/simulacion/escenario')) posts.push(r.url()) })
-      await page.goto('/observatorio')
+      await page.goto('/explorar/observatorio')
       const menu = page.getByRole('button', { name: 'Más acciones' })
       const todo = page.getByRole('button', { name: 'Ver todo Ecuador' }).or(menu)
       await expect(todo).toBeVisible({ timeout: 30_000 })
@@ -125,7 +125,7 @@ for (const { nombre, ancho, alto } of ANCHOS) {
     })
 
     test('Observatorio · mapa: la provincia aparece bajo el puntero', async ({ page }) => {
-      await page.goto('/observatorio?escenario=ec_la_segua')
+      await page.goto('/explorar/observatorio?escenario=ec_la_segua')
       const lienzo = page.getByTestId('mapa')
       await expect(lienzo.locator('canvas.maplibregl-canvas')).toBeVisible({ timeout: 30_000 })
       const caja = (await lienzo.boundingBox())!
@@ -139,7 +139,7 @@ for (const { nombre, ancho, alto } of ANCHOS) {
     test('Observatorio · mapa: un clic fuera de Ecuador avisa y no simula', async ({ page }) => {
       const posts: string[] = []
       page.on('request', (r) => { if (r.method() === 'POST' && r.url().includes('/api/simulacion/escenario')) posts.push(r.url()) })
-      await page.goto('/observatorio')
+      await page.goto('/explorar/observatorio')
       // En móvil la acción vive en el menú «Más acciones»; en escritorio, en la barra del mapa.
       const menu = page.getByRole('button', { name: 'Más acciones' })
       const todo = page.getByRole('button', { name: 'Ver todo Ecuador' }).or(menu)
@@ -167,7 +167,7 @@ for (const { nombre, ancho, alto } of ANCHOS) {
 
     if (ancho < 700) {
       test('móvil: barra inferior visible, riel oculto y sin desborde horizontal', async ({ page }) => {
-        for (const ruta of ['/', '/observatorio']) {
+        for (const ruta of ['/', '/explorar/observatorio']) {
           await page.goto(ruta)
           const nav = page.getByRole('navigation', { name: 'Principal' })
           await expect(nav).toBeVisible()
@@ -182,7 +182,7 @@ for (const { nombre, ancho, alto } of ANCHOS) {
       test('escritorio: riel lateral visible y sin desborde horizontal', async ({ page }) => {
         await page.goto('/')
         const caja = (await page.getByRole('navigation', { name: 'Principal' }).boundingBox())!
-        expect(caja.width).toBeLessThan(100)
+        expect(caja.width).toBeLessThan(240)
         expect(await hayDesborde(page)).toBe(false)
       })
     }

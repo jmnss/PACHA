@@ -6,7 +6,7 @@ for (const { nombre, ancho, alto } of [{ nombre: 'escritorio 1440', ancho: 1440,
     test.use({ viewport: { width: ancho, height: alto } })
 
     test('la inundación muestra hectáreas, lectura como ejemplo y un informe PNG descargable', async ({ page }) => {
-      await page.goto('/observatorio?escenario=ec_la_segua&vista=impacto')
+      await page.goto('/explorar/observatorio?escenario=ec_la_segua&vista=impacto')
       await expect(page.getByText('Superficie inundada al final')).toBeVisible({ timeout: 60_000 })
       await expect(page.getByText(/En este escenario de demostración, el radar marca unas/)).toBeVisible()
       await expect(page.getByText(/Si esto fuera un evento real/)).toBeVisible()
@@ -15,12 +15,12 @@ for (const { nombre, ancho, alto } of [{ nombre: 'escritorio 1440', ancho: 1440,
     })
 
     test('el incendio se resume en superficie quemada', async ({ page }) => {
-      await page.goto('/observatorio?escenario=ec_loja&vista=impacto')
+      await page.goto('/explorar/observatorio?escenario=ec_loja&vista=impacto')
       await expect(page.getByText('Superficie quemada detectada')).toBeVisible({ timeout: 60_000 })
     })
 
     test('un escenario sin historia no ofrece la pestaña Impacto', async ({ page }) => {
-      await page.goto('/observatorio?escenario=ec_antisana&vista=impacto')
+      await page.goto('/explorar/observatorio?escenario=ec_antisana&vista=impacto')
       await expect(page.getByRole('tab', { name: 'Serie' })).toBeVisible({ timeout: 60_000 })
       await expect(page.getByRole('tab', { name: 'Impacto' })).toHaveCount(0)
     })

@@ -95,7 +95,7 @@ describe('informe y enlace', () => {
     envolver(<ResultadosEvento evento={INCENDIO} mundo={MUNDO} estado={{ ...ESTADO_INICIAL, i: 60, j: 61 }} />)
     fireEvent.click(screen.getByRole('button', { name: 'Copiar enlace' }))
     await waitFor(() => expect(escribir).toHaveBeenCalled())
-    expect(escribir.mock.calls[0][0]).toMatch(/\/simulador\?.*i=60.*j=61/)
+    expect(escribir.mock.calls[0][0]).toMatch(/\/simular\?.*i=60.*j=61/)
     expect(await screen.findByText('Enlace copiado.')).toBeInTheDocument()
   })
 

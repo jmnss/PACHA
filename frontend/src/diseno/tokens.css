@@ -166,7 +166,7 @@ a { color: var(--laguna-tinta); text-underline-offset: 0.2em; }
 
 /* estructura y componentes (docs/diseno.md §6, §7, §8, §10) */
 :root {
-  --w-rail: 50px;          /* riel de iconos (T2 lo cambia por un riel con texto) */
+  --w-rail: 184px;         /* riel con texto: logo, PACHA, cuatro destinos e idioma */
   --h-banda: 36px;         /* banda de demostración (32 px en móvil) */
   --h-banda-movil: 32px;
   --h-barra-inferior: 56px;

@@ -122,12 +122,12 @@ describe('Historias · pantalla', () => {
   })
 
   it('el comparador carga HV en el incendio y se puede cambiar a HH', async () => {
-    montar('/?historia=incendio')
+    montar('/explorar/historias?historia=incendio')
     await screen.findByRole('heading', { name: HISTORIAS[1].titulo })
     const fig = await screen.findByRole('figure')
     expect(fig.querySelector('figcaption')?.textContent).toBe('σ⁰ HV, dB')
     expect(llamadas.some((l) => l.url === '/api/escenarios/ec_fuego/cambio' && l.cuerpo.polarizacion === 'HV')).toBe(true)
-    screen.getByRole('tab', { name: 'HH' }).click()
+    screen.getByRole('radio', { name: 'HH' }).click()
     await waitFor(() => expect(screen.getByRole('figure').querySelector('figcaption')?.textContent).toBe('σ⁰ HH, dB'))
   })
 
@@ -136,7 +136,7 @@ describe('Historias · pantalla', () => {
     await screen.findByRole('figure')
     const href = screen.getByRole('link', { name: 'Ver en el Observatorio' }).getAttribute('href')!
     const q = new URLSearchParams(href.split('?')[1])
-    expect(href.startsWith('/observatorio?')).toBe(true)
+    expect(href.startsWith('/explorar/observatorio?')).toBe(true)
     expect(q.get('escenario')).toBe('ec_agua')
     expect(q.get('antes')).toBe(fechas[1])
     expect(q.get('despues')).toBe(fechas[3])
@@ -177,7 +177,7 @@ describe('Historias · pantalla', () => {
     const fig = await screen.findByRole('figure')
     retener = fechas[3]
     // La consulta HH ya está en caché; la HV tarda.
-    screen.getByRole('tab', { name: 'HV' }).click()
+    screen.getByRole('radio', { name: 'HV' }).click()
     expect(await screen.findByText('Actualizando…')).toBeInTheDocument()
     expect(screen.getByRole('figure')).toBe(fig)
     await act(async () => { liberar!() })

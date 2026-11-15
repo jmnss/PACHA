@@ -2,6 +2,7 @@ import type { titulos as esTitulos } from '../es/titulos'
 
 // Borrador en kichwa unificado, pendiente de revisión por hablantes.
 export const titulos: Record<keyof typeof esTitulos, string> = {
+  'titulos.inicio': 'Kallari',
   'titulos.historias': 'Willakuykuna',
   'titulos.observatorio': 'Observatorio',
   'titulos.simulador': 'Simulador de eventos',

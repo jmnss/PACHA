@@ -8,7 +8,7 @@ import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { Deslizador } from '../../diseno/Deslizador'
 import { Cargando, ErrorBloque, TextoMensaje } from '../../diseno/Estados'
 import { IconoFinal, IconoInicio, IconoPausa, IconoPlay } from '../../diseno/iconos'
-import { Pestanas } from '../../diseno/Pestanas'
+import { ControlSegmentado } from '../../diseno/ControlSegmentado'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { TextoApi } from '../../idioma/TextoApi'
@@ -115,7 +115,7 @@ export default function Simulador() {
           <div className="simulador__principal">
             {movil && tarjetaMundo}
             <Tarjeta titulo={t('sim.pantalla.tablero')} pie={mundo.data ? <SelloOrigen origen={mundo.data.origen} /> : undefined}>
-              <Pestanas etiqueta={t('sim.pantalla.herramienta')} pestanas={cat.herramientas.map((h) => ({ id: h.id, etiqueta: <TextoApi texto={h.nombre} clave={clavesApi.simHerramienta(h.id, 'nombre')} /> }))} activa={estado.h}
+              <ControlSegmentado etiqueta={t('sim.pantalla.herramienta')} opciones={cat.herramientas.map((h) => ({ id: h.id, etiqueta: <TextoApi texto={h.nombre} clave={clavesApi.simHerramienta(h.id, 'nombre')} /> }))} valor={estado.h}
                 onCambiar={(id) => { setElegidos({}); actualizar({ h: id, i: null, j: null, p: {} }, false) }} />
               {mundo.isPending && <Cargando texto={t('sim.pantalla.creando_mundo')} filas={2} />}
               {mundo.isError && <ErrorBloque mensaje={mensaje(mundo.error)} onReintentar={() => void mundo.refetch()} />}

@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test'
 // Las Tareas 21–25 las van quitando; la Tarea 25 deja la lista vacía.
 const PENDIENTES: string[] = []
 
-const RUTAS = ['/', '/observatorio', '/simulador', '/laboratorio', '/recorrido', '/fundamentos']
+const RUTAS = ['/', '/explorar/historias', '/explorar/observatorio', '/simular', '/aprender/laboratorio', '/aprender/recorrido', '/aprender/fundamentos']
 const IDIOMAS = ['es', 'en', 'qu']
 const ANCHOS = [
   { ancho: 1440, alto: 900 },
@@ -42,7 +42,7 @@ for (const ruta of RUTAS) {
 test('teclado a 390 px: el foco no queda tapado y los objetivos miden ≥ 24 px', async ({ page }) => {
   test.setTimeout(90_000)
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/observatorio?idioma=es')
+  await page.goto('/explorar/observatorio?idioma=es')
   await page.waitForLoadState('networkidle')
   await expect(page.locator('[aria-busy="true"]')).toHaveCount(0, { timeout: 20_000 })
 
@@ -88,7 +88,7 @@ test('teclado a 390 px: el foco no queda tapado y los objetivos miden ≥ 24 px'
 test('al navegar por el riel el foco va al h1 de la pantalla nueva (también desde una que carga)', async ({ page }) => {
   test.setTimeout(90_000)
   await page.setViewportSize({ width: 1440, height: 900 })
-  await page.goto('/fundamentos?idioma=es')
+  await page.goto('/aprender/fundamentos?idioma=es')
   await page.waitForLoadState('networkidle')
   const riel = page.getByRole('navigation', { name: 'Principal' })
   const foco = () => page.evaluate(() => {
@@ -96,7 +96,7 @@ test('al navegar por el riel el foco va al h1 de la pantalla nueva (también des
     return el?.tagName === 'H1' && !!el.closest('#contenido') ? 'h1' : `${el?.tagName}.${(el as HTMLElement | null)?.className ?? ''}`
   })
   // El Observatorio monta una cabecera mientras carga y la cambia por la definitiva.
-  for (const destino of [/Observatorio/, /Fundamentos/, /Fundamentos/, /Historias/, /Observatorio/]) {
+  for (const destino of [/Explorar/, /Aprender/, /Aprender/, /Inicio/, /Explorar/]) {
     await riel.getByRole('link', { name: destino }).click()
     await expect(page.locator('[aria-busy="true"]')).toHaveCount(0, { timeout: 20_000 })
     await expect.poll(foco, { timeout: 10_000 }).toBe('h1')

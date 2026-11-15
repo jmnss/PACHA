@@ -5,7 +5,7 @@ import { useCambio, useContexto, type Escenario } from '../../api/consultas'
 import { Comparador } from '../../comparador/Comparador'
 import { Cargando, ErrorBloque } from '../../diseno/Estados'
 import { NotasModelo } from '../../diseno/NotasModelo'
-import { Pestanas } from '../../diseno/Pestanas'
+import { ControlSegmentado } from '../../diseno/ControlSegmentado'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { Termino } from '../../diseno/Termino'
 import { formatoHora } from '../../idioma/formato'
@@ -88,7 +88,7 @@ export function Historia({ contenido: c, esc, indice }: Props) {
     .filter((x) => esc.polarizaciones.includes(x))
     .map((x) => ({ id: x, etiqueta: x === c.comparador.polarizacion ? t('historias.pol.recomendada', { pol: x }) : x }))
 
-  const enlace = `/observatorio?${new URLSearchParams({
+  const enlace = `/explorar/observatorio?${new URLSearchParams({
     escenario: esc.id,
     ...(antes ? { antes: antes.id } : {}),
     ...(despues ? { despues: despues.id } : {}),
@@ -152,7 +152,7 @@ export function Historia({ contenido: c, esc, indice }: Props) {
         <h3 id="h-3" className="historia__encabezado" data-contenido-largo>{c.comparador.titulo}</h3>
         <Tarjeta className="historia__comparador">
           <div className="historia__pestanas">
-            {polarizaciones.length > 1 && <Pestanas etiqueta={t('historias.pol.etiqueta')} pestanas={polarizaciones} activa={pol ?? ''} onCambiar={setPol} />}
+            {polarizaciones.length > 1 && <ControlSegmentado etiqueta={t('historias.pol.etiqueta')} opciones={polarizaciones} valor={pol ?? ''} onCambiar={setPol} />}
             {/* Siempre ocupa su sitio: «Actualizando…» no cambia la altura del bloque. */}
             <p className="historia__estado" role="status">{resultado.isPlaceholderData ? t('historias.comparador.actualizando') : ''}</p>
           </div>

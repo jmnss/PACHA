@@ -1,7 +1,7 @@
 import type { Clave } from '../idioma/traductor'
 import { useT } from '../idioma/useT'
 import { Deslizador } from '../diseno/Deslizador'
-import { Pestanas } from '../diseno/Pestanas'
+import { ControlSegmentado } from '../diseno/ControlSegmentado'
 import { MAPAS_BASE, type MapaBaseId } from './estilo'
 
 interface Props {
@@ -26,8 +26,8 @@ export function ControlesMapa({ base, onBase, opacidad, onOpacidad, conBases }: 
   return (
     <div className="controles-mapa">
       {conBases && (
-        <Pestanas etiqueta={t('piezas.mapa.base')} pestanas={MAPAS_BASE.map((b) => ({ id: b.id, etiqueta: t(CLAVE_BASE[b.id]) }))}
-          activa={base} onCambiar={(id) => onBase(id as MapaBaseId)} />
+        <ControlSegmentado etiqueta={t('piezas.mapa.base')} opciones={MAPAS_BASE.map((b) => ({ id: b.id, etiqueta: t(CLAVE_BASE[b.id]) }))}
+          valor={base} onCambiar={(id) => onBase(id as MapaBaseId)} />
       )}
       <Deslizador etiqueta={t('piezas.mapa.opacidad')} valorTexto={`${Math.round(opacidad * 100)} %`}
         min={10} max={100} step={5} value={Math.round(opacidad * 100)}

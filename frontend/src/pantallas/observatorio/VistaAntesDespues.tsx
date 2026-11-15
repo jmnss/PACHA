@@ -5,7 +5,7 @@ import type { CapaDto, Escenario, ResultadoCambio } from '../../api/consultas'
 import { Comparador, type Cuadrante, type Punto } from '../../comparador/Comparador'
 import { Boton } from '../../diseno/Boton'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
-import { Pestanas } from '../../diseno/Pestanas'
+import { ControlSegmentado } from '../../diseno/ControlSegmentado'
 import { NotasModelo } from '../../diseno/NotasModelo'
 import { Selector } from '../../diseno/Selector'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
@@ -163,7 +163,7 @@ export function VistaAntesDespues({ esc, resultado, antesId, despuesId, polariza
       <Tarjeta className="vista-comparar">
         {selectores}
         {ayudaPolarizacion}
-        {vistas.length > 0 && <Pestanas etiqueta={t('obs.comparar.ver')} pestanas={vistas} activa={vista?.id ?? 'comparar'} onCambiar={setVer} />}
+        {vistas.length > 0 && <ControlSegmentado etiqueta={t('obs.comparar.ver')} opciones={vistas} valor={vista?.id ?? 'comparar'} onCambiar={setVer} />}
         {cuerpo}
         {aviso && <p className="vista-comparar__error" role="status">{aviso}</p>}
         <p className="vista-mapa__ayuda">{t('obs.comparar.ayuda_gestos')}</p>

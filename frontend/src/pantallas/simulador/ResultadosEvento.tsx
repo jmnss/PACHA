@@ -64,7 +64,7 @@ export function ResultadosEvento({ evento, mundo, estado }: Props) {
 
   const copiar = async () => {
     try {
-      await navigator.clipboard.writeText(`${window.location.origin}${conBase('/simulador')}${consulta}`)
+      await navigator.clipboard.writeText(`${window.location.origin}${conBase('/simular')}${consulta}`)
       setAviso('sim.res.enlace_copiado')
     } catch { setAviso('sim.res.enlace_error') }
   }

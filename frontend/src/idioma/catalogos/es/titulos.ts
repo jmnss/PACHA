@@ -1,4 +1,5 @@
 export const titulos = {
+  'titulos.inicio': 'Inicio',
   'titulos.historias': 'Historias',
   'titulos.observatorio': 'Observatorio',
   'titulos.simulador': 'Simulador de eventos',

@@ -47,7 +47,7 @@ beforeEach(() => {
 })
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks() })
 
-function montar(ruta = '/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18') {
+function montar(ruta = '/explorar/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18') {
   const cliente = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   return render(
     <QueryClientProvider client={cliente}>
@@ -128,7 +128,7 @@ describe('Observatorio · series · idioma', () => {
     const cliente = new QueryClient({ defaultOptions: { queries: { retry: false } } })
     return render(
       <QueryClientProvider client={cliente}>
-        <MemoryRouter initialEntries={['/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18']}><Observatorio /></MemoryRouter>
+        <MemoryRouter initialEntries={['/explorar/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18']}><Observatorio /></MemoryRouter>
       </QueryClientProvider>,
     )
   }
@@ -180,7 +180,7 @@ describe('Observatorio · series · idioma', () => {
     URL.createObjectURL = vi.fn((b: Blob) => { contenido = b; return 'blob:x' })
     URL.revokeObjectURL = vi.fn()
     vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (this: HTMLAnchorElement) { nombre = this.download })
-    montar('/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18&p=0.5,0.5')
+    montar('/explorar/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18&p=0.5,0.5')
     await waitFor(() => expect(screen.getAllByRole('figure')).toHaveLength(3))
     const tarjeta = screen.getByRole('heading', { name: 'En la selección' }).closest('section') as HTMLElement
     expect(within(tarjeta).getByRole('figure')).toBeInTheDocument()
@@ -200,7 +200,7 @@ describe('Observatorio · series · idioma', () => {
 
   it('una selección sin puntos dice «Sin dato en la selección»', async () => {
     seleccion = { ...serie('Superficie inundada', 'sintetico', []), puntos: [] }
-    montar('/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18&c=0.1,0.1,0.5,0.5')
+    montar('/explorar/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18&c=0.1,0.1,0.5,0.5')
     expect(await screen.findByText('Sin dato en la selección')).toBeInTheDocument()
     expect(screen.getByText('El punto o el cuadrante cae en agua o en una zona sin dato del radar.')).toBeInTheDocument()
   })

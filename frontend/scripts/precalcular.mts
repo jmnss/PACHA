@@ -55,15 +55,15 @@ for (const e of escenarios) {
   pasadas[e.id] = ((await (await fetch(`${origen}/api/escenarios/${e.id}`)).json()) as { adquisiciones: unknown[] }).adquisiciones.length
 }
 
-await visitar('/')
-await visitar('/?historia=incendio')
+await visitar('/explorar/historias')
+await visitar('/explorar/historias?historia=incendio')
 for (const e of escenarios) {
   for (const vista of ['mapa', 'comparar', 'serie']) {
     // El reproductor se recorre otra vez (hasta dos) si falta alguna capa: en una máquina lenta un clic puede
     // saltarse una pasada. Lo ya grabado no se repite.
     const intentos = vista === 'mapa' ? 3 : 1
     for (let intento = 0; intento < intentos && (intento === 0 || capas(e.id) < pasadas[e.id]); intento++) {
-      await visitar(`/observatorio?escenario=${e.id}&vista=${vista}`, vista !== 'mapa' ? undefined : async (p) => {
+      await visitar(`/explorar/observatorio?escenario=${e.id}&vista=${vista}`, vista !== 'mapa' ? undefined : async (p) => {
         // Con `reducedMotion: 'reduce'` cada pulsación de «Reproducir» avanza una pasada: se pulsa una vez por pasada
         // para que se pida (y se grabe) la capa de cada fotograma de la línea de tiempo.
         const boton = p.getByRole('button', { name: 'Reproducir' })
@@ -80,15 +80,15 @@ for (const e of escenarios) {
       if (intento > 0) console.log(`reintento ${intento} de ${e.id}: ${capas(e.id)} de ${pasadas[e.id]} capas`)
     }
   }
-  if (e.historia !== null) await visitar(`/observatorio?escenario=${e.id}&vista=impacto`)
+  if (e.historia !== null) await visitar(`/explorar/observatorio?escenario=${e.id}&vista=impacto`)
 }
-for (let n = 0; n <= 100; n += 10) await visitar(`/laboratorio?nubes=${n}`)
+for (let n = 0; n <= 100; n += 10) await visitar(`/aprender/laboratorio?nubes=${n}`)
 for (const banda of ['L', 'S']) {
-  for (const pol of ['HH', 'HV', 'VV']) await visitar(`/laboratorio?vista=polarizacion&banda=${banda}&pol=${pol}`)
+  for (const pol of ['HH', 'HV', 'VV']) await visitar(`/aprender/laboratorio?vista=polarizacion&banda=${banda}&pol=${pol}`)
 }
-await visitar('/fundamentos')
-await visitar('/simulador')
-for (let paso = 1; paso <= 6; paso++) await visitar(`/recorrido?paso=${paso}`)
+await visitar('/aprender/fundamentos')
+await visitar('/simular')
+for (let paso = 1; paso <= 6; paso++) await visitar(`/aprender/recorrido?paso=${paso}`)
 
 await Promise.all(grabaciones)
 writeFileSync(join(salida, 'indice.json'), JSON.stringify(indice))

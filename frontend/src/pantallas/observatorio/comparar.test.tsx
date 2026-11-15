@@ -114,7 +114,7 @@ const medidas = () => llamadas.filter((l) => l.url.endsWith('/medicion'))
 const cambios = () => llamadas.filter((l) => l.url.endsWith('/cambio'))
 
 function Ubicacion() { return <output data-testid="ubicacion">{useLocation().search}</output> }
-function montar(ruta = '/observatorio?escenario=ec_x&vista=comparar') {
+function montar(ruta = '/explorar/observatorio?escenario=ec_x&vista=comparar') {
   const cliente = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   return render(
     <QueryClientProvider client={cliente}>
@@ -139,7 +139,7 @@ afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks() })
 
 describe('Observatorio · antes y después', () => {
   it('el comparador usa las fechas elegidas y la polarización elegida', async () => {
-    montar('/observatorio?escenario=ec_x&vista=comparar&antes=2026-04-24&despues=2026-05-18&pol=HV')
+    montar('/explorar/observatorio?escenario=ec_x&vista=comparar&antes=2026-04-24&despues=2026-05-18&pol=HV')
     const fig = await listo()
     expect(within(fig).getByText('Antes · 24 abr 2026')).toBeInTheDocument()
     expect(within(fig).getByText('Después · 18 may 2026')).toBeInTheDocument()
@@ -154,7 +154,7 @@ describe('Observatorio · antes y después', () => {
   })
 
   it('antes = después muestra «Elige dos fechas distintas» y no llama a la API de cambio', async () => {
-    montar('/observatorio?escenario=ec_uno&vista=comparar')
+    montar('/explorar/observatorio?escenario=ec_uno&vista=comparar')
     expect(await screen.findByText('Elige dos fechas distintas')).toBeInTheDocument()
     expect(screen.queryByRole('figure')).not.toBeInTheDocument()
     expect(cambios()).toHaveLength(0)
@@ -230,7 +230,7 @@ describe('Observatorio · antes y después', () => {
   })
 
   it('lee la selección de la URL e ignora lo inválido', async () => {
-    montar('/observatorio?escenario=ec_x&vista=comparar&p=0.25,0.75&c=basura')
+    montar('/explorar/observatorio?escenario=ec_x&vista=comparar&p=0.25,0.75&c=basura')
     await screen.findByText('Medición en un punto')
     expect(medidas()[0].cuerpo.punto).toEqual([0.25, 0.75])
     expect(leerPunto('2,3')).toBeNull()
@@ -241,7 +241,7 @@ describe('Observatorio · antes y después', () => {
   })
 
   it('glaciares muestra el campo de flujo con su leyenda y sello', async () => {
-    montar('/observatorio?escenario=ec_glaciar&vista=comparar')
+    montar('/explorar/observatorio?escenario=ec_glaciar&vista=comparar')
     const flujo = (await screen.findByText('Campo de flujo')).closest('section') as HTMLElement
     const lienzo = within(flujo).getByRole('img', { name: /Campo de flujo: 3 flechas/ })
     expect(lienzo.querySelectorAll('line')).toHaveLength(3)
@@ -252,7 +252,7 @@ describe('Observatorio · antes y después', () => {
   })
 
   it('agricultura muestra la tabla por parcela con paginación y CSV', async () => {
-    montar('/observatorio?escenario=ec_agri&vista=comparar')
+    montar('/explorar/observatorio?escenario=ec_agri&vista=comparar')
     const tarjeta = (await screen.findByRole('heading', { name: 'Resultados por parcela' })).closest('section') as HTMLElement
     expect(within(tarjeta).getByText('P-1')).toBeInTheDocument()
     expect(within(tarjeta).queryByText('P-60')).not.toBeInTheDocument()
@@ -288,7 +288,7 @@ describe('Observatorio · antes y después', () => {
     const clicAncla = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {})
     montar()
     await listo()
-    fireEvent.click(screen.getByRole('tab', { name: 'Cambio detectado' }))
+    fireEvent.click(screen.getByRole('radio', { name: 'Cambio detectado' }))
     fireEvent.click(await screen.findByRole('button', { name: 'Descargar PNG' }))
     await waitFor(() => expect(clicAncla).toHaveBeenCalled())
     const salida = lienzos[lienzos.length - 1]
@@ -300,7 +300,7 @@ describe('Observatorio · antes y después', () => {
 
 describe('Observatorio · honestidad y avisos', () => {
   it('avisa si la polarización medida no es la elegida (medición y capa de cambio)', async () => {
-    const { container } = montar('/observatorio?escenario=ec_pol&vista=comparar&pol=HV')
+    const { container } = montar('/explorar/observatorio?escenario=ec_pol&vista=comparar&pol=HV')
     const fig = await listo()
     expect(fig.querySelector('figcaption')?.textContent).toBe('σ⁰ HH, dB')
     const g = conLienzo(container)
@@ -308,12 +308,12 @@ describe('Observatorio · honestidad y avisos', () => {
     const tarjeta = (await screen.findByText('Medición en un punto')).closest('section') as HTMLElement
     await within(tarjeta).findByText('-4,36 dB')
     expect(within(tarjeta).getByText(NOTA)).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('tab', { name: 'Cambio detectado' }))
+    fireEvent.click(screen.getByRole('radio', { name: 'Cambio detectado' }))
     expect(await screen.findAllByText(NOTA)).toHaveLength(2)
   })
 
   it('con HV elegida y medición en HH la nota sale una sola vez en la tarjeta del punto', async () => {
-    const { container } = montar('/observatorio?escenario=ec_x&vista=comparar&pol=HV')
+    const { container } = montar('/explorar/observatorio?escenario=ec_x&vista=comparar&pol=HV')
     await listo()
     clic(conLienzo(container), 100, 50)
     await screen.findByText('Medición en un punto')
@@ -344,14 +344,14 @@ describe('Observatorio · honestidad y avisos', () => {
     vi.stubGlobal('fetch', vi.fn((url: string, init?: RequestInit) => (url.endsWith('/medicion')
       ? json({ ...MED_PUNTO, metricas: [{ ...MED_PUNTO.metricas[0], ayuda: '' }] })
       : previo(url, init))))
-    montar('/observatorio?escenario=ec_x&vista=comparar&p=0.5,0.5')
+    montar('/explorar/observatorio?escenario=ec_x&vista=comparar&p=0.5,0.5')
     expect(await screen.findByText('Valor medido en el píxel más cercano al punto.')).toBeInTheDocument()
   })
 
   it('las columnas repetidas de una tabla no se pisan', async () => {
     const dup = { ...PARCELAS, titulo: 'Doble', columnas: ['Parcela', 'Valor', 'Valor'], filas: [['A', 1, 2]] }
     CAMBIOS.ec_agri = { ...BASE, tablas: [dup] }
-    montar('/observatorio?escenario=ec_agri&vista=comparar')
+    montar('/explorar/observatorio?escenario=ec_agri&vista=comparar')
     const tarjeta = (await screen.findByRole('heading', { name: 'Doble' })).closest('section') as HTMLElement
     expect(within(tarjeta).getAllByRole('columnheader').map((c) => c.textContent)).toEqual(['Parcela', 'Valor', 'Valor (2)'])
     expect(within(tarjeta).getByText('1')).toBeInTheDocument()
@@ -411,11 +411,11 @@ describe('Observatorio · comparar · idioma', () => {
     .filter((x) => !API.includes(x) && !/^Escenario ec_|^P-\d+$|^Cosecha$|^Clic /.test(x))
 
   it.each([
-    ['con medición de un cuadrante', '/observatorio?escenario=ec_x&vista=comparar&c=0.1,0.1,0.5,0.6'],
-    ['con medición de un punto', '/observatorio?escenario=ec_x&vista=comparar&p=0.5,0.5'],
-    ['con campo de flujo', '/observatorio?escenario=ec_glaciar&vista=comparar'],
-    ['con tabla por parcela', '/observatorio?escenario=ec_agri&vista=comparar'],
-    ['sin pareja', '/observatorio?escenario=ec_uno&vista=comparar'],
+    ['con medición de un cuadrante', '/explorar/observatorio?escenario=ec_x&vista=comparar&c=0.1,0.1,0.5,0.6'],
+    ['con medición de un punto', '/explorar/observatorio?escenario=ec_x&vista=comparar&p=0.5,0.5'],
+    ['con campo de flujo', '/explorar/observatorio?escenario=ec_glaciar&vista=comparar'],
+    ['con tabla por parcela', '/explorar/observatorio?escenario=ec_agri&vista=comparar'],
+    ['sin pareja', '/explorar/observatorio?escenario=ec_uno&vista=comparar'],
   ])('la vista «antes y después» %s pasa por el traductor', async (_n, ruta) => {
     const { container } = montarCon(renderPseudo, ruta)
     await screen.findAllByText(/⟦(Antes|Elige dos fechas)/, undefined, { timeout: 3000 })
@@ -428,7 +428,7 @@ describe('Observatorio · comparar · idioma', () => {
     URL.createObjectURL = vi.fn((b: Blob) => { contenido = b; return 'blob:x' })
     URL.revokeObjectURL = vi.fn()
     vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {})
-    montarCon((ui) => renderConIdioma(ui, 'en'), '/observatorio?escenario=ec_x&vista=comparar&c=0.1,0.1,0.5,0.6')
+    montarCon((ui) => renderConIdioma(ui, 'en'), '/explorar/observatorio?escenario=ec_x&vista=comparar&c=0.1,0.1,0.5,0.6')
     fireEvent.click(await screen.findByRole('button', { name: 'Download CSV' }))
     const texto: string = await new Promise((ok) => { const f = new FileReader(); f.onload = () => ok(String(f.result)); f.readAsText(contenido!) })
     const lineas = texto.replace(/^\uFEFF/, '').split('\n')
@@ -439,7 +439,7 @@ describe('Observatorio · comparar · idioma', () => {
   })
 
   it('en inglés la tabla de la medición traduce capa, medida y valor con su clave', async () => {
-    montarCon((ui) => renderConIdioma(ui, 'en'), '/observatorio?escenario=ec_x&vista=comparar&c=0.1,0.1,0.5,0.6')
+    montarCon((ui) => renderConIdioma(ui, 'en'), '/explorar/observatorio?escenario=ec_x&vista=comparar&c=0.1,0.1,0.5,0.6')
     const tabla = await screen.findByRole('table', { name: /quadrant|Quadrant/ })
     expect(within(tabla).getByText('Mean')).not.toHaveAttribute('lang')
     expect(within(tabla).getByText('σ⁰ HH · April 12, 2026')).toBeInTheDocument()

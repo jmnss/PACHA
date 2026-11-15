@@ -8,14 +8,14 @@ test.beforeEach(async ({ page }) => {
 test('el motor responde salud y cambio en Chromium', async ({ page }) => {
   page.on('console', (m) => { if (m.type() === 'error') console.log('consola:', m.text()) })
   page.on('pageerror', (e) => console.log('pageerror:', e.message))
-  await page.goto('./')
+  await page.goto('explorar/historias')
   await expect(page.getByRole('region', { name: 'Aviso de datos de demostración' })).toBeVisible({ timeout: 120_000 })
   // el comparador de la historia necesita /cambio: aparece su lienzo
   await expect(page.locator('canvas').first()).toBeVisible({ timeout: 120_000 })
 })
 
 test('el recorrido incrusta pantallas con la base', async ({ page }) => {
-  await page.goto('recorrido')
+  await page.goto('aprender/recorrido')
   const marco = page.locator('iframe')
   await expect(marco).toBeVisible({ timeout: 120_000 })
   const src = await marco.getAttribute('src')
@@ -34,14 +34,14 @@ const SIN_COMPARTIDO = () => { Object.defineProperty(window, 'SharedWorker', { v
 test('la portada se ve sin esperar al motor', async ({ page }) => {
   await page.addInitScript(SIN_COMPARTIDO)
   await page.route(SIN_MOTOR, () => new Promise(() => {})) // el motor nunca termina de cargar
-  await page.goto('./')
+  await page.goto('explorar/historias')
   await expect(page.getByRole('region', BANDA)).toBeVisible({ timeout: 15_000 })
   await expect(page.locator('canvas').first()).toBeVisible({ timeout: 15_000 })
   await expect(page.getByText(/Preparando el motor de cálculo/)).toHaveCount(0)
 })
 
 test('recargar una ruta profunda funciona', async ({ page }) => {
-  await page.goto('observatorio?escenario=ec_loja&vista=comparar')
+  await page.goto('explorar/observatorio?escenario=ec_loja&vista=comparar')
   await expect(page.getByRole('region', BANDA)).toBeVisible({ timeout: 120_000 })
   await page.reload()
   await expect(page.getByRole('region', BANDA)).toBeVisible({ timeout: 120_000 })
@@ -49,13 +49,13 @@ test('recargar una ruta profunda funciona', async ({ page }) => {
 })
 
 test('el motor calcula un escenario nuevo del Observatorio', async ({ page }) => {
-  await page.goto('observatorio?escenario=ec_la_segua')
+  await page.goto('explorar/observatorio?escenario=ec_la_segua')
   await page.getByLabel('Semilla').fill('11')
   await expect(page).toHaveURL(/escenario=ec_la_segua(~|%7E)/, { timeout: 120_000 })
 })
 
 test('el simulador crea un mundo y desata un incendio con el motor', async ({ page }) => {
-  await page.goto('simulador?lat=-4.05&lon=-79.25&dem=0&ext=60')
+  await page.goto('simular?lat=-4.05&lon=-79.25&dem=0&ext=60')
   const tablero = page.getByRole('group', { name: /Tablero del simulador/ })
   await expect(tablero).toBeVisible({ timeout: 120_000 })
   await tablero.focus()
@@ -67,7 +67,7 @@ test('el simulador crea un mundo y desata un incendio con el motor', async ({ pa
 })
 
 test('un enlace profundo del simulador recrea el evento', async ({ page }) => {
-  await page.goto('simulador?lat=-4.05&lon=-79.25&dem=0&ext=60&h=incendio&i=64&j=64')
+  await page.goto('simular?lat=-4.05&lon=-79.25&dem=0&ext=60&h=incendio&i=64&j=64')
   await expect(page.getByRole('heading', { name: /Incendio/ }).first()).toBeVisible({ timeout: 120_000 })
   await expect(page.getByText(/Lo que vería un radar como NISAR/)).toBeVisible({ timeout: 120_000 })
 })
@@ -75,7 +75,7 @@ test('un enlace profundo del simulador recrea el evento', async ({ page }) => {
 test('si el motor no carga, se avisa y lo precalculado sigue', async ({ page }) => {
   await page.addInitScript(SIN_COMPARTIDO)
   await page.route('**/motor/app-*.zip', (r) => r.fulfill({ status: 404 }))
-  await page.goto('observatorio?escenario=ec_la_segua')
+  await page.goto('explorar/observatorio?escenario=ec_la_segua')
   await expect(page.getByRole('region', BANDA)).toBeVisible({ timeout: 120_000 })
   await page.getByLabel('Semilla').fill('12')
   await expect(page.getByRole('alert').filter({ hasText: /El motor de cálculo no pudo cargarse/ })).toBeVisible({ timeout: 120_000 })
@@ -87,10 +87,10 @@ for (const [ancho, alto] of [[1440, 900], [768, 1024], [390, 844]]) {
     await page.addInitScript(SIN_COMPARTIDO)
     await page.setViewportSize({ width: ancho, height: alto })
     await page.route(SIN_MOTOR, () => new Promise(() => {}))
-    await page.goto('observatorio?escenario=ec_la_segua')
+    await page.goto('explorar/observatorio?escenario=ec_la_segua')
     await expect(page.getByRole('region', BANDA)).toBeVisible({ timeout: 30_000 })
     if (ancho >= 700) await page.getByLabel('Semilla').fill('13')
-    else await page.goto('simulador?lat=-4.05&lon=-79.25&dem=0&ext=60')
+    else await page.goto('simular?lat=-4.05&lon=-79.25&dem=0&ext=60')
     await expect(page.getByText(/Preparando el motor de cálculo/)).toBeVisible({ timeout: 60_000 })
     await page.screenshot({ path: `../docs/capturas-nuevas/aviso-motor/${ancho}.png` })
   })

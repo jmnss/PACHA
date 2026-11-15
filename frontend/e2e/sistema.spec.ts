@@ -41,8 +41,7 @@ for (const [nombre, ancho, alto] of [['escritorio', 1440, 900], ['móvil', 390, 
     await page.goto('/')
     const nav = page.getByRole('navigation', { name: 'Principal' })
     await nav.evaluate((el) => el.setAttribute('data-contenedor', ''))
-    const clase = ancho < 700 ? '.riel__linea--etiqueta' : '.riel__linea--riel'
-    await lineaVisible(nav.locator(clase), nav)
+    await lineaVisible(nav.locator('.riel__destino[aria-current="page"] .riel__linea'), nav)
   })
 }
 

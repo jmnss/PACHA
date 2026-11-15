@@ -13,6 +13,7 @@ import { piezas } from './piezas'
 import { api } from './api'
 import { titulos } from './titulos'
 import { a11y } from './a11y'
+import { inicio } from './inicio'
 import { simulador } from './simulador'
 
-export const en = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador, ...laboratorio, ...recorrido, ...fundamentos, ...api, ...titulos, ...a11y }
+export const en = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador, ...laboratorio, ...recorrido, ...fundamentos, ...api, ...titulos, ...inicio, ...a11y }

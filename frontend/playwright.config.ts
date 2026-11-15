@@ -17,7 +17,7 @@ export default defineConfig({
     },
     {
       name: 'flujos',
-      testMatch: ['flujos.spec.ts', 'simulador.spec.ts', 'laboratorio.spec.ts', 'impacto.spec.ts', 'accesibilidad.spec.ts', 'idioma.spec.ts'],
+      testMatch: ['flujos.spec.ts', 'simulador.spec.ts', 'laboratorio.spec.ts', 'impacto.spec.ts', 'accesibilidad.spec.ts', 'idioma.spec.ts', 'redirecciones.spec.ts'],
       use: { locale: 'es-EC', baseURL: 'http://127.0.0.1:8000', launchOptions: lanzamiento },
     },
   ],

@@ -9,6 +9,7 @@ import { HojaInferior } from '../../diseno/HojaInferior'
 import { MenuAcciones, type AccionMenu } from '../../diseno/MenuAcciones'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { Pestanas } from '../../diseno/Pestanas'
+import { propsPanel } from '../../diseno/panelPestana'
 import { Selector } from '../../diseno/Selector'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
 import { useMovil } from '../../estado/useMovil'
@@ -249,7 +250,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
         <Pestanas etiqueta={t('obs.estructura.vistas_etiqueta')} pestanas={(esc.historia ? VISTAS : VISTAS.filter((v) => v.id !== 'impacto')).map((v) => ({ id: v.id, etiqueta: t(v.clave) }))} activa={vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
         {movil && acciones.length > 0 && <MenuAcciones etiqueta={t('obs.estructura.mas_acciones')} acciones={acciones} />}
       </div>
-      <div className="observatorio">
+      <div className="observatorio" {...propsPanel(vista)}>
         <div className="observatorio__principal">
           {vista === 'mapa' ? (
             <VistaMapa
