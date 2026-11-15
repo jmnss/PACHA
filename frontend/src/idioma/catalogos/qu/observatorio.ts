@@ -66,7 +66,7 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.contexto.titulo': 'Pachapa tiyashka pacha',
   'obs.contexto.cargando': 'Tiyashka pachata chaskishka…',
   'obs.contexto.sin_contexto': 'Tiyashka pacha illa',
-  'obs.contexto.sin_datos': 'Kay pachapak clima willaykuna mana tiyanchu.',
+  'obs.contexto.sin_datos': 'Kay pachapak clima willaykuna mana tiyanchu. Shuyupi shuk pachata llapiy.',
   'obs.contexto.region': 'Región',
   'obs.contexto.provincia': 'Provincia',
   'obs.contexto.temporada': 'Rikuk pasadapi pacha',
@@ -138,7 +138,7 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.comparar.explica_hh': 'Ondata horizontalpi kachan, horizontalpi chaskin.',
   'obs.comparar.explica_hv': 'Horizontalpi kachan, verticalpi chaskin.',
   'obs.comparar.elige_dos': 'Ishkay mana kikin punchakunata akllay',
-  'obs.comparar.elige_dos_texto': 'Kay escenariopika ishkay mana kikin pasadakuna tupachinkapak minishtin. Shuyu rikuypi churay.',
+  'obs.comparar.elige_dos_texto': 'Tupachinkapak ishkay pasadakuna minishtin. Shuyu rikuypi churay.',
   'obs.comparar.aviso_sin_area': 'Áreayuk shuk cuadrota shuyuy',
   'obs.comparar.vista_comparar': '{variable} ñawpa, washa',
   'obs.comparar.vista_clasificacion': 'Clasificación',
@@ -217,7 +217,7 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.serie.seleccion_titulo': 'Akllasqapi',
   'obs.serie.seleccion_aviso_pol': 'Wiñachikka tipopa rikuna polarización-wan llamkan, akllanapa mana.',
   'obs.serie.seleccion_vacia_titulo': 'Akllasqapi mana willay kanchu',
-  'obs.serie.seleccion_vacia_texto': 'Punto utaq cuadrante yakupi utaq radarpa mana willayniyuq pachapi tarikun.',
+  'obs.serie.seleccion_vacia_texto': 'Chay punto yakupi o radar mana tupushka pachapi tarikun. Shuk puntota llapiy.',
   'obs.serie.seleccion_calculando': 'Akllasqapa wiñachikta yupachkan…',
 
   // — Impacto —

@@ -7,7 +7,7 @@ export const historias: Record<keyof typeof esHistorias, string> = {
     'Credits: climate from NASA POWER, province boundaries from geoBoundaries (CC0), Public Sans and Spectral typefaces (SIL OFL).',
   'historias.cargando': 'Loading the story…',
   'historias.sin_escenario.titulo': 'This story has no scenario',
-  'historias.sin_escenario.texto': 'There is no team scenario linked to this story.',
+  'historias.sin_escenario.texto': 'There is no scenario for this story yet. Try the other one.',
   'historias.marca.ejemplo': 'In this demonstration scenario',
   'historias.marca.pendiente': 'pending confirmation with the official documentation',
   'historias.sitio.etiqueta': 'Reservoir',

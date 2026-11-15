@@ -384,3 +384,12 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
 .subnav__enlace:hover { color: var(--secondary); }
 .subnav__enlace[aria-current='page'] { color: var(--text); border-bottom-color: var(--ocre-borde); }
 @media (max-width: 699px) { .subnav__enlace { min-height: var(--h-touch); } }
+
+/* Migas de pan de Explorar (T7): una línea discreta bajo la subnavegación. */
+.migas { padding: var(--space-2) 0 0; font-size: var(--fs-13); color: var(--muted); }
+.migas__lista { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); list-style: none; margin: 0; padding: 0; }
+.migas__item + .migas__item::before { content: '›'; margin-right: var(--space-2); }
+.migas__item a { color: var(--muted); text-decoration: underline; text-underline-offset: var(--offset-subrayado); }
+.migas__item a:hover { color: var(--text); }
+.migas__item a, .migas__item span { display: inline-flex; align-items: center; min-height: var(--size-objetivo); }
+.migas__item [aria-current='page'] { color: var(--text); }

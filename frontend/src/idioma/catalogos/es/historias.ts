@@ -5,7 +5,7 @@ export const historias = {
     'Créditos: clima de NASA POWER, límites de provincias de geoBoundaries (CC0), tipografía Public Sans y Spectral (SIL OFL).',
   'historias.cargando': 'Cargando la historia…',
   'historias.sin_escenario.titulo': 'Esta historia no tiene escenario',
-  'historias.sin_escenario.texto': 'No hay un escenario del equipo asociado a esta historia.',
+  'historias.sin_escenario.texto': 'Todavía no hay un escenario para esta historia. Prueba con la otra.',
   'historias.marca.ejemplo': 'En este escenario de demostración',
   'historias.marca.pendiente': 'pendiente de confirmar con la documentación oficial',
   'historias.sitio.etiqueta': 'Embalse',

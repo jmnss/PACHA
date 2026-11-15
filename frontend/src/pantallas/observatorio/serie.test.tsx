@@ -114,7 +114,7 @@ describe('Observatorio · series', () => {
   it('sin series explica el motivo y un error ofrece Reintentar', async () => {
     respuesta = cambio([])
     const { unmount } = montar()
-    expect(await screen.findByText('Este escenario no devuelve series temporales. Prueba con la vista Mapa o con otro escenario.')).toBeInTheDocument()
+    expect(await screen.findByText('Este escenario no tiene series de tiempo. Prueba la vista Mapa u otro escenario.')).toBeInTheDocument()
     unmount()
     vi.stubGlobal('fetch', vi.fn((url: string) => (url.endsWith('/cambio') ? json({ mensaje: 'Falló el cálculo.' }, 422) : json(url === '/api/escenarios/ec_x' ? escenario('ec_x') : url.startsWith('/api/contexto') ? null : [], 200))))
     montar()
@@ -202,7 +202,7 @@ describe('Observatorio · series · idioma', () => {
     seleccion = { ...serie('Superficie inundada', 'sintetico', []), puntos: [] }
     montar('/explorar/observatorio?escenario=ec_x&vista=serie&antes=2026-04-24&despues=2026-05-18&c=0.1,0.1,0.5,0.5')
     expect(await screen.findByText('Sin dato en la selección')).toBeInTheDocument()
-    expect(screen.getByText('El punto o el cuadrante cae en agua o en una zona sin dato del radar.')).toBeInTheDocument()
+    expect(screen.getByText('Ese punto cae en agua o donde el radar no midió. Toca otro punto.')).toBeInTheDocument()
   })
 
   it('sin punto ni cuadrante no se llama a la API de selección', async () => {

@@ -1,8 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useIncrustado } from '../../estado/useIncrustado'
 import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
 import { Entradas } from './Entradas'
+import { GuiaPrimeraVisita } from './GuiaPrimeraVisita'
+import { guiaVista } from './guiaMemoria'
 import { Localizador } from './Localizador'
 import type { IdLugar } from './lugares'
 import { NotaLugar } from './NotaLugar'
@@ -19,6 +22,14 @@ export default function Inicio() {
   const { t } = useT()
   useTituloPagina('titulos.inicio')
   const [elegido, setElegido] = useState<IdLugar>('daule')
+  const incrustado = useIncrustado()
+  const [guia, setGuia] = useState(false)
+  // Primera visita: el recorrido se abre solo una vez, ya con las anclas en pantalla.
+  useEffect(() => {
+    if (incrustado || guiaVista()) return
+    const id = window.setTimeout(() => setGuia(true), 400)
+    return () => window.clearTimeout(id)
+  }, [incrustado])
   return (
     <div className="inicio">
       <section className="portada" aria-labelledby="inicio-titulo">
@@ -36,6 +47,7 @@ export default function Inicio() {
                 </svg>
                 {t('inicio.recorrido')}
               </Link>
+              <button type="button" className="inicio__enlace inicio__enlace--discreto" onClick={() => setGuia(true)}>{t('guia.repetir')}</button>
             </div>
           </div>
           <RegistroPasadas />
@@ -49,6 +61,7 @@ export default function Inicio() {
       </section>
       <div className="inicio__contacto" aria-hidden="true" />
       <Entradas />
+      <GuiaPrimeraVisita abierta={guia} onCerrar={() => setGuia(false)} />
     </div>
   )
 }

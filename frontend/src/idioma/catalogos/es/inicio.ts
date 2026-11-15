@@ -69,7 +69,7 @@ export const inicio = {
   'inicio.embalses_corte': 'Corte de un embalse: el nivel del agua con lluvia y en sequía',
   'inicio.embalses_lluvia': 'con lluvia',
   'inicio.embalses_sequia': 'en sequía',
-  'inicio.embalses_detalle': 'Mazar, en la Sierra, y Daule-Peripa, en la Costa. Mira cómo sube el agua con la lluvia, cómo baja en la sequía y qué significa eso para la luz que llega a tu casa.',
+  'inicio.embalses_detalle': 'Mazar, en la Sierra, y Daule-Peripa, en la Costa. Mira cómo sube el agua con la lluvia, cómo baja en la sequía y qué significa para la luz de tu casa.',
   'inicio.embalses_ir_mazar': 'Mazar',
   'inicio.embalses_ir_daule': 'Daule-Peripa',
   'inicio.embalses_lugares': 'Elige el embalse',

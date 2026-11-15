@@ -65,7 +65,7 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.contexto.titulo': 'Context of the place',
   'obs.contexto.cargando': 'Loading the context…',
   'obs.contexto.sin_contexto': 'No context',
-  'obs.contexto.sin_datos': 'There is no climate data for this point.',
+  'obs.contexto.sin_datos': 'There is no climate data for this point. Tap another place on the map.',
   'obs.contexto.region': 'Region',
   'obs.contexto.provincia': 'Province',
   'obs.contexto.temporada': 'Season at the active pass',
@@ -137,7 +137,7 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.comparar.explica_hh': 'It is sent and received with the wave horizontal.',
   'obs.comparar.explica_hv': 'It is sent horizontally and received vertically.',
   'obs.comparar.elige_dos': 'Choose two different dates',
-  'obs.comparar.elige_dos_texto': 'This scenario needs two different passes to compare them. Set them from the Map view.',
+  'obs.comparar.elige_dos_texto': 'Comparing needs two passes. Set them in the Map view.',
   'obs.comparar.aviso_sin_area': 'Draw a box with an area',
   'obs.comparar.vista_comparar': '{variable} before and after',
   'obs.comparar.vista_clasificacion': 'Classification',
@@ -203,7 +203,7 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   // — Serie —
   'obs.serie.sin_series': 'No series',
   'obs.serie.sin_pareja_texto': 'This scenario needs at least two different passes to compute its series.',
-  'obs.serie.sin_series_texto': 'This scenario returns no time series. Try the Map view or another scenario.',
+  'obs.serie.sin_series_texto': 'This scenario has no time series. Try the Map view or another scenario.',
   'obs.serie.calculando': 'Computing the series…',
   'obs.serie.marca_antes': 'before',
   'obs.serie.marca_despues': 'after',
@@ -216,7 +216,7 @@ export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.serie.seleccion_titulo': 'In the selection',
   'obs.serie.seleccion_aviso_pol': 'The series uses the polarization of the type\'s observable, not the one in the selector.',
   'obs.serie.seleccion_vacia_titulo': 'No data in the selection',
-  'obs.serie.seleccion_vacia_texto': 'The point or quadrant falls on water or on an area with no radar data.',
+  'obs.serie.seleccion_vacia_texto': 'That point falls on water or where the radar did not measure. Tap another point.',
   'obs.serie.seleccion_calculando': 'Computing the series of the selection…',
 
   // — Impacto —

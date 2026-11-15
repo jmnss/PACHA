@@ -617,6 +617,8 @@ estructura.banda.sin_origen,Los datos de origen aún no se han cargado.,The orig
 estructura.estado.reintentar,Reintentar,Retry,Kutin ruray,no
 estructura.estado.ultimo_dato,Último dato bueno: {hora}.,Last good data: {hora}.,Kipa alli willay: {hora}.,no
 estructura.limite_error.mensaje,No se pudo cargar la pantalla.,The screen could not be loaded.,Mana kay pantallata kichayta ushashkachu.,no
+estructura.miga.paso,Paso {n},Step {n},{n} ñiqi,no
+estructura.migas,Dónde estás,Where you are,Maypi kanki,no
 estructura.motor.cargando,Preparando el motor de cálculo… (primera visita: unos 25 MB),Preparing the computation engine… (first visit: about 25 MB),Yupana motorta allichikun… (punta kutin: 25 MB shina),no
 estructura.motor.error,El motor de cálculo no pudo cargarse en este navegador; lo precalculado sigue disponible.,The computation engine could not load in this browser; precomputed content is still available.,Yupana motorka kay navegadorpi mana chaskiyta ushashkachu; ñawpa yupashkaka tiyakunllami.,no
 estructura.motor.no_disponible,"Esta función necesita el motor de cálculo, que no pudo cargarse en este navegador.","This feature needs the computation engine, which could not load in this browser.","Kay ruranaka yupana motorta minishtin, shinapash kay navegadorpi mana chaskiyta ushashkachu.",no
@@ -681,6 +683,21 @@ fundamentos.tarjeta.mision,La misión NISAR,The NISAR mission,NISAR misión,no
 fundamentos.tarjeta.pol_bandas,Polarizaciones y bandas,Polarizations and bands,"Polarizacionkuna, bandakuna",no
 fundamentos.tarjeta.radar,Un radar que ilumina por sí mismo,A radar that lights its own scene,Pay kikin kanchachik radar,no
 fundamentos.titulo,Fundamentos,Fundamentals,Sapi yachay,no
+guia.1.texto,Muestra cómo el radar NISAR ve el agua y el fuego. La franja de arriba avisa cuando los datos son de demostración.,It shows how the NISAR radar sees water and fire. The strip at the top tells you when data is demonstration data.,NISAR radarmi yakuta ninatapash imashina rikushkata rikuchin. Hawa sinchika rikuchin ima willaykuna rikuchinapak kashkata.,no
+guia.1.titulo,Esto es PACHA,This is PACHA,Kayka PACHAmi,no
+guia.2.texto,"Dos historias, embalses e incendios, y un simulador para probar «¿y si…?».","Two stories, reservoirs and wildfires, and a simulator to try “what if…?”.","Ishkay willakuy, yaku wakaychikuna y ninakuna, y shuk simulador «¿imapak kashpaka…?» yachanapak.",no
+guia.2.titulo,Tres maneras de entrar,Three ways in,Kimsa yaykuna,no
+guia.3.texto,"Inicio, Explorar, Simular y Aprender. Siempre están aquí para volver.","Home, Explore, Simulate and Learn. They are always here to come back to.","Inicio, Explorar, Simular y Aprender. Kaypimi sapa kutin tiyan kutinkapak.",no
+guia.3.titulo,Cuatro destinos,Four places to go,Chusku rina,no
+guia.4.texto,"Cambia entre español, inglés y kichwa cuando quieras.","Switch between Spanish, English and Kichwa whenever you like.","Kastilla, inglés y kichwa shimikunata munashka kutinpi tikray.",no
+guia.4.titulo,Tu idioma,Your language,Kikin shimi,no
+guia.anterior,Anterior,Back,Washa,no
+guia.entendido,Entendido,Got it,Intindirkani,no
+guia.etiqueta,Guía de primera visita,First-visit guide,Ñawpaq rikuypa pushaq,no
+guia.paso,Paso {n} de {total},Step {n} of {total},"{n} ñiqi, {total} ukumanta",no
+guia.repetir,Ver la guía otra vez,See the guide again,Pushaqta shuk kutin rikuy,no
+guia.saltar,Saltar guía,Skip guide,Pushaqta usha,no
+guia.siguiente,Siguiente,Next,Qatiq,no
 historias.cargando,Cargando la historia…,Loading the story…,Willakuyta chaskishka…,no
 historias.cifra.calculando,Calculando…,Computing…,Yupashka…,no
 historias.cifra.mas,Todas las cifras del escenario,All the figures of the scenario,Escenariopa tukuy yupaykuna,no
@@ -710,7 +727,7 @@ historias.por_llegar,Por llegar,Coming soon,Shamunkarak,no
 historias.por_llegar.nota,Aún no está en la app; no se muestra ninguna cifra inventada.,Not in the app yet; no made-up figure is shown.,Appika kunanrak mana charinchu; mana yuyarishka yupayta rikuchinchu.,no
 historias.pregunta,"Qué ve el radar cuando baja el agua de un embalse o arde la Sierra, paso a paso.","What the radar sees when a reservoir drops or the Sierra burns, step by step.","Embalsepi yaku urakukpi o Sierrapi nina rupakpi, radarka ima rikun, paso paso.",no
 historias.simular.enlace,Abrir el Simulador,Open the Simulator,Simuladorta paskay,no
-historias.sin_escenario.texto,No hay un escenario del equipo asociado a esta historia.,There is no team scenario linked to this story.,Kay willakuywan equipopa escenario mana tiyanchu.,no
+historias.sin_escenario.texto,Todavía no hay un escenario para esta historia. Prueba con la otra.,There is no scenario for this story yet. Try the other one.,Kay willakuypak mana ima escenario tiyanchu. Shukwanmi ensayay.,no
 historias.sin_escenario.titulo,Esta historia no tiene escenario,This story has no scenario,Kay willakuypak escenario mana tiyanchu,no
 historias.sitio.etiqueta,Embalse,Reservoir,Embalse,no
 historias.vista.etiqueta,Qué estás viendo,What you are seeing,Ima rikukunki,no
@@ -721,7 +738,7 @@ inicio.bajada,"PACHA usa el radar NISAR, que ve de día, de noche y entre nubes,
 inicio.embalses,Embalses y lluvia,Reservoirs and rain,"Yaku wakaychinakuna, tamya",no
 inicio.embalses_corte,Corte de un embalse: el nivel del agua con lluvia y en sequía,Section of a reservoir: the water level with rain and in drought,"Yaku wakaychinapak kuchushka: yaku hawa tamyawan, chakipipash",no
 inicio.embalses_dato,Costa y Sierra,Coast and Highlands,"Costa, Sierrapash",no
-inicio.embalses_detalle,"Mazar, en la Sierra, y Daule-Peripa, en la Costa. Mira cómo sube el agua con la lluvia, cómo baja en la sequía y qué significa eso para la luz que llega a tu casa.","Mazar, in the Highlands, and Daule-Peripa, on the Coast. See how the water rises with rain, how it drops in drought and what that means for the power that reaches your home.","Mazar, Sierrapi, Daule-Peripa, Costapi. Rikuy yaku tamyawan imashina wichayan, chakipi imashina urayan, chayka kikinpak wasiman chayak achikpak ima nishkata.",no
+inicio.embalses_detalle,"Mazar, en la Sierra, y Daule-Peripa, en la Costa. Mira cómo sube el agua con la lluvia, cómo baja en la sequía y qué significa para la luz de tu casa.","Mazar, in the Highlands, and Daule-Peripa, on the Coast. See how the water rises with rain, how it drops in drought and what that means for the power that reaches your home.","Mazar, Sierrapi, Daule-Peripa, Costapi. Rikuy yaku tamyawan imashina wichayan, chakipi imashina urayan, chayka kikinpak wasiman chayak achikpak ima nishkata.",no
 inicio.embalses_ir_daule,Daule-Peripa,Daule-Peripa,Daule-Peripa,no
 inicio.embalses_ir_mazar,Mazar,Mazar,Mazar,no
 inicio.embalses_lluvia,con lluvia,with rain,tamyawan,no
@@ -852,7 +869,7 @@ obs.comparar.como_leer,Cómo leer esto,How to read this,Kayta imashina ñawinchi
 obs.comparar.descargar_png,Descargar PNG,Download PNG,PNGta uraykachay,no
 obs.comparar.despues,Después,After,Washa,no
 obs.comparar.elige_dos,Elige dos fechas distintas,Choose two different dates,Ishkay mana kikin punchakunata akllay,no
-obs.comparar.elige_dos_texto,Este escenario necesita dos pasadas distintas para compararlas. Fíjalas desde la vista Mapa.,This scenario needs two different passes to compare them. Set them from the Map view.,Kay escenariopika ishkay mana kikin pasadakuna tupachinkapak minishtin. Shuyu rikuypi churay.,no
+obs.comparar.elige_dos_texto,Para comparar hacen falta dos pasadas. Fíjalas en la vista Mapa.,Comparing needs two passes. Set them in the Map view.,Tupachinkapak ishkay pasadakuna minishtin. Shuyu rikuypi churay.,no
 obs.comparar.error_lienzo,No se pudo dibujar la capa.,The layer could not be drawn.,Capata mana shuyuyta ushashkachu.,no
 obs.comparar.etiqueta_antes,Antes · {fecha},Before · {fecha},Ñawpa · {fecha},no
 obs.comparar.etiqueta_despues,Después · {fecha},After · {fecha},Washa · {fecha},no
@@ -877,7 +894,7 @@ obs.contexto.provincia,Provincia,Province,Provincia,no
 obs.contexto.proximo_hito,Próximo hito,Next milestone,Shamuk hito,no
 obs.contexto.region,Región,Region,Región,no
 obs.contexto.sin_contexto,Sin contexto,No context,Tiyashka pacha illa,no
-obs.contexto.sin_datos,No hay datos climáticos para este punto.,There is no climate data for this point.,Kay pachapak clima willaykuna mana tiyanchu.,no
+obs.contexto.sin_datos,No hay datos de clima para este punto. Toca otro lugar del mapa.,There is no climate data for this point. Tap another place on the map.,Kay pachapak clima willaykuna mana tiyanchu. Shuyupi shuk pachata llapiy.,no
 obs.contexto.temporada,Temporada en la pasada activa,Season at the active pass,Rikuk pasadapi pacha,no
 obs.contexto.temporada_lluviosa,Lluviosa,Rainy,Tamya,no
 obs.contexto.temporada_seca,Seca,Dry,Chaki,no
@@ -1029,11 +1046,11 @@ obs.serie.nota_verdad,"La línea punteada es la verdad sintética del modelo de 
 obs.serie.seleccion_aviso_pol,"La serie usa la polarización del observable del tipo, no la del selector.","The series uses the polarization of the type's observable, not the one in the selector.","Wiñachikka tipopa rikuna polarización-wan llamkan, akllanapa mana.",no
 obs.serie.seleccion_calculando,Calculando la serie de la selección…,Computing the series of the selection…,Akllasqapa wiñachikta yupachkan…,no
 obs.serie.seleccion_titulo,En la selección,In the selection,Akllasqapi,no
-obs.serie.seleccion_vacia_texto,El punto o el cuadrante cae en agua o en una zona sin dato del radar.,The point or quadrant falls on water or on an area with no radar data.,Punto utaq cuadrante yakupi utaq radarpa mana willayniyuq pachapi tarikun.,no
+obs.serie.seleccion_vacia_texto,Ese punto cae en agua o donde el radar no midió. Toca otro punto.,That point falls on water or where the radar did not measure. Tap another point.,Chay punto yakupi o radar mana tupushka pachapi tarikun. Shuk puntota llapiy.,no
 obs.serie.seleccion_vacia_titulo,Sin dato en la selección,No data in the selection,Akllasqapi mana willay kanchu,no
 obs.serie.sin_pareja_texto,Este escenario necesita al menos dos pasadas distintas para calcular sus series.,This scenario needs at least two different passes to compute its series.,Kay escenariopika wiñachikkunata yupankapak a lo menos ishkay mana kikin pasadakuna minishtin.,no
 obs.serie.sin_series,Sin series,No series,Wiñachik mana kanchu,no
-obs.serie.sin_series_texto,Este escenario no devuelve series temporales. Prueba con la vista Mapa o con otro escenario.,This scenario returns no time series. Try the Map view or another scenario.,Kay escenariopika pachapi wiñachikkuna mana kanchu. Shuyu rikuypi o shuk escenariopi llankay.,no
+obs.serie.sin_series_texto,Este escenario no tiene series de tiempo. Prueba la vista Mapa u otro escenario.,This scenario has no time series. Try the Map view or another scenario.,Kay escenariopika pachapi wiñachikkuna mana kanchu. Shuyu rikuypi o shuk escenariopi llankay.,no
 obs.serie.valores_de,Valores de {titulo},Values of {titulo},{titulo}-pa chaninkuna,no
 obs.tiempo.anterior,Pasada anterior · {fecha},Previous pass · {fecha},Ñawpa pasada · {fecha},no
 obs.tiempo.fijar_antes,Fijar como «antes»,Set as “before”,«Ñawpa» shina churay,no

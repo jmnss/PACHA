@@ -68,7 +68,7 @@ export const observatorio = {
   'obs.contexto.titulo': 'Contexto del lugar',
   'obs.contexto.cargando': 'Cargando el contexto…',
   'obs.contexto.sin_contexto': 'Sin contexto',
-  'obs.contexto.sin_datos': 'No hay datos climáticos para este punto.',
+  'obs.contexto.sin_datos': 'No hay datos de clima para este punto. Toca otro lugar del mapa.',
   'obs.contexto.region': 'Región',
   'obs.contexto.provincia': 'Provincia',
   'obs.contexto.temporada': 'Temporada en la pasada activa',
@@ -141,7 +141,7 @@ export const observatorio = {
   'obs.comparar.explica_hh': 'Se emite y se recibe con la onda en horizontal.',
   'obs.comparar.explica_hv': 'Se emite en horizontal y se recibe en vertical.',
   'obs.comparar.elige_dos': 'Elige dos fechas distintas',
-  'obs.comparar.elige_dos_texto': 'Este escenario necesita dos pasadas distintas para compararlas. Fíjalas desde la vista Mapa.',
+  'obs.comparar.elige_dos_texto': 'Para comparar hacen falta dos pasadas. Fíjalas en la vista Mapa.',
   'obs.comparar.aviso_sin_area': 'Dibuja un recuadro con área',
   'obs.comparar.vista_comparar': '{variable} antes y después',
   'obs.comparar.vista_clasificacion': 'Clasificación',
@@ -207,7 +207,7 @@ export const observatorio = {
   // — Serie —
   'obs.serie.sin_series': 'Sin series',
   'obs.serie.sin_pareja_texto': 'Este escenario necesita al menos dos pasadas distintas para calcular sus series.',
-  'obs.serie.sin_series_texto': 'Este escenario no devuelve series temporales. Prueba con la vista Mapa o con otro escenario.',
+  'obs.serie.sin_series_texto': 'Este escenario no tiene series de tiempo. Prueba la vista Mapa u otro escenario.',
   'obs.serie.calculando': 'Calculando las series…',
   'obs.serie.marca_antes': 'antes',
   'obs.serie.marca_despues': 'después',
@@ -220,7 +220,7 @@ export const observatorio = {
   'obs.serie.seleccion_titulo': 'En la selección',
   'obs.serie.seleccion_aviso_pol': 'La serie usa la polarización del observable del tipo, no la del selector.',
   'obs.serie.seleccion_vacia_titulo': 'Sin dato en la selección',
-  'obs.serie.seleccion_vacia_texto': 'El punto o el cuadrante cae en agua o en una zona sin dato del radar.',
+  'obs.serie.seleccion_vacia_texto': 'Ese punto cae en agua o donde el radar no midió. Toca otro punto.',
   'obs.serie.seleccion_calculando': 'Calculando la serie de la selección…',
 
   // — Impacto —

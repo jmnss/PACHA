@@ -49,7 +49,7 @@ export default function App() {
     <Routes>
       <Route element={<Estructura />}>
         <Route index element={<InicioONaveg />} />
-        <Route path="explorar" element={<SeccionConSub enlaces={SUB_EXPLORAR} etiqueta="estructura.sub.explorar" />}>
+        <Route path="explorar" element={<SeccionConSub enlaces={SUB_EXPLORAR} etiqueta="estructura.sub.explorar" migas />}>
           <Route index element={<Redirigir a="/explorar/historias" />} />
           <Route
             path="historias"

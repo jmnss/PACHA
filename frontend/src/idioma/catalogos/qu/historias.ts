@@ -8,7 +8,7 @@ export const historias: Record<keyof typeof esHistorias, string> = {
     'Yupaychay: NASA POWER-manta clima, geoBoundaries-manta provinciakunapa límites (CC0), Public Sans, Spectral tipografía (SIL OFL).',
   'historias.cargando': 'Willakuyta chaskishka…',
   'historias.sin_escenario.titulo': 'Kay willakuypak escenario mana tiyanchu',
-  'historias.sin_escenario.texto': 'Kay willakuywan equipopa escenario mana tiyanchu.',
+  'historias.sin_escenario.texto': 'Kay willakuypak mana ima escenario tiyanchu. Shukwanmi ensayay.',
   'historias.marca.ejemplo': 'Kay rikuchiy escenariopi',
   'historias.marca.pendiente': 'kamachik panka-wan chiqanyachina kan',
   'historias.sitio.etiqueta': 'Embalse',

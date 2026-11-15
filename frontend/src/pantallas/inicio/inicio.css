@@ -186,3 +186,21 @@
   .perfil__pasada { animation: none; transform: translateX(45cqw); }
   .pasadas__capa--nueva .pasadas__roca { animation: none; transform: none; }
 }
+
+/* Guía de primera visita (T7): globo anclado, sin tapar la banda; sin movimiento si se pide quieto. */
+.inicio__enlace--discreto { background: none; border: 0; padding: 0; font-weight: 500; font-size: var(--fs-14); color: var(--muted); text-decoration: underline; text-underline-offset: var(--offset-subrayado); cursor: pointer; }
+.inicio__enlace--discreto:hover { color: var(--text); }
+.guia {
+  position: fixed; z-index: var(--z-banda); width: min(320px, calc(100vw - 2 * var(--space-4)));
+  background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius-card);
+  box-shadow: var(--shadow-float); padding: var(--space-4); display: grid; gap: var(--space-2);
+}
+.guia__paso { margin: 0; font-size: var(--fs-13); color: var(--muted); }
+.guia__titulo { margin: 0; font-size: var(--fs-17); font-weight: 600; }
+.guia__texto { margin: 0; font-size: var(--fs-15); line-height: 1.45; }
+.guia__acciones { display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: flex-end; margin-top: var(--space-2); }
+.guia-ancla { outline: var(--size-2) solid var(--ocre-borde); outline-offset: var(--space-1); }
+@media (prefers-reduced-motion: no-preference) {
+  .guia { animation: guia-entra 160ms ease-out; }
+  @keyframes guia-entra { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+}

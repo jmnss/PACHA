@@ -1,0 +1,20 @@
+import type { guia as esGuia } from '../es/guia'
+export const guia: Record<keyof typeof esGuia, string> = {
+  'guia.etiqueta': 'First-visit guide',
+  'guia.paso': 'Step {n} of {total}',
+  'guia.siguiente': 'Next',
+  'guia.anterior': 'Back',
+  'guia.entendido': 'Got it',
+  'guia.saltar': 'Skip guide',
+  'guia.repetir': 'See the guide again',
+  'guia.1.titulo': 'This is PACHA',
+  'guia.1.texto': 'It shows how the NISAR radar sees water and fire. The strip at the top tells you when data is demonstration data.',
+  'guia.2.titulo': 'Three ways in',
+  'guia.2.texto': 'Two stories, reservoirs and wildfires, and a simulator to try “what if…?”.',
+  'guia.3.titulo': 'Four places to go',
+  'guia.3.texto': 'Home, Explore, Simulate and Learn. They are always here to come back to.',
+  'guia.4.titulo': 'Your language',
+  'guia.4.texto': 'Switch between Spanish, English and Kichwa whenever you like.',
+  'estructura.migas': 'Where you are',
+  'estructura.miga.paso': 'Step {n}',
+}
