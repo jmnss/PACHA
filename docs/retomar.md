@@ -11,7 +11,13 @@ Actualizado: 2026-11-14 (cierre de la fase 1). Léelo antes que `INFORME.md` (qu
   hace falta). La app Streamlit se retiró: etiqueta `legado-streamlit`.
 - Ramas: `main` (publicada), **`embalses` (trabajo actual)**, `datos-reales` (= main), `migracion-react` (historia vieja).
 
-## En pausa: fase 2 hasta rediseñar la UX (2026-11-14)
+## Rediseño hecho (2026-11-15, rama `rediseno-pacha`)
+
+T1b–T9 del plan `docs/superpowers/plans/2026-11-15-rediseno-t1b-t9.md` integrados con verificación reducida (ver
+`INFORME.md`, «Rediseño «Tierra viva»»). Rutas: `/`, `/explorar/historias`, `/explorar/observatorio`, `/simular`,
+`/aprender/*`. Falta el cierre T8 completo (Playwright, axe, Pages) y reconciliar las fases 2–5 con la interfaz nueva.
+
+## (Histórico) En pausa: fase 2 hasta rediseñar la UX (2026-11-14)
 
 **Decisión del usuario:** antes de empezar la fase 2 (`docs/superpowers/plans/2026-11-14-fase2-pagina-embalses.md`,
 que ya trabaja con frontend) hay que pasar por un proceso de cambios de interfaz: la UI actual carece de

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import combinaciones from './combinaciones-demo.json'
-import { COLORES_CATEGORIA, COLORES_RESPALDO, RAMPAS, colorear, coloresDeCategorias, hexARgb, lutDeRampa, rampaDePaleta, type NombreRampa } from './rampas'
+import { COLORES_CATEGORIA, COLORES_POR_ETIQUETA, COLORES_RESPALDO, RAMPAS, colorear, coloresDeCategorias, hexARgb, lutDeRampa, rampaDePaleta, type NombreRampa } from './rampas'
 
 type V3 = [number, number, number]
 const lineal = (c: number) => { const x = c / 255; return x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4 }
@@ -121,6 +121,16 @@ describe('rampas de color (docs/diseno.md §4)', () => {
         expect(rampaDePaleta(c.paleta as never, c.variable), `${c.variable}/${c.paleta}`).not.toBeNull()
       }
     }
+  })
+
+  it('máscara del equipo: agua en la rampa agua, quemado en la fuego, el fondo transparente (nunca naranja ni ocre)', () => {
+    expect(coloresDeCategorias('mascara', 2, ['agua', 'no agua'])).toEqual([RAMPAS.agua[3], null])
+    expect(coloresDeCategorias('mascara', 2, ['quemado', 'no quemado'])).toEqual([RAMPAS.fuego[2], null])
+    const prohibidos = ['#e0773a', '#d9a21b', '#7d5c0e', '#e4b23a']
+    for (const v of ['mascara', 'cambio']) {
+      for (const c of Object.values(COLORES_POR_ETIQUETA[v])) expect(prohibidos).not.toContain(c?.toLowerCase())
+    }
+    expect(coloresDeCategorias('cambio', 4, ['Agua persistente', 'Agua ganada', 'Agua perdida', 'Sin agua'])[3]).toBeNull()
   })
 
   it('variable categórica desconocida: tonos de respaldo por posición, ninguno vacío', () => {

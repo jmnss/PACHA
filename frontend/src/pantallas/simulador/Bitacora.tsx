@@ -1,3 +1,4 @@
+import { useEffect, useId, useRef, useState } from 'react'
 import { Boton } from '../../diseno/Boton'
 import { Tabla, type ColumnaTabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
@@ -17,6 +18,18 @@ interface Props { entradas: EntradaBitacora[]; origen: Origen; onVaciar: () => v
 export function Bitacora({ entradas, origen, onVaciar }: Props) {
   const ctx = useT()
   const { t, idioma } = ctx
+  // Vaciar borra lo guardado sin vuelta atrás: se pide confirmación en línea (UX-18). Al abrirla el foco va a
+  // «Cancelar» (lo seguro); al cerrarla vuelve al botón «Vaciar»; Escape cancela.
+  const [confirmando, setConfirmando] = useState(false)
+  const idPregunta = useId()
+  const cancelar = useRef<HTMLButtonElement>(null)
+  const vaciar = useRef<HTMLButtonElement>(null)
+  const abierta = useRef(false)
+  useEffect(() => {
+    if (confirmando) cancelar.current?.focus()
+    else if (abierta.current) vaciar.current?.focus()
+    abierta.current = confirmando
+  }, [confirmando])
   if (entradas.length === 0) return null
   const texto = (v: unknown) => <TextoApi texto={String(v)} />
   const columnas: ColumnaTabla<Record<string, unknown>>[] = COLUMNAS_BITACORA.map((c, k) => ({
@@ -40,8 +53,18 @@ export function Bitacora({ entradas, origen, onVaciar }: Props) {
       <Tabla columnas={columnas} filas={filas} titulo={t('sim.bitacora.tabla')} porPagina={10} />
       <div className="simulador__acciones">
         <Boton variante="secundario" onClick={() => descargarCsv('bitacora-simulador.csv', csvBitacora(entradas, origen, ctx, idioma))}>{t('sim.bitacora.descargar')}</Boton>
-        <Boton variante="terciario" onClick={onVaciar}>{t('sim.bitacora.vaciar')}</Boton>
+        {!confirmando && <button ref={vaciar} type="button" className="boton boton--terciario" onClick={() => setConfirmando(true)}>{t('sim.bitacora.vaciar')}</button>}
       </div>
+      {confirmando && (
+        <div className="simulador__confirmar" role="group" aria-labelledby={idPregunta}
+          onKeyDown={(e) => { if (e.key === 'Escape') { e.stopPropagation(); setConfirmando(false) } }}>
+          <p id={idPregunta} className="simulador__nota">{t('sim.bitacora.vaciar_pregunta')}</p>
+          <div className="simulador__acciones">
+            <button ref={cancelar} type="button" className="boton boton--secundario" onClick={() => setConfirmando(false)}>{t('sim.bitacora.vaciar_no')}</button>
+            <Boton variante="terciario" onClick={() => { setConfirmando(false); onVaciar() }}>{t('sim.bitacora.vaciar_si')}</Boton>
+          </div>
+        </div>
+      )}
     </Tarjeta>
   )
 }

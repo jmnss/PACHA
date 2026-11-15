@@ -256,7 +256,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
         <Pestanas etiqueta={t('obs.estructura.vistas_etiqueta')} pestanas={(esc.historia ? VISTAS : VISTAS.filter((v) => v.id !== 'impacto')).map((v) => ({ id: v.id, etiqueta: t(v.clave) }))} activa={vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
         {movil && acciones.length > 0 && <MenuAcciones etiqueta={t('obs.estructura.mas_acciones')} acciones={acciones} />}
       </div>
-      <p className="observatorio__que">{t(`obs.vista.${vista}.que`)}</p>
+      {!movil && <p className="observatorio__que">{t(`obs.vista.${vista}.que`)}</p>}
       <div className="observatorio" {...propsPanel(vista)}>
         <div className="observatorio__principal">
           {vista === 'mapa' ? (
@@ -283,6 +283,8 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
           )}
         </div>
         <aside className="observatorio__lado" aria-label={t('obs.estructura.lado_etiqueta')}>
+          {/* En móvil, «qué ves» va bajo el mapa: el mapa es lo primero tras la cabecera. */}
+          {movil && <p className="observatorio__que">{t(`obs.vista.${vista}.que`)}</p>}
           {!movil && panelAvanzado}
           <AyudaRadar descripcion={tipoActual?.descripcion} nombreTipo={tipoActual?.nombre} tipoId={tipoActual?.id} observable={movil ? detalleObservable : undefined} />
           {vista === 'comparar' && peticion && (

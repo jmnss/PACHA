@@ -47,7 +47,7 @@ beforeEach(() => {
         antes: capa(variable, cuerpo.polarizacion), despues: capa(variable, cuerpo.polarizacion), cambio: capa(variable, cuerpo.polarizacion),
         capas_extra: [], clasificacion: null, tablas: [], vectores: null, origen, notas: [],
         metricas: embalse
-          ? [{ etiqueta: 'Variación relativa', valor: '-30.0', unidad: '%', ayuda: '', clave_texto: null, valores_texto: null }]
+          ? [{ etiqueta: 'Variación relativa', valor: '-30,0', unidad: '%', ayuda: '', clave_texto: 'api.cambio.metrica.embalse.variacion_relativa', valores_texto: { valor: -30 } }]
           : [{ etiqueta: 'Área quemada detectada', valor: '14,3', unidad: 'km²', ayuda: '', clave_texto: 'api.obs.metrica.area_quemada_detectada', valores_texto: { valor: 14.3 } }],
         series: [{ titulo: 'Superficie de agua', unidad: 'km²', origen, puntos: (embalse ? FECHAS_EMB : FECHAS_INC).map((f, i) => [`${f}T00:00:00Z`, [5.94, 4.16, 3, 2][i], 'S']) }],
       })

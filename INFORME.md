@@ -656,3 +656,21 @@ Salida de `python scripts/preparar_embalses.py --sitio todos` (desde cero, tras 
 - La superficie de agua de cada fecha se mide ahora en la rejilla **original** de la máscara (el contorno se rasteriza a esa rejilla), no tras remuestrear a la de referencia; prueba con píxel de 10,063 × 9,950 m. Mazar usa la rejilla de referencia, así que sus derivados no cambian.
 - `preparar_embalses.py` imprime por fecha lo que falta de la procedencia y las fechas omitidas; `ProveedorDerivados` y `ProveedorMixto` avisan con `warnings.warn` cuando un sitio no se puede leer.
 - Mazar: la fecha 2026-10-29 es inferida del nombre del archivo (ver Tarea 6). Daule-Peripa: la superficie del sustituto es la región rellenada del DEM, no el embalse.
+
+## Rediseño «Tierra viva» (rama `rediseno-pacha`, 2026-11-15)
+
+Plan: `docs/superpowers/plans/2026-11-15-rediseno-t1b-t9.md` (mezcla D, vía A). Hecho: T1b (diseño v2, tokens, logo,
+romaO en la fase), T2 (cuatro destinos y redirecciones), T3 (Inicio), T4 (Historias por pasos sobre Mazar, Daule-Peripa y
+Casitagua, con huecos «por llegar» de la fase 2), T5 (Simulador en tres pasos; fix Mw 7,8/7,0), T6 (Observatorio), T7
+(guía, migas, vacíos, textos), arreglos de T8 y T9 (guion `docs/prueba-usabilidad.md`).
+
+**Verificación reducida por decisión del usuario (velocidad):** vitest 706/706, lint y build en verde tras integrar todo;
+pytest de `tests/datos` + `tests/api` 395 OK. **Sin correr** tras T2: Playwright completo, axe, e2e de Pages, revisión a
+768 y en en/qu, `/polish` y `/audit` contra `docs/auditoria-ux.md`. Queda pendiente para un cierre T8 completo.
+
+**Pendientes:** mini-perfil A–A′ del Simulador (la API no da perfiles de elevación); perfil de Inicio sigue esquemático
+(falta corte SRTM); fuente del incendio del Casitagua; leyenda de la capa `cambio` sin claves (sale en español); en el
+hallazgo del Observatorio se mezcla español en el texto inglés; pequeño solape a la izquierda de la primera categoría de
+la leyenda del mapa a 1440; `Vacio` de `Galeria.tsx` en español fijo; punto del Simulador antes de desatar no va a la URL;
+kichwa nuevo en borrador; `scripts/revision_visual.sh` reutiliza cualquier servidor del puerto 8000; reconciliar los planes
+de las fases 2–5 para que rellenen los huecos de T4 en lugar de crear una página aparte.

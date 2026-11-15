@@ -1,6 +1,22 @@
 import type { api as esApi } from '../es/api'
 
 export const api: Record<keyof typeof esApi, string> = {
+  'api.cambio.metrica.embalse.antes.ayuda': 'Ñawpa rejillapi, muyuyuk ukupi tupushka, {fecha} punchapi.',
+  'api.cambio.metrica.embalse.antes.etiqueta': 'Yaku allpa ñawpa',
+  'api.cambio.metrica.embalse.despues.ayuda': 'Ñawpa rejillapi, muyuyuk ukupi tupushka, {fecha} punchapi.',
+  'api.cambio.metrica.embalse.despues.etiqueta': 'Yaku allpa washa',
+  'api.cambio.metrica.embalse.variacion.ayuda': 'Ishkay punchakuna chawpipi yaku allpa tikray.',
+  'api.cambio.metrica.embalse.variacion.etiqueta': 'Allpa tikray',
+  'api.cambio.metrica.embalse.variacion_relativa.ayuda': 'Ñawpa punchamanta yaku allpa tikray.',
+  'api.cambio.metrica.embalse.variacion_relativa.etiqueta': 'Tupuk tikray',
+  'api.cambio.metrica.incendio.antes.ayuda': 'Ñawpa rejillapi, muyuyuk ukupi tupushka, {fecha} punchapi.',
+  'api.cambio.metrica.incendio.antes.etiqueta': 'Rupashka allpa ñawpa',
+  'api.cambio.metrica.incendio.despues.ayuda': 'Ñawpa rejillapi, muyuyuk ukupi tupushka, {fecha} punchapi.',
+  'api.cambio.metrica.incendio.despues.etiqueta': 'Rupashka allpa washa',
+  'api.cambio.metrica.incendio.variacion.ayuda': 'Ishkay punchakuna chawpipi rupashka allpa tikray.',
+  'api.cambio.metrica.incendio.variacion.etiqueta': 'Allpa tikray',
+  'api.cambio.metrica.incendio.variacion_relativa.ayuda': 'Ñawpa punchamanta rupashka allpa tikray.',
+  'api.cambio.metrica.incendio.variacion_relativa.etiqueta': 'Tupuk tikray',
   'api.categoria.area_quemada_detectada.1': 'Chawpi severidad (−2,5-manta −4,5 dB-kama)',
   'api.categoria.area_quemada_detectada.2': 'Sinchi severidad (< −4,5 dB)',
   'api.categoria.cambio_de_inundacion.1': 'Mushuk yaku junday',

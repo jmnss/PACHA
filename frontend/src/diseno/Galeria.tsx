@@ -89,7 +89,7 @@ function TarjetaComparador({ esc, cambio }: { esc: Escenario; cambio: ResultadoC
   const d = cambio.despues
   const rampa = rampaDePaleta(a.paleta, a.variable) ?? 'gris'
   const cat = useMemo(
-    () => (a.paleta === 'categorias' ? coloresDeCategorias(a.variable, a.leyenda?.length ?? 0) : undefined),
+    () => (a.paleta === 'categorias' ? coloresDeCategorias(a.variable, a.leyenda?.length ?? 0, a.leyenda?.map(([e]) => e)) : undefined),
     [a.paleta, a.variable, a.leyenda],
   )
   const pol = a.polarizacion ? ` ${a.polarizacion}` : ''
@@ -224,7 +224,7 @@ export function Galeria() {
                 bbox={cambio.data.cambio.rejilla.bbox}
                 rampa={rampaDePaleta(cambio.data.cambio.paleta, cambio.data.cambio.variable) ?? 'gris'}
                 categorias={cambio.data.cambio.paleta === 'categorias'
-                  ? coloresDeCategorias(cambio.data.cambio.variable, cambio.data.cambio.leyenda?.length ?? 0) : undefined}
+                  ? coloresDeCategorias(cambio.data.cambio.variable, cambio.data.cambio.leyenda?.length ?? 0, cambio.data.cambio.leyenda?.map(([e]) => e)) : undefined}
               />
             </MapaBase>
           </div>
