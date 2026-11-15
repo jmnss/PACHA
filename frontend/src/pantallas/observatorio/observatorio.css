@@ -129,3 +129,11 @@
 /* Fila de vistas: pestañas a la izquierda y, en móvil, el menú de acciones a la derecha. */
 .observatorio__vistas { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); }
 .observatorio__vistas .pestanas { flex: 1; min-width: 0; }
+
+.vista-mapa__lectura { margin: 0; color: var(--secondary); font-size: var(--fs-12); line-height: var(--lh-16); }
+.vista-mapa__barra { justify-content: flex-end; }
+.observatorio__que { margin: 0; color: var(--secondary); font-size: var(--fs-14); max-width: var(--w-lectura); }
+.observatorio__avanzado { border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); }
+.observatorio__avanzado > summary { cursor: pointer; padding: var(--space-3) var(--space-4); font-size: var(--fs-14); color: var(--text); min-height: var(--h-touch); display: flex; align-items: center; }
+.observatorio__avanzado[open] > summary { border-bottom: 1px solid var(--rule); }
+.observatorio__avanzado-cuerpo { padding: var(--space-4); }

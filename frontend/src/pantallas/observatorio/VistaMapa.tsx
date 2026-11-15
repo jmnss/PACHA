@@ -11,7 +11,7 @@ import { Boton } from '../../diseno/Boton'
 import { IconoChevron } from '../../diseno/iconos'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
 import { Leyenda } from '../../diseno/Leyenda'
-import { ControlSegmentado } from '../../diseno/ControlSegmentado'
+import { Selector } from '../../diseno/Selector'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { formatearFecha, formatearInstante } from '../../tiempo/fechas'
@@ -23,7 +23,7 @@ import { Localizador } from '../../mapa/Localizador'
 import { MapaBase } from '../../mapa/MapaBase'
 import type { Valores } from './parametros'
 import { BloqueTiempo } from './BloqueTiempo'
-import { estiloDeCapa, temporadasLluviosas } from './derivados'
+import { claveLecturaEscala, estiloDeCapa, temporadasLluviosas } from './derivados'
 import { ventanaFotogramas } from './fotogramas'
 import { PASO_PASADA_MIN } from './useTiempoObservatorio'
 import type { TiempoObservatorio } from './useTiempoObservatorio'
@@ -169,19 +169,21 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
     ? (ventana ? t('obs.mapa.rotulo_modelo', { instante: formatearInstante(tiempo.ms, idioma) ?? '—' }) : pasada ? t('obs.mapa.rotulo_pasada', { fecha: formatearFecha(pasada.instante, idioma) ?? '—' }) : null)
     : t('obs.mapa.rotulo_cambio', { antes: formatearFecha(esc.adquisiciones[iAntes]?.instante, idioma) ?? '—', despues: formatearFecha(esc.adquisiciones[iDespues]?.instante, idioma) ?? '—' })
 
+  const selectorCapa = (
+    <Selector etiqueta={t('obs.mapa.capa_etiqueta')} value={modo} onChange={(e) => setModo(e.target.value as ModoCapa)}
+      opciones={MODOS.map((m) => ({ valor: m.id, texto: t(m.clave) }))} />
+  )
+
   return (
     <>
       <Tarjeta pie={capa ? <SelloOrigen origen={capa.origen} /> : undefined} className="vista-mapa">
-        <div className="vista-mapa__barra">
-          <ControlSegmentado etiqueta={t('obs.mapa.capa_etiqueta')} opciones={MODOS.map((m) => ({ id: m.id, etiqueta: t(m.clave) }))} valor={modo} onCambiar={(id) => setModo(id as ModoCapa)} />
-          <div className="vista-mapa__acciones">
-            {!movil && (
-              <Boton variante="secundario" onClick={() => onPais(!pais)} aria-pressed={pais}>
-                {pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo')}
-              </Boton>
-            )}
+        {!movil && (
+          <div className="vista-mapa__barra">
+            <Boton variante="secundario" onClick={() => onPais(!pais)} aria-pressed={pais}>
+              {pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo')}
+            </Boton>
           </div>
-        </div>
+        )}
         <div className="vista-mapa__mapa" role="group" aria-label={t('obs.estructura.vista_mapa')} aria-describedby={idNota}>
           <p id={idNota} className="solo-lectores">{t('a11y.mapa.nota')}</p>
           <MapaBase base={base} bbox={pais ? undefined : esc.bbox} onClic={alClic} onFueraDeEcuador={alClic} marcadores={marcadores} conProvincia>
@@ -199,14 +201,14 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
                   </button>
                   {placaAbierta && (
                     <div id={idPlaca}>
-                      <ControlesMapa base={base} onBase={elegirBase} opacidad={opacidad} onOpacidad={setOpacidad} conBases={conBases} />
+                      <ControlesMapa base={base} onBase={elegirBase} opacidad={opacidad} onOpacidad={setOpacidad} conBases={conBases} extra={selectorCapa} />
                     </div>
                   )}
                 </div>
               ) : (
                 <>
                   {capa && rotulo ? <p className="vista-mapa__capa num">{rotulo}</p> : <span />}
-                  <ControlesMapa base={base} onBase={elegirBase} opacidad={opacidad} onOpacidad={setOpacidad} conBases={conBases} />
+                  <ControlesMapa base={base} onBase={elegirBase} opacidad={opacidad} onOpacidad={setOpacidad} conBases={conBases} extra={selectorCapa} />
                 </>
               )}
             </div>
@@ -219,6 +221,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
                   <Leyenda paleta={capa.paleta} vmin={capa.rejilla.vmin} vmax={capa.rejilla.vmax} unidad={capa.unidad}
                     leyenda={capa.leyenda} variable={capa.variable} extremos={extremosDe(capa)} />
                 )}
+                {leyendaAbierta && <p className="vista-mapa__lectura">{t(claveLecturaEscala(capa))}</p>}
               </div>
             )}
           </div>

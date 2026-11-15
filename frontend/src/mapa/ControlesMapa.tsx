@@ -1,7 +1,8 @@
 import type { Clave } from '../idioma/traductor'
 import { useT } from '../idioma/useT'
 import { Deslizador } from '../diseno/Deslizador'
-import { ControlSegmentado } from '../diseno/ControlSegmentado'
+import type { ReactNode } from 'react'
+import { Selector } from '../diseno/Selector'
 import { MAPAS_BASE, type MapaBaseId } from './estilo'
 
 interface Props {
@@ -12,6 +13,8 @@ interface Props {
   onOpacidad: (valor: number) => void
   /** Sin red no hay mapas base que elegir: solo queda la opacidad. */
   conBases: boolean
+  /** Otros selectores compactos de la misma placa (p. ej. la capa). */
+  extra?: ReactNode
 }
 
 /** Selector de mapa base y opacidad de la capa de datos: placa flotante sobre el mapa. */
@@ -21,13 +24,14 @@ const CLAVE_BASE: Record<MapaBaseId, Clave> = {
   relieve: 'piezas.mapa.base_relieve',
 }
 
-export function ControlesMapa({ base, onBase, opacidad, onOpacidad, conBases }: Props) {
+export function ControlesMapa({ base, onBase, opacidad, onOpacidad, conBases, extra }: Props) {
   const { t } = useT()
   return (
     <div className="controles-mapa">
+      {extra}
       {conBases && (
-        <ControlSegmentado etiqueta={t('piezas.mapa.base')} opciones={MAPAS_BASE.map((b) => ({ id: b.id, etiqueta: t(CLAVE_BASE[b.id]) }))}
-          valor={base} onCambiar={(id) => onBase(id as MapaBaseId)} />
+        <Selector etiqueta={t('piezas.mapa.base')} value={base} onChange={(e) => onBase(e.target.value as MapaBaseId)}
+          opciones={MAPAS_BASE.map((b) => ({ valor: b.id, texto: t(CLAVE_BASE[b.id]) }))} />
       )}
       <Deslizador etiqueta={t('piezas.mapa.opacidad')} valorTexto={`${Math.round(opacidad * 100)} %`}
         min={10} max={100} step={5} value={Math.round(opacidad * 100)}

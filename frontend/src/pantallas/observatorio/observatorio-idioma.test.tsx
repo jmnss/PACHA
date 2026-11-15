@@ -95,7 +95,7 @@ function montar(ruta: string, render: typeof renderPseudo = renderPseudo) {
     </QueryClientProvider>,
   )
 }
-const esperar = () => screen.findByText('⟦Parámetros del modelo⟧', undefined, { timeout: 3000 })
+const esperar = () => screen.findByText('⟦Parámetros avanzados⟧', undefined, { timeout: 3000 })
 
 describe('Observatorio · idioma', () => {
   for (const vista of ['mapa', 'comparar', 'serie', 'impacto']) {

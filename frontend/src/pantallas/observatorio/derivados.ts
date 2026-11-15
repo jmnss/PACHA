@@ -126,3 +126,16 @@ export function hallazgo(
   // El hallazgo de un origen real va sin la marca de ejemplo.
   return esReal(r.origen) ? t('obs.hallazgo.real', { frase: `${frase.charAt(0).toUpperCase()}${frase.slice(1)}` }) : t('obs.hallazgo.demo', { frase })
 }
+
+/** Lectura en palabras de la escala de color: por variable de la capa y, si no, por paleta. Solo claves de texto. */
+const LECTURA_POR_VARIABLE: [string, Clave][] = [
+  ['gamma0', 'obs.escala.radar'], ['sigma', 'obs.escala.radar'], ['mascara', 'obs.escala.mascara'],
+]
+const LECTURA_POR_PALETA: Record<CapaDto['paleta'], Clave> = {
+  gris: 'obs.escala.radar', secuencial: 'obs.escala.secuencial', divergente: 'obs.escala.divergente',
+  ciclico: 'obs.escala.ciclico', categorias: 'obs.escala.categorias',
+}
+export function claveLecturaEscala(capa: CapaDto): Clave {
+  const v = capa.variable.toLowerCase()
+  return LECTURA_POR_VARIABLE.find(([k]) => v.includes(k))?.[1] ?? LECTURA_POR_PALETA[capa.paleta]
+}

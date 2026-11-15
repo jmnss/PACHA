@@ -36,7 +36,7 @@ import './observatorio.css'
 
 /** Estado de la pantalla en la URL: /observatorio?escenario&antes&despues&t&vista */
 const ESQUEMA = {
-  escenario: { tipo: 'string', porDefecto: 'ec_la_segua' },
+  escenario: { tipo: 'string', porDefecto: 'embalse-mazar' },
   antes: { tipo: 'string', porDefecto: '' },
   despues: { tipo: 'string', porDefecto: '' },
   t: { tipo: 'string', porDefecto: '' },
@@ -232,7 +232,13 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
       <ErrorBloque mensaje={mensajeDeError(tipos.error, t)} onReintentar={() => void tipos.refetch()} />
     </Tarjeta>
   ) : (
-    <PanelSimulacion esc={esc} controles={controles} sim={sim} enHoja={movil} />
+    <PanelSimulacion esc={esc} controles={controles} sim={sim} enHoja />
+  )
+  const panelAvanzado = panel && (
+    <details className="observatorio__avanzado" open={!!url.par || undefined}>
+      <summary>{t('obs.parametros.avanzado')}</summary>
+      <div className="observatorio__avanzado-cuerpo">{panel}</div>
+    </details>
   )
   const selectores = (
     <Selectores tipos={tipos.data} lista={lista} escenarioId={esc.id} tipoId={esc.tipo_cambio} actual={esc} onEscenario={irA} onTipo={alTipo} />
@@ -241,7 +247,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
   // «Impacto» solo existe para las historias (inundación, incendio); en otro escenario se muestra el mapa.
   const vista = url.vista === 'impacto' && !esc.historia ? 'mapa' : url.vista
   const acciones: AccionMenu[] = []
-  if (puedeSimular) acciones.push({ id: 'parametros', texto: t('obs.parametros.titulo'), alElegir: () => setHoja(true) })
+  if (puedeSimular) acciones.push({ id: 'parametros', texto: t('obs.parametros.avanzado'), alElegir: () => setHoja(true) })
   if (vista === 'mapa') acciones.push({ id: 'pais', texto: pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo'), alElegir: () => setPais((p) => !p) })
   return (
     <>
@@ -250,6 +256,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
         <Pestanas etiqueta={t('obs.estructura.vistas_etiqueta')} pestanas={(esc.historia ? VISTAS : VISTAS.filter((v) => v.id !== 'impacto')).map((v) => ({ id: v.id, etiqueta: t(v.clave) }))} activa={vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
         {movil && acciones.length > 0 && <MenuAcciones etiqueta={t('obs.estructura.mas_acciones')} acciones={acciones} />}
       </div>
+      <p className="observatorio__que">{t(`obs.vista.${vista}.que`)}</p>
       <div className="observatorio" {...propsPanel(vista)}>
         <div className="observatorio__principal">
           {vista === 'mapa' ? (
@@ -276,7 +283,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
           )}
         </div>
         <aside className="observatorio__lado" aria-label={t('obs.estructura.lado_etiqueta')}>
-          {!movil && panel}
+          {!movil && panelAvanzado}
           <AyudaRadar descripcion={tipoActual?.descripcion} nombreTipo={tipoActual?.nombre} tipoId={tipoActual?.id} observable={movil ? detalleObservable : undefined} />
           {vista === 'comparar' && peticion && (
             <Mediciones
@@ -291,7 +298,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
         </aside>
       </div>
       {movil && hoja && panel && (
-        <HojaInferior titulo={t('obs.parametros.titulo')} onCerrar={() => setHoja(false)}>{panel}</HojaInferior>
+        <HojaInferior titulo={t('obs.parametros.avanzado')} onCerrar={() => setHoja(false)}>{panel}</HojaInferior>
       )}
     </>
   )

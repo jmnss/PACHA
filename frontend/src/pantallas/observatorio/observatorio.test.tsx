@@ -167,16 +167,15 @@ describe('Observatorio · mapa y tiempo', () => {
   it('la capa alterna entre «modelo en el tiempo» y «cambio detectado»', async () => {
     montar()
     await listo()
-    const cambio = screen.getByRole('radio', { name: 'Cambio detectado' })
-    const modelo = screen.getByRole('radio', { name: 'Modelo en el tiempo' })
-    expect(cambio).toHaveAttribute('aria-checked', 'true')
+    const capaSel = screen.getByRole('combobox', { name: 'Capa del mapa' })
+    expect(capaSel).toHaveValue('cambio')
     expect(screen.queryByText('dB')).not.toBeInTheDocument()
-    fireEvent.click(modelo)
-    expect(modelo).toHaveAttribute('aria-checked', 'true')
+    fireEvent.change(capaSel, { target: { value: 'modelo' } })
+    expect(capaSel).toHaveValue('modelo')
     await waitFor(() => expect(llamadas.some((l) => l.url.startsWith('/api/escenarios/ec_x/capa?adquisicion=2026-04-12&variable=sigma0&polarizacion=HH'))).toBe(true))
     await waitFor(() => expect(screen.queryByText(/Nueva inundación/)).not.toBeInTheDocument())
     expect(screen.getAllByText('dB').length).toBeGreaterThan(0)
-    fireEvent.click(cambio)
+    fireEvent.change(capaSel, { target: { value: 'cambio' } })
     expect(await screen.findByText(/Nueva inundación/)).toBeInTheDocument()
   })
 
@@ -231,7 +230,7 @@ describe('Observatorio · fotogramas del modelo continuo', () => {
   it('con un paso de 1 h pide un bloque de fotogramas y avanzar mueve el instante en horas', async () => {
     montar()
     await listo()
-    fireEvent.click(screen.getByRole('radio', { name: 'Modelo en el tiempo' }))
+    fireEvent.change(screen.getByRole('combobox', { name: 'Capa del mapa' }), { target: { value: 'modelo' } })
     fireEvent.change(screen.getByRole('combobox', { name: 'Paso' }), { target: { value: '60' } })
     await waitFor(() => expect(fotogramas()).toHaveLength(1))
     expect(fotogramas()[0].cuerpo).toEqual({
@@ -325,7 +324,7 @@ describe('Observatorio · casos límite', () => {
     expect(reloj).toHaveTextContent('Siguiente · 6 may 2026')
     const kpi = screen.getByText('Pasada activa').closest('div') as HTMLElement
     expect(kpi).toHaveTextContent('24 abr 2026')
-    fireEvent.click(screen.getByRole('radio', { name: 'Modelo en el tiempo' }))
+    fireEvent.change(screen.getByRole('combobox', { name: 'Capa del mapa' }), { target: { value: 'modelo' } })
     await waitFor(() => expect(llamadas.some((l) => l.url.includes('/capa?adquisicion=2026-04-24&'))).toBe(true))
     expect(await screen.findByText('Pasada · 24 abr 2026')).toBeInTheDocument()
   })
