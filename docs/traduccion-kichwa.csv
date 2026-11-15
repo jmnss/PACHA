@@ -455,6 +455,29 @@ api.sim.herramienta.incendio.nombre,Incendio,Fire,Incendio,no
 api.sim.herramienta.inundacion.nombre,Desborde / marejada,Overflow / surge,Hawaman llukshiy / marejada,no
 api.sim.herramienta.terremoto.nombre,Terremoto,Earthquake,Allpa kuyuy,no
 api.sim.herramienta.tormenta.nombre,Tormenta,Storm,Tormenta,no
+api.sim.lectura.area_inundada,Como unas {canchas} canchas de fútbol bajo el agua.,About {canchas} football pitches under water.,Shina {canchas} pukllana pampakuna yaku ukupi.,no
+api.sim.lectura.area_quemada,Como unas {canchas} canchas de fútbol.,About {canchas} football pitches.,Shina {canchas} pukllana pampakuna.,no
+api.sim.lectura.biomasa_consumida,Madera y hojas que el fuego convirtió en humo y ceniza.,Wood and leaves the fire turned into smoke and ash.,"Nina kushniman, ushpaman tikrachishka kaspikuna, pankakuna.",no
+api.sim.lectura.ceniza_1_cm,Gente bajo una capa de ceniza de un centímetro o más.,People under an ash layer of one centimetre or more.,Shuk centímetro ushpa ukupi kawsak runakuna.,no
+api.sim.lectura.co2_emitido,Gas de efecto invernadero que soltó el fuego.,Greenhouse gas released by the fire.,Nina kacharishka kunuk antawa.,no
+api.sim.lectura.columna_eruptiva,Altura de la nube de ceniza sobre el cráter.,Height of the ash cloud above the crater.,Ushpa pukutaypak hatun kay.,no
+api.sim.lectura.deslizamientos,Laderas que se vendrían abajo.,Slopes that would come down.,Urmanalla urku manyakuna.,no
+api.sim.lectura.flujos_piroclasticos,Nubes ardientes de gas y roca que bajan por las laderas.,Glowing clouds of gas and rock rushing down the slopes.,Urkukunamanta uraykuk rupak pukutaykuna.,no
+api.sim.lectura.humedad_del_combustible,"Cuanto más seca la hojarasca, más rápido arde.","The drier the leaf litter, the faster it burns.","Chakishka panka, ashtawan utka rupan.",no
+api.sim.lectura.intensidad_debil,MMI {valor}: se siente poco; sin daños.,MMI {valor}: barely felt; no damage.,MMI {valor}: ashallata uyarin; mana wakllichin.,no
+api.sim.lectura.intensidad_fuerte,MMI {valor}: daño fuerte en construcciones vulnerables.,MMI {valor}: heavy damage to vulnerable buildings.,MMI {valor}: llaki wasikunata sinchita wakllichin.,no
+api.sim.lectura.intensidad_grave,"MMI {valor}: daño grave, incluso en construcciones comunes.","MMI {valor}: severe damage, even to ordinary buildings.",MMI {valor}: tukuy wasikunatapash sinchita wakllichin.,no
+api.sim.lectura.intensidad_leve,MMI {valor}: lo sienten todos; daños leves.,MMI {valor}: felt by everyone; light damage.,MMI {valor}: tukuykuna uyarin; ashalla wakllichin.,no
+api.sim.lectura.lahares,Ríos de lodo volcánico que bajan por los cauces.,Rivers of volcanic mud running down the channels.,Ñankunata uraykuk turu mayukuna.,no
+api.sim.lectura.magnitud,La energía del sismo en su origen; cada punto más es unas 32 veces más energía.,The quake's energy at its source; each extra point is about 32 times more energy.,Allpa kuyuypak sinchi kallarinapi; shuk yupay yallishpaka 32 kuti ashtawan sinchi.,no
+api.sim.lectura.perdidas_en_viviendas,Lo que costaría reponer las casas dañadas.,What it would cost to replace the damaged houses.,Wakllishka wasikunata kutin rurankapak kullki.,no
+api.sim.lectura.personas_a_evacuar,Gente que vive dentro del fuego o junto a su borde.,People living inside the fire or right next to its edge.,Nina ukupi mana kashpa paypa manyapi kawsak runakuna.,no
+api.sim.lectura.poblacion_con_mmi_vi,Gente que sentiría el sismo con fuerza suficiente para dañar casas.,People who would feel the quake strongly enough to damage houses.,Wasikunata wakllichinkama allpa kuyuyta uyarik runakuna.,no
+api.sim.lectura.poblacion_expuesta,Gente que vive donde llegó el agua.,People living where the water reached.,Yaku chayashka pachapi kawsak runakuna.,no
+api.sim.lectura.tsunami_en_tierra,Tierra que cubriría la ola.,Land the wave would cover.,Hatun yaku pillushka allpa.,no
+api.sim.lectura.victimas_estimadas,"Cálculo de un modelo, sin evacuación: sirve para comparar, no para predecir.","A model estimate without evacuation: for comparing, not for predicting.","Shuk modelopak yupay, mana anchurishpa: chimpapurachinkapak, mana willankapak.",no
+api.sim.lectura.victimas_sin_alerta,"Cálculo de un modelo sin alerta: sirve para comparar, no para predecir.","A model estimate without warning: for comparing, not for predicting.","Shuk modelopak yupay, mana willashpa: chimpapurachinkapak, mana willankapak.",no
+api.sim.lectura.viviendas_destruidas_equiv,"Casas que se perderían del todo, sumando los daños parciales.","Houses that would be fully lost, adding up partial damage.",Tukuy chinkarishka wasikuna.,no
 api.sim.metrica.acierto_iou.etiqueta,Acierto (IoU),Accuracy (IoU),Alli tupay (IoU),no
 api.sim.metrica.area_inundada.etiqueta,Área inundada,Flooded area,Yakuwan jundashka allpa,no
 api.sim.metrica.area_inundada_deteccion_del_modelo_simulacion.etiqueta,Área inundada · detección del modelo (simulación),Flooded area · model detection (simulation),Yakuwan jundashka allpa · modelopa rikushka (simulación),no
@@ -485,6 +508,8 @@ api.sim.metrica.victimas_sin_alerta.etiqueta,Víctimas sin alerta,Casualties wit
 api.sim.metrica.viviendas_destruidas_equiv.etiqueta,Viviendas destruidas (equiv.),Houses destroyed (equiv.),Tukuchishka wasikuna (equiv.),no
 api.sim.mundo.bosques_secos_de_loja.descripcion,Bosque andino y matorral seco con incendios recurrentes entre agosto y octubre.,Andean forest and dry scrub with recurring fires between August and October.,"Andes sacha, chaki matorral ima, agosto-manta octubre-kama kutin incendiokunawan.",no
 api.sim.mundo.bosques_secos_de_loja.nombre,Bosques secos de Loja,Dry forests of Loja,Lojapa chaki sachakuna,no
+api.sim.mundo.cerro_casitagua.descripcion,"Cerro al norte de Quito, junto a la línea equinoccial. El incendio que se simula aquí es un ejemplo.","A hill north of Quito, next to the equator line. The fire simulated here is an example.","Quitumanta hawa urku, chawpi pacha ñan kuchupi. Kaypi rikuchishka ninaka shuk rikuchiylla.",no
+api.sim.mundo.cerro_casitagua.nombre,Cerro Casitagua,Casitagua hill,Casitagua urku,no
 api.sim.mundo.cotopaxi_y_el_valle_de_latacunga.descripcion,Volcán más vigilado del país; en 1877 sus lahares bajaron por los ríos Cutuchi y Pita.,The most closely monitored volcano in the country; in 1877 its lahars came down the Cutuchi and Pita rivers.,"Mamallaktapi ashtawan rikurishka volcán; 1877 watapi laharkunaka Cutuchi, Pita mayukunapi urmarka.",no
 api.sim.mundo.cotopaxi_y_el_valle_de_latacunga.nombre,Cotopaxi y el valle de Latacunga,Cotopaxi and the Latacunga valley,Cotopaxiwan Latacunga valle,no
 api.sim.mundo.cuenca_baja_del_guayas_babahoyo.descripcion,Llanura de inundación que se anega en casi todos los inviernos.,Floodplain that is flooded in almost every winter.,"Yaku jundak pampa, tukuy invierno shina yakuwan jundarin.",no
@@ -657,35 +682,124 @@ fundamentos.tarjeta.pol_bandas,Polarizaciones y bandas,Polarizations and bands,"
 fundamentos.tarjeta.radar,Un radar que ilumina por sí mismo,A radar that lights its own scene,Pay kikin kanchachik radar,no
 fundamentos.titulo,Fundamentos,Fundamentals,Sapi yachay,no
 historias.cargando,Cargando la historia…,Loading the story…,Willakuyta chaskishka…,no
+historias.cifra.calculando,Calculando…,Computing…,Yupashka…,no
+historias.cifra.mas,Todas las cifras del escenario,All the figures of the scenario,Escenariopa tukuy yupaykuna,no
+historias.cifra.pasadas,{n} pasadas,{n} passes,{n} pasadakuna,no
 historias.comparador.actualizando,Actualizando…,Updating…,Mushukyachishka…,no
 historias.comparador.antes,Antes · {fecha},Before · {fecha},Ñawpa · {fecha},no
-historias.comparador.calculando,Calculando el cambio entre las dos pasadas…,Calculating the change between the two passes…,Ishkay pasadakunapa tikrayta yupachishka…,no
+historias.comparador.calculando,Calculando el cambio entre las dos pasadas…,Computing the change between the two passes…,Ishkay pasadakunapa tikrayta yupachishka…,no
 historias.comparador.despues,Después · {fecha},After · {fecha},Washa · {fecha},no
-historias.comparador.nota_cinta,Una muesca por pasada del satélite. Mueve el cursor para elegir «después»; «antes» queda fija.,One notch per satellite pass. Move the cursor to choose «after»; «before» stays fixed.,Sapa satélitepa pasadapak shuk rikchay. Kursorta kuyuchishpa «washa»ta akllay; «ñawpa» sayashkallami kan.,no
+historias.comparador.mascara,Máscara de agua,Water mask,Yaku máscara,no
+historias.comparador.nota_cinta,Una muesca por pasada del satélite. Mueve el cursor para elegir «después»; «antes» queda fija.,One notch per satellite pass. Move the cursor to choose “after”; “before” stays fixed.,Sapa satélitepa pasadapak shuk rikchay. Kursorta kuyuchishpa «washa»ta akllay; «ñawpa» sayashkallami kan.,no
 historias.comparador.sin_pasadas,Este escenario no tiene dos pasadas distintas para comparar.,This scenario does not have two different passes to compare.,Kay escenariopi mana ishkay mana kikin pasadakuna tiyanchu tupachinkapak.,no
-historias.comparador.ver_observatorio,Ver en el Observatorio,View in the Observatory,Observatoriopi rikuy,no
-historias.creditos,"Créditos: clima de NASA POWER, límites de provincias de geoBoundaries (CC0), tipografía Public Sans (SIL OFL).","Credits: climate data from NASA POWER, province boundaries from geoBoundaries (CC0), Public Sans typeface (SIL OFL).","Yupaychay: NASA POWER-manta clima, geoBoundaries-manta provinciakunapa límites (CC0), Public Sans tipografía (SIL OFL).",no
+historias.creditos,"Créditos: clima de NASA POWER, límites de provincias de geoBoundaries (CC0), tipografía Public Sans y Spectral (SIL OFL).","Credits: climate from NASA POWER, province boundaries from geoBoundaries (CC0), Public Sans and Spectral typefaces (SIL OFL).","Yupaychay: NASA POWER-manta clima, geoBoundaries-manta provinciakunapa límites (CC0), Public Sans, Spectral tipografía (SIL OFL).",no
+historias.evento_real,evento real · fuente por añadir,real event · source to be added,chiqan tukuy · pukyuta yapanami,no
+historias.final.boton,Explóralo tú en el Observatorio,Explore it yourself in the Observatory,Observatoriopi kikin maskay,no
+historias.final.texto,"Mide puntos y cuadrantes, cambia de pasada y descarga los datos de este mismo escenario.","Measure points and boxes, change the pass and download the data of this same scenario.","Pushtukunata, cuadrantekunata tupuy, pasadata tikray, kay escenariopa datokunata uraykachiy.",no
+historias.final.titulo,Explóralo tú,Explore it yourself,Kikin maskay,no
 historias.indice.etiqueta,Historias,Stories,Willakuykuna,no
-historias.indice.principal,{etiqueta} · historia principal,{etiqueta} · main story,{etiqueta} · hatun willakuy,no
 historias.marca.ejemplo,En este escenario de demostración,In this demonstration scenario,Kay rikuchiy escenariopi,no
 historias.marca.pendiente,pendiente de confirmar con la documentación oficial,pending confirmation with the official documentation,kamachik panka-wan chiqanyachina kan,no
+historias.paso.indicador,Paso {n} de {total},Step {n} of {total},{total} pasomanta {n} paso,no
+historias.paso.lista,Pasos de la historia,Story steps,Willakuypa pasokuna,no
+historias.paso.numero,Paso {n},Step {n},{n} paso,no
+historias.paso.siguiente,Siguiente: {titular},Next: {titular},Katik: {titular},no
 historias.pol.etiqueta,Polarización,Polarization,Polarización,no
 historias.pol.recomendada,{pol} · recomendada,{pol} · recommended,{pol} · ruranapak,no
-historias.pregunta,"Qué ve el radar cuando el agua sube o el bosque arde, y por qué.","What the radar sees when the water rises or the forest burns, and why.","Yaku wicharikpi o sacha ninawan rupakpi, radarka ima rikun, imarayku?",no
-historias.sin_escenario.texto,No hay un escenario de demostración asociado a esta historia.,There is no demonstration scenario linked to this story.,Kay willakuywan rikuchiy escenario mana tiyanchu.,no
+historias.por_llegar,Por llegar,Coming soon,Shamunkarak,no
+historias.por_llegar.nota,Aún no está en la app; no se muestra ninguna cifra inventada.,Not in the app yet; no made-up figure is shown.,Appika kunanrak mana charinchu; mana yuyarishka yupayta rikuchinchu.,no
+historias.pregunta,"Qué ve el radar cuando baja el agua de un embalse o arde la Sierra, paso a paso.","What the radar sees when a reservoir drops or the Sierra burns, step by step.","Embalsepi yaku urakukpi o Sierrapi nina rupakpi, radarka ima rikun, paso paso.",no
+historias.simular.enlace,Abrir el Simulador,Open the Simulator,Simuladorta paskay,no
+historias.sin_escenario.texto,No hay un escenario del equipo asociado a esta historia.,There is no team scenario linked to this story.,Kay willakuywan equipopa escenario mana tiyanchu.,no
 historias.sin_escenario.titulo,Esta historia no tiene escenario,This story has no scenario,Kay willakuypak escenario mana tiyanchu,no
+historias.sitio.etiqueta,Embalse,Reservoir,Embalse,no
+historias.vista.etiqueta,Qué estás viendo,What you are seeing,Ima rikukunki,no
 idioma.aviso_qu,Traducción en revisión por hablantes · {validadas} de {total} textos validados,Translation under review by speakers · {validadas} of {total} texts validated,Kichwa tikrayka manaraka chiqanyachishkachu · {total}-manta {validadas} chiqanyachishka,no
 idioma.selector.etiqueta,Idioma,Language,Shimi,no
 idioma.sin_traducir,Texto aún sin traducir; se muestra en español,Text not yet translated; shown in Spanish,Kay killkaka mana tikrashkachu; castellano shimipi rikuchishka,no
-inicio.embalses,Embalses y lluvia,Reservoirs and rain,"Hatun yaku wakaychinakuna, tamya",no
-inicio.embalses_detalle,Mazar y Daule-Peripa vistos por el radar.,Mazar and Daule-Peripa seen by radar.,"Mazar, Daule-Peripa radarwan rikushka.",no
-inicio.entradas,Por dónde empezar,Where to start,Maymanta kallarina,no
+inicio.bajada,"PACHA usa el radar NISAR, que ve de día, de noche y entre nubes, para mostrarte cómo crecen y bajan los embalses del Ecuador con la lluvia y la sequía, y qué deja un incendio en el cerro.","PACHA uses the NISAR radar, which sees by day, by night and through clouds, to show you how Ecuador’s reservoirs rise and fall with rain and drought, and what a wildfire leaves on a hill.","PACHAka NISAR radarta rurachin, punchapi, tutapi, phuyukuna ukupipash rikun, Ecuadorpak hatun yaku wakaychinakuna tamyawan, chakiwanpash imashina wiñan, urayan, urkupi nina ima sakin, chaykunata rikuchinkapak.",no
+inicio.embalses,Embalses y lluvia,Reservoirs and rain,"Yaku wakaychinakuna, tamya",no
+inicio.embalses_corte,Corte de un embalse: el nivel del agua con lluvia y en sequía,Section of a reservoir: the water level with rain and in drought,"Yaku wakaychinapak kuchushka: yaku hawa tamyawan, chakipipash",no
+inicio.embalses_dato,Costa y Sierra,Coast and Highlands,"Costa, Sierrapash",no
+inicio.embalses_detalle,"Mazar, en la Sierra, y Daule-Peripa, en la Costa. Mira cómo sube el agua con la lluvia, cómo baja en la sequía y qué significa eso para la luz que llega a tu casa.","Mazar, in the Highlands, and Daule-Peripa, on the Coast. See how the water rises with rain, how it drops in drought and what that means for the power that reaches your home.","Mazar, Sierrapi, Daule-Peripa, Costapi. Rikuy yaku tamyawan imashina wichayan, chakipi imashina urayan, chayka kikinpak wasiman chayak achikpak ima nishkata.",no
+inicio.embalses_ir_daule,Daule-Peripa,Daule-Peripa,Daule-Peripa,no
+inicio.embalses_ir_mazar,Mazar,Mazar,Mazar,no
+inicio.embalses_lluvia,con lluvia,with rain,tamyawan,no
+inicio.embalses_lugares,Elige el embalse,Choose the reservoir,Yaku wakaychinata akllay,no
+inicio.embalses_sequia,en sequía,in drought,chakipi,no
+inicio.entradas,Tres maneras de entrar,Three ways in,Kimsa yaykuna,no
+inicio.entradas_bajada,Dos historias del Ecuador y un taller para probar lo tuyo.,Two stories from Ecuador and a workshop to try your own.,"Ecuadormanta ishkay willakuy, kikinpa rurayta tantachinkapak shuk yachana wasi.",no
+inicio.fuente_por_anadir,Evento real · fuente por añadir,Real event · source to be added,Chiqa tukushka · maymanta shamushkata churanami,no
 inicio.incendio,Incendio en la Sierra,Wildfire in the Highlands,Sierrapi nina,no
-inicio.incendio_detalle,El cerro Casitagua antes y después.,Cerro Casitagua before and after.,"Casitagua urkuka ñawpaq, washa.",no
-inicio.recorrido,Primera vez: recorrido de 90 s,First time: 90-second tour,Ñawpaq kuti: 90 sikundu purina,no
+inicio.incendio_corte,Corte de un cerro: una ladera con vegetación y la otra quemada,Section of a hill: one slope with vegetation and the other burned,"Urkupak kuchushka: shuk pata yurakunawan, shukka rupashka",no
+inicio.incendio_dato,Casitagua · Pichincha,Casitagua · Pichincha,Casitagua · Pichincha,no
+inicio.incendio_detalle,"Un incendio quemó parte del cerro Casitagua, junto a Quito. Después del fuego, la ladera devuelve menos señal HV al radar, y así se dibuja lo que ardió.","A wildfire burned part of Cerro Casitagua, next to Quito. After the fire, the slope sends less HV signal back to the radar, and that is how the burned area is drawn.","Shuk nina Casitagua urkuta rupachirka, Quito kuchupi. Nina washa, urku patakaka ashalla HV willaytami radarman kutichin, shinami rupashkata rikuchin.",no
+inicio.incendio_hv,HV es la onda que vuelve girada: la que más cambia con la vegetación.,HV is the wave that comes back rotated: the one that changes most with vegetation.,HV muyushpa kutimuk antawami: yurakunawan ashtawan shukyarik.,no
+inicio.incendio_ir,Ver la historia del incendio,See the wildfire story,Nina willakuyta rikuy,no
+inicio.incendio_quemado,ladera quemada,burned slope,rupashka pata,no
+inicio.incendio_verde,con vegetación,with vegetation,yurakunawan,no
+inicio.localizador.nota,"Los tres lugares en el mapa real (geoBoundaries). La franja mide lo que cubre NISAR en una pasada, unos 240 km; su recorrido es ilustrativo.","The three places on the real map (geoBoundaries). The swath is what NISAR covers in one pass, about 240 km; its path is illustrative.","Kimsa llaktakuna chiqa mapapi (geoBoundaries). Suyuka NISAR shuk yallikpi mashnata rikushkatami tupun, 240 km shina; paypak purinaka rikuchinkapakllami.",no
+inicio.localizador.titulo,"Ecuador continental con Daule-Peripa, Casitagua y Mazar, y una franja de radar de unos 240 km","Mainland Ecuador with Daule-Peripa, Casitagua and Mazar, and a radar swath of about 240 km","Ecuador allpa, Daule-Peripa, Casitagua, Mazarwan, 240 km radar suyuwanpash",no
+inicio.lugar.ayuda,Toca un lugar del perfil para leer su nota.,Tap a place on the profile to read its note.,"Kuchushkapi shuk llaktata llapiy, paypak willayta killkakatinkapak.",no
+inicio.lugar.casitagua.corto,Cerro · junto a Quito,Hill · next to Quito,Urku · Quito kuchupi,no
+inicio.lugar.casitagua.donde,"Pichincha, junto a Quito","Pichincha, next to Quito","Pichincha, Quito kuchupi",no
+inicio.lugar.casitagua.nombre,Casitagua,Casitagua,Casitagua,no
+inicio.lugar.casitagua.texto,"Aquí hubo un incendio. Después del fuego, la ladera quemada devuelve otra señal al radar, y la mancha de lo que ardió aparece en el mapa.","There was a wildfire here. After the fire, the burned slope sends a different signal back to the radar, and the patch that burned shows up on the map.","Kaypimi nina karka. Nina washa, rupashka urku patakaka shuk shina willayta radarman kutichin, rupashka allpaka mapapimi rikurin.",no
+inicio.lugar.casitagua.titulo,Cerro Casitagua,Cerro Casitagua,Casitagua urku,no
+inicio.lugar.daule.corto,Embalse · Costa baja,Reservoir · lowland Coast,Yaku wakaychina · uray Costa,no
+inicio.lugar.daule.donde,"Costa baja, entre Guayas y Manabí","Lowland Coast, between Guayas and Manabí","Uray Costa, Guayas Manabí chawpipi",no
+inicio.lugar.daule.nombre,Daule-Peripa,Daule-Peripa,Daule-Peripa,no
+inicio.lugar.daule.texto,"Un embalse grande en la llanura de la Costa. Con la lluvia, el agua se extiende sobre tierras bajas; en la sequía se retira y deja orillas al descubierto. El radar lo ve aunque esté nublado.","A large reservoir on the coastal plain. With rain, the water spreads over low land; in drought it pulls back and leaves bare shores. The radar sees it even when it is cloudy.","Costa pampapi hatun yaku wakaychina. Tamyawan yakuka uray allpakunapi mirarin; chakipika kutirin, patakunatami llutsan sakin. Radarka phuyu kakpipash rikunmi.",no
+inicio.lugar.daule.titulo,Embalse Daule-Peripa,Daule-Peripa reservoir,Daule-Peripa yaku wakaychina,no
+inicio.lugar.ir_embalse,Ver cómo cambia el embalse,See how the reservoir changes,Yaku wakaychina imashina shukyarishkata rikuy,no
+inicio.lugar.ir_incendio,Ver la historia del incendio,See the wildfire story,Nina willakuyta rikuy,no
+inicio.lugar.mazar.corto,Embalse · valle del Paute,Reservoir · Paute valley,Yaku wakaychina · Paute wayku,no
+inicio.lugar.mazar.donde,"Sierra, río Paute, entre Azuay y Cañar","Highlands, Paute river, between Azuay and Cañar","Sierra, Paute mayu, Azuay Cañar chawpipi",no
+inicio.lugar.mazar.nombre,Mazar,Mazar,Mazar,no
+inicio.lugar.mazar.texto,"Un embalse de montaña en un valle estrecho. Su agua cuenta para la energía del Paute: cuando baja, se nota en la luz. El radar mide cuánto espejo de agua queda.","A mountain reservoir in a narrow valley. Its water counts for the Paute’s power: when it drops, you notice it in the electricity. The radar measures how much open water is left.","Kichki waykupi urku yaku wakaychina. Paypak yakuka Paute achikpak kallpami: urayakpika, achikpimi riksirin. Radarka mashna yaku rirpu sakirishkata tupun.",no
+inicio.lugar.mazar.titulo,Embalse Mazar,Mazar reservoir,Mazar yaku wakaychina,no
+inicio.pasadas.antes,Antes,Earlier,Ñawpa,no
+inicio.pasadas.en_curso,Pasada en curso,Pass in progress,Kunan yallik,no
+inicio.pasadas.hoy,Hoy,Today,Kunan,no
+inicio.pasadas.lluvias,Temporada de lluvias,Rainy season,Tamya pacha,no
+inicio.pasadas.nota,"Cada capa es una pasada del radar; la de arriba crece mientras el haz cruza el corte. Ilustrativo, sin fechas reales.","Each layer is one radar pass; the top one grows while the beam crosses the section. Illustrative, no real dates.","Kamuy kamuyka shuk radar yallikmi; hawa kamuyka wiñan, radar achik kuchushkata chimpakpi. Rikuchinkapakllami, mana chiqa punchakunayuk.",no
+inicio.pasadas.seca,Temporada seca,Dry season,Chaki pacha,no
+inicio.pasadas.sin_cambios,Pasada sin cambios,Pass without changes,Mana shukyarik yallik,no
+inicio.pasadas.titulo,Registro de pasadas,Log of passes,Radar yallikunapak killkana,no
+inicio.pasadas.transicion,Transición,Transition,Tikrarik pacha,no
+inicio.perfil.amazonia,Amazonía,Amazon,Amazonía,no
+inicio.perfil.aria,"Perfil esquemático del Ecuador de oeste a este, con los tres lugares a su altura","Schematic west–east profile of Ecuador, with the three places at their height","Ecuadorpak inti chinkarinamanta inti llukshinakama kuchushka, kimsa llaktakunawan paykunapak hawapi",no
+inicio.perfil.costa,Costa,Coast,Costa,no
+inicio.perfil.esquema,"perfil esquemático, alturas por verificar","schematic profile, heights to be verified","rikuchina kuchushka, hawakunata killkashpa chiqanchina",no
+inicio.perfil.llanura,llanura y bosque seco,plain and dry forest,"pampa, chaki sacha",no
+inicio.perfil.nublado,bosque nublado,cloud forest,phuyu sacha,no
+inicio.perfil.pacifico,Pacífico,Pacific,Pacífico,no
+inicio.perfil.paramo,páramo,páramo,urku pampa,no
+inicio.perfil.pasada,pasada del radar,radar pass,radar yallik,no
+inicio.perfil.selva,selva amazónica,Amazon rainforest,Amazonía sacha,no
+inicio.perfil.sierra,Sierra,Highlands,Sierra,no
+inicio.perfil.valle,valle interandino,inter-Andean valley,urkukuna chawpi wayku,no
+inicio.principal,Entra a la historia de los embalses,Enter the reservoirs story,Yaku wakaychinakunapak willakuyman yaykuy,no
+inicio.recorrido,¿Primera vez? Recorrido de 90 s,First time? 90-second tour,¿Ñawpaq kutichu? 90 sikundu purina,no
+inicio.sello_demo,datos de demostración por ahora,demonstration data for now,kunanka rikuchinkapak willaykunami,no
+inicio.sello_simulacion,todo es simulación,it is all simulation,tukuyllami simulana,no
+inicio.signos.agua,Agua: mar y embalses,Water: sea and reservoirs,"Yaku: hatun kucha, yaku wakaychinakuna",no
+inicio.signos.altura,Tierras altas: bosque nublado y páramo,Highlands: cloud forest and páramo,"Hawa allpakuna: phuyu sacha, urku pampa",no
+inicio.signos.capa,Capa: una pasada del radar,Layer: one radar pass,Kamuy: shuk radar yallik,no
+inicio.signos.esquema,No está a escala ni lleva cifras. Los tres lugares están en latitudes distintas; aquí se proyectan sobre un mismo corte de oeste a este.,It is not to scale and has no figures. The three places lie at different latitudes; here they are projected onto one west–east section.,"Mana tupushkachu, mana yupaykunayukchu. Kimsa llaktakunaka shuk shuk latitudpimi kan; kaypika shuklla kuchushkapimi churarin.",no
+inicio.signos.esquema_t,"Perfil esquemático, alturas por verificar.","Schematic profile, heights to be verified.","Rikuchina kuchushka, hawakunata chiqanchinami.",no
+inicio.signos.franja,"Franja de una pasada, unos 240 km","Swath of one pass, about 240 km","Shuk yallikpak suyu, 240 km shina",no
+inicio.signos.haz,Haz del radar en el corte,Radar beam on the section,Radar achik kuchushkapi,no
+inicio.signos.lugar,Lugar con historia: tócalo,Place with a story: tap it,Willakuyuk llakta: llapiy,no
+inicio.signos.rayado,Rayado: dato de demostración,Hatching: demonstration data,Shiru: rikuchinkapak willay,no
+inicio.signos.titulo,Signos convencionales,Map legend,Rikuchik unanchakuna,no
 inicio.simular,Provoca tu propio evento,Trigger your own event,Kikinpa pachakutita rurana,no
-inicio.simular_detalle,Simula un fenómeno sobre el relieve de Ecuador.,Simulate a phenomenon over the Ecuadorian terrain.,Ecuador allpapi pachakutita simulana.,no
-inicio.valor,La tierra guarda las marcas; el radar las lee.,The land keeps the marks; the radar reads them.,Allpaka rikchakunata waykan; radarmi ñawinchin.,no
+inicio.simular_corte,"Perfil del Ecuador, de Galápagos a la Sierra, con lugares del simulador","Profile of Ecuador, from Galápagos to the Highlands, with places from the simulator","Ecuadorpak kuchushka, Galápagosmanta Sierrakama, simuladorpak llaktakunawan",no
+inicio.simular_dato,5 fenómenos,5 phenomena,5 pachakutikuna,no
+inicio.simular_detalle,"Elige qué pasa y dónde, sobre el relieve del Ecuador. Ajusta tres cosas y mira qué vería el radar.","Choose what happens and where, on Ecuador’s terrain. Adjust three things and see what the radar would see.","Ima tukushkata, maypi tukushkata akllay, Ecuador allpa hawapi. Kimsa imakunata allichiy, radar ima rikunata rikuy.",no
+inicio.simular_ir,Abrir el simulador,Open the simulator,Simuladorta paskay,no
+inicio.titular_1,La tierra guarda las marcas;,The land keeps the marks;,Allpaka rikchakunata wakaychin;,no
+inicio.titular_2,el radar las lee.,the radar reads them.,radarmi ñawinchin.,no
 lab.comun.preparando,Preparando el experimento…,Preparing the experiment…,Yachanata allichishpa…,no
 lab.nubes.activo,activo,active,activo,no
 lab.nubes.activo_explicacion,"Emite su propia señal y mide el eco, así que no necesita luz del Sol ni se detiene por las nubes.","It emits its own signal and measures the echo, so it needs no sunlight and clouds do not stop it.","Pay kikinpa señalta kachan, ecota tupun, chaymanta inti achikta mana minishtinchu, puyukunapash mana harkanchu.",no
@@ -768,6 +882,12 @@ obs.contexto.temporada,Temporada en la pasada activa,Season at the active pass,R
 obs.contexto.temporada_lluviosa,Lluviosa,Rainy,Tamya,no
 obs.contexto.temporada_seca,Seca,Dry,Chaki,no
 obs.contexto.titulo,Contexto del lugar,Context of the place,Pachapa tiyashka pacha,no
+obs.escala.categorias,Cada color es una categoría de la leyenda.,Each color is a category in the legend.,Sapa tullpaka leyendapi shuk rikchakmi.,no
+obs.escala.ciclico,Los colores se repiten en ciclo: la fase vuelve al inicio tras una vuelta completa.,Colors repeat in a cycle: the phase returns to the start after one full turn.,Tullpakuna muyupi kutinmi: fase kutin qallariman.,no
+obs.escala.divergente,"Un color por cada lado del cero: uno es aumento y el otro, disminución.","One color on each side of zero: one is an increase, the other a decrease.","Sapa ladopi shuk tullpa: shukka yapay, shukka urmay.",no
+obs.escala.mascara,"Cada color es una clase: por ejemplo agua, tierra o cambio entre pasadas.","Each color is a class: for example water, land or change between passes.","Sapa tullpaka shuk rikchakmi: yaku, allpa, tikray.",no
+obs.escala.radar,"Más oscuro = superficie lisa, como el agua; más claro = superficie rugosa o con construcciones.","Darker = smooth surface, like water; lighter = rough surface or buildings.","Yanaraku = llamp’u pacha, yakuman rikchakmi; yuraraku = sinchi pacha.",no
+obs.escala.secuencial,Más intenso = más cantidad de lo que se mide.,More intense = more of what is measured.,Sinchiraku = aswan achka tupushka.,no
 obs.estructura.calculando_cambio,Calculando el cambio entre las dos pasadas…,Computing the change between the two passes…,Ishkay pasadakunapa tikrayta yupachishka…,no
 obs.estructura.cargando_escenario,Cargando el escenario…,Loading the scenario…,Escenariota chaskishka…,no
 obs.estructura.cargando_parametros,Cargando los parámetros…,Loading the parameters…,Parámetroskunata chaskishka…,no
@@ -867,6 +987,7 @@ obs.metricas.pasada_activa,Pasada activa,Active pass,Kunan pasada,no
 obs.metricas.pasada_base,{n} de {total},{n} of {total},{total}-manta {n},no
 obs.metricas.sin_cambio_titulo,Sin cambio que mostrar,No change to show,Rikuchinkapak tikray mana kanchu,no
 obs.metricas.tabla_titulo,Métricas del cambio,Change metrics,Tikraypa yupaykuna,no
+obs.parametros.avanzado,Parámetros avanzados,Advanced parameters,Hatun parámetroskuna,no
 obs.parametros.calculando,Calculando… {s} s,Computing… {s} s,Yupachishka… {s} s,no
 obs.parametros.controles_titulo,Controles de este tipo de cambio,Controls for this type of change,Kay tikray rikchaypa controlkuna,no
 obs.parametros.estacional,Variación estacional,Seasonal variation,Pachapa tikray,no
@@ -933,6 +1054,10 @@ obs.variable.desplazamiento_los_desenrollado,Desplazamiento en la línea de vist
 obs.variable.error_frente_a_la_verdad_sintetica,Error frente a la verdad sintética,Error against the synthetic truth,Sintético chiqanwan pantay,no
 obs.variable.fase_interferometrica,Fase interferométrica,Interferometric phase,Fase interferométrica,no
 obs.variable.velocidad_vertical,Velocidad vertical,Vertical velocity,Vertical utkay,no
+obs.vista.comparar.que,"Qué estás viendo: la misma zona antes y después, lado a lado.","What you are seeing: the same area before and after, side by side.","Ima rikushkanki: shuk pachata ñawpa kipa, chimpapura.",no
+obs.vista.impacto.que,"Qué estás viendo: cuánta superficie cambió y qué podría significar, como ejemplo.","What you are seeing: how much surface changed and what it could mean, as an example.","Ima rikushkanki: ima tupu tikrashka, ejemplo shina.",no
+obs.vista.mapa.que,"Qué estás viendo: el mapa del cambio entre dos pasadas del radar, o la escena en el tiempo.","What you are seeing: the map of change between two radar passes, or the scene over time.",Ima rikushkanki: iskay radar pasadapa tikray shuyu.,no
+obs.vista.serie.que,Qué estás viendo: cómo cambia la señal del radar en un punto a lo largo de las pasadas.,What you are seeing: how the radar signal at one point changes across passes.,Ima rikushkanki: shuk puntopi radar señal pasadakunapi imashina tikran.,no
 origen.leyenda.desplazamiento_mas,hacia el satélite,toward the satellite,satéliteman kuchuyakun,no
 origen.leyenda.desplazamiento_menos,alejándose,moving away,karuyakun,no
 origen.leyenda.divergente_mas,más señal,stronger signal,achka señal,no
@@ -1029,6 +1154,10 @@ sim.bitacora.descargar,Descargar CSV,Download CSV,CSVta uraykachay,no
 sim.bitacora.tabla,Eventos simulados en este navegador,Events simulated in this browser,Kay navegadorpi simulashka eventokuna,no
 sim.bitacora.titulo,Bitácora de eventos,Event log,Eventokunapa bitácora,no
 sim.bitacora.vaciar,Vaciar la bitácora,Clear the log,Bitácorata chullayachiy,no
+sim.carta.este,E,E,E,no
+sim.carta.norte,N,N,N,no
+sim.carta.oeste,O,W,O,no
+sim.carta.sur,S,S,S,no
 sim.coords,"{lat}° {ns}, {lon}° {eo}","{lat}° {ns}, {lon}° {eo}","{lat}° {ns}, {lon}° {eo}",no
 sim.coords.norte,N,N,N,no
 sim.coords.oeste,O,W,O,no
@@ -1046,6 +1175,12 @@ sim.espera.maxima_corta,Espera máx.,Max. wait,Hatun shuyay,no
 sim.espera.media,Espera media hasta la primera imagen,Mean wait until the first image,Ñawpa rikchakama chawpi shuyay,no
 sim.espera.media_corta,Espera media,Mean wait,Chawpi shuyay,no
 sim.espera.titulo,¿Cuándo lo vería el radar?,When would the radar see it?,Ima pachapi radar rikunman?,no
+sim.fenomeno.erupcion,"Ceniza, flujos ardientes y lahares de un volcán.","Ash, glowing flows and lahars from a volcano.","Urkupak ushpa, rupak pukutay, turu mayukuna.",no
+sim.fenomeno.incendio,El fuego avanza con el viento y la hojarasca seca.,Fire spreads with the wind and dry leaf litter.,"Ninaka wayrawan, chaki pankawan purin.",no
+sim.fenomeno.inundacion,Un río se desborda o el mar entra en la costa.,A river overflows or the sea floods the coast.,"Mayu llukshin, mana kashpa mama kucha manyaman yaykun.",no
+sim.fenomeno.terremoto,"La tierra tiembla y se deforma; a veces, tsunami.","The ground shakes and deforms; sometimes, a tsunami.","Allpa kuyun, shukyarin; wakinpika tsunami.",no
+sim.fenomeno.titulo,¿Qué quieres provocar?,What do you want to set off?,¿Imatatak rurachinata munanki?,no
+sim.fenomeno.tormenta,Lluvia fuerte que satura el suelo y desliza laderas.,Heavy rain that soaks the ground and brings slopes down.,"Sinchi tamya allpata hunt achin, urkukunata urmachin.",no
 sim.gemelo.deteccion_aria,Detección del radar frente a la verdad sintética,Radar detection against the synthetic ground truth,"Radarpa tarinakuy, sintético chiqanwan tupachishka",no
 sim.gemelo.nota,"Es una simulación de un radar como NISAR sobre el evento simulado, no una observación. Desliza el divisor para pasar de «antes» a «después».","This is a simulation of a radar like NISAR over the simulated event, not an observation. Slide the divider to go from “before” to “after”.","Kayka NISAR shina radarpa simulaciónmi, rurachishka eventopi; mana rikuychu. Rakikta kuyuchiy «ñawpa»-manta «washa»-man rinkapak.",no
 sim.gemelo.por_que_hh,"La polarización HH responde con fuerza al agua abierta, que se ve oscura por la reflexión especular, y a la vegetación inundada, que se ve brillante por el doble rebote.","HH polarization responds strongly to open water, which looks dark because of specular reflection, and to flooded vegetation, which looks bright because of double-bounce scattering.","HH polarización paskashka yakuwan sinchita kutichin, chay reflexión especularrayku yanayan, yakupi sachawanpash, chay doble rebote-rayku llimpin.",no
@@ -1055,6 +1190,11 @@ sim.informe.aviso,Simulación con modelos físicos publicados: no son observacio
 sim.informe.error_imagen,No se pudo cargar la imagen del informe.,Could not load the report image.,Willaypa rikchata mana chaskiyta ushashkachu.,no
 sim.informe.error_lienzo,No se pudo crear el lienzo del informe.,Could not create the report canvas.,Willaypa lienzota mana rurayta ushashkachu.,no
 sim.informe.temporada,temporada {temporada},season: {temporada},pacha: {temporada},no
+sim.lugar.aria,Mapa del lugar,Map of the place,Pachapak mapa,no
+sim.lugar.centro,Empieza en el centro del mapa. Toca el mapa para moverlo.,It starts at the centre of the map. Tap the map to move it.,Mapapak chawpipi kallarin. Mapata llapiy kuyuchinkapak.,no
+sim.lugar.punto,Empieza en el punto que marcaste en el mapa.,It starts at the point you marked on the map.,Mapapi akllashka pachapi kallarin.,no
+sim.lugar.toca,"Toca el mapa para elegir dónde empieza, o elige otro lugar en el panel.","Tap the map to choose where it starts, or pick another place in the panel.","Mapata llapiy maypi kallarinata akllankapak, mana kashpa panelpi shuk pachata akllay.",no
+sim.mundo.aplicar,Usar estas coordenadas,Use these coordinates,Kay coordenadakunata llamkachiy,no
 sim.mundo.creando,Creando el mundo…,Creating the world…,Mundota rurashka…,no
 sim.mundo.crear,Crear el mundo,Create the world,Mundota ruray,no
 sim.mundo.fecha,Fecha (fija la temporada),Date (sets the season),Puncha (pachata churan),no
@@ -1065,6 +1205,12 @@ sim.mundo.longitud,Longitud,Longitude,Longitud,no
 sim.mundo.lugar,Lugar,Place,Maypi,no
 sim.mundo.propio,Coordenadas propias,Custom coordinates,Kikin coordenadakuna,no
 sim.mundo.relieve_real,Relieve real (SRTM),Real terrain (SRTM),Chiqan allpa pata (SRTM),no
+sim.panel.ajustes,Ajustes,Settings,Allichikuna,no
+sim.panel.aria,Ajustes del evento,Event settings,Rikurikpak allichikuna,no
+sim.panel.avanzado,Avanzado,Advanced,Ashtawan,no
+sim.panel.cambiaron,Cambiaste los ajustes o el punto: desata de nuevo para ver el resultado nuevo.,You changed the settings or the point: unleash again to see the new result.,Allichikunata mana kashpa pachata shukyachirkanki: kutin kacharipay mushuk tukuchita rikunkapak.,no
+sim.panel.desatando,Desatando…,Unleashing…,Kacharikun…,no
+sim.panel.desatar,Desatar,Unleash,Kacharipay,no
 sim.pantalla.animacion,Animación del evento,Event animation,Eventopa kuyuri,no
 sim.pantalla.cargando_simulador,Cargando el simulador…,Loading the simulator…,Simuladorta chaskishka…,no
 sim.pantalla.celda,Celda {m} m,Cell {m} m,Celda {m} m,no
@@ -1084,13 +1230,24 @@ sim.pantalla.simulando,Simulando {herramienta}… puede tardar unos segundos.,Si
 sim.pantalla.tablero,Tablero,Board,Tablero,no
 sim.pantalla.temporada,Temporada,Season,Pacha,no
 sim.pantalla.titulo,Simulador de eventos,Event simulator,Simulador de eventos,no
+sim.pasos.ajusta,Ajusta y desata,Adjust and unleash,"Allichiy, kacharipay",no
+sim.pasos.aria,Pasos del simulador,Simulator steps,Simuladorpak purinkuna,no
+sim.pasos.cambiar_fenomeno,Cambiar el fenómeno,Change the phenomenon,Rikurikta shukyachiy,no
+sim.pasos.fenomeno,Fenómeno,Phenomenon,Rikurik,no
+sim.pasos.lugar,Lugar,Place,Pacha,no
+sim.res.calculando,Calculando el evento… puede tardar unos segundos.,Computing the event… it can take a few seconds.,Rikurikta yupakun… ashalla segundokunata unayanka.,no
+sim.res.comparar,Compáralo con lo que vio el radar,Compare it with what the radar saw,Radar rikushkawan chimpapurachiy,no
 sim.res.copiar,Copiar enlace,Copy link,Enlaceta copiay,no
 sim.res.detalle,Detalle de los efectos: {titulo},Effects in detail: {titulo},Efectokunapa willay: {titulo},no
+sim.res.ejemplo,ejemplo de demostración,demonstration example,rikuchiypak shuk rikuchiy,no
 sim.res.enlace_copiado,Enlace copiado.,Link copied.,Enlace copiashka.,no
 sim.res.enlace_error,No se pudo copiar: copia la dirección del navegador.,Could not copy: copy the address from the browser.,Mana copiayta ushashkachu: navegadorpa direcciónta copiay.,no
+sim.res.evento_real,evento real · fuente por añadir,real event · source to be added,chiqan rikurik · pukyu churanami,no
 sim.res.informe,Informe de una página (PNG),One-page report (PNG),Shuk panka willay (PNG),no
 sim.res.informe_error,No se pudo generar el informe.,Could not generate the report.,Willayta mana rurayta ushashkachu.,no
 sim.res.modelos,Modelos usados,Models used,Llamkachishka modelokuna,no
+sim.res.titulo,Resultado,Result,Tukuchi,no
+sim.res.ver_detalle,"Ver el detalle: radar, espera y tabla","See the details: radar, wait and table","Tukuyta rikuy: radar, shuyana, tabla",no
 sim.tablero.aria,"Tablero del simulador. Pulsa una celda, o mueve el cursor con las flechas (Mayús avanza de diez en diez) y pulsa Enter, para desatar el evento.","Simulator board. Press a cell, or move the cursor with the arrow keys (Shift moves ten at a time) and press Enter, to trigger the event.","Simuladorpa tablero. Celdata ñitiy. Cursorta flechakunawan kuyuchiy (Mayús chunka chunkata rin) shinallatak Enter-ta ñitiy, eventota rurachinkapak.",no
 titulos.fundamentos,Fundamentos,Fundamentals,Sapi yachay,no
 titulos.historias,Historias,Stories,Willakuykuna,no
