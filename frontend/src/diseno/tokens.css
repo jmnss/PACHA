@@ -201,4 +201,17 @@ a { color: var(--laguna-tinta); text-underline-offset: 0.2em; }
   --scrim: rgba(31, 29, 26, 0.5); /* fondo tras una hoja modal */
   --z-flotante: 20;
   --z-banda: 30;
+
+  /* Inicio (propuesta D): perfil, registro de pasadas y la única animación (el haz) */
+  --h-perfil: clamp(600px, calc(100svh - 80px), 800px);
+  --h-perfil-movil: 320px;
+  --w-pasadas: 228px;  --h-pasadas: 330px;
+  --w-pasadas-medio: 190px; --h-pasadas-medio: 280px;
+  --w-pasadas-movil: 40px;  --h-pasadas-movil: 108px;
+  --w-texto-portada: 780px;
+  --w-localizador: 300px;
+  --t-pasada: 26s;     /* una vuelta del haz por el perfil = lo que tarda en crecer la capa en curso */
+  --tinte-haz: color-mix(in srgb, var(--laguna) 26%, transparent);
+  --tinte-franja: color-mix(in srgb, var(--laguna) 16%, transparent);
+  --contacto: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 12' preserveAspectRatio='none'><path d='M0,6.5 C90,3.5 170,9.5 280,7 S470,2.5 600,5.5 S820,10 930,6.5 S1110,3 1200,6' fill='none' stroke='%23CDBDA6' stroke-width='1.5' vector-effect='non-scaling-stroke'/></svg>");
 }

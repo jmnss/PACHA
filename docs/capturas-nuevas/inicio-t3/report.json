@@ -1,0 +1,1141 @@
+{
+ "url": "http://127.0.0.1:8010/?idioma=es",
+ "at": "2026-11-15T16:56:24.027Z",
+ "allow": [
+  "palette-terracotta"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    0.92,
+    0.73,
+    0.63
+   ],
+   "motion": {
+    "elements": 2,
+    "css": 2,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 1962,
+     "screens": 2.2,
+     "words": 487,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 14,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "La tierra guarda las marcas; el radar las lee.",
+     "words": 9,
+     "chars": 46,
+     "lines": 2,
+     "size": 60,
+     "vw": 4.2,
+     "font": "Spectral",
+     "weight": 400,
+     "tracking": 0,
+     "leading": 1.04,
+     "top": 84,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "La tierra guarda las marcas; el radar las lee.",
+     "words": 9,
+     "lines": 2,
+     "size": 60,
+     "font": "Spectral"
+    },
+    "headings": [
+     {
+      "text": "La tierra guarda las marcas; el radar las lee.",
+      "words": 9,
+      "chars": 46,
+      "lines": 2,
+      "size": 60,
+      "vw": 4.2,
+      "font": "Spectral",
+      "weight": 500,
+      "tracking": 0,
+      "leading": 1.04,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.52,
+      "top": 84,
+      "mixedFonts": [
+       "Spectral",
+       "Spectral italic"
+      ],
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Embalse Daule-Peripa",
+      "words": 2,
+      "chars": 20,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Spectral",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.2,
+      "top": 861,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tres maneras de entrar",
+      "words": 4,
+      "chars": 22,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Spectral",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.83,
+      "top": 1320,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 4,
+     "mixedFontHeadings": 1
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Public Sans",
+       "share": 0.86,
+       "mono": false
+      },
+      {
+       "family": "Spectral",
+       "share": 0.14,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      20,
+      21,
+      28,
+      60
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": {
+      "font": "Public Sans",
+      "size": 13,
+      "leading": 1.54,
+      "weight": 600,
+      "tracking": 0,
+      "contrast": 7.5
+     },
+     "measureChars": 54,
+     "max": {
+      "size": 60,
+      "vw": 4.2,
+      "font": "Spectral",
+      "text": "La tierra guarda las marcas;"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.04,
+     "smallText": 0
+    },
+    "eyebrows": [
+     {
+      "text": "pasada del radar",
+      "above": "La tierra guarda las marcas; el radar la",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 48
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f1e9dd",
+     "bodyBgHsl": {
+      "h": 36,
+      "s": 0.42,
+      "l": 0.91
+     },
+     "dark": false,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#574f45",
+       "share": 0.44
+      },
+      {
+       "color": "#1f1d1a",
+       "share": 0.41
+      },
+      {
+       "color": "#6e2e0b",
+       "share": 0.06
+      },
+      {
+       "color": "#246a66",
+       "share": 0.05
+      },
+      {
+       "color": "#6b4226",
+       "share": 0.03
+      }
+     ],
+     "button": {
+      "bg": "#f8f3ec",
+      "hsl": {
+       "h": 35,
+       "s": 0.46,
+       "l": 0.95
+      },
+      "fg": "#1f1d1a"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 8,
+     "height": 38,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Saltar al contenido",
+      "Entra a la historia de los embalses"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 1,
+     "scrims": 0,
+     "gradientSamples": [
+      "span.perfil__haz → repeating-radial-gradient(circle at 50% 0px, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 22px, color(srgb 0.168627 "
+     ],
+     "gradientText": 0,
+     "hairlines": 10,
+     "hairlineSamples": [
+      "nav.riel 184px",
+      "div.banda-demo__fila 1256px",
+      "div.portada__pie 1256px",
+      "h2#inicio-signos-t.signos__titulo 336px",
+      "header.entrada__cajetin 379px"
+     ],
+     "outlinedBoxes": 4,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 1403
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "svg",
+      "ratio": 0.78
+     },
+     {
+      "type": "svg",
+      "ratio": 0.78
+     }
+    ],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 900,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "public sans",
+     "spectral"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 1962,
+    "margins": {
+     "left": 201,
+     "right": 32
+    },
+    "sections": [
+     {
+      "sel": "section.portada",
+      "tag": "section",
+      "top": 36,
+      "height": 1224,
+      "words": 288,
+      "media": 3,
+      "middle": 0,
+      "heading": {
+       "text": "La tierra guarda las marcas;",
+       "size": 60,
+       "tag": "h1"
+      },
+      "left": 184,
+      "right": 0,
+      "textLeft": 201,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.entradas",
+      "tag": "section",
+      "top": 1272,
+      "height": 690,
+      "words": 149,
+      "media": 3,
+      "middle": 58,
+      "heading": {
+       "text": "Tres maneras de entrar",
+       "size": 28,
+       "tag": "h2"
+      },
+      "left": 216,
+      "right": 49,
+      "textLeft": 216,
+      "textRight": 57,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "La tierra guarda las marcas; el radar las lee.",
+      "size": 60,
+      "top": 84,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 216,
+      "n": 6
+     },
+     {
+      "x": 1052,
+      "n": 3
+     },
+     {
+      "x": 241,
+      "n": 2
+     },
+     {
+      "x": 646,
+      "n": 2
+     },
+     {
+      "x": 1180,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 14,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.08,
+    "voidBox": {
+     "x": 0,
+     "y": 240,
+     "w": 180,
+     "h": 600
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": false,
+    "ground": "#f1e9dd",
+    "sidebar": {
+     "w": 184,
+     "tag": "nav",
+     "links": 5,
+     "share": 0.13
+    },
+    "topbar": {
+     "h": 36
+    },
+    "canvas": {
+     "left": 0,
+     "right": 0
+    },
+    "hero": {
+     "text": "La tierra guarda las marcas; el radar las lee.",
+     "words": 9,
+     "chars": 46,
+     "lines": 2,
+     "size": 60,
+     "vw": 4.2,
+     "font": "Spectral",
+     "weight": 400,
+     "tracking": 0,
+     "leading": 1.04,
+     "top": 84,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 3,
+    "layout": {
+     "panels": 5,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 121,
+       "at": 1673,
+       "panel": "Provoca tu propio evento"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 9,
+     "radii": [
+      [
+       0,
+       6
+      ],
+      [
+       4,
+       3
+      ]
+     ],
+     "heavyBorders": 5,
+     "borderSamples": [
+      "#1f1d1a on #f1e9dd (13.96:1)",
+      "#574f45 on #f8f3ec (7.29:1)",
+      "#574f45 on #f8f3ec (7.29:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 4,
+    "placeholders": [],
+    "type": {
+     "under13": 0,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      20,
+      21,
+      28,
+      30,
+      60
+     ]
+    },
+    "title": {
+     "text": "La tierra guarda las marcas;\nel radar las lee.",
+     "size": 60,
+     "top": 84
+    },
+    "colourShare": 0.028
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 4,
+   "filled": [
+    0.89,
+    0.66,
+    0.83,
+    0.79
+   ],
+   "motion": {
+    "elements": 2,
+    "css": 2,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 3323,
+     "screens": 3.9,
+     "words": 434,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 14,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "La tierra guarda las marcas; el radar las lee.",
+     "words": 9,
+     "chars": 46,
+     "lines": 3,
+     "size": 38,
+     "vw": 9.7,
+     "font": "Spectral",
+     "weight": 400,
+     "tracking": 0,
+     "leading": 1.04,
+     "top": 73,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "La tierra guarda las marcas; el radar las lee.",
+     "words": 9,
+     "lines": 3,
+     "size": 38,
+     "font": "Spectral"
+    },
+    "headings": [
+     {
+      "text": "La tierra guarda las marcas; el radar las lee.",
+      "words": 9,
+      "chars": 46,
+      "lines": 3,
+      "size": 38,
+      "vw": 9.7,
+      "font": "Spectral",
+      "weight": 500,
+      "tracking": 0,
+      "leading": 1.04,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 73,
+      "mixedFonts": [
+       "Spectral",
+       "Spectral italic"
+      ],
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 3,
+     "over2Lines": 1,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 1
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Public Sans",
+       "share": 0.88,
+       "mono": false
+      },
+      {
+       "family": "Spectral",
+       "share": 0.12,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      21,
+      38
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Public Sans",
+      "size": 16,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.2
+     },
+     "measureChars": 42,
+     "max": {
+      "size": 38,
+      "vw": 9.7,
+      "font": "Spectral",
+      "text": "La tierra guarda las marcas;"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.01,
+     "smallText": 3
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f1e9dd",
+     "bodyBgHsl": {
+      "h": 36,
+      "s": 0.42,
+      "l": 0.91
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f8f3ec",
+       "top": 1415,
+       "hsl": {
+        "h": 35,
+        "s": 0.46,
+        "l": 0.95
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#1f1d1a",
+       "share": 0.47
+      },
+      {
+       "color": "#574f45",
+       "share": 0.37
+      },
+      {
+       "color": "#6e2e0b",
+       "share": 0.06
+      },
+      {
+       "color": "#246a66",
+       "share": 0.05
+      },
+      {
+       "color": "#6b4226",
+       "share": 0.03
+      }
+     ],
+     "button": {
+      "bg": "#f8f3ec",
+      "hsl": {
+       "h": 35,
+       "s": 0.46,
+       "l": 0.95
+      },
+      "fg": "#1f1d1a"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 8,
+     "height": 38,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Saltar al contenido",
+      "Entra a la historia de los embalses"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 1,
+     "scrims": 0,
+     "gradientSamples": [
+      "span.perfil__haz → repeating-radial-gradient(circle at 50% 0px, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 22px, color(srgb 0.168627 "
+     ],
+     "gradientText": 0,
+     "hairlines": 10,
+     "hairlineSamples": [
+      "nav.riel 390px",
+      "div.banda-demo__fila 390px",
+      "div.portada__pie 390px",
+      "h2#inicio-signos-t.signos__titulo 324px",
+      "header.entrada__cajetin 356px"
+     ],
+     "outlinedBoxes": 4,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "svg",
+      "ratio": 0.38
+     },
+     {
+      "type": "svg",
+      "ratio": 0.38
+     }
+    ],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 56,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "public sans",
+     "spectral"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 3323,
+    "margins": {
+     "left": 16,
+     "right": 16
+    },
+    "sections": [
+     {
+      "sel": "div.portada__lienzo",
+      "tag": "div",
+      "top": 49,
+      "height": 688,
+      "words": 70,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "La tierra guarda las marcas;",
+       "size": 38,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 16,
+      "fullBleed": true,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.portada__pie",
+      "tag": "div",
+      "top": 737,
+      "height": 1038,
+      "words": 147,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Embalse Daule-Peripa",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 22,
+      "textLeft": 16,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.entradas",
+      "tag": "section",
+      "top": 1786,
+      "height": 1480,
+      "words": 149,
+      "media": 3,
+      "middle": 0,
+      "heading": {
+       "text": "Tres maneras de entrar",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 33,
+      "textLeft": 16,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "La tierra guarda las marcas; el radar las lee.",
+      "size": 38,
+      "top": 73,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 33,
+      "n": 7
+     },
+     {
+      "x": 16,
+      "n": 6
+     }
+    ],
+    "leftBlocks": 13,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": false,
+    "ground": "#f1e9dd",
+    "sidebar": null,
+    "topbar": {
+     "h": 49
+    },
+    "canvas": {
+     "left": 0,
+     "right": -83
+    },
+    "hero": {
+     "text": "La tierra guarda las marcas; el radar las lee.",
+     "words": 9,
+     "chars": 46,
+     "lines": 3,
+     "size": 38,
+     "vw": 9.7,
+     "font": "Spectral",
+     "weight": 400,
+     "tracking": 0,
+     "leading": 1.04,
+     "top": 73,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 3,
+    "layout": {
+     "panels": 4,
+     "firstScreen": 0,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 7,
+     "radii": [
+      [
+       0,
+       4
+      ],
+      [
+       4,
+       3
+      ]
+     ],
+     "heavyBorders": 4,
+     "borderSamples": [
+      "#574f45 on #f8f3ec (7.29:1)",
+      "#574f45 on #f8f3ec (7.29:1)",
+      "#574f45 on #f8f3ec (7.29:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 4,
+    "placeholders": [],
+    "type": {
+     "under13": 0.05,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      20,
+      21,
+      30,
+      38
+     ]
+    },
+    "title": {
+     "text": "La tierra guarda las marcas;\nel radar las lee.",
+     "size": 38,
+     "top": 73
+    },
+    "colourShare": 0.062
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "mixed-font-headline",
+   "width": 1440,
+   "message": "1 headline(s) switch typeface or to italic mid-line (the \"one italic serif word\" move).",
+   "fix": "Set the whole headline in one face. Emphasis comes from the words.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient",
+   "width": 1440,
+   "message": "1 gradient fill(s): span.perfil__haz → repeating-radial-gradient(circle at 50% 0px, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 22px, color(srgb 0.168627 ",
+   "fix": "Use a flat colour or a real image. The only gradient allowed by default is a neutral scrim over a photo for legibility.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "palette-cream",
+   "width": 1440,
+   "message": "Yellow-cream background (page background #f1e9dd, button #f8f3ec).",
+   "fix": "Use the drawn palette. If you want warmth, take a low-chroma stone or bone, not a yellow cream.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "heavy-borders",
+   "width": 1440,
+   "message": "5 panel borders are dark against their ground: #1f1d1a on #f1e9dd (13.96:1) | #574f45 on #f8f3ec (7.29:1) | #574f45 on #f8f3ec (7.29:1)",
+   "fix": "A panel border is a whisper: about 1.1–1.3:1 against its ground on a light screen (#e5e7eb–#ededed on white), and about 1.2–1.5:1 on a dark one (#1a1a1a on #000, #2e2e2e on #111). Darker lines turn the screen into a grid of boxes; keep the stronger line for controls.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "below-fold",
+   "width": 1440,
+   "message": "Only 2 of 5 blocks start on the first 1440px screen.",
+   "fix": "Every block the brief names shows its header and first rows on the first desktop screen: size the headline block to its question, cap long lists with \"View all\", and put time-sensitive blocks before long tables."
+  },
+  {
+   "level": "WARN",
+   "id": "panel-void",
+   "width": 1440,
+   "message": "1 card(s) hold a blank band inside: 121px in \"Provoca tu propio evento\".",
+   "fix": "A card stretches to its neighbour only when it has content to fill. Keep a legend or a note directly under its chart (only an action or a total may sit at a stretched card's foot), let a short card keep its own height (align-items: start), and let a filtered block shrink to its rows."
+  },
+  {
+   "level": "WARN",
+   "id": "app-title-size",
+   "width": 1440,
+   "message": "The h1 is 60px (\"La tierra guarda las marcas;\nel radar la\").",
+   "fix": "An app screen is not a landing page: the title is 18-32px (20-24px on a phone).",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "headline-lines",
+   "width": 390,
+   "message": "1 headline(s) wrap past two lines at 390px: \"La tierra guarda las marcas; el radar las lee.\" → 3 lines (9 words, 38px)",
+   "fix": "Cut words first (a headline is a title, not a sentence). Then give it a wider measure. Lower the size only as a last resort and never below the scale you chose. A real statement paragraph belongs in a <p> or <blockquote> at 24px or less."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "/home/jnavas/NASA2026/NISAR-Ecuador/.claude/worktrees/agent-a5b1ac03c01a9eb85/docs/capturas-nuevas/inicio-t3/desktop-fold.jpg",
+   "pages": [
+    "/home/jnavas/NASA2026/NISAR-Ecuador/.claude/worktrees/agent-a5b1ac03c01a9eb85/docs/capturas-nuevas/inicio-t3/desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "/home/jnavas/NASA2026/NISAR-Ecuador/.claude/worktrees/agent-a5b1ac03c01a9eb85/docs/capturas-nuevas/inicio-t3/mobile-fold.jpg",
+   "pages": [
+    "/home/jnavas/NASA2026/NISAR-Ecuador/.claude/worktrees/agent-a5b1ac03c01a9eb85/docs/capturas-nuevas/inicio-t3/mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}
