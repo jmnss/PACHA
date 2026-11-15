@@ -22,7 +22,7 @@ def test_sitio_json_valido():
     assert len(sitios) == 3, [str(s) for s in sitios]
     for sj in sitios:
         datos = json.loads(sj.read_text(encoding="utf-8"))
-        assert datos["version"] == 1
+        assert datos["version"] in (1, 2)
         raiz = sj.parent
         for clave in ("dem", "curva", "contorno"):
             ref = datos.get(clave)

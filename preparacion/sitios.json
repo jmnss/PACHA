@@ -3,9 +3,9 @@
    "bbox": [-78.74, -2.80, -78.55, -2.55], "semilla": [-2.6640, -78.6197], "epsg": 32717,
    "clases_defecto": {"1": "agua", "0": "no agua", "3": "sin dato", "255": "sin dato"}},
   {"sitio": "daule-peripa", "tipo": "embalse", "nombre": "Embalse Daule-Peripa", "region": "Guayas / Manabí",
-   "bbox": [-79.55, -1.14, -79.30, -0.75], "semilla": [-0.9127, -79.4430], "epsg": 32717,
+   "bbox": [-79.86, -1.14, -79.30, -0.63], "semilla": [-0.9127, -79.4430], "epsg": 32717,
    "clases_defecto": {"1": "agua", "0": "no agua", "3": "sin dato", "255": "sin dato"}},
   {"sitio": "casitagua", "tipo": "incendio", "nombre": "Cerro Casitagua", "region": "Pichincha",
-   "bbox": [-78.56, -0.08, -78.47, 0.02], "semilla": [-0.03, -78.52], "epsg": 32717,
+   "bbox": [-78.56, -0.09, -78.43, 0.02], "semilla": [-0.03, -78.47], "epsg": 32717,
    "clases_defecto": {"1": "quemado", "0": "no quemado", "3": "sin dato", "255": "sin dato"}}
 ]

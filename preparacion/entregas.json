@@ -175,7 +175,21 @@
    ]
   },
   "daule-peripa": {
-   "rejilla": null,
+   "rejilla": {
+    "epsg": 32717,
+    "transform": [
+     10,
+     0,
+     627670,
+     0,
+     -10,
+     9929740
+    ],
+    "forma": [
+     3625,
+     5441
+    ]
+   },
    "fechas": [
     {
      "fecha": "2026-06-26",

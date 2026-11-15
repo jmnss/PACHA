@@ -92,3 +92,34 @@ comparador) y el borde sin dato marcado.
 - **Mazar**: una fecha (2026-10-29, agua 5,43 km²), sin `procedencia.json`; con relieve Copernicus, curva nivel–superficie y contorno.
 - **Daule-Peripa** y **Casitagua**: solo relieve y contorno; esperan máscaras del equipo (Casitagua, antes y después del 17 sep 2026).
 - Pendientes del equipo: fecha de la primera máscara de Mazar, procedencia de cada fecha, stack del 29 oct.
+
+## Tercera entrega (2026-11-15): Casitagua, Mazar (13 ago) y Daule-Peripa
+
+Normalizada con `scripts/organizar_entregas.py` según el manifiesto `preparacion/entregas.json` y preparada con
+`scripts/preparar_embalses.py`. Todo sigue con **procedencia incompleta** (falta `coleccion`, `granulos`,
+`fecha_adquisicion` con hora UTC, `frecuencia` y `madurez`): la app no la muestra y `mixto` sirve los sustitutos.
+
+| Archivo | Qué es (medido) | Decisión |
+|---|---|---|
+| `HH2_db_2026_09_13.tif`, `HV2_db_2026_09_13.tif` | 1 banda float32, EPSG:32717, 10 m, 631×928. El valor 40,0 es «sin dato» (sin `nodata` declarado). | Usados: stack «antes» de Casitagua, 2026-09-13. |
+| `ImageNISAR_Incendio.tif` | 3 bandas float32, EPSG:32617, píxel de 10 × 5 m; 0 = sin dato; la banda 3 repite la 2. | Usado (bandas 1 y 2): stack «después», 2026-09-25. |
+| `InfoNISAR.tif` | uint8 0/1, nodata 255. Clasificación supervisada (aprendizaje automático); 1 = quemado. | Usada: máscara de quemado de 2026-09-25. Estimación del equipo, no conclusión. |
+| `RFDI_antes_despues.tif` | float32, 10 m, 629×926; ΔRFDI = antes − después (positivo = menos vegetación; confirmado por el equipo). | Usado como capa continua de 2026-09-25; su rejilla es la de referencia de Casitagua. |
+| `HH2_HV2_db_2026_09_13.tif` | HH−HV de la imagen «después» pese al nombre; 116 px corruptos. | Descartado. |
+| `imagenes.zip`, `*.aux.xml`, `Mascara.tif`, `Tabla2.csv` | Copias, estadísticas, prueba de formato, tabla sin geometría. | Descartados. |
+| `Clas_Super.tif` + `Mazar_Stack.tif` | Máscara y stack de Mazar, 2026-08-13 (equipo). | Usados: «antes» de Mazar. |
+| `Mazar_CS1029.tif` | Máscara de Mazar, 2026-10-29. | Usada (sin cambios). |
+| `daule_stack0626.tif`, `masacara0626Daule.tif` | Stack (3 bandas dB) y máscara de Daule-Peripa, misma rejilla, 2026-06-26. | Usados; rejilla de referencia del sitio. |
+| `Daule_Stack1.tif`, `masacara1.tif` | Stack y máscara, 2026-10-12 (por descarte; **por confirmar**); la máscara está desplazada un píxel. | Usados; el manifiesto fija la rejilla de Daule y la máscara se remuestrea por vecino más cercano. |
+
+Respuestas del equipo (2026-11-15): productos GCOV con HH y HV leídos de granulos `.h5`; ~10 m; dB (potencia);
+incendio «después» = 2026-09-25; máscara de incendio por clasificación supervisada; ΔRFDI = antes − después.
+
+Cifras de los derivados (dentro del contorno provisional): Casitagua 2026-09-25 quemado 19,42 km² (sin máscara en
+2026-09-13: la máscara del equipo es el quemado entre ambas fechas); Mazar 7,08 km² (13 ago) y 5,67 km² (29 oct);
+Daule-Peripa 116,02 km² (26 jun) y 113,42 km² (12 oct). Derivados de `embalses` + `incendios`: 6,71 MB de 10 MB.
+
+### Lo que sigue faltando del equipo
+1. El **nombre de cada archivo `.h5`** usado (Casitagua 13 y 25 sep; Mazar 13 ago y 29 oct; Daule-Peripa 26 jun y 12 oct),
+   de donde salen granulo, colección, instante UTC, frecuencia y madurez; o confirmar uno de los candidatos de abajo.
+2. Confirmar que `Daule_Stack1.tif` y `masacara1.tif` son del 12 de octubre.
