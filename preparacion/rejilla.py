@@ -94,3 +94,12 @@ def reducir_continua(datos: np.ndarray, ref: Rejilla, destino: Rejilla) -> np.nd
     with np.errstate(divide="ignore", invalid="ignore"):
         media = np.where(n > 0, suma / np.maximum(n, 1), np.nan)
         return (10.0 * np.log10(media)).astype(np.float32)
+
+
+def remuestrear_continua(r: Raster, destino: Rejilla) -> np.ndarray:
+    """Bilineal a la rejilla destino (float32); NaN donde la fuente no cubre o no tiene dato."""
+    fuente = r.datos.astype(np.float32)
+    out = np.full((destino.alto, destino.ancho), np.nan, np.float32)
+    reproject(fuente, out, src_transform=r.transform, src_crs=r.crs, dst_transform=destino.transform,
+              dst_crs=destino.crs, resampling=Resampling.bilinear, src_nodata=np.nan, dst_nodata=np.nan)
+    return out

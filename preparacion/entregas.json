@@ -1,0 +1,273 @@
+{
+ "version": 1,
+ "sitios": {
+  "casitagua": {
+   "rejilla": {
+    "epsg": 32717,
+    "transform": [
+     10,
+     0,
+     778390,
+     0,
+     -10,
+     10000740
+    ],
+    "forma": [
+     926,
+     629
+    ]
+   },
+   "fechas": [
+    {
+     "fecha": "2026-09-13",
+     "papel": "antes",
+     "stack": {
+      "HH": {
+       "archivo": "HH2_db_2026_09_13.tif",
+       "banda": 1,
+       "umbral_sin_dato": 39.99
+      },
+      "HV": {
+       "archivo": "HV2_db_2026_09_13.tif",
+       "banda": 1,
+       "umbral_sin_dato": 39.99
+      }
+     },
+     "procedencia": {
+      "fecha_adquisicion_utc": null,
+      "granulos": [],
+      "producto": "GCOV",
+      "coleccion": null,
+      "frecuencia": null,
+      "madurez": null,
+      "polarizaciones": [
+       "HH",
+       "HV"
+      ],
+      "unidades_stack": "dB",
+      "autor": "equipo PACHA"
+     }
+    },
+    {
+     "fecha": "2026-09-25",
+     "papel": "despues",
+     "stack": {
+      "HH": {
+       "archivo": "ImageNISAR_Incendio.tif",
+       "banda": 1,
+       "sin_dato": [
+        0
+       ]
+      },
+      "HV": {
+       "archivo": "ImageNISAR_Incendio.tif",
+       "banda": 2,
+       "sin_dato": [
+        0
+       ]
+      }
+     },
+     "mascara": {
+      "archivo": "InfoNISAR.tif",
+      "clases": {
+       "1": "quemado",
+       "0": "no quemado",
+       "255": "sin dato"
+      }
+     },
+     "delta_rfdi": {
+      "archivo": "RFDI_antes_despues.tif",
+      "signo": "antes_menos_despues"
+     },
+     "procedencia": {
+      "fecha_adquisicion_utc": null,
+      "granulos": [],
+      "producto": "GCOV",
+      "coleccion": null,
+      "frecuencia": null,
+      "madurez": null,
+      "polarizaciones": [
+       "HH",
+       "HV"
+      ],
+      "unidades_stack": "dB",
+      "metodo": {
+       "nombre": "clasificación supervisada (aprendizaje automático)",
+       "clases": 2,
+       "parametros": {}
+      },
+      "autor": "equipo PACHA"
+     }
+    }
+   ]
+  },
+  "mazar": {
+   "rejilla": null,
+   "fechas": [
+    {
+     "fecha": "2026-08-13",
+     "papel": "antes",
+     "mascara": {
+      "archivo": "Clas_Super.tif"
+     },
+     "stack": {
+      "HH": {
+       "archivo": "Mazar_Stack.tif",
+       "banda": 1,
+       "sin_dato": [
+        0
+       ]
+      },
+      "HV": {
+       "archivo": "Mazar_Stack.tif",
+       "banda": 2,
+       "sin_dato": [
+        0
+       ]
+      }
+     },
+     "procedencia": {
+      "fecha_adquisicion_utc": null,
+      "granulos": [],
+      "producto": "GCOV",
+      "coleccion": null,
+      "frecuencia": null,
+      "madurez": null,
+      "polarizaciones": [
+       "HH",
+       "HV"
+      ],
+      "unidades_stack": "dB",
+      "metodo": {
+       "nombre": "clasificación supervisada",
+       "clases": 2,
+       "parametros": {}
+      },
+      "autor": "equipo PACHA"
+     }
+    },
+    {
+     "fecha": "2026-10-29",
+     "papel": "despues",
+     "mascara": {
+      "archivo": "Mazar_CS1029.tif"
+     },
+     "procedencia": {
+      "fecha_adquisicion_utc": null,
+      "granulos": [],
+      "producto": "GCOV",
+      "coleccion": null,
+      "frecuencia": null,
+      "madurez": null,
+      "polarizaciones": [
+       "HH",
+       "HV"
+      ],
+      "unidades_stack": "dB",
+      "metodo": {
+       "nombre": "clasificación supervisada",
+       "clases": 2,
+       "parametros": {}
+      },
+      "autor": "equipo PACHA"
+     }
+    }
+   ]
+  },
+  "daule-peripa": {
+   "rejilla": null,
+   "fechas": [
+    {
+     "fecha": "2026-06-26",
+     "papel": "antes",
+     "mascara": {
+      "archivo": "masacara0626Daule.tif"
+     },
+     "stack": {
+      "HH": {
+       "archivo": "daule_stack0626.tif",
+       "banda": 1,
+       "sin_dato": [
+        0
+       ]
+      },
+      "HV": {
+       "archivo": "daule_stack0626.tif",
+       "banda": 2,
+       "sin_dato": [
+        0
+       ]
+      }
+     },
+     "procedencia": {
+      "fecha_adquisicion_utc": null,
+      "granulos": [],
+      "producto": "GCOV",
+      "coleccion": null,
+      "frecuencia": null,
+      "madurez": null,
+      "polarizaciones": [
+       "HH",
+       "HV"
+      ],
+      "unidades_stack": "dB",
+      "metodo": {
+       "nombre": "clasificación supervisada",
+       "clases": 2,
+       "parametros": {}
+      },
+      "autor": "equipo PACHA"
+     }
+    },
+    {
+     "fecha": "2026-10-12",
+     "papel": "despues",
+     "mascara": {
+      "archivo": "masacara1.tif"
+     },
+     "stack": {
+      "HH": {
+       "archivo": "Daule_Stack1.tif",
+       "banda": 1,
+       "sin_dato": [
+        0
+       ]
+      },
+      "HV": {
+       "archivo": "Daule_Stack1.tif",
+       "banda": 2,
+       "sin_dato": [
+        0
+       ]
+      }
+     },
+     "procedencia": {
+      "fecha_adquisicion_utc": null,
+      "granulos": [],
+      "producto": "GCOV",
+      "coleccion": null,
+      "frecuencia": null,
+      "madurez": null,
+      "polarizaciones": [
+       "HH",
+       "HV"
+      ],
+      "unidades_stack": "dB",
+      "metodo": {
+       "nombre": "clasificación supervisada",
+       "clases": 2,
+       "parametros": {}
+      },
+      "autor": "equipo PACHA"
+     }
+    }
+   ]
+  }
+ },
+ "descartados": {
+  "HH2_HV2_db_2026_09_13.tif": "HH−HV de la imagen «después» pese al nombre; redundante; 116 px corruptos",
+  "imagenes.zip": "repite los archivos sueltos",
+  "Mascara.tif": "prueba de formato superada",
+  "Tabla2.csv": "tabla de atributos sin geometría"
+ }
+}
