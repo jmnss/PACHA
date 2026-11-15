@@ -1,80 +1,111 @@
-import { useMutation } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { mensajeDeError } from '../../api/cliente'
-import { fundarCiudad, useCatalogo, useEvento, useMundo, type PeticionEvento, type PeticionMundo } from '../../api/simulador'
+import { useCatalogo, useEvento, useMundo, type PeticionEvento, type PeticionMundo } from '../../api/simulador'
 import { Boton } from '../../diseno/Boton'
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { Deslizador } from '../../diseno/Deslizador'
-import { Cargando, ErrorBloque, TextoMensaje } from '../../diseno/Estados'
+import { Cargando, ErrorBloque } from '../../diseno/Estados'
+import { HojaInferior } from '../../diseno/HojaInferior'
 import { IconoFinal, IconoInicio, IconoPausa, IconoPlay } from '../../diseno/iconos'
-import { ControlSegmentado } from '../../diseno/ControlSegmentado'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
-import { Tarjeta } from '../../diseno/Tarjeta'
-import { TextoApi } from '../../idioma/TextoApi'
-import { useTituloPagina } from '../../estado/useTituloPagina'
-import { useT } from '../../idioma/useT'
-import { useMovil } from '../../estado/useMovil'
-import { useMenosMovimiento } from '../../estado/useMenosMovimiento'
-import { usePlayback } from '../../tiempo/usePlayback'
-import { escribirEstado, leerEstado, sanearParametros, type EstadoSimulador, type ValorParametro } from './estadoSimulador'
-import { PanelHerramienta } from './PanelHerramienta'
-import { valoresIniciales } from './valores'
-import { PanelMundo, type BorradorMundo } from './PanelMundo'
-import { useBorradorMundo } from './useBorradorMundo'
-import { Tablero } from './Tablero'
-import { ResultadosEvento } from './ResultadosEvento'
 import { clavesApi } from '../../idioma/clavesApi'
+import { TextoApi } from '../../idioma/TextoApi'
+import { useT } from '../../idioma/useT'
+import { useMenosMovimiento } from '../../estado/useMenosMovimiento'
+import { useMovil } from '../../estado/useMovil'
+import { useTituloPagina } from '../../estado/useTituloPagina'
+import { usePlayback } from '../../tiempo/usePlayback'
+import { CapaResultado } from './CapaResultado'
+import { CartaMapa } from './CartaMapa'
+import { ElegirFenomeno } from './ElegirFenomeno'
+import { escribirEstado, leerEstado, sanearParametros, type EstadoSimulador, type ValorParametro } from './estadoSimulador'
+import { FENOMENOS, lugarPorDefecto } from './fenomenos'
+import { PanelAjustes } from './PanelAjustes'
+import type { BorradorMundo } from './PanelMundo'
+import { PasosSimulador } from './PasosSimulador'
+import { ResultadosEvento } from './ResultadosEvento'
+import { Tablero } from './Tablero'
+import { PROPIO, useBorradorMundo } from './useBorradorMundo'
+import { valoresIniciales } from './valores'
 import './simulador.css'
 
-/** Simulador de eventos (antes «Modo Dios»): un evento físico sobre el relieve de Ecuador y lo que vería un radar. */
+/**
+ * Simulador en tres pasos: (1) elige el fenómeno, (2) elige el lugar en el mapa, (3) ajusta y desata.
+ * El resultado solo aparece tras «Desatar»: junto al mapa en escritorio, en una hoja que sube en móvil.
+ */
 export default function Simulador() {
-  const { t, formatoNumero, textoApi } = useT()
+  const { t, formatoNumero } = useT()
   useTituloPagina('titulos.simulador')
   const mensaje = (e: unknown) => mensajeDeError(e, t)
   const [params, setParams] = useSearchParams()
   const estado = useMemo(() => leerEstado(params), [params])
   const catalogo = useCatalogo()
   const cat = catalogo.data
+  const movil = useMovil()
 
+  const enPaso1 = !params.has('h') || !(FENOMENOS as readonly string[]).includes(estado.h)
   const mundoReq: PeticionMundo = useMemo(() => ({
     lat: estado.lat, lon: estado.lon, extension_km: estado.ext, fecha: estado.fecha, usar_dem: estado.dem, ciudades: estado.ciudades,
   }), [estado.lat, estado.lon, estado.ext, estado.fecha, estado.dem, estado.ciudades])
-  const mundo = useMundo(mundoReq)
+  const mundo = useMundo(enPaso1 ? undefined : mundoReq)
   const actualMundo = useMemo(() => ({ lat: estado.lat, lon: estado.lon, ext: estado.ext, fecha: estado.fecha, dem: estado.dem }), [estado.lat, estado.lon, estado.ext, estado.fecha, estado.dem])
   const borrador = useBorradorMundo(cat, actualMundo)
 
   const actualizar = (parcial: Partial<EstadoSimulador>, reemplazar = true) =>
     setParams(escribirEstado({ ...estado, ...parcial }), { replace: reemplazar })
 
-  // Valores que el usuario cambió (el resto usa el defecto del catálogo / del mundo).
+  // Ajustes que el usuario cambió; los que se ven (con los defectos) son los que se envían al desatar.
   const [elegidos, setElegidos] = useState<Record<string, ValorParametro>>({})
   const herramienta = cat?.herramientas.find((h) => h.id === estado.h)
   useEffect(() => { if (cat) setElegidos(sanearParametros(estado.h, estado.p, cat)) }, [cat, estado.h]) // eslint-disable-line react-hooks/exhaustive-deps
   const valores = herramienta ? valoresIniciales(herramienta, { ...(mundo.data ? { humedad_comb: mundo.data.humedad_combustible_defecto } : {}), ...elegidos }) : {}
 
-  const eventoReq: PeticionEvento | undefined = estado.h !== 'ciudad' && estado.i !== null && estado.j !== null && cat
+  const eventoReq: PeticionEvento | undefined = !enPaso1 && estado.i !== null && estado.j !== null && cat
     ? { mundo: mundoReq, herramienta: estado.h, celda: [estado.i, estado.j], parametros: sanearParametros(estado.h, estado.p, cat) }
     : undefined
   const evento = useEvento(eventoReq)
+  const datos = evento.data
 
-  const ciudad = useMutation({
-    mutationFn: fundarCiudad,
-    onSuccess: (m) => actualizar({ ciudades: m.ciudades, i: null, j: null }),
-  })
+  // Punto elegido en el mapa; sin tocar nada, el centro (el lugar del catálogo).
+  const [cursor, setCursor] = useState<[number, number] | null>(estado.i !== null && estado.j !== null ? [estado.i, estado.j] : null)
+  const n = mundo.data?.n ?? 128
+  const punto: [number, number] = cursor ?? [Math.floor(n / 2), Math.floor(n / 2)]
 
-  const [cursor, setCursor] = useState<[number, number] | null>(null)
-  const alCelda = (i: number, j: number) => {
-    if (estado.h === 'ciudad') {
-      ciudad.mutate({ mundo: mundoReq, celda: [i, j], nombre: String(valores.nombre ?? 'Nueva Esperanza'), habitantes: Number(valores.habitantes ?? 50000) })
-    } else {
-      ciudad.reset()
-      actualizar({ i, j, p: elegidos }, false)
-    }
+  const [hojaAjustes, setHojaAjustes] = useState(false)
+  const [hojaResultado, setHojaResultado] = useState(false)
+  const detalle = useRef<HTMLDivElement>(null)
+
+  const desatar = () => {
+    actualizar({ i: punto[0], j: punto[1], p: valores }, false)
+    setHojaAjustes(false)
+    if (movil) setHojaResultado(true)
+  }
+  const verDetalle = () => {
+    setHojaResultado(false)
+    requestAnimationFrame(() => detalle.current?.scrollIntoView({ block: 'start' }))
+  }
+  const elegirFenomeno = (id: string) => {
+    if (!cat) return
+    const m = lugarPorDefecto(id, cat)
+    setElegidos({})
+    setCursor(null)
+    borrador.setPreset(m?.nombre ?? PROPIO)
+    actualizar({ h: id, i: null, j: null, p: {}, ciudades: [], ...(m ? { lat: m.lat, lon: m.lon, ext: m.extension_km } : {}) }, false)
+  }
+  const elegirLugar = (nombre: string) => {
+    const m = cat?.mundos.find((x) => x.nombre === nombre)
+    if (!m) return
+    borrador.setPreset(nombre)
+    setCursor(null)
+    actualizar({ lat: m.lat, lon: m.lon, ext: m.extension_km, i: null, j: null, ciudades: [] }, false)
+  }
+  const aplicarCoordenadas = (b: BorradorMundo) => {
+    setCursor(null)
+    actualizar({ ...b, i: null, j: null, ciudades: [] }, false)
   }
 
   // Animación del evento: arranca sola al llegar el resultado (salvo «menos movimiento»: salta al final).
-  const datos = evento.data
   const menosMovimiento = useMenosMovimiento()
   const pb = usePlayback({ total: datos?.cuadros_png_b64.length ?? 0, intervaloMs: 170 })
   const { ir, play, pausa } = pb
@@ -86,90 +117,85 @@ export default function Simulador() {
     else { ir(0); play() }
   }, [datos, ir, play, menosMovimiento])
 
-  const crear = (b: BorradorMundo, h?: string) => {
-    const mismoLugar = b.lat === estado.lat && b.lon === estado.lon
-    actualizar({ ...b, h: h ?? estado.h, i: null, j: null, p: {}, ciudades: mismoLugar ? estado.ciudades : [] }, false)
-    setElegidos({})
-    setCursor(null)
-  }
+  const desatado = estado.i !== null && estado.j !== null
+  const cambiaron = desatado && (
+    Object.entries(valores).some(([k, v]) => estado.p[k] !== undefined && estado.p[k] !== v)
+    || punto[0] !== estado.i || punto[1] !== estado.j)
+  const paso: 1 | 2 | 3 = enPaso1 ? 1 : cursor === null && !desatado ? 2 : 3
+  const lugarElegido = cat?.mundos.find((m) => m.lat === estado.lat && m.lon === estado.lon)
+  const nombreLugar = lugarElegido
+    ? <TextoApi texto={lugarElegido.nombre} clave={clavesApi.simMundo(lugarElegido.nombre, 'nombre')} />
+    : <span className="num">{formatoNumero(estado.lat, { maximumFractionDigits: 2 })}; {formatoNumero(estado.lon, { maximumFractionDigits: 2 })}</span>
+  const textoPunto = cursor === null ? t('sim.lugar.centro') : t('sim.lugar.punto')
+  const capaResultado = desatado
+    ? <CapaResultado evento={datos} cargando={evento.isFetching} onDetalle={verDetalle} />
+    : undefined
 
-  const movil = useMovil()
-  const nombreHerramienta = herramienta?.nombre ?? ''
-  // En móvil «Mundo» (dónde y cuándo) va antes que el tablero; en escritorio vive en la columna lateral.
-  const tarjetaMundo = cat && (
-    <Tarjeta titulo={t('sim.pantalla.mundo')}>
-      <PanelMundo catalogo={cat} cargando={mundo.isFetching} onCrear={crear}
-        borrador={borrador} />
-    </Tarjeta>
+  const panel = cat && herramienta && (
+    <PanelAjustes catalogo={cat} herramienta={herramienta} valores={valores}
+      onCambio={(id, v) => setElegidos((e) => ({ ...e, [id]: v }))}
+      lugar={lugarElegido?.nombre ?? PROPIO} onLugar={elegirLugar} borrador={borrador}
+      onCoordenadas={aplicarCoordenadas} cargandoMundo={mundo.isFetching}
+      punto={textoPunto} onDesatar={desatar} desatando={evento.isFetching} cambiaron={cambiaron}
+      resultado={movil ? undefined : capaResultado} />
   )
+
   return (
     <>
-      <CabeceraPantalla
-        titulo={t('sim.pantalla.titulo')}
-        hallazgo={t('sim.pantalla.hallazgo')}
-      />
+      <CabeceraPantalla titulo={t('sim.pantalla.titulo')} hallazgo={enPaso1 ? t('sim.pantalla.hallazgo') : undefined} />
+      <PasosSimulador paso={paso} onFenomeno={() => setParams('', { replace: false })}
+        fenomeno={herramienta && <TextoApi texto={herramienta.nombre} clave={clavesApi.simHerramienta(herramienta.id, 'nombre')} />}
+        lugar={nombreLugar} />
       {catalogo.isError && <ErrorBloque mensaje={mensaje(catalogo.error)} onReintentar={() => void catalogo.refetch()} />}
       {!cat && !catalogo.isError && <Cargando texto={t('sim.pantalla.cargando_simulador')} />}
-      {cat && (
-        <div className="simulador">
-          <div className="simulador__principal">
-            {movil && tarjetaMundo}
-            <Tarjeta titulo={t('sim.pantalla.tablero')} pie={mundo.data ? <SelloOrigen origen={mundo.data.origen} /> : undefined}>
-              <ControlSegmentado etiqueta={t('sim.pantalla.herramienta')} opciones={cat.herramientas.map((h) => ({ id: h.id, etiqueta: <TextoApi texto={h.nombre} clave={clavesApi.simHerramienta(h.id, 'nombre')} /> }))} valor={estado.h}
-                onCambiar={(id) => { setElegidos({}); actualizar({ h: id, i: null, j: null, p: {} }, false) }} />
+      {cat && enPaso1 && <ElegirFenomeno herramientas={cat.herramientas} onElegir={elegirFenomeno} />}
+      {cat && !enPaso1 && herramienta && (
+        <>
+          <div className="sim">
+            <section className="sim__mapa basalto" aria-label={t('sim.lugar.aria')}>
               {mundo.isPending && <Cargando texto={t('sim.pantalla.creando_mundo')} filas={2} />}
               {mundo.isError && <ErrorBloque mensaje={mensaje(mundo.error)} onReintentar={() => void mundo.refetch()} />}
               {mundo.data && (
                 <>
-                  <ul className="simulador__chips" aria-label={t('sim.pantalla.datos_mundo')}>
-                    <li><TextoApi texto={mundo.data.region} /></li>
-                    <li>{t('sim.pantalla.relieve')}: <TextoApi texto={mundo.data.fuente_dem} /></li>
-                    <li className="num">{t('sim.pantalla.celda', { m: Math.round(mundo.data.pixel_m) })}</li>
-                    <li className="num">{t('sim.pantalla.habitantes', { n: formatoNumero(Math.round(mundo.data.habitantes)) })}</li>
-                    {mundo.data.temporada && <li>{t('sim.pantalla.temporada')} <TemporadaMundo temporada={mundo.data.temporada} /></li>}
-                  </ul>
-                  <Tablero mundo={mundo.data} evento={datos} indice={pb.indice} cursor={cursor} onCursor={setCursor} onCelda={alCelda} />
-                  {evento.isFetching && <Cargando texto={t('sim.pantalla.simulando', { herramienta: textoApi(nombreHerramienta, clavesApi.simHerramienta(estado.h, 'nombre')).texto.toLowerCase() })} filas={1} />}
+                  <p className="sim__pista">{t('sim.lugar.toca')}</p>
+                  <CartaMapa bbox={mundo.data.bbox}>
+                    <Tablero mundo={mundo.data} evento={datos} indice={pb.indice} cursor={cursor ?? (desatado ? null : punto)}
+                      onCursor={setCursor} onCelda={(i, j) => setCursor([i, j])} />
+                  </CartaMapa>
                   {evento.isError && <ErrorBloque mensaje={mensaje(evento.error)} onReintentar={() => void evento.refetch()} />}
-                  {ciudad.isError && <p className="simulador__aviso" role="alert"><TextoMensaje mensaje={mensaje(ciudad.error)} /></p>}
                   {datos && (
                     <div className="reproductor-evento" role="group" aria-label={t('sim.pantalla.animacion')}>
                       <Boton variante="terciario" aria-label={t('piezas.tiempo.reproductor.ir_inicio')} icono={<IconoInicio />} onClick={() => { pausa(); ir(0) }} />
-                      <Boton variante="primario" aria-label={pb.reproduciendo ? t('piezas.tiempo.reproductor.pausa') : t('piezas.tiempo.reproductor.reproducir')} icono={pb.reproduciendo ? <IconoPausa /> : <IconoPlay />}
+                      <Boton variante="secundario" aria-label={pb.reproduciendo ? t('piezas.tiempo.reproductor.pausa') : t('piezas.tiempo.reproductor.reproducir')} icono={pb.reproduciendo ? <IconoPausa /> : <IconoPlay />}
                         onClick={pb.reproduciendo ? pausa : play} />
                       <Boton variante="terciario" aria-label={t('piezas.tiempo.reproductor.ir_final')} icono={<IconoFinal />} onClick={() => { pausa(); ir(datos.cuadros_png_b64.length - 1) }} />
                       <Deslizador etiqueta={t('sim.pantalla.instante')} valorTexto={datos.tiempos[pb.indice] ?? '—'} min={0} max={datos.cuadros_png_b64.length - 1} step={1}
                         value={pb.indice} onChange={(e) => { pausa(); ir(Number(e.target.value)) }} />
                     </div>
                   )}
-                  <p className="simulador__nota">
-                    {estado.h === 'ciudad' ? t('sim.pantalla.nota_ciudad') : t('sim.pantalla.nota_evento')}
-                  </p>
+                  <SelloOrigen origen={mundo.data.origen} />
                 </>
               )}
-            </Tarjeta>
-            {datos && mundo.data && <ResultadosEvento evento={datos} mundo={mundo.data} estado={estado} />}
+            </section>
+            {!movil && <aside className="sim__panel" aria-label={t('sim.panel.aria')}>{panel}</aside>}
           </div>
-          <div className="simulador__lado">
-            {!movil && tarjetaMundo}
-            {herramienta && (
-              <Tarjeta titulo={<>{t('sim.pantalla.parametros')} · <TextoApi texto={herramienta.nombre} clave={clavesApi.simHerramienta(herramienta.id, 'nombre')} /></>}>
-                <PanelHerramienta herramienta={herramienta} valores={valores} onCambio={(id, v) => setElegidos((e) => ({ ...e, [id]: v }))} />
-                {estado.ciudades.length > 0 && (
-                  <Boton variante="secundario" onClick={() => actualizar({ ciudades: [], i: null, j: null })}>{t('sim.pantalla.quitar_ciudades')}</Boton>
-                )}
-              </Tarjeta>
-            )}
-          </div>
-        </div>
+          {movil && (
+            <div className="sim__barra">
+              <Boton variante="secundario" onClick={() => setHojaAjustes(true)}>{t('sim.panel.ajustes')}</Boton>
+              <Boton variante="primario" onClick={desatar} disabled={evento.isFetching || mundo.isFetching}>{t('sim.panel.desatar')}</Boton>
+            </div>
+          )}
+          {movil && hojaAjustes && <HojaInferior titulo={t('sim.panel.ajustes')} onCerrar={() => setHojaAjustes(false)}>{panel}</HojaInferior>}
+          {movil && hojaResultado && capaResultado && (
+            <HojaInferior titulo={t('sim.res.titulo')} onCerrar={() => setHojaResultado(false)}>{capaResultado}</HojaInferior>
+          )}
+          {datos && mundo.data && (
+            <div className="sim__detalle" ref={detalle} id="detalle-evento">
+              <ResultadosEvento evento={datos} mundo={mundo.data} estado={estado} />
+            </div>
+          )}
+        </>
       )}
     </>
   )
-}
-
-/** Temporada del mundo («seca», «lluviosa»…) en minúsculas, traducida si el catálogo la conoce. */
-function TemporadaMundo({ temporada }: { temporada: string }) {
-  const { textoApi } = useT()
-  const r = textoApi(temporada, clavesApi.contexto('temporada', temporada))
-  return <span lang={r.traducido ? undefined : 'es'}>{r.texto.toLowerCase()}</span>
 }

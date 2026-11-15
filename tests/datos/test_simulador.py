@@ -19,10 +19,11 @@ def mundo(**kw):
     return PeticionMundo(**{**base, **kw})
 
 
-def test_catalogo_trae_seis_herramientas_y_ocho_mundos():
+def test_catalogo_trae_seis_herramientas_y_nueve_mundos():
     c = simulador.catalogo()
     assert [h["id"] for h in c["herramientas"]] == ["incendio", "tormenta", "inundacion", "terremoto", "erupcion", "ciudad"]
-    assert len(c["mundos"]) == 8
+    assert len(c["mundos"]) == 9
+    assert c["mundos"][0]["nombre"] == "Cerro Casitagua" and (c["mundos"][0]["lat"], c["mundos"][0]["lon"]) == (-0.03, -78.52)
     assert c["extensiones_km"] == [20, 30, 40, 60, 80, 120]
     inc = next(h for h in c["herramientas"] if h["id"] == "incendio")
     viento = next(x for x in inc["controles"] if x["id"] == "viento_ms")
@@ -291,3 +292,26 @@ def test_nota_de_lluvia_recupera_sus_cifras_con_decimales():
     ev = evento("tormenta", celda_en_tierra(), {"duracion_h": 2, "lluvia_mm": 150, "radio_km": 15})
     nt = next(x for x in ev["notas_texto"] if x["clave_texto"].startswith("api.sim.nota.tormenta.lluvia"))
     assert nt["valores_texto"]["mm"] == 150.0 and nt["decimales_texto"]["mm"] == 0 and nt["valores_texto"]["km"] == 15.0
+
+
+@pytest.mark.parametrize("mmi, clave, frase", [
+    ("3,2", "api.sim.lectura.intensidad_debil", "MMI 3,2: se siente poco; sin daños."),
+    ("7,4", "api.sim.lectura.intensidad_fuerte", "MMI 7,4: daño fuerte en construcciones vulnerables."),
+    ("8,6", "api.sim.lectura.intensidad_grave", "MMI 8,6: daño grave, incluso en construcciones comunes."),
+])
+def test_lectura_llana_de_la_intensidad(mmi, clave, frase):
+    m = simulador._metrica_evento("Intensidad máxima", f"MMI {mmi}", "PGA")
+    assert m["lectura"] == frase
+    assert m["lectura_texto"]["clave_texto"] == clave
+
+
+def test_lectura_del_area_quemada_en_canchas_y_metrica_sin_frase():
+    m = simulador._metrica_evento("Área quemada", "1,80 km²", "180 ha")
+    assert m["lectura"] == "Como unas 252 canchas de fútbol."
+    assert m["lectura_texto"]["valores_texto"] == {"canchas": 252}
+    assert "lectura" not in simulador._metrica_evento("Acierto (IoU)", "0,81", "")
+
+
+def test_evento_trae_una_lectura_por_metrica_principal():
+    ev = evento("terremoto", celda_en_tierra(), {"mw": 7.8})
+    assert all(m.get("lectura") for m in ev["metricas"][:3])

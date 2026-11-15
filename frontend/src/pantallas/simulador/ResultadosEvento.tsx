@@ -1,12 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { EventoDto, MundoDto } from '../../api/simulador'
 import { Boton } from '../../diseno/Boton'
-import { FranjaKpi } from '../../diseno/FranjaKpi'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { Tabla, type ColumnaTabla } from '../../diseno/Tabla'
 import { Tarjeta } from '../../diseno/Tarjeta'
 import { descargarPng } from '../../exportar/png'
-import { EtiquetaMetrica, ValorMetrica } from '../../idioma/MetricaApi'
 import { clavesApi, textoClave, type TextoClaveApi } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import type { Clave } from '../../idioma/traductor'
@@ -24,7 +22,7 @@ const CELDAS = '__celdas_texto'
 
 interface Props { evento: EventoDto; mundo: MundoDto; estado: EstadoSimulador }
 
-/** KPI, radar simulado, espera, efectos, bitácora, enlace e informe de un evento. */
+/** Detalle de un evento bajo el mapa: tabla, notas, radar simulado, espera, bitácora, enlace e informe (las cifras van en la capa «Resultado»). */
 export function ResultadosEvento({ evento, mundo, estado }: Props) {
   const ctx = useT()
   const { t, textoApi } = ctx
@@ -75,8 +73,6 @@ export function ResultadosEvento({ evento, mundo, estado }: Props) {
   return (
     <>
       <Tarjeta titulo={<TextoApi texto={evento.titulo} clave={evento.clave_texto} valores={evento.valores_texto} />} pie={<SelloOrigen origen={evento.origen} />}>
-        <FranjaKpi items={evento.metricas.slice(0, 5).map((m, k) => ({ etiqueta: <EtiquetaMetrica m={m} />, valor: <ValorMetrica m={m} />, principal: k === 0 }))} />
-        {evento.metricas.length > 5 && <FranjaKpi items={evento.metricas.slice(5).map((m) => ({ etiqueta: <EtiquetaMetrica m={m} />, valor: <ValorMetrica m={m} /> }))} />}
         <div className="simulador__acciones">
           <Boton variante="secundario" onClick={() => void copiar()}>{t('sim.res.copiar')}</Boton>
           <Boton variante="secundario" onClick={() => void informe()}>{t('sim.res.informe')}</Boton>

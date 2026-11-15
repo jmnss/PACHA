@@ -12,7 +12,7 @@ def test_catalogo(cliente_demo):
     r = cliente_demo.get("/api/simulador/catalogo")
     assert r.status_code == 200
     c = r.json()
-    assert len(c["herramientas"]) == 6 and len(c["mundos"]) == 8 and c["extensiones_km"][0] == 20
+    assert len(c["herramientas"]) == 6 and len(c["mundos"]) == 9 and c["extensiones_km"][0] == 20
 
 
 def test_mundo_con_origen_sintetico(cliente_demo):

@@ -101,7 +101,7 @@ export function leerEstado(q: URLSearchParams): EstadoSimulador {
 
 const codificar = (v: ValorParametro) => (typeof v === 'string' ? encodeURIComponent(v).replace(/[:,;]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`) : String(v))
 
-/** Cadena de consulta (sin «?») con lo que difiere del estado inicial. */
+/** Cadena de consulta (sin «?») con el fenómeno y lo que difiere del estado inicial. */
 export function escribirEstado(e: EstadoSimulador): string {
   const q = new URLSearchParams()
   const d = ESTADO_INICIAL
@@ -110,7 +110,7 @@ export function escribirEstado(e: EstadoSimulador): string {
   if (e.ext !== d.ext) q.set('ext', String(e.ext))
   if (e.fecha !== d.fecha) q.set('fecha', e.fecha)
   if (!e.dem) q.set('dem', '0')
-  if (e.h !== d.h) q.set('h', e.h)
+  q.set('h', e.h) // siempre: sin `h`, la pantalla está en el paso 1 (elegir el fenómeno)
   if (e.i !== null && e.j !== null) { q.set('i', String(e.i)); q.set('j', String(e.j)) }
   const p = Object.entries(e.p)
   if (p.length) q.set('p', p.map(([k, v]) => `${k}:${codificar(v)}`).join(','))

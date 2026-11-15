@@ -827,6 +827,9 @@ export interface components {
             clave_texto?: string | null;
             /** Etiqueta */
             etiqueta: string;
+            /** Lectura */
+            lectura?: string | null;
+            lectura_texto?: components["schemas"]["TextoClave"] | null;
             /** Valor */
             valor: string;
             /** Valores Texto */

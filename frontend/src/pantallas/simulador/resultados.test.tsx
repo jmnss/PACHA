@@ -99,9 +99,9 @@ describe('informe y enlace', () => {
     expect(await screen.findByText('Enlace copiado.')).toBeInTheDocument()
   })
 
-  it('los resultados muestran los KPI, la tabla y los modelos usados', () => {
+  it('el detalle muestra la tabla y los modelos usados (las cifras van en la capa «Resultado»)', () => {
     envolver(<ResultadosEvento evento={INCENDIO} mundo={MUNDO} estado={{ ...ESTADO_INICIAL, i: 60, j: 60 }} />)
-    expect(screen.getByText('12,3 km²')).toBeInTheDocument()
+    expect(screen.queryByText('12,3 km²')).toBeNull()
     expect(screen.getByText('Bosque seco')).toBeInTheDocument()
     expect(screen.getByText('Rothermel (1972)')).toBeInTheDocument()
   })

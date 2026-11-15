@@ -21,6 +21,8 @@
   --capa-honda: #56341D; /* «Avanzado», la capa profunda */
   --capa-honda-campo: #45291A;
   --capa-honda-borde: #B89C86;
+  --capa-honda-texto: #F8F3EC;   /* 9,99:1 sobre --capa-honda */
+  --capa-honda-texto-2: #E6D9C9; /* 7,95:1 sobre --capa-honda */
   --sobre-honda:   #F8F3EC;
   --sobre-honda-2: #E6D9C9;
 

@@ -1808,6 +1808,98 @@
     "es": "Tormenta"
   },
   {
+    "clave": "api.sim.lectura.area_inundada",
+    "es": "Como unas {canchas} canchas de fútbol bajo el agua."
+  },
+  {
+    "clave": "api.sim.lectura.area_quemada",
+    "es": "Como unas {canchas} canchas de fútbol."
+  },
+  {
+    "clave": "api.sim.lectura.biomasa_consumida",
+    "es": "Madera y hojas que el fuego convirtió en humo y ceniza."
+  },
+  {
+    "clave": "api.sim.lectura.ceniza_1_cm",
+    "es": "Gente bajo una capa de ceniza de un centímetro o más."
+  },
+  {
+    "clave": "api.sim.lectura.co2_emitido",
+    "es": "Gas de efecto invernadero que soltó el fuego."
+  },
+  {
+    "clave": "api.sim.lectura.columna_eruptiva",
+    "es": "Altura de la nube de ceniza sobre el cráter."
+  },
+  {
+    "clave": "api.sim.lectura.deslizamientos",
+    "es": "Laderas que se vendrían abajo."
+  },
+  {
+    "clave": "api.sim.lectura.flujos_piroclasticos",
+    "es": "Nubes ardientes de gas y roca que bajan por las laderas."
+  },
+  {
+    "clave": "api.sim.lectura.humedad_del_combustible",
+    "es": "Cuanto más seca la hojarasca, más rápido arde."
+  },
+  {
+    "clave": "api.sim.lectura.intensidad_debil",
+    "es": "MMI {valor}: se siente poco; sin daños."
+  },
+  {
+    "clave": "api.sim.lectura.intensidad_fuerte",
+    "es": "MMI {valor}: daño fuerte en construcciones vulnerables."
+  },
+  {
+    "clave": "api.sim.lectura.intensidad_grave",
+    "es": "MMI {valor}: daño grave, incluso en construcciones comunes."
+  },
+  {
+    "clave": "api.sim.lectura.intensidad_leve",
+    "es": "MMI {valor}: lo sienten todos; daños leves."
+  },
+  {
+    "clave": "api.sim.lectura.lahares",
+    "es": "Ríos de lodo volcánico que bajan por los cauces."
+  },
+  {
+    "clave": "api.sim.lectura.magnitud",
+    "es": "La energía del sismo en su origen; cada punto más es unas 32 veces más energía."
+  },
+  {
+    "clave": "api.sim.lectura.perdidas_en_viviendas",
+    "es": "Lo que costaría reponer las casas dañadas."
+  },
+  {
+    "clave": "api.sim.lectura.personas_a_evacuar",
+    "es": "Gente que vive dentro del fuego o junto a su borde."
+  },
+  {
+    "clave": "api.sim.lectura.poblacion_con_mmi_vi",
+    "es": "Gente que sentiría el sismo con fuerza suficiente para dañar casas."
+  },
+  {
+    "clave": "api.sim.lectura.poblacion_expuesta",
+    "es": "Gente que vive donde llegó el agua."
+  },
+  {
+    "clave": "api.sim.lectura.tsunami_en_tierra",
+    "es": "Tierra que cubriría la ola."
+  },
+  {
+    "clave": "api.sim.lectura.victimas_estimadas",
+    "es": "Cálculo de un modelo, sin evacuación: sirve para comparar, no para predecir."
+  },
+  {
+    "clave": "api.sim.lectura.victimas_sin_alerta",
+    "es": "Cálculo de un modelo sin alerta: sirve para comparar, no para predecir."
+  },
+  {
+    "clave": "api.sim.lectura.viviendas_destruidas_equiv",
+    "es": "Casas que se perderían del todo, sumando los daños parciales."
+  },
+  {
     "clave": "api.sim.metrica.acierto_iou.etiqueta",
     "es": "Acierto (IoU)"
   },
@@ -1926,6 +2018,14 @@
   {
     "clave": "api.sim.mundo.bosques_secos_de_loja.nombre",
     "es": "Bosques secos de Loja"
+  },
+  {
+    "clave": "api.sim.mundo.cerro_casitagua.descripcion",
+    "es": "Cerro al norte de Quito, junto a la línea equinoccial. El incendio que se simula aquí es un ejemplo."
+  },
+  {
+    "clave": "api.sim.mundo.cerro_casitagua.nombre",
+    "es": "Cerro Casitagua"
   },
   {
     "clave": "api.sim.mundo.cotopaxi_y_el_valle_de_latacunga.descripcion",
