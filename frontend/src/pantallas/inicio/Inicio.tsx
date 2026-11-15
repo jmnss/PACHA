@@ -15,8 +15,8 @@ import { SignosConvencionales } from './SignosConvencionales'
 import './inicio.css'
 
 /**
- * Inicio, `/` (propuesta D «Mezcla»): frase de valor, perfil esquemático oeste-este con los tres lugares, registro de
- * pasadas ilustrativo, localizador con la franja de ~240 km y tres entradas. Una sola acción principal (ocre).
+ * Inicio, `/` (propuesta D «Mezcla»): frase de valor, perfil oeste-este con los tres lugares, registro de
+ * pasadas con las fechas reales de la API, localizador con la franja de ~240 km y tres entradas. Una sola acción principal (ocre).
  */
 export default function Inicio() {
   const { t } = useT()

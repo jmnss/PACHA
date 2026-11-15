@@ -8,16 +8,13 @@ export const inicio: Record<keyof typeof esInicio, string> = {
   'inicio.recorrido': '¿Ñawpaq kutichu? 90 sikundu purina',
 
   'inicio.pasadas.titulo': 'Radar yallikunapak killkana',
-  'inicio.pasadas.hoy': 'Kunan',
-  'inicio.pasadas.antes': 'Ñawpa',
-  'inicio.pasadas.en_curso': 'Kunan yallik',
-  'inicio.pasadas.lluvias': 'Tamya pacha',
-  'inicio.pasadas.transicion': 'Tikrarik pacha',
-  'inicio.pasadas.seca': 'Chaki pacha',
-  'inicio.pasadas.sin_cambios': 'Mana shukyarik yallik',
-  'inicio.pasadas.nota': 'Kamuy kamuyka shuk radar yallikmi; hawa kamuyka wiñan, radar achik kuchushkata chimpakpi. Rikuchinkapakllami, mana chiqa punchakunayuk.',
+  'inicio.pasadas.hoy': 'Mushuk',
+  'inicio.pasadas.antes': 'Machu',
+  'inicio.pasadas.cargando': 'Pasashkakunapa punchakunata killkashka…',
+  'inicio.pasadas.error': 'Pasashkakunapa punchakunata mana killkashkachu.',
+  'inicio.pasadas.nota': 'Sapa capaka radarpa shuk pasashkami kimsa kitikunamanta shukpi; hawapi kashka wiñan haz pasakpi.',
 
-  'inicio.perfil.aria': 'Ecuadorpak inti chinkarinamanta inti llukshinakama kuchushka, kimsa llaktakunawan paykunapak hawapi',
+  'inicio.perfil.aria': 'Ecuadorpa kuntur-inti llukshinamanta rikuy, kimsa kitikunawan',
   'inicio.perfil.pasada': 'radar yallik',
   'inicio.perfil.pacifico': 'Pacífico',
   'inicio.perfil.costa': 'Costa',
@@ -28,7 +25,6 @@ export const inicio: Record<keyof typeof esInicio, string> = {
   'inicio.perfil.paramo': 'urku pampa',
   'inicio.perfil.valle': 'urkukuna chawpi wayku',
   'inicio.perfil.selva': 'Amazonía sacha',
-  'inicio.perfil.esquema': 'rikuchina kuchushka, hawakunata killkashpa chiqanchina',
 
   'inicio.lugar.daule.nombre': 'Daule-Peripa',
   'inicio.lugar.daule.corto': 'Yaku wakaychina · uray Costa',
@@ -48,7 +44,6 @@ export const inicio: Record<keyof typeof esInicio, string> = {
   'inicio.lugar.ir_embalse': 'Yaku wakaychina imashina shukyarishkata rikuy',
   'inicio.lugar.ir_incendio': 'Nina willakuyta rikuy',
   'inicio.lugar.ayuda': 'Kuchushkapi shuk llaktata llapiy, paypak willayta killkakatinkapak.',
-  'inicio.fuente_por_anadir': 'Chiqa tukushka · maymanta shamushkata churanami',
 
   'inicio.localizador.titulo': 'Ecuador allpa, Daule-Peripa, Casitagua, Mazarwan, 240 km radar suyuwanpash',
   'inicio.localizador.nota': 'Kimsa llaktakuna chiqa mapapi (geoBoundaries). Suyuka NISAR shuk yallikpi mashnata rikushkatami tupun, 240 km shina; paypak purinaka rikuchinkapakllami.',
@@ -60,8 +55,7 @@ export const inicio: Record<keyof typeof esInicio, string> = {
   'inicio.signos.franja': 'Shuk yallikpak suyu, 240 km shina',
   'inicio.signos.lugar': 'Willakuyuk llakta: llapiy',
   'inicio.signos.capa': 'Kamuy: shuk radar yallik',
-  'inicio.signos.rayado': 'Shiru: rikuchinkapak willay',
-  'inicio.signos.esquema_t': 'Rikuchina kuchushka, hawakunata chiqanchinami.',
+  'inicio.signos.rayado': 'Rayado: simulación',
   'inicio.signos.esquema': 'Mana tupushkachu, mana yupaykunayukchu. Kimsa llaktakunaka shuk shuk latitudpimi kan; kaypika shuklla kuchushkapimi churarin.',
 
   'inicio.entradas': 'Kimsa yaykuna',
@@ -88,6 +82,5 @@ export const inicio: Record<keyof typeof esInicio, string> = {
   'inicio.simular_corte': 'Ecuadorpak kuchushka, Galápagosmanta Sierrakama, simuladorpak llaktakunawan',
   'inicio.simular_detalle': 'Ima tukushkata, maypi tukushkata akllay, Ecuador allpa hawapi. Kimsa imakunata allichiy, radar ima rikunata rikuy.',
   'inicio.simular_ir': 'Simuladorta paskay',
-  'inicio.sello_demo': 'kunanka rikuchinkapak willaykunami',
   'inicio.sello_simulacion': 'tukuyllami simulana',
 }

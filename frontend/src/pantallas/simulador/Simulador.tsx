@@ -8,6 +8,7 @@ import { Deslizador } from '../../diseno/Deslizador'
 import { Cargando, ErrorBloque } from '../../diseno/Estados'
 import { HojaInferior } from '../../diseno/HojaInferior'
 import { IconoFinal, IconoInicio, IconoPausa, IconoPlay } from '../../diseno/iconos'
+import { RotuloSimulacion } from '../../diseno/RotuloSimulacion'
 import { SelloOrigen } from '../../diseno/SelloOrigen'
 import { clavesApi } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
@@ -142,7 +143,7 @@ export default function Simulador() {
 
   return (
     <>
-      <CabeceraPantalla titulo={t('sim.pantalla.titulo')} hallazgo={enPaso1 ? t('sim.pantalla.hallazgo') : undefined} />
+      <CabeceraPantalla titulo={t('sim.pantalla.titulo')} hallazgo={enPaso1 ? t('sim.pantalla.hallazgo') : undefined} acciones={<RotuloSimulacion />} />
       <PasosSimulador paso={paso} onFenomeno={() => setParams('', { replace: false })}
         fenomeno={herramienta && <TextoApi texto={herramienta.nombre} clave={clavesApi.simHerramienta(herramienta.id, 'nombre')} />}
         lugar={nombreLugar} />

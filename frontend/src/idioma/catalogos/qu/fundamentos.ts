@@ -16,7 +16,7 @@ export const fundamentos: Record<keyof typeof esFundamentos, string> = {
   'fundamentos.col.nota': 'Ima ninmi',
   'fundamentos.tabla.cambios': 'Tikraykuna, radarpi paykunapa ñan',
   'fundamentos.tabla.bandas': 'Radar bandakuna, ondapa sapa kutin sunilla',
-  'fundamentos.nota.cambios': 'Física tukuy rikuchiymi; appika ejemplokunaka rikuchiymi.',
+  'fundamentos.nota.cambios': 'Física tukuy rikuchiymi; laboratoriopi simuladorpipash ejemplokunaka simulaciónmi.',
   'fundamentos.nota.bandas': 'Sapa kutin sunikuna tukuy ima kawsaymanta, mana shuk misionpak.',
-  'fundamentos.nota.mision': 'Kamachik willaykunaman mana chayana kakpika, kaypi rikushkaka tukuy rikuchiy willaykunami.',
+  'fundamentos.nota.mision': 'NISAR kamachikpa willaykuna manaraka chiqanyachishkakunaka «shuyashka» nishka rikuchishkami.',
 }

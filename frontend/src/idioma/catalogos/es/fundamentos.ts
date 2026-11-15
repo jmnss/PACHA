@@ -13,7 +13,7 @@ export const fundamentos = {
   'fundamentos.col.nota': 'Qué implica',
   'fundamentos.tabla.cambios': 'Cambios y su huella en el radar',
   'fundamentos.tabla.bandas': 'Bandas de radar y su longitud de onda típica',
-  'fundamentos.nota.cambios': 'Descripción general de la física; en la app los ejemplos son de demostración.',
+  'fundamentos.nota.cambios': 'Descripción general de la física; los ejemplos del laboratorio y del simulador son simulaciones.',
   'fundamentos.nota.bandas': 'Longitudes típicas por convención general, no propias de una misión.',
-  'fundamentos.nota.mision': 'Mientras no haya acceso a los datos oficiales, todo lo que ves aquí son datos de demostración.',
+  'fundamentos.nota.mision': 'Los detalles de la misión NISAR que aún no están confirmados con la documentación oficial se marcan como pendientes.',
 }

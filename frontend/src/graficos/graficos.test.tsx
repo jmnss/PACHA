@@ -176,8 +176,8 @@ describe('Linea', () => {
   })
   it('lleva sello de origen y descripción accesible', () => {
     render(<Linea series={[{ nombre: 'Área', puntos: pts([1, 3]) }]} unidad="km²" origen={origen} titulo="Área inundada" />)
-    expect(screen.getByText(/^Sintético · /)).toBeInTheDocument()
-    expect(screen.getByRole('img').getAttribute('aria-label')).toMatch(/Área inundada.*km².*Sintético/)
+    expect(screen.getByText(/^Simulación/)).toBeInTheDocument()
+    expect(screen.getByRole('img').getAttribute('aria-label')).toMatch(/Área inundada.*km².*Simulación/)
   })
   it('interrumpe la línea en los nulos y dibuja el cero como línea plana', () => {
     const { container } = render(<Linea series={[{ nombre: 'A', puntos: pts([1, null, 3, 4]) }, { nombre: 'B', puntos: pts([0, 0, 0, 0]) }]} unidad="u" origen={origen} />)
@@ -189,7 +189,7 @@ describe('Linea', () => {
     const { container } = render(<Linea series={[{ nombre: 'A', puntos: [] }]} unidad="u" origen={origen} />)
     expect(screen.getByText('Sin datos en este rango')).toBeInTheDocument()
     expect(container.querySelector('.grafico__cero')).not.toBeNull()
-    expect(screen.getByText(/^Sintético · /)).toBeInTheDocument()
+    expect(screen.getByText(/^Simulación/)).toBeInTheDocument()
   })
   it('dibuja marcas con etiqueta', () => {
     render(<Linea series={[{ nombre: 'A', puntos: pts([1, 2, 3, 4]) }]} marcas={[{ instante: '2026-04-07', etiqueta: 'evento', tipo: 'evento' }]} unidad="u" origen={origen} />)
@@ -210,7 +210,7 @@ describe('Barras', () => {
     const { container } = render(<Barras datos={[{ etiqueta: 'HH', valor: 12 }, { etiqueta: 'HV', valor: 7 }]} unidad="km²" origen={origen} />)
     expect(container.querySelectorAll('rect.grafico__barra')).toHaveLength(2)
     expect(screen.getByText('HH')).toBeInTheDocument()
-    expect(screen.getByText(/^Sintético · /)).toBeInTheDocument()
+    expect(screen.getByText(/^Simulación/)).toBeInTheDocument()
   })
   it('usa el rótulo corto en el eje, deja el largo en el resumen y puede omitir los valores', () => {
     const { container } = render(<Barras datos={[{ etiqueta: 'enero', corta: 'E', valor: 12 }]} unidad="mm" origen={origen} valores={false} />)

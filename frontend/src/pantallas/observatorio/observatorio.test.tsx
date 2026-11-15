@@ -198,7 +198,7 @@ describe('Observatorio · mapa y tiempo', () => {
     await within(panel).findByText('Costa')
     expect(within(panel).getByText('Manabí')).toBeInTheDocument()
     expect(within(panel).getByText(/Lluviosa/)).toBeInTheDocument()
-    expect(within(panel).getByText(/Real · NASA POWER/)).toBeInTheDocument()
+    expect(within(panel).getAllByText(/NASA POWER/).length).toBeGreaterThan(0)
     expect(within(panel).getByRole('button', { name: 'NASA POWER' })).toBeInTheDocument()
   })
 

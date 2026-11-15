@@ -1,6 +1,6 @@
 /**
  * Guion del recorrido: datos, sin lógica científica. Cada paso incrusta una pantalla real.
- * Todo el texto es de demostración: se redacta como ejemplo, nunca como hallazgo sobre un lugar real.
+ * El texto se redacta como ejemplo, nunca como hallazgo sobre un lugar real.
  */
 export interface Paso {
   id: string
@@ -17,7 +17,7 @@ export interface TextoPaso { id: string; titulo: string; texto: string }
 export const guionEs: Paso[] = [
   {
     id: 'problema', titulo: 'Un río crece y nadie ve hasta dónde',
-    texto: 'Ejemplo ilustrativo en la Costa baja de Ecuador: cuando una inundación llega, las nubes suelen cubrir el cielo justo cuando más hace falta mirar.',
+    texto: 'Cuando una inundación llega en la Costa baja de Ecuador, las nubes suelen cubrir el cielo justo cuando más hace falta mirar.',
     ruta: '/explorar/historias', segundos: 12,
   },
   {

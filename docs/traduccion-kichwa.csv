@@ -619,17 +619,6 @@ comun.capas.otros,{n} capas,{n} layers,{n} capakuna,no
 comun.capas.uno,{n} capa,{n} layer,{n} capa,no
 comun.cargando,Cargando…,Loading…,Chaskishka…,no
 comun.cerrar,Cerrar,Close,Wichkay,no
-estructura.banda.aviso,Aviso de datos de demostración,Demonstration data notice,Rikuchiy willaykunamanta willachiy,no
-estructura.banda.cerrar_panel,Cerrar este panel,Close this panel,Kay panelta wichkay,no
-estructura.banda.corto,DEMOSTRACIÓN · no son datos reales de NISAR,DEMO · not real NISAR data,RIKUCHIY · mana NISAR-pa chiqan willaykuna kanchu,no
-estructura.banda.fecha,Fecha,Date,Puncha,no
-estructura.banda.generador,Generador,Generator,Rurachik,no
-estructura.banda.largo,DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR,DEMONSTRATION DATA · not real NISAR observations,RIKUCHIY WILLAYKUNA · mana NISAR-pa chiqan rikuykuna kanchu,no
-estructura.banda.panel_texto,"Los mapas, series y cifras que ves los fabrica un generador para enseñar cómo se vería el radar. No son mediciones de NISAR ni describen un hecho real. Cada dato lleva su origen.","The maps, series and figures you see are made by a generator to show how the radar would look. They are not NISAR measurements and do not describe a real event. Every data item carries its origin.","Kaypi rikushka shuyukuna, yupaykuna shinallatak shuk rurachikmi rurashka, radar imashina rikurinata yachachinkapak. Mana NISAR-pa tupushkachu, mana chiqan pasashkatapash willanchu. Sapa willaypak kallarishkami tiyan.",no
-estructura.banda.panel_titulo,Qué significa «datos de demostración»,What «demonstration data» means,Ima niyta munan «rikuchiy willaykuna»,no
-estructura.banda.que_significa,Qué significa,What this means,Ima niyta munan,no
-estructura.banda.semilla,Semilla,Seed,Muju,no
-estructura.banda.sin_origen,Los datos de origen aún no se han cargado.,The origin data have not been loaded yet.,Kallari willaykuna manaraka apamushkachu.,no
 estructura.estado.reintentar,Reintentar,Retry,Kutin ruray,no
 estructura.estado.ultimo_dato,Último dato bueno: {hora}.,Last good data: {hora}.,Kipa alli willay: {hora}.,no
 estructura.limite_error.mensaje,No se pudo cargar la pantalla.,The screen could not be loaded.,Mana kay pantallata kichayta ushashkachu.,no
@@ -690,8 +679,8 @@ fundamentos.col.pol,Polarización que suele resaltarlo,Polarization that usually
 fundamentos.col.que_ve,Qué ve el radar,What the radar sees,Radarka ima rikun,no
 fundamentos.hallazgo,Lo mínimo que hay que saber para leer una imagen de radar.,The minimum you need to know to read a radar image.,Radar rikchata ñawinchinkapak pishi yachana.,no
 fundamentos.nota.bandas,"Longitudes típicas por convención general, no propias de una misión.","Typical wavelengths by general convention, not specific to any mission.","Sapa kutin sunikuna tukuy ima kawsaymanta, mana shuk misionpak.",no
-fundamentos.nota.cambios,Descripción general de la física; en la app los ejemplos son de demostración.,General description of the physics; in the app the examples are demonstration data.,Física tukuy rikuchiymi; appika ejemplokunaka rikuchiymi.,no
-fundamentos.nota.mision,"Mientras no haya acceso a los datos oficiales, todo lo que ves aquí son datos de demostración.","Until there is access to the official data, everything you see here is demonstration data.","Kamachik willaykunaman mana chayana kakpika, kaypi rikushkaka tukuy rikuchiy willaykunami.",no
+fundamentos.nota.cambios,Descripción general de la física; los ejemplos del laboratorio y del simulador son simulaciones.,General description of the physics; the laboratory and simulator examples are simulations.,Física tukuy rikuchiymi; laboratoriopi simuladorpipash ejemplokunaka simulaciónmi.,no
+fundamentos.nota.mision,Los detalles de la misión NISAR que aún no están confirmados con la documentación oficial se marcan como pendientes.,Details of the NISAR mission not yet confirmed against the official documentation are marked as pending.,NISAR kamachikpa willaykuna manaraka chiqanyachishkakunaka «shuyashka» nishka rikuchishkami.,no
 fundamentos.tabla.bandas,Bandas de radar y su longitud de onda típica,Radar bands and their typical wavelength,"Radar bandakuna, ondapa sapa kutin sunilla",no
 fundamentos.tabla.cambios,Cambios y su huella en el radar,Changes and their radar signature,"Tikraykuna, radarpi paykunapa ñan",no
 fundamentos.tarjeta.cambios,Qué ve el radar en cada tipo de cambio,What the radar sees in each type of change,Sapa tikrayta radarka ima rikun,no
@@ -699,7 +688,7 @@ fundamentos.tarjeta.mision,La misión NISAR,The NISAR mission,NISAR misión,no
 fundamentos.tarjeta.pol_bandas,Polarizaciones y bandas,Polarizations and bands,"Polarizacionkuna, bandakuna",no
 fundamentos.tarjeta.radar,Un radar que ilumina por sí mismo,A radar that lights its own scene,Pay kikin kanchachik radar,no
 fundamentos.titulo,Fundamentos,Fundamentals,Sapi yachay,no
-guia.1.texto,Muestra cómo el radar NISAR ve el agua y el fuego. La franja de arriba avisa cuando los datos son de demostración.,It shows how the NISAR radar sees water and fire. The strip at the top tells you when data is demonstration data.,NISAR radarmi yakuta ninatapash imashina rikushkata rikuchin. Hawa sinchika rikuchin ima willaykuna rikuchinapak kashkata.,no
+guia.1.texto,Muestra cómo el radar NISAR ve el agua y el fuego en embalses y en un cerro del Ecuador.,It shows how the NISAR radar sees water and fire in reservoirs and on a hill in Ecuador.,NISAR radarmi yakuta ninatapash Ecuadorpa embalsekunapi shuk urkupipash imashina rikushkata rikuchin.,no
 guia.1.titulo,Esto es PACHA,This is PACHA,Kayka PACHAmi,no
 guia.2.texto,"Dos historias, embalses e incendios, y un simulador para probar «¿y si…?».","Two stories, reservoirs and wildfires, and a simulator to try “what if…?”.","Ishkay willakuy, yaku wakaychikuna y ninakuna, y shuk simulador «¿imapak kashpaka…?» yachanapak.",no
 guia.2.titulo,Tres maneras de entrar,Three ways in,Kimsa yaykuna,no
@@ -762,7 +751,6 @@ inicio.embalses_lugares,Elige el embalse,Choose the reservoir,Yaku wakaychinata 
 inicio.embalses_sequia,en sequía,in drought,chakipi,no
 inicio.entradas,Tres maneras de entrar,Three ways in,Kimsa yaykuna,no
 inicio.entradas_bajada,Dos historias del Ecuador y un taller para probar lo tuyo.,Two stories from Ecuador and a workshop to try your own.,"Ecuadormanta ishkay willakuy, kikinpa rurayta tantachinkapak shuk yachana wasi.",no
-inicio.fuente_por_anadir,Evento real · fuente por añadir,Real event · source to be added,Chiqa tukushka · maymanta shamushkata churanami,no
 inicio.incendio,Incendio en la Sierra,Wildfire in the Highlands,Sierrapi nina,no
 inicio.incendio_corte,Corte de un cerro: una ladera con vegetación y la otra quemada,Section of a hill: one slope with vegetation and the other burned,"Urkupak kuchushka: shuk pata yurakunawan, shukka rupashka",no
 inicio.incendio_dato,Casitagua · Pichincha,Casitagua · Pichincha,Casitagua · Pichincha,no
@@ -771,7 +759,7 @@ inicio.incendio_hv,HV es la onda que vuelve girada: la que más cambia con la ve
 inicio.incendio_ir,Ver la historia del incendio,See the wildfire story,Nina willakuyta rikuy,no
 inicio.incendio_quemado,ladera quemada,burned slope,rupashka pata,no
 inicio.incendio_verde,con vegetación,with vegetation,yurakunawan,no
-inicio.localizador.nota,"Los tres lugares en el mapa real (geoBoundaries). La franja mide lo que cubre NISAR en una pasada, unos 240 km; su recorrido es ilustrativo.","The three places on the real map (geoBoundaries). The swath is what NISAR covers in one pass, about 240 km; its path is illustrative.","Kimsa llaktakuna chiqa mapapi (geoBoundaries). Suyuka NISAR shuk yallikpi mashnata rikushkatami tupun, 240 km shina; paypak purinaka rikuchinkapakllami.",no
+inicio.localizador.nota,"Los tres lugares en el mapa real (geoBoundaries). La franja mide lo que cubre NISAR en una pasada, unos 240 km; no marca una pasada concreta.","The three places on the real map (geoBoundaries). The strip is what NISAR covers in one pass, about 240 km; it does not mark a specific pass.","Kimsa llaktakuna chiqa mapapi (geoBoundaries). Suyuka NISAR shuk yallikpi mashnata rikushkatami tupun, 240 km shina; paypak purinaka rikuchinkapakllami.",no
 inicio.localizador.titulo,"Ecuador continental con Daule-Peripa, Casitagua y Mazar, y una franja de radar de unos 240 km","Mainland Ecuador with Daule-Peripa, Casitagua and Mazar, and a radar swath of about 240 km","Ecuador allpa, Daule-Peripa, Casitagua, Mazarwan, 240 km radar suyuwanpash",no
 inicio.lugar.ayuda,Toca un lugar del perfil para leer su nota.,Tap a place on the profile to read its note.,"Kuchushkapi shuk llaktata llapiy, paypak willayta killkakatinkapak.",no
 inicio.lugar.casitagua.corto,Cerro · junto a Quito,Hill · next to Quito,Urku · Quito kuchupi,no
@@ -791,19 +779,15 @@ inicio.lugar.mazar.donde,"Sierra, río Paute, entre Azuay y Cañar","Highlands, 
 inicio.lugar.mazar.nombre,Mazar,Mazar,Mazar,no
 inicio.lugar.mazar.texto,"Un embalse de montaña en un valle estrecho. Su agua cuenta para la energía del Paute: cuando baja, se nota en la luz. El radar mide cuánto espejo de agua queda.","A mountain reservoir in a narrow valley. Its water counts for the Paute’s power: when it drops, you notice it in the electricity. The radar measures how much open water is left.","Kichki waykupi urku yaku wakaychina. Paypak yakuka Paute achikpak kallpami: urayakpika, achikpimi riksirin. Radarka mashna yaku rirpu sakirishkata tupun.",no
 inicio.lugar.mazar.titulo,Embalse Mazar,Mazar reservoir,Mazar yaku wakaychina,no
-inicio.pasadas.antes,Antes,Earlier,Ñawpa,no
-inicio.pasadas.en_curso,Pasada en curso,Pass in progress,Kunan yallik,no
-inicio.pasadas.hoy,Hoy,Today,Kunan,no
-inicio.pasadas.lluvias,Temporada de lluvias,Rainy season,Tamya pacha,no
-inicio.pasadas.nota,"Cada capa es una pasada del radar; la de arriba crece mientras el haz cruza el corte. Ilustrativo, sin fechas reales.","Each layer is one radar pass; the top one grows while the beam crosses the section. Illustrative, no real dates.","Kamuy kamuyka shuk radar yallikmi; hawa kamuyka wiñan, radar achik kuchushkata chimpakpi. Rikuchinkapakllami, mana chiqa punchakunayuk.",no
-inicio.pasadas.seca,Temporada seca,Dry season,Chaki pacha,no
-inicio.pasadas.sin_cambios,Pasada sin cambios,Pass without changes,Mana shukyarik yallik,no
+inicio.pasadas.antes,Más antigua,Oldest,Machu,no
+inicio.pasadas.cargando,Leyendo las fechas de las pasadas…,Reading the pass dates…,Pasashkakunapa punchakunata killkashka…,no
+inicio.pasadas.error,No se pudieron leer las fechas de las pasadas.,The pass dates could not be read.,Pasashkakunapa punchakunata mana killkashkachu.,no
+inicio.pasadas.hoy,Más reciente,Most recent,Mushuk,no
+inicio.pasadas.nota,Cada capa es una pasada del radar sobre uno de los tres lugares; la de arriba crece mientras el haz cruza el corte.,Each layer is one radar pass over one of the three places; the top one grows while the beam crosses the section.,Sapa capaka radarpa shuk pasashkami kimsa kitikunamanta shukpi; hawapi kashka wiñan haz pasakpi.,no
 inicio.pasadas.titulo,Registro de pasadas,Log of passes,Radar yallikunapak killkana,no
-inicio.pasadas.transicion,Transición,Transition,Tikrarik pacha,no
 inicio.perfil.amazonia,Amazonía,Amazon,Amazonía,no
-inicio.perfil.aria,"Perfil esquemático del Ecuador de oeste a este, con los tres lugares a su altura","Schematic west–east profile of Ecuador, with the three places at their height","Ecuadorpak inti chinkarinamanta inti llukshinakama kuchushka, kimsa llaktakunawan paykunapak hawapi",no
+inicio.perfil.aria,"Perfil del Ecuador de oeste a este, con los tres lugares a su altura","West–east profile of Ecuador, with the three places at their height","Ecuadorpa kuntur-inti llukshinamanta rikuy, kimsa kitikunawan",no
 inicio.perfil.costa,Costa,Coast,Costa,no
-inicio.perfil.esquema,"perfil esquemático, alturas por verificar","schematic profile, heights to be verified","rikuchina kuchushka, hawakunata killkashpa chiqanchina",no
 inicio.perfil.llanura,llanura y bosque seco,plain and dry forest,"pampa, chaki sacha",no
 inicio.perfil.nublado,bosque nublado,cloud forest,phuyu sacha,no
 inicio.perfil.pacifico,Pacífico,Pacific,Pacífico,no
@@ -814,17 +798,15 @@ inicio.perfil.sierra,Sierra,Highlands,Sierra,no
 inicio.perfil.valle,valle interandino,inter-Andean valley,urkukuna chawpi wayku,no
 inicio.principal,Entra a la historia de los embalses,Enter the reservoirs story,Yaku wakaychinakunapak willakuyman yaykuy,no
 inicio.recorrido,¿Primera vez? Recorrido de 90 s,First time? 90-second tour,¿Ñawpaq kutichu? 90 sikundu purina,no
-inicio.sello_demo,datos de demostración por ahora,demonstration data for now,kunanka rikuchinkapak willaykunami,no
 inicio.sello_simulacion,todo es simulación,it is all simulation,tukuyllami simulana,no
 inicio.signos.agua,Agua: mar y embalses,Water: sea and reservoirs,"Yaku: hatun kucha, yaku wakaychinakuna",no
 inicio.signos.altura,Tierras altas: bosque nublado y páramo,Highlands: cloud forest and páramo,"Hawa allpakuna: phuyu sacha, urku pampa",no
 inicio.signos.capa,Capa: una pasada del radar,Layer: one radar pass,Kamuy: shuk radar yallik,no
-inicio.signos.esquema,No está a escala ni lleva cifras. Los tres lugares están en latitudes distintas; aquí se proyectan sobre un mismo corte de oeste a este.,It is not to scale and has no figures. The three places lie at different latitudes; here they are projected onto one west–east section.,"Mana tupushkachu, mana yupaykunayukchu. Kimsa llaktakunaka shuk shuk latitudpimi kan; kaypika shuklla kuchushkapimi churarin.",no
-inicio.signos.esquema_t,"Perfil esquemático, alturas por verificar.","Schematic profile, heights to be verified.","Rikuchina kuchushka, hawakunata chiqanchinami.",no
+inicio.signos.esquema,No está a escala ni lleva cifras de altitud. Los tres lugares están en latitudes distintas; aquí se proyectan sobre un mismo corte de oeste a este.,It is not to scale and has no altitude figures. The three places lie at different latitudes; here they are projected onto one west–east section.,"Mana tupushkachu, mana yupaykunayukchu. Kimsa llaktakunaka shuk shuk latitudpimi kan; kaypika shuklla kuchushkapimi churarin.",no
 inicio.signos.franja,"Franja de una pasada, unos 240 km","Swath of one pass, about 240 km","Shuk yallikpak suyu, 240 km shina",no
 inicio.signos.haz,Haz del radar en el corte,Radar beam on the section,Radar achik kuchushkapi,no
 inicio.signos.lugar,Lugar con historia: tócalo,Place with a story: tap it,Willakuyuk llakta: llapiy,no
-inicio.signos.rayado,Rayado: dato de demostración,Hatching: demonstration data,Shiru: rikuchinkapak willay,no
+inicio.signos.rayado,Rayado: simulación,Hatching: simulation,Rayado: simulación,no
 inicio.signos.titulo,Signos convencionales,Map legend,Rikuchik unanchakuna,no
 inicio.simular,Provoca tu propio evento,Trigger your own event,Kikinpa pachakutita rurana,no
 inicio.simular_corte,"Perfil del Ecuador, de Galápagos a la Sierra, con lugares del simulador","Profile of Ecuador, from Galápagos to the Highlands, with places from the simulator","Ecuadorpak kuchushka, Galápagosmanta Sierrakama, simuladorpak llaktakunawan",no
@@ -1103,16 +1085,14 @@ origen.leyenda.titulo,Leyenda,Legend,Rikuchik,no
 origen.leyenda.titulo_rango,"Leyenda, {unidad}, de {desde} a {hasta}","Legend, {unidad}, from {desde} to {hasta}","Rikuchik, {unidad}, {desde}-manta {hasta}-kama",no
 origen.leyenda.titulo_unidad,"Leyenda, {unidad}","Legend, {unidad}","Rikuchik, {unidad}",no
 origen.leyenda.transparente,(transparente),(transparent),(transparente),no
-origen.notas.aviso,"Notas del modelo de demostración · los detalles sobre NISAR (productos, geometría, bandas) están pendientes de confirmar con la documentación oficial.","Demonstration model notes · details about NISAR (products, geometry, bands) are pending confirmation against the official documentation.","Rikuchiy modelopa willachiykuna · NISAR-manta willaykuna (productos, geometría, bandakuna) manaraka chiqanyachishkachu, kamachik panka-wan chiqanyachina kan.",no
+origen.notas.aviso,"Notas del modelo de simulación · los detalles sobre NISAR (productos, geometría, bandas) están pendientes de confirmar con la documentación oficial.","Simulation model notes · details about NISAR (products, geometry, bands) are pending confirmation against the official documentation.","Simulación modelopa willachiykuna · NISAR-manta willaykuna (productos, geometría, bandakuna) manaraka chiqanyachishkachu, kamachik panka-wan chiqanyachina kan.",no
 origen.notas.sin_verificar,(sin verificar),(unverified),(mana chiqanyachishka),no
-origen.sello.desconocida,desconocida,unknown,mana yachashka,no
-origen.sello.generado,generado {fecha},generated {fecha},rurashka puncha {fecha},no
-origen.sello.generador,generador,generator,rurachik,no
-origen.sello.generador_version,generador v{version},generator v{version},rurachik v{version},no
-origen.sello.real,Real,Real,Chiqan,no
+origen.sello.granulo,granulo {id},granule {id},granulo {id},no
+origen.sello.madurez,madurez {nivel},maturity {nivel},puririy {nivel},no
+origen.sello.nisar,NISAR,NISAR,NISAR,no
+origen.sello.procesado,procesado por el equipo PACHA,processed by the PACHA team,PACHA ayllu ruraskami,no
 origen.sello.semilla,semilla {semilla},seed {semilla},muju {semilla},no
-origen.sello.sintetico,Sintético,Synthetic,Rurashka,no
-origen.sello.sintetico_no_verificado,Sintético (no verificado),Synthetic (unverified),Rurashka (mana chiqanyachishka),no
+origen.sello.simulacion,Simulación,Simulation,Simulación,no
 piezas.comparador.aviso_rangos,Las dos imágenes venían con rangos distintos; se muestran con el rango común para que los colores sean comparables.,The two images came with different ranges; they are shown with the common range so the colors are comparable.,"Ishkay rikchakuna mana kikin rangokunawan shamushka; shuk rangolla rikuchishka, llimpikuna tupachina kachun.",no
 piezas.comparador.divisor,Divisor entre antes y después,Divider between before and after,Ñawpa-washa chawpipi rakik,no
 piezas.comparador.divisor_valor,{n} % de la imagen es «antes»,"{n} % of the image is ""before""",Rikchapa {n} % «ñawpa» kan,no
@@ -1167,7 +1147,7 @@ piezas.tiempo.velocidad.normal,"Normal (0,5 s)",Normal (0.5 s),"Normal (0,5 s)",
 piezas.tiempo.velocidad.rapida,"Rápida (0,25 s)",Fast (0.25 s),"Utka (0,25 s)",no
 recorrido.anterior,Anterior,Previous,Ñawpa,no
 recorrido.contador,Paso {i} de {n},Step {i} of {n},{n}-manta {i} ñan,no
-recorrido.hallazgo,Menos de dos minutos para ver por qué un radar importa. Todo son datos de demostración.,Less than two minutes to see why a radar matters. Everything shown is demonstration data.,Ishkay minutomanta pishi: radarka imarayku ministirishkata rikuy. Tukuy kaykunaka rikuchiy willaykunami.,no
+recorrido.hallazgo,Menos de dos minutos para ver por qué un radar importa. Las escenas del laboratorio y del simulador son simulaciones.,Less than two minutes to see why a radar matters. The laboratory and simulator scenes are simulations.,Ishkay minutomanta pishi: radarka imarayku ministirishkata rikuy. Laboratoriopi simuladorpipash rikushkakunaka simulaciónmi.,no
 recorrido.marco,Pantalla del paso: {titulo},Screen for the step: {titulo},Ñanpa pantalla: {titulo},no
 recorrido.paso_n,Paso {i}: {titulo},Step {i}: {titulo},{i} ñan: {titulo},no
 recorrido.pasos,Pasos,Steps,Ñankuna,no
@@ -1175,6 +1155,8 @@ recorrido.pausar,Pausar,Pause,Sayachiy,no
 recorrido.reanudar,Reanudar,Resume,Katichiy,no
 recorrido.siguiente,Siguiente,Next,Katik,no
 recorrido.titulo,Recorrido,Tour,Purina,no
+rotulo.simulacion,Simulación,Simulation,Simulación,no
+rotulo.simulacion.detalle,"Los datos de esta pantalla son inventados, no observaciones.","The data on this screen are invented, not observations.","Kay pantallapi willaykunaka rurashkami, mana rikushka willaykunachu.",no
 sim.bitacora.col_area,Área (km²),Area (km²),Área (km²),no
 sim.bitacora.col_deteccion,Detección del radar,Radar detection,Radarpa tarinakuy,no
 sim.bitacora.col_evento,Evento,Event,Evento,no

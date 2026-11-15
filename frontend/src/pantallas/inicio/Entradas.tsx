@@ -30,7 +30,6 @@ export function Entradas() {
           </div>
           <div className="entrada__cuerpo">
             <p>{t('inicio.embalses_detalle')}</p>
-            <Sello texto={t('inicio.sello_demo')} />
             <nav className="entrada__lugares" aria-label={t('inicio.embalses_lugares')}>
               <Link className="inicio__enlace" to="/explorar/historias?historia=embalses&sitio=mazar">{t('inicio.embalses_ir_mazar')}</Link>
               <Link className="inicio__enlace" to="/explorar/historias?historia=embalses&sitio=daule-peripa">{t('inicio.embalses_ir_daule')}</Link>
@@ -53,8 +52,7 @@ export function Entradas() {
           </div>
           <div className="entrada__cuerpo">
             <p>{t('inicio.incendio_detalle')}</p>
-            <p className="inicio__nota">{t('inicio.incendio_hv')} <span className="inicio__fuente">{t('inicio.fuente_por_anadir')}</span></p>
-            <Sello texto={t('inicio.sello_demo')} />
+            <p className="inicio__nota">{t('inicio.incendio_hv')}</p>
             <Link className="inicio__enlace" to="/explorar/historias?historia=incendio">{t('inicio.incendio_ir')}</Link>
           </div>
         </article>

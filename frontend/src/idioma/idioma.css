@@ -44,7 +44,7 @@
   .selector-idioma__opcion { min-height: var(--h-touch); }
 }
 
-/* ---------- Aviso del borrador en kichwa, justo bajo la banda ---------- */
+/* ---------- Aviso del borrador en kichwa, al inicio del lienzo ---------- */
 .aviso-traduccion {
   margin: 0; padding: var(--space-1) var(--page-padding);
   background: var(--demo-bg); border-bottom: 1px solid var(--demo-edge);

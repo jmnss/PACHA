@@ -7,16 +7,13 @@ export const inicio: Record<keyof typeof esInicio, string> = {
   'inicio.recorrido': 'First time? 90-second tour',
 
   'inicio.pasadas.titulo': 'Log of passes',
-  'inicio.pasadas.hoy': 'Today',
-  'inicio.pasadas.antes': 'Earlier',
-  'inicio.pasadas.en_curso': 'Pass in progress',
-  'inicio.pasadas.lluvias': 'Rainy season',
-  'inicio.pasadas.transicion': 'Transition',
-  'inicio.pasadas.seca': 'Dry season',
-  'inicio.pasadas.sin_cambios': 'Pass without changes',
-  'inicio.pasadas.nota': 'Each layer is one radar pass; the top one grows while the beam crosses the section. Illustrative, no real dates.',
+  'inicio.pasadas.hoy': 'Most recent',
+  'inicio.pasadas.antes': 'Oldest',
+  'inicio.pasadas.cargando': 'Reading the pass dates…',
+  'inicio.pasadas.error': 'The pass dates could not be read.',
+  'inicio.pasadas.nota': 'Each layer is one radar pass over one of the three places; the top one grows while the beam crosses the section.',
 
-  'inicio.perfil.aria': 'Schematic west–east profile of Ecuador, with the three places at their height',
+  'inicio.perfil.aria': 'West–east profile of Ecuador, with the three places at their height',
   'inicio.perfil.pasada': 'radar pass',
   'inicio.perfil.pacifico': 'Pacific',
   'inicio.perfil.costa': 'Coast',
@@ -27,7 +24,6 @@ export const inicio: Record<keyof typeof esInicio, string> = {
   'inicio.perfil.paramo': 'páramo',
   'inicio.perfil.valle': 'inter-Andean valley',
   'inicio.perfil.selva': 'Amazon rainforest',
-  'inicio.perfil.esquema': 'schematic profile, heights to be verified',
 
   'inicio.lugar.daule.nombre': 'Daule-Peripa',
   'inicio.lugar.daule.corto': 'Reservoir · lowland Coast',
@@ -47,10 +43,9 @@ export const inicio: Record<keyof typeof esInicio, string> = {
   'inicio.lugar.ir_embalse': 'See how the reservoir changes',
   'inicio.lugar.ir_incendio': 'See the wildfire story',
   'inicio.lugar.ayuda': 'Tap a place on the profile to read its note.',
-  'inicio.fuente_por_anadir': 'Real event · source to be added',
 
   'inicio.localizador.titulo': 'Mainland Ecuador with Daule-Peripa, Casitagua and Mazar, and a radar swath of about 240 km',
-  'inicio.localizador.nota': 'The three places on the real map (geoBoundaries). The swath is what NISAR covers in one pass, about 240 km; its path is illustrative.',
+  'inicio.localizador.nota': 'The three places on the real map (geoBoundaries). The strip is what NISAR covers in one pass, about 240 km; it does not mark a specific pass.',
 
   'inicio.signos.titulo': 'Map legend',
   'inicio.signos.agua': 'Water: sea and reservoirs',
@@ -59,9 +54,8 @@ export const inicio: Record<keyof typeof esInicio, string> = {
   'inicio.signos.franja': 'Swath of one pass, about 240 km',
   'inicio.signos.lugar': 'Place with a story: tap it',
   'inicio.signos.capa': 'Layer: one radar pass',
-  'inicio.signos.rayado': 'Hatching: demonstration data',
-  'inicio.signos.esquema_t': 'Schematic profile, heights to be verified.',
-  'inicio.signos.esquema': 'It is not to scale and has no figures. The three places lie at different latitudes; here they are projected onto one west–east section.',
+  'inicio.signos.rayado': 'Hatching: simulation',
+  'inicio.signos.esquema': 'It is not to scale and has no altitude figures. The three places lie at different latitudes; here they are projected onto one west–east section.',
 
   'inicio.entradas': 'Three ways in',
   'inicio.entradas_bajada': 'Two stories from Ecuador and a workshop to try your own.',
@@ -87,6 +81,5 @@ export const inicio: Record<keyof typeof esInicio, string> = {
   'inicio.simular_corte': 'Profile of Ecuador, from Galápagos to the Highlands, with places from the simulator',
   'inicio.simular_detalle': 'Choose what happens and where, on Ecuador’s terrain. Adjust three things and see what the radar would see.',
   'inicio.simular_ir': 'Open the simulator',
-  'inicio.sello_demo': 'demonstration data for now',
   'inicio.sello_simulacion': 'it is all simulation',
 }

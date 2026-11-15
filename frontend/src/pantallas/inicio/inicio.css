@@ -2,7 +2,6 @@
 .inicio { margin: calc(-1 * var(--page-padding)); display: flex; flex-direction: column; }
 .inicio h1, .inicio h2, .inicio h3, .inicio p { margin: 0; }
 .inicio__nota { font-size: var(--fs-13); line-height: var(--lh-20); color: var(--tinta-2); }
-.inicio__fuente { font-weight: 600; color: var(--cacao); }
 .inicio__enlace { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--h-touch); font-size: var(--fs-15); font-weight: 600; color: var(--laguna-tinta); }
 .inicio__enlace svg { width: var(--fs-22); height: var(--fs-22); flex: none; }
 .inicio__enlace:focus-visible, .portada__principal:focus-visible, .perfil__marca:focus-visible .perfil__cartela { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
@@ -187,11 +186,11 @@
   .pasadas__capa--nueva .pasadas__roca { animation: none; transform: none; }
 }
 
-/* Guía de primera visita (T7): globo anclado, sin tapar la banda; sin movimiento si se pide quieto. */
+/* Guía de primera visita (T7): globo anclado, dentro de la ventana; sin movimiento si se pide quieto. */
 .inicio__enlace--discreto { background: none; border: 0; padding: 0; font-weight: 500; font-size: var(--fs-14); color: var(--muted); text-decoration: underline; text-underline-offset: var(--offset-subrayado); cursor: pointer; }
 .inicio__enlace--discreto:hover { color: var(--text); }
 .guia {
-  position: fixed; z-index: var(--z-banda); width: min(320px, calc(100vw - 2 * var(--space-4)));
+  position: fixed; z-index: var(--z-superior); width: min(320px, calc(100vw - 2 * var(--space-4)));
   background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius-card);
   box-shadow: var(--shadow-float); padding: var(--space-4); display: grid; gap: var(--space-2);
 }

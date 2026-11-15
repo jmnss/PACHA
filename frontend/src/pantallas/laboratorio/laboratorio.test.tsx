@@ -45,7 +45,7 @@ describe('Laboratorio', () => {
     montar('/laboratorio?nubes=60')
     expect(await screen.findByText('Cambio visto por el radar')).toBeInTheDocument()
     expect(urls.some((u) => u.endsWith('cobertura=60'))).toBe(true)
-    expect(screen.getAllByText(/sintético/i).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/simulación/i).length).toBeGreaterThan(0)
   })
 
   it('el deslizador pide otra cobertura', async () => {

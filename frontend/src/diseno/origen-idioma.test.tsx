@@ -18,22 +18,25 @@ const origenDemo = {
 
 describe('textoSello por idioma', () => {
   it('sin t devuelve el español de siempre', () => {
-    expect(textoSello(origenDemo)).toBe(
-      'Sintético · Generador de demostración PACHA · generador v1 · semilla 7 · generado 2026-11-05',
-    )
-    expect(textoSello(null)).toBe('Sintético (no verificado)')
+    expect(textoSello(origenDemo)).toBe('Simulación · semilla 7')
+    expect(textoSello(null)).toBe('Simulación')
   })
-  it('en inglés empieza por Synthetic', () => {
-    expect(textoSello(origenDemo, traductor('en').t)).toMatch(/^Synthetic · /)
-    expect(textoSello(null, traductor('en').t)).toBe('Synthetic (unverified)')
+  it('en inglés empieza por Simulation', () => {
+    expect(textoSello(origenDemo, traductor('en').t)).toMatch(/^Simulation · /)
+    expect(textoSello(null, traductor('en').t)).toBe('Simulation')
   })
   it('en kichwa no deja «Sintético»', () => {
-    expect(textoSello(origenDemo, traductor('qu').t)).not.toContain('Sintético')
-    expect(textoSello(origenDemo, traductor('qu').t)).toMatch(/^Rurashka · /)
+    expect(textoSello(origenDemo, traductor('qu').t)).toMatch(/muju 7/)
   })
-  it('real en kichwa', () => {
-    const real = { ...origenDemo, tipo: 'real', generador: null } as Origen
-    expect(textoSello(real, traductor('qu').t)).toMatch(/^Chiqan · /)
+  it('real de NISAR: producto, polarizaciones, fecha y quién lo procesó; granulo y madurez solo si vienen', () => {
+    const real = {
+      ...origenDemo, tipo: 'real', clase: 'nisar', generador: null,
+      procedencia: { producto: 'GCOV', polarizaciones: ['HH', 'HV'], fecha_adquisicion: '2026-10-29T10:00:00Z', granulos: [] },
+    } as unknown as Origen
+    expect(textoSello(real)).toBe('NISAR · GCOV · HH/HV · 2026-10-29 · procesado por el equipo PACHA')
+    const completo = { ...real, procedencia: { ...real.procedencia, granulos: ['G1'], madurez: 'BETA' } } as unknown as Origen
+    expect(textoSello(completo)).toBe('NISAR · GCOV · HH/HV · 2026-10-29 · procesado por el equipo PACHA · granulo G1 · madurez BETA')
+    expect(textoSello(real, traductor('qu').t)).toMatch(/^NISAR · GCOV/)
   })
 })
 

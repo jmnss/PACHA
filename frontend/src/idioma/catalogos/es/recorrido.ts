@@ -1,6 +1,6 @@
 export const recorrido = {
   'recorrido.titulo': 'Recorrido',
-  'recorrido.hallazgo': 'Menos de dos minutos para ver por qué un radar importa. Todo son datos de demostración.',
+  'recorrido.hallazgo': 'Menos de dos minutos para ver por qué un radar importa. Las escenas del laboratorio y del simulador son simulaciones.',
   'recorrido.contador': 'Paso {i} de {n}',
   'recorrido.anterior': 'Anterior',
   'recorrido.siguiente': 'Siguiente',

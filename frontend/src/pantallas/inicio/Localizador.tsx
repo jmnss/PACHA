@@ -8,7 +8,7 @@ const ROTULO: Record<string, { dx: number; dy: number; fin?: boolean }> = {
   mazar: { dx: 21, dy: 13 },
 }
 
-/** Ecuador continental real (geoBoundaries) con los tres lugares y la franja de unos 240 km, quieta e ilustrativa. */
+/** Ecuador continental real (geoBoundaries) con los tres lugares y la franja de unos 240 km, quieta. */
 export function Localizador() {
   const { t } = useT()
   const x0 = 300 - ANCHO_FRANJA / 2

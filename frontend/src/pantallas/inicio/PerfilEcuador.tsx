@@ -4,7 +4,7 @@ import { useT } from '../../idioma/useT'
 import { PERFIL } from './geometria'
 import { LUGARES, type IdLugar } from './lugares'
 
-const ROTULOS: readonly { clave: Clave; x: number; y: number; tipo: 'region' | 'zona' | 'mar' | 'esquema' }[] = [
+const ROTULOS: readonly { clave: Clave; x: number; y: number; tipo: 'region' | 'zona' | 'mar' }[] = [
   { clave: 'inicio.perfil.pacifico', x: 3.4, y: 84, tipo: 'mar' },
   { clave: 'inicio.perfil.costa', x: 20, y: 94, tipo: 'region' },
   { clave: 'inicio.perfil.sierra', x: 61, y: 94, tipo: 'region' },
@@ -14,7 +14,6 @@ const ROTULOS: readonly { clave: Clave; x: number; y: number; tipo: 'region' | '
   { clave: 'inicio.perfil.paramo', x: 67, y: 17, tipo: 'zona' },
   { clave: 'inicio.perfil.valle', x: 60, y: 58, tipo: 'zona' },
   { clave: 'inicio.perfil.selva', x: 90, y: 77, tipo: 'zona' },
-  { clave: 'inicio.perfil.esquema', x: 50, y: 99, tipo: 'esquema' },
 ]
 
 interface Props {
@@ -23,7 +22,7 @@ interface Props {
 }
 
 /**
- * Perfil oeste-este ESQUEMÁTICO (de B), con los tres lugares como botones a su altura. La única animación de Inicio
+ * Perfil oeste-este (de B), sin cifras de altitud, con los tres lugares como botones a su altura. La única animación de Inicio
  * es el haz que lo cruza (y hace crecer la capa en curso del registro); con `prefers-reduced-motion` queda quieto.
  */
 export function PerfilEcuador({ elegido, onElegir }: Props) {
@@ -56,7 +55,7 @@ export function PerfilEcuador({ elegido, onElegir }: Props) {
           <path className="perfil__suelo" d={PERFIL.suelo} />
         </svg>
         {ROTULOS.map((r) => (
-          <span key={r.clave} className={`perfil__rotulo perfil__rotulo--${r.tipo}`} aria-hidden={r.tipo === 'esquema' ? undefined : true}
+          <span key={r.clave} className={`perfil__rotulo perfil__rotulo--${r.tipo}`} aria-hidden="true"
             style={{ '--x': r.x, '--y': r.y } as CSSProperties}>{t(r.clave)}</span>
         ))}
         {LUGARES.map((l) => (

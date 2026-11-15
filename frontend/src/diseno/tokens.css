@@ -75,11 +75,11 @@
   --chart-linea: 2px;    /* grosor de las líneas de datos */
   --chart-punto: 5px;    /* punto de la cabecera de leyenda */
 
-  /* origen de los datos: banda y sellos de demostración, melocotón con rayado */
+  /* avisos de borrador (traducción), franja de exportación y signos de Inicio: melocotón con rayado */
   --demo-bg:  #F3D9B8;
   --demo-ink: #6E2E0B;   /* 7,5:1 sobre --demo-bg */
   --demo-edge:#B8561F;   /* 3,5:1 sobre --demo-bg, 4,0:1 sobre la arcilla */
-  --rayado-demo: repeating-linear-gradient(135deg, var(--demo-edge) 0 2px, transparent 2px 5px); /* taste-skill-ignore: rayado = signo de demostración, no un degradado */
+  --rayado-demo: repeating-linear-gradient(135deg, var(--demo-edge) 0 2px, transparent 2px 5px); /* taste-skill-ignore: rayado = signo de borrador, no un degradado */
 
   /* escala de espaciado (docs/diseno.md §6), base de 4 px */
   --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
@@ -169,8 +169,6 @@ a { color: var(--laguna-tinta); text-underline-offset: 0.2em; }
 /* estructura y componentes (docs/diseno.md §6, §7, §8, §10) */
 :root {
   --w-rail: 184px;         /* riel con texto: logo, PACHA, cuatro destinos e idioma */
-  --h-banda: 36px;         /* banda de demostración (32 px en móvil) */
-  --h-banda-movil: 32px;
   --h-barra-inferior: 56px;
   --w-columna: 384px;      /* columna fija del Observatorio */
   --size-objetivo: 24px;   /* objetivo mínimo de puntero (WCAG 2.5.8) */
@@ -185,7 +183,6 @@ a { color: var(--laguna-tinta); text-underline-offset: 0.2em; }
   --size-thumb-switch: 10px;
   --size-2: 2px;           /* pista del deslizador, desfases finos */
   --offset-subrayado: 3px;
-  --w-flotante: 420px;     /* panel flotante de la banda */
   --w-termino: 320px;      /* panel de un término */
   --w-menu-acciones: 220px; /* lista del menú de acciones de móvil */
   --w-panel-idioma: 184px; /* panel del selector de idioma */
@@ -203,7 +200,7 @@ a { color: var(--laguna-tinta); text-underline-offset: 0.2em; }
   --w-icono-min: 120px;    /* celda de la galería de iconos */
   --scrim: rgba(31, 29, 26, 0.5); /* fondo tras una hoja modal */
   --z-flotante: 20;
-  --z-banda: 30;
+  --z-superior: 30;
 
   /* Inicio (propuesta D): perfil, registro de pasadas y la única animación (el haz) */
   --h-perfil: clamp(600px, calc(100svh - 80px), 800px);

@@ -2,7 +2,7 @@ import type { recorrido as esRecorrido } from '../es/recorrido'
 
 export const recorrido: Record<keyof typeof esRecorrido, string> = {
   'recorrido.titulo': 'Tour',
-  'recorrido.hallazgo': 'Less than two minutes to see why a radar matters. Everything shown is demonstration data.',
+  'recorrido.hallazgo': 'Less than two minutes to see why a radar matters. The laboratory and simulator scenes are simulations.',
   'recorrido.contador': 'Step {i} of {n}',
   'recorrido.anterior': 'Previous',
   'recorrido.siguiente': 'Next',

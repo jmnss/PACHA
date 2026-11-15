@@ -7,20 +7,23 @@ export interface Lugar {
   /** Centro del `bbox` de `data/<tema>/<sitio>/sitio.json` (lugares.test.ts lo comprueba). */
   lon: number
   lat: number
-  /** Posición en el perfil esquemático (% del ancho y del alto) y largo de la guía de la cartela. */
+  /** Posición en el perfil (% del ancho y del alto) y largo de la guía de la cartela. */
   perfil: { x: number; y: number; guia: number; derecha?: boolean }
   enlace: string
   claveIr: Clave
-  /** Un evento real sin fuente todavía: se rotula «evento real · fuente por añadir», sin fecha (regla 7). */
-  sinFuente?: boolean
+}
+
+/** Escenario de la API de cada lugar. */
+export const ESCENARIO_DE: Record<IdLugar, string> = {
+  daule: 'embalse-daule-peripa', casitagua: 'incendio-casitagua', mazar: 'embalse-mazar',
 }
 
 export const LUGARES: readonly Lugar[] = [
-  { id: 'daule', lon: -79.4250, lat: -0.9450, perfil: { x: 27.6, y: 87, guia: 64 },
+  { id: 'daule', lon: -79.6081, lat: -0.7996, perfil: { x: 27.6, y: 87, guia: 64 },
     enlace: '/explorar/historias?historia=embalses&sitio=daule-peripa', claveIr: 'inicio.lugar.ir_embalse' },
-  { id: 'casitagua', lon: -78.5150, lat: -0.0300, perfil: { x: 56.4, y: 36.6, guia: 58 },
-    enlace: '/explorar/historias?historia=incendio', claveIr: 'inicio.lugar.ir_incendio', sinFuente: true },
-  { id: 'mazar', lon: -78.6450, lat: -2.6751, perfil: { x: 72.8, y: 53, guia: 34, derecha: true },
+  { id: 'casitagua', lon: -78.4707, lat: -0.0352, perfil: { x: 56.4, y: 36.6, guia: 58 },
+    enlace: '/explorar/historias?historia=incendio', claveIr: 'inicio.lugar.ir_incendio' },
+  { id: 'mazar', lon: -78.6474, lat: -2.6776, perfil: { x: 72.8, y: 53, guia: 34, derecha: true },
     enlace: '/explorar/historias?historia=embalses&sitio=mazar', claveIr: 'inicio.lugar.ir_embalse' },
 ]
 

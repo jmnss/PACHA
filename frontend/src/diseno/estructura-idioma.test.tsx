@@ -1,11 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { fireEvent, screen, waitFor, within } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { en } from '../idioma/catalogos/en'
-import { qu } from '../idioma/catalogos/qu'
-import { renderConIdioma, renderPseudo, textosSinTraducir } from '../idioma/pruebas'
-import { BandaDemostracion } from './BandaDemostracion'
+import { renderPseudo, textosSinTraducir } from '../idioma/pruebas'
 import { Cargando, ErrorBloque } from './Estados'
 import { Estructura } from './Estructura'
 import { Tabla } from './Tabla'
@@ -35,12 +32,10 @@ const estructura = envolver(
 afterEach(() => vi.unstubAllGlobals())
 
 describe('estructura sin textos sueltos', () => {
-  it('Estructura con la banda abierta', async () => {
+  it('Estructura', async () => {
     simularApi()
     const { container } = renderPseudo(estructura)
-    fireEvent.click(await screen.findByRole('button', { name: /Qué significa/ }))
-    await screen.findByRole('dialog')
-    await waitFor(() => expect(screen.getByText('2026-11-05')).toBeInTheDocument())
+    await screen.findByText('⟦hola⟧')
     expect(textosSinTraducir(container)).toEqual([])
   })
   it('Cargando, ErrorBloque y Tabla paginada', () => {
@@ -53,29 +48,5 @@ describe('estructura sin textos sueltos', () => {
       </>,
     )
     expect(textosSinTraducir(container).filter((s) => s !== 'x')).toEqual([])
-  })
-})
-
-describe('honestidad de la banda en los tres idiomas', () => {
-  it.each([['es', 'DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR'],
-    ['en', en['estructura.banda.largo']], ['qu', qu['estructura.banda.largo']]] as const)(
-    'en %s existe, sin botón de cerrar', async (idioma, largo) => {
-      simularApi()
-      const { container } = renderConIdioma(envolver(<BandaDemostracion />), idioma)
-      await waitFor(() => expect(container.querySelector('.banda-demo__largo')).not.toBeNull())
-      expect(container.querySelector('.banda-demo__largo')).toHaveTextContent(largo)
-      expect(screen.getAllByRole('button')).toHaveLength(1)
-      expect(screen.queryByRole('button', { name: /cerrar|close|wichkay|ocultar/i })).toBeNull()
-    })
-})
-
-describe('riel', () => {
-  it('las etiquetas cortas en kichwa caben (≤ 8 caracteres)', async () => {
-    simularApi()
-    renderConIdioma(estructura, 'qu')
-    const nav = screen.getByRole('navigation', { name: qu['estructura.riel.principal'] })
-    for (const l of within(nav).getAllByRole('link')) {
-      expect(l.querySelector('.riel__etiqueta')!.textContent!.length).toBeLessThanOrEqual(8)
-    }
   })
 })

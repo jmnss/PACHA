@@ -1,6 +1,6 @@
 // Geometría de Inicio, generada desde la maqueta aprobada (docs/propuestas/d-mezcla/inicio.html) y el contorno de
-// provincias de docs/propuestas/comun/ecuador.svg (geoBoundaries, CC0). Solo dibujo: el perfil es ESQUEMÁTICO
-// (alturas por verificar, sin cifras) y así se rotula en pantalla.
+// provincias de docs/propuestas/comun/ecuador.svg (geoBoundaries, CC0). Solo dibujo: el perfil no lleva cifras
+// de altitud.
 
 /** Perfil oeste-este en un lienzo de 1000 × 400 (se estira con preserveAspectRatio="none"). */
 export const PERFIL = {

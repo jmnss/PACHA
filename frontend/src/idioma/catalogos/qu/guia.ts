@@ -9,7 +9,7 @@ export const guia: Record<keyof typeof esGuia, string> = {
   'guia.saltar': 'Pushaqta usha',
   'guia.repetir': 'Pushaqta shuk kutin rikuy',
   'guia.1.titulo': 'Kayka PACHAmi',
-  'guia.1.texto': 'NISAR radarmi yakuta ninatapash imashina rikushkata rikuchin. Hawa sinchika rikuchin ima willaykuna rikuchinapak kashkata.',
+  'guia.1.texto': 'NISAR radarmi yakuta ninatapash Ecuadorpa embalsekunapi shuk urkupipash imashina rikushkata rikuchin.',
   'guia.2.titulo': 'Kimsa yaykuna',
   'guia.2.texto': 'Ishkay willakuy, yaku wakaychikuna y ninakuna, y shuk simulador «¿imapak kashpaka…?» yachanapak.',
   'guia.3.titulo': 'Chusku rina',
