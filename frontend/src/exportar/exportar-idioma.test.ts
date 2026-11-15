@@ -18,9 +18,9 @@ describe('exportaciones con idioma', () => {
   })
   it('la franja de demostración existe en los tres idiomas', () => {
     const f = (i: 'es' | 'en' | 'qu') => pixelesFranja(2000, demo, undefined, traductor(i).t).lineas.join(' ')
-    expect(f('en')).toContain('DEMONSTRATION DATA')
-    expect(f('es')).toContain('DATOS DE DEMOSTRACIÓN')
-    expect(f('qu')).toContain('RIKUCHIY WILLAYKUNA')
+    expect(f('en')).toContain('Simulation')
+    expect(f('es')).toContain('Simulación')
+    expect(f('qu')).toContain('Simulación')
   })
   it('ErrorApi guarda clave y valores del cuerpo', async () => {
     const f = globalThis.fetch

@@ -293,7 +293,7 @@ describe('Observatorio · antes y después', () => {
     await waitFor(() => expect(clicAncla).toHaveBeenCalled())
     const salida = lienzos[lienzos.length - 1]
     expect(salida.height).toBeGreaterThan(24 + 1) // imagen ampliada + franja
-    expect(ops.some((o) => o.startsWith('texto DATOS DE DEMOSTRACIÓN'))).toBe(true)
+    expect(ops.some((o) => o.startsWith('texto Simulación'))).toBe(true)
     expect(ops.some((o) => /^rect 0,\d+,\d+,24$/.test(o))).toBe(true)
   })
 })

@@ -34,7 +34,7 @@ export function partirTexto(texto: string, ancho: number, medir: Medir): string[
 export function pixelesFranja(ancho: number, origen: Origen | null | undefined, medir: Medir = (t) => t.length * 7, t: T = traductor('es').t) {
   const css = typeof document !== 'undefined' ? getComputedStyle(document.documentElement) : null
   const leer = (v: string, respaldo: string) => css?.getPropertyValue(v).trim() || respaldo
-  const texto = esReal(origen) ? String(origen?.fuente || t('exportar.franja.fuente_desconocida')) : t('exportar.franja.demo')
+  const texto = esReal(origen) ? String(origen?.fuente || t('exportar.franja.fuente_desconocida')) : t('origen.sello.simulacion')
   const lineas = partirTexto(texto, Math.max(0, ancho - 2 * MARGEN), medir)
   return {
     ancho,

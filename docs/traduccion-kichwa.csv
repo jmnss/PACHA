@@ -666,7 +666,6 @@ exportar.error.lienzo,No se pudo crear el lienzo de exportación.,Could not crea
 exportar.error.png,No se pudo generar el PNG.,Could not generate the PNG.,Mana rurashkachu PNG-ta.,no
 exportar.error.red,No se pudo conectar con el servidor.,Could not connect to the server.,Servidor-wan mana tinkichishkachu.,no
 exportar.error.respuesta_invalida,La respuesta del servidor no es válida.,The server response is not valid.,Servidorpa kutichiyka mana allichu.,no
-exportar.franja.demo,DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR,DEMONSTRATION DATA · not real NISAR observations,RIKUCHIY WILLAYKUNA · NISAR-pa chiqan rikuykuna mana kanchu,no
 exportar.franja.fuente_desconocida,desconocida,unknown,mana yachashka,no
 fecha.dia.1,lunes,Monday,lunes,no
 fecha.dia.2,martes,Tuesday,martes,no

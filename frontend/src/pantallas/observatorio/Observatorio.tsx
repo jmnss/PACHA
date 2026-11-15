@@ -25,7 +25,6 @@ import { hallazgo, parejaValida } from './derivados'
 import { leerCuadrante, leerPunto, textoCuadrante, textoPunto } from './medicion'
 import { Mediciones } from './Mediciones'
 import { NotasResultado, VistaAntesDespues } from './VistaAntesDespues'
-import { VistaImpacto } from './VistaImpacto'
 import { AyudaRadar } from './AyudaRadar'
 import { PanelContexto } from './PanelContexto'
 import { PanelMetricas } from './PanelMetricas'
@@ -244,8 +243,10 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
     <Selectores tipos={tipos.data} lista={lista} escenarioId={esc.id} tipoId={esc.tipo_cambio} actual={esc} onEscenario={irA} onTipo={alTipo} />
   )
 
-  // «Impacto» solo existe para las historias (inundación, incendio); en otro escenario se muestra el mapa.
-  const vista = url.vista === 'impacto' && !esc.historia ? 'mapa' : url.vista
+  // Datos reales del equipo: «Impacto» dependía del modelo de demostración y la «Serie» necesita al menos tres
+  // fechas; las vistas que no aplican se ocultan (y su URL cae en el mapa).
+  const vistasVisibles = VISTAS.filter((v) => v.id !== 'impacto' && (v.id !== 'serie' || esc.adquisiciones.length >= 3))
+  const vista = vistasVisibles.some((v) => v.id === url.vista) ? url.vista : 'mapa'
   const acciones: AccionMenu[] = []
   if (puedeSimular) acciones.push({ id: 'parametros', texto: t('obs.parametros.avanzado'), alElegir: () => setHoja(true) })
   if (vista === 'mapa') acciones.push({ id: 'pais', texto: pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo'), alElegir: () => setPais((p) => !p) })
@@ -253,7 +254,7 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
     <>
       <CabeceraPantalla titulo={t('obs.estructura.titulo')} hallazgo={texto} detalle={movil ? undefined : detalleObservable} acciones={selectores} />
       <div className="observatorio__vistas">
-        <Pestanas etiqueta={t('obs.estructura.vistas_etiqueta')} pestanas={(esc.historia ? VISTAS : VISTAS.filter((v) => v.id !== 'impacto')).map((v) => ({ id: v.id, etiqueta: t(v.clave) }))} activa={vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
+        <Pestanas etiqueta={t('obs.estructura.vistas_etiqueta')} pestanas={vistasVisibles.map((v) => ({ id: v.id, etiqueta: t(v.clave) }))} activa={vista} onCambiar={(v) => cambiar({ vista: v as typeof url.vista })} />
         {movil && acciones.length > 0 && <MenuAcciones etiqueta={t('obs.estructura.mas_acciones')} acciones={acciones} />}
       </div>
       {!movil && <p className="observatorio__que">{t(`obs.vista.${vista}.que`)}</p>}
@@ -276,8 +277,6 @@ function ObservatorioCargado({ esc }: { esc: Escenario }) {
               onPareja={(antes, despues) => cambiar({ antes, despues })}
               onPolarizacion={(pol) => cambiar({ pol })}
             />
-          ) : vista === 'impacto' && esc.historia ? (
-            <VistaImpacto esc={esc} antesId={antesId} despuesId={despuesId} polarizacion={polarizacion} />
           ) : (
             <VistaSerie esc={esc} resultado={resultado} antesId={antesId} despuesId={despuesId} ms={tiempo.ms} punto={punto} cuadrante={cuadrante} />
           )}

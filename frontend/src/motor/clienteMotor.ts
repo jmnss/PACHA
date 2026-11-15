@@ -22,8 +22,11 @@ export interface ClienteMotor {
 
 interface Espera { resolver: (r: RespuestaMotor) => void; rechazar: (e: Error) => void }
 
-export function crearClienteMotor(crearPuerto: () => PuertoMotor, motorUrl: string): ClienteMotor {
+export function crearClienteMotor(crearPuerto: () => PuertoMotor, motorUrl: string, respaldo?: () => PuertoMotor): ClienteMotor {
   let puerto: PuertoMotor | null = null
+  // Si el primer puerto (SharedWorker) falla al cargar, se prueba una vez el respaldo (Worker dedicado).
+  let fabrica = crearPuerto
+  let quedaRespaldo = respaldo
   let estado: EstadoMotor = 'inactivo'
   let siguienteId = 1
   const esperas = new Map<number, Espera>()
@@ -31,6 +34,19 @@ export function crearClienteMotor(crearPuerto: () => PuertoMotor, motorUrl: stri
   const avisar = () => oyentes.forEach((f) => f())
 
   const fallar = (detalle?: string) => {
+    if (quedaRespaldo && estado === 'cargando') {
+      fabrica = quedaRespaldo
+      quedaRespaldo = undefined
+      const pendientes = [...esperas.values()]
+      esperas.clear()
+      try { (puerto as { close?: () => void } | null)?.close?.() } catch { /* sin cerrar */ }
+      puerto = null
+      estado = 'inactivo'
+      iniciar()
+      // Las peticiones en curso se rechazan para que la capa de datos las reintente con el motor nuevo.
+      pendientes.forEach((w) => w.rechazar(new MotorNoDisponible(detalle)))
+      return
+    }
     estado = 'error'
     const e = new MotorNoDisponible(detalle)
     esperas.forEach((w) => w.rechazar(e))
@@ -41,7 +57,7 @@ export function crearClienteMotor(crearPuerto: () => PuertoMotor, motorUrl: stri
   const iniciar = () => {
     if (puerto) return
     try {
-      puerto = crearPuerto()
+      puerto = fabrica()
     } catch (e) {
       puerto = null
       fallar(e instanceof Error ? e.message : String(e))
@@ -107,6 +123,9 @@ export function elegirPuerto(): PuertoMotor {
 export const motor: ClienteMotor = crearClienteMotor(
   elegirPuerto,
   new URL(conBase('/motor/'), globalThis.location?.origin ?? 'http://localhost').href,
+  typeof SharedWorker !== 'undefined'
+    ? () => new Worker(new URL('./motor.worker.ts', import.meta.url), { type: 'module' }) as unknown as PuertoMotor
+    : undefined,
 )
 
 /** Estado del motor para la interfaz (`esperando`: hay peticiones sin responder). */

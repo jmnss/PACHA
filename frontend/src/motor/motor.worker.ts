@@ -31,11 +31,11 @@ async function cargar(motorUrl: string): Promise<void> {
   try {
     const { loadPyodide } = await import(/* @vite-ignore */ motorUrl + 'pyodide/pyodide.mjs')
     const pyodide: PyodideMinimo = await loadPyodide({ indexURL: motorUrl + 'pyodide/' })
-    const rm = await fetch(motorUrl + 'manifiesto.json')
+    const rm = await fetch(motorUrl + 'manifiesto.json', { cache: 'no-cache' })
     if (!rm.ok) throw new Error(`manifiesto.json: ${rm.status}`)
     const manifiesto: Manifiesto = await rm.json()
     await pyodide.loadPackage(manifiesto.paquetes)
-    const ra = await fetch(motorUrl + manifiesto.app)
+    const ra = await fetch(motorUrl + manifiesto.app, { cache: 'no-cache' })
     if (!ra.ok) throw new Error(`${manifiesto.app}: ${ra.status}`)
     pyodide.unpackArchive(await ra.arrayBuffer(), 'zip', { extractDir: '/app' })
     await pyodide.runPythonAsync(`

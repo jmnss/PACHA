@@ -60,7 +60,7 @@ describe('honestidad fail-safe: solo tipo «real» exacto omite la marca', () =>
     expect(l).toContain('# DATOS DE DEMOSTRACIÓN: no son observaciones reales de NISAR')
   })
   it.each(raros)('PNG con %s lleva el texto de demostración', (_n, o) => {
-    expect(pixelesFranja(900, o).lineas.join(' ')).toContain('DATOS DE DEMOSTRACIÓN')
+    expect(pixelesFranja(900, o).lineas.join(' ')).toBe('Simulación')
   })
   it('fuente y fecha ausentes → «desconocida», sin TypeError', () => {
     const l = aCsv([], ['a'], { tipo: 'sintetico' } as Origen)
@@ -88,20 +88,21 @@ describe('aPng', () => {
     await aPng(l, sint)
     expect(salidas[0].height).toBeGreaterThan(50 + 24 - 1)
     expect(ops.some((o) => o.startsWith('rect 0,50,100,'))).toBe(true)
-    expect(ops.some((o) => o.startsWith('texto DATOS'))).toBe(true)
+    expect(ops.some((o) => o.startsWith('texto Simulación'))).toBe(true)
     expect(ops.indexOf('img')).toBeLessThan(ops.findIndex((o) => o.startsWith('rect 0,50')))
   })
   it('real usa la fuente como texto', () => {
     expect(pixelesFranja(900, real).lineas).toEqual(['NASA POWER'])
-    expect(pixelesFranja(900, sint).lineas.join(' ')).toContain('no son observaciones reales de NISAR')
+    expect(pixelesFranja(900, sint).lineas.join(' ')).toBe('Simulación')
   })
   it('ancho suficiente: una línea y 24 px; lienzo de 390 px: dos líneas y 36 px, sin recortar', () => {
     const medir = (t: string) => t.length * 6.5
-    const ancho = pixelesFranja(900, sint, medir)
+    const largo = { ...real, fuente: 'NISAR · GCOV · HH/HV · 2026-09-25 · procesado por el equipo PACHA' }
+    const ancho = pixelesFranja(900, largo, medir)
     expect([ancho.lineas.length, ancho.alto]).toEqual([1, 24])
-    const estrecho = pixelesFranja(390, sint, medir)
+    const estrecho = pixelesFranja(390, largo, medir)
     expect([estrecho.lineas.length, estrecho.alto]).toEqual([2, 36])
-    expect(estrecho.lineas.join(' ')).toBe('DATOS DE DEMOSTRACIÓN · no son observaciones reales de NISAR')
+    expect(estrecho.lineas.join(' ')).toBe(largo.fuente)
     expect(estrecho.lineas.every((l) => medir(l) <= 390 - 16)).toBe(true)
   })
 })
