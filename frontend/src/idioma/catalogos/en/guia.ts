@@ -8,7 +8,7 @@ export const guia: Record<keyof typeof esGuia, string> = {
   'guia.saltar': 'Skip guide',
   'guia.repetir': 'See the guide again',
   'guia.1.titulo': 'This is PACHA',
-  'guia.1.texto': 'It shows how the NISAR radar sees water and fire. The strip at the top tells you when data is demonstration data.',
+  'guia.1.texto': 'It shows how the NISAR radar sees water and fire in reservoirs and on a hill in Ecuador.',
   'guia.2.titulo': 'Three ways in',
   'guia.2.texto': 'Two stories, reservoirs and wildfires, and a simulator to try “what if…?”.',
   'guia.3.titulo': 'Four places to go',

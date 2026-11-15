@@ -1,4 +1,5 @@
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
+import { RotuloSimulacion } from '../../diseno/RotuloSimulacion'
 import { ControlSegmentado } from '../../diseno/ControlSegmentado'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
 import { useTituloPagina } from '../../estado/useTituloPagina'
@@ -26,6 +27,7 @@ export default function Laboratorio() {
       <CabeceraPantalla
         titulo={t('lab.pantalla.titulo')}
         hallazgo={t('lab.pantalla.hallazgo')}
+        acciones={<RotuloSimulacion />}
       />
       <ControlSegmentado
         etiqueta={t('lab.pantalla.experimentos')}

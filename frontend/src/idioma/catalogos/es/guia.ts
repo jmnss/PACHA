@@ -7,7 +7,7 @@ export const guia = {
   'guia.saltar': 'Saltar guía',
   'guia.repetir': 'Ver la guía otra vez',
   'guia.1.titulo': 'Esto es PACHA',
-  'guia.1.texto': 'Muestra cómo el radar NISAR ve el agua y el fuego. La franja de arriba avisa cuando los datos son de demostración.',
+  'guia.1.texto': 'Muestra cómo el radar NISAR ve el agua y el fuego en embalses y en un cerro del Ecuador.',
   'guia.2.titulo': 'Tres maneras de entrar',
   'guia.2.texto': 'Dos historias, embalses e incendios, y un simulador para probar «¿y si…?».',
   'guia.3.titulo': 'Cuatro destinos',

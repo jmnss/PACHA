@@ -32,7 +32,7 @@ describe('resumen textual de los lienzos', () => {
     const { t, } = traductor('es')
     const f = (n: number) => String(n)
     const con = resumenLienzo('Capa', { rejilla: A, origen, unidad: 'dB' }, t, f)
-    expect(con).toMatch(/sint[ée]tico/i)
+    expect(con).toMatch(/simulaci[óo]n/i)
     expect(con).toContain('Valor medio')
     expect(con).toContain('dB')
     const sin = resumenLienzo('Capa', { rejilla: A, origen, unidad: '', categorica: true }, t, f)

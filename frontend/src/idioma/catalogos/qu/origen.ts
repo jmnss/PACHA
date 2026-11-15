@@ -2,16 +2,14 @@ import type { origen as esOrigen } from '../es/origen'
 
 // Borrador en kichwa unificado, pendiente de revisión por hablantes.
 export const origen: Record<keyof typeof esOrigen, string> = {
-  'origen.sello.sintetico': 'Rurashka',
-  'origen.sello.sintetico_no_verificado': 'Rurashka (mana chiqanyachishka)',
-  'origen.sello.real': 'Chiqan',
-  'origen.sello.desconocida': 'mana yachashka',
-  'origen.sello.generador': 'rurachik',
-  'origen.sello.generador_version': 'rurachik v{version}',
+  'origen.sello.simulacion': 'Simulación',
+  'origen.sello.nisar': 'NISAR',
+  'origen.sello.procesado': 'PACHA ayllu ruraskami',
+  'origen.sello.granulo': 'granulo {id}',
+  'origen.sello.madurez': 'puririy {nivel}',
   'origen.sello.semilla': 'muju {semilla}',
-  'origen.sello.generado': 'rurashka puncha {fecha}',
   'origen.notas.aviso':
-    'Rikuchiy modelopa willachiykuna · NISAR-manta willaykuna (productos, geometría, bandakuna) manaraka chiqanyachishkachu, kamachik panka-wan chiqanyachina kan.',
+    'Simulación modelopa willachiykuna · NISAR-manta willaykuna (productos, geometría, bandakuna) manaraka chiqanyachishkachu, kamachik panka-wan chiqanyachina kan.',
   'origen.notas.sin_verificar': '(mana chiqanyachishka)',
   'origen.leyenda.titulo': 'Rikuchik',
   'origen.leyenda.titulo_unidad': 'Rikuchik, {unidad}',

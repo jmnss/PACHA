@@ -1,16 +1,14 @@
 import type { origen as esOrigen } from '../es/origen'
 
 export const origen: Record<keyof typeof esOrigen, string> = {
-  'origen.sello.sintetico': 'Synthetic',
-  'origen.sello.sintetico_no_verificado': 'Synthetic (unverified)',
-  'origen.sello.real': 'Real',
-  'origen.sello.desconocida': 'unknown',
-  'origen.sello.generador': 'generator',
-  'origen.sello.generador_version': 'generator v{version}',
+  'origen.sello.simulacion': 'Simulation',
+  'origen.sello.nisar': 'NISAR',
+  'origen.sello.procesado': 'processed by the PACHA team',
+  'origen.sello.granulo': 'granule {id}',
+  'origen.sello.madurez': 'maturity {nivel}',
   'origen.sello.semilla': 'seed {semilla}',
-  'origen.sello.generado': 'generated {fecha}',
   'origen.notas.aviso':
-    'Demonstration model notes · details about NISAR (products, geometry, bands) are pending confirmation against the official documentation.',
+    'Simulation model notes · details about NISAR (products, geometry, bands) are pending confirmation against the official documentation.',
   'origen.notas.sin_verificar': '(unverified)',
   'origen.leyenda.titulo': 'Legend',
   'origen.leyenda.titulo_unidad': 'Legend, {unidad}',

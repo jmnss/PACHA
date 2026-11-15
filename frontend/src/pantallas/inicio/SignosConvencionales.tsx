@@ -7,7 +7,7 @@ const SIGNOS: readonly [string, Clave][] = [
   ['rayado', 'inicio.signos.rayado'],
 ]
 
-/** Recuadro de signos convencionales al pie del perfil (de A), con la advertencia del perfil esquemático. */
+/** Recuadro de signos convencionales al pie del perfil (de A), con la advertencia de que el perfil no está a escala. */
 export function SignosConvencionales() {
   const { t } = useT()
   return (
@@ -18,7 +18,7 @@ export function SignosConvencionales() {
           <li key={s}><span className={`signos__s signos__s--${s}`} aria-hidden="true" />{t(clave)}</li>
         ))}
       </ul>
-      <p className="inicio__nota"><strong>{t('inicio.signos.esquema_t')}</strong> {t('inicio.signos.esquema')}</p>
+      <p className="inicio__nota">{t('inicio.signos.esquema')}</p>
     </div>
   )
 }

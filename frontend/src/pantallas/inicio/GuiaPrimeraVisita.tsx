@@ -16,15 +16,14 @@ const PASOS: PasoGuia[] = [
 const MARGEN = 12
 const CLASE_ANCLA = 'guia-ancla'
 
-/** Coloca el globo junto al ancla: a su derecha, debajo o encima, siempre dentro de la ventana y bajo la banda. */
+/** Coloca el globo junto al ancla: a su derecha, debajo o encima, siempre dentro de la ventana. */
 function colocar(globo: HTMLElement, ancla: HTMLElement) {
   const r = ancla.getBoundingClientRect()
   const vw = window.innerWidth
   const vh = window.innerHeight
   const w = globo.offsetWidth
   const h = globo.offsetHeight
-  const banda = document.querySelector('.banda-demo')?.getBoundingClientRect().bottom ?? 0
-  const minTop = Math.max(MARGEN, banda + MARGEN)
+  const minTop = MARGEN
   let top: number
   let left: number
   if (r.right + MARGEN + w <= vw - MARGEN && r.width < vw * 0.4) {

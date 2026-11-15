@@ -133,26 +133,26 @@ describe('Comparador', () => {
   it('siempre muestra la leyenda y el sello de origen, también con aviso o error', () => {
     const { unmount } = montar()
     expect(screen.getByRole('group', { name: /Leyenda/ })).toBeInTheDocument()
-    expect(screen.getByText(/^Sintético/)).toBeInTheDocument()
+    expect(screen.getByText(/^Simulación/)).toBeInTheDocument()
     unmount()
     montar({ despues: rejilla([1, 2, 3, 4], -20, 0) }) // rangos distintos: aviso
     expect(screen.getByText(/rangos distintos/)).toBeInTheDocument()
     expect(screen.getByRole('group', { name: /Leyenda/ })).toBeInTheDocument()
-    expect(screen.getByText(/^Sintético/)).toBeInTheDocument()
+    expect(screen.getByText(/^Simulación/)).toBeInTheDocument()
   })
 
   it('con extensiones distintas (error) sigue mostrando leyenda y sello', () => {
     montar({ despues: rejilla([1, 2, 3, 4, 5, 6, 7, 8, 9], -30, 0, 3) })
     expect(screen.getByRole('alert')).toBeInTheDocument()
     expect(screen.getByRole('group', { name: /Leyenda/ })).toBeInTheDocument()
-    expect(screen.getByText(/^Sintético/)).toBeInTheDocument()
+    expect(screen.getByText(/^Simulación/)).toBeInTheDocument()
   })
 
   it('si el origen de «después» difiere, se ven los dos sellos', () => {
-    const otro = { ...(origen as object), fuente: 'otra fuente' } as never
+    const otro = { ...(origen as object), tipo: 'real', fuente: 'otra fuente' } as never
     montar({ origenDespues: otro })
-    expect(screen.getAllByText(/^Sintético/)).toHaveLength(2)
-    expect(screen.getByText(/^Sintético · otra fuente/)).toBeInTheDocument()
+    expect(screen.getAllByText(/^Simulación/)).toHaveLength(1)
+    expect(screen.getByText(/^otra fuente/)).toBeInTheDocument()
   })
 
   it('marca el punto y el cuadrante recibidos', () => {

@@ -6,16 +6,13 @@ export const inicio = {
   'inicio.recorrido': '¿Primera vez? Recorrido de 90 s',
 
   'inicio.pasadas.titulo': 'Registro de pasadas',
-  'inicio.pasadas.hoy': 'Hoy',
-  'inicio.pasadas.antes': 'Antes',
-  'inicio.pasadas.en_curso': 'Pasada en curso',
-  'inicio.pasadas.lluvias': 'Temporada de lluvias',
-  'inicio.pasadas.transicion': 'Transición',
-  'inicio.pasadas.seca': 'Temporada seca',
-  'inicio.pasadas.sin_cambios': 'Pasada sin cambios',
-  'inicio.pasadas.nota': 'Cada capa es una pasada del radar; la de arriba crece mientras el haz cruza el corte. Ilustrativo, sin fechas reales.',
+  'inicio.pasadas.hoy': 'Más reciente',
+  'inicio.pasadas.antes': 'Más antigua',
+  'inicio.pasadas.cargando': 'Leyendo las fechas de las pasadas…',
+  'inicio.pasadas.error': 'No se pudieron leer las fechas de las pasadas.',
+  'inicio.pasadas.nota': 'Cada capa es una pasada del radar sobre uno de los tres lugares; la de arriba crece mientras el haz cruza el corte.',
 
-  'inicio.perfil.aria': 'Perfil esquemático del Ecuador de oeste a este, con los tres lugares a su altura',
+  'inicio.perfil.aria': 'Perfil del Ecuador de oeste a este, con los tres lugares a su altura',
   'inicio.perfil.pasada': 'pasada del radar',
   'inicio.perfil.pacifico': 'Pacífico',
   'inicio.perfil.costa': 'Costa',
@@ -26,7 +23,6 @@ export const inicio = {
   'inicio.perfil.paramo': 'páramo',
   'inicio.perfil.valle': 'valle interandino',
   'inicio.perfil.selva': 'selva amazónica',
-  'inicio.perfil.esquema': 'perfil esquemático, alturas por verificar',
 
   'inicio.lugar.daule.nombre': 'Daule-Peripa',
   'inicio.lugar.daule.corto': 'Embalse · Costa baja',
@@ -46,10 +42,9 @@ export const inicio = {
   'inicio.lugar.ir_embalse': 'Ver cómo cambia el embalse',
   'inicio.lugar.ir_incendio': 'Ver la historia del incendio',
   'inicio.lugar.ayuda': 'Toca un lugar del perfil para leer su nota.',
-  'inicio.fuente_por_anadir': 'Evento real · fuente por añadir',
 
   'inicio.localizador.titulo': 'Ecuador continental con Daule-Peripa, Casitagua y Mazar, y una franja de radar de unos 240 km',
-  'inicio.localizador.nota': 'Los tres lugares en el mapa real (geoBoundaries). La franja mide lo que cubre NISAR en una pasada, unos 240 km; su recorrido es ilustrativo.',
+  'inicio.localizador.nota': 'Los tres lugares en el mapa real (geoBoundaries). La franja mide lo que cubre NISAR en una pasada, unos 240 km; no marca una pasada concreta.',
 
   'inicio.signos.titulo': 'Signos convencionales',
   'inicio.signos.agua': 'Agua: mar y embalses',
@@ -58,9 +53,8 @@ export const inicio = {
   'inicio.signos.franja': 'Franja de una pasada, unos 240 km',
   'inicio.signos.lugar': 'Lugar con historia: tócalo',
   'inicio.signos.capa': 'Capa: una pasada del radar',
-  'inicio.signos.rayado': 'Rayado: dato de demostración',
-  'inicio.signos.esquema_t': 'Perfil esquemático, alturas por verificar.',
-  'inicio.signos.esquema': 'No está a escala ni lleva cifras. Los tres lugares están en latitudes distintas; aquí se proyectan sobre un mismo corte de oeste a este.',
+  'inicio.signos.rayado': 'Rayado: simulación',
+  'inicio.signos.esquema': 'No está a escala ni lleva cifras de altitud. Los tres lugares están en latitudes distintas; aquí se proyectan sobre un mismo corte de oeste a este.',
 
   'inicio.entradas': 'Tres maneras de entrar',
   'inicio.entradas_bajada': 'Dos historias del Ecuador y un taller para probar lo tuyo.',
@@ -86,6 +80,5 @@ export const inicio = {
   'inicio.simular_corte': 'Perfil del Ecuador, de Galápagos a la Sierra, con lugares del simulador',
   'inicio.simular_detalle': 'Elige qué pasa y dónde, sobre el relieve del Ecuador. Ajusta tres cosas y mira qué vería el radar.',
   'inicio.simular_ir': 'Abrir el simulador',
-  'inicio.sello_demo': 'datos de demostración por ahora',
   'inicio.sello_simulacion': 'todo es simulación',
 }

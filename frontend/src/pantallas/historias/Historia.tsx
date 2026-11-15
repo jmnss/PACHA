@@ -1,3 +1,4 @@
+import { RotuloSimulacion } from '../../diseno/RotuloSimulacion'
 import { Fragment, useMemo, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { useCambio, useCapa, useContexto, type Escenario } from '../../api/consultas'
@@ -162,6 +163,7 @@ export function Historia({ contenido: c, esc, estado, cambiar, cabecera }: Props
                   </details>
                 )}
                 {clave === 'satelite' && r && r.notas.length > 0 && <NotasModelo notas={r.notas} escenarioId={esc.id} textos={r.notas_texto} />}
+                {clave === 'simular' && <RotuloSimulacion />}
                 <PorLlegar elementos={p.porLlegar} />
                 {clave === 'simular' && c.historiaApi === 'incendio' && (
                   <Link to="/simular" className="boton boton--secundario">{t('historias.simular.enlace')}</Link>

@@ -15,7 +15,7 @@ export const fundamentos: Record<keyof typeof esFundamentos, string> = {
   'fundamentos.col.nota': 'What it implies',
   'fundamentos.tabla.cambios': 'Changes and their radar signature',
   'fundamentos.tabla.bandas': 'Radar bands and their typical wavelength',
-  'fundamentos.nota.cambios': 'General description of the physics; in the app the examples are demonstration data.',
+  'fundamentos.nota.cambios': 'General description of the physics; the laboratory and simulator examples are simulations.',
   'fundamentos.nota.bandas': 'Typical wavelengths by general convention, not specific to any mission.',
-  'fundamentos.nota.mision': 'Until there is access to the official data, everything you see here is demonstration data.',
+  'fundamentos.nota.mision': 'Details of the NISAR mission not yet confirmed against the official documentation are marked as pending.',
 }

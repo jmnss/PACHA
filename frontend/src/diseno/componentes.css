@@ -15,14 +15,14 @@
 button { font: inherit; color: inherit; }
 :focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
 
-/* El foco nunca queda tapado por la banda fija ni por la barra inferior móvil (WCAG 2.4.11). */
-html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4); }
+/* El foco nunca queda tapado por la barra inferior móvil (WCAG 2.4.11). */
+html { scroll-padding-top: var(--space-4); scroll-padding-bottom: var(--space-4); }
 @media (max-width: 699px) {
-  html { scroll-padding-top: var(--h-banda-movil); scroll-padding-bottom: calc(var(--h-barra-inferior) + var(--space-4)); }
+  html { scroll-padding-top: var(--space-4); scroll-padding-bottom: calc(var(--h-barra-inferior) + var(--space-4)); }
 }
 
 /* Objetivos de al menos 24 × 24 px (WCAG 2.5.8). */
-.boton, .riel__destino, .pestanas__pestana, .subnav__enlace, .segmentado__opcion, .banda-demo__enlace, .vista-mapa__plegar { min-width: var(--size-objetivo); min-height: var(--size-objetivo); }
+.boton, .riel__destino, .pestanas__pestana, .subnav__enlace, .segmentado__opcion, .vista-mapa__plegar { min-width: var(--size-objetivo); min-height: var(--size-objetivo); }
 .termino__nombre { display: inline-block; min-height: var(--size-objetivo); min-width: var(--size-objetivo); text-align: center; line-height: var(--lh-20); }
 
 /* ---------- Estructura ---------- */
@@ -71,51 +71,21 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
   .lienzo__contenido { padding: var(--space-4); gap: var(--space-4); }
 }
 
-/* ---------- Banda de demostración ---------- */
-.banda-demo { position: relative; z-index: var(--z-banda); }
-.banda-demo__fila {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
-  min-height: var(--h-banda); padding: 0 var(--page-padding);
-  background: var(--demo-bg); border-bottom: 1px solid var(--demo-edge);
-  color: var(--demo-ink); font-size: var(--fs-13); font-weight: 600;
+/* ---------- Rótulo «Simulación» (Simulador, Laboratorio, paso Simular) ---------- */
+.rotulo-simulacion {
+  margin: 0; display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-1) var(--space-3); border-radius: var(--radius-chip);
+  background: var(--demo-bg); color: var(--demo-ink); font-size: var(--fs-13); line-height: var(--lh-16);
 }
-.banda-demo__texto { margin: 0; padding: var(--space-1) 0; display: flex; align-items: center; gap: var(--space-2); }
-/* El rayado es el signo de «demostración»: lo llevan la banda y los sellos de lo sintético, nada más. */
-.banda-demo__texto::before, .sello-origen[data-origen='sintetico']::before {
-  content: ''; flex: none; width: var(--space-4); height: var(--space-4);
-  border: 1px solid var(--demo-edge); border-radius: var(--radius-chip); background: var(--rayado-demo);
+.rotulo-simulacion__signo {
+  flex: none; width: var(--space-3); height: var(--space-3);
+  border: 1px solid var(--demo-edge); border-radius: var(--size-2); background: var(--rayado-demo);
 }
-.banda-demo__corto { display: none; }
-.banda-demo__enlace {
-  display: inline-flex; align-items: center;
-  background: none; border: 0; padding: 0; color: var(--demo-ink); font-weight: 600;
-  text-decoration: underline; cursor: pointer; white-space: nowrap;
-}
-.banda-demo__panel {
-  position: absolute; right: var(--page-padding); top: 100%; margin-top: var(--space-2);
-  width: min(var(--w-flotante), calc(100vw - 2 * var(--space-4)));
-  background: var(--surface); border: 1px solid var(--control); border-radius: var(--radius-card);
-  box-shadow: var(--shadow-float); padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3);
-}
-.banda-demo__panel p { margin: 0; color: var(--secondary); }
-.banda-demo__datos { margin: 0; display: grid; grid-template-columns: 1fr; gap: var(--space-2); }
-.banda-demo__datos div { display: flex; justify-content: space-between; gap: var(--space-4); }
-.banda-demo__datos dt { color: var(--muted); }
-.banda-demo__datos dd { margin: 0; color: var(--text); text-align: right; }
-@media (max-width: 699px) {
-  .banda-demo { position: sticky; top: 0; }
-  .banda-demo__fila { min-height: var(--h-banda-movil); padding: 0 var(--space-4); gap: var(--space-2); font-size: var(--fs-12); }
-  .banda-demo__texto { min-width: 0; }
-  .banda-demo__enlace { font-weight: 500; flex-shrink: 1; white-space: normal; text-align: right; min-width: 0; }
-  .banda-demo__largo { display: none; }
-  .banda-demo__corto { display: inline; }
-  .banda-demo__panel { right: var(--space-4); top: 100%; }
-}
+.rotulo-simulacion__nombre { font-weight: 600; }
+@media (max-width: 699px) { .rotulo-simulacion__detalle { display: none; } }
 
 /* ---------- Sello de origen ---------- */
 .sello-origen { margin: 0; font-size: var(--fs-12); line-height: var(--lh-16); color: var(--muted); }
-.sello-origen[data-origen='sintetico'] { display: flex; align-items: flex-start; gap: var(--space-2); }
-.sello-origen[data-origen='sintetico']::before { width: var(--space-3); height: var(--space-3); margin-top: var(--size-2); }
 
 /* ---------- Cabecera de pantalla ---------- */
 .cabecera { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--gap); flex-wrap: wrap; }
@@ -319,7 +289,7 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
 .notas-modelo__marca { color: var(--muted); font-size: var(--fs-12); white-space: nowrap; }
 
 /* ---------- Hoja inferior (móvil, docs/diseno.md §10) ---------- */
-.hoja { position: fixed; inset: 0; z-index: var(--z-banda); display: flex; align-items: flex-end; }
+.hoja { position: fixed; inset: 0; z-index: var(--z-superior); display: flex; align-items: flex-end; }
 .hoja__fondo { position: absolute; inset: 0; background: var(--scrim); }
 .hoja__panel {
   position: relative; width: 100%; max-height: 88vh; display: flex; flex-direction: column;
@@ -332,7 +302,7 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
 
 /* ---------- Saltar al contenido (visible solo con foco) ---------- */
 .saltar {
-  position: fixed; top: var(--space-2); left: var(--space-2); z-index: calc(var(--z-banda) + 1);
+  position: fixed; top: var(--space-2); left: var(--space-2); z-index: calc(var(--z-superior) + 1);
   transform: translateY(-200%);
   padding: var(--space-2) var(--space-4); border-radius: var(--radius-pill);
   background: var(--surface); color: var(--text); border: 1px solid var(--accent);
@@ -341,7 +311,7 @@ html { scroll-padding-top: var(--h-banda); scroll-padding-bottom: var(--space-4)
 .saltar:focus-visible { transform: none; }
 .lienzo__contenido:focus { outline: none; }
 
-/* ---------- Aviso del motor de cálculo, bajo la banda de demostración ---------- */
+/* ---------- Aviso del motor de cálculo, bajo la cabecera ---------- */
 .aviso-motor {
   margin: 0; padding: var(--space-1) var(--page-padding);
   background: var(--raised); border-bottom: 1px solid var(--rule);

@@ -1,11 +1,13 @@
 import { fireEvent, screen } from '@testing-library/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { renderConIdioma } from '../../idioma/pruebas'
 import Inicio from './Inicio'
 
 const montar = (idioma: 'es' | 'en' | 'qu' = 'es') =>
-  renderConIdioma(<MemoryRouter><Inicio /></MemoryRouter>, idioma)
+  renderConIdioma(
+    <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><MemoryRouter><Inicio /></MemoryRouter></QueryClientProvider>, idioma)
 
 describe('Inicio', () => {
   it('tiene una sola acción principal y las entradas enlazan a su destino', () => {
@@ -20,13 +22,9 @@ describe('Inicio', () => {
     expect(href('¿Primera vez? Recorrido de 90 s')).toBe('/aprender/recorrido')
   })
 
-  it('rotula lo esquemático e ilustrativo, y el incendio sin fecha con su fuente pendiente', () => {
+  it('no rotula datos de demostración ni lo ilustrativo', () => {
     montar()
-    expect(screen.getByText('perfil esquemático, alturas por verificar')).toBeInTheDocument()
-    expect(screen.getByText(/Ilustrativo, sin fechas reales/)).toBeInTheDocument()
-    expect(screen.getByText(/su recorrido es ilustrativo/)).toBeInTheDocument()
-    expect(screen.getAllByText('Evento real · fuente por añadir').length).toBeGreaterThan(0)
-    expect(document.body.textContent).not.toMatch(/\b(19|20)\d\d\b/)
+    expect(document.body.textContent).not.toMatch(/demostraci|ilustrativ|esquem|fuente por añadir|por verificar/i)
   })
 
   it('los lugares del perfil cambian la nota y su enlace', () => {

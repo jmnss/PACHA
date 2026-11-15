@@ -4,7 +4,7 @@ import type { TextoPaso } from './guion.es'
 export const guionEn: TextoPaso[] = [
   {
     id: 'problema', titulo: 'A river rises and nobody can see how far',
-    texto: 'Illustrative example on Ecuador’s lower Coast: when a flood arrives, clouds often cover the sky just when it matters most to look.',
+    texto: 'When a flood arrives on Ecuador’s lower Coast, clouds often cover the sky just when it matters most to look.',
   },
   {
     id: 'nubes', titulo: 'Clouds do not stop it',
