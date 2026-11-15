@@ -13,16 +13,18 @@ source scripts/entorno.sh
 
 # --- 1. Precálculo contra el servidor local ---
 (cd frontend && VITE_MAPA_REMOTO=0 npm run build)
-python servidor.py >/tmp/servidor-precalculo.log 2>&1 &
+# Puerto propio (PRECALCULO_PUERTO) para no grabar las respuestas de otro servidor que ya ocupe el 8000.
+PUERTO="${PRECALCULO_PUERTO:-8000}"
+python -m uvicorn servidor:app --host 127.0.0.1 --port "$PUERTO" >/tmp/servidor-precalculo.log 2>&1 &
 SERVIDOR=$!
 trap 'kill "$SERVIDOR" 2>/dev/null || true' EXIT
 for _ in $(seq 30); do
-  curl -sf http://127.0.0.1:8000/api/salud >/dev/null && break
+  curl -sf http://127.0.0.1:$PUERTO/api/salud >/dev/null && break
   sleep 2
 done
-curl -sf http://127.0.0.1:8000/api/salud >/dev/null || { echo "El servidor no arrancó" >&2; cat /tmp/servidor-precalculo.log >&2; exit 1; }
+curl -sf http://127.0.0.1:$PUERTO/api/salud >/dev/null || { echo "El servidor no arrancó" >&2; cat /tmp/servidor-precalculo.log >&2; exit 1; }
 cd frontend
-node scripts/precalcular.mts --origen http://127.0.0.1:8000 --salida .precalculado
+node scripts/precalcular.mts --origen http://127.0.0.1:$PUERTO --salida .precalculado
 kill "$SERVIDOR" 2>/dev/null || true
 
 # --- 2 y 3. Motor y sitio de Pages ---

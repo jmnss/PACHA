@@ -674,3 +674,15 @@ hallazgo del Observatorio se mezcla español en el texto inglés; pequeño solap
 la leyenda del mapa a 1440; `Vacio` de `Galeria.tsx` en español fijo; punto del Simulador antes de desatar no va a la URL;
 kichwa nuevo en borrador; `scripts/revision_visual.sh` reutiliza cualquier servidor del puerto 8000; reconciliar los planes
 de las fases 2–5 para que rellenen los huecos de T4 en lugar de crear una página aparte.
+
+## Parte B: datos reales del equipo en la interfaz (rama `datos-equipo`, 2026-11-15)
+
+- Historias con `/resumen` y `/comparacion/embalses`; el visor solo pide capas que la fecha tiene (Mazar 29/10 sin γ⁰:
+  HH frente a HV del 13/08). Observatorio: sin Impacto ni Serie con < 3 fechas; PNG sin franja de demostración.
+- El sello mostraba la fecha de generación como si fuera de adquisición: corregido (usa `procedencia.fecha`).
+- `construir_pages.sh` acepta `PRECALCULO_PUERTO` y termina «Listo» (51 respuestas); el precálculo recorre los 4 pasos
+  de cada historia. `api/encoding._reducir_moda` contaba los 254 códigos en int64 (~1 GB por petición): el servidor
+  moría por memoria; ahora cuenta solo los presentes (pico 177 MB).
+- Pendiente: kichwa de los pasos nuevos (van en español), textos del mapa que aún invitan a «simular una escena»
+  (clic en el mapa), Recorrido/Fundamentos/Inicio sin revisar, e2e sin correr; signo de ΔRFDI por confirmar con el
+  equipo (RFDI clásico sube al perder vegetación, pero el equipo define antes − después positivo = menos vegetación).

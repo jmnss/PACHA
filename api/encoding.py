@@ -43,11 +43,14 @@ def _reducir_moda(datos: np.ndarray, factor: int) -> np.ndarray:
     relleno = np.full((nf * factor, nc * factor), np.nan, dtype=np.float32)
     relleno[:f, :c] = datos
     bloques = relleno.reshape(nf, factor, nc, factor).transpose(0, 2, 1, 3).reshape(nf, nc, factor * factor)
-    codigos = np.where(np.isnan(bloques), 0, np.rint(bloques)).astype(np.int64)
-    codigos = np.clip(codigos, 0, 254)
-    cuentas = np.stack([(codigos == k).sum(axis=2) for k in range(1, 255)], axis=2)  # (nf, nc, 254)
-    moda = cuentas.argmax(axis=2) + 1
-    out = moda.astype(np.float32)
+    codigos = np.where(np.isnan(bloques), 0, np.clip(np.rint(bloques), 0, 254)).astype(np.uint8)
+    # Solo se cuentan los códigos presentes (pocas categorías): contar los 254 posibles en int64 pedía ~0,5 GB por
+    # capa de 512×512 y mataba el servidor en máquinas con poca memoria. Mismo resultado (empate: el código menor).
+    presentes = np.array([k for k in np.unique(codigos).tolist() if k > 0], dtype=np.int64)
+    if presentes.size == 0:
+        return np.full((nf, nc), np.nan, dtype=np.float32)
+    cuentas = np.stack([(codigos == k).sum(axis=2, dtype=np.int32) for k in presentes], axis=2)
+    out = presentes[cuentas.argmax(axis=2)].astype(np.float32)
     out[cuentas.max(axis=2) == 0] = np.nan
     return out
 

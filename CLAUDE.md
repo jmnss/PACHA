@@ -52,16 +52,16 @@ los problemas van a `INFORME.md`.
    cita corta. **Solo lo que está en ese archivo puede dejar de decir «pendiente de confirmar con la
    documentación oficial»**; todo lo demás sigue marcado. El código heredado de `modelo/nisar.py:1550-1820` y
    `nisar.MISION` se revisó contra ese archivo (su §5): lo que no figura allí como verificado no lo está.
-7. **Honestidad en una app mixta.** Nunca se presenta como real lo que no lo es.
-   - Cada capa, serie y exportación lleva `origen` (`nisar`, `otro_sensor`, `sintetico` o `complementario`)
-     y su **procedencia**: producto, colección, id del granulo, fecha de adquisición, polarización, frecuencia
-     (A/B) y madurez (BETA, PROVISIONAL o VALIDATED).
-   - **Una capa real sin procedencia completa no se muestra.**
-   - La banda «DATOS DE DEMOSTRACIÓN» se muestra siempre que haya algo sintético en pantalla.
-   - El Simulador sigue siendo 100 % sintético.
-   - Las hipótesis sobre datos sintéticos se redactan como ejemplos ilustrativos; las hipótesis sobre datos
-     reales, como **hipótesis** por comprobar, nunca como conclusiones. Un evento real (fecha, lugar) solo se
-     nombra con su fuente.
+7. **Honestidad con los datos reales del equipo** (decisión del usuario, 2026-11-15).
+   - Las imágenes del equipo se muestran **como NISAR reales** (GCOV, banda L, HH/HV, procesadas por el equipo PACHA),
+     con lo que se sabe: producto, **fecha de adquisición (solo el día, nunca hora)**, polarizaciones y «procesado por
+     el equipo PACHA». Lo que no se sabe (granulo, colección, frecuencia, madurez, hora UTC) **se omite y nunca se
+     inventa** (regla 6); aparece solo cuando el equipo entregue los `.h5`. Cada capa, serie y exportación lleva su `origen`.
+   - **Sin banda «DATOS DE DEMOSTRACIÓN»** y sin escenarios sintéticos en Inicio, Historias y Observatorio.
+   - **Simulador y Laboratorio** son simulación y llevan el rótulo fijo **«Simulación»** en su pantalla (también el
+     paso «Simular» de las historias).
+   - Las lecturas sobre datos reales se redactan como **hipótesis** por comprobar, nunca como conclusiones. Un evento
+     real (fecha, lugar) solo se nombra con su fuente enlazada.
 
 ## Arquitectura
 

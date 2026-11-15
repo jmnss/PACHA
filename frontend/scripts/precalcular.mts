@@ -55,10 +55,21 @@ for (const e of escenarios) {
   pasadas[e.id] = ((await (await fetch(`${origen}/api/escenarios/${e.id}`)).json()) as { adquisiciones: unknown[] }).adquisiciones.length
 }
 
-await visitar('/explorar/historias')
-await visitar('/explorar/historias?historia=incendio')
+// Historias: cada paso de cada sitio (pide /resumen, /comparacion/embalses y solo las capas que cada fecha tiene).
+for (const q of ['historia=embalses', 'historia=embalses&sitio=daule-peripa', 'historia=incendio']) {
+  for (let paso = 1; paso <= 4; paso++) {
+    await visitar(`/explorar/historias?${q}&paso=${paso}`, async (p) => {
+      // HH/HV y, en el incendio, la capa ΔRFDI del paso 4.
+      for (const nombre of ['HH', 'HV', 'ΔRFDI']) {
+        const r = p.getByRole('radio', { name: new RegExp(`^${nombre}`) })
+        if (await r.count() > 0) { await r.first().click(); await p.waitForLoadState('networkidle', { timeout: 60_000 }) }
+      }
+    })
+  }
+}
 for (const e of escenarios) {
-  for (const vista of ['mapa', 'comparar', 'serie']) {
+  // La Serie solo existe con tres fechas o más; «Impacto» ya no se muestra con los datos del equipo.
+  for (const vista of pasadas[e.id] >= 3 ? ['mapa', 'comparar', 'serie'] : ['mapa', 'comparar']) {
     // El reproductor se recorre otra vez (hasta dos) si falta alguna capa: en una máquina lenta un clic puede
     // saltarse una pasada. Lo ya grabado no se repite.
     const intentos = vista === 'mapa' ? 3 : 1
@@ -80,7 +91,6 @@ for (const e of escenarios) {
       if (intento > 0) console.log(`reintento ${intento} de ${e.id}: ${capas(e.id)} de ${pasadas[e.id]} capas`)
     }
   }
-  if (e.historia !== null) await visitar(`/explorar/observatorio?escenario=${e.id}&vista=impacto`)
 }
 for (let n = 0; n <= 100; n += 10) await visitar(`/aprender/laboratorio?nubes=${n}`)
 for (const banda of ['L', 'S']) {

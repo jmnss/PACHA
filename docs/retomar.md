@@ -11,6 +11,13 @@ Actualizado: 2026-11-14 (cierre de la fase 1). Léelo antes que `INFORME.md` (qu
   hace falta). La app Streamlit se retiró: etiqueta `legado-streamlit`.
 - Ramas: `main` (publicada), **`embalses` (trabajo actual)**, `datos-reales` (= main), `migracion-react` (historia vieja).
 
+## Datos reales del equipo en la interfaz (2026-11-15, rama `datos-equipo`)
+
+Parte B (`docs/superpowers/plans/2026-11-15-parte-b-datos-reales-en-la-interfaz.md`): `mixto` sirve solo Mazar,
+Daule-Peripa y Casitagua como NISAR del equipo, sin demo. Historias leen `/resumen` y `/comparacion/embalses`
+(ficha con fuentes, γ⁰ HH/HV, máscara, ΔRFDI, lecturas como hipótesis); Observatorio sin Impacto ni Serie (< 3 fechas).
+Pages: `PRECALCULO_PUERTO=8766 bash scripts/construir_pages.sh`. Pendientes en `INFORME.md` («Parte B»).
+
 ## Rediseño hecho (2026-11-15, rama `rediseno-pacha`)
 
 T1b–T9 del plan `docs/superpowers/plans/2026-11-15-rediseno-t1b-t9.md` integrados con verificación reducida (ver
