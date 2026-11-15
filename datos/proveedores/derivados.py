@@ -1,7 +1,8 @@
 """Proveedor de los derivados del equipo (embalses e incendio): lee `data/<embalses|incendios>/<sitio>/`.
 
 Formato escrito por `preparacion/salida.py`: `sitio.json`, un `.npz` por fecha (`mascara` con códigos del contrato
-0 sin dato / 1 clase / 2 resto, y si hay stack `HH` y `HV` cuantizados), `contorno.geojson`. Regla 7 de CLAUDE.md:
+0 sin dato / 1 clase / 2 resto, salvo en una fecha de incendio sin máscara; si hay stack `HH` y `HV` cuantizados; y
+si hay ΔRFDI `delta_rfdi` cuantizado en [-1, 1]), `contorno.geojson`. Acepta las versiones 1 y 2 de `sitio.json`. Regla 7 de CLAUDE.md:
 una fecha sin procedencia completa NO se expone (ni en el escenario, ni en las capas, ni en la serie), y cada capa
 lleva el origen con la procedencia de su propia fecha. Solo numpy, json y pydantic (corre también en Pyodide).
 """
@@ -51,6 +52,8 @@ class _Fecha:
         self.id = fila["fecha"].replace("-", "")
         self.instante = proc.fecha_adquisicion
         self.stack = fila.get("stack") or None
+        self.tiene_mascara = fila.get("mascara", True)  # v1 siempre traía máscara
+        self.delta_rfdi = fila.get("delta_rfdi") or None
         self.origen = Origen(tipo="real", clase="nisar", fuente=FUENTE, producto=proc.producto,
                              fecha_generacion=fecha_prep, procedencia=proc)
 
@@ -137,11 +140,14 @@ class ProveedorDerivados:
         s = self._sitio(id)
         j = s.json
         hay_stack = any(f.stack for f in s.fechas)
+        hay_mascara = any(f.tiene_mascara for f in s.fechas)
+        hay_delta = any(f.delta_rfdi for f in s.fechas)
         return Escenario(
             id=id, nombre=j["nombre"], tipo_cambio=CARPETAS[s.tipo], historia=s.tipo, sitio=j["sitio"],
             region=j["region"], bbox=s.bbox, resolucion_m=j["resolucion_m"],
             polarizaciones=["HH", "HV"] if hay_stack else [],
-            variables=["mascara"] + (["gamma0"] if hay_stack else []),
+            variables=(["mascara"] if hay_mascara else []) + (["gamma0"] if hay_stack else [])
+            + (["delta_rfdi"] if hay_delta else []),
             adquisiciones=[Adquisicion(id=f.id, instante=f.instante, polarizaciones=["HH", "HV"] if f.stack else [])
                            for f in s.fechas],
             capacidades=self.capacidades, origen=s.fechas[-1].origen)
@@ -152,7 +158,14 @@ class ProveedorDerivados:
 
     # --- capas ------------------------------------------------------------------------------------
 
+    def _no_disponible(self, f: _Fecha, variable: str) -> EntradaNoValida:
+        disponibles = ", ".join((["mascara"] if f.tiene_mascara else []) + (["gamma0"] if f.stack else [])
+                                + (["delta_rfdi"] if f.delta_rfdi else []))
+        return EntradaNoValida.con("api.error.variable_desconocida", variable=variable, disponibles=disponibles)
+
     def _mascara(self, s: _Sitio, f: _Fecha) -> CapaRaster:
+        if not f.tiene_mascara:
+            raise self._no_disponible(f, "mascara")
         return CapaRaster(
             escenario_id=s.id_escenario, adquisicion_id=f.id, variable="mascara", polarizacion=None, unidad="",
             paleta="categorias", vmin=0, vmax=len(s.json["leyenda"]), leyenda=[tuple(x) for x in s.json["leyenda"]],
@@ -169,6 +182,17 @@ class ProveedorDerivados:
             escenario_id=s.id_escenario, adquisicion_id=f.id, variable="gamma0", polarizacion=pol, unidad="dB",
             paleta="gris", vmin=float(vmin), vmax=float(vmax), leyenda=None, datos=db, bbox=s.bbox, origen=f.origen)
 
+    def _delta_rfdi(self, s: _Sitio, f: _Fecha) -> CapaRaster:
+        if not f.delta_rfdi:
+            raise self._no_disponible(f, "delta_rfdi")
+        vmin, vmax = f.delta_rfdi
+        q = s.arrays(f)["delta_rfdi"]
+        datos = np.where(q == 0, np.nan, vmin + (q.astype(np.float64) - 1) / 254 * (vmax - vmin)).astype(np.float32)
+        return CapaRaster(
+            escenario_id=s.id_escenario, adquisicion_id=f.id, variable="delta_rfdi", polarizacion=None, unidad="",
+            paleta="divergente", vmin=float(vmin), vmax=float(vmax), leyenda=None, datos=datos, bbox=s.bbox,
+            origen=f.origen)
+
     def capa(self, escenario_id: str, adquisicion_id: str, variable: str, polarizacion: str | None) -> CapaRaster:
         s = self._sitio(escenario_id)
         f = s.fecha(adquisicion_id)
@@ -179,17 +203,21 @@ class ProveedorDerivados:
                 raise EntradaNoValida.con("api.error.polarizacion_no_disponible", polarizacion="(ninguna)",
                                           disponibles=", ".join(f.stack or []) or "ninguna")
             return self._gamma0(s, f, polarizacion)
-        disponibles = ", ".join(["mascara"] + (["gamma0"] if f.stack else []))
-        raise EntradaNoValida.con("api.error.variable_desconocida", variable=variable, disponibles=disponibles)
+        if variable == "delta_rfdi":
+            return self._delta_rfdi(s, f)
+        raise self._no_disponible(f, variable)
 
-    def _superficie(self, s: _Sitio, f: _Fecha) -> float:
-        return float(f.fila["superficie_km2"][s.clase])
+    def _superficie(self, s: _Sitio, f: _Fecha) -> float | None:
+        v = f.fila["superficie_km2"][s.clase]
+        return None if v is None else float(v)
 
     def serie_superficie(self, escenario_id: str) -> SerieTemporal:
+        """Superficie por fecha; las fechas sin máscara (superficie null) se omiten, no se les inventa un valor."""
         s = self._sitio(escenario_id)
         titulo = _TITULO_SERIE[s.tipo]
         return SerieTemporal(titulo=titulo, unidad="km²", origen=s.fechas[-1].origen,
-                             puntos=[(f.instante, self._superficie(s, f), titulo) for f in s.fechas])
+                             puntos=[(f.instante, self._superficie(s, f), titulo) for f in s.fechas
+                                     if self._superficie(s, f) is not None])
 
     # --- cambio -----------------------------------------------------------------------------------
 
@@ -198,7 +226,18 @@ class ProveedorDerivados:
         validar_par(a.id, d.id, a.instante, d.instante)
         return a, d
 
+    def _mascaras_par(self, s: _Sitio, a: _Fecha, d: _Fecha) -> tuple[np.ndarray, np.ndarray]:
+        """Máscaras (antes, después) para clasificar. Caso de incendio con «antes» sin máscara: la máscara del equipo
+        es el quemado entre ambas fechas: «antes» sale como «no quemado» (2) donde «después» tiene dato, así que el
+        quemado de «después» es cambio «nuevo»; sin dato en «después» sigue sin dato (0)."""
+        md = s.arrays(d)["mascara"]
+        if a.tiene_mascara:
+            return s.arrays(a)["mascara"], md
+        return np.where(md == 0, 0, 2).astype(np.uint8), md
+
     def cambio(self, escenario_id: str, antes_id: str, despues_id: str, polarizacion: str | None) -> ResultadoCambio:
+        """Cambio entre dos fechas. Si «antes» no tiene máscara (incendio), la superficie «antes» de las métricas
+        es 0,0 km² (nada quemado hasta esa fecha), por la definición del equipo de la máscara."""
         s = self._sitio(escenario_id)
         a, d = self._par(s, antes_id, despues_id)
         pol = polarizacion
@@ -207,9 +246,10 @@ class ProveedorDerivados:
             capa_a, capa_d = self._gamma0(s, a, pol), self._gamma0(s, d, pol)
         else:
             capa_a, capa_d = self._mascara(s, a), self._mascara(s, d)
-        cod = clasificar(s.arrays(a)["mascara"], s.arrays(d)["mascara"], s.dentro())
+        ma, md = self._mascaras_par(s, a, d)
+        cod = clasificar(ma, md, s.dentro())
         clasif = capa_clasificacion(s.id_escenario, d.id, s.tipo, cod, s.bbox, d.origen)
-        metricas = metricas_cambio(s.tipo, self._superficie(s, a), self._superficie(s, d), a.fila["fecha"], d.fila["fecha"])
+        metricas = metricas_cambio(s.tipo, self._superficie(s, a) or 0.0, self._superficie(s, d), a.fila["fecha"], d.fila["fecha"])
         return ResultadoCambio(antes=capa_a, despues=capa_d, cambio=clasif, clasificacion=clasif, metricas=metricas,
                                series=[self.serie_superficie(escenario_id)], notas=[], origen=d.origen)
 
@@ -228,8 +268,8 @@ class ProveedorDerivados:
             fecha = fechas[capa]
             return float(self._gamma0(s, fecha, pol).datos[f, c]) if fecha.stack else None
 
-        return medir_mascaras([n for n, _ in s.json["leyenda"]], s.km2_pixel, s.arrays(a)["mascara"],
-                               s.arrays(d)["mascara"], d.fila["fecha"], d.origen, gamma, cuadrante, punto)
+        ma, md = self._mascaras_par(s, a, d)
+        return medir_mascaras([n for n, _ in s.json["leyenda"]], s.km2_pixel, ma, md, d.fila["fecha"], d.origen, gamma, cuadrante, punto)
 
     # --- lo que este proveedor no ofrece ----------------------------------------------------------
 
