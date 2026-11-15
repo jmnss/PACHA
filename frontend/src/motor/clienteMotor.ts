@@ -1,7 +1,7 @@
 /** Cliente del motor de cálculo: crea el worker, correlaciona respuestas por id y expone su estado. */
 import { useSyncExternalStore } from 'react'
 import { conBase } from '../rutaBase'
-import type { EstadoMotor, MensajeDelMotor, PuertoMotor } from './protocolo'
+import type { EstadoMotor, MensajeAlMotor, MensajeDelMotor, PuertoMotor } from './protocolo'
 
 export class MotorNoDisponible extends Error {
   constructor(mensaje = 'El motor de cálculo no está disponible') {
@@ -20,13 +20,11 @@ export interface ClienteMotor {
   suscribir(fn: () => void): () => void
 }
 
-interface Espera { resolver: (r: RespuestaMotor) => void; rechazar: (e: Error) => void }
+interface Espera { resolver: (r: RespuestaMotor) => void; rechazar: (e: Error) => void; msg: MensajeAlMotor }
 
-export function crearClienteMotor(crearPuerto: () => PuertoMotor, motorUrl: string, respaldo?: () => PuertoMotor): ClienteMotor {
+export function crearClienteMotor(crearPuerto: () => PuertoMotor, motorUrl: string, crearRespaldo?: () => PuertoMotor): ClienteMotor {
   let puerto: PuertoMotor | null = null
-  // Si el primer puerto (SharedWorker) falla al cargar, se prueba una vez el respaldo (Worker dedicado).
-  let fabrica = crearPuerto
-  let quedaRespaldo = respaldo
+  let conRespaldo = false
   let estado: EstadoMotor = 'inactivo'
   let siguienteId = 1
   const esperas = new Map<number, Espera>()
@@ -34,18 +32,16 @@ export function crearClienteMotor(crearPuerto: () => PuertoMotor, motorUrl: stri
   const avisar = () => oyentes.forEach((f) => f())
 
   const fallar = (detalle?: string) => {
-    if (quedaRespaldo && estado === 'cargando') {
-      fabrica = quedaRespaldo
-      quedaRespaldo = undefined
-      const pendientes = [...esperas.values()]
-      esperas.clear()
-      try { (puerto as { close?: () => void } | null)?.close?.() } catch { /* sin cerrar */ }
+    // El worker compartido falló (p. ej. en Edge de escritorio): se reintenta una vez con un Worker dedicado.
+    if (crearRespaldo && !conRespaldo) {
+      conRespaldo = true
       puerto = null
-      estado = 'inactivo'
       iniciar()
-      // Las peticiones en curso se rechazan para que la capa de datos las reintente con el motor nuevo.
-      pendientes.forEach((w) => w.rechazar(new MotorNoDisponible(detalle)))
-      return
+      if (puerto) {
+        // Las peticiones en espera se reenvían al nuevo puerto.
+        esperas.forEach((w) => puerto!.postMessage(w.msg))
+        return
+      }
     }
     estado = 'error'
     const e = new MotorNoDisponible(detalle)
@@ -57,7 +53,7 @@ export function crearClienteMotor(crearPuerto: () => PuertoMotor, motorUrl: stri
   const iniciar = () => {
     if (puerto) return
     try {
-      puerto = fabrica()
+      puerto = conRespaldo && crearRespaldo ? crearRespaldo() : crearPuerto()
     } catch (e) {
       puerto = null
       fallar(e instanceof Error ? e.message : String(e))
@@ -87,8 +83,9 @@ export function crearClienteMotor(crearPuerto: () => PuertoMotor, motorUrl: stri
     if (estado === 'error') return Promise.reject(new MotorNoDisponible())
     const id = siguienteId++
     return new Promise<RespuestaMotor>((resolver, rechazar) => {
-      esperas.set(id, { resolver, rechazar })
-      puerto!.postMessage({ tipo: 'pedir', id, metodo, ruta, cuerpo })
+      const msg: MensajeAlMotor = { tipo: 'pedir', id, metodo, ruta, cuerpo }
+      esperas.set(id, { resolver, rechazar, msg })
+      puerto!.postMessage(msg)
       avisar()
     })
   }
@@ -120,12 +117,14 @@ export function elegirPuerto(): PuertoMotor {
 }
 
 /** Instancia de la app. */
+export function puertoDedicado(): PuertoMotor {
+  return new Worker(new URL('./motor.worker.ts', import.meta.url), { type: 'module' }) as unknown as PuertoMotor
+}
+
 export const motor: ClienteMotor = crearClienteMotor(
   elegirPuerto,
   new URL(conBase('/motor/'), globalThis.location?.origin ?? 'http://localhost').href,
-  typeof SharedWorker !== 'undefined'
-    ? () => new Worker(new URL('./motor.worker.ts', import.meta.url), { type: 'module' }) as unknown as PuertoMotor
-    : undefined,
+  typeof SharedWorker !== 'undefined' ? puertoDedicado : undefined,
 )
 
 /** Estado del motor para la interfaz (`esperando`: hay peticiones sin responder). */
