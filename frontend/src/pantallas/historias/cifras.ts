@@ -14,7 +14,7 @@ export type Cifra =
   | { tipo: 'por_llegar' }
   | { tipo: 'sin_dato' }
 
-/** Métricas del incendio por su clave de texto (las de embalse aún no traen clave: se eligen por su unidad). */
+/** Métricas del incendio por su clave de texto; la del embalse es su variación relativa. */
 const METRICA_INCENDIO: Partial<Record<ClavePaso, string>> = {
   satelite: 'api.obs.metrica.area_quemada_detectada',
   simular: 'api.obs.metrica.area_quemada_simulada_verdad_sintetica',
@@ -45,7 +45,7 @@ export function cifraDePaso(
   if (!r) return null
   if (paso === 'datos') return puntoEn(r, antes)
   if (paso === 'satelite') return puntoEn(r, despues)
-  return metrica(r, r.metricas.find((m) => m.unidad === '%'))
+  return metrica(r, r.metricas.find((m) => m.clave_texto === 'api.cambio.metrica.embalse.variacion_relativa'))
 }
 
 /** Qué muestra el comparador en cada paso: la máscara del equipo (si el escenario la tiene) o la señal del radar. */

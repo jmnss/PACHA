@@ -177,13 +177,6 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
   return (
     <>
       <Tarjeta pie={capa ? <SelloOrigen origen={capa.origen} /> : undefined} className="vista-mapa">
-        {!movil && (
-          <div className="vista-mapa__barra">
-            <Boton variante="secundario" onClick={() => onPais(!pais)} aria-pressed={pais}>
-              {pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo')}
-            </Boton>
-          </div>
-        )}
         <div className="vista-mapa__mapa" role="group" aria-label={t('obs.estructura.vista_mapa')} aria-describedby={idNota}>
           <p id={idNota} className="solo-lectores">{t('a11y.mapa.nota')}</p>
           <MapaBase base={base} bbox={pais ? undefined : esc.bbox} onClic={alClic} onFueraDeEcuador={alClic} marcadores={marcadores} conProvincia>
@@ -207,7 +200,13 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
                 </div>
               ) : (
                 <>
-                  {capa && rotulo ? <p className="vista-mapa__capa num">{rotulo}</p> : <span />}
+                  {/* «Ver todo Ecuador» flota sobre el mapa: así el mapa empieza arriba y cabe en el primer pantallazo. */}
+                  <div className="vista-mapa__izquierda">
+                    <Boton variante="secundario" onClick={() => onPais(!pais)} aria-pressed={pais}>
+                      {pais ? t('obs.mapa.ver_escenario') : t('obs.mapa.ver_todo')}
+                    </Boton>
+                    {capa && rotulo && <p className="vista-mapa__capa num">{rotulo}</p>}
+                  </div>
                   <ControlesMapa base={base} onBase={elegirBase} opacidad={opacidad} onOpacidad={setOpacidad} conBases={conBases} extra={selectorCapa} />
                 </>
               )}

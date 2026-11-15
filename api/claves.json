@@ -1,5 +1,69 @@
 [
   {
+    "clave": "api.cambio.metrica.embalse.antes.ayuda",
+    "es": "Medida en la rejilla original, dentro del contorno, el {fecha}."
+  },
+  {
+    "clave": "api.cambio.metrica.embalse.antes.etiqueta",
+    "es": "Superficie de agua antes"
+  },
+  {
+    "clave": "api.cambio.metrica.embalse.despues.ayuda",
+    "es": "Medida en la rejilla original, dentro del contorno, el {fecha}."
+  },
+  {
+    "clave": "api.cambio.metrica.embalse.despues.etiqueta",
+    "es": "Superficie de agua después"
+  },
+  {
+    "clave": "api.cambio.metrica.embalse.variacion.ayuda",
+    "es": "Cambio de la superficie de agua entre las dos fechas."
+  },
+  {
+    "clave": "api.cambio.metrica.embalse.variacion.etiqueta",
+    "es": "Variación de superficie"
+  },
+  {
+    "clave": "api.cambio.metrica.embalse.variacion_relativa.ayuda",
+    "es": "Cambio de la superficie de agua respecto a la fecha anterior."
+  },
+  {
+    "clave": "api.cambio.metrica.embalse.variacion_relativa.etiqueta",
+    "es": "Variación relativa"
+  },
+  {
+    "clave": "api.cambio.metrica.incendio.antes.ayuda",
+    "es": "Medida en la rejilla original, dentro del contorno, el {fecha}."
+  },
+  {
+    "clave": "api.cambio.metrica.incendio.antes.etiqueta",
+    "es": "Superficie quemada antes"
+  },
+  {
+    "clave": "api.cambio.metrica.incendio.despues.ayuda",
+    "es": "Medida en la rejilla original, dentro del contorno, el {fecha}."
+  },
+  {
+    "clave": "api.cambio.metrica.incendio.despues.etiqueta",
+    "es": "Superficie quemada después"
+  },
+  {
+    "clave": "api.cambio.metrica.incendio.variacion.ayuda",
+    "es": "Cambio de la superficie quemada entre las dos fechas."
+  },
+  {
+    "clave": "api.cambio.metrica.incendio.variacion.etiqueta",
+    "es": "Variación de superficie"
+  },
+  {
+    "clave": "api.cambio.metrica.incendio.variacion_relativa.ayuda",
+    "es": "Cambio de la superficie quemada respecto a la fecha anterior."
+  },
+  {
+    "clave": "api.cambio.metrica.incendio.variacion_relativa.etiqueta",
+    "es": "Variación relativa"
+  },
+  {
     "clave": "api.categoria.area_quemada_detectada.1",
     "es": "Severidad moderada (−2,5 a −4,5 dB)"
   },

@@ -49,8 +49,27 @@ export const COLORES_CATEGORIA: Record<string, ColorCategoria[]> = {
 /** Lista fija de §4 para una variable categórica desconocida: por posición, nunca una casilla vacía. */
 export const COLORES_RESPALDO: string[] = ['#4f8fc4', '#e0773a', '#5fc39c', '#9a3412', '#8fc0e6', '#efa04a']
 
-/** Colores de las `n` categorías de `variable`; si no se conoce, la lista de respaldo (cíclica). */
-export function coloresDeCategorias(variable: string, n: number): ColorCategoria[] {
+/**
+ * Colores por ETIQUETA para las variables cuyo significado depende del sitio: la `mascara` del equipo es
+ * agua/no agua en un embalse y quemado/no quemado en un incendio. Lo de interés toma su rampa (agua o fuego);
+ * el fondo («no agua», «no quemado») es transparente, con el borde tenue de la leyenda.
+ */
+export const COLORES_POR_ETIQUETA: Record<string, Record<string, ColorCategoria>> = {
+  mascara: { 'agua': RAMPAS.agua[3], 'no agua': null, 'quemado': RAMPAS.fuego[2], 'no quemado': null },
+  // Cambio entre dos máscaras (embalse o incendio): el agua en la rampa agua, lo quemado en la fuego; el fondo transparente.
+  cambio: {
+    'Agua persistente': RAMPAS.agua[2], 'Agua ganada': RAMPAS.agua[4], 'Agua perdida': RAMPAS.fuego[2], 'Sin agua': null,
+    'Quemado en ambas': RAMPAS.fuego[1], 'Quemado nuevo': RAMPAS.fuego[3], 'Recuperado': '#5fc39c', 'Sin quemar': null,
+  },
+}
+
+/** Colores de las `n` categorías de `variable`; si no se conoce, la lista de respaldo (cíclica).
+ * Con `etiquetas`, una variable de `COLORES_POR_ETIQUETA` toma el color de cada etiqueta. */
+export function coloresDeCategorias(variable: string, n: number, etiquetas?: readonly string[]): ColorCategoria[] {
+  const porEtiqueta = COLORES_POR_ETIQUETA[variable]
+  if (porEtiqueta && etiquetas && etiquetas.length === n && etiquetas.every((e) => e in porEtiqueta)) {
+    return etiquetas.map((e) => porEtiqueta[e])
+  }
   const conocidos = COLORES_CATEGORIA[variable]
   if (conocidos && conocidos.length >= n) return conocidos.slice(0, n)
   return Array.from({ length: n }, (_, i) => COLORES_RESPALDO[i % COLORES_RESPALDO.length])

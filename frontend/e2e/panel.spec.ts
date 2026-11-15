@@ -25,8 +25,8 @@ for (const [idioma, observa] of [['es', 'Qué observa el radar'], ['en', 'What t
     const mapa = page.locator('.vista-mapa__mapa')
     await expect(mapa).toBeVisible()
     const caja = await mapa.boundingBox()
-    // Medido a 390x844 tras T2: la subnavegación de Explorar suma ~44 px (es: 510, en: 541); T6 rehace el encabezado.
-    expect(caja!.y).toBeLessThan(580)
+    // Medido a 390x844 tras T8 (tipo y escenario en una línea, «qué ves» bajo el mapa): ~380 px con un hallazgo de tres líneas.
+    expect(caja!.y).toBeLessThan(440)
     expect(caja!.y + caja!.height).toBeGreaterThan(844)
     // No se pierde información: la línea del observable pasa a la tarjeta de ayuda, bajo el mapa.
     const observable = page.locator('.ayuda-radar__observable')

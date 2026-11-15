@@ -71,7 +71,7 @@ export function temporadasLluviosas(ctx: Contexto | null | undefined, t0: number
 /** Rampa y colores de categoría de una capa de la API (códigos directos: k → color k−1). */
 export function estiloDeCapa(capa: CapaDto): { rampa: NombreRampa; categorias?: readonly ColorCategoria[] } {
   if (capa.paleta === 'categorias') {
-    return { rampa: 'gris', categorias: coloresDeCategorias(capa.variable, capa.leyenda?.length ?? 0) }
+    return { rampa: 'gris', categorias: coloresDeCategorias(capa.variable, capa.leyenda?.length ?? 0, capa.leyenda?.map(([e]) => e)) }
   }
   return { rampa: rampaDePaleta(capa.paleta, capa.variable) ?? 'gris' }
 }
