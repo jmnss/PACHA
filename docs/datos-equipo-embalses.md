@@ -123,3 +123,48 @@ Daule-Peripa 116,02 km² (26 jun) y 113,42 km² (12 oct). Derivados de `embalses
 1. El **nombre de cada archivo `.h5`** usado (Casitagua 13 y 25 sep; Mazar 13 ago y 29 oct; Daule-Peripa 26 jun y 12 oct),
    de donde salen granulo, colección, instante UTC, frecuencia y madurez; o confirmar uno de los candidatos de abajo.
 2. Confirmar que `Daule_Stack1.tif` y `masacara1.tif` son del 12 de octubre.
+
+## Granulos candidatos (por confirmar con el equipo)
+
+Consulta de **solo metadatos** al catálogo de ASF el 2026-11-15 (`scripts/granulos_candidatos.py`, sin cuenta ni descargas): GCOV adquiridos ese día UTC cuya huella cubre la caja del sitio. **No son la procedencia**: el equipo debe confirmar cuál granulo usó (el nombre del `.h5` que abrió); hasta entonces el manifiesto no se toca. Los de la fecha 2026-09-13 de Casitagua con una sola polarización (HH) no pueden ser el stack HH/HV del equipo.
+
+**casitagua · 2026-09-13**
+
+| Granulo (id) | Instante UTC | Colección | Frecuencias (pol.) | Madurez | % de la caja |
+|---|---|---|---|---|---|
+| `NISAR_L2_PR_GCOV_030_112_D_088_2005_SHSH_M_20260913T233837_20260913T233911_P05023_N_F_J_001` | 2026-09-13T23:38:37Z | NISAR_L2_GCOV_PROVISIONAL_V1 | A: HH; B: HH | PROVISIONAL | 100 % |
+| `NISAR_L2_PR_GCOV_030_112_D_088_4005_DHDH_A_20260913T233907_20260913T233911_P05023_N_P_J_001` | 2026-09-13T23:39:07Z | NISAR_L2_GCOV_PROVISIONAL_V1 | A: HH+HV; B: HH+HV | PROVISIONAL | 87 % |
+| `NISAR_L2_PR_GCOV_030_112_D_089_4005_DHDH_A_20260913T233907_20260913T233945_P05023_N_F_J_001` | 2026-09-13T23:39:07Z | NISAR_L2_GCOV_PROVISIONAL_V1 | A: HH+HV; B: HH+HV | PROVISIONAL | 87 % |
+
+**casitagua · 2026-09-25**
+
+| Granulo (id) | Instante UTC | Colección | Frecuencias (pol.) | Madurez | % de la caja |
+|---|---|---|---|---|---|
+| `NISAR_L2_PR_GCOV_031_112_D_088_2005_DHDH_M_20260925T233837_20260925T233911_P05023_N_F_J_001` | 2026-09-25T23:38:37Z | NISAR_L2_GCOV_PROVISIONAL_V1 | A: HH+HV; B: HH+HV | PROVISIONAL | 100 % |
+| `NISAR_L2_PR_GCOV_031_112_D_088_4005_DHDH_A_20260925T233907_20260925T233911_P05023_N_P_J_001` | 2026-09-25T23:39:07Z | NISAR_L2_GCOV_PROVISIONAL_V1 | A: HH+HV; B: HH+HV | PROVISIONAL | 88 % |
+| `NISAR_L2_PR_GCOV_031_112_D_089_4005_DHDH_A_20260925T233907_20260925T233945_P05023_N_F_J_001` | 2026-09-25T23:39:07Z | NISAR_L2_GCOV_PROVISIONAL_V1 | A: HH+HV; B: HH+HV | PROVISIONAL | 88 % |
+
+**mazar · 2026-08-13**
+
+| Granulo (id) | Instante UTC | Colección | Frecuencias (pol.) | Madurez | % de la caja |
+|---|---|---|---|---|---|
+| `NISAR_L2_PR_GCOV_028_011_D_090_4005_DHDH_A_20260813T233124_20260813T233159_P05023_N_F_J_001` | 2026-08-13T23:31:24Z | NISAR_L2_GCOV_PROVISIONAL_V1 | A: HH+HV; B: HH+HV | PROVISIONAL | 100 % |
+| `NISAR_L2_PR_GCOV_028_003_A_176_4005_DHDH_A_20260813T110112_20260813T110148_P05023_N_F_J_001` | 2026-08-13T11:01:12Z | NISAR_L2_GCOV_PROVISIONAL_V1 | A: HH+HV; B: HH+HV | PROVISIONAL | 77 % |
+
+**mazar · 2026-10-29**
+
+| Granulo (id) | Instante UTC | Colección | Frecuencias (pol.) | Madurez | % de la caja |
+|---|---|---|---|---|---|
+| `NISAR_L2_PR_GCOV_034_075_A_176_4005_DHDH_A_20261029T105252_20261029T105329_P05036_N_F_J_001` | 2026-10-29T10:52:52Z | NISAR_L2_GCOV_V1 | A: HH+HV; B: HH+HV | VALIDATED | 100 % |
+
+**daule-peripa · 2026-06-26**
+
+| Granulo (id) | Instante UTC | Colección | Frecuencias (pol.) | Madurez | % de la caja |
+|---|---|---|---|---|---|
+| `NISAR_L2_PR_GCOV_024_004_A_001_4005_DHDH_A_20260626T110150_20260626T110224_P05023_N_F_J_001` | 2026-06-26T11:01:50Z | NISAR_L2_GCOV_PROVISIONAL_V1 | A: HH+HV; B: HH+HV | PROVISIONAL | 100 % |
+
+**daule-peripa · 2026-10-12**
+
+| Granulo (id) | Instante UTC | Colección | Frecuencias (pol.) | Madurez | % de la caja |
+|---|---|---|---|---|---|
+| `NISAR_L2_PR_GCOV_033_004_A_001_4005_DHDH_A_20261012T110147_20261012T110222_P05023_N_F_J_001` | 2026-10-12T11:01:47Z | NISAR_L2_GCOV_PROVISIONAL_V1 | A: HH+HV; B: HH+HV | PROVISIONAL | 100 % |
