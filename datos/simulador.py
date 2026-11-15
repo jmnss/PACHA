@@ -100,12 +100,19 @@ _CONTROLES = {
 _CONTROLES = {k: (v + [_SEMILLA] if k in desastres.DESASTRES else v) for k, v in _CONTROLES.items()}
 
 
+# Lugares de las historias del equipo. Casitagua: centro del `bbox` de data/incendios/casitagua/sitio.json.
+MUNDOS_EQUIPO = {
+    "Cerro Casitagua": (-0.03, -78.52, 20.0, "incendio",
+                        "Cerro al norte de Quito, junto a la línea equinoccial. El incendio que se simula aquí es un ejemplo."),
+}
+
+
 def catalogo() -> dict:
     return {
         "herramientas": [dict(id=k, icono=icono, nombre=nombre, controles=_CONTROLES[k])
                          for k, (icono, nombre) in desastres.HERRAMIENTAS.items()],
         "mundos": [dict(nombre=n, lat=lat, lon=lon, extension_km=int(ext), herramienta=h, descripcion=d)
-                   for n, (lat, lon, ext, h, d) in desastres.ESCENARIOS.items()],
+                   for n, (lat, lon, ext, h, d) in {**MUNDOS_EQUIPO, **desastres.ESCENARIOS}.items()],
         "volcanes": [dict(nombre=n, lat=la, lon=lo) for n, la, lo in desastres.VOLCANES],
         "extensiones_km": list(EXTENSIONES_KM),
     }
@@ -295,7 +302,34 @@ def _metrica_evento(etiqueta: str, valor: Any, ayuda: str) -> dict:
     # El número puede ir tras una sigla («Mw 7,0», «MMI 7,4»): el cliente lo reescribe a su manera.
     numero = numero_de(texto_valor)
     valores = {"valor": numero} if numero is not None else None
-    return dict(etiqueta=etiqueta, valor=texto_valor, ayuda=ayuda, clave_texto=clave, valores_texto=valores)
+    return dict(etiqueta=etiqueta, valor=texto_valor, ayuda=ayuda, clave_texto=clave, valores_texto=valores,
+                **_lectura(slug(etiqueta), numero))
+
+
+CANCHA_M2 = 105 * 68   # cancha de fútbol de medidas FIFA, para dar escala a un área
+# Umbrales de la escala de Mercalli modificada (USGS): VII = daño considerable en lo mal construido; VIII = en lo común.
+_UMBRALES_MMI = ((4.0, "debil"), (7.0, "leve"), (8.0, "fuerte"), (float("inf"), "grave"))
+
+
+def _lectura(id_metrica: str, numero: float | None) -> dict:
+    """Frase llana que acompaña a una cifra («MMI 7,4: daño fuerte en construcciones vulnerables»).
+    Devuelve `lectura` (español) y `lectura_texto` (clave para traducir), o nada si la cifra no tiene frase."""
+    valores: dict = {}
+    decimales: dict = {}
+    if id_metrica == "intensidad_maxima" and numero is not None:
+        nivel = next(n for limite, n in _UMBRALES_MMI if numero < limite)
+        clave, valores, decimales = f"api.sim.lectura.intensidad_{nivel}", {"valor": numero}, {"valor": 1}
+    elif id_metrica in ("area_quemada", "area_inundada") and numero is not None:
+        canchas = max(1, round(numero * 1e6 / CANCHA_M2))
+        clave, valores, decimales = f"api.sim.lectura.{id_metrica}", {"canchas": canchas}, {"canchas": 0}
+    else:
+        clave = f"api.sim.lectura.{id_metrica}"
+    if clave not in REGISTRO:
+        return {}
+    texto = REGISTRO[clave]
+    for k, v in valores.items():
+        texto = texto.replace(f"{{{k}}}", f"{v:,.{decimales[k]}f}".replace(",", " ").replace(".", ","))
+    return dict(lectura=texto, lectura_texto=dict(clave_texto=clave, valores_texto=valores, decimales_texto=decimales))
 
 
 def _clave_titulo(herramienta: str, titulo: str, lat: float, lon: float) -> tuple[str | None, dict | None]:

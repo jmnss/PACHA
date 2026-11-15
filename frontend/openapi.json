@@ -1687,6 +1687,27 @@
             "title": "Etiqueta",
             "type": "string"
           },
+          "lectura": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lectura"
+          },
+          "lectura_texto": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TextoClave"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "valor": {
             "title": "Valor",
             "type": "string"

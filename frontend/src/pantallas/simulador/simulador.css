@@ -1,30 +1,138 @@
-/* Simulador de eventos (docs/diseno.md). Solo tokens. */
-.simulador { display: grid; grid-template-columns: minmax(0, 1fr) var(--w-columna); gap: var(--gap); align-items: start; }
-.simulador__principal, .simulador__lado { display: flex; flex-direction: column; gap: var(--gap); min-width: 0; }
-@media (max-width: 1099px) { .simulador { grid-template-columns: minmax(0, 1fr); } }
+/* Simulador en tres pasos (docs/diseno.md v2, docs/propuestas/d-mezcla/simulador.html). Solo tokens. */
 
+/* ---------- Indicador de pasos ---------- */
+.pasos__lista { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); align-items: center; }
+.pasos__paso { display: flex; align-items: center; gap: var(--space-2); font-size: var(--fs-14); color: var(--secondary); min-width: 0; }
+.pasos__numero {
+  flex: none; display: inline-grid; place-items: center; width: var(--space-5); height: var(--space-5);
+  border-radius: var(--radius-redondo); border: var(--borde-control) solid var(--control); font-size: var(--fs-12); font-weight: 600;
+}
+.pasos__paso--hecho .pasos__numero { background: var(--tinta); border-color: var(--tinta); color: var(--arcilla); }
+.pasos__paso--activo { color: var(--text); font-weight: 600; }
+.pasos__paso--activo .pasos__numero { background: var(--ocre); border-color: var(--ocre-borde); color: var(--tinta); }
+.pasos__rotulo { color: var(--secondary); font-weight: 400; }
+.pasos__paso--activo .pasos__rotulo { color: var(--text); font-weight: 600; }
+.pasos__cambiar {
+  font: inherit; color: var(--text); background: none; border: 0; padding: 0; min-height: var(--size-objetivo); cursor: pointer;
+  text-decoration: underline; text-underline-offset: var(--offset-subrayado); text-decoration-color: var(--control);
+}
+.pasos__cambiar:hover { text-decoration-color: var(--text); }
+.pasos__cambiar:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+
+/* ---------- Paso 1: tarjetas de fenómeno ---------- */
+.fenomenos { display: flex; flex-direction: column; gap: var(--space-4); }
+.fenomenos__titulo { margin: 0; font-family: var(--font-serif); font-size: var(--fs-22); line-height: var(--lh-28); font-weight: 500; }
+.fenomenos__lista { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--w-selector-min), 1fr)); gap: var(--space-4); }
+.fenomeno {
+  width: 100%; height: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); text-align: left;
+  padding: var(--space-5); background: var(--surface); color: var(--text); font: inherit; cursor: pointer;
+  border: 1px solid var(--border); border-radius: var(--radius-card); transition: border-color var(--t-respuesta) ease-out;
+}
+.fenomeno:hover { border-color: var(--tinta-2); }
+.fenomeno:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+.icono-fenomeno { color: var(--cacao); }
+.fenomeno__nombre { font-family: var(--font-serif); font-size: var(--fs-21); line-height: var(--lh-28); font-weight: 600; }
+.fenomeno__desc { color: var(--secondary); font-size: var(--fs-14); line-height: var(--lh-20); }
+
+/* ---------- Pasos 2 y 3: mapa a pantalla + panel ---------- */
+.sim { display: grid; grid-template-columns: minmax(0, 1fr) var(--w-columna); gap: var(--gap); align-items: start; }
+@media (max-width: 1099px) { .sim { grid-template-columns: minmax(0, 1fr); } }
+.sim__mapa {
+  min-width: 0; display: flex; flex-direction: column; gap: var(--space-3);
+  padding: var(--space-4); background: var(--mapa-fondo); border-radius: var(--radius-card);
+}
+.sim__pista { margin: 0; color: var(--secondary); font-size: var(--fs-13); line-height: var(--lh-20); }
+.sim__panel { position: sticky; top: var(--space-4); min-width: 0; max-height: calc(100vh - var(--space-6)); overflow-y: auto; border-radius: var(--radius-card); }
+.sim__detalle { display: flex; flex-direction: column; gap: var(--gap); scroll-margin-top: var(--space-6); }
+
+/* Hoja con margen: coordenadas reales arriba y a la izquierda, el tablero dentro. */
+.carta { --w-margen: 52px; --h-margen: 22px; position: relative; padding: var(--h-margen) 0 0 var(--w-margen); width: min(100%, calc(100vh - 300px + var(--w-margen))); margin-inline: auto; }
+.carta__hoja { border: 1px solid var(--mapa-control); border-radius: var(--radius-chip); overflow: hidden; }
+.carta__hoja .tablero { border-radius: 0; max-height: none; }
+.carta__margen { position: absolute; color: var(--mapa-texto-2); font-size: var(--fs-12); line-height: var(--lh-16); }
+.carta__margen--arriba { top: 0; left: var(--w-margen); right: 0; height: var(--h-margen); }
+.carta__margen--izquierda { top: var(--h-margen); bottom: 0; left: 0; width: var(--w-margen); }
+.carta__marca { position: absolute; white-space: nowrap; }
+.carta__margen--arriba .carta__marca { transform: translateX(-50%); }
+.carta__margen--izquierda .carta__marca { right: var(--space-2); transform: translateY(-50%); }
+
+/* Panel como pila de capas finas: resultado (capa nueva), lugar, ajustes y «Avanzado» (capa honda). */
+.panel-ajustes { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); overflow: hidden; }
+.panel-ajustes__capa { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-4) var(--card-padding); border-top: 1px solid var(--filete); }
+.panel-ajustes__capa:first-child { border-top: 0; }
+.panel-ajustes__avanzado { background: var(--capa-honda); color: var(--capa-honda-texto); }
+.panel-ajustes__avanzado > summary {
+  cursor: pointer; padding: var(--space-3) var(--card-padding); min-height: var(--h-touch); display: flex; align-items: center;
+  font-weight: 600; font-size: var(--fs-14);
+}
+.panel-ajustes__avanzado > summary:focus-visible { outline: 2px solid var(--ocre); outline-offset: -4px; }
+.panel-ajustes__hondo {
+  --surface: var(--capa-honda); --raised: var(--capa-honda-campo); --ground: var(--capa-honda-campo);
+  --border: var(--capa-honda-borde); --control: var(--capa-honda-borde);
+  --text: var(--capa-honda-texto); --secondary: var(--capa-honda-texto-2); --muted: var(--capa-honda-texto-2);
+  --accent: var(--ocre); --focus: var(--ocre); --focus-ring: 2px solid var(--ocre);
+  color: var(--text); display: flex; flex-direction: column; gap: var(--space-4); padding: 0 var(--card-padding) var(--space-4);
+}
+.panel-ajustes__hondo .boton--secundario { color: var(--text); border-color: var(--control); }
+.panel-ajustes__aviso { margin: 0; padding: var(--space-3) var(--card-padding) 0; color: var(--warning); font-size: var(--fs-13); line-height: var(--lh-20); }
+.panel-ajustes__acciones { position: sticky; bottom: 0; padding: var(--space-4) var(--card-padding); background: var(--surface); border-top: 1px solid var(--filete); }
+.panel-ajustes__acciones .boton { width: 100%; }
+
+.capa-resultado { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-4) var(--card-padding); background: var(--capa-nueva); }
+.cajetin { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); flex-wrap: wrap; padding-bottom: var(--space-2); border-bottom: 1px solid var(--tinta-2); }
+.cajetin__titulo { margin: 0; font-family: var(--font-serif); font-size: var(--fs-21); line-height: var(--lh-28); font-weight: 600; }
+.capa-resultado__lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.capa-resultado__lista li { display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--fs-14); line-height: var(--lh-20); }
+.capa-resultado__cifra { font-weight: 600; }
+.capa-resultado__lectura { color: var(--secondary); }
+.capa-resultado__comparar { margin: 0; display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--fs-14); }
+.capa-resultado__comparar a { color: var(--laguna-tinta); font-weight: 600; }
+.capa-resultado__real { color: var(--cacao); font-size: var(--fs-12); }
+.capa-resultado__detalle {
+  align-self: flex-start; font: inherit; font-size: var(--fs-13); color: var(--text); background: none; border: 0; padding: 0;
+  min-height: var(--size-objetivo); cursor: pointer; text-decoration: underline; text-underline-offset: var(--offset-subrayado);
+}
+.capa-resultado__detalle:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+.hoja .capa-resultado { padding: 0; background: none; }
+.hoja .cajetin__titulo { display: none; } /* la hoja ya lleva el título «Resultado» */
+.hoja .cajetin { justify-content: flex-end; }
+.hoja .panel-ajustes { border: 0; border-radius: 0; }
+
+/* Móvil: el mapa primero; «Ajustes» y «Desatar» fijos sobre la barra inferior. */
+.sim__barra { display: none; }
+@media (max-width: 699px) {
+  .sim__mapa { margin-inline: calc(-1 * var(--space-4)); border-radius: 0; padding: var(--space-3) var(--space-4); }
+  .carta { --w-margen: 44px; width: 100%; }
+  .sim__barra {
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--space-3);
+    position: fixed; left: 0; right: 0; bottom: var(--h-barra-inferior); z-index: var(--z-flotante);
+    padding: var(--space-3) var(--space-4); background: var(--surface); border-top: 1px solid var(--border);
+  }
+  .sim__barra .boton { min-height: var(--h-touch); width: 100%; }
+  .sim__detalle { padding-bottom: calc(var(--h-touch) + var(--space-6)); }
+  .sim { padding-bottom: calc(var(--h-touch) + var(--space-6)); }
+  .pasos__lista { gap: var(--space-2) var(--space-4); }
+  .pasos__paso { font-size: var(--fs-13); }
+}
+
+/* ---------- Controles (catálogo de la API) ---------- */
 .simulador__fila { display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: flex-end; }
-.simulador__fila .campo { min-width: var(--w-selector-min); flex: 1; }
+.simulador__fila .campo { min-width: 0; flex: 1 1 var(--w-fecha-min); }
 .simulador__acciones { display: flex; gap: var(--space-2); flex-wrap: wrap; }
-.simulador__chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); color: var(--secondary); font-size: var(--fs-13); }
-.simulador__nota { margin: 0; color: var(--muted); font-size: var(--fs-13); line-height: var(--lh-16); }
-.simulador__aviso { margin: 0; color: var(--warning); font-size: var(--fs-13); }
-
+.simulador__nota { margin: 0; color: var(--muted); font-size: var(--fs-13); line-height: var(--lh-20); }
 .panel-herramienta { display: flex; flex-direction: column; gap: var(--space-4); }
 
 /* Tablero: relieve y cuadro de la animación apilados; las celdas se ven como píxeles. */
-.tablero { position: relative; width: 100%; aspect-ratio: 1; max-height: var(--h-mapa-max); margin-inline: auto; cursor: crosshair; border-radius: var(--radius-card); overflow: hidden; background: var(--ground); touch-action: manipulation; }
+.tablero { position: relative; width: 100%; aspect-ratio: 1; cursor: crosshair; overflow: hidden; background: var(--ground); touch-action: manipulation; }
 .tablero:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
 .tablero__capa { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; user-select: none; pointer-events: none; }
 .tablero__marca { position: absolute; transform: translate(-50%, -50%); padding: 0 var(--space-1); font-size: var(--fs-12); line-height: var(--lh-16); color: var(--text); background: color-mix(in srgb, var(--surface) 70%, transparent); border-radius: var(--radius-chip); white-space: nowrap; pointer-events: none; }
 .tablero__marca--volcan { color: var(--warning); }
 .tablero__evento { position: absolute; width: var(--size-thumb); height: var(--size-thumb); transform: translate(-50%, -50%); border-radius: 50%; border: var(--size-2) solid var(--text); box-sizing: border-box; pointer-events: none; }
-.tablero__cursor { position: absolute; border: var(--size-2) solid var(--accent); min-width: var(--size-thumb); min-height: var(--size-thumb); box-sizing: border-box; pointer-events: none; }
+.tablero__cursor { position: absolute; border: var(--size-2) solid var(--ocre); min-width: var(--size-thumb); min-height: var(--size-thumb); box-sizing: border-box; pointer-events: none; }
 
 .reproductor-evento { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
-.reproductor-evento .campo { flex: 1; min-width: var(--w-selector-min); }
-@media (min-width: 700px) { .simulador__chips li + li::before { content: '|'; color: var(--control); margin-right: var(--space-4); } }
-@media (max-width: 699px) { .simulador__chips { flex-direction: column; } }
+.reproductor-evento .campo { flex: 1; min-width: var(--w-kpi-min); }
 
 .rejilla-paneles { display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--w-fecha-min), 1fr)); gap: var(--gap); }
 .panel-radar { margin: 0; display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }

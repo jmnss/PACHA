@@ -88,6 +88,8 @@ class MetricaEventoDto(BaseModel):
     ayuda: str
     clave_texto: str | None = None  # clave base (`api.sim.metrica.<slug>`); el cliente añade `.etiqueta`
     valores_texto: dict[str, float | int | str] | None = None   # {"valor": número} si el valor es numérico
+    lectura: str | None = None          # frase llana en español que acompaña a la cifra
+    lectura_texto: TextoClave | None = None   # la misma frase con su clave para traducirla
 
 
 class TablaEventoDto(BaseModel):

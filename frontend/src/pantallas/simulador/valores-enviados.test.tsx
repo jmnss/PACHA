@@ -32,7 +32,10 @@ describe('Simulador · valores enviados', () => {
       </QueryClientProvider>,
     )
     fireEvent.click(screen.getByRole('button', { name: 'celda' }))
-    const ultima = peticiones.filter(Boolean).at(-1)
+    fireEvent.click(screen.getByRole('button', { name: 'Desatar' }))
+    const enviadas = peticiones.filter(Boolean)
+    const ultima = enviadas[enviadas.length - 1]
+    expect(ultima?.celda).toEqual([10, 20])
     expect(ultima?.parametros).toMatchObject({ mw: 7.8 })
   })
 })
