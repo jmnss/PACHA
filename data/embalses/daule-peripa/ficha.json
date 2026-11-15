@@ -1,0 +1,39 @@
+{
+ "version": 1,
+ "datos": [
+  {
+   "id": "volumen_embalse",
+   "valor": 6000,
+   "unidad": "hm³",
+   "fuente": {
+    "nombre": "El Universo",
+    "url": "https://www.eluniverso.com/noticias/economia/hidroelectrica-marcel-laniado-de-wind-mantenimiento-programado-celec-ecuador-nota/",
+    "cita": "6.000 hectómetros cúbicos",
+    "consulta": "2026-11-15"
+   }
+  },
+  {
+   "id": "potencia_central",
+   "valor": 213,
+   "unidad": "MW",
+   "nombre_propio": "Marcel Laniado de Wind",
+   "fuente": {
+    "nombre": "El Universo",
+    "url": "https://www.eluniverso.com/noticias/economia/hidroelectrica-marcel-laniado-de-wind-mantenimiento-programado-celec-ecuador-nota/",
+    "cita": "tiene tres unidades, cada una con una capacidad de 71 MW",
+    "consulta": "2026-11-15"
+   }
+  },
+  {
+   "id": "unidades",
+   "valor": 3,
+   "unidad": "",
+   "fuente": {
+    "nombre": "El Universo",
+    "url": "https://www.eluniverso.com/noticias/economia/hidroelectrica-marcel-laniado-de-wind-mantenimiento-programado-celec-ecuador-nota/",
+    "cita": "tiene tres unidades, cada una con una capacidad de 71 MW",
+    "consulta": "2026-11-15"
+   }
+  }
+ ]
+}

@@ -7,7 +7,6 @@ import pytest
 from datos.contrato import EntradaNoValida
 from datos.proveedores.derivados import ProveedorDerivados
 from datos.proveedores.mixto import ProveedorMixto
-from datos.proveedores.demo import ProveedorDemostracion
 from tests.datos.derivados_prueba import BBOX, FORMA, LEYENDAS, TRANSFORM, procedencia_prueba, rectangulo_lonlat
 
 ID = "incendio-casitagua"
@@ -29,14 +28,14 @@ def _sitio(raiz, completa_despues=True):
     km2 = abs(TRANSFORM[0] * TRANSFORM[4]) / 1e6
     p_d = procedencia_prueba("2026-09-25")
     if not completa_despues:
-        p_d["granulos"] = []
+        p_d["producto"] = None
     filas = [
         {"fecha": "2026-09-13", "archivo": "20260913.npz", "mascara": False, "instante": "2026-09-13T11:30:00Z",
          "superficie_km2": {"quemado": None}, "procedencia": procedencia_prueba("2026-09-13"),
          "procedencia_completa": True, "faltan": [], "stack": rangos, "delta_rfdi": None},
         {"fecha": "2026-09-25", "archivo": "20260925.npz", "mascara": True, "instante": "2026-09-25T11:30:00Z",
          "superficie_km2": {"quemado": round(float((m == 1).sum()) * km2, 4)}, "procedencia": p_d,
-         "procedencia_completa": completa_despues, "faltan": [] if completa_despues else ["granulos"],
+         "procedencia_completa": completa_despues, "faltan": [] if completa_despues else ["producto"],
          "stack": rangos, "delta_rfdi": [-1.0, 1.0]}]
     (c / "contorno.geojson").write_text(json.dumps(rectangulo_lonlat(-78.75, -2.57, -78.72, -2.54)))
     (c / "sitio.json").write_text(json.dumps({
@@ -97,10 +96,10 @@ def test_procedencia_incompleta_no_se_muestra(tmp_path):
         d.capa(ID, "20260925", "delta_rfdi", None)
 
 
-def test_sin_ninguna_fecha_completa_mixto_sirve_sustituto(tmp_path):
+def test_sin_ninguna_fecha_completa_mixto_omite_el_sitio(tmp_path):
     _sitio(tmp_path, completa_despues=False)
     j = json.loads((tmp_path / "incendios" / "casitagua" / "sitio.json").read_text())
     j["fechas"] = j["fechas"][1:]
     (tmp_path / "incendios" / "casitagua" / "sitio.json").write_text(json.dumps(j))
     assert ID not in {e.id for e in ProveedorDerivados(tmp_path).escenarios()}
-    assert ProveedorMixto(tmp_path, ProveedorDemostracion()).escenario(ID).origen.tipo == "sintetico"
+    assert ProveedorMixto(tmp_path).escenarios() == []   # sin sustitutos sintéticos (decisión 2026-11-15)

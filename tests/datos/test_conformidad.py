@@ -3,7 +3,7 @@ import math
 
 import pytest
 
-from datos.contrato import CapaRaster, CapacidadNoDisponible, Medicion, ProveedorDatos, ResultadoCambio
+from datos.contrato import CapaRaster, CapacidadNoDisponible, EntradaNoValida, Medicion, ProveedorDatos, ResultadoCambio
 from datos.proveedores.demo import ProveedorDemostracion
 from datos.proveedores.derivados import ProveedorDerivados
 from datos.proveedores.mixto import ProveedorMixto
@@ -34,6 +34,16 @@ def _casos(proveedor):
         yield e, antes, despues, pol
 
 
+def _capa_antes(proveedor, e, antes, pol) -> CapaRaster:
+    """Primera variable del escenario disponible en «antes» (en un incendio real, «antes» no trae máscara)."""
+    for v in e.variables:
+        try:
+            return proveedor.capa(e.id, antes, v, pol)
+        except EntradaNoValida:
+            continue
+    raise AssertionError(f"{e.id}: ninguna variable disponible en {antes}")
+
+
 def _capas(r: ResultadoCambio) -> list[CapaRaster]:
     return [c for c in (r.antes, r.despues, r.cambio, r.clasificacion, *r.capas_extra) if c is not None]
 
@@ -41,7 +51,7 @@ def _capas(r: ResultadoCambio) -> list[CapaRaster]:
 def _origenes(proveedor, e, antes, despues, pol):
     """Todos los orígenes que el proveedor devuelve para un escenario."""
     r = proveedor.cambio(e.id, antes, despues, pol)
-    out = [e.origen, proveedor.capa(e.id, antes, e.variables[0], pol).origen, r.origen]
+    out = [e.origen, _capa_antes(proveedor, e, antes, pol).origen, r.origen]
     out += [c.origen for c in _capas(r)] + [t.origen for t in r.tablas] + [s.origen for s in r.series]
     if r.vectores is not None:
         out.append(r.vectores.origen)
@@ -73,7 +83,7 @@ def test_cumple_el_protocolo(proveedor):
 def test_cada_capa_tiene_origen(proveedor):
     for e, antes, despues, pol in _casos(proveedor):
         assert e.origen is not None
-        capa = proveedor.capa(e.id, antes, e.variables[0], pol)
+        capa = _capa_antes(proveedor, e, antes, pol)
         assert capa.origen is not None and capa.origen.fuente
         r = proveedor.cambio(e.id, antes, despues, pol)
         assert r.origen is not None
@@ -144,7 +154,7 @@ def test_sinteticos_siempre_marcados(proveedor):
         pytest.skip("solo aplica al demo")
     for e, antes, despues, pol in _casos(proveedor):
         assert e.origen.tipo == "sintetico"
-        assert proveedor.capa(e.id, antes, e.variables[0], pol).origen.tipo == "sintetico"
+        assert _capa_antes(proveedor, e, antes, pol).origen.tipo == "sintetico"
         r = proveedor.cambio(e.id, antes, despues, pol)
         assert r.origen.tipo == "sintetico"
         for c in _capas(r):

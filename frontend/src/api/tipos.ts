@@ -4,6 +4,26 @@
  */
 
 export interface paths {
+    "/api/comparacion/embalses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Comparacion Embalses
+         * @description Mazar frente a Daule-Peripa: la misma métrica en cada embalse y el desfase entre sus fechas.
+         */
+        get: operations["comparacion_embalses"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/contexto": {
         parameters: {
             query?: never;
@@ -117,6 +137,26 @@ export interface paths {
         put?: never;
         /** Medicion */
         post: operations["medicion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/escenarios/{id}/resumen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Resumen
+         * @description Resumen científico de un sitio del equipo: superficies, retrodispersión, ΔRFDI, ficha con fuentes y lecturas.
+         */
+        get: operations["resumen"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -321,6 +361,13 @@ export interface components {
         Adquisicion: {
             /** Direccion Orbital */
             direccion_orbital?: string | null;
+            /** Fecha */
+            fecha?: string | null;
+            /**
+             * Hora Conocida
+             * @default true
+             */
+            hora_conocida: boolean;
             /** Id */
             id: string;
             /**
@@ -475,6 +522,21 @@ export interface components {
             nombre: string;
         };
         /**
+         * ComparacionEmbalses
+         * @description Misma métrica (superficie de agua, primera → última fecha) en cada embalse, con el desfase de fechas.
+         */
+        ComparacionEmbalses: {
+            /** Dias Entre Antes */
+            dias_entre_antes?: number | null;
+            /** Dias Entre Despues */
+            dias_entre_despues?: number | null;
+            /** Lecturas */
+            lecturas: components["schemas"]["Lectura"][];
+            origen: components["schemas"]["Origen"];
+            /** Sitios */
+            sitios: components["schemas"]["SitioComparado"][];
+        };
+        /**
          * ContextoDto
          * @description Clima, temporada y suelo de un punto. Es contexto real complementario (NASA POWER y
          *     geoBoundaries): NO es una observación de NISAR y su `origen.tipo="real"` no activa la banda
@@ -568,6 +630,25 @@ export interface components {
             /** Unidad */
             unidad: string;
         };
+        /**
+         * DatoFicha
+         * @description Un dato del sitio con su fuente publicada. Etiqueta traducible: `api.ficha.<id>.etiqueta`.
+         */
+        DatoFicha: {
+            /** Clave Texto */
+            clave_texto: string;
+            /** Etiqueta */
+            etiqueta: string;
+            fuente: components["schemas"]["FuenteFicha"];
+            /** Id */
+            id: string;
+            /** Nombre Propio */
+            nombre_propio?: string | null;
+            /** Unidad */
+            unidad: string;
+            /** Valor */
+            valor: number | string;
+        };
         /** ErrorDto */
         ErrorDto: {
             /** Clave Texto */
@@ -628,6 +709,24 @@ export interface components {
             /** Verificado */
             verificado: boolean;
         };
+        /**
+         * EstadisticaDb
+         * @description Retrodispersión (γ⁰, dB) de una polarización en una fecha, sobre los píxeles con dato de la escena.
+         */
+        EstadisticaDb: {
+            /** Mediana Clase Db */
+            mediana_clase_db?: number | null;
+            /** Mediana Db */
+            mediana_db: number;
+            /** Mediana Resto Db */
+            mediana_resto_db?: number | null;
+            /** P2 Db */
+            p2_db: number;
+            /** P98 Db */
+            p98_db: number;
+            /** Polarizacion */
+            polarizacion: string;
+        };
         /** EventoDto */
         EventoDto: {
             /** Capas */
@@ -681,6 +780,20 @@ export interface components {
                 [key: string]: number | string;
             } | null;
         };
+        /** FechaResumen */
+        FechaResumen: {
+            /** Adquisicion Id */
+            adquisicion_id: string;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Retrodispersion */
+            retrodispersion: components["schemas"]["EstadisticaDb"][];
+            /** Superficie Km2 */
+            superficie_km2: number | null;
+        };
         /**
          * Frase
          * @description Texto de la API con su clave: el cliente traduce `clave_texto` y rellena `{x}` con `valores_texto`.
@@ -695,6 +808,20 @@ export interface components {
             valores_texto: {
                 [key: string]: number | string;
             };
+        };
+        /** FuenteFicha */
+        FuenteFicha: {
+            /** Cita */
+            cita: string;
+            /**
+             * Consulta
+             * Format: date
+             */
+            consulta: string;
+            /** Nombre */
+            nombre: string;
+            /** Url */
+            url: string;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -749,6 +876,30 @@ export interface components {
             /** Titulo */
             titulo: string;
             titulo_frase?: components["schemas"]["Frase"] | null;
+        };
+        /**
+         * Lectura
+         * @description Frase en palabras (hipótesis). `texto` es el español; el cliente traduce por `clave_texto`.
+         */
+        Lectura: {
+            /** Clave Texto */
+            clave_texto: string;
+            /**
+             * Decimales Texto
+             * @default {}
+             */
+            decimales_texto: {
+                [key: string]: number;
+            };
+            /** Texto */
+            texto: string;
+            /**
+             * Valores Texto
+             * @default {}
+             */
+            valores_texto: {
+                [key: string]: number | string;
+            };
         };
         /** MarcaDto */
         MarcaDto: {
@@ -1065,12 +1216,17 @@ export interface components {
         /**
          * Procedencia
          * @description Procedencia de una capa real: de qué producto, granulo y pasada sale.
+         *
+         *     Lo que no se sabe se omite (nunca se inventa): al serializar, los campos vacíos (None o lista vacía) no salen.
+         *     `fecha` es la fecha de adquisición sin hora, cuando solo se conoce el día (p. ej. por el nombre del archivo).
          */
         Procedencia: {
             /** Autor */
             autor?: string | null;
             /** Coleccion */
             coleccion?: string | null;
+            /** Fecha */
+            fecha?: string | null;
             /** Fecha Adquisicion */
             fecha_adquisicion?: string | null;
             /** Fecha Proceso */
@@ -1177,6 +1333,54 @@ export interface components {
             tablas: components["schemas"]["TablaResultado"][];
             vectores: components["schemas"]["CampoVectorial"] | null;
         };
+        /**
+         * ResumenIncendio
+         * @description Área marcada por la máscara del equipo y ΔRFDI (= RFDI antes − RFDI después, definición del equipo).
+         */
+        ResumenIncendio: {
+            /** Adquisicion Id */
+            adquisicion_id: string;
+            /** Area Marcada Ha */
+            area_marcada_ha: number;
+            /** Area Marcada Km2 */
+            area_marcada_km2: number;
+            /** Delta Rfdi Diferencia */
+            delta_rfdi_diferencia: number | null;
+            /** Delta Rfdi Mediana Dentro */
+            delta_rfdi_mediana_dentro: number | null;
+            /** Delta Rfdi Mediana Fuera */
+            delta_rfdi_mediana_fuera: number | null;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+        };
+        /** ResumenSitio */
+        ResumenSitio: {
+            /** Escala Db */
+            escala_db: {
+                [key: string]: [
+                    number,
+                    number
+                ];
+            };
+            /** Escenario Id */
+            escenario_id: string;
+            /** Fechas */
+            fechas: components["schemas"]["FechaResumen"][];
+            /** Ficha */
+            ficha: components["schemas"]["DatoFicha"][];
+            /** Historia */
+            historia: string;
+            incendio?: components["schemas"]["ResumenIncendio"] | null;
+            /** Lecturas */
+            lecturas: components["schemas"]["Lectura"][];
+            /** Nombre */
+            nombre: string;
+            origen: components["schemas"]["Origen"];
+            variacion?: components["schemas"]["Variacion"] | null;
+        };
         /** Salud */
         Salud: {
             /**
@@ -1213,6 +1417,14 @@ export interface components {
             titulo: string;
             /** Unidad */
             unidad: string;
+        };
+        /** SitioComparado */
+        SitioComparado: {
+            /** Escenario Id */
+            escenario_id: string;
+            /** Nombre */
+            nombre: string;
+            variacion: components["schemas"]["Variacion"];
         };
         /** TablaEventoDto */
         TablaEventoDto: {
@@ -1311,6 +1523,33 @@ export interface components {
             /** Error Type */
             type: string;
         };
+        /** Variacion */
+        Variacion: {
+            /** Absoluta Km2 */
+            absoluta_km2: number;
+            /** Antes Id */
+            antes_id: string;
+            /** Antes Km2 */
+            antes_km2: number;
+            /** Despues Id */
+            despues_id: string;
+            /** Despues Km2 */
+            despues_km2: number;
+            /** Dias */
+            dias: number;
+            /**
+             * Fecha Antes
+             * Format: date
+             */
+            fecha_antes: string;
+            /**
+             * Fecha Despues
+             * Format: date
+             */
+            fecha_despues: string;
+            /** Relativa Pct */
+            relativa_pct: number | null;
+        };
         /** VolcanDto */
         VolcanDto: {
             /** Lat */
@@ -1329,6 +1568,35 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    comparacion_embalses: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ComparacionEmbalses"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDto"];
+                };
+            };
+        };
+    };
     contexto: {
         parameters: {
             query: {
@@ -1540,6 +1808,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MedicionDto"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resumen: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ResumenSitio"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDto"];
                 };
             };
             /** @description Validation Error */

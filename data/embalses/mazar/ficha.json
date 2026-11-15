@@ -1,0 +1,39 @@
+{
+ "version": 1,
+ "datos": [
+  {
+   "id": "potencia_central",
+   "valor": 170,
+   "unidad": "MW",
+   "fuente": {
+    "nombre": "KCH Comunicación (nota de CELEC EP, 27 jul 2026)",
+    "url": "https://kchcomunicacion.com/?p=495127",
+    "cita": "La central Mazar tiene una potencia instalada de 170 MW",
+    "consulta": "2026-11-15"
+   }
+  },
+  {
+   "id": "unidades",
+   "valor": 2,
+   "unidad": "",
+   "fuente": {
+    "nombre": "KCH Comunicación (nota de CELEC EP, 27 jul 2026)",
+    "url": "https://kchcomunicacion.com/?p=495127",
+    "cita": "dos unidades de generación de 85 megavatios (MW) cada una",
+    "consulta": "2026-11-15"
+   }
+  },
+  {
+   "id": "potencia_complejo",
+   "valor": 1756,
+   "unidad": "MW",
+   "nombre_propio": "Paute Integral",
+   "fuente": {
+    "nombre": "Primicias (jul 2026)",
+    "url": "https://www.primicias.ec/economia/celec-mantenimiento-unidad2-hidroelectrica-mazar-julio-2026-cortes-luz-127968/",
+    "cita": "una potencia instalada de 1.756 MW",
+    "consulta": "2026-11-15"
+   }
+  }
+ ]
+}

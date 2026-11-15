@@ -36,7 +36,7 @@ def test_procedencia_incompleta_aunque_el_json_diga_completa(tmp_path):
     carpeta = escribir_sitio_prueba(tmp_path)
     import json
     sj = json.loads((carpeta / "sitio.json").read_text())
-    sj["fechas"][1]["procedencia"].pop("madurez")  # el proveedor no se fía de la bandera
+    sj["fechas"][1]["procedencia"].pop("polarizaciones")  # el proveedor no se fía de la bandera
     (carpeta / "sitio.json").write_text(json.dumps(sj))
     assert [a.id for a in ProveedorDerivados(tmp_path).escenario("embalse-lago").adquisiciones] == ["20261029"]
 

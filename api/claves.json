@@ -612,6 +612,30 @@
     "es": "Pedernales (Manabí)"
   },
   {
+    "clave": "api.ficha.area_publicada.etiqueta",
+    "es": "Superficie afectada publicada"
+  },
+  {
+    "clave": "api.ficha.fecha_inicio.etiqueta",
+    "es": "Inicio del incendio"
+  },
+  {
+    "clave": "api.ficha.potencia_central.etiqueta",
+    "es": "Potencia instalada de la central"
+  },
+  {
+    "clave": "api.ficha.potencia_complejo.etiqueta",
+    "es": "Potencia instalada del complejo"
+  },
+  {
+    "clave": "api.ficha.unidades.etiqueta",
+    "es": "Unidades de generación"
+  },
+  {
+    "clave": "api.ficha.volumen_embalse.etiqueta",
+    "es": "Volumen del embalse"
+  },
+  {
     "clave": "api.impacto.accion.incendio.1",
     "es": "Contrastar la cicatriz con los reportes de bomberos y con focos de calor ópticos antes de actuar."
   },
@@ -1442,6 +1466,46 @@
   {
     "clave": "api.plantilla.nota.pedernales_los",
     "es": "Vector LOS (este, norte, arriba) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR mira a la izquierda: el movimiento norte-sur casi no se proyecta en la línea de vista, por eso las fallas de rumbo N-S se complementan con desplazamientos de píxel (GOFF)."
+  },
+  {
+    "clave": "api.resumen.lectura.comparacion",
+    "es": "{sitio_a} cambia {rel_a} % de su superficie de agua en {dias_a} días; {sitio_b}, {rel_b} % en {dias_b} días. Las fechas no coinciden ({entre_a} días de desfase entre las primeras y {entre_d} entre las segundas): la comparación es orientativa."
+  },
+  {
+    "clave": "api.resumen.lectura.embalse.baja",
+    "es": "Entre el {antes} y el {despues} ({dias} días), la superficie de agua medida pasa de {a} a {d} km² ({rel} %). Sugiere que el nivel del embalse bajó; queda por contrastar con la cota publicada por el operador."
+  },
+  {
+    "clave": "api.resumen.lectura.embalse.contraste",
+    "es": "El {fecha}, el agua se ve más oscura en HH (mediana {agua} dB) que el resto de la escena ({resto} dB). Es compatible con una superficie lisa que refleja la señal lejos del radar."
+  },
+  {
+    "clave": "api.resumen.lectura.embalse.estable",
+    "es": "Entre el {antes} y el {despues} ({dias} días), la superficie de agua medida apenas cambia: de {a} a {d} km² ({rel} %)."
+  },
+  {
+    "clave": "api.resumen.lectura.embalse.sube",
+    "es": "Entre el {antes} y el {despues} ({dias} días), la superficie de agua medida pasa de {a} a {d} km² (+{rel} %). Sugiere que el nivel del embalse subió; queda por contrastar con la cota publicada por el operador."
+  },
+  {
+    "clave": "api.resumen.lectura.escena_cambia",
+    "es": "La mediana de HV de toda la escena pasa de {a} dB el {antes} a {d} dB el {despues} ({dif} dB). Un cambio tan grande en toda la escena apunta a diferencias de procesamiento o de geometría entre las dos imágenes más que a un cambio del terreno."
+  },
+  {
+    "clave": "api.resumen.lectura.incendio.area",
+    "es": "La máscara del equipo marca {km2} km² ({ha} ha) como quemados el {fecha}."
+  },
+  {
+    "clave": "api.resumen.lectura.incendio.publicada",
+    "es": "La máscara marca unas {ha} ha; la cifra publicada es {publicada} ha ({fuente}), unas {razon} veces menos. Sugiere que la máscara incluye cambios que no son quemado; hay que revisarla antes de usar la cifra."
+  },
+  {
+    "clave": "api.resumen.lectura.incendio.rfdi_no_separa",
+    "es": "La mediana de ΔRFDI es {dentro} dentro del área marcada y {fuera} fuera (diferencia {dif}): casi igual. El cambio afecta a toda la escena, así que el ΔRFDI por sí solo no distingue el área marcada."
+  },
+  {
+    "clave": "api.resumen.lectura.incendio.rfdi_separa",
+    "es": "La mediana de ΔRFDI es {dentro} dentro del área marcada y {fuera} fuera (diferencia {dif}). El área marcada cambia distinto del resto, lo que apoya la hipótesis de un efecto del fuego."
   },
   {
     "clave": "api.serie.0_hh_en_la_seleccion",

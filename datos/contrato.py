@@ -6,14 +6,14 @@ Todo dato lleva su `Origen`. Ver docs/contrato-datos.md.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import date, datetime
 from typing import Literal, Protocol, runtime_checkable
 
 import numpy as np
 import math
 
 from datos.claves import texto
-from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, model_validator
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, model_serializer, model_validator
 
 BBox = tuple[float, float, float, float]  # (oeste, sur, este, norte) en WGS84
 Paleta = Literal["gris", "secuencial", "divergente", "ciclico", "categorias"]
@@ -78,13 +78,17 @@ ClaseOrigen = Literal["nisar", "otro_sensor", "sintetico", "complementario"]
 
 
 class Procedencia(BaseModel):
-    """Procedencia de una capa real: de qué producto, granulo y pasada sale."""
+    """Procedencia de una capa real: de qué producto, granulo y pasada sale.
+
+    Lo que no se sabe se omite (nunca se inventa): al serializar, los campos vacíos (None o lista vacía) no salen.
+    `fecha` es la fecha de adquisición sin hora, cuando solo se conoce el día (p. ej. por el nombre del archivo)."""
     model_config = ConfigDict(frozen=True)
 
     producto: str | None = None
     coleccion: str | None = None
     granulos: list[str] = []
     fecha_adquisicion: AwareDatetime | None = None
+    fecha: date | None = None
     polarizaciones: list[str] = []
     frecuencia: Literal["A", "B"] | None = None
     madurez: Literal["BETA", "PROVISIONAL", "VALIDATED"] | None = None
@@ -93,20 +97,31 @@ class Procedencia(BaseModel):
     autor: str | None = None
     fecha_proceso: str | None = None
 
+    @model_serializer(mode="wrap")
+    def _sin_vacios(self, siguiente):
+        return {k: v for k, v in siguiente(self).items() if v is not None and v != []}
 
+
+# Decisión del usuario (2026-11-15): lo procesado por el equipo se muestra como NISAR con lo que se sabe. Se exige
+# producto, fecha (con hora o solo el día) y polarizaciones; granulos, colección, frecuencia y madurez son opcionales
+# y, si faltan, se omiten.
 _EXIGIDOS: dict[str, tuple[str, ...]] = {
-    "nisar": ("producto", "coleccion", "granulos", "fecha_adquisicion",
-              "polarizaciones", "frecuencia", "madurez"),
+    "nisar": ("producto", "fecha_adquisicion", "polarizaciones"),
     "otro_sensor": ("producto", "granulos", "fecha_adquisicion", "polarizaciones"),
 }
 
 
 def faltantes_procedencia(clase: ClaseOrigen, p: Procedencia | None) -> list[str]:
-    """Nombres de los campos de procedencia que faltan para esa clase de origen."""
+    """Nombres de los campos de procedencia que faltan para esa clase de origen. En NISAR, `fecha` (solo el día)
+    cumple el requisito de `fecha_adquisicion`."""
     exigidos = _EXIGIDOS.get(clase, ())
     if p is None:
         return list(exigidos)
-    return [c for c in exigidos if not getattr(p, c)]
+    def tiene(c: str) -> bool:
+        if c == "fecha_adquisicion" and clase == "nisar":
+            return bool(p.fecha_adquisicion or p.fecha)
+        return bool(getattr(p, c))
+    return [c for c in exigidos if not tiene(c)]
 
 
 class Origen(BaseModel):
@@ -138,7 +153,11 @@ class Origen(BaseModel):
 
 class Adquisicion(BaseModel):
     id: str
-    instante: AwareDatetime  # con zona horaria (UTC)
+    # Con zona horaria (UTC). Si `hora_conocida` es False, la hora no se sabe: `instante` es solo un ancla (12:00 UTC
+    # del día) para ordenar, y la interfaz debe mostrar `fecha`, nunca la hora.
+    instante: AwareDatetime
+    fecha: date | None = None
+    hora_conocida: bool = True
     direccion_orbital: str | None = None
     polarizaciones: list[str]
 

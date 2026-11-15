@@ -4,13 +4,15 @@ Formato escrito por `preparacion/salida.py`: `sitio.json`, un `.npz` por fecha (
 0 sin dato / 1 clase / 2 resto, salvo en una fecha de incendio sin máscara; si hay stack `HH` y `HV` cuantizados; y
 si hay ΔRFDI `delta_rfdi` cuantizado en [-1, 1]), `contorno.geojson`. Acepta las versiones 1 y 2 de `sitio.json`. Regla 7 de CLAUDE.md:
 una fecha sin procedencia completa NO se expone (ni en el escenario, ni en las capas, ni en la serie), y cada capa
-lleva el origen con la procedencia de su propia fecha. Solo numpy, json y pydantic (corre también en Pyodide).
+lleva el origen con la procedencia de su propia fecha. Decisión del usuario (2026-11-15): lo del equipo se sirve como
+NISAR con lo que se sabe (producto, fecha, polarizaciones); granulo, colección, frecuencia, madurez y hora se omiten
+si faltan, nunca se inventan. Solo numpy, json y pydantic (corre también en Pyodide).
 """
 from __future__ import annotations
 
 import json
 import warnings
-from datetime import datetime
+from datetime import date, datetime, time, timezone
 from pathlib import Path
 
 import numpy as np
@@ -18,6 +20,7 @@ import numpy as np
 from datos.proveedores._embalse_comun import (TITULO_SERIE as _TITULO_SERIE, capa_clasificacion,
                                               clasificar, dentro_contorno, medir_mascaras, metricas_cambio,
                                               num as _num, validar_par)
+from datos import resumen as _resumen
 from datos.contrato import (Adquisicion, CapaRaster, Capacidades, CapacidadNoDisponible, Escenario, EntradaNoValida,
                             Medicion, Metrica, NoEncontrado, Origen, Procedencia, ResultadoCambio, SerieTemporal,
                             faltantes_procedencia)
@@ -25,8 +28,9 @@ from datos.contrato import (Adquisicion, CapaRaster, Capacidades, CapacidadNoDis
 DIR_DATOS = Path(__file__).resolve().parents[2] / "data"  # carpeta data/ en la raíz del proyecto
 CARPETAS = {"embalse": "embalses", "incendio": "incendios"}
 FUENTE = "equipo PACHA"
-def _procedencia(d: dict | None) -> Procedencia | None:
-    """Procedencia del `sitio.json` (claves de `procedencia.json`) → modelo; None si no se puede leer."""
+def _procedencia(d: dict | None, dia: str | None = None) -> Procedencia | None:
+    """Procedencia del `sitio.json` (claves de `procedencia.json`) → modelo; None si no se puede leer. `dia` es la
+    fecha de la fila (AAAA-MM-DD): se usa como fecha de adquisición sin hora cuando no hay instante UTC."""
     if not isinstance(d, dict):
         return None
     try:
@@ -36,7 +40,8 @@ def _procedencia(d: dict | None) -> Procedencia | None:
             adq = None
         metodo = d.get("metodo")
         return Procedencia(producto=d.get("producto"), coleccion=d.get("coleccion"), granulos=d.get("granulos") or [],
-                           fecha_adquisicion=adq, polarizaciones=d.get("polarizaciones") or [],
+                           fecha_adquisicion=adq, fecha=None if adq is not None or not dia else date.fromisoformat(dia),
+                           polarizaciones=d.get("polarizaciones") or [],
                            frecuencia=d.get("frecuencia"), madurez=d.get("madurez"), unidades=d.get("unidades_stack"),
                            metodo=metodo if isinstance(metodo, dict) else None, autor=d.get("autor"),
                            fecha_proceso=d.get("fecha_proceso"))
@@ -50,7 +55,10 @@ class _Fecha:
     def __init__(self, fila: dict, proc: Procedencia, fecha_prep: datetime) -> None:
         self.fila, self.procedencia = fila, proc
         self.id = fila["fecha"].replace("-", "")
-        self.instante = proc.fecha_adquisicion
+        # Sin hora conocida, el instante es un ancla (12:00 UTC del día) solo para ordenar; la interfaz muestra la fecha.
+        self.hora_conocida = proc.fecha_adquisicion is not None
+        self.dia = proc.fecha_adquisicion.date() if self.hora_conocida else proc.fecha
+        self.instante = proc.fecha_adquisicion or datetime.combine(proc.fecha, time(12), timezone.utc)
         self.stack = fila.get("stack") or None
         self.tiene_mascara = fila.get("mascara", True)  # v1 siempre traía máscara
         self.delta_rfdi = fila.get("delta_rfdi") or None
@@ -66,9 +74,9 @@ class _Sitio:
         prep = datetime.fromisoformat(s["fecha_preparacion"].replace("Z", "+00:00"))
         self.fechas: list[_Fecha] = []
         for fila in s["fechas"]:
-            proc = _procedencia(fila.get("procedencia"))
-            # No basta la bandera del archivo: se vuelve a comprobar la procedencia con las reglas del contrato.
-            if fila.get("procedencia_completa") and proc is not None and not faltantes_procedencia("nisar", proc):
+            proc = _procedencia(fila.get("procedencia"), fila.get("fecha"))
+            # La bandera del archivo se calculó con las reglas de entonces: manda el contrato.
+            if proc is not None and not faltantes_procedencia("nisar", proc):
                 self.fechas.append(_Fecha(fila, proc, prep))
         self.fechas.sort(key=lambda f: f.instante)
         self.clase = s["leyenda"][0][0]
@@ -78,6 +86,10 @@ class _Sitio:
         self.km2_pixel = abs(s["transform"][0] * s["transform"][4]) / 1e6
         self._npz: dict[str, dict[str, np.ndarray]] = {}
         self._dentro: np.ndarray | None = None
+        self._escala: dict[str, tuple[float, float]] = {}
+        ruta_ficha = carpeta / "ficha.json"
+        self.ficha = (json.loads(ruta_ficha.read_text(encoding="utf-8")).get("datos", [])
+                      if ruta_ficha.exists() else [])
 
     @property
     def id_escenario(self) -> str:
@@ -94,6 +106,21 @@ class _Sitio:
             with np.load(self.carpeta / f.fila["archivo"]) as z:
                 self._npz[f.id] = {k: z[k] for k in z.files}
         return self._npz[f.id]
+
+    def db(self, f: _Fecha, pol: str) -> np.ndarray:
+        """γ⁰ en dB de una fecha (NaN sin dato), descuantizado del stack."""
+        vmin, vmax = f.stack[pol]
+        q = self.arrays(f)[pol]
+        return np.where(q == 0, np.nan, vmin + (q.astype(np.float64) - 1) / 254 * (vmax - vmin)).astype(np.float32)
+
+    def escala(self, pol: str) -> tuple[float, float]:
+        """Escala común de γ⁰ para el sitio: percentiles 2–98 de todos los píxeles con dato de todas sus fechas."""
+        if pol not in self._escala:
+            v = np.concatenate([self.db(f, pol).ravel() for f in self.fechas if f.stack and pol in f.stack])
+            v = v[np.isfinite(v)]
+            p2, p98 = np.percentile(v, [2, 98]) if v.size else (-25.0, 0.0)
+            self._escala[pol] = (round(float(p2), 2), round(float(max(p98, p2 + 0.01)), 2))
+        return self._escala[pol]
 
     def dentro(self) -> np.ndarray:
         """Máscara bool del contorno sobre la rejilla (todo True si el sitio no trae contorno)."""
@@ -148,7 +175,8 @@ class ProveedorDerivados:
             polarizaciones=["HH", "HV"] if hay_stack else [],
             variables=(["mascara"] if hay_mascara else []) + (["gamma0"] if hay_stack else [])
             + (["delta_rfdi"] if hay_delta else []),
-            adquisiciones=[Adquisicion(id=f.id, instante=f.instante, polarizaciones=["HH", "HV"] if f.stack else [])
+            adquisiciones=[Adquisicion(id=f.id, instante=f.instante, fecha=f.dia, hora_conocida=f.hora_conocida,
+                                       polarizaciones=["HH", "HV"] if f.stack else [])
                            for f in s.fechas],
             capacidades=self.capacidades, origen=s.fechas[-1].origen)
 
@@ -175,9 +203,8 @@ class ProveedorDerivados:
         if not f.stack or pol not in f.stack:
             raise EntradaNoValida.con("api.error.polarizacion_no_disponible", polarizacion=pol,
                                       disponibles=", ".join(f.stack or []) or "ninguna")
-        vmin, vmax = f.stack[pol]
-        q = s.arrays(f)[pol]
-        db = np.where(q == 0, np.nan, vmin + (q.astype(np.float64) - 1) / 254 * (vmax - vmin)).astype(np.float32)
+        vmin, vmax = s.escala(pol)   # escala de color: percentiles 2–98 reales del sitio (los datos no se recortan)
+        db = s.db(f, pol)
         return CapaRaster(
             escenario_id=s.id_escenario, adquisicion_id=f.id, variable="gamma0", polarizacion=pol, unidad="dB",
             paleta="gris", vmin=float(vmin), vmax=float(vmax), leyenda=None, datos=db, bbox=s.bbox, origen=f.origen)
@@ -270,6 +297,62 @@ class ProveedorDerivados:
 
         ma, md = self._mascaras_par(s, a, d)
         return medir_mascaras([n for n, _ in s.json["leyenda"]], s.km2_pixel, ma, md, d.fila["fecha"], d.origen, gamma, cuadrante, punto)
+
+    # --- resumen científico y comparación ---------------------------------------------------------
+
+    def _delta(self, s: _Sitio, f: _Fecha) -> np.ndarray:
+        return self._delta_rfdi(s, f).datos
+
+    def resumen(self, escenario_id: str) -> _resumen.ResumenSitio:
+        """Superficies, retrodispersión por fecha, ΔRFDI dentro/fuera del área marcada, ficha y lecturas."""
+        s = self._sitio(escenario_id)
+        fechas = []
+        for f in s.fechas:
+            m = s.arrays(f)["mascara"] if f.tiene_mascara else None
+            stats = [e for pol in ("HH", "HV") if f.stack and pol in f.stack
+                     for e in [_resumen.estadistica(pol, s.db(f, pol), m)] if e is not None]
+            fechas.append(_resumen.FechaResumen(adquisicion_id=f.id, fecha=f.dia, superficie_km2=self._superficie(s, f),
+                                                retrodispersion=stats))
+        ficha = _resumen.ficha(s.ficha)
+        var = inc = None
+        lecturas: list[_resumen.Lectura] = []
+        if s.tipo == "embalse":
+            var = _resumen.variacion(fechas)
+            lecturas = _resumen.lecturas_embalse(fechas, var)
+        else:
+            con = [f for f in s.fechas if f.tiene_mascara and self._superficie(s, f) is not None]
+            if con:
+                f = con[-1]
+                m = s.arrays(f)["mascara"]
+                dentro = fuera = dif = None
+                if f.delta_rfdi:
+                    d = self._delta(s, f)
+                    dentro, fuera = _resumen.mediana(d[m == 1]), _resumen.mediana(d[m == 2])
+                    if dentro is not None and fuera is not None:
+                        dif = round(dentro - fuera, 3)
+                km2 = self._superficie(s, f)
+                inc = _resumen.ResumenIncendio(
+                    adquisicion_id=f.id, fecha=f.dia, area_marcada_km2=round(km2, 2), area_marcada_ha=round(km2 * 100),
+                    delta_rfdi_mediana_dentro=None if dentro is None else round(dentro, 3),
+                    delta_rfdi_mediana_fuera=None if fuera is None else round(fuera, 3), delta_rfdi_diferencia=dif)
+                lecturas = _resumen.lecturas_incendio(inc, ficha)
+        escena = _resumen.lectura_escena(fechas)
+        if escena is not None:
+            lecturas.append(escena)
+        escala = {pol: s.escala(pol) for pol in ("HH", "HV") if any(f.stack and pol in f.stack for f in s.fechas)}
+        return _resumen.ResumenSitio(escenario_id=escenario_id, nombre=s.json["nombre"], historia=s.tipo, fechas=fechas,
+                                     variacion=var, incendio=inc, escala_db=escala, ficha=ficha, lecturas=lecturas,
+                                     origen=s.fechas[-1].origen)
+
+    def comparacion_embalses(self) -> _resumen.ComparacionEmbalses:
+        """Mazar frente a Daule-Peripa (o los embalses que haya), con la misma métrica y el desfase de fechas."""
+        ids = [i for i, s in self._escenarios.items() if s.tipo == "embalse"]
+        if not ids:
+            raise NoEncontrado.con("api.error.escenario_desconocido", id="embalses")
+        orden = {"embalse-mazar": 0, "embalse-daule-peripa": 1}
+        ids.sort(key=lambda i: (orden.get(i, 9), i))
+        resumenes = [self.resumen(i) for i in ids]
+        return _resumen.comparar(resumenes, resumenes[0].origen)
 
     # --- lo que este proveedor no ofrece ----------------------------------------------------------
 

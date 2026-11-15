@@ -1,6 +1,6 @@
 """Pruebas del contrato de datos genérico (datos/contrato.py)."""
 from dataclasses import FrozenInstanceError
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
 import numpy as np
 import pytest
@@ -180,9 +180,17 @@ def _proc(**kw) -> Procedencia:
 
 
 def test_origen_nisar_sin_procedencia_completa_se_rechaza():
-    with pytest.raises(ValidationError, match="coleccion"):
+    with pytest.raises(ValidationError, match="fecha_adquisicion"):
         Origen(tipo="real", clase="nisar", fuente="x", fecha_generacion=AHORA,
-               procedencia=Procedencia(producto="GCOV"))
+               procedencia=Procedencia(producto="GCOV", polarizaciones=["HH"]))
+
+
+def test_procedencia_sin_granulo_no_lleva_campos_vacios():
+    p = Procedencia(producto="GCOV", fecha=date(2026, 10, 29), polarizaciones=["HH", "HV"], autor="equipo PACHA")
+    o = Origen(tipo="real", clase="nisar", fuente="equipo PACHA", fecha_generacion=AHORA, procedencia=p)
+    d = o.model_dump(mode="json")["procedencia"]
+    assert d == {"producto": "GCOV", "fecha": "2026-10-29", "polarizaciones": ["HH", "HV"], "autor": "equipo PACHA"}
+    assert Origen(**o.model_dump()).procedencia == p   # ida y vuelta
 
 
 def test_origen_clase_sintetico_exige_tipo_sintetico():
@@ -200,7 +208,11 @@ def test_origen_sin_clase_sigue_valiendo():
 
 def test_faltantes_procedencia():
     assert faltantes_procedencia("nisar", _proc()) == []
-    assert faltantes_procedencia("nisar", _proc(madurez=None)) == ["madurez"]
+    # Decisión 2026-11-15: granulo, colección, frecuencia y madurez son opcionales en NISAR; la fecha sola basta.
+    assert faltantes_procedencia("nisar", _proc(madurez=None, granulos=[], coleccion=None, frecuencia=None)) == []
+    assert faltantes_procedencia("nisar", _proc(fecha_adquisicion=None)) == ["fecha_adquisicion"]
+    assert faltantes_procedencia("nisar", _proc(fecha_adquisicion=None, fecha=date(2026, 10, 29))) == []
+    assert faltantes_procedencia("nisar", _proc(polarizaciones=[])) == ["polarizaciones"]
     assert faltantes_procedencia("otro_sensor", _proc(coleccion=None)) == []
 
 

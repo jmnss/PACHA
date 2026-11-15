@@ -14,6 +14,23 @@
             ],
             "title": "Direccion Orbital"
           },
+          "fecha": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fecha"
+          },
+          "hora_conocida": {
+            "default": true,
+            "title": "Hora Conocida",
+            "type": "boolean"
+          },
           "id": {
             "title": "Id",
             "type": "string"
@@ -457,6 +474,57 @@
         "title": "CiudadExtra",
         "type": "object"
       },
+      "ComparacionEmbalses": {
+        "description": "Misma métrica (superficie de agua, primera → última fecha) en cada embalse, con el desfase de fechas.",
+        "properties": {
+          "dias_entre_antes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dias Entre Antes"
+          },
+          "dias_entre_despues": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dias Entre Despues"
+          },
+          "lecturas": {
+            "items": {
+              "$ref": "#/components/schemas/Lectura"
+            },
+            "title": "Lecturas",
+            "type": "array"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "sitios": {
+            "items": {
+              "$ref": "#/components/schemas/SitioComparado"
+            },
+            "title": "Sitios",
+            "type": "array"
+          }
+        },
+        "required": [
+          "sitios",
+          "lecturas",
+          "origen"
+        ],
+        "title": "ComparacionEmbalses",
+        "type": "object"
+      },
       "ContextoDto": {
         "description": "Clima, temporada y suelo de un punto. Es contexto real complementario (NASA POWER y\ngeoBoundaries): NO es una observación de NISAR y su `origen.tipo=\"real\"` no activa la banda\nde demostración. La respuesta es `null` si el punto cae fuera de la malla o de Ecuador.",
         "properties": {
@@ -753,6 +821,62 @@
         "title": "ControlDto",
         "type": "object"
       },
+      "DatoFicha": {
+        "description": "Un dato del sitio con su fuente publicada. Etiqueta traducible: `api.ficha.<id>.etiqueta`.",
+        "properties": {
+          "clave_texto": {
+            "title": "Clave Texto",
+            "type": "string"
+          },
+          "etiqueta": {
+            "title": "Etiqueta",
+            "type": "string"
+          },
+          "fuente": {
+            "$ref": "#/components/schemas/FuenteFicha"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "nombre_propio": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nombre Propio"
+          },
+          "unidad": {
+            "title": "Unidad",
+            "type": "string"
+          },
+          "valor": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Valor"
+          }
+        },
+        "required": [
+          "id",
+          "clave_texto",
+          "etiqueta",
+          "valor",
+          "unidad",
+          "fuente"
+        ],
+        "title": "DatoFicha",
+        "type": "object"
+      },
       "ErrorDto": {
         "properties": {
           "clave_texto": {
@@ -971,6 +1095,57 @@
           "verificado"
         ],
         "title": "EsperaRadarDto",
+        "type": "object"
+      },
+      "EstadisticaDb": {
+        "description": "Retrodispersión (γ⁰, dB) de una polarización en una fecha, sobre los píxeles con dato de la escena.",
+        "properties": {
+          "mediana_clase_db": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mediana Clase Db"
+          },
+          "mediana_db": {
+            "title": "Mediana Db",
+            "type": "number"
+          },
+          "mediana_resto_db": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mediana Resto Db"
+          },
+          "p2_db": {
+            "title": "P2 Db",
+            "type": "number"
+          },
+          "p98_db": {
+            "title": "P98 Db",
+            "type": "number"
+          },
+          "polarizacion": {
+            "title": "Polarizacion",
+            "type": "string"
+          }
+        },
+        "required": [
+          "polarizacion",
+          "mediana_db",
+          "p2_db",
+          "p98_db"
+        ],
+        "title": "EstadisticaDb",
         "type": "object"
       },
       "EventoDto": {
@@ -1195,6 +1370,45 @@
         "title": "EventoDto",
         "type": "object"
       },
+      "FechaResumen": {
+        "properties": {
+          "adquisicion_id": {
+            "title": "Adquisicion Id",
+            "type": "string"
+          },
+          "fecha": {
+            "format": "date",
+            "title": "Fecha",
+            "type": "string"
+          },
+          "retrodispersion": {
+            "items": {
+              "$ref": "#/components/schemas/EstadisticaDb"
+            },
+            "title": "Retrodispersion",
+            "type": "array"
+          },
+          "superficie_km2": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Superficie Km2"
+          }
+        },
+        "required": [
+          "adquisicion_id",
+          "fecha",
+          "superficie_km2",
+          "retrodispersion"
+        ],
+        "title": "FechaResumen",
+        "type": "object"
+      },
       "Frase": {
         "description": "Texto de la API con su clave: el cliente traduce `clave_texto` y rellena `{x}` con `valores_texto`.",
         "properties": {
@@ -1225,6 +1439,35 @@
           "clave_texto"
         ],
         "title": "Frase",
+        "type": "object"
+      },
+      "FuenteFicha": {
+        "properties": {
+          "cita": {
+            "title": "Cita",
+            "type": "string"
+          },
+          "consulta": {
+            "format": "date",
+            "title": "Consulta",
+            "type": "string"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nombre",
+          "url",
+          "cita",
+          "consulta"
+        ],
+        "title": "FuenteFicha",
         "type": "object"
       },
       "HTTPValidationError": {
@@ -1420,6 +1663,48 @@
           "origen"
         ],
         "title": "ImpactoDto",
+        "type": "object"
+      },
+      "Lectura": {
+        "description": "Frase en palabras (hipótesis). `texto` es el español; el cliente traduce por `clave_texto`.",
+        "properties": {
+          "clave_texto": {
+            "title": "Clave Texto",
+            "type": "string"
+          },
+          "decimales_texto": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "default": {},
+            "title": "Decimales Texto",
+            "type": "object"
+          },
+          "texto": {
+            "title": "Texto",
+            "type": "string"
+          },
+          "valores_texto": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "default": {},
+            "title": "Valores Texto",
+            "type": "object"
+          }
+        },
+        "required": [
+          "clave_texto",
+          "texto"
+        ],
+        "title": "Lectura",
         "type": "object"
       },
       "MarcaDto": {
@@ -2381,7 +2666,7 @@
         "type": "object"
       },
       "Procedencia": {
-        "description": "Procedencia de una capa real: de qué producto, granulo y pasada sale.",
+        "description": "Procedencia de una capa real: de qué producto, granulo y pasada sale.\n\nLo que no se sabe se omite (nunca se inventa): al serializar, los campos vacíos (None o lista vacía) no salen.\n`fecha` es la fecha de adquisición sin hora, cuando solo se conoce el día (p. ej. por el nombre del archivo).",
         "properties": {
           "autor": {
             "anyOf": [
@@ -2404,6 +2689,18 @@
               }
             ],
             "title": "Coleccion"
+          },
+          "fecha": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fecha"
           },
           "fecha_adquisicion": {
             "anyOf": [
@@ -2779,6 +3076,161 @@
         "title": "ResultadoCambioDto",
         "type": "object"
       },
+      "ResumenIncendio": {
+        "description": "Área marcada por la máscara del equipo y ΔRFDI (= RFDI antes − RFDI después, definición del equipo).",
+        "properties": {
+          "adquisicion_id": {
+            "title": "Adquisicion Id",
+            "type": "string"
+          },
+          "area_marcada_ha": {
+            "title": "Area Marcada Ha",
+            "type": "number"
+          },
+          "area_marcada_km2": {
+            "title": "Area Marcada Km2",
+            "type": "number"
+          },
+          "delta_rfdi_diferencia": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delta Rfdi Diferencia"
+          },
+          "delta_rfdi_mediana_dentro": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delta Rfdi Mediana Dentro"
+          },
+          "delta_rfdi_mediana_fuera": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delta Rfdi Mediana Fuera"
+          },
+          "fecha": {
+            "format": "date",
+            "title": "Fecha",
+            "type": "string"
+          }
+        },
+        "required": [
+          "adquisicion_id",
+          "fecha",
+          "area_marcada_km2",
+          "area_marcada_ha",
+          "delta_rfdi_mediana_dentro",
+          "delta_rfdi_mediana_fuera",
+          "delta_rfdi_diferencia"
+        ],
+        "title": "ResumenIncendio",
+        "type": "object"
+      },
+      "ResumenSitio": {
+        "properties": {
+          "escala_db": {
+            "additionalProperties": {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            "title": "Escala Db",
+            "type": "object"
+          },
+          "escenario_id": {
+            "title": "Escenario Id",
+            "type": "string"
+          },
+          "fechas": {
+            "items": {
+              "$ref": "#/components/schemas/FechaResumen"
+            },
+            "title": "Fechas",
+            "type": "array"
+          },
+          "ficha": {
+            "items": {
+              "$ref": "#/components/schemas/DatoFicha"
+            },
+            "title": "Ficha",
+            "type": "array"
+          },
+          "historia": {
+            "title": "Historia",
+            "type": "string"
+          },
+          "incendio": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResumenIncendio"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lecturas": {
+            "items": {
+              "$ref": "#/components/schemas/Lectura"
+            },
+            "title": "Lecturas",
+            "type": "array"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "origen": {
+            "$ref": "#/components/schemas/Origen"
+          },
+          "variacion": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Variacion"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "escenario_id",
+          "nombre",
+          "historia",
+          "fechas",
+          "escala_db",
+          "ficha",
+          "lecturas",
+          "origen"
+        ],
+        "title": "ResumenSitio",
+        "type": "object"
+      },
       "Salud": {
         "properties": {
           "estado": {
@@ -2875,6 +3327,28 @@
           "origen"
         ],
         "title": "SerieTemporal",
+        "type": "object"
+      },
+      "SitioComparado": {
+        "properties": {
+          "escenario_id": {
+            "title": "Escenario Id",
+            "type": "string"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "variacion": {
+            "$ref": "#/components/schemas/Variacion"
+          }
+        },
+        "required": [
+          "escenario_id",
+          "nombre",
+          "variacion"
+        ],
+        "title": "SitioComparado",
         "type": "object"
       },
       "TablaEventoDto": {
@@ -3223,6 +3697,68 @@
         "title": "ValidationError",
         "type": "object"
       },
+      "Variacion": {
+        "properties": {
+          "absoluta_km2": {
+            "title": "Absoluta Km2",
+            "type": "number"
+          },
+          "antes_id": {
+            "title": "Antes Id",
+            "type": "string"
+          },
+          "antes_km2": {
+            "title": "Antes Km2",
+            "type": "number"
+          },
+          "despues_id": {
+            "title": "Despues Id",
+            "type": "string"
+          },
+          "despues_km2": {
+            "title": "Despues Km2",
+            "type": "number"
+          },
+          "dias": {
+            "title": "Dias",
+            "type": "integer"
+          },
+          "fecha_antes": {
+            "format": "date",
+            "title": "Fecha Antes",
+            "type": "string"
+          },
+          "fecha_despues": {
+            "format": "date",
+            "title": "Fecha Despues",
+            "type": "string"
+          },
+          "relativa_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Relativa Pct"
+          }
+        },
+        "required": [
+          "antes_id",
+          "despues_id",
+          "fecha_antes",
+          "fecha_despues",
+          "dias",
+          "antes_km2",
+          "despues_km2",
+          "absoluta_km2",
+          "relativa_pct"
+        ],
+        "title": "Variacion",
+        "type": "object"
+      },
       "VolcanDto": {
         "properties": {
           "lat": {
@@ -3254,6 +3790,35 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/comparacion/embalses": {
+      "get": {
+        "description": "Mazar frente a Daule-Peripa: la misma métrica en cada embalse y el desfase entre sus fechas.",
+        "operationId": "comparacion_embalses",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComparacionEmbalses"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Comparacion Embalses"
+      }
+    },
     "/api/contexto": {
       "get": {
         "operationId": "contexto",
@@ -3634,6 +4199,56 @@
           }
         },
         "summary": "Medicion"
+      }
+    },
+    "/api/escenarios/{id}/resumen": {
+      "get": {
+        "description": "Resumen científico de un sitio del equipo: superficies, retrodispersión, ΔRFDI, ficha con fuentes y lecturas.",
+        "operationId": "resumen",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResumenSitio"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resumen"
       }
     },
     "/api/escenarios/{id}/serie-seleccion": {

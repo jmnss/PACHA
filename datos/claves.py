@@ -487,3 +487,40 @@ def slug(t: str) -> str:
 from datos.claves_demo import PLANTILLAS  # noqa: E402
 
 REGISTRO.update(PLANTILLAS)
+
+# --- resumen de los sitios del equipo (prefijo api.resumen. y api.ficha.) -------------------------
+# Lecturas redactadas como hipótesis por comprobar (Regla 7): nunca como conclusiones.
+REGISTRO.update({
+    "api.resumen.lectura.embalse.baja": "Entre el {antes} y el {despues} ({dias} días), la superficie de agua medida "
+        "pasa de {a} a {d} km² ({rel} %). Sugiere que el nivel del embalse bajó; queda por contrastar con la cota "
+        "publicada por el operador.",
+    "api.resumen.lectura.embalse.sube": "Entre el {antes} y el {despues} ({dias} días), la superficie de agua medida "
+        "pasa de {a} a {d} km² (+{rel} %). Sugiere que el nivel del embalse subió; queda por contrastar con la cota "
+        "publicada por el operador.",
+    "api.resumen.lectura.embalse.estable": "Entre el {antes} y el {despues} ({dias} días), la superficie de agua "
+        "medida apenas cambia: de {a} a {d} km² ({rel} %).",
+    "api.resumen.lectura.embalse.contraste": "El {fecha}, el agua se ve más oscura en HH (mediana {agua} dB) que el "
+        "resto de la escena ({resto} dB). Es compatible con una superficie lisa que refleja la señal lejos del radar.",
+    "api.resumen.lectura.incendio.area": "La máscara del equipo marca {km2} km² ({ha} ha) como quemados el {fecha}.",
+    "api.resumen.lectura.incendio.rfdi_separa": "La mediana de ΔRFDI es {dentro} dentro del área marcada y {fuera} "
+        "fuera (diferencia {dif}). El área marcada cambia distinto del resto, lo que apoya la hipótesis de un efecto "
+        "del fuego.",
+    "api.resumen.lectura.incendio.rfdi_no_separa": "La mediana de ΔRFDI es {dentro} dentro del área marcada y {fuera} "
+        "fuera (diferencia {dif}): casi igual. El cambio afecta a toda la escena, así que el ΔRFDI por sí solo no "
+        "distingue el área marcada.",
+    "api.resumen.lectura.incendio.publicada": "La máscara marca unas {ha} ha; la cifra publicada es {publicada} ha "
+        "({fuente}), unas {razon} veces menos. Sugiere que la máscara incluye cambios que no son quemado; hay que "
+        "revisarla antes de usar la cifra.",
+    "api.resumen.lectura.escena_cambia": "La mediana de HV de toda la escena pasa de {a} dB el {antes} a {d} dB el "
+        "{despues} ({dif} dB). Un cambio tan grande en toda la escena apunta a diferencias de procesamiento o de "
+        "geometría entre las dos imágenes más que a un cambio del terreno.",
+    "api.resumen.lectura.comparacion": "{sitio_a} cambia {rel_a} % de su superficie de agua en {dias_a} días; "
+        "{sitio_b}, {rel_b} % en {dias_b} días. Las fechas no coinciden ({entre_a} días de desfase entre las "
+        "primeras y {entre_d} entre las segundas): la comparación es orientativa.",
+    "api.ficha.potencia_central.etiqueta": "Potencia instalada de la central",
+    "api.ficha.unidades.etiqueta": "Unidades de generación",
+    "api.ficha.potencia_complejo.etiqueta": "Potencia instalada del complejo",
+    "api.ficha.volumen_embalse.etiqueta": "Volumen del embalse",
+    "api.ficha.fecha_inicio.etiqueta": "Inicio del incendio",
+    "api.ficha.area_publicada.etiqueta": "Superficie afectada publicada",
+})

@@ -1,0 +1,27 @@
+{
+ "version": 1,
+ "datos": [
+  {
+   "id": "fecha_inicio",
+   "valor": "2026-09-17",
+   "unidad": "",
+   "fuente": {
+    "nombre": "El Comercio (17 sep 2026)",
+    "url": "https://www.elcomercio.com/actualidad/quito/incendio-forestal-casitagua-moviliza-bomberos-quito-jueves-17-de-septiembre/",
+    "cita": "El ECU 911 Quito recibió a las 10:22 una alerta sobre una emergencia",
+    "consulta": "2026-11-15"
+   }
+  },
+  {
+   "id": "area_publicada",
+   "valor": 300,
+   "unidad": "ha",
+   "fuente": {
+    "nombre": "Teleamazonas (alcalde de Quito, 20 sep 2026)",
+    "url": "https://www.teleamazonas.com/actualidad/noticias/quito/pabel-munoz-confirma-300-hectareas-destruidas-incendios-casitagua-128402/",
+    "cita": "la afectación en esta zona asciende a 300 hectáreas de cobertura vegetal",
+    "consulta": "2026-11-15"
+   }
+  }
+ ]
+}

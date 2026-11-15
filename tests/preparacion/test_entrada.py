@@ -104,8 +104,10 @@ def test_validar_procedencia_ejemplo_del_doc():
 def test_validar_procedencia_ausente_o_incompleta():
     assert validar_procedencia(None) == ["procedencia.json"]
     p = _ejemplo_del_doc()
-    del p["madurez"]
-    assert validar_procedencia(p) == ["madurez"]
+    del p["madurez"]   # opcional desde la decisión del 2026-11-15
+    assert validar_procedencia(p) == []
+    del p["producto"]
+    assert validar_procedencia(p) == ["producto"]
 
 
 def test_sitios():
