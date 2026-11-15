@@ -69,7 +69,8 @@ export default function Simulador() {
       ciudad.mutate({ mundo: mundoReq, celda: [i, j], nombre: String(valores.nombre ?? 'Nueva Esperanza'), habitantes: Number(valores.habitantes ?? 50000) })
     } else {
       ciudad.reset()
-      actualizar({ i, j, p: elegidos }, false)
+      // Se envían los valores que se ven (defectos incluidos), no solo los que el usuario tocó.
+      actualizar({ i, j, p: valores }, false)
     }
   }
 
