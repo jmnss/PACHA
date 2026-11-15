@@ -89,8 +89,8 @@ describe('estilo', () => {
     }
   })
   it('usa los colores del diseño', () => {
-    expect(COLORES_MAPA.tierra).toBe('#1b1b1f')
-    expect(COLORES_MAPA.provincia).toBe('#2e2e33')
+    expect(COLORES_MAPA.tierra).toBe('#2E3336')
+    expect(COLORES_MAPA.provincia).toBe('#3A4044')
   })
   it('la capa remota se desactiva con VITE_MAPA_REMOTO=0', () => {
     vi.stubEnv('VITE_MAPA_REMOTO', '0')

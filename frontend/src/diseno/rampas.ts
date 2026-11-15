@@ -13,7 +13,9 @@ export const RAMPAS: Record<NombreRampa, string[]> = {
   agua: ['#0f2236', '#173f63', '#2a6496', '#4f8fc4', '#8fc0e6', '#d2ebf8'],
   fuego: ['#2a0f07', '#5e1d0c', '#9a3412', '#d4622a', '#efa04a', '#f8d98a'],
   divergente: ['#8fc0e6', '#2a6496', '#1c1c1f', '#b4501f', '#efa04a'],
-  ciclico: ['#e0773a', '#e5b93c', '#5fc39c', '#3f8fd0', '#c96b8c', '#e0773a'],
+  // romaO de Crameri (Scientific colour maps v8, cmcrameri), muestreada cada 32 de sus 256 entradas y cerrada en la
+  // primera: cíclica y perceptual, sin el salto de luminosidad de un arcoíris.
+  ciclico: ['#733957', '#8b4433', '#aa752f', '#cfbc66', '#cbe1b3', '#8bcbcf', '#5393bf', '#595891', '#733957'],
   mmi: ['#2b2230', '#6e3a52', '#c96b8c', '#e9a9a0', '#f6e2d0'],
   lahar: ['#3b2a1a', '#6b4a28', '#b5803d', '#e2b77a'],
   ceniza: ['#2a2a2c', '#6e6e73', '#cfcfd2'],

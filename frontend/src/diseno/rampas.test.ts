@@ -74,6 +74,22 @@ describe('rampas de color (docs/diseno.md §4)', () => {
     expect(RAMPAS.ciclico[0]).toBe(RAMPAS.ciclico[RAMPAS.ciclico.length - 1])
   })
 
+  // Fase interferométrica: romaO de Crameri, no un arcoíris (auditoría UX). Una cíclica perceptual avanza a pasos
+  // de diferencia parecida (ΔE2000 entre paradas vecinas) y su luminosidad sube y baja una sola vez.
+  it('cíclica perceptual: pasos de ΔE2000 parecidos y un solo máximo de L*', () => {
+    const c = RAMPAS.ciclico
+    expect(c).toEqual(['#733957', '#8b4433', '#aa752f', '#cfbc66', '#cbe1b3', '#8bcbcf', '#5393bf', '#595891', '#733957'])
+    const pasos = c.slice(1).map((h, i) => de2000(lab(hexARgb(c[i])), lab(hexARgb(h))))
+    expect(Math.max(...pasos) / Math.min(...pasos)).toBeLessThan(2.5)
+    const ls = c.slice(0, -1).map(L)
+    const cambios = ls.map((l, i) => Math.sign(ls[(i + 1) % ls.length] - l)).filter((s, i, a) => s !== a[(i + 1) % a.length])
+    expect(cambios.length).toBe(2) // sube hasta el claro y baja: una vuelta, sin bandas
+  })
+
+  it('cíclica sin los tonos del arcoíris de la v1', () => {
+    for (const viejo of ['#e0773a', '#e5b93c', '#5fc39c', '#3f8fd0', '#c96b8c']) expect(RAMPAS.ciclico).not.toContain(viejo)
+  })
+
   const CONJUNTOS: Record<string, (string | null)[]> = {
     ...COLORES_CATEGORIA,
     respaldo_4: COLORES_RESPALDO.slice(0, 4),

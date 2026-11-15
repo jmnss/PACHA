@@ -1,7 +1,7 @@
 import { expect, test, type Locator } from '@playwright/test'
 
 // Requiere la API en :8000 (python servidor.py): `npm run preview` la usa como proxy.
-// Comprueba en navegador real que cada línea de selección de 1 px (accent) se PINTA:
+// Comprueba en navegador real que cada línea de selección (2 px, --accent) se PINTA:
 // tiene tamaño, está dentro del área visible de su contenedor y es lo que hay bajo su centro
 // (elementFromPoint ignora lo recortado por overflow).
 async function lineaVisible(linea: Locator, contenedor: Locator) {
@@ -21,7 +21,7 @@ async function lineaVisible(linea: Locator, contenedor: Locator) {
   expect(Math.max(r.ancho, r.alto)).toBeGreaterThan(1) // con largo
   expect(r.dentro).toBe(true)
   expect(r.encima).toBe(true)
-  expect(r.color).toBe('rgb(229, 185, 60)')
+  expect(r.color).toBe('rgb(125, 92, 14)') // --accent v2 (ocre borde)
   await expect(contenedor).toBeVisible()
 }
 
