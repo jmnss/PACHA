@@ -115,3 +115,21 @@ def test_sitios():
     o, su, e, n = s["mazar"].bbox
     lat, lon = s["mazar"].semilla
     assert o < lon < e and su < lat < n and s["mazar"].epsg == 32717
+
+
+def _solo_stack(raiz, sitio):
+    d = raiz / sitio / "20260913"
+    d.mkdir(parents=True)
+    _escribir_stack(d / "stack.tif", np.full((ALTO, ANCHO), -7.0, np.float32), np.full((ALTO, ANCHO), -13.0, np.float32))
+
+
+def test_descubrir_incendio_sin_mascara(tmp_path):
+    _solo_stack(tmp_path, "casitagua")
+    (f,) = descubrir(tmp_path, "casitagua", "incendio")
+    assert f.mascara is None and f.stack is not None and "mascara.tif" not in f.faltan
+
+
+def test_descubrir_embalse_sin_mascara_falta(tmp_path):
+    _solo_stack(tmp_path, "mazar")
+    (f,) = descubrir(tmp_path, "mazar", "embalse")
+    assert "mascara.tif" in f.faltan

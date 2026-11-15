@@ -34,9 +34,10 @@ def _es_cuadrado(t: Affine, tol: float = 1e-6) -> bool:
     return abs(abs(t.a) - abs(t.e)) < tol and t.b == 0 and t.d == 0
 
 
-def rejilla_referencia(sitio: Sitio, mascaras: list[Raster]) -> Rejilla:
-    """La de la primera máscara en EPSG:32717 con píxel cuadrado; si ninguna, la caja del sitio a 10 m."""
-    for m in mascaras:
+def rejilla_referencia(sitio: Sitio, rasters: list[Raster]) -> Rejilla:
+    """La del primer ráster en EPSG:32717 con píxel cuadrado (el llamador pasa las máscaras, luego el HH de los
+    stacks y luego el ΔRFDI); si ninguno, la caja del sitio a 10 m."""
+    for m in rasters:
         if m.crs.upper().replace("EPSG:", "") == "32717" and _es_cuadrado(m.transform):
             return Rejilla(m.transform, m.datos.shape[1], m.datos.shape[0], CRS_REF)
     o, s, e, n = transform_bounds("EPSG:4326", CRS_REF, *sitio.bbox)
@@ -103,3 +104,12 @@ def remuestrear_continua(r: Raster, destino: Rejilla) -> np.ndarray:
     reproject(fuente, out, src_transform=r.transform, src_crs=r.crs, dst_transform=destino.transform,
               dst_crs=destino.crs, resampling=Resampling.bilinear, src_nodata=np.nan, dst_nodata=np.nan)
     return out
+
+
+def reducir_media(datos: np.ndarray, ref: Rejilla, destino: Rejilla) -> np.ndarray:
+    """Media aritmética por bloque ignorando NaN (para magnitudes que no son dB, como el ΔRFDI). Sin datos: NaN."""
+    b = _bloques(datos.astype(np.float64), _factor(ref, destino), destino, np.nan)
+    n = np.isfinite(b).sum(axis=2)
+    suma = np.where(np.isfinite(b), b, 0.0).sum(axis=2)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        return np.where(n > 0, suma / np.maximum(n, 1), np.nan).astype(np.float32)

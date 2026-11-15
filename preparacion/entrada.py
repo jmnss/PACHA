@@ -28,14 +28,17 @@ class Raster:
 class Fecha:
     sitio: str
     fecha: date
-    mascara: Path
+    mascara: Path | None
     stack: Path | None = None
+    delta_rfdi: Path | None = None
     procedencia: dict | None = None
     faltan: list[str] = field(default_factory=list)
 
 
-def descubrir(raiz: Path, sitio: str) -> list[Fecha]:
-    """Fechas entregadas para un sitio, ordenadas; las carpetas con otro nombre se ignoran con aviso."""
+def descubrir(raiz: Path, sitio: str, tipo: str = "embalse") -> list[Fecha]:
+    """Fechas entregadas para un sitio, ordenadas; las carpetas con otro nombre se ignoran con aviso.
+    En un embalse falta `mascara.tif` es un error (queda en `faltan`); en un incendio la fecha «antes» puede traer
+    solo `stack.tif` (sin máscara), y una carpeta sin `stack.tif` ni `mascara.tif` se ignora con aviso."""
     salida = []
     base = Path(raiz) / sitio
     if not base.is_dir():
@@ -51,7 +54,15 @@ def descubrir(raiz: Path, sitio: str) -> list[Fecha]:
             warnings.warn(f"carpeta ignorada (se esperaba AAAAMMDD): {carpeta}")
             continue
         mascara, stack, prov = carpeta / "mascara.tif", carpeta / "stack.tif", carpeta / "procedencia.json"
-        faltan = [n for n, ruta in (("mascara.tif", mascara), ("procedencia.json", prov)) if not ruta.exists()]
+        delta = carpeta / "delta_rfdi.tif"
+        if tipo == "incendio":
+            if not mascara.exists() and not stack.exists():
+                warnings.warn(f"carpeta ignorada (sin stack.tif ni mascara.tif): {carpeta}")
+                continue
+            revisar = (("procedencia.json", prov),)
+        else:
+            revisar = (("mascara.tif", mascara), ("procedencia.json", prov))
+        faltan = [n for n, ruta in revisar if not ruta.exists()]
         procedencia = None
         if prov.exists():
             try:
@@ -61,7 +72,8 @@ def descubrir(raiz: Path, sitio: str) -> list[Fecha]:
             except ValueError:  # JSON mal formado (UnicodeDecodeError también es ValueError)
                 procedencia = None
                 faltan.append("procedencia.json (ilegible)")
-        salida.append(Fecha(sitio=sitio, fecha=f, mascara=mascara, stack=stack if stack.exists() else None,
+        salida.append(Fecha(sitio=sitio, fecha=f, mascara=mascara if mascara.exists() or tipo != "incendio" else None,
+                            stack=stack if stack.exists() else None, delta_rfdi=delta if delta.exists() else None,
                             procedencia=procedencia, faltan=faltan))
     return sorted(salida, key=lambda x: x.fecha)
 

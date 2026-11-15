@@ -2,12 +2,13 @@ import json
 
 import numpy as np
 import pytest
+import rasterio
 
 from preparacion.entrada import descubrir
 from preparacion.salida import cuantizar, descuantizar, escribir_sitio, tamano_mb
 from preparacion.sitios import cargar_sitios
 
-from .conftest import ALTO, ANCHO, escribir
+from .conftest import ALTO, ANCHO, TRANSFORM, escribir
 
 PROV = {"granulos": ["NISAR_X"], "fecha_adquisicion_utc": "2026-10-29T23:31:00Z", "producto": "GCOV",
         "coleccion": "NISAR_L2_GCOV_V1", "madurez": "VALIDATED", "frecuencia": "A",
@@ -44,7 +45,7 @@ def test_escribir_sitio_formato(entrega, tmp_path):
     assert [f["faltan"] for f in sj["fechas"]] == [["procedencia.json"], []]
     assert sj["fechas"][1]["instante"] == "2026-10-29T23:31:00Z" and sj["fechas"][0]["instante"] is None
     assert sj["leyenda"][0][0] == "agua" and sj["dem"] is None and sj["curva"] is None
-    assert sj["epsg"] == 32717 and sj["version"] == 1
+    assert sj["epsg"] == 32717 and sj["version"] == 2
     z = np.load(dest / "20261029.npz")
     assert z["mascara"].shape == tuple(sj["forma"]) and z["mascara"].dtype == np.uint8
     assert set(np.unique(z["mascara"])) <= {0, 1, 2}
@@ -98,3 +99,51 @@ def test_superficie_en_la_rejilla_original(tmp_path):
     sj = escribir_sitio(cargar_sitios()["mazar"], descubrir(tmp_path / "e", "mazar"), tmp_path / "out")
     exacta = int((m == 1).sum()) * 10.063 * 9.950 / 1e6
     assert sj["fechas"][0]["superficie_km2"]["agua"] == pytest.approx(exacta, abs=1e-4)
+
+
+def _sitio_casitagua(tmp_path, valores, con_rfdi=False):
+    """Casitagua de prueba: «antes» solo con stack, «después» con stack + máscara (+ ΔRFDI)."""
+    from .conftest import escribir as esc
+    sin_borde = np.where(valores == 3, 255, valores).astype(np.uint8)
+    for f in ("20260913", "20260925"):
+        d = tmp_path / "e" / "casitagua" / f
+        d.mkdir(parents=True)
+        with rasterio.open(d / "stack.tif", "w", driver="GTiff", height=ALTO, width=ANCHO, count=2, dtype="float32",
+                           crs="EPSG:32717", transform=TRANSFORM) as w:
+            w.write(np.full((ALTO, ANCHO), -7.0, np.float32), 1)
+            w.write(np.full((ALTO, ANCHO), -13.0, np.float32), 2)
+    d = tmp_path / "e" / "casitagua" / "20260925"
+    esc(d / "mascara.tif", sin_borde)
+    if con_rfdi:
+        r = np.full((ALTO, ANCHO), 0.3, np.float32)
+        r[:3, :3] = np.nan
+        esc(d / "delta_rfdi.tif", r)
+    return tmp_path / "e"
+
+
+def test_escribir_sitio_fecha_sin_mascara(tmp_path, valores):
+    e = _sitio_casitagua(tmp_path, valores)
+    sj = escribir_sitio(cargar_sitios()["casitagua"], descubrir(e, "casitagua", "incendio"), tmp_path / "o")
+    antes, despues = sj["fechas"]
+    assert sj["version"] == 2
+    assert antes["mascara"] is False and antes["superficie_km2"] == {"quemado": None}
+    assert despues["mascara"] is True and despues["superficie_km2"]["quemado"] > 0
+    z = np.load(tmp_path / "o" / "20260913.npz")
+    assert "mascara" not in z.files and {"HH", "HV"} <= set(z.files)
+
+
+def test_escribir_sitio_delta_rfdi(tmp_path, valores):
+    from preparacion.salida import descuantizar
+    e = _sitio_casitagua(tmp_path, valores, con_rfdi=True)
+    sj = escribir_sitio(cargar_sitios()["casitagua"], descubrir(e, "casitagua", "incendio"), tmp_path / "o")
+    assert sj["fechas"][0]["delta_rfdi"] is None and sj["fechas"][1]["delta_rfdi"] == [-1.0, 1.0]
+    d = descuantizar(np.load(tmp_path / "o" / "20260925.npz")["delta_rfdi"], -1, 1)
+    assert abs(float(d[10, 10]) - 0.3) < 0.01 and np.isnan(d[0, 0])
+
+
+def test_rejilla_referencia_desde_stack(tmp_path, valores):
+    e = _sitio_casitagua(tmp_path, valores)
+    for f in e.glob("casitagua/*/mascara.tif"):
+        f.unlink()
+    sj = escribir_sitio(cargar_sitios()["casitagua"], descubrir(e, "casitagua", "incendio"), tmp_path / "o")
+    assert sj["epsg"] == 32717 and sj["transform"][2] == 750000.0 and sj["forma"] == [ALTO, ANCHO]

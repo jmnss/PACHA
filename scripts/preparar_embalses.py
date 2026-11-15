@@ -34,7 +34,7 @@ def main(argv: list[str] | None = None) -> int:
     for s in elegidos:
         dem_fn = None if a.sin_dem else (lambda rej, s=s: dem_en_rejilla(s.bbox, rej, CRUDO))
         destino = salida / CARPETAS[s.tipo] / s.sitio
-        entregas = descubrir(Path(a.entrada), s.sitio)
+        entregas = descubrir(Path(a.entrada), s.sitio, s.tipo)
         sj = escribir_sitio(s, entregas, destino, dem_fn=dem_fn,
                             regenerar_contorno=a.regenerar_contorno)
         print(f"== {s.nombre} ({s.sitio}) -> {destino}")
@@ -45,7 +45,7 @@ def main(argv: list[str] | None = None) -> int:
             if e.fecha.isoformat() not in escritas:
                 print(f"   {e.fecha}  OMITIDA (no se pudo leer; ver avisos). Falta: {', '.join(e.faltan) or 'nada declarado'}")
         for f in sj["fechas"]:
-            sup = ", ".join(f"{k} {v:.2f} km2" for k, v in f["superficie_km2"].items())
+            sup = ", ".join("sin máscara" if v is None else f"{k} {v:.2f} km2" for k, v in f["superficie_km2"].items())
             falta = "completa" if f["procedencia_completa"] else "falta: " + ", ".join(f["faltan"])
             print(f"   {f['fecha']}  {sup}  procedencia {falta}")
             if f["faltan"]:

@@ -9,13 +9,15 @@ import numpy as np
 from pyproj import Transformer
 
 from preparacion.entrada import SIN_DATO, Fecha, Raster, leer_mascara, leer_stack, validar_procedencia
+from preparacion.normalizar import leer_banda
 from preparacion.medidas import contorno, contorno_a_geojson, geojson_a_mascara, superficie_km2
 from preparacion.rejilla import Rejilla, reducir_categorica, reducir_continua, rejilla_derivados, \
-    rejilla_referencia, remuestrear_categorica
+    reducir_media, rejilla_referencia, remuestrear_categorica
 from preparacion.relieve import curva_nivel_superficie, superficie_agua_dem
 from preparacion.sitios import Sitio
 
-VERSION = 1
+VERSION = 2
+RANGO_DELTA_RFDI = (-1.0, 1.0)
 RANGOS_DB = {"HH": (-25.0, 0.0), "HV": (-30.0, -5.0)}
 SIN_DATO_DEM = -32768
 DECIMALES_GEOJSON = 5  # ~1 m: ahorra tamaño frente al presupuesto de 10 MB
@@ -99,18 +101,26 @@ def escribir_sitio(sitio: Sitio, fechas: list[Fecha], destino: Path,
     destino.mkdir(parents=True, exist_ok=True)
     clase = LEYENDAS[sitio.tipo][0][0]
 
-    leidas: list[tuple[Fecha, Raster, Raster | None, Raster | None]] = []
+    leidas: list[tuple[Fecha, Raster | None, Raster | None, Raster | None, Raster | None]] = []
     for f in fechas:
         try:
             hh = hv = None
             if f.stack is not None:
                 hh, hv = leer_stack(f.stack)
-            leidas.append((f, leer_mascara(f.mascara, hh.datos if hh is not None else None), hh, hv))
+            m = leer_mascara(f.mascara, hh.datos if hh is not None else None) if f.mascara is not None else None
+            rfdi = leer_banda(f.delta_rfdi) if f.delta_rfdi is not None else None
+            if m is None and hh is None:
+                raise ValueError("ni máscara ni stack")
+            leidas.append((f, m, hh, hv, rfdi))
         except Exception as e:  # una fecha ilegible no tumba el sitio
             warnings.warn(f"{sitio.sitio} {f.fecha}: fecha omitida ({e})")
-    ref = rejilla_referencia(sitio, [m for _, m, _, _ in leidas])
+    ref = rejilla_referencia(sitio, [m for _, m, _, _, _ in leidas if m is not None]
+                             + [h for _, _, h, _, _ in leidas if h is not None]
+                             + [r for _, _, _, _, r in leidas if r is not None])
     der = rejilla_derivados(ref)
-    ref_mascaras = [m.datos if _mismo_rejilla(m, ref) else remuestrear_categorica(m, ref) for _, m, _, _ in leidas]
+    ref_mascaras = [None if m is None else (m.datos if _mismo_rejilla(m, ref) else remuestrear_categorica(m, ref))
+                    for _, m, _, _, _ in leidas]
+    con_mascara = [x for x in ref_mascaras if x is not None]
 
     # DEM, agua en el DEM y curva (el DEM sin cota válida en la semilla no aborta: se escribe sin él)
     dem = agua_dem = curva = None
@@ -130,8 +140,8 @@ def escribir_sitio(sitio: Sitio, fechas: list[Fecha], destino: Path,
     if ruta_contorno.exists() and not regenerar_contorno:
         gj = json.loads(ruta_contorno.read_text(encoding="utf-8"))
         dentro = geojson_a_mascara(gj, ref)
-    elif ref_mascaras:
-        dentro = contorno(ref_mascaras, ref)
+    elif con_mascara:
+        dentro = contorno(con_mascara, ref)
     elif agua_dem is not None:  # sin entregas: el agua del DEM dilatada (la usan los sustitutos)
         dentro = contorno([agua_dem.astype(np.uint8)], der, min_ha=0)
         ref = der
@@ -143,8 +153,10 @@ def escribir_sitio(sitio: Sitio, fechas: list[Fecha], destino: Path,
         dentro = None
 
     filas = []
-    for (f, m, hh, hv), m_ref in zip(leidas, ref_mascaras):
-        arrays = {"mascara": _a_codigos_contrato(reducir_categorica(m_ref, ref, der))}
+    for (f, m, hh, hv, rfdi), m_ref in zip(leidas, ref_mascaras):
+        arrays = {}
+        if m is not None:
+            arrays["mascara"] = _a_codigos_contrato(reducir_categorica(m_ref, ref, der))
         stack = None
         if hh is not None and _mismo_rejilla(hh, ref):
             for nombre, banda in (("HH", hh), ("HV", hv)):
@@ -152,15 +164,26 @@ def escribir_sitio(sitio: Sitio, fechas: list[Fecha], destino: Path,
             stack = {k: list(v) for k, v in RANGOS_DB.items()}
         elif hh is not None:
             warnings.warn(f"{sitio.sitio} {f.fecha}: el stack no está en la rejilla de referencia; se omite")
+        delta = None
+        if rfdi is not None and _mismo_rejilla(rfdi, ref):
+            arrays["delta_rfdi"] = cuantizar(reducir_media(rfdi.datos, ref, der), *RANGO_DELTA_RFDI)
+            delta = list(RANGO_DELTA_RFDI)
+        elif rfdi is not None:
+            warnings.warn(f"{sitio.sitio} {f.fecha}: el ΔRFDI no está en la rejilla de referencia; se omite")
+        if not arrays:
+            warnings.warn(f"{sitio.sitio} {f.fecha}: fecha omitida (nada que escribir)")
+            continue
         nombre_npz = f"{f.fecha:%Y%m%d}.npz"
         np.savez_compressed(destino / nombre_npz, **arrays)
         faltan = validar_procedencia(f.procedencia)
         faltan += [x for x in f.faltan if "ilegible" in x]
+        sup = None if m is None else round(superficie_km2(m, 1, _dentro_en(m, ref, dentro, gj)), 4)
         filas.append({
-            "fecha": f.fecha.isoformat(), "archivo": nombre_npz,
+            "fecha": f.fecha.isoformat(), "archivo": nombre_npz, "mascara": m is not None,
             "instante": (f.procedencia or {}).get("fecha_adquisicion_utc"),
-            "superficie_km2": {clase: round(superficie_km2(m, 1, _dentro_en(m, ref, dentro, gj)), 4)},
+            "superficie_km2": {clase: sup},
             "procedencia": f.procedencia, "procedencia_completa": not faltan, "faltan": faltan, "stack": stack,
+            "delta_rfdi": delta,
         })
 
     if dem is not None:
