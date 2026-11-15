@@ -9,6 +9,14 @@ export const terminosEn: Terminos = {
     nombre: 'σ⁰',
     explicacion: 'How much signal returns to the satellite from each point on the ground (backscatter). Smooth water returns little; tree canopies return a lot.',
   },
+  gamma0: {
+    nombre: 'γ⁰',
+    explicacion: 'How much signal returns to the satellite from each point on the ground, corrected for the slope of the terrain. Smooth water returns little; tree canopies return a lot.',
+  },
+  rfdi: {
+    nombre: 'RFDI',
+    explicacion: 'Radar forest degradation index: it compares the signal in HH and HV to describe how much vegetation scatters the wave. Its change between two dates (ΔRFDI) points to where vegetation changed.',
+  },
   dB: {
     nombre: 'dB',
     explicacion: 'Decibels: a scale that compresses very different numbers. Every 3 dB of difference is, roughly, double or half the signal.',

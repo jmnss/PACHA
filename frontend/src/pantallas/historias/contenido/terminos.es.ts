@@ -9,6 +9,14 @@ export const terminosEs: Terminos = {
     nombre: 'σ⁰',
     explicacion: 'Cuánta señal vuelve al satélite desde cada punto del suelo. El agua lisa devuelve poca; las copas de los árboles, mucha.',
   },
+  gamma0: {
+    nombre: 'γ⁰',
+    explicacion: 'Cuánta señal vuelve al satélite desde cada punto del suelo, corregida por la inclinación del terreno. El agua lisa devuelve poca; las copas de los árboles, mucha.',
+  },
+  rfdi: {
+    nombre: 'RFDI',
+    explicacion: 'Índice de degradación forestal del radar: compara la señal en HH y en HV para describir cuánta vegetación esparce la onda. Su cambio entre dos fechas (ΔRFDI) apunta a dónde cambió la vegetación.',
+  },
   dB: {
     nombre: 'dB',
     explicacion: 'Decibelios: una escala que comprime números muy distintos. Cada 3 dB de diferencia es, más o menos, el doble o la mitad de señal.',

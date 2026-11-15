@@ -1,22 +1,19 @@
-import { RotuloSimulacion } from '../../diseno/RotuloSimulacion'
-import { Fragment, useMemo, type ReactNode } from 'react'
+import { Fragment, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { useCambio, useCapa, useContexto, type Escenario } from '../../api/consultas'
+import { useCapa, useComparacionEmbalses, useResumen, type Escenario, type LecturaApi } from '../../api/consultas'
 import { ControlSegmentado } from '../../diseno/ControlSegmentado'
-import { NotasModelo } from '../../diseno/NotasModelo'
+import { RotuloSimulacion } from '../../diseno/RotuloSimulacion'
 import { Termino } from '../../diseno/Termino'
-import { EtiquetaMetrica, UnidadMetrica, ValorMetrica } from '../../idioma/MetricaApi'
 import { useT } from '../../idioma/useT'
-import { CintaPasadas } from '../../tiempo/CintaPasadas'
 import { formatearFecha } from '../../tiempo/fechas'
-import { temporadasLluviosas } from '../observatorio/derivados'
 import { CifraPaso } from './CifraPaso'
-import { cifraDePaso, vistaDePaso } from './cifras'
+import { cifraDePaso, planVisor, tituloCapa, type CapaIncendio } from './cifras'
 import { terminosDe } from './contenido'
-import { PASOS, type ContenidoHistoria, type Parrafo } from './contenido/tipos'
+import { PASOS, type ClavePaso, type ContenidoHistoria, type Parrafo } from './contenido/tipos'
+import { FichaSitio } from './FichaSitio'
 import { IndicadorPasos } from './IndicadorPasos'
-import { parejaDeMayorCambio } from './pareja'
-import { PorLlegar } from './PorLlegar'
+import { LecturasApi } from './LecturasApi'
+import { TablaComparacion } from './TablaComparacion'
 import { TarjetaPaso } from './TarjetaPaso'
 import { VisorPaso } from './VisorPaso'
 
@@ -25,7 +22,7 @@ export interface EstadoHistoria {
   paso: number
   /** '' = la polarización recomendada de la historia. */
   pol: '' | 'HH' | 'HV'
-  /** Índice de la pasada «después»; 0 = la pareja automática. */
+  /** Se conserva en la URL por compatibilidad; con dos fechas no se usa. */
   pasada: number
 }
 
@@ -38,51 +35,55 @@ interface Props {
   cabecera?: ReactNode
 }
 
+/** Lecturas de la API que van con cada paso (las demás, en Impactos). */
+function lecturasDe(paso: ClavePaso, todas: LecturaApi[]): LecturaApi[] {
+  const deSatelite = (l: LecturaApi) => /\.(contraste|escena_cambia)$/.test(l.clave_texto)
+  if (paso === 'satelite') return todas.filter(deSatelite)
+  if (paso === 'impactos') return todas.filter((l) => !deSatelite(l))
+  return []
+}
+
 /**
- * Historia como recorrido por cuatro pasos (Datos · Lo que ve el satélite · Simular · Impactos). Cada paso es una
- * tarjeta con su cifra (de la API, con su sello); el comparador queda fijo a la derecha y cambia con el paso.
- * Pareja por defecto: la API no recomienda un intervalo; `parejaDeMayorCambio` la elige con la serie del escenario.
+ * Historia como recorrido por cuatro pasos (Datos · Lo que ve el satélite · Simular · Impactos) con los datos NISAR
+ * del equipo. Las cifras, la ficha y las lecturas salen de `/resumen`; el visor solo pide las capas que cada fecha tiene.
  */
 export function Historia({ contenido: c, esc, estado, cambiar, cabecera }: Props) {
   const { t, idioma } = useT()
-  const fecha = (iso: string | undefined) => formatearFecha(iso, idioma) ?? '—'
   const TERMINOS = terminosDe(idioma)
-  const pasadas = esc.adquisiciones
-  const ultima = pasadas.length - 1
   const recomendada = esc.polarizaciones.includes(c.polarizacion) ? c.polarizacion : esc.polarizaciones[0]
   const pol: string | undefined = estado.pol && esc.polarizaciones.includes(estado.pol) ? estado.pol : recomendada
   const n = Math.min(Math.max(1, estado.paso), PASOS.length)
   const paso = PASOS[n - 1]
+  const [capaIncendio, setCapaIncendio] = useState<CapaIncendio>('mascara')
 
-  const descubrimiento = useCambio(
-    esc.id,
-    useMemo(() => (ultima > 0 ? { antes: pasadas[0].id, despues: pasadas[ultima].id, ...(recomendada ? { polarizacion: recomendada } : {}) } : undefined), [pasadas, ultima, recomendada]),
-  )
-  const pareja = useMemo<[number, number] | null>(() => {
-    if (ultima < 1 || descubrimiento.isPending) return null
-    return parejaDeMayorCambio(descubrimiento.data?.series[0]?.puntos, pasadas) ?? [0, ultima]
-  }, [descubrimiento.isPending, descubrimiento.data, pasadas, ultima])
+  const resumen = useResumen(esc.id)
+  const res = resumen.data
+  const comparacion = useComparacionEmbalses(c.historiaApi === 'embalse')
 
-  const iAntes = pareja ? pareja[0] : 0
-  const iDespues = pareja ? Math.min(ultima, Math.max(iAntes + 1, estado.pasada || pareja[1])) : 0
-  const antes = pareja ? pasadas[iAntes] : undefined
-  const despues = pareja ? pasadas[iDespues] : undefined
-  const peticion = useMemo(
-    () => (antes && despues ? { antes: antes.id, despues: despues.id, ...(pol ? { polarizacion: pol } : {}) } : undefined),
-    [antes, despues, pol],
-  )
-  const resultado = useCambio(esc.id, peticion, true)
-  const vista = vistaDePaso(c, paso, esc)
-  const mascaraAntes = useCapa(esc.id, vista === 'mascara' && antes ? { adquisicion: antes.id, variable: 'mascara' } : undefined)
-  const mascaraDespues = useCapa(esc.id, vista === 'mascara' && despues ? { adquisicion: despues.id, variable: 'mascara' } : undefined)
+  const plan = planVisor(c, paso, esc, res, pol, capaIncendio)
+  const capaA = useCapa(esc.id, plan?.a)
+  const capaB = useCapa(esc.id, plan && plan.modo !== 'sola' ? plan.b : undefined)
 
-  const lat = (esc.bbox[1] + esc.bbox[3]) / 2
-  const lon = (esc.bbox[0] + esc.bbox[2]) / 2
-  const contexto = useContexto(lat, lon)
-  const temporadas = useMemo(() => {
-    const ts = pasadas.map((p) => Date.parse(p.instante))
-    return ts.length ? temporadasLluviosas(contexto.data, Math.min(...ts), Math.max(...ts)) : []
-  }, [contexto.data, pasadas])
+  const fechaDe = (id: string | undefined) => {
+    const a = esc.adquisiciones.find((x) => x.id === id)
+    return formatearFecha(a?.fecha ?? a?.instante, idioma) ?? '—'
+  }
+
+  let etiquetaA = '', etiquetaB = '', titulo = '', queVes = c.pasos[paso].vista.replace('{pol}', pol ?? '')
+  if (plan?.modo === 'fechas') {
+    etiquetaA = t('historias.comparador.antes', { fecha: fechaDe(plan.a.adquisicion) })
+    etiquetaB = t('historias.comparador.despues', { fecha: fechaDe(plan.b.adquisicion) })
+    titulo = plan.a.variable === 'mascara' ? t('historias.comparador.mascara') : tituloCapa(capaA.data)
+  } else if (plan?.modo === 'polarizaciones') {
+    etiquetaA = t('historias.comparador.pol', { pol: 'HH', fecha: fechaDe(plan.a.adquisicion) })
+    etiquetaB = t('historias.comparador.pol', { pol: 'HV', fecha: fechaDe(plan.b.adquisicion) })
+    titulo = `γ⁰ HH / HV, dB`
+    queVes = t('historias.vista.polarizaciones')
+  } else if (plan?.modo === 'sola') {
+    etiquetaA = fechaDe(plan.a.adquisicion)
+    titulo = plan.a.variable === 'delta_rfdi' ? t('historias.comparador.drfdi')
+      : c.historiaApi === 'incendio' ? t('historias.comparador.quemado') : t('historias.comparador.mascara')
+  }
 
   // Un término se explica solo la primera vez que aparece en lo que está abierto.
   const vistos = new Set<string>()
@@ -95,33 +96,30 @@ export function Historia({ contenido: c, esc, estado, cambiar, cabecera }: Props
       return <Termino key={i} nombre={def.nombre} explicacion={def.explicacion} />
     })
 
-  const r = resultado.data
   const polarizaciones = ['HH', 'HV']
     .filter((x) => esc.polarizaciones.includes(x))
     .map((x) => ({ id: x, etiqueta: x === c.polarizacion ? t('historias.pol.recomendada', { pol: x }) : x }))
 
+  const antesId = plan && plan.modo === 'fechas' ? plan.a.adquisicion : esc.adquisiciones[0]?.id
+  const despuesId = plan && plan.modo === 'fechas' ? plan.b.adquisicion : esc.adquisiciones[esc.adquisiciones.length - 1]?.id
   const enlace = `/explorar/observatorio?${new URLSearchParams({
     escenario: esc.id,
-    ...(antes ? { antes: antes.id } : {}),
-    ...(despues ? { despues: despues.id } : {}),
+    ...(antesId ? { antes: antesId } : {}),
+    ...(despuesId ? { despues: despuesId } : {}),
     ...(pol ? { pol } : {}),
     vista: 'comparar',
   })}`
 
   const controles = (
     <div className="visor__controles">
-      {vista === 'radar' && polarizaciones.length > 1 && (
+      {plan?.modo === 'fechas' && plan.a.variable === 'gamma0' && polarizaciones.length > 1 && (
         <ControlSegmentado etiqueta={t('historias.pol.etiqueta')} opciones={polarizaciones} valor={pol ?? ''} onCambiar={(p) => cambiar({ pol: p === recomendada ? '' : (p as 'HH' | 'HV') })} />
       )}
-      <p className="historia__estado" role="status">{resultado.isPlaceholderData ? t('historias.comparador.actualizando') : ''}</p>
-      {pasadas.length > 2 && pareja && (
-        <>
-          <CintaPasadas
-            adquisiciones={pasadas} instante={despues?.instante ?? ''} temporadas={temporadas}
-            onCambio={(_, i) => cambiar({ pasada: i === pareja[1] ? 0 : Math.max(iAntes + 1, i) })}
-          />
-          <p className="historia__nota">{t('historias.comparador.nota_cinta')}</p>
-        </>
+      {c.historiaApi === 'incendio' && paso === 'impactos' && esc.variables.includes('delta_rfdi') && (
+        <ControlSegmentado
+          etiqueta={t('historias.capa.etiqueta')} valor={capaIncendio} onCambiar={(v) => setCapaIncendio(v as CapaIncendio)}
+          opciones={[{ id: 'mascara', etiqueta: t('historias.capa.mascara') }, { id: 'delta_rfdi', etiqueta: t('historias.capa.drfdi') }]}
+        />
       )}
     </div>
   )
@@ -146,26 +144,16 @@ export function Historia({ contenido: c, esc, estado, cambiar, cabecera }: Props
               <TarjetaPaso
                 key={clave} n={i + 1} titular={p.titular} frase={p.frase} abierto={abierto}
                 onAbrir={() => cambiar({ paso: i + 1 })}
-                cifra={<CifraPaso cifra={cifraDePaso(c, clave, esc, r, antes?.instante, despues?.instante)} rotulo={p.cifra} />}
+                cifra={<CifraPaso cifra={cifraDePaso(c, clave, res, pol)} rotulo={p.cifra} pol={pol} />}
               >
-                {p.detalle.map((par, k) => <p key={k} className="historia__parrafo">{texto(par)}</p>)}
-                {clave === 'impactos' && r && r.metricas.length > 0 && (
-                  <details className="paso__metricas">
-                    <summary>{t('historias.cifra.mas')}</summary>
-                    <dl>
-                      {r.metricas.map((m) => (
-                        <div key={m.etiqueta} className="paso__metrica">
-                          <dt><EtiquetaMetrica m={m} /></dt>
-                          <dd><ValorMetrica m={m} /> <UnidadMetrica unidad={m.unidad} /></dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </details>
-                )}
-                {clave === 'satelite' && r && r.notas.length > 0 && <NotasModelo notas={r.notas} escenarioId={esc.id} textos={r.notas_texto} />}
                 {clave === 'simular' && <RotuloSimulacion />}
-                <PorLlegar elementos={p.porLlegar} />
-                {clave === 'simular' && c.historiaApi === 'incendio' && (
+                {p.detalle.map((par, k) => <p key={k} className="historia__parrafo">{texto(par)}</p>)}
+                {clave === 'datos' && res && <FichaSitio datos={res.ficha} />}
+                {res && <LecturasApi lecturas={lecturasDe(clave, res.lecturas)} />}
+                {clave === 'impactos' && c.historiaApi === 'embalse' && comparacion.data && comparacion.data.sitios.length > 1 && (
+                  <TablaComparacion datos={comparacion.data} />
+                )}
+                {clave === 'simular' && (
                   <Link to="/simular" className="boton boton--secundario">{t('historias.simular.enlace')}</Link>
                 )}
                 {siguiente && (
@@ -187,9 +175,8 @@ export function Historia({ contenido: c, esc, estado, cambiar, cabecera }: Props
 
       <div className="historia__visor">
         <VisorPaso
-          vista={vista} queVes={c.pasos[paso].vista.replace('{pol}', pol ?? '')} hayPareja={ultima > 0}
-          cambio={resultado} mascaraAntes={mascaraAntes} mascaraDespues={mascaraDespues}
-          fechaAntes={fecha(antes?.instante)} fechaDespues={fecha(despues?.instante)} controles={controles}
+          queVes={queVes} modo={plan ? (plan.modo === 'sola' ? 'sola' : 'par') : res || resumen.isError ? null : 'par'}
+          a={capaA} b={capaB} etiquetaA={etiquetaA} etiquetaB={etiquetaB} titulo={titulo} controles={controles}
         />
       </div>
     </article>

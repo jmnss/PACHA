@@ -1,8 +1,8 @@
 import { t, type ContenidoHistoria } from './tipos'
 
 /**
- * Incendio en la Sierra (cerro Casitagua). El incendio es un evento real que se nombra sin fecha y con «evento real ·
- * fuente por añadir» hasta tener la fuente (regla 7); el escenario de hoy es de demostración.
+ * Incendio en el cerro Casitagua con las imágenes NISAR del equipo. La fecha del incendio y la superficie publicada
+ * vienen de la ficha de la API, con su fuente; las lecturas son hipótesis.
  */
 export const casitaguaEs: ContenidoHistoria = {
   clave: 'incendio',
@@ -14,46 +14,43 @@ export const casitaguaEs: ContenidoHistoria = {
   polarizacion: 'HV',
   pasos: {
     datos: {
-      titular: 'Un radar que pasa una y otra vez',
-      frase: 'El escenario reúne las pasadas del satélite sobre el cerro, antes y después del fuego.',
-      cifra: 'Pasadas en el escenario',
+      titular: 'Dos pasadas, antes y después del fuego',
+      frase: 'El radar pasó sobre el cerro antes y después del incendio; las dos imágenes se comparan punto a punto.',
+      cifra: 'Inicio del incendio',
       vista: 'Señal del radar en {pol}, antes y después del fuego.',
       detalle: [
-        ['Cada pasada es una imagen del mismo lugar tomada desde la misma órbita, así que se pueden comparar punto a punto.'],
-        ['En este escenario de demostración las pasadas son sintéticas, generadas sobre el relieve real del cerro.'],
+        ['Las dos imágenes cubren el mismo lugar, así que se pueden comparar punto a punto.'],
+        ['Son de NISAR (producto GCOV, ', t('bandaL'), '), procesadas por el equipo PACHA. La fecha del incendio y la superficie publicada vienen de la prensa, con su enlace.'],
       ],
-      porLlegar: ['Ficha del sitio con fuente: superficie reportada del incendio.'],
     },
     satelite: {
       titular: 'Lo que ardió pierde señal',
-      frase: 'Cuando el fuego consume ramas y troncos, vuelve menos señal al satélite.',
-      cifra: 'Área quemada que detecta el radar',
+      frase: 'Cuando el fuego consume ramas y troncos, debería volver menos señal al satélite, sobre todo en HV.',
+      cifra: 'Señal {pol} dentro del área marcada el {fecha} (mediana)',
       vista: 'Señal del radar en {pol}, antes y después: más oscuro = menos ramas y troncos.',
       detalle: [
-        ['Un ', t('radar'), ' emite su propia señal, así que ve a través del humo. Lo que vuelve de cada punto se llama ', t('sigma0'), ' y se mide en ', t('dB'), '.'],
-        ['La onda de ', t('bandaL'), ' atraviesa las hojas y llega a ramas y troncos. La ', t('polarizacion'), ' ', t('HV'), ' responde a esa madera: cuando se quema, la señal cae. En ', t('HH'), ' el cambio se nota menos.'],
+        ['Un ', t('radar'), ' emite su propia señal, así que ve a través del humo. Lo que vuelve de cada punto se llama ', t('gamma0'), ' y se mide en ', t('dB'), '.'],
+        ['La onda de ', t('bandaL'), ' atraviesa las hojas y llega a ramas y troncos. La ', t('polarizacion'), ' ', t('HV'), ' responde a esa madera: cuando se quema, se espera que la señal caiga. En ', t('HH'), ' el cambio se nota menos.'],
       ],
-      porLlegar: [],
     },
     simular: {
       titular: 'Provoca tu propio incendio',
       frase: 'En el Simulador puedes encender un fuego de ejemplo y ver hasta dónde llega.',
-      cifra: 'Área quemada simulada (verdad sintética)',
+      cifra: '',
       vista: 'Señal del radar en {pol}: compárala con lo que simules.',
       detalle: [
-        ['La verdad sintética es el perímetro que dibujó el generador de demostración. Sirve para medir cuánto acierta el detector del paso anterior.'],
+        ['El Simulador genera imágenes de radar con un modelo físico sencillo. Sirve para entender qué cambia en la señal; sus cifras no describen este incendio.'],
       ],
-      porLlegar: ['Simulación colocada en el Casitagua, con los impactos recalculados.'],
     },
     impactos: {
-      titular: 'Qué se perdió con el fuego',
-      frase: 'En este escenario de demostración, la vegetación quemada se traduce en carbono enviado al aire.',
-      cifra: 'CO₂ emitido (estimado)',
-      vista: 'Señal del radar en {pol}: la zona oscura es la que perdió biomasa.',
+      titular: 'Cuánto marcó el equipo como quemado',
+      frase: 'La máscara del equipo marca el área quemada; la capa ΔRFDI muestra dónde cambió la vegetación.',
+      cifra: 'Área marcada como quemada el {fecha}',
+      vista: 'Después del fuego: la máscara de quemado del equipo o el ΔRFDI.',
       detalle: [
-        ['La API estima la biomasa perdida con la superficie quemada y, de ella, el CO₂. Son cifras de ejemplo: con datos reales serían una hipótesis por comprobar.'],
+        ['El ', t('rfdi'), ' compara la señal en ', t('HH'), ' y en ', t('HV'), '. El ΔRFDI es el RFDI de antes menos el de después: según el equipo, un valor positivo indica menos vegetación.'],
+        ['Las cifras de abajo son hipótesis por comprobar: la API las contrasta con la superficie publicada.'],
       ],
-      porLlegar: ['Calidad del aire y factores de emisión con su cita.'],
     },
   },
 }

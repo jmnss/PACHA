@@ -1,6 +1,6 @@
 /** Términos técnicos que las historias explican la primera vez que aparecen (docs/diseno.md §8). */
 export type IdTermino =
-  | 'radar' | 'sigma0' | 'dB' | 'HH' | 'HV' | 'polarizacion' | 'bandaL' | 'dielectrica' | 'rugosidad'
+  | 'radar' | 'sigma0' | 'gamma0' | 'dB' | 'HH' | 'HV' | 'polarizacion' | 'bandaL' | 'dielectrica' | 'rugosidad' | 'rfdi'
 
 /** Un trozo de párrafo: texto llano o un término técnico. */
 export type Segmento = string | { termino: IdTermino }
@@ -18,18 +18,16 @@ export type ClavePaso = (typeof PASOS)[number]
 
 /**
  * Un paso, con divulgación progresiva: se ve el titular, la frase llana y la cifra (que sale de la API); el
- * detalle técnico y los huecos «por llegar» se abren al elegir el paso.
+ * detalle técnico se abre al elegir el paso.
  */
 export interface PasoHistoria {
   titular: string
   frase: string
-  /** Rótulo de la cifra visible; `{fecha}` es la fecha de la pasada a la que se refiere. */
+  /** Rótulo de la cifra visible; `{fecha}` es la fecha de la pasada y `{pol}` la polarización activa. */
   cifra: string
   /** «Qué estás viendo» en el comparador durante este paso; `{pol}` es la polarización activa. */
   vista: string
   detalle: Parrafo[]
-  /** Lo que la fase 2 aún no trae: se nombra y se marca «por llegar», nunca se inventa. */
-  porLlegar: string[]
 }
 
 /** Una historia sobre los escenarios del equipo. */

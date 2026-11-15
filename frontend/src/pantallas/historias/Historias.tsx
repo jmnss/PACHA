@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import { mensajeDeError } from '../../api/cliente'
-import { useEscenarios } from '../../api/consultas'
+import { useEscenarios, useResumen } from '../../api/consultas'
 import { CabeceraPantalla } from '../../diseno/CabeceraPantalla'
 import { ControlSegmentado } from '../../diseno/ControlSegmentado'
 import { Cargando, ErrorBloque, Vacio } from '../../diseno/Estados'
 import { useEstadoUrl, type Esquema } from '../../estado/useEstadoUrl'
 import { useTituloPagina } from '../../estado/useTituloPagina'
 import { useT } from '../../idioma/useT'
+import { formatearFecha } from '../../tiempo/fechas'
 import { HISTORIAS, historiasDe } from './contenido'
 import { PASOS } from './contenido/tipos'
 import { Historia } from './Historia'
@@ -35,6 +36,8 @@ export default function Historias() {
   const sitio = contenido.sitios.includes(url.sitio) ? url.sitio : contenido.sitios[0]
   const deLaHistoria = escenarios.data?.filter((e) => e.historia === contenido.historiaApi && e.sitio && contenido.sitios.includes(e.sitio)) ?? []
   const esc = deLaHistoria.find((e) => e.sitio === sitio)
+  const resumen = useResumen(esc?.id)
+  const inicio = resumen.data?.ficha.find((d) => d.id === 'fecha_inicio')
 
   const indice = (
     <nav className="historias__indice" aria-label={t('historias.indice.etiqueta')}>
@@ -55,7 +58,7 @@ export default function Historias() {
     </nav>
   )
 
-  // Embalses: elegir el sitio (los nombres salen de la API). Incendio: el evento real, sin fecha y sin fuente aún.
+  // Embalses: elegir el sitio (los nombres salen de la API). Incendio: el evento real con su fecha y su fuente (ficha).
   const cabecera = contenido.clave === 'embalses' ? (
     deLaHistoria.length > 1 ? (
       <ControlSegmentado
@@ -68,9 +71,15 @@ export default function Historias() {
         onCambiar={(s) => cambiar({ sitio: s === contenido.sitios[0] ? '' : s, paso: url.paso, pol: '', pasada: 0 })}
       />
     ) : null
-  ) : (
-    <p className="historia__evento-real">{t('historias.evento_real')}</p>
-  )
+  ) : inicio ? (
+    <p className="historia__evento-real">
+      {t('historias.evento.fecha', { fecha: formatearFecha(String(inicio.valor), idioma) ?? String(inicio.valor) })}
+      {' · '}
+      <a href={inicio.fuente.url} target="_blank" rel="noopener noreferrer" title={inicio.fuente.cita}>
+        {t('historias.evento.fuente', { fuente: inicio.fuente.nombre })}
+      </a>
+    </p>
+  ) : null
 
   let cuerpo
   if (escenarios.isPending) cuerpo = <Cargando texto={t('historias.cargando')} filas={4} />

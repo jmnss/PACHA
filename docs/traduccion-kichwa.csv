@@ -156,6 +156,12 @@ api.escenario.ec_loja.descripcion,Escenario ilustrativo: bosque andino y matorra
 api.escenario.ec_loja.sitio,Bosques andinos de Loja,Loja Andean forests,Lojapa Andes sachakuna,no
 api.escenario.ec_pedernales.descripcion,"Escenario ilustrativo: sismo de subducción frente a Manabí. El océano, al oeste, no tiene datos de radar.","Illustrative scenario: subduction earthquake off Manabí. The ocean, to the west, has no radar data.","Rikuchiy escenario: Manabí ñawpapi subducción allpa kuyuy. Mama kucha, intipa chinkana kinraypi, radar willaykunata mana charin.",no
 api.escenario.ec_pedernales.sitio,Pedernales (Manabí),Pedernales (Manabí),Pedernales (Manabí),no
+api.ficha.area_publicada.etiqueta,Superficie afectada publicada,Published affected area,Rimashka rupashka allpa,no
+api.ficha.fecha_inicio.etiqueta,Inicio del incendio,Fire start,Rupay kallari,no
+api.ficha.potencia_central.etiqueta,Potencia instalada de la central,Installed capacity of the power plant,Central ushay,no
+api.ficha.potencia_complejo.etiqueta,Potencia instalada del complejo,Installed capacity of the complex,Tantanakuy ushay,no
+api.ficha.unidades.etiqueta,Unidades de generación,Generating units,Ushay rurakkuna,no
+api.ficha.volumen_embalse.etiqueta,Volumen del embalse,Reservoir volume,Yaku huntachina,no
 api.impacto.accion.incendio.1,Contrastar la cicatriz con los reportes de bomberos y con focos de calor ópticos antes de actuar.,Cross-check the scar against firefighters' reports and optical heat hotspots before acting.,"Ruranapak ñawpa, cicatrizta bomberokunapa willaykunawan, óptico rupay puntukunawan ima tupachiy.",no
 api.impacto.accion.incendio.1_hipotetica,"Si esto fuera un evento real, contrastar la cicatriz con los reportes de bomberos y con focos de calor ópticos antes de actuar.","If this were a real event, cross-check the scar against firefighters' reports and optical heat hotspots before acting.","Kay chiqan evento kakpika, ruranapak ñawpa, cicatrizta bomberokunapa willaykunawan, óptico rupay puntukunawan ima tupachiy.",no
 api.impacto.accion.incendio.2,"Priorizar la revisión de las zonas de severidad alta, donde la pérdida de estructura es mayor.","Prioritise checking the high-severity zones, where the loss of structure is greatest.","Sinchi severidad zonakunata ñawpaman llanchiy, maypi sacha kayka ashtawan tukurin.",no
@@ -364,6 +370,16 @@ api.opcion.terremotos.rake.normal,Normal,Normal,Normal,no
 api.opcion.terremotos.rake.rumbo_dextral,Rumbo dextral,Right-lateral strike-slip,Rumbo dextral,no
 api.opcion.terremotos.rake.rumbo_sinistral,Rumbo sinistral,Left-lateral strike-slip,Rumbo sinistral,no
 api.plantilla.nota.pedernales_los,"Vector LOS (este, norte, arriba) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR mira a la izquierda: el movimiento norte-sur casi no se proyecta en la línea de vista, por eso las fallas de rumbo N-S se complementan con desplazamientos de píxel (GOFF).","LOS vector (east, north, up) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR looks to the left: north-south motion barely projects onto the line of sight, which is why N-S strike faults are complemented with pixel offsets (GOFF).","LOS vector (inti llukshina, chinchay, hawa) = ({le_signo_punto}, {ln_signo_punto}, {lu_signo_punto}). NISAR-ka lluki ladoman rikun: chinchay-urin kuyuriyka rikuy línea-pi ashallata rikurin, chaymanta N-S rumbo fallakunataka píxel kuyuriykunawan (GOFF) paktachin.",no
+api.resumen.lectura.comparacion,"{sitio_a} cambia {rel_a} % de su superficie de agua en {dias_a} días; {sitio_b}, {rel_b} % en {dias_b} días. Las fechas no coinciden ({entre_a} días de desfase entre las primeras y {entre_d} entre las segundas): la comparación es orientativa.","{sitio_a} changes {rel_a} % of its water area in {dias_a} days; {sitio_b}, {rel_b} % in {dias_b} days. The dates do not match ({entre_a} days apart for the first ones and {entre_d} for the second ones): the comparison is only indicative.","{sitio_a} yakuka {rel_a} % shuktayan {dias_a} punchakunapi; {sitio_b}, {rel_b} % {dias_b} punchakunapi. Punchakunaka mana kikinchu ({entre_a} punchakuna ñawpakunapi, {entre_d} kipakunapi): chimpapurachinaka rikuchillami.",no
+api.resumen.lectura.embalse.baja,"Entre el {antes} y el {despues} ({dias} días), la superficie de agua medida pasa de {a} a {d} km² ({rel} %). Sugiere que el nivel del embalse bajó; queda por contrastar con la cota publicada por el operador.","Between {antes} and {despues} ({dias} days), the measured water area goes from {a} to {d} km² ({rel} %). This suggests the reservoir level dropped; it still has to be checked against the level published by the operator.","{antes} punchamanta {despues} punchakama ({dias} punchakuna), yaku allpaka {a} km²-manta {d} km²-man rin ({rel} %). Yaku urmashkata yuyachin; operadorpa willaywan rikuna kan.",no
+api.resumen.lectura.embalse.contraste,"El {fecha}, el agua se ve más oscura en HH (mediana {agua} dB) que el resto de la escena ({resto} dB). Es compatible con una superficie lisa que refleja la señal lejos del radar.","On {fecha}, water looks darker in HH (median {agua} dB) than the rest of the scene ({resto} dB). This fits a smooth surface that reflects the signal away from the radar.","{fecha} punchapi, yakuka HH-pi yanami rikurin ({agua} dB) shuk allpamanta ({resto} dB). Llampu yaku hawa radarmanta karuman kutichishkawan tinkin.",no
+api.resumen.lectura.embalse.estable,"Entre el {antes} y el {despues} ({dias} días), la superficie de agua medida apenas cambia: de {a} a {d} km² ({rel} %).","Between {antes} and {despues} ({dias} days), the measured water area barely changes: from {a} to {d} km² ({rel} %).","{antes} punchamanta {despues} punchakama ({dias} punchakuna), yaku allpaka ashallata shuktayan: {a} km²-manta {d} km²-man ({rel} %).",no
+api.resumen.lectura.embalse.sube,"Entre el {antes} y el {despues} ({dias} días), la superficie de agua medida pasa de {a} a {d} km² (+{rel} %). Sugiere que el nivel del embalse subió; queda por contrastar con la cota publicada por el operador.","Between {antes} and {despues} ({dias} days), the measured water area goes from {a} to {d} km² (+{rel} %). This suggests the reservoir level rose; it still has to be checked against the level published by the operator.","{antes} punchamanta {despues} punchakama ({dias} punchakuna), yaku allpaka {a} km²-manta {d} km²-man rin (+{rel} %). Yaku wichiyashkata yuyachin; operadorpa willaywan rikuna kan.",no
+api.resumen.lectura.escena_cambia,La mediana de HV de toda la escena pasa de {a} dB el {antes} a {d} dB el {despues} ({dif} dB). Un cambio tan grande en toda la escena apunta a diferencias de procesamiento o de geometría entre las dos imágenes más que a un cambio del terreno.,The HV median of the whole scene goes from {a} dB on {antes} to {d} dB on {despues} ({dif} dB). Such a large change across the whole scene points to differences in processing or geometry between the two images rather than a change on the ground.,"Tukuy rikuypa HV chawpika {a} dB {antes} punchapi, {d} dB {despues} punchapi ({dif} dB). Chashna hatun shuktayayka ishkay rikchakunapa rurashka shuktayaymanta kanchu, mana allpa shuktayaymantachu.",no
+api.resumen.lectura.incendio.area,La máscara del equipo marca {km2} km² ({ha} ha) como quemados el {fecha}.,The team's mask marks {km2} km² ({ha} ha) as burned on {fecha}.,Ayllupa killkaka {km2} km² ({ha} ha) rupashkata rikuchin {fecha} punchapi.,no
+api.resumen.lectura.incendio.publicada,"La máscara marca unas {ha} ha; la cifra publicada es {publicada} ha ({fuente}), unas {razon} veces menos. Sugiere que la máscara incluye cambios que no son quemado; hay que revisarla antes de usar la cifra.","The mask marks about {ha} ha; the published figure is {publicada} ha ({fuente}), about {razon} times less. This suggests the mask includes changes that are not burn scars; it needs review before the figure is used.","Killkaka {ha} ha rikuchin; rimashka yupayka {publicada} ha ({fuente}), {razon} kuti ashalla. Killkaka mana rupashka shuktayaykunatapash charin; yupayta ushashpa ñawpa rikuna kan.",no
+api.resumen.lectura.incendio.rfdi_no_separa,"La mediana de ΔRFDI es {dentro} dentro del área marcada y {fuera} fuera (diferencia {dif}): casi igual. El cambio afecta a toda la escena, así que el ΔRFDI por sí solo no distingue el área marcada.","The median ΔRFDI is {dentro} inside the marked area and {fuera} outside (difference {dif}): almost the same. The change affects the whole scene, so ΔRFDI alone does not single out the marked area.","ΔRFDI chawpika {dentro} killkashka ukupi, {fuera} hawapi ({dif}): kikinlla. Shuktayayka tukuy rikuypimi, chaymanta ΔRFDI shinallaka mana killkashkata shikanyachinchu.",no
+api.resumen.lectura.incendio.rfdi_separa,"La mediana de ΔRFDI es {dentro} dentro del área marcada y {fuera} fuera (diferencia {dif}). El área marcada cambia distinto del resto, lo que apoya la hipótesis de un efecto del fuego.","The median ΔRFDI is {dentro} inside the marked area and {fuera} outside (difference {dif}). The marked area changes differently from the rest, which supports the hypothesis of a fire effect.","ΔRFDI chawpika {dentro} killkashka ukupi, {fuera} hawapi ({dif}). Killkashkaka shuk shina shuktayan, rupaypa yuyayta sinchiyachin.",no
 api.serie.0_hh_en_la_seleccion,σ⁰ HH en la selección,σ⁰ HH in the selection,Akllashkapi σ⁰ HH,no
 api.serie.0_hv_en_la_seleccion,σ⁰ HV en la selección,σ⁰ HV in the selection,Akllashkapi σ⁰ HV,no
 api.serie.0_hv_medio,σ⁰ HV medio,Mean σ⁰ HV,σ⁰ HV chawpi,no
@@ -703,23 +719,42 @@ guia.paso,Paso {n} de {total},Step {n} of {total},"{n} ñiqi, {total} ukumanta",
 guia.repetir,Ver la guía otra vez,See the guide again,Pushaqta shuk kutin rikuy,no
 guia.saltar,Saltar guía,Skip guide,Pushaqta usha,no
 guia.siguiente,Siguiente,Next,Qatiq,no
+historias.capa.drfdi,ΔRFDI,ΔRFDI,ΔRFDI,no
+historias.capa.etiqueta,Capa,Layer,Capa,no
+historias.capa.mascara,Máscara de quemado,Burn mask,Máscara de quemado,no
 historias.cargando,Cargando la historia…,Loading the story…,Willakuyta chaskishka…,no
 historias.cifra.calculando,Calculando…,Computing…,Yupashka…,no
 historias.cifra.mas,Todas las cifras del escenario,All the figures of the scenario,Escenariopa tukuy yupaykuna,no
 historias.cifra.pasadas,{n} pasadas,{n} passes,{n} pasadakuna,no
+historias.comparacion.antes,Antes (km²),Before (km²),Antes (km²),no
+historias.comparacion.despues,Después (km²),After (km²),Después (km²),no
+historias.comparacion.dias,{n} días,{n} days,{n} días,no
+historias.comparacion.fechas,Fechas,Dates,Fechas,no
+historias.comparacion.sitio,Embalse,Reservoir,Embalse,no
+historias.comparacion.titulo,Los dos embalses con la misma medida,Both reservoirs with the same measure,Los dos embalses con la misma medida,no
+historias.comparacion.variacion,Variación (%),Change (%),Variación (%),no
 historias.comparador.actualizando,Actualizando…,Updating…,Mushukyachishka…,no
 historias.comparador.antes,Antes · {fecha},Before · {fecha},Ñawpa · {fecha},no
 historias.comparador.calculando,Calculando el cambio entre las dos pasadas…,Computing the change between the two passes…,Ishkay pasadakunapa tikrayta yupachishka…,no
 historias.comparador.despues,Después · {fecha},After · {fecha},Washa · {fecha},no
+historias.comparador.drfdi,ΔRFDI (antes − después; positivo = menos vegetación),ΔRFDI (before − after; positive = less vegetation),ΔRFDI (antes − después; positivo = menos vegetación),no
 historias.comparador.mascara,Máscara de agua,Water mask,Yaku máscara,no
 historias.comparador.nota_cinta,Una muesca por pasada del satélite. Mueve el cursor para elegir «después»; «antes» queda fija.,One notch per satellite pass. Move the cursor to choose “after”; “before” stays fixed.,Sapa satélitepa pasadapak shuk rikchay. Kursorta kuyuchishpa «washa»ta akllay; «ñawpa» sayashkallami kan.,no
+historias.comparador.pol,{pol} · {fecha},{pol} · {fecha},{pol} · {fecha},no
+historias.comparador.quemado,Máscara de quemado del equipo,Team’s burn mask,Máscara de quemado del equipo,no
 historias.comparador.sin_pasadas,Este escenario no tiene dos pasadas distintas para comparar.,This scenario does not have two different passes to compare.,Kay escenariopi mana ishkay mana kikin pasadakuna tiyanchu tupachinkapak.,no
 historias.creditos,"Créditos: clima de NASA POWER, límites de provincias de geoBoundaries (CC0), tipografía Public Sans y Spectral (SIL OFL).","Credits: climate from NASA POWER, province boundaries from geoBoundaries (CC0), Public Sans and Spectral typefaces (SIL OFL).","Yupaychay: NASA POWER-manta clima, geoBoundaries-manta provinciakunapa límites (CC0), Public Sans, Spectral tipografía (SIL OFL).",no
-historias.evento_real,evento real · fuente por añadir,real event · source to be added,chiqan tukuy · pukyuta yapanami,no
+historias.evento.fecha,Incendio del {fecha},Fire of {fecha},Incendio del {fecha},no
+historias.evento.fuente,fuente: {fuente},source: {fuente},fuente: {fuente},no
+historias.ficha.fuente,Fuente,Source,Fuente,no
+historias.ficha.titulo,"Datos del sitio, con su fuente","Site facts, with their source","Datos del sitio, con su fuente",no
 historias.final.boton,Explóralo tú en el Observatorio,Explore it yourself in the Observatory,Observatoriopi kikin maskay,no
 historias.final.texto,"Mide puntos y cuadrantes, cambia de pasada y descarga los datos de este mismo escenario.","Measure points and boxes, change the pass and download the data of this same scenario.","Pushtukunata, cuadrantekunata tupuy, pasadata tikray, kay escenariopa datokunata uraykachiy.",no
 historias.final.titulo,Explóralo tú,Explore it yourself,Kikin maskay,no
 historias.indice.etiqueta,Historias,Stories,Willakuykuna,no
+historias.lecturas.titulo,Qué sugieren los datos (hipótesis por comprobar),What the data suggest (hypotheses to be checked),Qué sugieren los datos (hipótesis por comprobar),no
+historias.leyenda.drfdi_mas,menos vegetación,less vegetation,menos vegetación,no
+historias.leyenda.drfdi_menos,más vegetación,more vegetation,más vegetación,no
 historias.marca.ejemplo,En este escenario de demostración,In this demonstration scenario,Kay rikuchiy escenariopi,no
 historias.marca.pendiente,pendiente de confirmar con la documentación oficial,pending confirmation with the official documentation,kamachik panka-wan chiqanyachina kan,no
 historias.paso.indicador,Paso {n} de {total},Step {n} of {total},{total} pasomanta {n} paso,no
@@ -728,14 +763,13 @@ historias.paso.numero,Paso {n},Step {n},{n} paso,no
 historias.paso.siguiente,Siguiente: {titular},Next: {titular},Katik: {titular},no
 historias.pol.etiqueta,Polarización,Polarization,Polarización,no
 historias.pol.recomendada,{pol} · recomendada,{pol} · recommended,{pol} · ruranapak,no
-historias.por_llegar,Por llegar,Coming soon,Shamunkarak,no
-historias.por_llegar.nota,Aún no está en la app; no se muestra ninguna cifra inventada.,Not in the app yet; no made-up figure is shown.,Appika kunanrak mana charinchu; mana yuyarishka yupayta rikuchinchu.,no
 historias.pregunta,"Qué ve el radar cuando baja el agua de un embalse o arde la Sierra, paso a paso.","What the radar sees when a reservoir drops or the Sierra burns, step by step.","Embalsepi yaku urakukpi o Sierrapi nina rupakpi, radarka ima rikun, paso paso.",no
 historias.simular.enlace,Abrir el Simulador,Open the Simulator,Simuladorta paskay,no
 historias.sin_escenario.texto,Todavía no hay un escenario para esta historia. Prueba con la otra.,There is no scenario for this story yet. Try the other one.,Kay willakuypak mana ima escenario tiyanchu. Shukwanmi ensayay.,no
 historias.sin_escenario.titulo,Esta historia no tiene escenario,This story has no scenario,Kay willakuypak escenario mana tiyanchu,no
 historias.sitio.etiqueta,Embalse,Reservoir,Embalse,no
 historias.vista.etiqueta,Qué estás viendo,What you are seeing,Ima rikukunki,no
+historias.vista.polarizaciones,"La misma fecha en HH y en HV: la otra fecha no tiene imagen de radar, solo máscara.","The same date in HH and HV: the other date has no radar image, only a mask.","La misma fecha en HH y en HV: la otra fecha no tiene imagen de radar, solo máscara.",no
 idioma.aviso_qu,Traducción en revisión por hablantes · {validadas} de {total} textos validados,Translation under review by speakers · {validadas} of {total} texts validated,Kichwa tikrayka manaraka chiqanyachishkachu · {total}-manta {validadas} chiqanyachishka,no
 idioma.selector.etiqueta,Idioma,Language,Shimi,no
 idioma.sin_traducir,Texto aún sin traducir; se muestra en español,Text not yet translated; shown in Spanish,Kay killkaka mana tikrashkachu; castellano shimipi rikuchishka,no

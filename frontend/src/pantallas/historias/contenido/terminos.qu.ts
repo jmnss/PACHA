@@ -11,6 +11,14 @@ export const terminosQu: Terminos = {
     nombre: 'σ⁰',
     explicacion: 'Allpapa sapa puntomanta satéliteman hayk señal kutimun. Llampu yakuka pishita kutichin; mallkikunapa umakunaka achkata.',
   },
+  gamma0: {
+    nombre: 'γ⁰',
+    explicacion: 'Cuánta señal vuelve al satélite desde cada punto del suelo, corregida por la inclinación del terreno. El agua lisa devuelve poca; las copas de los árboles, mucha.',
+  },
+  rfdi: {
+    nombre: 'RFDI',
+    explicacion: 'Índice de degradación forestal del radar: compara la señal en HH y en HV para describir cuánta vegetación esparce la onda. Su cambio entre dos fechas (ΔRFDI) apunta a dónde cambió la vegetación.',
+  },
   dB: {
     nombre: 'dB',
     explicacion: 'Decibelios: achka mana kikin yupaykunata pishiyachik escalami. Sapa 3 dB mana kikin kayka, yapa ishkay kuti o chawpi señal kan.',

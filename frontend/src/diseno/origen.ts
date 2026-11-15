@@ -30,7 +30,8 @@ export function textoSello(o: Origen | null | undefined, t: T = traductor('es').
   const producto = pr?.producto ?? real.producto
   if (producto) partes.push(producto)
   if (pr?.polarizaciones?.length) partes.push(pr.polarizaciones.join('/'))
-  const fecha = pr?.fecha_adquisicion ?? real.fecha_generacion
+  // Fecha de ADQUISICIÓN (solo el día): la de generación del derivado no se presenta como tal.
+  const fecha = pr ? pr.fecha_adquisicion ?? pr.fecha : real.fecha_generacion
   if (fecha) partes.push(fechaCorta(fecha))
   if (propio) partes.push(t('origen.sello.procesado'))
   if (pr?.granulos?.length) partes.push(t('origen.sello.granulo', { id: pr.granulos.join(', ') }))

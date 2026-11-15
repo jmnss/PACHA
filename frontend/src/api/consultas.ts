@@ -136,3 +136,26 @@ export const useImpacto = (id: string | undefined, antes: string | undefined, de
     enabled: habilitado && !!id && !!antes && !!despues && antes !== despues,
     staleTime: Infinity,
   })
+
+export type ResumenSitio = S['ResumenSitio']
+export type ComparacionEmbalses = S['ComparacionEmbalses']
+export type LecturaApi = S['Lectura']
+export type DatoFicha = S['DatoFicha']
+
+/** Resumen científico de un sitio del equipo: superficies, retrodispersión, ΔRFDI, ficha con fuentes y lecturas. */
+export const useResumen = (id: string | undefined) =>
+  useQuery({
+    queryKey: ['resumen', id],
+    queryFn: () => llamar<ResumenSitio>(`/api/escenarios/${e(id!)}/resumen`),
+    enabled: !!id,
+    staleTime: Infinity,
+  })
+
+/** Misma métrica (superficie de agua) en los embalses del equipo, con el desfase de fechas. */
+export const useComparacionEmbalses = (habilitado = true) =>
+  useQuery({
+    queryKey: ['comparacion-embalses'],
+    queryFn: () => llamar<ComparacionEmbalses>('/api/comparacion/embalses'),
+    enabled: habilitado,
+    staleTime: Infinity,
+  })

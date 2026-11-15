@@ -78,17 +78,6 @@
 .cifra-paso__pendiente { font-family: var(--font-sans); font-size: var(--fs-13); font-weight: 400; color: var(--muted); }
 .cifra-paso .sello-origen { margin: 0; }
 
-/* Huecos de la fase 2. */
-.por-llegar { display: flex; flex-direction: column; gap: var(--space-2); }
-.por-llegar__lista { display: flex; flex-direction: column; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
-.por-llegar__elemento { display: flex; align-items: baseline; gap: var(--space-2); font-size: var(--fs-15); line-height: var(--lh-24); color: var(--secondary); }
-.por-llegar__chip {
-  display: inline-block; flex: none; padding: 0 var(--space-2); border-radius: var(--radius-chip);
-  background: var(--pill-neutral-bg); color: var(--pill-neutral-ink); font-family: var(--font-sans);
-  font-size: var(--fs-12); line-height: var(--lh-20); font-weight: 600;
-}
-.por-llegar__nota { margin: 0; font-size: var(--fs-12); line-height: var(--lh-16); color: var(--muted); }
-
 .historia__final { display: flex; flex-direction: column; gap: var(--space-3); padding-top: var(--space-5); border-top: 1px solid var(--border); }
 .historia__final-titulo { margin: 0; font-family: var(--font-serif); font-size: var(--fs-20); line-height: var(--lh-28); font-weight: 600; }
 
@@ -110,3 +99,19 @@
   .paso { padding: var(--space-4); }
 }
 .historias__creditos { margin-top: var(--space-7); color: var(--muted); font-size: var(--fs-12); line-height: var(--lh-16); max-width: var(--w-lectura); }
+
+/* Datos reales del equipo: ficha con fuentes, lecturas (hipótesis) y comparación de embalses. */
+.cifra-paso__fuente { margin: 0; font-size: var(--fs-12); line-height: var(--lh-16); color: var(--muted); }
+.ficha-sitio, .lecturas-api, .comparacion-embalses { display: flex; flex-direction: column; gap: var(--space-2); }
+.ficha-sitio__titulo, .lecturas-api__titulo, .comparacion-embalses__titulo { margin: 0; font-size: var(--fs-13); line-height: var(--lh-20); font-weight: 600; color: var(--secondary); }
+.ficha-sitio__lista { display: flex; flex-direction: column; gap: var(--space-2); margin: 0; }
+.ficha-sitio__dato { display: flex; flex-direction: column; gap: var(--space-1); }
+.ficha-sitio__dato dt { font-size: var(--fs-13); line-height: var(--lh-20); color: var(--muted); }
+.ficha-sitio__dato dd { display: flex; flex-direction: column; gap: var(--space-1); margin: 0; }
+.ficha-sitio__valor { font-size: var(--fs-15); line-height: var(--lh-24); font-variant-numeric: tabular-nums; }
+.ficha-sitio__fuente { font-size: var(--fs-12); line-height: var(--lh-16); color: var(--muted); }
+.lecturas-api__lista { display: flex; flex-direction: column; gap: var(--space-2); margin: 0; padding-left: var(--space-4); font-size: var(--fs-15); line-height: var(--lh-24); }
+.comparacion-embalses__marco { overflow-x: auto; }
+.comparacion-embalses__tabla { width: 100%; border-collapse: collapse; font-size: var(--fs-13); line-height: var(--lh-20); }
+.comparacion-embalses__tabla th, .comparacion-embalses__tabla td { padding: var(--space-1) var(--space-2); border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+.comparacion-embalses__tabla .num { text-align: right; font-variant-numeric: tabular-nums; }
