@@ -1,6 +1,22 @@
 import type { api as esApi } from '../es/api'
 
 export const api: Record<keyof typeof esApi, string> = {
+  'api.cambio.metrica.embalse.antes.ayuda': 'Measured on the original grid, inside the outline, on {fecha}.',
+  'api.cambio.metrica.embalse.antes.etiqueta': 'Water area before',
+  'api.cambio.metrica.embalse.despues.ayuda': 'Measured on the original grid, inside the outline, on {fecha}.',
+  'api.cambio.metrica.embalse.despues.etiqueta': 'Water area after',
+  'api.cambio.metrica.embalse.variacion.ayuda': 'Change in water area between the two dates.',
+  'api.cambio.metrica.embalse.variacion.etiqueta': 'Change in area',
+  'api.cambio.metrica.embalse.variacion_relativa.ayuda': 'Change in water area relative to the earlier date.',
+  'api.cambio.metrica.embalse.variacion_relativa.etiqueta': 'Relative change',
+  'api.cambio.metrica.incendio.antes.ayuda': 'Measured on the original grid, inside the outline, on {fecha}.',
+  'api.cambio.metrica.incendio.antes.etiqueta': 'Burned area before',
+  'api.cambio.metrica.incendio.despues.ayuda': 'Measured on the original grid, inside the outline, on {fecha}.',
+  'api.cambio.metrica.incendio.despues.etiqueta': 'Burned area after',
+  'api.cambio.metrica.incendio.variacion.ayuda': 'Change in burned area between the two dates.',
+  'api.cambio.metrica.incendio.variacion.etiqueta': 'Change in area',
+  'api.cambio.metrica.incendio.variacion_relativa.ayuda': 'Change in burned area relative to the earlier date.',
+  'api.cambio.metrica.incendio.variacion_relativa.etiqueta': 'Relative change',
   'api.categoria.area_quemada_detectada.1': 'Moderate severity (−2.5 to −4.5 dB)',
   'api.categoria.area_quemada_detectada.2': 'High severity (< −4.5 dB)',
   'api.categoria.cambio_de_inundacion.1': 'New flooding',

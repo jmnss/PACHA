@@ -32,7 +32,7 @@ export function Leyenda({ paleta, vmin, vmax, unidad, leyenda, variable, extremo
   const { t, idioma } = useT()
   if (paleta === 'categorias') {
     const items = leyenda ?? []
-    const colores = coloresDeCategorias(variable ?? '', items.length)
+    const colores = coloresDeCategorias(variable ?? '', items.length, items.map(([e]) => e))
     return (
       <div className="leyenda" role="group" aria-label={unidad ? t('origen.leyenda.titulo_unidad', { unidad }) : t('origen.leyenda.titulo')}>
         <ul className="leyenda__categorias">

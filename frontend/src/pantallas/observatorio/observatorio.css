@@ -8,20 +8,20 @@
 .observatorio__principal, .observatorio__lado { display: flex; flex-direction: column; gap: var(--gap); min-width: 0; }
 @media (max-width: 1099px) { .observatorio { grid-template-columns: minmax(0, 1fr); } }
 
-.vista-mapa__barra { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
-.vista-mapa__barra .pestanas { border-bottom: 0; }
 .vista-mapa__acciones { display: flex; gap: var(--space-2); flex-wrap: wrap; }
 .observatorio__principal > .vista-mapa { flex: 0 1 auto; }
 .vista-mapa .tarjeta__cuerpo { display: flex; flex-direction: column; gap: var(--space-4); }
-.vista-mapa__mapa { position: relative; height: var(--h-mapa); min-height: var(--h-mapa); max-height: var(--h-mapa-max); border-radius: var(--radius-card); overflow: hidden; }
+.vista-mapa__mapa { position: relative; height: var(--h-mapa); min-height: var(--h-mapa-min); max-height: var(--h-mapa-max); border-radius: var(--radius-card); overflow: hidden; }
 .vista-mapa__estado { position: absolute; left: var(--space-3); right: var(--space-3); bottom: var(--space-6); z-index: 3; padding: var(--space-3) var(--space-4); background: var(--surface); border-radius: var(--radius-card); }
 .vista-mapa__aviso { margin: 0; color: var(--warning); font-size: var(--fs-13); }
 .vista-mapa__ayuda { margin: 0; color: var(--muted); font-size: var(--fs-12); line-height: var(--lh-16); }
 @media (max-width: 699px) {
   .vista-mapa__mapa { height: var(--h-mapa-movil); min-height: var(--h-mapa-movil); }
-  /* Un selector por fila: los nombres de escenario no caben recortados en dos columnas de 390 px. */
-  .observatorio__selectores { display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; gap: var(--space-2); }
+  /* Tipo y escenario en una sola línea, para que el mapa sea lo primero tras la cabecera. Las etiquetas quedan
+     para el lector de pantalla: el valor elegido ya dice qué es cada selector. */
+  .observatorio__selectores { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); width: 100%; gap: var(--space-2); }
   .observatorio__selectores .campo { min-width: 0; }
+  .observatorio__selectores .campo__etiqueta { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   .cabecera:has(.observatorio__selectores) .cabecera__lado { width: 100%; }
 }
 
@@ -51,6 +51,8 @@
 .vista-mapa__flota > *, .vista-mapa__arriba > * { pointer-events: auto; }
 .vista-mapa__arriba { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-3); pointer-events: none; }
 .vista-mapa__capa, .vista-mapa__placa, .controles-mapa, .vista-mapa__leyenda { background: color-mix(in srgb, var(--surface) 85%, transparent); border-radius: var(--radius-card); }
+.vista-mapa__izquierda { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); max-width: 50%; }
+.vista-mapa__izquierda .vista-mapa__capa { max-width: 100%; }
 .vista-mapa__capa { margin: 0; padding: var(--space-2) var(--space-3); color: var(--secondary); font-size: var(--fs-12); line-height: var(--lh-16); max-width: 50%; }
 .controles-mapa { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-2) var(--space-3); width: var(--w-controles-mapa); max-width: 100%; }
 .controles-mapa .pestanas { border-bottom: 0; gap: var(--space-4); }
@@ -131,7 +133,6 @@
 .observatorio__vistas .pestanas { flex: 1; min-width: 0; }
 
 .vista-mapa__lectura { margin: 0; color: var(--secondary); font-size: var(--fs-12); line-height: var(--lh-16); }
-.vista-mapa__barra { justify-content: flex-end; }
 .observatorio__que { margin: 0; color: var(--secondary); font-size: var(--fs-14); max-width: var(--w-lectura); }
 .observatorio__avanzado { border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--surface); }
 .observatorio__avanzado > summary { cursor: pointer; padding: var(--space-3) var(--space-4); font-size: var(--fs-14); color: var(--text); min-height: var(--h-touch); display: flex; align-items: center; }

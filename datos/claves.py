@@ -114,6 +114,20 @@ REGISTRO.update({
     "api.medicion.posicion.ayuda": "Centro del píxel (fila {fila}, columna {columna})",
 })
 
+# --- métricas del cambio entre dos máscaras de embalse o incendio (prefijo api.cambio.metrica.) ---------------
+for _tipo, _titulo, _nombre in (("embalse", "Superficie de agua", "superficie de agua"),
+                                ("incendio", "Superficie quemada", "superficie quemada")):
+    REGISTRO.update({
+        f"api.cambio.metrica.{_tipo}.antes.etiqueta": f"{_titulo} antes",
+        f"api.cambio.metrica.{_tipo}.antes.ayuda": "Medida en la rejilla original, dentro del contorno, el {fecha}.",
+        f"api.cambio.metrica.{_tipo}.despues.etiqueta": f"{_titulo} después",
+        f"api.cambio.metrica.{_tipo}.despues.ayuda": "Medida en la rejilla original, dentro del contorno, el {fecha}.",
+        f"api.cambio.metrica.{_tipo}.variacion.etiqueta": "Variación de superficie",
+        f"api.cambio.metrica.{_tipo}.variacion.ayuda": f"Cambio de la {_nombre} entre las dos fechas.",
+        f"api.cambio.metrica.{_tipo}.variacion_relativa.etiqueta": "Variación relativa",
+        f"api.cambio.metrica.{_tipo}.variacion_relativa.ayuda": f"Cambio de la {_nombre} respecto a la fecha anterior.",
+    })
+
 # --- resumen de impacto (prefijo api.impacto.) -----------------------------------------------------
 REGISTRO.update({
     "api.impacto.titulo.inundacion": "Superficie inundada",

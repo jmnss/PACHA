@@ -3,6 +3,22 @@ a11y.lienzo.con_media,{que}. Origen: {origen}. Valor medio de la zona: {valor}.,
 a11y.lienzo.sin_media,{que}. Origen: {origen}.,{que}. Source: {origen}.,{que}. Maypi llukshishka: {origen}.,no
 a11y.mapa.nota,Mapa interactivo de la capa elegida. Las mismas cifras están en el panel de métricas y en la tabla de resultados de esta pantalla.,Interactive map of the chosen layer. The same figures are in the metrics panel and in the results table on this screen.,"Akllashka capapa shuyu, makiwan llamkachishka. Shinallatak yupaykuna kay pantallapi yupaykunapa panka ukupi, tabla ukupipash kan.",no
 a11y.saltar,Saltar al contenido,Skip to content,Willaykunaman pasay,no
+api.cambio.metrica.embalse.antes.ayuda,"Medida en la rejilla original, dentro del contorno, el {fecha}.","Measured on the original grid, inside the outline, on {fecha}.","Ñawpa rejillapi, muyuyuk ukupi tupushka, {fecha} punchapi.",no
+api.cambio.metrica.embalse.antes.etiqueta,Superficie de agua antes,Water area before,Yaku allpa ñawpa,no
+api.cambio.metrica.embalse.despues.ayuda,"Medida en la rejilla original, dentro del contorno, el {fecha}.","Measured on the original grid, inside the outline, on {fecha}.","Ñawpa rejillapi, muyuyuk ukupi tupushka, {fecha} punchapi.",no
+api.cambio.metrica.embalse.despues.etiqueta,Superficie de agua después,Water area after,Yaku allpa washa,no
+api.cambio.metrica.embalse.variacion.ayuda,Cambio de la superficie de agua entre las dos fechas.,Change in water area between the two dates.,Ishkay punchakuna chawpipi yaku allpa tikray.,no
+api.cambio.metrica.embalse.variacion.etiqueta,Variación de superficie,Change in area,Allpa tikray,no
+api.cambio.metrica.embalse.variacion_relativa.ayuda,Cambio de la superficie de agua respecto a la fecha anterior.,Change in water area relative to the earlier date.,Ñawpa punchamanta yaku allpa tikray.,no
+api.cambio.metrica.embalse.variacion_relativa.etiqueta,Variación relativa,Relative change,Tupuk tikray,no
+api.cambio.metrica.incendio.antes.ayuda,"Medida en la rejilla original, dentro del contorno, el {fecha}.","Measured on the original grid, inside the outline, on {fecha}.","Ñawpa rejillapi, muyuyuk ukupi tupushka, {fecha} punchapi.",no
+api.cambio.metrica.incendio.antes.etiqueta,Superficie quemada antes,Burned area before,Rupashka allpa ñawpa,no
+api.cambio.metrica.incendio.despues.ayuda,"Medida en la rejilla original, dentro del contorno, el {fecha}.","Measured on the original grid, inside the outline, on {fecha}.","Ñawpa rejillapi, muyuyuk ukupi tupushka, {fecha} punchapi.",no
+api.cambio.metrica.incendio.despues.etiqueta,Superficie quemada después,Burned area after,Rupashka allpa washa,no
+api.cambio.metrica.incendio.variacion.ayuda,Cambio de la superficie quemada entre las dos fechas.,Change in burned area between the two dates.,Ishkay punchakuna chawpipi rupashka allpa tikray.,no
+api.cambio.metrica.incendio.variacion.etiqueta,Variación de superficie,Change in area,Allpa tikray,no
+api.cambio.metrica.incendio.variacion_relativa.ayuda,Cambio de la superficie quemada respecto a la fecha anterior.,Change in burned area relative to the earlier date.,Ñawpa punchamanta rupashka allpa tikray.,no
+api.cambio.metrica.incendio.variacion_relativa.etiqueta,Variación relativa,Relative change,Tupuk tikray,no
 api.categoria.area_quemada_detectada.1,"Severidad moderada (−2,5 a −4,5 dB)",Moderate severity (−2.5 to −4.5 dB),"Chawpi severidad (−2,5-manta −4,5 dB-kama)",no
 api.categoria.area_quemada_detectada.2,"Severidad alta (< −4,5 dB)",High severity (< −4.5 dB),"Sinchi severidad (< −4,5 dB)",no
 api.categoria.cambio_de_inundacion.1,Nueva inundación,New flooding,Mushuk yaku junday,no
@@ -1154,6 +1170,9 @@ sim.bitacora.descargar,Descargar CSV,Download CSV,CSVta uraykachay,no
 sim.bitacora.tabla,Eventos simulados en este navegador,Events simulated in this browser,Kay navegadorpi simulashka eventokuna,no
 sim.bitacora.titulo,Bitácora de eventos,Event log,Eventokunapa bitácora,no
 sim.bitacora.vaciar,Vaciar la bitácora,Clear the log,Bitácorata chullayachiy,no
+sim.bitacora.vaciar_no,Cancelar,Cancel,Ama,no
+sim.bitacora.vaciar_pregunta,¿Vaciar la bitácora? Se borran todos los eventos guardados en este navegador y no se pueden recuperar.,Clear the log? Every event saved in this browser is deleted and cannot be recovered.,"¿Bitácorata chullayachinkichu? Kay navegadorpi wakaychishka tukuy eventokunami anchurinka, mana kutin tarinkapachu.",no
+sim.bitacora.vaciar_si,"Sí, vaciar","Yes, clear it","Ari, chullayachiy",no
 sim.carta.este,E,E,E,no
 sim.carta.norte,N,N,N,no
 sim.carta.oeste,O,W,O,no

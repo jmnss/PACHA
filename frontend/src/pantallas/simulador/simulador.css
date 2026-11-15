@@ -46,7 +46,7 @@
 .sim__detalle { display: flex; flex-direction: column; gap: var(--gap); scroll-margin-top: var(--space-6); }
 
 /* Hoja con margen: coordenadas reales arriba y a la izquierda, el tablero dentro. */
-.carta { --w-margen: 52px; --h-margen: 22px; position: relative; padding: var(--h-margen) 0 0 var(--w-margen); width: min(100%, calc(100vh - 300px + var(--w-margen))); margin-inline: auto; }
+.carta { --w-margen: 52px; --h-margen: 22px; position: relative; padding: var(--h-margen) 0 0 var(--w-margen); width: min(100%, calc(100vh - 380px + var(--w-margen))); /* el tablero, el reproductor y el sello caben en el primer pantallazo */ margin-inline: auto; }
 .carta__hoja { border: 1px solid var(--mapa-control); border-radius: var(--radius-chip); overflow: hidden; }
 .carta__hoja .tablero { border-radius: 0; max-height: none; }
 .carta__margen { position: absolute; color: var(--mapa-texto-2); font-size: var(--fs-12); line-height: var(--lh-16); }
@@ -119,6 +119,7 @@
 .simulador__fila { display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: flex-end; }
 .simulador__fila .campo { min-width: 0; flex: 1 1 var(--w-fecha-min); }
 .simulador__acciones { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.simulador__confirmar { display: flex; flex-direction: column; gap: var(--space-2); padding-top: var(--space-3); border-top: 1px solid var(--rule); }
 .simulador__nota { margin: 0; color: var(--muted); font-size: var(--fs-13); line-height: var(--lh-20); }
 .panel-herramienta { display: flex; flex-direction: column; gap: var(--space-4); }
 

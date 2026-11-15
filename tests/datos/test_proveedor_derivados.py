@@ -102,7 +102,7 @@ def test_cambio_categorias_y_metricas(tmp_path):
     assert [n for n, _ in cls.leyenda][:3] == ["Agua persistente", "Agua ganada", "Agua perdida"]
     assert cls.vmax == 4 and r.cambio.datos.shape == FORMA
     var = [m for m in r.metricas if "ariaci" in m.etiqueta]
-    assert var and var[0].valor == "-0.02"  # 0.072 - 0.09 del sitio.json
+    assert var and var[0].valor == "-0,02"  # 0.072 - 0.09 del sitio.json
     assert len(r.series) == 1 and len(r.series[0].puntos) == 2
     assert r.origen.procedencia.fecha_adquisicion.day == 10
 

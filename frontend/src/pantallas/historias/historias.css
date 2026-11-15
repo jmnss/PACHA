@@ -12,8 +12,17 @@
 
 .historia { display: flex; flex-direction: column; gap: var(--space-6); font-size: var(--fs-16); }
 .historia__lectura { display: flex; flex-direction: column; gap: var(--space-5); min-width: 0; }
-/* Móvil y tableta: el comparador va arriba. Escritorio: a la derecha y fijo mientras se recorren los pasos. */
-.historia__visor { order: -1; min-width: 0; }
+/* Móvil y tableta: título, sitio y «Paso n de 4» arriba; el comparador justo debajo y luego los pasos.
+   La lectura se «disuelve» (display: contents) para intercalar el visor entre su cabecera y sus pasos.
+   Escritorio: a la derecha y fijo mientras se recorren los pasos. */
+.historia__visor { min-width: 0; }
+@media (max-width: 1099px) {
+  .historia { gap: var(--space-5); }
+  .historia__lectura { display: contents; }
+  .historia__visor { order: 1; }
+  .historia .pasos { order: 2; }
+  .historia__final { order: 3; }
+}
 @media (min-width: 1100px) {
   .historia { display: grid; grid-template-columns: minmax(0, var(--w-lectura)) minmax(0, 1fr); column-gap: var(--space-7); align-items: start; }
   .historia__visor { order: 0; position: sticky; top: var(--space-6); }
@@ -90,6 +99,12 @@
 .visor .comparador__escenario { width: min(100%, calc(var(--h-comparador) * var(--razon, 1))); margin-inline: auto; }
 .visor__controles { display: flex; flex-direction: column; gap: var(--space-2); }
 @media (max-width: 699px) {
+  /* Selector de historia compacto: solo los títulos, en una línea. */
+  .historias__indice { flex-wrap: nowrap; gap: var(--space-4); margin-bottom: var(--space-4); }
+  .historias__enlace { flex: 1 1 0; padding-bottom: var(--space-2); }
+  .historias__enlace-titulo { font-size: var(--fs-16); line-height: var(--lh-24); }
+  .historias__enlace-resumen { display: none; }
+  .historia__resumen { font-size: var(--fs-15); line-height: var(--lh-24); }
   .visor { --h-comparador: clamp(220px, 42vh, 360px); }
   .visor .comparador__escenario { width: 100%; }
   .paso { padding: var(--space-4); }

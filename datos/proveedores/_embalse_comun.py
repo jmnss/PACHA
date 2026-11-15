@@ -25,7 +25,8 @@ TITULO_SERIE = {"embalse": "Superficie de agua", "incendio": "Superficie quemada
 
 
 def num(v: float, decimales: int = 2) -> str:
-    return f"{v:.{decimales}f}"
+    """Cifra en español (coma decimal): el cliente la reescribe a la manera de su idioma con `valores_texto`."""
+    return f"{v:.{decimales}f}".replace(".", ",")
 
 
 def dentro_contorno(carpeta: Path, sitio: dict) -> np.ndarray:
@@ -61,19 +62,24 @@ def capa_clasificacion(escenario_id: str, adquisicion_id: str, tipo: str, cod: n
 
 
 def metricas_cambio(tipo: str, sa: float, sd: float, fecha_antes: str, fecha_despues: str) -> list[Metrica]:
+    """Las cuatro métricas del cambio, cada una con su clave (`api.cambio.metrica.<tipo>.<campo>`) y las cifras
+    sin formato para que cada idioma las escriba a su manera."""
     dif = sd - sa
-    pct = num(dif / sa * 100, 1) if sa else "—"
-    titulo = TITULO_SERIE[tipo]
-    nombre = titulo.lower()
+    rel = round(dif / sa * 100, 1) if sa else None
+
+    def metrica(campo: str, valor: str, numero: float | None, unidad: str, **extra: str) -> Metrica:
+        clave = f"api.cambio.metrica.{tipo}.{campo}"
+        valores: dict[str, float | str] = dict(extra)
+        if numero is not None:
+            valores["valor"] = numero
+        return Metrica(etiqueta=texto(f"{clave}.etiqueta"), valor=valor, unidad=unidad,
+                       ayuda=texto(f"{clave}.ayuda", **extra), clave_texto=clave, valores_texto=valores or None)
+
     return [
-        Metrica(etiqueta=f"{titulo} antes", valor=num(sa), unidad="km²",
-                ayuda=f"Medida en la rejilla original, dentro del contorno, el {fecha_antes}."),
-        Metrica(etiqueta=f"{titulo} después", valor=num(sd), unidad="km²",
-                ayuda=f"Medida en la rejilla original, dentro del contorno, el {fecha_despues}."),
-        Metrica(etiqueta="Variación de superficie", valor=num(dif), unidad="km²",
-                ayuda=f"Cambio de la {nombre} entre las dos fechas."),
-        Metrica(etiqueta="Variación relativa", valor=pct, unidad="%",
-                ayuda=f"Cambio de la {nombre} respecto a la fecha anterior."),
+        metrica("antes", num(sa), round(sa, 2), "km²", fecha=fecha_antes),
+        metrica("despues", num(sd), round(sd, 2), "km²", fecha=fecha_despues),
+        metrica("variacion", num(dif), round(dif, 2), "km²"),
+        metrica("variacion_relativa", num(rel, 1) if rel is not None else "—", rel, "%"),
     ]
 
 

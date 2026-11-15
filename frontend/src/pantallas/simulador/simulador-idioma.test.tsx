@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Catalogo, Herramienta, MundoDto } from '../../api/simulador'
 import { renderConIdioma, renderPseudo, textosSinTraducir } from '../../idioma/pruebas'
@@ -177,5 +177,19 @@ describe('exportaciones en el idioma elegido (bloque C)', () => {
     const e = { ...entradaDeEvento(INCENDIO, MUNDO, '?a=1'), titulo: 'Tormenta extrema', titulo_clave: null, titulo_valores: null }
     renderConIdioma(<Bitacora entradas={[e]} origen={ORIGEN} onVaciar={() => {}} />, 'en')
     expect(screen.getByText('Extreme storm')).not.toHaveAttribute('lang')
+  })
+
+  it('vaciar la bitácora pide confirmación: Cancelar no borra y devuelve el foco; «Sí, vaciar» borra', () => {
+    const onVaciar = vi.fn()
+    renderConIdioma(<Bitacora entradas={[entradaDeEvento(INCENDIO, MUNDO, '?a=1')]} origen={ORIGEN} onVaciar={onVaciar} />, 'es')
+    fireEvent.click(screen.getByRole('button', { name: 'Vaciar la bitácora' }))
+    expect(screen.getByRole('group', { name: /¿Vaciar la bitácora\?/ })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Cancelar' })).toHaveFocus()
+    fireEvent.click(screen.getByRole('button', { name: 'Cancelar' }))
+    expect(onVaciar).not.toHaveBeenCalled()
+    expect(screen.getByRole('button', { name: 'Vaciar la bitácora' })).toHaveFocus()
+    fireEvent.click(screen.getByRole('button', { name: 'Vaciar la bitácora' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Sí, vaciar' }))
+    expect(onVaciar).toHaveBeenCalledTimes(1)
   })
 })
