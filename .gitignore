@@ -27,3 +27,4 @@ data/crudo/
 datos_imagenes/
 *.h5
 *.netrc
+.claude/worktrees/
