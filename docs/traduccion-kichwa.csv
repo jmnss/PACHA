@@ -597,19 +597,18 @@ estructura.motor.error,El motor de cálculo no pudo cargarse en este navegador; 
 estructura.motor.no_disponible,"Esta función necesita el motor de cálculo, que no pudo cargarse en este navegador.","This feature needs the computation engine, which could not load in this browser.","Kay ruranaka yupana motorta minishtin, shinapash kay navegadorpi mana chaskiyta ushashkachu.",no
 estructura.no_encontrada.hallazgo,Esta dirección no existe en la app.,This address does not exist in the app.,Kay ñan kay app-pi mana tiyanchu.,no
 estructura.no_encontrada.titulo,Página no encontrada,Page not found,Kay panka mana tiyanchu,no
-estructura.riel.fundamentos,Fundamentos,Fundamentals,Sapi yachay,no
-estructura.riel.fundamentos_corto,Base,Basics,Sapi,no
-estructura.riel.historias,Historias,Stories,Willakuykuna,no
-estructura.riel.historias_corto,Inicio,Start,Kallari,no
-estructura.riel.laboratorio,Laboratorio del radar,Radar lab,Radarpa laboratorio,no
-estructura.riel.laboratorio_corto,Lab.,Lab,Lab.,no
-estructura.riel.observatorio,Observatorio,Observatory,Observatorio,no
-estructura.riel.observatorio_corto,Observ.,Observ.,Rikuy,no
+estructura.riel.aprender,Aprender,Learn,Yachay,no
+estructura.riel.explorar,Explorar,Explore,Mashkay,no
+estructura.riel.inicio,Inicio,Start,Kallari,no
 estructura.riel.principal,Principal,Main,Hatun,no
-estructura.riel.recorrido,Recorrido guiado,Guided tour,Pushashka purina,no
-estructura.riel.recorrido_corto,Tour,Tour,Purina,no
-estructura.riel.simulador,Simulador de eventos,Event simulator,Simulador de eventos,no
-estructura.riel.simulador_corto,Simul.,Simul.,Simul.,no
+estructura.riel.simular,Simular,Simulate,Simulana,no
+estructura.sub.aprender,Aprender,Learn,Yachay,no
+estructura.sub.explorar,Explorar,Explore,Mashkay,no
+estructura.sub.fundamentos,Fundamentos,Fundamentals,Sapi yachay,no
+estructura.sub.historias,Historias,Stories,Willakuykuna,no
+estructura.sub.laboratorio,Laboratorio del radar,Radar lab,Radarpa laboratorio,no
+estructura.sub.observatorio,Observatorio,Observatory,Observatorio,no
+estructura.sub.recorrido,Recorrido guiado,Guided tour,Pushashka purina,no
 estructura.tabla.anterior,Anterior,Previous,Ñawpa,no
 estructura.tabla.rango,{desde}–{hasta} de {total},{desde}–{hasta} of {total},"{desde}–{hasta}, {total}-manta",no
 estructura.tabla.siguiente,Siguiente,Next,Katik,no
@@ -678,6 +677,15 @@ historias.sin_escenario.titulo,Esta historia no tiene escenario,This story has n
 idioma.aviso_qu,Traducción en revisión por hablantes · {validadas} de {total} textos validados,Translation under review by speakers · {validadas} of {total} texts validated,Kichwa tikrayka manaraka chiqanyachishkachu · {total}-manta {validadas} chiqanyachishka,no
 idioma.selector.etiqueta,Idioma,Language,Shimi,no
 idioma.sin_traducir,Texto aún sin traducir; se muestra en español,Text not yet translated; shown in Spanish,Kay killkaka mana tikrashkachu; castellano shimipi rikuchishka,no
+inicio.embalses,Embalses y lluvia,Reservoirs and rain,"Hatun yaku wakaychinakuna, tamya",no
+inicio.embalses_detalle,Mazar y Daule-Peripa vistos por el radar.,Mazar and Daule-Peripa seen by radar.,"Mazar, Daule-Peripa radarwan rikushka.",no
+inicio.entradas,Por dónde empezar,Where to start,Maymanta kallarina,no
+inicio.incendio,Incendio en la Sierra,Wildfire in the Highlands,Sierrapi nina,no
+inicio.incendio_detalle,El cerro Casitagua antes y después.,Cerro Casitagua before and after.,"Casitagua urkuka ñawpaq, washa.",no
+inicio.recorrido,Primera vez: recorrido de 90 s,First time: 90-second tour,Ñawpaq kuti: 90 sikundu purina,no
+inicio.simular,Provoca tu propio evento,Trigger your own event,Kikinpa pachakutita rurana,no
+inicio.simular_detalle,Simula un fenómeno sobre el relieve de Ecuador.,Simulate a phenomenon over the Ecuadorian terrain.,Ecuador allpapi pachakutita simulana.,no
+inicio.valor,La tierra guarda las marcas; el radar las lee.,The land keeps the marks; the radar reads them.,Allpaka rikchakunata waykan; radarmi ñawinchin.,no
 lab.comun.preparando,Preparando el experimento…,Preparing the experiment…,Yachanata allichishpa…,no
 lab.nubes.activo,activo,active,activo,no
 lab.nubes.activo_explicacion,"Emite su propia señal y mide el eco, así que no necesita luz del Sol ni se detiene por las nubes.","It emits its own signal and measures the echo, so it needs no sunlight and clouds do not stop it.","Pay kikinpa señalta kachan, ecota tupun, chaymanta inti achikta mana minishtinchu, puyukunapash mana harkanchu.",no
@@ -1086,6 +1094,7 @@ sim.res.modelos,Modelos usados,Models used,Llamkachishka modelokuna,no
 sim.tablero.aria,"Tablero del simulador. Pulsa una celda, o mueve el cursor con las flechas (Mayús avanza de diez en diez) y pulsa Enter, para desatar el evento.","Simulator board. Press a cell, or move the cursor with the arrow keys (Shift moves ten at a time) and press Enter, to trigger the event.","Simuladorpa tablero. Celdata ñitiy. Cursorta flechakunawan kuyuchiy (Mayús chunka chunkata rin) shinallatak Enter-ta ñitiy, eventota rurachinkapak.",no
 titulos.fundamentos,Fundamentos,Fundamentals,Sapi yachay,no
 titulos.historias,Historias,Stories,Willakuykuna,no
+titulos.inicio,Inicio,Start,Kallari,no
 titulos.laboratorio,Laboratorio del radar,Radar lab,Radarpa laboratorio,no
 titulos.observatorio,Observatorio,Observatory,Observatorio,no
 titulos.recorrido,Recorrido guiado,Guided tour,Pushashka purina,no
