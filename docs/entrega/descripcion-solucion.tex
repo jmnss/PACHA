@@ -1,0 +1,62 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{enumitem,titlesec,hyperref}
+\setlist{nosep,leftmargin=1.2em}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1em}{0.3em}
+\titleformat{\subsection}{\normalsize\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{0.7em}{0.2em}
+\hypersetup{colorlinks=true,urlcolor=blue}
+\setlength{\parindent}{0pt}\setlength{\parskip}{0.45em}
+
+\title{\textbf{PACHA}\\[2pt]\large El radar NISAR lee las marcas de la tierra\\[2pt]\normalsize NASA Space Apps Challenge --- \emph{Dancing with the SARs}}
+\author{}\date{}
+
+\begin{document}
+\maketitle\vspace{-2.5em}
+
+\section*{Resumen}
+\textbf{PACHA} es una aplicación web abierta, sin cuentas ni instalación, que explica y muestra cómo un radar de apertura sintética de banda L como NISAR ve el cambio en el territorio ecuatoriano. Su lema es \emph{``La tierra guarda las marcas; el radar las lee''}. Cuenta dos historias: \textbf{embalses y lluvia} (Mazar y Daule-Peripa: cuánta agua guardan y cómo suben o bajan con la lluvia y la sequía) e \textbf{incendios forestales} (el cerro Casitagua, junto a Quito). Alrededor de ellas ofrece un observatorio para comparar pasadas, un simulador de eventos y una sección didáctica para aprender a leer una imagen de radar. Disponible en \url{https://jmnss.github.io/PACHA/}; código bajo licencia MIT (provisional) en \texttt{jmnss/PACHA}.
+
+\section*{Recorrido por la aplicación}
+
+\subsection*{1. Inicio}
+La portada presenta la idea en una frase y una sola acción principal: \emph{entrar a la historia de los embalses}. Muestra un perfil esquemático del Ecuador de oeste a este (Pacífico, Costa, Sierra, Amazonía) con los tres lugares de estudio; al tocar uno aparece su nota (dónde está y qué esperar del radar). Un ``registro de pasadas'' animado enseña la idea central: cada capa es una pasada del satélite y la más reciente se superpone a las anteriores. Un localizador ubica la franja de unos 240~km que observa el radar. En la primera visita se abre una guía breve que señala cada zona de la pantalla.
+
+\subsection*{2. Historias (\texttt{Explorar $\rightarrow$ Historias})}
+El corazón de la aplicación. Cada historia avanza en cuatro pasos, con un titular, una frase y una cifra calculada:
+\begin{itemize}
+\item \textbf{Datos}: la máscara de agua de cada fecha (azul = agua) y la superficie del embalse que resulta de sumar sus píxeles.
+\item \textbf{Lo que ve el satélite}: la señal en polarizaciones HH y HV, antes y después. El agua en calma refleja la onda lejos del satélite y se ve oscura, por lo que el borde del embalse es nítido incluso con nubes.
+\item \textbf{Simular}: la lluvia de unos meses sobre el relieve, para ver subir o bajar el agua (en construcción, rotulada como ``por llegar'').
+\item \textbf{Impactos}: cuánto cambió la orilla entre dos fechas y qué implica; con datos reales se redacta siempre como \emph{hipótesis por comprobar con el operador}, nunca como conclusión.
+\end{itemize}
+La historia del incendio usa un deslizador antes/después: la polarización cruzada (HV) cae donde el bosque pierde estructura. Cada término técnico (radar, banda L, dB, HH, HV) tiene una explicación emergente en español llano.
+
+\subsection*{3. Observatorio (\texttt{Explorar $\rightarrow$ Observatorio})}
+Es la herramienta general: sirve para los \textbf{seis tipos de cambio} que NISAR puede ver. El usuario elige tipo y escenario, y dos pasadas cualesquiera; la aplicación calcula \emph{qué cambió y cuánto}. Ofrece cuatro vistas: \textbf{Mapa} del cambio, \textbf{Antes y después}, \textbf{Serie} temporal con reproductor, e \textbf{Impacto}. Se puede medir un cuadrante del mapa, ajustar parámetros del modelo (semilla, número de miradas, dirección de órbita, estacionalidad) y consultar el \textbf{contexto del lugar}: región, provincia, temporada lluviosa o seca, humedad estimada del suelo y precipitación mensual (clima de NASA POWER, aclarado como dato complementario y no del radar). Todo se exporta: PNG de la comparación, CSV de las mediciones e informe de impacto en PNG.
+
+\subsection*{4. Simulador de eventos}
+Un ``mundo'' sobre el \textbf{relieve real del Ecuador} (SRTM), con celdas y habitantes, en el que se desata un fenómeno con un clic o con el teclado: \textbf{incendio, tormenta, inundación, terremoto o erupción}. Cada uno tiene controles esenciales (viento y humedad del combustible, lluvia, caudal, magnitud, índice de explosividad volcánica…) y otros avanzados. Se puede fundar una ciudad y ver el efecto sobre la población. El ``gemelo del radar'' muestra \emph{lo que vería un radar como NISAR} antes y después, con la detección frente a la ``verdad'' simulada, y una sección responde a la pregunta \emph{¿cuándo lo vería el radar?}, según el ritmo de pasadas. Una bitácora guarda los eventos. Es 100~\% simulación y está rotulado como tal.
+
+\subsection*{5. Aprender}
+\begin{itemize}
+\item \textbf{Fundamentos}: lo mínimo para leer una imagen de radar --- radar que ilumina por sí mismo, qué ve cada tipo de cambio, polarizaciones y bandas, y la misión NISAR.
+\item \textbf{Laboratorio}: dos experimentos interactivos. ``La nube no lo detiene'' sube la cobertura de nubes y compara el cambio visto por un sensor óptico con el del radar; ``Polarización y banda'' permite cambiar banda (L o S) y polarización y ver la respuesta de cada superficie.
+\item \textbf{Recorrido de 90~s}: seis pasos guiados que incrustan pantallas reales (problema, nubes, polarización, mapa de cambio, incendio, simulador).
+\end{itemize}
+
+\section*{Aspectos destacados}
+\begin{itemize}
+\item \textbf{Honestidad de los datos.} Cada capa, serie y exportación lleva su origen y procedencia (producto, fecha, polarización, frecuencia, madurez). Una capa real sin procedencia completa no se muestra; simulador y laboratorio se rotulan ``Simulación''; lo no confirmado sobre NISAR figura como ``pendiente de confirmar con la documentación oficial''.
+\item \textbf{Funciona sin servidor.} En GitHub Pages la API de Python corre \emph{en el navegador} (Pyodide en un Web Worker): la ciencia permanece en Python y el sitio es estático y gratuito.
+\item \textbf{Accesible y multilingüe.} Interfaz en español, inglés y kichwa (esta última pendiente de validación por hablantes), con navegación por teclado y un sistema de diseño propio para tres anchos (escritorio, tableta y móvil).
+\item \textbf{Abierta y reproducible.} El estado vive en la URL, de modo que cada vista se comparte con un enlace; los derivados pequeños se versionan con su \texttt{procedencia.json}, y los HDF5 crudos nunca entran al repositorio.
+\item \textbf{Aprender haciendo.} Todo término técnico se explica donde aparece; el público objetivo es quien nunca ha visto una imagen de radar.
+\end{itemize}
+
+\section*{Datos y tecnología}
+Los productos de banda L (GCOV, HH y HV) provienen del catálogo de NISAR en ASF DAAC; el equipo segmenta el agua con su propio método y la aplicación \emph{solo lee} esos resultados. Frontend: React~18, Vite y TypeScript; núcleo científico y API en Python (FastAPI) tras un contrato de datos intercambiable. Créditos de fuentes, tipografías y referencias: \texttt{CREDITOS.md}.
+
+\end{document}

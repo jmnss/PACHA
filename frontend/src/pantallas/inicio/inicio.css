@@ -8,11 +8,15 @@
 .inicio__contacto { height: var(--space-3); background: var(--contacto) center / 100% 100% no-repeat; }
 
 /* Portada: texto, registro de pasadas y perfil en la misma celda */
-.portada__lienzo { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); }
+.portada__lienzo { position: relative; container-type: inline-size; display: grid; grid-template-columns: minmax(0, 1fr); }
 .portada__texto { grid-area: 1 / 1; position: relative; z-index: 3; align-self: start; max-width: var(--w-texto-portada); padding: var(--space-7) 0 0 var(--space-6); }
 .portada__titular { font-family: var(--font-serif); font-size: var(--fs-60); font-weight: 500; line-height: var(--lh-titular); color: var(--tinta); }
 .portada__linea-2 { display: block; color: var(--cacao); font-style: italic; font-weight: 400; }
 .portada__bajada { margin-top: var(--space-5); max-width: 52ch; font-size: var(--fs-17); line-height: var(--lh-cuerpo); color: var(--tinta-2); }
+/* Halo del color del fondo: los frentes de onda del haz no cruzan las letras */
+.portada__texto h1, .portada__texto p, .portada__acciones a, .portada__acciones button { text-shadow: 0 0 var(--space-2) var(--arcilla), 0 0 var(--space-3) var(--arcilla); }
+/* Bajada y acciones se quedan a la izquierda de la cartela de Casitagua */
+@container (min-width: 861px) { .portada__bajada, .portada__acciones { max-width: min(52ch, calc(56.4cqw - var(--space-6) - 90px)); } }
 .portada__acciones { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); margin-top: var(--space-6); }
 .portada__principal { height: var(--h-principal); padding: 0 var(--space-5); font-size: var(--fs-15); text-decoration: none; }
 

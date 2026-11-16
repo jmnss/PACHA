@@ -29,6 +29,18 @@ Three languages: Spanish, English and Kichwa (Kichwa is a draft awaiting review)
 
 Accessibility: target is WCAG 2.2 AA; automated axe checks run in CI.
 
+## In pictures
+
+Slides from our Space Apps presentation (team SAGE). The maps are NISAR products processed by the team; the app interprets them as hypotheses, not conclusions.
+
+![Why it matters: the Casitagua fire mask and the Daule-Peripa flooding seen by NISAR](docs/img/diapositiva-por-que-importa.jpg)
+
+![Comparisons: Casitagua fire mask on two NISAR passes, and Daule-Peripa water in NISAR and Sentinel](docs/img/diapositiva-comparaciones.jpg)
+
+![The proposed solution: the PACHA web app](docs/img/diapositiva-solucion.jpg)
+
+Full [slides (PDF)](docs/entrega/PACHA_Slides.pdf), [video](docs/entrega/PACHA_video.mp4) and [submission texts](docs/entrega.md).
+
 ## Architecture
 
 - Frontend: React 18 + Vite + TypeScript.

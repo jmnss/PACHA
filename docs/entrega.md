@@ -48,23 +48,3 @@ ESA Copernicus DEM GLO-30 (terrain). Also geoBoundaries (boundaries) and Esri ba
 ## Declaración de uso de IA
 
 This project was developed with the assistance of Claude Code (Anthropic) for code, documentation and drafting. The team reviewed all outputs and is responsible for the content. No AI-generated data is presented as observation: all figures come from NISAR products processed by the team, and the simulator is labeled synthetic.
-
-## Guion de vídeo (30 s, inglés)
-
-| Tiempo | Toma de la app | Locución |
-|---|---|---|
-| 0-4 s | Inicio, título PACHA | "Clouds hide Ecuador from satellites. Radar does not." |
-| 4-12 s | Historias: Mazar, deslizador antes/después | "NISAR's L-band radar shows the Mazar reservoir lost about 20 % of its water in 77 days." |
-| 12-19 s | Casitagua: máscara de quemado y RFDI | "It also sees the Casitagua fire scar. We compare it with press reports, as a hypothesis." |
-| 19-25 s | Simular: evento y acciones citadas | "Simulate an event and read suggested actions, each with its source." |
-| 25-30 s | Idiomas es/en/kichwa, URL | "In Spanish, English and Kichwa. Try PACHA, free and open." |
-
-## Esquema de 7 diapositivas
-
-1. Título: PACHA, equipo, challenge "Dancing with the SARs", URL.
-2. Problema: nubes, inundaciones, sequías e incendios; por qué radar.
-3. Datos: NISAR L2 GCOV, banda L, HH/HV, ~10 m, dB; procedencia.
-4. Resultados: Mazar -19,9 %, Daule-Peripa -2,2 %, Casitagua 19,4 km2 vs 300 ha (hipótesis).
-5. La app: Inicio, Explorar, Simular, Aprender (capturas).
-6. Técnica y accesibilidad: React + FastAPI + Pyodide en el navegador; tres idiomas; WCAG 2.2 AA, axe.
-7. Cierre: fuentes, uso de IA, licencia MIT, próximos pasos.

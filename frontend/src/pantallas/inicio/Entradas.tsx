@@ -24,8 +24,8 @@ export function Entradas() {
               <path className="corte__agua-baja" d="M136.5,84 L160,104 L200,106 L225.9,84 Z" />
               <path className="corte__suelo" d="M0,30 L60,36 L120,70 L160,104 L200,106 L240,72 L300,40 L360,34" />
               <path className="corte__linea-agua" d="M88,52 H344 M136,84 H344" />
-              <text x="352" y="47" textAnchor="end">{t('inicio.embalses_lluvia')}</text>
-              <text x="352" y="79" textAnchor="end">{t('inicio.embalses_sequia')}</text>
+              <text x="352" y="26" textAnchor="end">{t('inicio.embalses_lluvia')}</text>
+              <text x="352" y="76" textAnchor="end">{t('inicio.embalses_sequia')}</text>
             </svg>
           </div>
           <div className="entrada__cuerpo">
@@ -47,7 +47,7 @@ export function Entradas() {
               <path className="corte__quemado" d="M205,32 L240,52 L290,84 L330,100" />
               <path className="corte__suelo" d="M0,108 L40,100 L90,80 L140,46 L175,28 L205,32 L240,52 L290,84 L330,100 L360,106" />
               <text x="8" y="60">{t('inicio.incendio_verde')}</text>
-              <text x="352" y="56" textAnchor="end">{t('inicio.incendio_quemado')}</text>
+              <text x="352" y="44" textAnchor="end">{t('inicio.incendio_quemado')}</text>
             </svg>
           </div>
           <div className="entrada__cuerpo">
