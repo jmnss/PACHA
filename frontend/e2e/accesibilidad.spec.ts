@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 
-// Reglas axe con infracciones serious/critical conocidas (línea base en INFORME.md).
+// Reglas axe con infracciones serious/critical conocidas.
 // Las Tareas 21–25 las van quitando; la Tarea 25 deja la lista vacía.
 const PENDIENTES: string[] = []
 

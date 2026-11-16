@@ -25,7 +25,7 @@ El material crudo vive en `datos_imagenes/` (fuera de git, `.gitignore`).
 ### Qué haría falta para usarla en la app
 
 1. **Más de una fecha** del mismo embalse (la historia es el cambio: estación seca frente a otra fecha).
-2. **Procedencia de cada fecha** (regla 7 de `CLAUDE.md`: una capa real sin procedencia no se muestra).
+2. **Procedencia de cada fecha** (Regla 7 de honestidad del proyecto: una capa real sin procedencia no se muestra).
 3. **Afinar el agua**: recortar al embalse (polígono de interés) o refinar la segmentación para quitar las zonas
    oscuras que no son agua. Lo decide el equipo; la app solo lo lee.
 4. Marcar el borde sin dato como 3 en la máscara.

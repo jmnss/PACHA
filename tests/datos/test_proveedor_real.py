@@ -39,7 +39,7 @@ def test_real_lanza_error_legible():
         with pytest.raises(DatosRealesNoDisponibles) as e:
             llamada()
         assert str(e.value) == MENSAJE
-    assert "aún no está implementado" in MENSAJE and "Integración de datos reales" in MENSAJE
+    assert "aún no está implementado" in MENSAJE and "NISAR_PROVEEDOR=mixto" in MENSAJE
 
 
 def test_valor_desconocido_lanza_valueerror(monkeypatch):

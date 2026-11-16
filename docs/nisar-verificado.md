@@ -1,6 +1,6 @@
 # NISAR: lo verificado en fuentes oficiales
 
-Regla 6 de `CLAUDE.md`: **solo lo que está en este archivo puede dejar de decir «pendiente de confirmar con la
+Regla 6 de honestidad del proyecto: **solo lo que está en este archivo puede dejar de decir «pendiente de confirmar con la
 documentación oficial»**. Cada fila lleva la URL, la fecha de consulta y una cita corta (en el idioma de la fuente).
 Si una fuente cambia, se actualiza la fila y su fecha; si una cita deja de estar en la fuente, el dato vuelve a
 «pendiente de confirmar».
@@ -101,7 +101,7 @@ comprobará en los atributos del HDF5); el valor de «sin dato»; la convención
 | `modelo/nisar.py:1662` y `1756` «potencia lineal» y rótulo «σ⁰» | GCOV como σ⁰ | **Error:** GCOV es γ⁰ (GU `gcov`); σ⁰ requiere `rtcGammaToSigmaFactor`. Lineal o dB: pendiente (atributos del HDF5). El lector nuevo irá en `scripts/preparar_datos_reales.py`; `modelo/` no se toca salvo corrección con prueba. |
 | `modelo/nisar.py:1684-1694` `unwrappedPhase`, `coherenceMagnitude`, `centerFrequency`, `xCoordinates` | Rutas del GUNW | Capas existen (GU `gunw`); nombres exactos de los datasets: pendiente de confirmar con un archivo real. |
 | `modelo/nisar.py:1800` «JPL D-102272» y convención de signo | Especificación del GUNW | Número del documento: **verificado (GU `gunw`)**. Signo: pendiente (no se ha leído D-102272). |
-| Notas e INFORME (bloque C): menciones a GCOV, GUNW, GOFF | Productos con que se observaría cada cambio | Existencia y descripción de los tres: **verificado (GU `products-overview`)**. Que el demo los «simula» sigue siendo ilustrativo. |
+| Notas del proyecto (bloque C): menciones a GCOV, GUNW, GOFF | Productos con que se observaría cada cambio | Existencia y descripción de los tres: **verificado (GU `products-overview`)**. Que el demo los «simula» sigue siendo ilustrativo. |
 | Laboratorio: banda S (`datos/laboratorio.py:5,186`, `lab.pol.aviso_banda`) | «Ejemplo ilustrativo; pendiente qué bandas entrega NISAR» | Que NISAR tiene banda S (λ 9,3 cm), sobre zonas seleccionadas y sobre todo sobre India, vía Bhoonidhi: **verificado (GU)**. Los coeficientes del Laboratorio siguen siendo ilustrativos; si hay banda S sobre Ecuador: pendiente (no consultado, Bhoonidhi exige registro). |
 | Simulador: ciclo de 12 días (`datos/simulador.py:209`, `sim.espera.intro_pendiente`) | «Ciclo supuesto de 12 días» | **Verificado (NASA)**. Matiz: el mismo lugar se vuelve a ver dos veces por ciclo (ascendente y descendente; JPL-LANZ), así que la espera máxima real en un punto puede ser menor que 12 días según la geometría. |
 | «Cómo ve el radar» (`obs.ayuda.interferometria_antes`) y Fundamentos: «a escala de centímetros» | Movimiento de la superficie | **Verificado (JPL-LANZ, «down to the centimeter»)**. |

@@ -1,4 +1,4 @@
-"""Colorización del Simulador de Eventos: relieve y capas animadas a PNG (sin Streamlit).
+"""Colorización del Simulador de Eventos: relieve y capas animadas a PNG.
 
 Porta la lógica de `interfaz/modo_dios.py` (relieve sombreado, estilos de capa y composición «alfa sobre»).
 Los colores son los de las capas físicas del mapa del tablero (fuego, agua, lahar, ceniza…), no del sistema

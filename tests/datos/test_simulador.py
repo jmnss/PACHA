@@ -187,7 +187,7 @@ def test_metrica_sin_registrar_queda_sin_clave():
 
 @pytest.mark.parametrize("herramienta", ["incendio", "inundacion", "erupcion"])
 def test_metricas_del_radar_no_dicen_detectado_por_nisar(herramienta):
-    """Regla 7 de CLAUDE.md: la detección del simulador la hace el modelo, no NISAR."""
+    """Regla de honestidad del proyecto: la detección del simulador la hace el modelo, no NISAR."""
     from tests.api.test_claves_api import CLAVES
     rapidos = {"incendio": {"horas": 6}, "inundacion": {"duracion_h": 2}, "erupcion": {"duracion_h": 2}}
     ev = evento(herramienta, celda_en_tierra(), rapidos.get(herramienta))

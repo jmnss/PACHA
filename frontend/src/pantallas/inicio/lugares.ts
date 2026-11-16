@@ -27,7 +27,7 @@ export const LUGARES: readonly Lugar[] = [
     enlace: '/explorar/historias?historia=embalses&sitio=mazar', claveIr: 'inicio.lugar.ir_embalse' },
 ]
 
-// Proyección lineal de docs/propuestas/comun/ecuador.svg (geoBoundaries): dos esquinas conocidas del contorno.
+// Proyección lineal del contorno de geoBoundaries: dos esquinas conocidas del contorno.
 const SX = (591.3 - 11.7) / (-75.18859 + 81.0814)
 const SY = (611.8 - 13.0) / (1.45962 + 5.01147)
 export const proyectar = (lon: number, lat: number): [number, number] =>

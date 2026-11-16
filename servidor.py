@@ -8,7 +8,7 @@ from fastapi.responses import FileResponse
 
 from api.app import create_app
 
-# NISAR_DIST permite servir otra carpeta compilada (p. ej. la de scripts/revision_visual.sh).
+# NISAR_DIST permite servir otra carpeta compilada.
 DIST = Path(os.environ.get("NISAR_DIST") or Path(__file__).parent / "frontend" / "dist")
 
 

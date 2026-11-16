@@ -2,7 +2,7 @@
 
 Formato escrito por `preparacion/salida.py`: `sitio.json`, un `.npz` por fecha (`mascara` con códigos del contrato
 0 sin dato / 1 clase / 2 resto, salvo en una fecha de incendio sin máscara; si hay stack `HH` y `HV` cuantizados; y
-si hay ΔRFDI `delta_rfdi` cuantizado en [-1, 1]), `contorno.geojson`. Acepta las versiones 1 y 2 de `sitio.json`. Regla 7 de CLAUDE.md:
+si hay ΔRFDI `delta_rfdi` cuantizado en [-1, 1]), `contorno.geojson`. Acepta las versiones 1 y 2 de `sitio.json`. Regla de honestidad del proyecto:
 una fecha sin procedencia completa NO se expone (ni en el escenario, ni en las capas, ni en la serie), y cada capa
 lleva el origen con la procedencia de su propia fecha. Decisión del usuario (2026-11-15): lo del equipo se sirve como
 NISAR con lo que se sabe (producto, fecha, polarizaciones); granulo, colección, frecuencia, madurez y hora se omiten

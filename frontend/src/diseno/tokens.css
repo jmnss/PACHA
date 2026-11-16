@@ -3,7 +3,7 @@
    nuevos para que todas las pantallas hereden el tema; los nombres de paisaje (--arcilla, --basalto…) son los de la
    identidad y se usan en lo nuevo. */
 :root {
-  /* paisaje (identidad, docs/propuestas/d-mezcla) */
+  /* paisaje (identidad) */
   --arcilla:  #F1E9DD;   /* fondo de página */
   --papel:    #F8F3EC;   /* papel elevado: tarjetas, panel, cartelas */
   --barro:    #DFD0BA;   /* cuerpo de la tierra en los perfiles; nunca lleva texto */

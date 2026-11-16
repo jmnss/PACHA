@@ -1,4 +1,4 @@
-/* Inicio · propuesta D «Mezcla» (docs/propuestas/d-mezcla). Todo valor sale de tokens.css. */
+/* Inicio · propuesta D «Mezcla». Todo valor sale de tokens.css. */
 .inicio { margin: calc(-1 * var(--page-padding)); display: flex; flex-direction: column; }
 .inicio h1, .inicio h2, .inicio h3, .inicio p { margin: 0; }
 .inicio__nota { font-size: var(--fs-13); line-height: var(--lh-20); color: var(--tinta-2); }

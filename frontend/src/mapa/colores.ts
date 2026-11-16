@@ -1,7 +1,7 @@
 /**
  * Colores del mapa sobre basalto (docs/diseno.md §8, v2 «Tierra viva»). Único archivo fuera de diseno/tokens.css y diseno/rampas.ts que
  * puede contener hex: MapLibre pinta en WebGL y no lee variables CSS. Los valores salen del diseño:
- * si cambian allí, cambian aquí. El guard de scripts/revision_visual.sh autoriza este archivo.
+ * si cambian allí, cambian aquí.
  */
 export const COLORES_MAPA = {
   tierra: '#2E3336',

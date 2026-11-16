@@ -28,3 +28,14 @@ datos_imagenes/
 *.h5
 *.netrc
 .claude/worktrees/
+# Contexto de agentes y de desarrollo (solo local)
+CLAUDE.md
+GEMINI.md
+AGENTS.md
+PRODUCT.md
+INFORME.md
+.claude/
+.taste-skill/
+.vscode/
+docs/superpowers/
+docs/capturas-nuevas/

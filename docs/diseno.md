@@ -1,9 +1,6 @@
 # Documento de diseño — PACHA · v2 «Tierra viva»
 
-Versión 2 (2026-11-15, rama `rediseno-pacha`). Sustituye a la v1 «Sala de control» (oscura, acento amarillo de 1 px),
-que queda en la historia de git. La identidad aprobada es la **propuesta D «Mezcla»** (`docs/propuestas/d-mezcla/`:
-`README.md`, `estilo.css`, `logo.svg`, capturas) y la dirección del brief es `docs/rediseno-pacha.md` §2. Este
-documento manda sobre toda decisión visual del frontend React. Los valores salen de `frontend/src/diseno/tokens.css`
+Versión 2 (2026-11-15). Identidad «Tierra viva». Este documento manda sobre toda decisión visual del frontend React. Los valores salen de `frontend/src/diseno/tokens.css`
 (colores, tamaños, radios) y `frontend/src/diseno/rampas.ts` (datos); nada de valores sueltos.
 
 ---
@@ -360,12 +357,10 @@ doi:10.5281/zenodo.1243862). ASF DAAC y NISAR se acreditan solo cuando se usen d
 
 ## 13. Cómo se verifica cada pantalla
 
-1. `bash scripts/revision_visual.sh <ruta> <nombre>` (captura a 1440, 768 y 390; lint e inspección de Taste Skill
-   `--app`); capturas en `docs/capturas-nuevas/<nombre>/`.
+1. Captura a 1440, 768 y 390 px en un navegador real.
 2. Playwright con axe: 0 violaciones (como mucho los nodos «incompletos» de contraste de la línea base, 59), sin
    desborde horizontal a 320 px.
 3. `cd frontend && npm test` (incluye `tokens.test.ts`, `contraste.test.ts`, `rampas.test.ts`), `npm run lint`,
    `npm run build`.
-4. Crítica escrita con las preguntas de `.claude/skills/design-taste-frontend/references/app-screens.md` §2.7 y, si
-   hace falta, `/critique` de Impeccable. Cada aviso se corrige o se defiende en una frase.
+4. Crítica escrita con las 10 heurísticas de Nielsen. Cada aviso se corrige o se defiende en una frase.
 5. Como máximo tres rondas de corrección por pantalla; lo pendiente se anota y se sigue.

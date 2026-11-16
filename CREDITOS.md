@@ -18,7 +18,7 @@ usan todavía: todo lo que muestra la app es sintético (ver `README.es.md`).
 
 - Public Sans (vía `@fontsource/public-sans`), SIL Open Font License 1.1.
 
-## Modelos científicos y referencias (tal como los citaba la app heredada, etiqueta `legado-streamlit`)
+## Modelos científicos y referencias
 
 - NISAR Science Users' Handbook, NASA-JPL / ISRO.
 - ASF DAAC, documentación de productos NISAR: nisar-docs.asf.alaska.edu

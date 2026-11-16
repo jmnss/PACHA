@@ -94,6 +94,6 @@ for (const [ancho, alto] of [[1440, 900], [768, 1024], [390, 844]]) {
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible({ timeout: 30_000 })
     await page.goto('simular?lat=-4.05&lon=-79.25&dem=0&ext=60')
     await expect(page.getByText(/Preparando el motor de cálculo/)).toBeVisible({ timeout: 60_000 })
-    await page.screenshot({ path: `../docs/capturas-nuevas/aviso-motor/${ancho}.png` })
+    await page.screenshot({ path: `test-results/aviso-motor/${ancho}.png` })
   })
 }

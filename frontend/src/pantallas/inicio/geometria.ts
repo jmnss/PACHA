@@ -1,5 +1,5 @@
 // Geometría de Inicio. El perfil sale de `perfil.json` (Copernicus DEM GLO-30, generado fuera de línea con
-// scripts/generar_perfil_inicio.py); las provincias, del contorno de docs/propuestas/comun/ecuador.svg
+// scripts/generar_perfil_inicio.py); las provincias, del contorno de geoBoundaries (data/ecuador_provincias.geojson)
 // (geoBoundaries, CC0).
 import datos from './perfil.json'
 

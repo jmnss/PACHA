@@ -1,5 +1,5 @@
 """Sustitutos sintéticos con la forma del sitio: un embalse simulado sobre su relieve real y un incendio simulado
-en sus coordenadas. TODO lo que sale de aquí es sintético (Regla 7 de CLAUDE.md): `origen.tipo == "sintetico"`,
+en sus coordenadas. TODO lo que sale de aquí es sintético (Regla de honestidad del proyecto): `origen.tipo == "sintetico"`,
 fechas ilustrativas, sin procedencia de granulo. Solo numpy, json y pydantic (corre también en Pyodide)."""
 from __future__ import annotations
 

@@ -122,5 +122,5 @@ Preguntas posteriores: anota las respuestas 3 y 4 palabra por palabra (honestida
 3. Asigna gravedad (0–4) y ordena. Gravedad 3–4 primero.
 4. Para cada uno, propón un cambio con un único responsable y una pantalla: ruta, componente o texto (clave es/en/qu).
 5. Los textos nuevos llevan su clave en los tres catálogos. Nada de lógica científica en el frontend.
-6. Los problemas de gravedad 3–4 se corrigen y se vuelve a probar con otras 2 personas. Los de 1–2 pasan a `INFORME.md`.
-7. Guarda el resumen (tabla de tareas, problemas, citas) en `INFORME.md` o en un archivo nuevo en `docs/`, sin nombres de personas.
+6. Los problemas de gravedad 3–4 se corrigen y se vuelve a probar con otras 2 personas. Los de 1–2 quedan anotados como pendientes.
+7. Guarda el resumen (tabla de tareas, problemas, citas) en un archivo nuevo en `docs/`, sin nombres de personas.

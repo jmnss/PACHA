@@ -1,7 +1,7 @@
 /**
  * Marca de PACHA (docs/diseno.md §2): dos curvas de nivel en tinta con un punto central, atravesadas por una cuña de
  * barrido de radar en ocre maíz con su filo en ocre borde (sin el filo, el ocre se pierde sobre la arcilla a 16 px).
- * Mismo dibujo que frontend/public/favicon.svg y docs/propuestas/d-mezcla/logo.svg. Colores por clase (tokens.css).
+ * Mismo dibujo que frontend/public/favicon.svg. Colores por clase (tokens.css).
  */
 export function Marca({ tamano = 28 }: { tamano?: number }) {
   return (

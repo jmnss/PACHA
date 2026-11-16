@@ -4,7 +4,7 @@ Cada método lanza `DatosRealesNoDisponibles` con un mensaje legible. No contien
 de NISAR (productos, rutas de archivos, bandas, URLs): todo eso está pendiente de confirmar con la
 documentación oficial.
 
-Lista de verificación («Integración de datos reales» de docs/plan-migracion.md), en orden:
+Lista de verificación , en orden:
 - [ ] Pegar la lista oficial de recursos y los requisitos de entrega en `docs/challenge.md`.
 - [ ] Leer la documentación oficial de los productos NISAR elegidos y completar cada punto «pendiente de
       confirmar» de `docs/contrato-datos.md` (proyección, polarizaciones, unidades, sin dato, tamaño, formato).
@@ -30,7 +30,7 @@ from datos.contrato import (CapaRaster, Capacidades, DatosRealesNoDisponibles, E
                             ResultadoCambio, SerieTemporal)
 
 MENSAJE = ("El proveedor de datos reales de NISAR aún no está implementado. "
-           "Sigue la sección «Integración de datos reales» de docs/plan-migracion.md.")
+           "Usa NISAR_PROVEEDOR=mixto (derivados del equipo en data/).")
 
 
 def _no_disponible() -> DatosRealesNoDisponibles:

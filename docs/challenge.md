@@ -69,7 +69,6 @@ información accionable.
    fechas ni resultados de eventos reales.
 4. Los datos sintéticos se generan con un script reproducible del repositorio, con semilla fija y
    documentado, y se marcan como tales en su metadata.
-   *(Desde 2026-11-14 la app puede ser mixta: manda la regla 7 de `CLAUDE.md`, que amplía esta.)*
 5. Ningún detalle técnico de NISAR (productos, estructura de archivos, bandas, URLs, fechas de la misión)
    se da por cierto sin una fuente oficial; lo no verificado se marca «pendiente de confirmar con la
    documentación oficial».
@@ -104,21 +103,20 @@ la búsqueda de metadatos, no.
 
 ### Referencias que ya usa el código (no verificadas como recursos oficiales del challenge)
 
-Las referencias a `app.py` apuntan a la app Streamlit heredada, retirada el 2026-11-14 (etiqueta `legado-streamlit`).
 
 | Referencia en el código | Para qué | Estado |
 |---|---|---|
 | ASF SearchAPI `https://api.daac.asf.alaska.edu/services/search/param` con `dataset=NISAR` (`modelo/nisar.py:1550`) | Búsqueda de productos NISAR | `dataset=NISAR` y `processingLevel` verificados con `asf_search` (`docs/nisar-verificado.md` §5); la URL exacta de la API, pendiente |
-| `https://nisar-docs.asf.alaska.edu` (`app.py:856`, `app.py:1542`) | Documentación de productos | Verificado: es la NISAR Data User Guide oficial de ASF |
+| `https://nisar-docs.asf.alaska.edu` | Documentación de productos | Verificado: es la NISAR Data User Guide oficial de ASF |
 | Productos «GCOV, GUNW, GOFF, GSLC», ruta interna HDF5 `science/LSAR/GCOV/grids/frequencyA`, datasets `unwrappedPhase`, `coherenceMagnitude`, `xCoordinates` (`modelo/nisar.py:1658-1725`) | Lectura de HDF5 reales | Productos y ruta GCOV verificados; GCOV es γ⁰ (no σ⁰); rutas del GUNW pendientes (`docs/nisar-verificado.md` §5) |
 | Ficha `nisar.MISION` (lanzamiento, órbita, frecuencias, «BETA feb. 2026 / PROVISIONAL 20 jul. 2026») (`modelo/nisar.py:55-64`) | Texto de la misión | Parcialmente verificado; falta VALIDATED y hay dos longitudes de onda que corregir (`docs/nisar-verificado.md` §5) |
 | «JPL D-102272» como especificación de GUNW (`modelo/nisar.py:1813`) | Nota de signo LOS | Número del documento verificado; la convención de signo, pendiente |
-| ISRO Bhoonidhi (`app.py:860`) | Banda S | Verificado: la banda S de NISAR se distribuye en Bhoonidhi (ISRO) |
+| ISRO Bhoonidhi | Banda S | Verificado: la banda S de NISAR se distribuye en Bhoonidhi (ISRO) |
 | NASA POWER, API de climatología regional (`scripts/preparar_datos_ecuador.py:22`) → `data/clima_ecuador_power.csv` | Clima mensual 2001–2025 | Dato real complementario ya descargado |
 | geoBoundaries gbOpen ECU ADM1, CC0 (`scripts/preparar_datos_ecuador.py:20`) → `data/ecuador_provincias.geojson` | Provincias | Dato real complementario ya descargado |
 | Teselas Terrarium de AWS Open Data (`modelo/desastres.py:49`) | Relieve SRTM del Modo Dios | Dato real complementario, se descarga al usar el Modo Dios |
-| OpenStreetMap Nominatim (`app.py:660`) | Geocodificación | Servicio externo |
-| Esri World Dark Gray e Imagery (`app.py:503-508`) | Mapas base; el frontend React los usa (más Topo y etiquetas de referencia) cuando hay internet | Servicio externo, sin clave; ya en uso |
+| OpenStreetMap Nominatim | Geocodificación | Servicio externo |
+| Esri World Dark Gray e Imagery | Mapas base; el frontend React los usa (más Topo y etiquetas de referencia) cuando hay internet | Servicio externo, sin clave; ya en uso |
 
 ## Requisitos de entrega
 

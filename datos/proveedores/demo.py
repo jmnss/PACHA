@@ -210,7 +210,7 @@ def _textos_de_fila(fila: dict) -> dict:
             for col, pre in _PREFIJO_MEDICION.items() if col in fila}
 
 
-# --- sitio del mapa (réplica de app.py:sitio_en_mapa; no se importa app.py) ---------------------
+# --- sitio del mapa ---------------------
 
 def _coordenadas(lat: float, lon: float) -> str:
     return (f"{abs(lat):.4f}° {'N' if lat >= 0 else 'S'}, {abs(lon):.4f}° {'E' if lon >= 0 else 'O'}"
