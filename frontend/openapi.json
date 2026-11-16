@@ -1,6 +1,106 @@
 {
   "components": {
     "schemas": {
+      "AccionDto": {
+        "properties": {
+          "clave_texto": {
+            "title": "Clave Texto",
+            "type": "string"
+          },
+          "fuente": {
+            "$ref": "#/components/schemas/FuenteAccionDto"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "momento": {
+            "enum": [
+              "antes",
+              "durante",
+              "despues"
+            ],
+            "title": "Momento",
+            "type": "string"
+          },
+          "porque": {
+            "title": "Porque",
+            "type": "string"
+          },
+          "porque_texto": {
+            "$ref": "#/components/schemas/TextoClave"
+          },
+          "prioridad": {
+            "enum": [
+              "alta",
+              "normal"
+            ],
+            "title": "Prioridad",
+            "type": "string"
+          },
+          "texto": {
+            "title": "Texto",
+            "type": "string"
+          },
+          "valores_texto": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "default": {},
+            "title": "Valores Texto",
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "momento",
+          "prioridad",
+          "texto",
+          "clave_texto",
+          "porque",
+          "porque_texto",
+          "fuente"
+        ],
+        "title": "AccionDto",
+        "type": "object"
+      },
+      "AccionesDto": {
+        "description": "Acciones sugeridas según la gravedad simulada; recomendaciones generales con fuente, no órdenes de emergencia.",
+        "properties": {
+          "acciones": {
+            "items": {
+              "$ref": "#/components/schemas/AccionDto"
+            },
+            "title": "Acciones",
+            "type": "array"
+          },
+          "gravedad": {
+            "enum": [
+              "baja",
+              "media",
+              "alta"
+            ],
+            "title": "Gravedad",
+            "type": "string"
+          }
+        },
+        "required": [
+          "gravedad",
+          "acciones"
+        ],
+        "title": "AccionesDto",
+        "type": "object"
+      },
       "Adquisicion": {
         "properties": {
           "direccion_orbital": {
@@ -1150,6 +1250,9 @@
       },
       "EventoDto": {
         "properties": {
+          "acciones": {
+            "$ref": "#/components/schemas/AccionesDto"
+          },
           "capas": {
             "items": {
               "$ref": "#/components/schemas/CapaEventoDto"
@@ -1365,6 +1468,7 @@
           "metricas_radar",
           "espera_radar",
           "resumen",
+          "acciones",
           "origen"
         ],
         "title": "EventoDto",
@@ -1439,6 +1543,39 @@
           "clave_texto"
         ],
         "title": "Frase",
+        "type": "object"
+      },
+      "FuenteAccionDto": {
+        "properties": {
+          "cita": {
+            "title": "Cita",
+            "type": "string"
+          },
+          "consultado": {
+            "title": "Consultado",
+            "type": "string"
+          },
+          "idioma": {
+            "title": "Idioma",
+            "type": "string"
+          },
+          "nombre": {
+            "title": "Nombre",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nombre",
+          "url",
+          "cita",
+          "idioma",
+          "consultado"
+        ],
+        "title": "FuenteAccionDto",
         "type": "object"
       },
       "FuenteFicha": {

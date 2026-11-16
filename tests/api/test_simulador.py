@@ -90,3 +90,14 @@ def test_evento_responde_con_clave_de_titulo(cliente_demo):
     e = cliente_demo.post("/api/simulador/evento", json=evento()).json()
     assert e["titulo"].startswith("Terremoto Mw ") and e["clave_texto"] == "api.sim.titulo.terremoto"
     assert e["clave_texto"] in CLAVES and e["valores_texto"]["mw"] == 7.0
+
+
+@pytest.mark.parametrize("herramienta", ["incendio", "terremoto"])
+def test_evento_trae_acciones_con_fuente(cliente_demo, herramienta):
+    e = cliente_demo.post("/api/simulador/evento", json=evento(herramienta)).json()
+    acc = e["acciones"]
+    assert acc["gravedad"] in ("baja", "media", "alta") and acc["acciones"]
+    assert {a["momento"] for a in acc["acciones"]} == {"antes", "durante", "despues"}
+    for a in acc["acciones"]:
+        assert a["fuente"]["url"].startswith("https://") and a["fuente"]["cita"]
+        assert a["clave_texto"].startswith(f"api.sim.accion.{herramienta}.")

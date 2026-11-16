@@ -1,4 +1,6 @@
 """Respuestas tipadas del simulador de eventos (el contrato OpenAPI que consume el frontend)."""
+from typing import Literal
+
 from pydantic import BaseModel
 
 from api.schemas import CapaDto
@@ -107,6 +109,32 @@ class EsperaRadarDto(BaseModel):
     verificado: bool                # siempre false hasta confirmarlo con la documentación oficial
 
 
+class FuenteAccionDto(BaseModel):
+    nombre: str
+    url: str
+    cita: str                       # frase literal de la guía, en su idioma
+    idioma: str                     # idioma de la cita (es | en)
+    consultado: str                 # fecha de consulta (AAAA-MM-DD)
+
+
+class AccionDto(BaseModel):
+    id: str
+    momento: Literal["antes", "durante", "despues"]
+    prioridad: Literal["alta", "normal"]
+    texto: str
+    clave_texto: str                # `api.sim.accion.<herramienta>.<id>`
+    valores_texto: dict[str, float | int | str] = {}
+    porque: str
+    porque_texto: TextoClave
+    fuente: FuenteAccionDto
+
+
+class AccionesDto(BaseModel):
+    """Acciones sugeridas según la gravedad simulada; recomendaciones generales con fuente, no órdenes de emergencia."""
+    gravedad: Literal["baja", "media", "alta"]
+    acciones: list[AccionDto]
+
+
 class EventoDto(BaseModel):
     herramienta: str
     titulo: str
@@ -130,6 +158,7 @@ class EventoDto(BaseModel):
     metricas_radar: list[MetricaEventoDto]
     espera_radar: EsperaRadarDto
     resumen: dict[str, float | None]
+    acciones: AccionesDto
     origen: Origen
 
 

@@ -1,20 +1,26 @@
 import { Link } from 'react-router-dom'
-import type { EventoDto } from '../../api/simulador'
+import type { EventoDto, Herramienta } from '../../api/simulador'
 import { Cargando } from '../../diseno/Estados'
 import { EtiquetaMetrica, ValorMetrica } from '../../idioma/MetricaApi'
 import { textoClave } from '../../idioma/clavesApi'
 import { TextoApi } from '../../idioma/TextoApi'
 import { useT } from '../../idioma/useT'
+import { AccionesSugeridas } from './AccionesSugeridas'
+import type { Valores } from './valores'
 
 interface Props {
   evento?: EventoDto
   cargando: boolean
   /** Ir al detalle (gemelo del radar, espera, tabla, bitácora) bajo el mapa. */
   onDetalle: () => void
+  /** Para el resumen del escenario de «Pregúntale a tu IA». */
+  herramienta?: Herramienta
+  parametros?: Valores
+  lugar?: string
 }
 
 /** Capa «Resultado», la nueva de la pila: cada cifra con su frase llana; todo es un ejemplo de demostración. */
-export function CapaResultado({ evento, cargando, onDetalle }: Props) {
+export function CapaResultado({ evento, cargando, onDetalle, herramienta, parametros, lugar }: Props) {
   const { t } = useT()
   return (
     <section className="capa-resultado" aria-labelledby="capa-resultado-titulo" aria-live="polite" aria-busy={cargando}>
@@ -36,6 +42,7 @@ export function CapaResultado({ evento, cargando, onDetalle }: Props) {
               )
             })}
           </ul>
+          {evento.acciones && <AccionesSugeridas evento={evento} herramienta={herramienta} parametros={parametros} lugar={lugar} />}
           {evento.herramienta === 'incendio' && (
             <p className="capa-resultado__comparar">
               <Link to="/explorar/historias?historia=incendio">{t('sim.res.comparar')}</Link>
