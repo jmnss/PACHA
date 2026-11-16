@@ -56,7 +56,7 @@ export const inicio: Record<keyof typeof esInicio, string> = {
   'inicio.signos.lugar': 'Willakuyuk llakta: llapiy',
   'inicio.signos.capa': 'Kamuy: shuk radar yallik',
   'inicio.signos.rayado': 'Rayado: simulación',
-  'inicio.signos.esquema': 'Mana tupushkachu, mana yupaykunayukchu. Kimsa llaktakunaka shuk shuk latitudpimi kan; kaypika shuklla kuchushkapimi churarin.',
+  'inicio.signos.esquema': 'Copernicus DEM GLO-30 chiqan hatunkuna. Kimsa llaktakunaka shuk shuk latitudpimi kan; kuchushkaka paykunata tantachin.',
 
   'inicio.entradas': 'Kimsa yaykuna',
   'inicio.entradas_bajada': 'Ecuadormanta ishkay willakuy, kikinpa rurayta tantachinkapak shuk yachana wasi.',

@@ -54,7 +54,7 @@ export const inicio = {
   'inicio.signos.lugar': 'Lugar con historia: tócalo',
   'inicio.signos.capa': 'Capa: una pasada del radar',
   'inicio.signos.rayado': 'Rayado: simulación',
-  'inicio.signos.esquema': 'No está a escala ni lleva cifras de altitud. Los tres lugares están en latitudes distintas; aquí se proyectan sobre un mismo corte de oeste a este.',
+  'inicio.signos.esquema': 'Alturas reales de Copernicus DEM GLO-30, con exageración vertical. El corte une por tramos los tres lugares, que están en latitudes distintas.',
 
   'inicio.entradas': 'Tres maneras de entrar',
   'inicio.entradas_bajada': 'Dos historias del Ecuador y un taller para probar lo tuyo.',

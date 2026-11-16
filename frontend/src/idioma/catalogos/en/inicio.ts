@@ -55,7 +55,7 @@ export const inicio: Record<keyof typeof esInicio, string> = {
   'inicio.signos.lugar': 'Place with a story: tap it',
   'inicio.signos.capa': 'Layer: one radar pass',
   'inicio.signos.rayado': 'Hatching: simulation',
-  'inicio.signos.esquema': 'It is not to scale and has no altitude figures. The three places lie at different latitudes; here they are projected onto one west–east section.',
+  'inicio.signos.esquema': 'Real heights from Copernicus DEM GLO-30, vertically exaggerated. The section joins the three places in segments, as they lie at different latitudes.',
 
   'inicio.entradas': 'Three ways in',
   'inicio.entradas_bajada': 'Two stories from Ecuador and a workshop to try your own.',

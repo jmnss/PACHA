@@ -924,7 +924,7 @@ inicio.sello_simulacion,todo es simulación,it is all simulation,tukuyllami simu
 inicio.signos.agua,Agua: mar y embalses,Water: sea and reservoirs,"Yaku: hatun kucha, yaku wakaychinakuna",no
 inicio.signos.altura,Tierras altas: bosque nublado y páramo,Highlands: cloud forest and páramo,"Hawa allpakuna: phuyu sacha, urku pampa",no
 inicio.signos.capa,Capa: una pasada del radar,Layer: one radar pass,Kamuy: shuk radar yallik,no
-inicio.signos.esquema,No está a escala ni lleva cifras de altitud. Los tres lugares están en latitudes distintas; aquí se proyectan sobre un mismo corte de oeste a este.,It is not to scale and has no altitude figures. The three places lie at different latitudes; here they are projected onto one west–east section.,"Mana tupushkachu, mana yupaykunayukchu. Kimsa llaktakunaka shuk shuk latitudpimi kan; kaypika shuklla kuchushkapimi churarin.",no
+inicio.signos.esquema,"Alturas reales de Copernicus DEM GLO-30, con exageración vertical. El corte une por tramos los tres lugares, que están en latitudes distintas.","Real heights from Copernicus DEM GLO-30, vertically exaggerated. The section joins the three places in segments, as they lie at different latitudes.",Copernicus DEM GLO-30 chiqan hatunkuna. Kimsa llaktakunaka shuk shuk latitudpimi kan; kuchushkaka paykunata tantachin.,no
 inicio.signos.franja,"Franja de una pasada, unos 240 km","Swath of one pass, about 240 km","Shuk yallikpak suyu, 240 km shina",no
 inicio.signos.haz,Haz del radar en el corte,Radar beam on the section,Radar achik kuchushkapi,no
 inicio.signos.lugar,Lugar con historia: tócalo,Place with a story: tap it,Willakuyuk llakta: llapiy,no
