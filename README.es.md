@@ -16,7 +16,7 @@ Datos reales NISAR L2 GCOV (banda L, polarizaciones HH/HV, píxel de unos 10 m, 
 | Embalse Daule-Peripa | 116,0 -> 113,4 km2 (-2,2 %) |
 | Incendio del cerro Casitagua (17 sep 2026) | Máscara de quemado del equipo: 19,4 km2, frente a 300 ha publicadas por la prensa; cambio en el RFDI (índice radar de degradación forestal) |
 
-La comparación de Casitagua y cualquier lectura de estos cambios se presentan como **hipótesis por comprobar**, no como conclusiones. Cada capa lleva su procedencia (producto, granulo, fecha, polarización, frecuencia, madurez). Los datos de prensa de las fichas (`data/*/*/ficha.json`) citan fuente, URL y cita textual.
+La comparación de Casitagua y cualquier lectura de estos cambios se presentan como **hipótesis por comprobar**, no como conclusiones. Cada capa indica su procedencia (producto, fecha de adquisición, polarizaciones, procesado por el equipo). Los datos de prensa de las fichas (`data/*/*/ficha.json`) citan fuente, URL y cita textual.
 
 ## Cuatro destinos
 

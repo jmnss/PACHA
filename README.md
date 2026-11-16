@@ -16,7 +16,7 @@ Real NISAR L2 GCOV data (L-band, HH/HV polarizations, about 10 m pixels, shown i
 | Daule-Peripa reservoir | 116.0 -> 113.4 km2 (-2.2 %) |
 | Casitagua fire (17 Sep 2026) | Team burn mask: 19.4 km2, versus 300 ha published by the press; change in RFDI (radar forest degradation index) |
 
-The Casitagua comparison and any reading of these changes are presented as **hypotheses to be checked**, not conclusions. Every layer carries its provenance (product, granule, date, polarization, frequency, maturity level). Press facts in the site sheets (`data/*/*/ficha.json`) cite their source, URL and quote.
+The Casitagua comparison and any reading of these changes are presented as **hypotheses to be checked**, not conclusions. Every layer states its provenance (product, acquisition date, polarizations, processed by the team). Press facts in the site sheets (`data/*/*/ficha.json`) cite their source, URL and quote.
 
 ## Four destinations
 
