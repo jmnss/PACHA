@@ -16,5 +16,7 @@ import { a11y } from './a11y'
 import { inicio } from './inicio'
 import { guia } from './guia'
 import { simulador } from './simulador'
+import { perfilReal } from './perfilReal'
+import { metodo } from './metodo'
 
-export const es = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador, ...laboratorio, ...recorrido, ...fundamentos, ...api, ...titulos, ...inicio, ...guia, ...a11y }
+export const es = { ...comun, ...idioma, ...fecha, ...estructura, ...historias, ...origen, ...piezas, ...exportar, ...observatorio, ...simulador, ...laboratorio, ...recorrido, ...fundamentos, ...api, ...titulos, ...inicio, ...guia, ...a11y, ...perfilReal, ...metodo }

@@ -1,12 +1,67 @@
-// Geometría de Inicio, generada desde la maqueta aprobada (docs/propuestas/d-mezcla/inicio.html) y el contorno de
-// provincias de docs/propuestas/comun/ecuador.svg (geoBoundaries, CC0). Solo dibujo: el perfil no lleva cifras
-// de altitud.
+// Geometría de Inicio. El perfil sale de `perfil.json` (Copernicus DEM GLO-30, generado fuera de línea con
+// scripts/generar_perfil_inicio.py); las provincias, del contorno de docs/propuestas/comun/ecuador.svg
+// (geoBoundaries, CC0).
+import datos from './perfil.json'
 
-/** Perfil oeste-este en un lienzo de 1000 × 400 (se estira con preserveAspectRatio="none"). */
+/** Lienzo del perfil: 1000 × 400 (se estira con preserveAspectRatio="none"). */
+export const LIENZO = { ancho: 1000, alto: 400 } as const
+/** Nivel del mar en el lienzo y cota del borde superior de la escala vertical. */
+const Y_MAR = 352
+const COTA_TECHO_M = 4500
+const Y_TECHO = 190
+const POR_METRO = (Y_MAR - Y_TECHO) / COTA_TECHO_M
+
+export const xKm = (km: number) => (km / datos.largo_km) * LIENZO.ancho
+export const yM = (m: number) => Y_MAR - m * POR_METRO
+const r1 = (n: number) => Math.round(n * 10) / 10
+
+const puntos = datos.alturas_m.map((m, i) => `${r1(xKm(i * datos.paso_km))},${r1(yM(m))}`)
+const xCosta = xKm(datos.costa_km)
+
+/** Perfil real: cuerpo de tierra (desde la costa), línea del suelo y elementos derivados de las alturas. */
 export const PERFIL = {
-  tierra: "M40,400 58,362 68,352 76,346 90,340 104,333 118,322 130,316 142,320 156,331 172,339 190,343 210,346 226,348 240,354 256,362 276,366 296,364 310,356 322,348 340,340 365,336 392,330 414,320 432,306 450,284 468,252 484,212 498,168 508,140 516,122 524,112 532,110 540,118 546,132 552,148 558,151 564,146 570,152 578,176 588,200 600,207 614,205 626,186 638,150 646,124 654,104 662,92 670,88 678,92 686,104 694,124 700,142 708,170 714,200 720,222 730,224 738,214 744,204 752,206 764,230 780,264 798,290 820,311 852,327 890,337 940,342 1000,345 L1000,400 Z",
-  suelo: "M40,400 58,362 68,352 76,346 90,340 104,333 118,322 130,316 142,320 156,331 172,339 190,343 210,346 226,348 240,354 256,362 276,366 296,364 310,356 322,348 340,340 365,336 392,330 414,320 432,306 450,284 468,252 484,212 498,168 508,140 516,122 524,112 532,110 540,118 546,132 552,148 558,151 564,146 570,152 578,176 588,200 600,207 614,205 626,186 638,150 646,124 654,104 662,92 670,88 678,92 686,104 694,124 700,142 708,170 714,200 720,222 730,224 738,214 744,204 752,206 764,230 780,264 798,290 820,311 852,327 890,337 940,342 1000,345",
-} as const
+  fuente: datos.fuente,
+  largoKm: datos.largo_km,
+  maxM: datos.max_m,
+  /** Cuerpo de la tierra: desde la costa (el mar queda aparte), cerrado por abajo. */
+  tierra: `M${r1(xCosta)},${LIENZO.alto} L${puntos.slice(Math.max(0, Math.round(datos.costa_km / datos.paso_km) - 1)).join(' ')} L${LIENZO.ancho},${LIENZO.alto} Z`,
+  suelo: `M${puntos.slice(Math.max(0, Math.round(datos.costa_km / datos.paso_km) - 1)).join(' ')}`,
+  /** Mar: de 0 a la costa, al nivel 0 m. */
+  mar: `M0,${Y_MAR} L${r1(xCosta)},${Y_MAR} L${r1(xCosta)},${LIENZO.alto} L0,${LIENZO.alto} Z`,
+  xCosta: r1(xCosta),
+  /** Rayas de altitud cada 1000 m (escala vertical rotulada). */
+  niveles: [1000, 2000, 3000, 4000].map((m) => ({ m, y: r1(yM(m)) })),
+  /** Altura (en el lienzo) por encima de la cual se tiñe la tierra alta. */
+  yAlta: r1(yM(3000)),
+  /** Px del lienzo por metro de altura y por metro de distancia: la exageración vertical depende del tamaño real. */
+  porMetroVertical: POR_METRO,
+  porMetroHorizontal: LIENZO.ancho / (datos.largo_km * 1000),
+  /** Selva: banda bajo el suelo desde el final de la Sierra (criterio de dibujo: cota de 1000 m). */
+  selva: (() => {
+    const desde = Math.round(datos.sierra_km[1] / datos.paso_km)
+    const arriba = puntos.slice(desde)
+    const abajo = datos.alturas_m.slice(desde).map((m, i) => `${r1(xKm((desde + i) * datos.paso_km))},${r1(yM(m) + 16)}`).reverse()
+    return `M${arriba.join(' ')} L${abajo.join(' ')} Z`
+  })(),
+  /** Centro de cada tramo de región y de la llanura costera, en % del ancho. */
+  regiones: {
+    costa: ((datos.costa_km + datos.sierra_km[0]) / 2 / datos.largo_km) * 100,
+    sierra: ((datos.sierra_km[0] + datos.sierra_km[1]) / 2 / datos.largo_km) * 100,
+    amazonia: ((datos.sierra_km[1] + datos.largo_km) / 2 / datos.largo_km) * 100,
+    mar: (datos.costa_km / 2 / datos.largo_km) * 100,
+  },
+  /** Punto más alto del corte (para el rótulo «páramo»), en % del lienzo. */
+  cima: (() => {
+    const i = datos.alturas_m.indexOf(datos.max_m)
+    return { x: (xKm(i * datos.paso_km) / LIENZO.ancho) * 100, y: (yM(datos.max_m) / LIENZO.alto) * 100 }
+  })(),
+  /** Cada lugar en el corte: posición (% del lienzo) y altura del DEM en ese punto. */
+  lugares: Object.fromEntries(
+    Object.entries(datos.lugares).map(([id, l]) => [id, { x: (xKm(l.km) / LIENZO.ancho) * 100, y: (yM(l.altura_m) / LIENZO.alto) * 100, alturaM: l.altura_m, xLienzo: xKm(l.km), yLienzo: yM(l.altura_m) }]),
+  ) as Record<'daule' | 'casitagua' | 'mazar', { x: number; y: number; alturaM: number; xLienzo: number; yLienzo: number }>,
+  /** Vértices del corte por tramos (giros), en % del ancho. */
+  vertices: datos.vertices.map((v) => ({ id: v.id, x: (xKm(v.km) / LIENZO.ancho) * 100 })),
+}
 
 /** Provincias del Ecuador continental en el sistema de ecuador.svg. */
 export const PROVINCIAS: readonly string[] = [
