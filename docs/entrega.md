@@ -32,18 +32,36 @@ ESA Copernicus DEM GLO-30 (terrain). Also geoBoundaries (boundaries) and Esri ba
 
 ## Referencias
 
-- ASF DAAC: https://asf.alaska.edu/
-- NISAR Data User Guide: https://nisar-docs.asf.alaska.edu/
-- NASA NISAR mission overview: https://science.nasa.gov/mission/nisar/mission-overview/
-- Copernicus DEM: https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM
-- geoBoundaries: https://www.geoboundaries.org/
-- NASA POWER: https://power.larc.nasa.gov/
-- El Universo (Daule-Peripa): https://www.eluniverso.com/noticias/economia/hidroelectrica-marcel-laniado-de-wind-mantenimiento-programado-celec-ecuador-nota/
-- KCH Comunicación (Mazar): https://kchcomunicacion.com/?p=495127
-- Primicias (Mazar): https://www.primicias.ec/economia/celec-mantenimiento-unidad2-hidroelectrica-mazar-julio-2026-cortes-luz-127968/
-- El Comercio (Casitagua): https://www.elcomercio.com/actualidad/quito/incendio-forestal-casitagua-moviliza-bomberos-quito-jueves-17-de-septiembre/
-- Teleamazonas (Casitagua): https://www.teleamazonas.com/actualidad/noticias/quito/pabel-munoz-confirma-300-hectareas-destruidas-incendios-casitagua-128402/
-- Código y app: https://jmnss.github.io/PACHA/ · https://github.com/jmnss/PACHA
+### 1. NASA y socios de la misión NISAR
+
+1. NISAR Data User Guide (ASF DAAC, para la NASA): https://nisar-docs.asf.alaska.edu/
+2. ASF DAAC, Alaska Satellite Facility (NASA Earthdata), fuente de los granulos NISAR L2 GCOV: https://asf.alaska.edu/
+3. ASF DAAC Search API (metadatos de granulos): https://api.daac.asf.alaska.edu/services/search/param
+4. NASA NISAR Mission Overview (NASA Science): https://science.nasa.gov/mission/nisar/mission-overview/
+5. NISAR Quick Facts (NASA/JPL press kit): https://www.jpl.nasa.gov/press-kits/nisar/quick-facts/
+6. «NASA-ISRO Satellite Lifts Off to Track Earth's Changing Surfaces» (NASA/JPL, 30 jul 2025): https://www.jpl.nasa.gov/news/nasa-isro-satellite-lifts-off-to-track-earths-changing-surfaces/
+7. NASA POWER, climatología (contexto complementario, no es NISAR): https://power.larc.nasa.gov/
+8. SAR Tutorial (Canadian Space Agency, material didáctico): https://github.com/asc-csa/Synthetic_Aperture_Radar_Tutorial
+
+### 2. Otras agencias y datos abiertos
+
+9. Copernicus DEM GLO-30 (ESA, relieve): https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM
+10. Sentinel-1 (ESA/Copernicus), comparación del agua de Daule-Peripa: https://dataspace.copernicus.eu/
+11. geoBoundaries (límites administrativos): https://www.geoboundaries.org/
+12. Esri, mapas base Dark, Satellite y Relief: https://www.esri.com/
+
+### 3. Prensa (contraste de eventos reales)
+
+13. El Universo, Daule-Peripa: https://www.eluniverso.com/noticias/economia/hidroelectrica-marcel-laniado-de-wind-mantenimiento-programado-celec-ecuador-nota/
+14. KCH Comunicación, Mazar: https://kchcomunicacion.com/?p=495127
+15. Primicias, Mazar: https://www.primicias.ec/economia/celec-mantenimiento-unidad2-hidroelectrica-mazar-julio-2026-cortes-luz-127968/
+16. El Comercio, incendio de Casitagua: https://www.elcomercio.com/actualidad/quito/incendio-forestal-casitagua-moviliza-bomberos-quito-jueves-17-de-septiembre/
+17. Teleamazonas, 300 hectáreas en Casitagua: https://www.teleamazonas.com/actualidad/noticias/quito/pabel-munoz-confirma-300-hectareas-destruidas-incendios-casitagua-128402/
+
+### 4. Nuestro proyecto
+
+18. App publicada: https://jmnss.github.io/PACHA/
+19. Código abierto: https://github.com/jmnss/PACHA
 
 ## Declaración de uso de IA
 
