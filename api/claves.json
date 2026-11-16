@@ -1556,6 +1556,310 @@
     "es": "Velocidad superficial en la selección"
   },
   {
+    "clave": "api.sim.accion.erupcion.evacuar",
+    "es": "Sigue las órdenes de evacuación y sal temprano."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.evacuar.porque",
+    "es": "En la simulación, unas {personas} personas quedan en zonas de flujos, lahares o ceniza."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.fuentes_oficiales",
+    "es": "Infórmate solo por fuentes oficiales sobre los cambios de alerta."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.fuentes_oficiales.porque",
+    "es": "Los rumores confunden y retrasan las decisiones correctas."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.lahar_alto",
+    "es": "Si estás en el fondo de un valle que baja del volcán y viene un lahar, sube a un lugar alto."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.lahar_alto.porque",
+    "es": "Los lahares bajan por los cauces como ríos de lodo y no se pueden esquivar en el valle."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.limpieza",
+    "es": "Usa ropa que te cubra y mascarilla al limpiar la ceniza."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.limpieza.porque",
+    "es": "Al barrer, la ceniza vuelve al aire y se respira."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.no_conducir",
+    "es": "Evita conducir para no levantar la ceniza del suelo."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.no_conducir.porque",
+    "es": "La ceniza en el aire quita visibilidad y daña los motores."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.ojos_vias",
+    "es": "Protégete los ojos y las vías respiratorias de la ceniza."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.ojos_vias.porque",
+    "es": "La ceniza volcánica son trocitos de roca y vidrio que irritan ojos y pulmones."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.plan_ceniza",
+    "es": "Ten un plan para quedarte bajo techo si tu mayor riesgo es la ceniza."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.plan_ceniza.porque",
+    "es": "La ceniza puede caer durante horas lejos del volcán."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.techo",
+    "es": "No subas al techo a quitar ceniza sin guía o sin preparación."
+  },
+  {
+    "clave": "api.sim.accion.erupcion.techo.porque",
+    "es": "La ceniza resbala y pesa: hay caídas y techos que ceden."
+  },
+  {
+    "clave": "api.sim.accion.incendio.alejarse",
+    "es": "Aléjate del fuego y del humo; no intentes apagar tú un incendio grande."
+  },
+  {
+    "clave": "api.sim.accion.incendio.alejarse.porque",
+    "es": "El humo y el calor llegan antes que las llamas, y un fuego que crece puede cerrarte el paso."
+  },
+  {
+    "clave": "api.sim.accion.incendio.avisar_911",
+    "es": "Si ves fuego o humo en el monte, avisa enseguida al 911."
+  },
+  {
+    "clave": "api.sim.accion.incendio.avisar_911.porque",
+    "es": "Un aviso temprano permite atacar el fuego cuando todavía es pequeño."
+  },
+  {
+    "clave": "api.sim.accion.incendio.brasas",
+    "es": "Evita la ceniza caliente, los árboles quemados y las brasas que aún humean."
+  },
+  {
+    "clave": "api.sim.accion.incendio.brasas.porque",
+    "es": "Bajo la ceniza puede quedar fuego activo durante días."
+  },
+  {
+    "clave": "api.sim.accion.incendio.evacuar",
+    "es": "Si las autoridades piden evacuar, sal de inmediato por la ruta indicada."
+  },
+  {
+    "clave": "api.sim.accion.incendio.evacuar.porque",
+    "es": "En la simulación, unas {personas} personas viven dentro del fuego o junto a su borde."
+  },
+  {
+    "clave": "api.sim.accion.incendio.franja_limpia",
+    "es": "Mantén una franja de unos 9 m alrededor de la casa sin hojarasca, ramas ni material que arda."
+  },
+  {
+    "clave": "api.sim.accion.incendio.franja_limpia.porque",
+    "es": "Sin combustible cerca, el fuego pierde fuerza antes de llegar a la vivienda."
+  },
+  {
+    "clave": "api.sim.accion.incendio.mascarilla",
+    "es": "Protégete del humo con una mascarilla N95 si la tienes."
+  },
+  {
+    "clave": "api.sim.accion.incendio.mascarilla.porque",
+    "es": "Las partículas finas del humo dañan los pulmones, también lejos de las llamas."
+  },
+  {
+    "clave": "api.sim.accion.incendio.sin_fogatas",
+    "es": "No hagas fogatas en zonas de bosque o pajonal, sobre todo en época seca."
+  },
+  {
+    "clave": "api.sim.accion.incendio.sin_fogatas.porque",
+    "es": "Muchos incendios forestales empiezan por una fogata o una quema mal apagada."
+  },
+  {
+    "clave": "api.sim.accion.incendio.volver",
+    "es": "No vuelvas a casa hasta que las autoridades digan que es seguro."
+  },
+  {
+    "clave": "api.sim.accion.incendio.volver.porque",
+    "es": "El fuego puede reavivarse y dejar árboles y estructuras a punto de caer."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.agua_segura",
+    "es": "Sigue lo que digan las autoridades sobre cómo usar el agua para beber, cocinar o limpiar."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.agua_segura.porque",
+    "es": "Tras una inundación el agua de la llave puede estar contaminada."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.alcantarillas",
+    "es": "Limpia alcantarillas y cunetas para que el agua de lluvia circule."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.alcantarillas.porque",
+    "es": "Un desagüe tapado hace que el agua suba en las calles más rápido."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.no_cruzar",
+    "es": "No cruces a pie ni en carro una calle inundada: date la vuelta."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.no_cruzar.porque",
+    "es": "Con poca agua en movimiento basta para tumbar a una persona o arrastrar un carro."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.no_vadear",
+    "es": "Evita caminar por el agua de la inundación."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.no_vadear.porque",
+    "es": "Puede estar contaminada y esconder objetos peligrosos."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.provisiones",
+    "es": "Ten agua, comida que no se dañe y artículos de limpieza para varios días."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.provisiones.porque",
+    "es": "Una crecida puede dejarte aislado y sin servicios durante días."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.subir",
+    "es": "Sube a un lugar alto o a un piso superior."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.subir.porque",
+    "es": "En la simulación, el agua llega a donde viven unas {personas} personas."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.volver",
+    "es": "Vuelve a casa solo cuando las autoridades digan que es seguro."
+  },
+  {
+    "clave": "api.sim.accion.inundacion.volver.porque",
+    "es": "El agua puede seguir subiendo o haber dañado paredes y cables."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.agacharse",
+    "es": "Agáchate, cúbrete la cabeza y el cuello y sujétate hasta que pare el movimiento."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.agacharse.porque",
+    "es": "La intensidad simulada llega a MMI {mmi}; correr mientras tiembla expone a caídas y escombros."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.asegurar_muebles",
+    "es": "Fija a la pared los muebles y aparatos pesados: estantes, refrigeradora, calentador, televisor."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.asegurar_muebles.porque",
+    "es": "Lo que cae durante el sismo causa muchas de las heridas."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.heridos",
+    "es": "Revisa si estás herido y ayuda a otros si sabes cómo hacerlo."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.heridos.porque",
+    "es": "Las primeras horas son las que más cuentan para los heridos."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.no_entrar",
+    "es": "No entres en edificios dañados."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.no_entrar.porque",
+    "es": "En la simulación, unas {personas} personas sienten una sacudida capaz de dañar casas."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.practicar",
+    "es": "Practica con tu familia y en el trabajo cómo protegerte durante un sismo."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.practicar.porque",
+    "es": "Lo ensayado se hace sin pensar cuando empieza a temblar."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.replicas",
+    "es": "Espera réplicas después del sismo principal."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.replicas.porque",
+    "es": "Las réplicas pueden tumbar lo que el primer sismo dejó debilitado."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.reserva",
+    "es": "Prepara una reserva de agua y comida para varios días."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.reserva.porque",
+    "es": "Tras un sismo fuerte el agua, la luz y los caminos pueden fallar."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.tsunami",
+    "es": "Si estás en la costa, en cuanto pare el sismo ve tierra adentro o a un lugar alto."
+  },
+  {
+    "clave": "api.sim.accion.terremoto.tsunami.porque",
+    "es": "En la simulación el sismo genera un tsunami que entra en tierra."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.despierto",
+    "es": "Durante una tormenta fuerte, mantente alerta y despierto."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.despierto.porque",
+    "es": "Muchos deslizamientos ocurren de noche, mientras la gente duerme."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.drenaje",
+    "es": "Mantén limpio y despejado el drenaje de tu casa y de la ladera."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.drenaje.porque",
+    "es": "El agua que no corre empapa el suelo y lo vuelve inestable."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.fisuras",
+    "es": "Revisa a menudo si aparecen grietas o suelo empapado en la ladera."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.fisuras.porque",
+    "es": "Las grietas y el suelo saturado anuncian un deslizamiento."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.lejos_deslave",
+    "es": "Aléjate de la zona del deslizamiento."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.lejos_deslave.porque",
+    "es": "Tras un deslizamiento pueden venir otros, y también crecidas."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.no_cruzar",
+    "es": "No cruces una calle o un camino por donde baja agua o lodo."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.no_cruzar.porque",
+    "es": "Una corriente de lodo arrastra personas y vehículos con poca profundidad."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.replantar",
+    "es": "Vuelve a sembrar cuanto antes el suelo que quedó desnudo."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.replantar.porque",
+    "es": "Las raíces sujetan el suelo; sin ellas, la próxima lluvia lo arrastra."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.salir",
+    "es": "Sal de casa si te piden evacuar o si sientes que no es seguro quedarte."
+  },
+  {
+    "clave": "api.sim.accion.tormenta.salir.porque",
+    "es": "En la simulación, unas {personas} personas viven donde llegan el agua o los deslizamientos."
+  },
+  {
     "clave": "api.sim.capa.calado",
     "es": "Calado"
   },

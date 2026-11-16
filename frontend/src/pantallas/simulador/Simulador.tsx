@@ -129,7 +129,8 @@ export default function Simulador() {
     : <span className="num">{formatoNumero(estado.lat, { maximumFractionDigits: 2 })}; {formatoNumero(estado.lon, { maximumFractionDigits: 2 })}</span>
   const textoPunto = cursor === null ? t('sim.lugar.centro') : t('sim.lugar.punto')
   const capaResultado = desatado
-    ? <CapaResultado evento={datos} cargando={evento.isFetching} onDetalle={verDetalle} />
+    ? <CapaResultado evento={datos} cargando={evento.isFetching} onDetalle={verDetalle}
+      herramienta={herramienta} parametros={herramienta ? valoresIniciales(herramienta, estado.p) : estado.p} lugar={lugarElegido?.nombre} />
     : undefined
 
   const panel = cat && herramienta && (

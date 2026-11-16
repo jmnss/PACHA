@@ -357,6 +357,49 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AccionDto */
+        AccionDto: {
+            /** Clave Texto */
+            clave_texto: string;
+            fuente: components["schemas"]["FuenteAccionDto"];
+            /** Id */
+            id: string;
+            /**
+             * Momento
+             * @enum {string}
+             */
+            momento: "antes" | "durante" | "despues";
+            /** Porque */
+            porque: string;
+            porque_texto: components["schemas"]["TextoClave"];
+            /**
+             * Prioridad
+             * @enum {string}
+             */
+            prioridad: "alta" | "normal";
+            /** Texto */
+            texto: string;
+            /**
+             * Valores Texto
+             * @default {}
+             */
+            valores_texto: {
+                [key: string]: number | string;
+            };
+        };
+        /**
+         * AccionesDto
+         * @description Acciones sugeridas según la gravedad simulada; recomendaciones generales con fuente, no órdenes de emergencia.
+         */
+        AccionesDto: {
+            /** Acciones */
+            acciones: components["schemas"]["AccionDto"][];
+            /**
+             * Gravedad
+             * @enum {string}
+             */
+            gravedad: "baja" | "media" | "alta";
+        };
         /** Adquisicion */
         Adquisicion: {
             /** Direccion Orbital */
@@ -729,6 +772,7 @@ export interface components {
         };
         /** EventoDto */
         EventoDto: {
+            acciones: components["schemas"]["AccionesDto"];
             /** Capas */
             capas: components["schemas"]["CapaEventoDto"][];
             /** Celda */
@@ -808,6 +852,19 @@ export interface components {
             valores_texto: {
                 [key: string]: number | string;
             };
+        };
+        /** FuenteAccionDto */
+        FuenteAccionDto: {
+            /** Cita */
+            cita: string;
+            /** Consultado */
+            consultado: string;
+            /** Idioma */
+            idioma: string;
+            /** Nombre */
+            nombre: string;
+            /** Url */
+            url: string;
         };
         /** FuenteFicha */
         FuenteFicha: {

@@ -13,6 +13,7 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
+from datos import acciones
 from datos import simulador_render as render
 from datos.claves import REGISTRO, buscar_texto, numero_de, sin_nisar_simulador, slug
 from datos.contrato import EntradaNoValida, Origen
@@ -355,6 +356,23 @@ def _texto_o_none(prefijo: str, texto_es: str) -> dict | None:
     return tc.model_dump() if tc else None
 
 
+def _por_defecto(herramienta: str, id_control: str) -> Valor:
+    return next(c["defecto"] for c in _CONTROLES[herramienta] if c["id"] == id_control)
+
+
+def _indicadores(herramienta: str, ev: Any, par: dict[str, Valor]) -> dict:
+    """Lo que el motor de acciones necesita del resultado: el resumen del modelo y algunas cifras de sus métricas."""
+    ind: dict = {k: _numero(v) for k, v in ev.resumen.items()}
+    por_slug = {slug(e): numero_de(str(v)) for e, v, _ in ev.metricas}
+    if herramienta == "terremoto":
+        ind["mmi_max"] = por_slug.get("intensidad_maxima")
+        ind["tsunami"] = bool(por_slug.get("tsunami_en_tierra"))
+    if herramienta == "erupcion":
+        ind["vei"] = float(par.get("vei", _por_defecto("erupcion", "vei")))
+        ind["lahar"] = float(par.get("volumen_lahar_hm3", _por_defecto("erupcion", "volumen_lahar_hm3"))) > 0
+    return ind
+
+
 def desatar(p: PeticionEvento) -> dict:
     """Ejecuta el desastre y devuelve el `EventoDto` (con los paneles de radar como `CapaRaster`)."""
     if p.herramienta not in desastres.DESASTRES:
@@ -409,7 +427,8 @@ def desatar(p: PeticionEvento) -> dict:
         espera_radar=dict(ciclo_dias=CICLO_DIAS_SUPUESTO, minimo_dias=0, maximo_dias=CICLO_DIAS_SUPUESTO,
                           medio_dias=CICLO_DIAS_SUPUESTO / 2, duracion_evento_h=_duracion_h(p.herramienta, par),
                           verificado=False),
-        resumen={k: _numero(v) for k, v in ev.resumen.items()}, origen=ORIGEN_SIMULADOR())
+        resumen={k: _numero(v) for k, v in ev.resumen.items()},
+        acciones=acciones.sugerir(p.herramienta, _indicadores(p.herramienta, ev, par)), origen=ORIGEN_SIMULADOR())
     _EVENTOS.guardar(clave, dto)
     return dto
 
