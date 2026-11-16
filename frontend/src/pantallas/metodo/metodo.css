@@ -1,0 +1,42 @@
+/* «Cómo lo hacemos» (docs/diseno.md): pila de capas finas separadas por filetes. Solo tokens. */
+.metodo { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; min-width: 0; }
+.metodo__paso { display: grid; grid-template-columns: minmax(180px, 1fr) 3fr; gap: var(--gap); padding: var(--space-5) 0; border-top: 1px solid var(--filete); }
+.metodo__paso:last-child { border-bottom: 1px solid var(--filete); }
+.metodo__n { display: block; font-size: var(--fs-13); color: var(--muted); }
+.metodo__titulo { margin: var(--space-1) 0 0; font-family: var(--font-serif); font-weight: 600; font-size: var(--fs-21); line-height: var(--lh-28); color: var(--text); }
+.metodo__cuerpo { min-width: 0; max-width: 72ch; }
+.metodo__resumen { margin: 0 0 var(--space-4); font-size: var(--fs-17); line-height: var(--lh-26); color: var(--text); }
+.metodo__detalle { margin-top: var(--space-4); }
+.metodo__detalle > summary { cursor: pointer; color: var(--laguna-tinta); font-weight: 600; font-size: var(--fs-15); min-height: var(--space-6); display: inline-flex; align-items: center; }
+.metodo__detalle > summary:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+.metodo__detalle-cuerpo p, .metodo__detalle-cuerpo li { color: var(--secondary); line-height: var(--lh-24); }
+.metodo__detalle-cuerpo p { margin: var(--space-3) 0 0; }
+.metodo__nota { color: var(--muted); font-size: var(--fs-13); line-height: var(--lh-20); margin: var(--space-2) 0 0; }
+.metodo__kpi { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.metodo__kpi > div { padding: var(--space-3) var(--space-3) var(--space-3) 0; }
+.metodo__kpi > div + div { border-left: 1px solid var(--rule); padding-left: var(--space-3); }
+.metodo__kpi dt { font-size: var(--fs-13); color: var(--muted); line-height: var(--lh-16); }
+.metodo__kpi dd { margin: var(--space-1) 0 0; font-family: var(--font-serif); font-weight: 600; font-size: var(--fs-26); color: var(--text); }
+.metodo__pol { margin: 0; display: grid; gap: var(--space-2); }
+.metodo__pol > div { display: grid; grid-template-columns: var(--space-7) 1fr; gap: var(--space-3); align-items: baseline; }
+.metodo__pol dt { font-family: var(--font-serif); font-weight: 600; font-size: var(--fs-20); }
+.metodo__pol dd { margin: 0; color: var(--secondary); line-height: var(--lh-24); }
+.metodo__bloque { margin-top: var(--space-3); min-width: 0; overflow-x: auto; }
+.metodo__tabla { width: 100%; border-collapse: collapse; font-size: var(--fs-15); }
+.metodo__tabla th, .metodo__tabla td { text-align: left; padding: var(--space-2) var(--space-3) var(--space-2) 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.metodo__tabla thead th { font-size: var(--fs-12); font-weight: 500; color: var(--muted); }
+.metodo__tabla tbody th { font-weight: 600; }
+.metodo__tabla .num { text-align: right; font-variant-numeric: tabular-nums; }
+.metodo__dato { margin: var(--space-3) 0 0; color: var(--secondary); line-height: var(--lh-24); }
+.metodo__formula { margin: 0; font-family: var(--font-serif); font-style: italic; font-size: var(--fs-20); color: var(--text); }
+.metodo__lista { margin: 0; padding-left: var(--space-5); display: grid; gap: var(--space-2); line-height: var(--lh-24); color: var(--secondary); }
+.metodo__subtitulo { margin: var(--space-3) 0 var(--space-2); font-size: var(--fs-15); font-weight: 600; color: var(--text); }
+.metodo__fuentes a { color: var(--laguna-tinta); }
+@media (max-width: 700px) {
+  .metodo__paso { grid-template-columns: 1fr; gap: var(--space-3); padding: var(--space-4) 0; }
+  .metodo__kpi { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .metodo__kpi > div:nth-child(3) { border-left: 0; padding-left: 0; }
+  .metodo__kpi > div:nth-child(n + 3) { border-top: 1px solid var(--rule); }
+  .metodo__resumen { font-size: var(--fs-16); }
+  .metodo__tabla { font-size: var(--fs-14); }
+}

@@ -18,6 +18,7 @@ const Laboratorio = lazy(() => import('./pantallas/laboratorio/Laboratorio'))
 const Recorrido = lazy(() => import('./pantallas/recorrido/Recorrido'))
 const Fundamentos = lazy(() => import('./pantallas/fundamentos/Fundamentos'))
 const Inicio = lazy(() => import('./pantallas/inicio/Inicio'))
+const Metodo = lazy(() => import('./pantallas/metodo/Metodo'))
 const Simulador = lazy(() => import('./pantallas/simulador/Simulador'))
 
 const SUB_EXPLORAR: EnlaceSub[] = [
@@ -28,6 +29,7 @@ const SUB_APRENDER: EnlaceSub[] = [
   { ruta: '/aprender/fundamentos', etiqueta: 'estructura.sub.fundamentos' },
   { ruta: '/aprender/laboratorio', etiqueta: 'estructura.sub.laboratorio' },
   { ruta: '/aprender/recorrido', etiqueta: 'estructura.sub.recorrido' },
+  { ruta: '/aprender/metodo', etiqueta: 'estructura.sub.metodo' },
 ]
 
 /** `/` es Inicio; con `?historia=` (enlaces viejos de Historias) lleva a `/explorar/historias` con la misma query. */
@@ -110,6 +112,16 @@ export default function App() {
               <LimiteError>
                 <Suspense fallback={<Cargando />}>
                   <Recorrido />
+                </Suspense>
+              </LimiteError>
+            }
+          />
+          <Route
+            path="metodo"
+            element={
+              <LimiteError>
+                <Suspense fallback={<Cargando />}>
+                  <Metodo />
                 </Suspense>
               </LimiteError>
             }
