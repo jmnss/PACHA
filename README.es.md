@@ -1,83 +1,66 @@
 # PACHA
 
-*Antes «NISAR · Ecuador».*
+**NASA Space Apps Challenge 2026 · «Dancing with the SARs»**
 
-English: [README.md](README.md)
+PACHA es una app web abierta que convierte las observaciones del radar de banda L de NISAR en mapas y cifras legibles sobre el cambio de la superficie en Ecuador: embalses que se reducen y un incendio forestal.
 
-> **AVISO: DATOS DE DEMOSTRACIÓN.** Todo lo que muestra esta app es **sintético**, producido por un generador reproducible (`scripts/generar_datos_demo.py`, semilla fija). **Nada es una observación real de NISAR.** La app muestra siempre una banda naranja «DATOS DE DEMOSTRACIÓN» y cada capa y exportación lleva su origen. El proveedor de datos reales (`NISAR_PROVEEDOR=real`) es un **esqueleto** que falla con un mensaje claro hasta que estén los recursos oficiales del challenge. Los detalles técnicos de NISAR (productos, bandas, fechas) están *pendientes de confirmar con la documentación oficial*. La única excepción es el contexto climático (climatología de NASA POWER): es dato real complementario, no es de NISAR ni viene del radar; todo lo demás es sintético.
+**App en línea:** https://jmnss.github.io/PACHA/ · English: [README.md](README.md)
 
-## Qué es
+## Qué muestra
 
-Una app web abierta que muestra cómo el radar NISAR (NASA-ISRO) puede «ver» **inundaciones y humedales** (historia principal, Costa baja de Ecuador) e **incendios forestales** (segunda historia, Sierra), con un observatorio para los seis tipos de cambio que menciona el challenge. Se hizo para el NASA Space Apps Challenge **«Dancing with the SARs»**, cuyo objetivo (resumen propio, no el texto oficial) es una app interactiva y fácil de usar que traduzca observaciones de radar en información legible sobre cambios en la superficie. Ver [docs/challenge.md](docs/challenge.md).
+Datos reales NISAR L2 GCOV (banda L, polarizaciones HH/HV, píxel de unos 10 m, en dB), procesados por el equipo a partir de granulos publicados en ASF DAAC, sobre tres sitios:
 
-- **Historias** (`/`): lectura guiada de cada caso, con comparador antes/después, polarizaciones, cinta de pasadas e hipótesis ilustrativas.
-- **Observatorio** (`/observatorio`): vistas Mapa, Antes y después y Serie, mediciones y un panel de simulación. El mapa es una carta geográfica con mapas base Oscuro, Satélite y Relieve de **Esri**, que se piden por internet (sin clave ni cuenta); sin conexión sigue funcionando con las provincias locales y las ciudades principales, sin las etiquetas ni el terreno de Esri.
+| Sitio | Resultado (medición del equipo) |
+|---|---|
+| Embalse Mazar | Agua: 7,08 -> 5,67 km2 (-19,9 % en 77 días) |
+| Embalse Daule-Peripa | 116,0 -> 113,4 km2 (-2,2 %) |
+| Incendio del cerro Casitagua (17 sep 2026) | Máscara de quemado del equipo: 19,4 km2, frente a 300 ha publicadas por la prensa; cambio en el RFDI (índice radar de degradación forestal) |
 
-- **Laboratorio del radar** (`/laboratorio`): «La nube no lo detiene» (el óptico se pierde con nubes y el radar sigue viendo) y «Polarización y banda» (qué polarización resalta cada cambio). Escena genérica con coeficientes ilustrativos; la banda S es solo un ejemplo, pendiente de confirmar.
-- **Impacto** (pestaña del Observatorio, inundación e incendio): hectáreas afectadas, evolución, lectura en lenguaje llano e informe de una página en PNG, con acciones condicionales («si esto fuera un evento real…»).
-- **Recorrido** (`/recorrido`): la historia completa en 90 segundos, con pantallas reales incrustadas.
-- **Fundamentos** (`/fundamentos`): la física del radar; lo específico de NISAR queda pendiente de confirmar.
+La comparación de Casitagua y cualquier lectura de estos cambios se presentan como **hipótesis por comprobar**, no como conclusiones. Cada capa lleva su procedencia (producto, granulo, fecha, polarización, frecuencia, madurez). Los datos de prensa de las fichas (`data/*/*/ficha.json`) citan fuente, URL y cita textual.
 
-## Idioma y accesibilidad
+## Cuatro destinos
 
-- **Idioma:** selector en el riel con español, English y Kichwa. El cambio es inmediato, sin recargar ni repetir peticiones, y se recuerda en el navegador. El kichwa es un **borrador en revisión por hablantes** (0 de 923 claves validadas; la app muestra un aviso). Para revisarlo: [docs/guia-traduccion-kichwa.md](docs/guia-traduccion-kichwa.md) y [docs/traduccion-kichwa.csv](docs/traduccion-kichwa.csv). La banda de datos de demostración y los sellos de origen se muestran en los tres idiomas.
-- **Accesibilidad:** el objetivo es WCAG 2.2 AA. Lo medido: auditoría automática con axe (6 pantallas × 3 idiomas × 2 anchos, sin infracciones graves ni críticas), recorrido solo con teclado y reflujo a 320 px sin scroll horizontal. **No** se ha hecho aún una prueba con lector de pantalla (NVDA u Orca) con personas, así que no se afirma cumplimiento total. Detalle en [INFORME.md](INFORME.md).
+- **Inicio**: qué es PACHA y por dónde empezar.
+- **Explorar**: *Historias* (lecturas guiadas de cada caso, antes/después) y *Observatorio* (exploración libre de capas y pasadas).
+- **Simular**: simulador de eventos (100 % sintético, y así se rotula) con acciones sugeridas, cada una con su fuente citada.
+- **Aprender**: *Fundamentos* (cómo ve el radar), *Laboratorio*, *Recorrido* y *Cómo lo hacemos* (método).
 
-## Simulador de eventos
+Tres idiomas: español, inglés y kichwa (el kichwa está en borrador, pendiente de revisión).
 
-En `/simulador` (antes «Modo Dios» de la app Streamlit) puedes provocar un incendio, una tormenta, una crecida, un terremoto o una erupción sobre el relieve de Ecuador y ver cómo lo vería un radar como NISAR, cuánto tardaría en volver a pasar (ciclo supuesto, pendiente de confirmar) y compartir el escenario por enlace. Todo es simulación y va marcado como datos de demostración.
-
-## Versión publicada
-
-La app está publicada en **https://jmnss.github.io/PACHA/** (GitHub Pages, sitio estático sin servidor). Todo se
-calcula en tu navegador: la API Python corre allí con Pyodide. La primera visita descarga unos 25 MB; lo precalculado
-(portada, historias y escenarios) se ve de inmediato. El Simulador puede tardar hasta un minuto en tormentas e
-inundaciones, y los móviles de gama baja pueden no cargar el motor. El aviso de datos de demostración no cambia: los
-datos son sintéticos.
-
-## Instalación y arranque
-
-Requiere Python 3.13 y Node 22. En este repo, `source scripts/entorno.sh` prepara Node 22 (nvm), `CHROME_PATH` y el proveedor.
-
-```bash
-python -m pip install -r requirements.txt -r requirements-api.txt
-python scripts/generar_datos_demo.py     # opcional: la app no lo necesita
-cd frontend && npm install && npm run build && cd ..
-python servidor.py                        # API + frontend en http://localhost:8000
-```
-
-Comprobación: `curl http://localhost:8000/api/salud` devuelve `"hay_sinteticos":true`.
-
-**Desarrollo:** `python servidor.py` y, en otra terminal, `cd frontend && npm run dev` (http://localhost:5173).
-
-**Proveedor de datos:** `NISAR_PROVEEDOR=demo|real` (por defecto `demo`). `real` es un esqueleto.
-
-## Pruebas
-
-```bash
-python -m pytest tests -q                       # datos y API
-python -m unittest modelo.clima modelo.desastres # núcleo científico
-cd frontend && npm test && npm run lint         # vitest y eslint
-cd frontend && npx playwright test              # extremo a extremo (necesita CHROME_PATH y el frontend compilado)
-```
+Accesibilidad: objetivo WCAG 2.2 AA; pruebas automáticas con axe en CI.
 
 ## Arquitectura
 
-- `datos/`: contrato de datos (`contrato.py`) y proveedores: `demo` (sintético) y `real` (esqueleto). Contrato: [docs/contrato-datos.md](docs/contrato-datos.md).
-- `api/`: FastAPI sin estado; solo habla con el contrato de `datos/` (salvo `/api/contexto`, que usa datos complementarios de `modelo/estaciones.py`).
-- `frontend/`: React 18 + Vite + TypeScript; el estado vive en la URL y en el navegador, sin cuentas.
-- `modelo/`: física y generador sintético.
-- `frontend/src/motor/`: en la versión publicada la API corre en el navegador (Pyodide en un Web Worker).
-- Docs: [challenge](docs/challenge.md), [diseño](docs/diseno.md), [guion de presentación](docs/historia-datos.md).
+- Frontend: React 18 + Vite + TypeScript.
+- Backend: FastAPI sin estado, que solo lee un contrato de datos (`datos/`). En GitHub Pages no hay servidor: la misma API corre **en el navegador con Pyodide** en un Web Worker.
+- La preparación fuera de línea (`scripts/preparar_datos_reales.py`) descarga y reduce granulos NISAR a derivados pequeños en `data/`; los HDF5 crudos nunca se versionan.
 
-## App Streamlit heredada
+## Correr en local
 
-La app original en Streamlit se retiró el 2026-11-14. Su último estado está en la etiqueta `legado-streamlit` (`git checkout legado-streamlit`).
+```bash
+source scripts/entorno.sh
+python -m pip install -r requirements.txt -r requirements-api.txt
+cd frontend && npm install && npm run build && cd ..
+python servidor.py          # http://localhost:8000
+```
 
-## Requisitos de entrega
+Desarrollo: `python servidor.py` y `cd frontend && npm run dev` (http://localhost:5173). Pruebas: `python -m pytest tests -q`, `cd frontend && npm test`.
 
-Requisitos oficiales de entrega: pendiente de confirmar.
+## Fuentes de datos
 
-## Licencia y créditos
+- NISAR L2 GCOV (banda L), ASF DAAC / NASA Earthdata: https://asf.alaska.edu/ · Guía de datos de NISAR: https://nisar-docs.asf.alaska.edu/
+- Copernicus DEM GLO-30 (ESA)
+- geoBoundaries (límites administrativos)
+- Mapas base de Esri
+- Climatología NASA POWER (contexto complementario, no es NISAR)
+- Fuentes de prensa citadas en cada `ficha.json` (El Universo, KCH Comunicación / CELEC EP, Primicias, El Comercio, Teleamazonas)
 
-MIT ([LICENSE](LICENSE)); provisional, pendiente de confirmar por el equipo. Fuentes de datos, tipografía y referencias: [CREDITOS.md](CREDITOS.md).
+Lo que se dice de NISAR se limita a lo registrado con su fuente en [docs/nisar-verificado.md](docs/nisar-verificado.md).
+
+## Uso de IA
+
+Desarrollado con la asistencia de Claude Code (Anthropic). El equipo revisó los resultados y responde por ellos.
+
+## Licencia y equipo
+
+MIT, ver [LICENSE](LICENSE). Créditos: [CREDITOS.md](CREDITOS.md). Equipo: **Equipo PACHA**.
