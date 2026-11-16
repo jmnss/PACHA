@@ -2,7 +2,7 @@
 export const observatorio = {
   // — Estructura de la pantalla —
   'obs.estructura.titulo': 'Observatorio',
-  'obs.estructura.observable': 'Qué observa el radar en esta demostración:',
+  'obs.estructura.observable': 'Qué observa el radar en este tipo de cambio:',
   'obs.estructura.sigma0_termino': 'σ⁰',
   'obs.estructura.sigma0_explicacion': 'Retrodispersión: fracción de la señal del radar que vuelve al satélite.',
   'obs.estructura.pregunta': 'Qué cambió aquí entre dos pasadas y cuánto.',

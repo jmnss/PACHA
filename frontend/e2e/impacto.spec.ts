@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test'
 // Requiere `npm run build` previo. Todo sintético: sin red.
 for (const { nombre, ancho, alto } of [{ nombre: 'escritorio 1440', ancho: 1440, alto: 900 }, { nombre: 'móvil 390', ancho: 390, alto: 844 }]) {
   test.describe(`impacto · ${nombre}`, () => {
+    test.fixme(true, 'La vista Impacto se ocultó en el Observatorio con datos reales del equipo (dependía del modelo de demostración).')
     test.use({ viewport: { width: ancho, height: alto } })
 
     test('la inundación muestra hectáreas, lectura como ejemplo y un informe PNG descargable', async ({ page }) => {

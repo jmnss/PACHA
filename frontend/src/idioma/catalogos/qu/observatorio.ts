@@ -3,7 +3,7 @@ import type { observatorio as esObservatorio } from '../es/observatorio'
 // Borrador en kichwa unificado, pendiente de revisión por hablantes (ver docs/guia-traduccion-kichwa.md).
 export const observatorio: Record<keyof typeof esObservatorio, string> = {
   'obs.estructura.titulo': 'Observatorio',
-  'obs.estructura.observable': 'Kay rikuchiypi radar ima rikun:',
+  'obs.estructura.observable': 'Kay tikrayta radar ima rikun:',
   'obs.estructura.sigma0_termino': 'σ⁰',
   'obs.estructura.sigma0_explicacion': 'Kutimuq ch\'iqiy: radarpa willayninpa satelitiman kutimuq rakinmi.',
   'obs.estructura.pregunta': 'Kaypi ima tikrarka ishkay pasada chawpipi, imashina hatunta.',

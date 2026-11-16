@@ -7,7 +7,6 @@ for (const { nombre, ancho, alto } of [{ nombre: 'escritorio 1440', ancho: 1440,
 
     test('las nubes tapan el óptico y el radar no cambia', async ({ page }) => {
       await page.goto('/aprender/laboratorio?nubes=0')
-      await expect(page.getByRole('region', { name: 'Aviso de datos de demostración' })).toBeVisible()
       const radar = page.locator('.franja-kpi__item', { hasText: 'Cambio visto por el radar' }).locator('.franja-kpi__valor')
       const optico = page.locator('.franja-kpi__item', { hasText: 'Cambio visto por el óptico' }).locator('.franja-kpi__valor')
       await expect(radar).toBeVisible({ timeout: 30_000 })
@@ -25,11 +24,11 @@ for (const { nombre, ancho, alto } of [{ nombre: 'escritorio 1440', ancho: 1440,
       await expect(page.getByText('Quema del bosque').first()).toBeVisible()
     })
 
-    test('el recorrido incrusta la pantalla del paso, sin riel y con la banda, y avanza con el teclado', async ({ page }) => {
+    test('el recorrido incrusta la pantalla del paso, sin riel, y avanza con el teclado', async ({ page }) => {
       await page.goto('/aprender/recorrido')
       await page.getByRole('button', { name: 'Pausar' }).click()
       const marco = page.frameLocator('iframe')
-      await expect(marco.getByRole('region', { name: 'Aviso de datos de demostración' })).toBeVisible({ timeout: 30_000 })
+      await expect(marco.getByRole('heading', { level: 1 })).toBeVisible({ timeout: 30_000 })
       await expect(marco.getByRole('navigation', { name: 'Principal' })).toHaveCount(0)
       await page.getByRole('button', { name: 'Siguiente' }).click()
       await expect(page).toHaveURL(/paso=2/)

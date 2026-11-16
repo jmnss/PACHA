@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-const OBS = '/explorar/observatorio?escenario=ec_la_segua'
+const OBS = '/explorar/observatorio?escenario=embalse-mazar'
 
 async function esperarCarga(page: import('@playwright/test').Page) {
   await page.waitForLoadState('networkidle')
@@ -41,12 +41,11 @@ test.describe('idioma', () => {
     await expect(page.getByRole('button', { name: /Language/ })).toHaveAttribute('aria-expanded', 'false')
   })
 
-  test('en kichwa se ven el aviso de revisión y la banda de demostración', async ({ page }) => {
+  test('en kichwa se ven el aviso de revisión', async ({ page }) => {
     await page.goto(`${OBS}&idioma=qu`)
     await esperarCarga(page)
     await expect(page.locator('html')).toHaveAttribute('lang', 'qu-EC')
     await expect(page.locator('.aviso-traduccion')).toBeVisible()
-    await expect(page.locator('.banda-demo__fila')).toBeVisible()
   })
 
   test('el recorrido incrustado sigue al idioma de la página sin peticiones nuevas', async ({ page }) => {

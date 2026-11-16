@@ -12,13 +12,10 @@ for (const { nombre, ancho, alto } of ANCHOS) {
     test.use({ viewport: { width: ancho, height: alto } })
 
     for (const ruta of ['/', '/explorar/observatorio']) {
-      test(`banda de demostración visible y sin cerrar en ${ruta}`, async ({ page }) => {
+      test(`ya no hay banda de demostración en ${ruta}`, async ({ page }) => {
         await page.goto(ruta)
-        const banda = page.getByRole('region', { name: 'Aviso de datos de demostración' })
-        await expect(banda).toBeVisible()
-        await expect(banda.getByRole('button')).toHaveCount(1) // solo «Qué significa»
-        await expect(banda.getByRole('button', { name: 'Qué significa' })).toBeVisible()
-        await expect(banda.getByRole('button', { name: /cerrar|descartar|ocultar/i })).toHaveCount(0)
+        await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible()
+        await expect(page.getByRole('region', { name: 'Aviso de datos de demostración' })).toHaveCount(0)
       })
     }
 

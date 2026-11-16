@@ -212,8 +212,8 @@ describe('Observatorio · mapa y tiempo', () => {
   it('la cabecera dice qué observa el radar y explica σ⁰', async () => {
     montar()
     await listo()
-    const p = await screen.findByText(/Qué observa el radar en esta demostración:/)
-    expect(p).toHaveTextContent('Qué observa el radar en esta demostración: σ⁰ HH y HV (dB)')
+    const p = await screen.findByText(/Qué observa el radar en este tipo de cambio:/)
+    expect(p).toHaveTextContent('Qué observa el radar en este tipo de cambio: σ⁰ HH y HV (dB)')
     expect(within(p).getByRole('button', { name: 'σ⁰' })).toBeInTheDocument()
   })
 

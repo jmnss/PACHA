@@ -764,6 +764,18 @@
     "es": "Agua"
   },
   {
+    "clave": "api.lab.leyenda.agua_ganada",
+    "es": "Agua ganada"
+  },
+  {
+    "clave": "api.lab.leyenda.agua_perdida",
+    "es": "Agua perdida"
+  },
+  {
+    "clave": "api.lab.leyenda.agua_persistente",
+    "es": "Agua persistente"
+  },
+  {
     "clave": "api.lab.leyenda.bosque",
     "es": "Bosque"
   },
@@ -792,8 +804,28 @@
     "es": "Quemado"
   },
   {
+    "clave": "api.lab.leyenda.quemado_en_ambas",
+    "es": "Quemado en ambas"
+  },
+  {
+    "clave": "api.lab.leyenda.quemado_nuevo",
+    "es": "Quemado nuevo"
+  },
+  {
+    "clave": "api.lab.leyenda.recuperado",
+    "es": "Recuperado"
+  },
+  {
+    "clave": "api.lab.leyenda.sin_agua",
+    "es": "Sin agua"
+  },
+  {
     "clave": "api.lab.leyenda.sin_cambio",
     "es": "Sin cambio"
+  },
+  {
+    "clave": "api.lab.leyenda.sin_quemar",
+    "es": "Sin quemar"
   },
   {
     "clave": "api.lab.leyenda.tapado_por_nube",

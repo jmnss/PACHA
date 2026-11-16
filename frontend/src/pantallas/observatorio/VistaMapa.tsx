@@ -148,6 +148,7 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
   )
 
   const alClic = (lat: number, lon: number) => {
+    if (!esc.capacidades.simulacion) return // escenarios reales del equipo: el clic no calcula nada
     if (!dentroDeEcuador(lat, lon)) { setAviso(t('obs.mapa.aviso_fuera')); return }
     setAviso(null)
     const base = esc.id.split('~')[0]
@@ -242,9 +243,11 @@ export function VistaMapa({ esc, resultado, tiempo, contexto, antesId, despuesId
             <ErrorBloque mensaje={mensajeDeError(simular.error, t)} onReintentar={() => simular.reset()} />
           </div>
         )}
-        <p className="vista-mapa__ayuda">
-          {pais ? t('obs.mapa.ayuda_pais') : t('obs.mapa.ayuda_escenario')}
-        </p>
+        {esc.capacidades.simulacion && (
+          <p className="vista-mapa__ayuda">
+            {pais ? t('obs.mapa.ayuda_pais') : t('obs.mapa.ayuda_escenario')}
+          </p>
+        )}
       </Tarjeta>
       <Tarjeta titulo={t('obs.mapa.cinta_titulo')}>
         <BloqueTiempo

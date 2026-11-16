@@ -194,6 +194,9 @@ api.lab.cambio.inundacion_a_cielo_abierto,Inundación a cielo abierto,Open-sky f
 api.lab.cambio.inundacion_bajo_dosel,Inundación bajo dosel,Flooding under canopy,Sacha pakana uku yaku junday,no
 api.lab.cambio.quema_del_bosque,Quema del bosque,Forest burning,Sachapa rupay,no
 api.lab.leyenda.agua,Agua,Water,Yaku,no
+api.lab.leyenda.agua_ganada,Agua ganada,Water gained,Yaku japishka,no
+api.lab.leyenda.agua_perdida,Agua perdida,Water lost,Yaku chinkashka,no
+api.lab.leyenda.agua_persistente,Agua persistente,Persistent water,Mana tukurik yaku,no
 api.lab.leyenda.bosque,Bosque,Forest,Sacha,no
 api.lab.leyenda.bosque_inundado,Bosque inundado,Flooded forest,Yakuwan jundashka sacha,no
 api.lab.leyenda.cambio_detectado,Cambio detectado,Change detected,Rikushka tikray,no
@@ -201,7 +204,12 @@ api.lab.leyenda.cambio_sin_detectar,Cambio sin detectar,Change not detected,Mana
 api.lab.leyenda.cultivo,Cultivo,Crop,Tarpushka,no
 api.lab.leyenda.falsa_alarma,Falsa alarma,False alarm,Llulla alarma,no
 api.lab.leyenda.quemado,Quemado,Burned,Rupashka,no
+api.lab.leyenda.quemado_en_ambas,Quemado en ambas,Burned in both,Ishkaypi rupashka,no
+api.lab.leyenda.quemado_nuevo,Quemado nuevo,Newly burned,Mushuk rupashka,no
+api.lab.leyenda.recuperado,Recuperado,Recovered,Kutin wiñashka,no
+api.lab.leyenda.sin_agua,Sin agua,No water,Yaku illa,no
 api.lab.leyenda.sin_cambio,Sin cambio,No change,Tikray illa,no
+api.lab.leyenda.sin_quemar,Sin quemar,Not burned,Mana rupashka,no
 api.lab.leyenda.tapado_por_nube,Tapado por nube,Hidden by cloud,Puyuwan pakashka,no
 api.lab.metrica.cambio_visto_por_el_optico.ayuda,"Lo mismo para una imagen óptica. Las nubes la tapan y, bajo el dosel, no ve el agua.","The same for an optical image. Clouds hide it and, under the canopy, it cannot see the water.","Óptico rikchapak kikin. Puyukuna pakan, sacha pakana ukupika yakuta mana rikunchu.",no
 api.lab.metrica.cambio_visto_por_el_optico.etiqueta,Cambio visto por el óptico,Change seen by the optical image,Ópticopa rikushka tikray,no
@@ -720,40 +728,40 @@ guia.saltar,Saltar guía,Skip guide,Pushaqta usha,no
 guia.siguiente,Siguiente,Next,Qatiq,no
 historias.capa.drfdi,ΔRFDI,ΔRFDI,ΔRFDI,no
 historias.capa.etiqueta,Capa,Layer,Capa,no
-historias.capa.mascara,Máscara de quemado,Burn mask,Máscara de quemado,no
+historias.capa.mascara,Máscara de quemado,Burn mask,Rupashka mascara,no
 historias.cargando,Cargando la historia…,Loading the story…,Willakuyta chaskishka…,no
 historias.cifra.calculando,Calculando…,Computing…,Yupashka…,no
 historias.cifra.mas,Todas las cifras del escenario,All the figures of the scenario,Escenariopa tukuy yupaykuna,no
 historias.cifra.pasadas,{n} pasadas,{n} passes,{n} pasadakuna,no
 historias.comparacion.antes,Antes (km²),Before (km²),Antes (km²),no
-historias.comparacion.despues,Después (km²),After (km²),Después (km²),no
+historias.comparacion.despues,Después (km²),After (km²),Washa (km²),no
 historias.comparacion.dias,{n} días,{n} days,{n} días,no
 historias.comparacion.fechas,Fechas,Dates,Fechas,no
 historias.comparacion.sitio,Embalse,Reservoir,Embalse,no
-historias.comparacion.titulo,Los dos embalses con la misma medida,Both reservoirs with the same measure,Los dos embalses con la misma medida,no
-historias.comparacion.variacion,Variación (%),Change (%),Variación (%),no
+historias.comparacion.titulo,Los dos embalses con la misma medida,Both reservoirs with the same measure,Ishkay yaku jundaykuna shuk tupuywan,no
+historias.comparacion.variacion,Variación (%),Change (%),Tikray (%),no
 historias.comparador.actualizando,Actualizando…,Updating…,Mushukyachishka…,no
 historias.comparador.antes,Antes · {fecha},Before · {fecha},Ñawpa · {fecha},no
 historias.comparador.calculando,Calculando el cambio entre las dos pasadas…,Computing the change between the two passes…,Ishkay pasadakunapa tikrayta yupachishka…,no
 historias.comparador.despues,Después · {fecha},After · {fecha},Washa · {fecha},no
-historias.comparador.drfdi,ΔRFDI (antes − después; positivo = menos vegetación),ΔRFDI (before − after; positive = less vegetation),ΔRFDI (antes − después; positivo = menos vegetación),no
+historias.comparador.drfdi,ΔRFDI (antes − después; positivo = menos vegetación),ΔRFDI (before − after; positive = less vegetation),ΔRFDI (ñawpa − washa; ashtawan jatun = pishi sacha),no
 historias.comparador.mascara,Máscara de agua,Water mask,Yaku máscara,no
 historias.comparador.nota_cinta,Una muesca por pasada del satélite. Mueve el cursor para elegir «después»; «antes» queda fija.,One notch per satellite pass. Move the cursor to choose “after”; “before” stays fixed.,Sapa satélitepa pasadapak shuk rikchay. Kursorta kuyuchishpa «washa»ta akllay; «ñawpa» sayashkallami kan.,no
 historias.comparador.pol,{pol} · {fecha},{pol} · {fecha},{pol} · {fecha},no
-historias.comparador.quemado,Máscara de quemado del equipo,Team’s burn mask,Máscara de quemado del equipo,no
+historias.comparador.quemado,Máscara de quemado del equipo,Team’s burn mask,Equipopa rupashka mascara,no
 historias.comparador.sin_pasadas,Este escenario no tiene dos pasadas distintas para comparar.,This scenario does not have two different passes to compare.,Kay escenariopi mana ishkay mana kikin pasadakuna tiyanchu tupachinkapak.,no
 historias.creditos,"Créditos: clima de NASA POWER, límites de provincias de geoBoundaries (CC0), tipografía Public Sans y Spectral (SIL OFL).","Credits: climate from NASA POWER, province boundaries from geoBoundaries (CC0), Public Sans and Spectral typefaces (SIL OFL).","Yupaychay: NASA POWER-manta clima, geoBoundaries-manta provinciakunapa límites (CC0), Public Sans, Spectral tipografía (SIL OFL).",no
-historias.evento.fecha,Incendio del {fecha},Fire of {fecha},Incendio del {fecha},no
-historias.evento.fuente,fuente: {fuente},source: {fuente},fuente: {fuente},no
+historias.evento.fecha,Incendio del {fecha},Fire of {fecha},{fecha} punchapi rupay,no
+historias.evento.fuente,fuente: {fuente},source: {fuente},willay: {fuente},no
 historias.ficha.fuente,Fuente,Source,Fuente,no
-historias.ficha.titulo,"Datos del sitio, con su fuente","Site facts, with their source","Datos del sitio, con su fuente",no
+historias.ficha.titulo,"Datos del sitio, con su fuente","Site facts, with their source","Kay pachapa willaykuna, paypa willaykuyuk",no
 historias.final.boton,Explóralo tú en el Observatorio,Explore it yourself in the Observatory,Observatoriopi kikin maskay,no
 historias.final.texto,"Mide puntos y cuadrantes, cambia de pasada y descarga los datos de este mismo escenario.","Measure points and boxes, change the pass and download the data of this same scenario.","Pushtukunata, cuadrantekunata tupuy, pasadata tikray, kay escenariopa datokunata uraykachiy.",no
 historias.final.titulo,Explóralo tú,Explore it yourself,Kikin maskay,no
 historias.indice.etiqueta,Historias,Stories,Willakuykuna,no
-historias.lecturas.titulo,Qué sugieren los datos (hipótesis por comprobar),What the data suggest (hypotheses to be checked),Qué sugieren los datos (hipótesis por comprobar),no
-historias.leyenda.drfdi_mas,menos vegetación,less vegetation,menos vegetación,no
-historias.leyenda.drfdi_menos,más vegetación,more vegetation,más vegetación,no
+historias.lecturas.titulo,Qué sugieren los datos (hipótesis por comprobar),What the data suggest (hypotheses to be checked),Willaykuna ima nin (kamachinakuna llukshichina),no
+historias.leyenda.drfdi_mas,menos vegetación,less vegetation,pishi sacha,no
+historias.leyenda.drfdi_menos,más vegetación,more vegetation,ashtawan sacha,no
 historias.marca.ejemplo,En este escenario de demostración,In this demonstration scenario,Kay rikuchiy escenariopi,no
 historias.marca.pendiente,pendiente de confirmar con la documentación oficial,pending confirmation with the official documentation,kamachik panka-wan chiqanyachina kan,no
 historias.paso.indicador,Paso {n} de {total},Step {n} of {total},{total} pasomanta {n} paso,no
@@ -768,7 +776,7 @@ historias.sin_escenario.texto,Todavía no hay un escenario para esta historia. P
 historias.sin_escenario.titulo,Esta historia no tiene escenario,This story has no scenario,Kay willakuypak escenario mana tiyanchu,no
 historias.sitio.etiqueta,Embalse,Reservoir,Embalse,no
 historias.vista.etiqueta,Qué estás viendo,What you are seeing,Ima rikukunki,no
-historias.vista.polarizaciones,"La misma fecha en HH y en HV: la otra fecha no tiene imagen de radar, solo máscara.","The same date in HH and HV: the other date has no radar image, only a mask.","La misma fecha en HH y en HV: la otra fecha no tiene imagen de radar, solo máscara.",no
+historias.vista.polarizaciones,"La misma fecha en HH y en HV: la otra fecha no tiene imagen de radar, solo máscara.","The same date in HH and HV: the other date has no radar image, only a mask.","Shuk punchapi HH-pi HV-pipash: shuk punchapi radar rikuchiy illa, mascarallami.",no
 idioma.aviso_qu,Traducción en revisión por hablantes · {validadas} de {total} textos validados,Translation under review by speakers · {validadas} of {total} texts validated,Kichwa tikrayka manaraka chiqanyachishkachu · {total}-manta {validadas} chiqanyachishka,no
 idioma.selector.etiqueta,Idioma,Language,Shimi,no
 idioma.sin_traducir,Texto aún sin traducir; se muestra en español,Text not yet translated; shown in Spanish,Kay killkaka mana tikrashkachu; castellano shimipi rikuchishka,no
@@ -946,7 +954,7 @@ obs.estructura.escenario_no_disponible,Escenario no disponible,Scenario not avai
 obs.estructura.lado_etiqueta,Métricas y contexto,Metrics and context,"Yupaykuna, tiyashka pacha",no
 obs.estructura.mas_acciones,Más acciones,More actions,Astawan rurakuna,no
 obs.estructura.motivo_reproductor,Se está calculando un escenario nuevo; el reproductor vuelve al terminar.,A new scenario is being computed; the player returns when it finishes.,Mushuk escenariota yupachishka; tukurikpi reproductor kutimunka.,no
-obs.estructura.observable,Qué observa el radar en esta demostración:,What the radar observes in this demonstration:,Kay rikuchiypi radar ima rikun:,no
+obs.estructura.observable,Qué observa el radar en este tipo de cambio:,What the radar observes in this type of change:,Kay tikrayta radar ima rikun:,no
 obs.estructura.pregunta,Qué cambió aquí entre dos pasadas y cuánto.,"What changed here between two passes, and by how much.","Kaypi ima tikrarka ishkay pasada chawpipi, imashina hatunta.",no
 obs.estructura.sigma0_explicacion,Retrodispersión: fracción de la señal del radar que vuelve al satélite.,Backscatter: the fraction of the radar signal that returns to the satellite.,Kutimuq ch'iqiy: radarpa willayninpa satelitiman kutimuq rakinmi.,no
 obs.estructura.sigma0_termino,σ⁰,σ⁰,σ⁰,no
